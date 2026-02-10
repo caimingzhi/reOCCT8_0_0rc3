@@ -74,45 +74,55 @@ class RefactorWorker:
         protected_offsets = []
 
         def walk(cursor):
-            # 检查是否在当前文件内 - 只用于决定是否处理当前 cursor，不阻止遍历子节点
-            in_current_file = cursor.location.file and os.path.normpath(cursor.location.file.name) == abs_path
-            
-            if in_current_file:
-                # 记录字符串位置，防止修改字符串内容
-                if cursor.kind == CursorKind.STRING_LITERAL:
-                    protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+            # 特殊处理 TranslationUnit：它通常没有文件信息，或者是整个单元的根，需要遍历其子节点
+            if cursor.kind == CursorKind.TRANSLATION_UNIT:
+                for child in cursor.get_children():
+                    walk(child)
+                return
 
-                # 处理类/结构体/类模板的声明
-                if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL, CursorKind.CLASS_TEMPLATE] and cursor.spelling in self.mapping:
-                    # 必须同时满足：是定义 AND 在顶层（TU或Namespace）
-                    is_definition = cursor.is_definition()
-                    parent = cursor.lexical_parent
-                    is_toplevel = parent and parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]
-                    
-                    if is_definition and is_toplevel:
-                        # 记录范围，防止 Token 扫描阶段在类定义处重复加前缀
-                        protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
-                        
-                        target_ns = self.mapping[cursor.spelling]
-                        pre, suf = generate_namespace_wrappers_bytes(target_ns)
-                        
-                        # 寻找末尾的分号
-                        end_off = cursor.extent.end.offset
-                        scan_pos = end_off
-                        limit = min(end_off + 200, len(content))
-                        found_semicolon = False
-                        while scan_pos < limit:
-                            if content[scan_pos] == 59: # ';'
-                                scan_pos += 1
-                                found_semicolon = True
-                                break
-                            elif content[scan_pos] not in (9, 10, 13, 32): # 非空白字符
-                                break
-                            scan_pos += 1
-                        
-                        replacements.append((cursor.extent.start.offset, 0, pre))
-                        replacements.append((scan_pos if found_semicolon else end_off, 0, suf))
+            # 对于其他节点，检查是否在当前文件内
+            # 如果不在当前文件，直接剪枝（不再遍历子节点）
+            if not cursor.location.file or os.path.normpath(cursor.location.file.name) != abs_path:
+                return
             
+            # --- 以下逻辑仅对当前文件内的节点执行 ---
+
+            # 记录字符串位置，防止修改字符串内容
+            if cursor.kind == CursorKind.STRING_LITERAL:
+                protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+
+            # 处理类/结构体/类模板的声明
+            if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL, CursorKind.CLASS_TEMPLATE] and cursor.spelling in self.mapping:
+                # 必须同时满足：是定义 AND 在顶层（TU或Namespace）
+                is_definition = cursor.is_definition()
+                parent = cursor.lexical_parent
+                is_toplevel = parent and parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]
+                
+                if is_definition and is_toplevel:
+                    # 记录范围，防止 Token 扫描阶段在类定义处重复加前缀
+                    protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+                    
+                    target_ns = self.mapping[cursor.spelling]
+                    pre, suf = generate_namespace_wrappers_bytes(target_ns)
+                    
+                    # 寻找末尾的分号
+                    end_off = cursor.extent.end.offset
+                    scan_pos = end_off
+                    limit = min(end_off + 200, len(content))
+                    found_semicolon = False
+                    while scan_pos < limit:
+                        if content[scan_pos] == 59: # ';'
+                            scan_pos += 1
+                            found_semicolon = True
+                            break
+                        elif content[scan_pos] not in (9, 10, 13, 32): # 非空白字符
+                            break
+                        scan_pos += 1
+                    
+                    replacements.append((cursor.extent.start.offset, 0, pre))
+                    replacements.append((scan_pos if found_semicolon else end_off, 0, suf))
+            
+            # 继续遍历子节点（仅限当前文件内的节点）
             for child in cursor.get_children():
                 walk(child)
 
@@ -172,7 +182,7 @@ def main():
         return
     src_dir, csv_file, log_file = sys.argv[1], sys.argv[2], sys.argv[3]
     
-    logging.basicConfig(filename=log_file, level=logging.DEBUG, format='%(asctime)s %(message)s')
+    logging.basicConfig(filename=log_file, level=logging.WARNING, format='%(asctime)s %(message)s')
     mapping = load_mapping(csv_file)
     header_args = get_all_header_dirs(src_dir)
 
