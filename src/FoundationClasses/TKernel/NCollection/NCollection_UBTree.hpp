@@ -338,6 +338,6 @@ int NCollection_UBTree<TheObjType, TheBndType>::Select(const TreeNode& theBranch
   private:                                                                                         \
     UBTree* myTree;                                                                                \
   };                                                                                               \
-  DEFINE_STANDARD_HANDLE(_HUBTREE, _HPARENT)
+  DEFINE_STANDARD_HANDLECLASS(_HUBTREE, _HPARENT, Standard_Transient)
 
 #define IMPLEMENT_HUBTREE(_HUBTREE, _HPARENT)

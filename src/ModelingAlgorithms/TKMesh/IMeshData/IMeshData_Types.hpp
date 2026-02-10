@@ -149,7 +149,7 @@ bool NCollection_EBTree<TheObjType, TheBndType>::Remove(const TheObjType& theObj
                                                                                                    \
     DEFINE_STANDARD_RTTI_INLINE(_HEBTREE, _HUBTREE)                                                \
   };                                                                                               \
-  DEFINE_STANDARD_HANDLE(_HEBTREE, _HUBTREE)
+  DEFINE_STANDARD_HANDLECLASS(_HEBTREE, _HUBTREE, Standard_Transient)
 
 #define IMPLEMENT_HEBTREE(_HEBTREE, _HUBTREE)
 

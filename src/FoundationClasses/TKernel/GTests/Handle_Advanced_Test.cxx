@@ -46,7 +46,7 @@ public:
     }                                                                                              \
     DEFINE_STANDARD_RTTI_INLINE(theClass, theParent)                                               \
   };                                                                                               \
-  DEFINE_STANDARD_HANDLE(theClass, theParent)
+  DEFINE_STANDARD_HANDLECLASS(theClass, theParent, Standard_Transient)
 
 #define QA_NAME(theNum) QaClass##theNum##_50
 #define QA_HANDLE_NAME(theNum) Handle(QaClass##theNum##_50)

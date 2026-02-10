@@ -381,6 +381,3 @@ namespace std
                         "directly instead.")                                                       \
     typedef Handle(C1) Handle_##C1;
 #endif
-
-#define DEFINE_STANDARD_HANDLE(C1, C2) DEFINE_STANDARD_HANDLECLASS(C1, C2, Standard_Transient)
-#define DEFINE_STANDARD_PHANDLE(C1, C2) DEFINE_STANDARD_HANDLECLASS(C1, C2, Standard_Persistent)
