@@ -93,12 +93,13 @@ class RefactorWorker:
 
             # 处理类/结构体/类模板的声明
             if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL, CursorKind.CLASS_TEMPLATE] and cursor.spelling in self.mapping:
-                # 必须同时满足：是定义 AND 在顶层（TU或Namespace）
+                # 必须同时满足：在顶层（TU或Namespace）
+                # 注意：无论是定义（class A {...};）还是前向声明（class A;），只要在顶层都需要包裹
                 is_definition = cursor.is_definition()
                 parent = cursor.lexical_parent
                 is_toplevel = parent and parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]
                 
-                if is_definition and is_toplevel:
+                if is_toplevel:
                     # 记录范围，防止 Token 扫描阶段在类定义处重复加前缀
                     protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
                     
