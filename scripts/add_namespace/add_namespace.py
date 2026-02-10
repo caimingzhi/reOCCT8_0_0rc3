@@ -74,39 +74,51 @@ class RefactorWorker:
         protected_offsets = []
 
         def walk(cursor):
-            # 特殊处理 TranslationUnit：它通常没有文件信息，或者是整个单元的根，需要遍历其子节点
             if cursor.kind == CursorKind.TRANSLATION_UNIT:
                 for child in cursor.get_children():
                     walk(child)
                 return
 
-            # 对于其他节点，检查是否在当前文件内
-            # 如果不在当前文件，直接剪枝（不再遍历子节点）
-            if not cursor.location.file or os.path.normpath(cursor.location.file.name) != abs_path:
+            loc = cursor.location
+            if not loc.file:
                 return
             
-            # --- 以下逻辑仅对当前文件内的节点执行 ---
-
-            # 记录字符串位置，防止修改字符串内容
+            # 性能优化：文件比对
+            if target_file:
+                if loc.file.name != target_file.name: 
+                    return
+            else:
+                if os.path.normpath(loc.file.name) != abs_path:
+                    return
+            
+            # 1. 保护字符串字面量 (保持不变)
             if cursor.kind == CursorKind.STRING_LITERAL:
-                protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+                off = cursor.extent.start.offset
+                if off < len(content) and content[off:off+1] in (b'"', b"'", b'L', b'R', b'u', b'U'):
+                    protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
 
-            # 处理类/结构体/类模板的声明
+            # 2. 处理类定义/声明
             if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL, CursorKind.CLASS_TEMPLATE] and cursor.spelling in self.mapping:
-                # 必须同时满足：在顶层（TU或Namespace）
-                # 注意：无论是定义（class A {...};）还是前向声明（class A;），只要在顶层都需要包裹
                 is_definition = cursor.is_definition()
                 parent = cursor.lexical_parent
                 is_toplevel = parent and parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]
                 
                 if is_toplevel:
-                    # 记录范围，防止 Token 扫描阶段在类定义处重复加前缀
-                    protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+                    # ========================================================
+                    # 【核心修复】：只保护类名本身，不保护整个类的内容！
+                    # ========================================================
+                    # cursor.location 通常指向类名单词的起始位置
+                    name_start = cursor.location.offset
+                    # 计算类名长度
+                    name_len = len(cursor.spelling.encode('utf-8'))
+                    # 只将 "Aspect_FrustumLRBT" 这几个字符加入保护区
+                    protected_offsets.append((name_start, name_start + name_len))
                     
+                    # 生成 namespace 包裹代码 (保持不变)
                     target_ns = self.mapping[cursor.spelling]
                     pre, suf = generate_namespace_wrappers_bytes(target_ns)
                     
-                    # 寻找末尾的分号
+                    # 寻找末尾的分号 (保持不变)
                     end_off = cursor.extent.end.offset
                     scan_pos = end_off
                     limit = min(end_off + 200, len(content))
@@ -116,14 +128,13 @@ class RefactorWorker:
                             scan_pos += 1
                             found_semicolon = True
                             break
-                        elif content[scan_pos] not in (9, 10, 13, 32): # 非空白字符
+                        elif content[scan_pos] not in (9, 10, 13, 32):
                             break
                         scan_pos += 1
                     
                     replacements.append((cursor.extent.start.offset, 0, pre))
                     replacements.append((scan_pos if found_semicolon else end_off, 0, suf))
             
-            # 继续遍历子节点（仅限当前文件内的节点）
             for child in cursor.get_children():
                 walk(child)
 
