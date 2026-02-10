@@ -73,42 +73,45 @@ class RefactorWorker:
         replacements = []
         protected_offsets = []
 
-        # 1. AST 扫描：处理类定义的 namespace 包裹
         def walk(cursor):
-            if not cursor.location.file or os.path.normpath(cursor.location.file.name) != abs_path:
-                return
+            # 检查是否在当前文件内 - 只用于决定是否处理当前 cursor，不阻止遍历子节点
+            in_current_file = cursor.location.file and os.path.normpath(cursor.location.file.name) == abs_path
             
-            # 记录字符串位置，防止修改字符串内容
-            if cursor.kind == CursorKind.STRING_LITERAL:
-                protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
-
-            # 识别类声明/定义
-            if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL] and cursor.spelling in self.mapping:
-                # 只有在顶层（TU或Namespace）的类定义才需要包裹
-                if cursor.is_definition() or (cursor.lexical_parent and cursor.lexical_parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]):
-                    # 记录类名本身的位置，防止 Token 扫描阶段在类定义处重复加前缀
-                    # 这里只保护类名开头到类定义结束的范围
+            if in_current_file:
+                # 记录字符串位置，防止修改字符串内容
+                if cursor.kind == CursorKind.STRING_LITERAL:
                     protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+
+                # 处理类/结构体/类模板的声明
+                if cursor.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL, CursorKind.CLASS_TEMPLATE] and cursor.spelling in self.mapping:
+                    # 必须同时满足：是定义 AND 在顶层（TU或Namespace）
+                    is_definition = cursor.is_definition()
+                    parent = cursor.lexical_parent
+                    is_toplevel = parent and parent.kind in [CursorKind.TRANSLATION_UNIT, CursorKind.NAMESPACE]
                     
-                    target_ns = self.mapping[cursor.spelling]
-                    pre, suf = generate_namespace_wrappers_bytes(target_ns)
-                    
-                    # 寻找末尾的分号
-                    end_off = cursor.extent.end.offset
-                    scan_pos = end_off
-                    limit = min(end_off + 200, len(content))
-                    found_semicolon = False
-                    while scan_pos < limit:
-                        if content[scan_pos] == 59: # ';'
+                    if is_definition and is_toplevel:
+                        # 记录范围，防止 Token 扫描阶段在类定义处重复加前缀
+                        protected_offsets.append((cursor.extent.start.offset, cursor.extent.end.offset))
+                        
+                        target_ns = self.mapping[cursor.spelling]
+                        pre, suf = generate_namespace_wrappers_bytes(target_ns)
+                        
+                        # 寻找末尾的分号
+                        end_off = cursor.extent.end.offset
+                        scan_pos = end_off
+                        limit = min(end_off + 200, len(content))
+                        found_semicolon = False
+                        while scan_pos < limit:
+                            if content[scan_pos] == 59: # ';'
+                                scan_pos += 1
+                                found_semicolon = True
+                                break
+                            elif content[scan_pos] not in (9, 10, 13, 32): # 非空白字符
+                                break
                             scan_pos += 1
-                            found_semicolon = True
-                            break
-                        elif content[scan_pos] not in (9, 10, 13, 32): # 非空白字符
-                            break
-                        scan_pos += 1
-                    
-                    replacements.append((cursor.extent.start.offset, 0, pre))
-                    replacements.append((scan_pos if found_semicolon else end_off, 0, suf))
+                        
+                        replacements.append((cursor.extent.start.offset, 0, pre))
+                        replacements.append((scan_pos if found_semicolon else end_off, 0, suf))
             
             for child in cursor.get_children():
                 walk(child)
