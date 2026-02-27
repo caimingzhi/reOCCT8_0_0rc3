@@ -46,7 +46,7 @@ void BinTools_OStream::WriteReference(const uint64_t& thePosition)
   {
     *myStream << (uint8_t)BinTools_ObjectType_Reference64;
 #if DO_INVERSE
-    aDelta = FSD_BinaryFile::InverseUint64(aDelta);
+    aDelta = app::file::stream::FSD_BinaryFile::InverseUint64(aDelta);
 #endif
     myStream->write((char*)&aDelta, sizeof(uint64_t));
     myPosition += sizeof(uint8_t) + sizeof(uint64_t);
@@ -79,7 +79,7 @@ BinTools_OStream& BinTools_OStream::operator<<(const uint8_t& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const double& theValue)
 {
 #if DO_INVERSE
-  const double aRValue = FSD_BinaryFile::InverseReal(theValue);
+  const double aRValue = app::file::stream::FSD_BinaryFile::InverseReal(theValue);
   myStream->write((char*)&aRValue, sizeof(double));
 #else
   myStream->write((char*)&theValue, sizeof(double));
@@ -98,7 +98,7 @@ BinTools_OStream& BinTools_OStream::operator<<(const bool& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const int& theValue)
 {
 #if DO_INVERSE
-  const int aRValue = FSD_BinaryFile::InverseInt(theValue);
+  const int aRValue = app::file::stream::FSD_BinaryFile::InverseInt(theValue);
   myStream->write((char*)&aRValue, sizeof(int));
 #else
   myStream->write((char*)&theValue, sizeof(int));
@@ -110,7 +110,7 @@ BinTools_OStream& BinTools_OStream::operator<<(const int& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const char16_t& theValue)
 {
 #if DO_INVERSE
-  const char16_t aRValue = FSD_BinaryFile::InverseExtChar(theValue);
+  const char16_t aRValue = app::file::stream::FSD_BinaryFile::InverseExtChar(theValue);
   myStream->write((char*)&aRValue, sizeof(char16_t));
 #else
   myStream->write((char*)&theValue, sizeof(char16_t));
@@ -122,9 +122,9 @@ BinTools_OStream& BinTools_OStream::operator<<(const char16_t& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt& theValue)
 {
 #if DO_INVERSE
-  myRealBuf[0] = FSD_BinaryFile::InverseReal(theValue.X());
-  myRealBuf[1] = FSD_BinaryFile::InverseReal(theValue.Y());
-  myRealBuf[2] = FSD_BinaryFile::InverseReal(theValue.Z());
+  myRealBuf[0] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.X());
+  myRealBuf[1] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.Y());
+  myRealBuf[2] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.Z());
 #else
   myRealBuf[0] = theValue.X();
   myRealBuf[1] = theValue.Y();
@@ -138,9 +138,9 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir& theValue)
 {
 #if DO_INVERSE
-  myRealBuf[0] = FSD_BinaryFile::InverseReal(theValue.X());
-  myRealBuf[1] = FSD_BinaryFile::InverseReal(theValue.Y());
-  myRealBuf[2] = FSD_BinaryFile::InverseReal(theValue.Z());
+  myRealBuf[0] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.X());
+  myRealBuf[1] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.Y());
+  myRealBuf[2] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.Z());
 #else
   myRealBuf[0] = theValue.X();
   myRealBuf[1] = theValue.Y();
@@ -154,8 +154,8 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt2d& theValue)
 {
 #if DO_INVERSE
-  myRealBuf[0] = FSD_BinaryFile::InverseReal(theValue.X());
-  myRealBuf[1] = FSD_BinaryFile::InverseReal(theValue.Y());
+  myRealBuf[0] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.X());
+  myRealBuf[1] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.Y());
 #else
   myRealBuf[0] = theValue.X();
   myRealBuf[1] = theValue.Y();
@@ -168,8 +168,8 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Pnt2d& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const gp_Dir2d& theValue)
 {
 #if DO_INVERSE
-  myRealBuf[0] = FSD_BinaryFile::InverseReal(theValue.X());
-  myRealBuf[1] = FSD_BinaryFile::InverseReal(theValue.Y());
+  myRealBuf[0] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.X());
+  myRealBuf[1] = app::file::stream::FSD_BinaryFile::InverseReal(theValue.Y());
 #else
   myRealBuf[0] = theValue.X();
   myRealBuf[1] = theValue.Y();
@@ -184,18 +184,18 @@ BinTools_OStream& BinTools_OStream::operator<<(const gp_Trsf& theValue)
   gp_XYZ aTr  = theValue.TranslationPart();
   gp_Mat aMat = theValue.VectorialPart();
 #if DO_INVERSE
-  myRealBuf[0]  = FSD_BinaryFile::InverseReal(aMat(1, 1));
-  myRealBuf[1]  = FSD_BinaryFile::InverseReal(aMat(1, 2));
-  myRealBuf[2]  = FSD_BinaryFile::InverseReal(aMat(1, 3));
-  myRealBuf[3]  = FSD_BinaryFile::InverseReal(aTr.Coord(1));
-  myRealBuf[4]  = FSD_BinaryFile::InverseReal(aMat(2, 1));
-  myRealBuf[5]  = FSD_BinaryFile::InverseReal(aMat(2, 2));
-  myRealBuf[6]  = FSD_BinaryFile::InverseReal(aMat(2, 3));
-  myRealBuf[7]  = FSD_BinaryFile::InverseReal(aTr.Coord(2));
-  myRealBuf[8]  = FSD_BinaryFile::InverseReal(aMat(3, 1));
-  myRealBuf[9]  = FSD_BinaryFile::InverseReal(aMat(3, 2));
-  myRealBuf[10] = FSD_BinaryFile::InverseReal(aMat(3, 3));
-  myRealBuf[11] = FSD_BinaryFile::InverseReal(aTr.Coord(3));
+  myRealBuf[0]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(1, 1));
+  myRealBuf[1]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(1, 2));
+  myRealBuf[2]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(1, 3));
+  myRealBuf[3]  = app::file::stream::FSD_BinaryFile::InverseReal(aTr.Coord(1));
+  myRealBuf[4]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(2, 1));
+  myRealBuf[5]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(2, 2));
+  myRealBuf[6]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(2, 3));
+  myRealBuf[7]  = app::file::stream::FSD_BinaryFile::InverseReal(aTr.Coord(2));
+  myRealBuf[8]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(3, 1));
+  myRealBuf[9]  = app::file::stream::FSD_BinaryFile::InverseReal(aMat(3, 2));
+  myRealBuf[10] = app::file::stream::FSD_BinaryFile::InverseReal(aMat(3, 3));
+  myRealBuf[11] = app::file::stream::FSD_BinaryFile::InverseReal(aTr.Coord(3));
 #else
   myRealBuf[0]  = aMat(1, 1);
   myRealBuf[1]  = aMat(1, 2);
@@ -219,9 +219,9 @@ BinTools_OStream& BinTools_OStream::operator<<(const Poly_Triangle& theValue)
 {
   theValue.Value(1);
 #if DO_INVERSE
-  myIntBuf[0] = FSD_BinaryFile::InverseInt(theValue.Value(1));
-  myIntBuf[1] = FSD_BinaryFile::InverseInt(theValue.Value(2));
-  myIntBuf[2] = FSD_BinaryFile::InverseInt(theValue.Value(3));
+  myIntBuf[0] = app::file::stream::FSD_BinaryFile::InverseInt(theValue.Value(1));
+  myIntBuf[1] = app::file::stream::FSD_BinaryFile::InverseInt(theValue.Value(2));
+  myIntBuf[2] = app::file::stream::FSD_BinaryFile::InverseInt(theValue.Value(3));
 #else
   myIntBuf[0] = theValue.Value(1);
   myIntBuf[1] = theValue.Value(2);
@@ -235,9 +235,9 @@ BinTools_OStream& BinTools_OStream::operator<<(const Poly_Triangle& theValue)
 BinTools_OStream& BinTools_OStream::operator<<(const NCollection_Vec3<float>& theValue)
 {
 #if DO_INVERSE
-  myFloatBuf[0] = FSD_BinaryFile::InverseShortReal(theValue.x());
-  myFloatBuf[1] = FSD_BinaryFile::InverseShortReal(theValue.y());
-  myFloatBuf[2] = FSD_BinaryFile::InverseShortReal(theValue.z());
+  myFloatBuf[0] = app::file::stream::FSD_BinaryFile::InverseShortReal(theValue.x());
+  myFloatBuf[1] = app::file::stream::FSD_BinaryFile::InverseShortReal(theValue.y());
+  myFloatBuf[2] = app::file::stream::FSD_BinaryFile::InverseShortReal(theValue.z());
 #else
   myFloatBuf[0] = theValue.x();
   myFloatBuf[1] = theValue.y();

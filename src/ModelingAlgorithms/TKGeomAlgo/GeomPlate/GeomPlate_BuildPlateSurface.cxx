@@ -195,8 +195,8 @@ occ::handle<Geom2d_Curve> GeomPlate_BuildPlateSurface::ProjectCurve(
   UfinCheck = Curv->LastParameter();
   HProjector->Bounds(1, ProjUdeb, ProjUfin);
 
-  if (HProjector->NbCurves() != 1 || std::abs(UdebCheck - ProjUdeb) > Precision::PConfusion()
-      || std::abs(UfinCheck - ProjUfin) > Precision::PConfusion())
+  if (HProjector->NbCurves() != 1 || std::abs(UdebCheck - ProjUdeb) > math::precision::Precision::PConfusion()
+      || std::abs(UfinCheck - ProjUfin) > math::precision::Precision::PConfusion())
   {
     if (HProjector->IsSinglePnt(1, P2d))
     {
@@ -255,7 +255,7 @@ occ::handle<Adaptor2d_Curve2d> GeomPlate_BuildPlateSurface::ProjectedCurve(
         && std::abs(Last1 - Last2) <= std::max(myTolU, myTolV))
     {
       HProjector = occ::down_cast<ProjLib_HCompProjectedCurve>(
-        HProjector->Trim(First2, Last2, Precision::PConfusion()));
+        HProjector->Trim(First2, Last2, math::precision::Precision::PConfusion()));
     }
     else
     {
@@ -323,11 +323,11 @@ void GeomPlate_BuildPlateSurface::Add(const occ::handle<GeomPlate_PointConstrain
   myPntCont->Append(Cont);
 }
 
-void GeomPlate_BuildPlateSurface::Perform(const Message_ProgressRange& theProgress)
+void GeomPlate_BuildPlateSurface::Perform(const System::log::Message_ProgressRange& theProgress)
 {
 #ifdef OCCT_DEBUG
 
-  OSD_Chronometer Chrono;
+  System::os::OSD_Chronometer Chrono;
   Chrono.Reset();
   Chrono.Start();
 #endif
@@ -348,7 +348,7 @@ void GeomPlate_BuildPlateSurface::Perform(const Message_ProgressRange& theProgre
     return;
   }
 
-  Message_ProgressScope aPS(theProgress, "Calculating the surface filled", 100, true);
+  System::log::Message_ProgressScope aPS(theProgress, "Calculating the surface filled", 100, true);
   if (!mySurfInitIsGive)
   {
     ComputeSurfInit(aPS.Next(10));
@@ -1159,7 +1159,7 @@ bool GeomPlate_BuildPlateSurface::CourbeJointive(const double tolerance)
     return false;
 }
 
-void GeomPlate_BuildPlateSurface::ComputeSurfInit(const Message_ProgressRange& theProgress)
+void GeomPlate_BuildPlateSurface::ComputeSurfInit(const System::log::Message_ProgressRange& theProgress)
 {
   int    nopt = 2, popt = 2, Np = 1;
   bool   isHalfSpace = true;
@@ -1506,7 +1506,7 @@ void GeomPlate_BuildPlateSurface::ComputeSurfInit(const Message_ProgressRange& t
     if (myPntCont->Length() != 0)
       LoadPoint(0, 0);
 
-    Message_ProgressScope aPS(theProgress, "ComputeSurfInit", 1);
+    System::log::Message_ProgressScope aPS(theProgress, "ComputeSurfInit", 1);
     myPlate.SolveTI(2, ComputeAnisotropie(), aPS.Next());
     if (theProgress.UserBreak())
     {

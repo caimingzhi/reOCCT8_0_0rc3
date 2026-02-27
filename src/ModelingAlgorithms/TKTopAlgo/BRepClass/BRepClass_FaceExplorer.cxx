@@ -18,10 +18,10 @@ BRepClass_FaceExplorer::BRepClass_FaceExplorer(const TopoDS_Face& F)
       myCurEdgePar(Probing_Start),
       myMaxTolerance(0.1),
       myUseBndBox(false),
-      myUMin(Precision::Infinite()),
-      myUMax(-Precision::Infinite()),
-      myVMin(Precision::Infinite()),
-      myVMax(-Precision::Infinite())
+      myUMin(math::precision::Precision::Infinite()),
+      myUMax(-math::precision::Precision::Infinite()),
+      myVMin(math::precision::Precision::Infinite()),
+      myVMax(-math::precision::Precision::Infinite())
 
 {
   myFace.Orientation(TopAbs_FORWARD);
@@ -32,8 +32,8 @@ void BRepClass_FaceExplorer::ComputeFaceBounds()
   TopLoc_Location                  aLocation;
   const occ::handle<Geom_Surface>& aSurface = BRep_Tool::Surface(myFace, aLocation);
   aSurface->Bounds(myUMin, myUMax, myVMin, myVMax);
-  if (Precision::IsInfinite(myUMin) || Precision::IsInfinite(myUMax)
-      || Precision::IsInfinite(myVMin) || Precision::IsInfinite(myVMax))
+  if (math::precision::Precision::IsInfinite(myUMin) || math::precision::Precision::IsInfinite(myUMax)
+      || math::precision::Precision::IsInfinite(myVMin) || math::precision::Precision::IsInfinite(myVMax))
   {
     BRepTools::UVBounds(myFace, myUMin, myUMax, myVMin, myVMax);
   }
@@ -46,15 +46,15 @@ bool BRepClass_FaceExplorer::CheckPoint(gp_Pnt2d& thePoint)
     ComputeFaceBounds();
   }
 
-  if (Precision::IsInfinite(myUMin) || Precision::IsInfinite(myUMax)
-      || Precision::IsInfinite(myVMin) || Precision::IsInfinite(myVMax))
+  if (math::precision::Precision::IsInfinite(myUMin) || math::precision::Precision::IsInfinite(myUMax)
+      || math::precision::Precision::IsInfinite(myVMin) || math::precision::Precision::IsInfinite(myVMax))
   {
     return true;
   }
 
   gp_Pnt2d aCenterPnt((myUMin + myUMax) / 2, (myVMin + myVMax) / 2);
   double   aDistance = aCenterPnt.Distance(thePoint);
-  if (Precision::IsInfinite(aDistance))
+  if (math::precision::Precision::IsInfinite(aDistance))
   {
     thePoint.SetCoord(myUMin - (myUMax - myUMin), myVMin - (myVMax - myVMin));
     return false;
@@ -94,7 +94,7 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
   double                    aFPar;
   double                    aLPar;
   occ::handle<Geom2d_Curve> aC2d;
-  constexpr double          aTolParConf2 = Precision::PConfusion() * Precision::PConfusion();
+  constexpr double          aTolParConf2 = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
   gp_Pnt2d                  aPOnC;
   double                    aParamIn;
 
@@ -115,9 +115,9 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
       if (!aC2d.IsNull())
       {
 
-        if (Precision::IsNegativeInfinite(aFPar))
+        if (math::precision::Precision::IsNegativeInfinite(aFPar))
         {
-          if (Precision::IsPositiveInfinite(aLPar))
+          if (math::precision::Precision::IsPositiveInfinite(aLPar))
           {
             aFPar = -1.;
             aLPar = 1.;
@@ -127,7 +127,7 @@ bool BRepClass_FaceExplorer::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double
             aFPar = aLPar - 1.;
           }
         }
-        else if (Precision::IsPositiveInfinite(aLPar))
+        else if (math::precision::Precision::IsPositiveInfinite(aLPar))
           aLPar = aFPar + 1.;
 
         for (; myCurEdgePar < Probing_End; myCurEdgePar += Probing_Step)

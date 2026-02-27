@@ -31,7 +31,7 @@ public:
 
   Standard_EXPORT TopoDS_Shape ProcessShape(const TopoDS_Shape&                  theShape,
                                             const ShapeProcess::OperationsFlags& theOperations,
-                                            const Message_ProgressRange&         theProgress);
+                                            const System::log::Message_ProgressRange&         theProgress);
 
   occ::handle<ShapeProcess_ShapeContext> GetContext() { return myContext; }
 

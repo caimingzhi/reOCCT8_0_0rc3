@@ -15,10 +15,11 @@ typedef std::fstream FSD_FStream;
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
 
-class FSD_File : public Storage_BaseDriver
+namespace app { namespace file { namespace stream {
+class FSD_File : public app::storage::Storage_BaseDriver
 {
 public:
-  DEFINE_STANDARD_RTTIEXT(FSD_File, Storage_BaseDriver)
+  DEFINE_STANDARD_RTTIEXT(FSD_File, app::storage::Storage_BaseDriver)
 
 public:
   Standard_EXPORT FSD_File();
@@ -60,7 +61,7 @@ public:
                                 NCollection_Sequence<TCollection_AsciiString>& userInfo) override;
 
   Standard_EXPORT void ReadCompleteInfo(Standard_IStream&          theIStream,
-                                        occ::handle<Storage_Data>& theData) override;
+                                        occ::handle<app::storage::Storage_Data>& theData) override;
 
   Standard_EXPORT Storage_Error EndReadInfoSection() override;
 
@@ -162,33 +163,33 @@ public:
 
   Standard_EXPORT void SkipObject() override;
 
-  Standard_EXPORT Storage_BaseDriver& PutReference(const int aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutReference(const int aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutCharacter(const char aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutCharacter(const char aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutExtCharacter(const char16_t aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutExtCharacter(const char16_t aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutInteger(const int aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutInteger(const int aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutBoolean(const bool aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutBoolean(const bool aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutReal(const double aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutReal(const double aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutShortReal(const float aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutShortReal(const float aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetReference(int& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetReference(int& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetCharacter(char& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetCharacter(char& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetExtCharacter(char16_t& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetExtCharacter(char16_t& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetInteger(int& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetInteger(int& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetBoolean(bool& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetBoolean(bool& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetReal(double& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetReal(double& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetShortReal(float& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetShortReal(float& aValue) override;
 
   Standard_EXPORT Storage_Error Close() override;
 
@@ -218,3 +219,5 @@ protected:
 protected:
   FSD_FStream myStream;
 };
+}}} // namespace app::file::stream
+

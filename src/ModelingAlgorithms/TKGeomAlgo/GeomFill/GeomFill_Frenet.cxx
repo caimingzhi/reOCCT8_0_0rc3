@@ -109,7 +109,7 @@ void GeomFill_Frenet::Init()
   constexpr double   TolF = 1.0e-10;
   constexpr double   Tol  = 10 * TolF;
   constexpr double   Tol2 = Tol * Tol;
-  constexpr double   PTol = Precision::PConfusion();
+  constexpr double   PTol = math::precision::Precision::PConfusion();
 
   int                                      NbIntC2 = myCurve->NbIntervals(GeomAbs_C2);
   occ::handle<NCollection_HArray1<double>> myC2Disc =
@@ -317,7 +317,7 @@ bool GeomFill_Frenet::RotateTrihedron(gp_Vec&       Tangent,
                                       gp_Vec&       BiNormal,
                                       const gp_Vec& NewTangent) const
 {
-  const double anInfCOS = cos(Precision::Angular());
+  const double anInfCOS = cos(math::precision::Precision::Angular());
   const double aTol     = gp::Resolution();
 
   gp_Vec       anAxis = Tangent.Crossed(NewTangent);
@@ -645,7 +645,7 @@ int GeomFill_Frenet::NbIntervals(const GeomAbs_Shape S) const
   myCurve->Intervals(TrimInt, tmpS);
 
   NCollection_Sequence<double> Fusion;
-  GeomLib::FuseIntervals(TrimInt, mySngl->Array1(), Fusion, Precision::PConfusion(), true);
+  GeomLib::FuseIntervals(TrimInt, mySngl->Array1(), Fusion, math::precision::Precision::PConfusion(), true);
 
   return Fusion.Length() - 1;
 }
@@ -682,7 +682,7 @@ void GeomFill_Frenet::Intervals(NCollection_Array1<double>& T, const GeomAbs_Sha
   myCurve->Intervals(TrimInt, tmpS);
 
   NCollection_Sequence<double> Fusion;
-  GeomLib::FuseIntervals(TrimInt, mySngl->Array1(), Fusion, Precision::PConfusion(), true);
+  GeomLib::FuseIntervals(TrimInt, mySngl->Array1(), Fusion, math::precision::Precision::PConfusion(), true);
 
   for (int i = 1; i <= Fusion.Length(); i++)
     T.ChangeValue(i) = Fusion.Value(i);
@@ -766,7 +766,7 @@ bool GeomFill_Frenet::DoSingular(const double U,
   for (i = 1; i <= MaxN; i++)
   {
     Tangent = myTrimmed->DN(U, i);
-    if (Tangent.Magnitude() > Precision::Confusion())
+    if (Tangent.Magnitude() > math::precision::Precision::Confusion())
       break;
   }
   if (i > MaxN)
@@ -779,7 +779,7 @@ bool GeomFill_Frenet::DoSingular(const double U,
   {
     BiNormal    = Tangent.Crossed(myTrimmed->DN(U, i));
     double magn = BiNormal.Magnitude();
-    if (magn > Precision::Confusion())
+    if (magn > math::precision::Precision::Confusion())
     {
 
       gp_Vec NextBiNormal = Tangent.Crossed(myTrimmed->DN(U, i + 1));

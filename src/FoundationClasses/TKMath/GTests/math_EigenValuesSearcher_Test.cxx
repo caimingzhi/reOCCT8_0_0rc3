@@ -109,11 +109,11 @@ TEST(math_EigenValuesSearcherTest, OneByOneMatrix)
 
   EXPECT_TRUE(searcher.IsDone());
   EXPECT_EQ(searcher.Dimension(), 1);
-  EXPECT_NEAR(searcher.EigenValue(1), 5.0, Precision::Confusion());
+  EXPECT_NEAR(searcher.EigenValue(1), 5.0, math::precision::Precision::Confusion());
 
   math_Vector eigenvec = searcher.EigenVector(1);
   EXPECT_EQ(eigenvec.Length(), 1);
-  EXPECT_NEAR(eigenvec(1), 1.0, Precision::Confusion());
+  EXPECT_NEAR(eigenvec(1), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(math_EigenValuesSearcherTest, TwoByTwoMatrix)
@@ -223,10 +223,10 @@ TEST(math_EigenValuesSearcherTest, DiagonalMatrix)
 
   std::sort(eigenvals.begin(), eigenvals.end());
 
-  EXPECT_NEAR(eigenvals[0], 1.0, Precision::Confusion());
-  EXPECT_NEAR(eigenvals[1], 2.0, Precision::Confusion());
-  EXPECT_NEAR(eigenvals[2], 3.0, Precision::Confusion());
-  EXPECT_NEAR(eigenvals[3], 4.0, Precision::Confusion());
+  EXPECT_NEAR(eigenvals[0], 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(eigenvals[1], 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(eigenvals[2], 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(eigenvals[3], 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(math_EigenValuesSearcherTest, IdentityMatrix)
@@ -249,7 +249,7 @@ TEST(math_EigenValuesSearcherTest, IdentityMatrix)
 
   for (int i = 1; i <= 3; i++)
   {
-    EXPECT_NEAR(searcher.EigenValue(i), 1.0, Precision::Confusion());
+    EXPECT_NEAR(searcher.EigenValue(i), 1.0, math::precision::Precision::Confusion());
   }
 }
 
@@ -460,7 +460,7 @@ TEST(math_EigenValuesSearcherTest, RepeatedEigenvalues)
 
   for (int i = 1; i <= 4; i++)
   {
-    EXPECT_NEAR(searcher.EigenValue(i), 2.0, Precision::Confusion());
+    EXPECT_NEAR(searcher.EigenValue(i), 2.0, math::precision::Precision::Confusion());
   }
 }
 

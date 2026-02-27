@@ -20,7 +20,7 @@ IMPLEMENT_DOMSTRING(ModeString, "mode")
 IMPLEMENT_DOMSTRING(DisplayedString, "true")
 
 XmlMDataXtd_PresentationDriver::XmlMDataXtd_PresentationDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

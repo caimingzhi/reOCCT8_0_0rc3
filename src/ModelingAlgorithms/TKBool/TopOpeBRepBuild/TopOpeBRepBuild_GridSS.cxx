@@ -1196,7 +1196,7 @@ void TopOpeBRepBuild_Builder::AddONPatchesSFS(const TopOpeBRepBuild_GTopo&  G1,
       aBAS1.D1(aP2d.X(), aP2d.Y(), aPbid, aDU, aDV);
       aN1         = aDU ^ aDV;
       double norm = aN1.Magnitude();
-      if (norm < Precision::Confusion())
+      if (norm < math::precision::Precision::Confusion())
         continue;
       aN1 /= norm;
       if (aFace1.Orientation() == TopAbs_REVERSED)
@@ -1228,7 +1228,7 @@ void TopOpeBRepBuild_Builder::AddONPatchesSFS(const TopOpeBRepBuild_GTopo&  G1,
           aBAS2.D1(aP2d.X(), aP2d.Y(), aPbid, aDU, aDV);
           aN2  = aDU ^ aDV;
           norm = aN2.Magnitude();
-          if (norm < Precision::Confusion())
+          if (norm < math::precision::Precision::Confusion())
           {
             ok = false;
             continue;
@@ -1315,7 +1315,7 @@ static bool AreFacesCoincideInArea(const TopoDS_Shape&                   theBase
 
   bool                  hasInt  = false;
   double                pLinMin = RealLast();
-  double                tol2d   = Precision::PConfusion();
+  double                tol2d   = math::precision::Precision::PConfusion();
   BRepClass_Intersector anInter;
   BRepClass_Edge        aBCE;
   aBCE.Face()    = aBaseFace;
@@ -1363,8 +1363,8 @@ static bool AreFacesCoincideInArea(const TopoDS_Shape&                   theBase
       {
         const IntRes2d_IntersectionSegment& aIS = anInter.Segment(i);
         double                              pLinF =
-          aIS.HasFirstPoint() ? aIS.FirstPoint().ParamOnFirst() : -Precision::Infinite();
-        double pLinL = aIS.HasLastPoint() ? aIS.LastPoint().ParamOnFirst() : Precision::Infinite();
+          aIS.HasFirstPoint() ? aIS.FirstPoint().ParamOnFirst() : -math::precision::Precision::Infinite();
+        double pLinL = aIS.HasLastPoint() ? aIS.LastPoint().ParamOnFirst() : math::precision::Precision::Infinite();
         if (pLinF < tol2d && pLinL > -tol2d)
           isError = true;
         else if (pLinF > tol2d && pLinF < pLinMin)

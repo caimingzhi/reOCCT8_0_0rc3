@@ -50,7 +50,7 @@ XSDRAWSTL_DataSource::XSDRAWSTL_DataSource(const occ::handle<Poly_Triangulation>
       gp_Vec aV2(aP2, aP3);
 
       gp_Vec aN = aV1.Crossed(aV2);
-      if (aN.SquareMagnitude() > Precision::SquareConfusion())
+      if (aN.SquareMagnitude() > math::precision::Precision::SquareConfusion())
         aN.Normalize();
       else
         aN.SetCoord(0.0, 0.0, 0.0);

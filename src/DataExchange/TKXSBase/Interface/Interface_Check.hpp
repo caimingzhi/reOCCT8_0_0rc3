@@ -8,7 +8,10 @@
 #include <Standard_Transient.hpp>
 #include <Standard_Integer.hpp>
 #include <Interface_CheckStatus.hpp>
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 class TCollection_HAsciiString;
 
 #ifdef Status
@@ -23,7 +26,7 @@ public:
 
   Standard_EXPORT Interface_Check(const occ::handle<Standard_Transient>& anentity);
 
-  Standard_EXPORT void SendFail(const Message_Msg& amsg);
+  Standard_EXPORT void SendFail(const System::log::Message_Msg& amsg);
 
   Standard_EXPORT void AddFail(const occ::handle<TCollection_HAsciiString>& amess);
 
@@ -32,7 +35,7 @@ public:
 
   Standard_EXPORT void AddFail(const char* amess, const char* orig = "");
 
-  Standard_EXPORT void AddFail(const Message_Msg& amsg);
+  Standard_EXPORT void AddFail(const System::log::Message_Msg& amsg);
 
   Standard_EXPORT bool HasFailed() const;
 
@@ -46,7 +49,7 @@ public:
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Fails(
     const bool final = true) const;
 
-  Standard_EXPORT void SendWarning(const Message_Msg& amsg);
+  Standard_EXPORT void SendWarning(const System::log::Message_Msg& amsg);
 
   Standard_EXPORT void AddWarning(const occ::handle<TCollection_HAsciiString>& amess);
 
@@ -55,7 +58,7 @@ public:
 
   Standard_EXPORT void AddWarning(const char* amess, const char* orig = "");
 
-  Standard_EXPORT void AddWarning(const Message_Msg& amsg);
+  Standard_EXPORT void AddWarning(const System::log::Message_Msg& amsg);
 
   Standard_EXPORT bool HasWarnings() const;
 
@@ -70,7 +73,7 @@ public:
   Standard_EXPORT occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>>
                   Warnings(const bool final = true) const;
 
-  Standard_EXPORT void SendMsg(const Message_Msg& amsg);
+  Standard_EXPORT void SendMsg(const System::log::Message_Msg& amsg);
 
   Standard_EXPORT int NbInfoMsgs() const;
 

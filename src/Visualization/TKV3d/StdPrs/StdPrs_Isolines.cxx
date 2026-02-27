@@ -56,7 +56,7 @@ namespace
       for (VecOfSegments::Iterator aSegIter(*anIsoSegs); aSegIter.More(); aSegIter.Next())
       {
         if (!aPolyline->IsEmpty()
-            && std::abs(aSegIter.Value()[0].Param - aLast) > Precision::PConfusion())
+            && std::abs(aSegIter.Value()[0].Param - aLast) > math::precision::Precision::PConfusion())
         {
           aPolyline = new NCollection_HSequence<gp_Pnt>();
           thePolylines.Append(aPolyline);
@@ -77,8 +77,8 @@ namespace
     theFirst = std::max(theCurve.FirstParameter(), theFirst);
     theLast  = std::min(theCurve.LastParameter(), theLast);
 
-    bool isFirstInf = Precision::IsNegativeInfinite(theFirst);
-    bool isLastInf  = Precision::IsPositiveInfinite(theLast);
+    bool isFirstInf = math::precision::Precision::IsNegativeInfinite(theFirst);
+    bool isLastInf  = math::precision::Precision::IsPositiveInfinite(theLast);
 
     if (!isFirstInf && !isLastInf)
     {
@@ -186,8 +186,8 @@ void StdPrs_Isolines::AddOnTriangulation(
     double u1, u2, v1, v2;
     aSurface->Bounds(u1, u2, v1, v2);
 
-    if (Precision::IsInfinite(u1) || Precision::IsInfinite(u2) || Precision::IsInfinite(v1)
-        || Precision::IsInfinite(v2))
+    if (math::precision::Precision::IsInfinite(u1) || math::precision::Precision::IsInfinite(u2) || math::precision::Precision::IsInfinite(v1)
+        || math::precision::Precision::IsInfinite(v2))
     {
       u1       = std::max(aUmin, u1);
       u2       = std::min(aUmax, u2);
@@ -431,13 +431,13 @@ void StdPrs_Isolines::addOnSurface(
 
         double anOrigin = 0.0;
 
-        if (!Precision::IsNegativeInfinite(aU1) || !Precision::IsPositiveInfinite(aU2))
+        if (!math::precision::Precision::IsNegativeInfinite(aU1) || !math::precision::Precision::IsPositiveInfinite(aU2))
         {
-          if (Precision::IsNegativeInfinite(aU1))
+          if (math::precision::Precision::IsNegativeInfinite(aU1))
           {
             anOrigin = aU2 - aUVLimit;
           }
-          else if (Precision::IsPositiveInfinite(aU2))
+          else if (math::precision::Precision::IsPositiveInfinite(aU2))
           {
             anOrigin = aU1 + aUVLimit;
           }
@@ -478,7 +478,7 @@ void StdPrs_Isolines::addOnSurface(
     }
 
     aHatchingTolerance *= 0.1;
-    aHatchingTolerance = std::max(Precision::Confusion(), aHatchingTolerance);
+    aHatchingTolerance = std::max(math::precision::Precision::Confusion(), aHatchingTolerance);
     aHatchingTolerance = std::min(1.0E-5, aHatchingTolerance);
 
     Hatch_Hatcher aHatcher(aHatchingTolerance, anEdgeTool.IsOriented());
@@ -538,7 +538,7 @@ void StdPrs_Isolines::addOnSurface(
 
           findLimits(aBSurfaceCurve, aUVLimit, aSegmentP1, aSegmentP2);
 
-          if (aSegmentP2 - aSegmentP1 <= Precision::Confusion())
+          if (aSegmentP2 - aSegmentP1 <= math::precision::Precision::Confusion())
           {
             continue;
           }
@@ -552,7 +552,7 @@ void StdPrs_Isolines::addOnSurface(
 
           findLimits(aCanonicalCurve, aUVLimit, aSegmentP1, aSegmentP2);
 
-          if (aSegmentP2 - aSegmentP1 <= Precision::Confusion())
+          if (aSegmentP2 - aSegmentP1 <= math::precision::Precision::Confusion())
           {
             continue;
           }
@@ -616,13 +616,13 @@ void StdPrs_Isolines::UVIsoParameters(const TopoDS_Face&            theFace,
   double aVmin = theVmin;
   double aVmax = theVmax;
 
-  if (Precision::IsInfinite(aUmin))
+  if (math::precision::Precision::IsInfinite(aUmin))
     aUmin = -theUVLimit;
-  if (Precision::IsInfinite(aUmax))
+  if (math::precision::Precision::IsInfinite(aUmax))
     aUmax = theUVLimit;
-  if (Precision::IsInfinite(aVmin))
+  if (math::precision::Precision::IsInfinite(aVmin))
     aVmin = -theUVLimit;
-  if (Precision::IsInfinite(aVmax))
+  if (math::precision::Precision::IsInfinite(aVmax))
     aVmax = theUVLimit;
 
   const bool isUClosed = aSurface->IsUClosed();
@@ -680,7 +680,7 @@ bool StdPrs_Isolines::findSegmentOnTriangulation(const occ::handle<Geom_Surface>
     double aDistanceUV2 =
       isLeftUV2 ? theIsoline.Distance(aNodeUV2) : -theIsoline.Distance(aNodeUV2);
 
-    if (std::abs(aDistanceUV1) < Precision::PConfusion())
+    if (std::abs(aDistanceUV1) < math::precision::Precision::PConfusion())
     {
       theSegment[aNPoints].Param = theIsU ? aNodeUV1.Y() : aNodeUV1.X();
       theSegment[aNPoints].Pnt   = aNode1;
@@ -688,7 +688,7 @@ bool StdPrs_Isolines::findSegmentOnTriangulation(const occ::handle<Geom_Surface>
       continue;
     }
 
-    if (std::abs(aDistanceUV2) < Precision::PConfusion())
+    if (std::abs(aDistanceUV2) < math::precision::Precision::PConfusion())
     {
       theSegment[aNPoints].Param = theIsU ? aNodeUV2.Y() : aNodeUV2.X();
       theSegment[aNPoints].Pnt   = aNode2;
@@ -703,7 +703,7 @@ bool StdPrs_Isolines::findSegmentOnTriangulation(const occ::handle<Geom_Surface>
       continue;
     }
 
-    if (aNode1.SquareDistance(aNode2) < Precision::PConfusion())
+    if (aNode1.SquareDistance(aNode2) < math::precision::Precision::PConfusion())
     {
       theSegment[aNPoints].Param = theIsU ? aNodeUV1.Y() : aNodeUV1.X();
       theSegment[aNPoints].Pnt   = aNode1;
@@ -755,8 +755,8 @@ bool StdPrs_Isolines::findSegmentOnTriangulation(const occ::handle<Geom_Surface>
         GCPnts_AbscissaPoint::Length(aCurveAdaptor1, aPntOnNode1Iso, aPntOnNode3Iso, 1e-2);
       double aLength2 =
         GCPnts_AbscissaPoint::Length(aCurveAdaptor2, aPntOnNode2Iso, aPntOnNode3Iso, 1e-2);
-      if (std::abs(aLength1) < Precision::Confusion()
-          || std::abs(aLength2) < Precision::Confusion())
+      if (std::abs(aLength1) < math::precision::Precision::Confusion()
+          || std::abs(aLength2) < math::precision::Precision::Confusion())
       {
         theSegment[aNPoints].Param = aCrossParam;
         theSegment[aNPoints].Pnt   = (aNode2.XYZ() - aNode1.XYZ()) * anAlpha + aNode1.XYZ();
@@ -773,7 +773,7 @@ bool StdPrs_Isolines::findSegmentOnTriangulation(const occ::handle<Geom_Surface>
   }
 
   if (aNPoints != 2
-      || std::abs(theSegment[1].Param - theSegment[0].Param) <= Precision::PConfusion())
+      || std::abs(theSegment[1].Param - theSegment[0].Param) <= math::precision::Precision::PConfusion())
   {
     return false;
   }

@@ -95,7 +95,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
     BRep_Builder       B;
     ShapeAnalysis_Edge sae;
     ShapeBuild_Edge    sbe;
-    constexpr double   preci = Precision::PConfusion();
+    constexpr double   preci = math::precision::Precision::PConfusion();
     for (TopExp_Explorer exp(myResult, TopAbs_FACE); exp.More(); exp.Next())
     {
       TopoDS_Face face = TopoDS::Face(exp.Current());
@@ -136,9 +136,9 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
                 gp_Pnt p2  = bezier->Value(last);
                 gp_Pnt p1v = BRep_Tool::Pnt(V1);
                 gp_Pnt p2v = BRep_Tool::Pnt(V2);
-                if (p1.Distance(p1v) > Precision::Confusion())
+                if (p1.Distance(p1v) > math::precision::Precision::Confusion())
                   bezier->SetPole(1, p1v);
-                if (p2.Distance(p2v) > Precision::Confusion())
+                if (p2.Distance(p2v) > math::precision::Precision::Confusion())
                   bezier->SetPole(bezier->NbPoles(), p2v);
                 B.UpdateEdge(edge, bezier, 0.);
               }
@@ -263,7 +263,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           gp_Pnt2d p2d2next = beziernext->Value(l2);
           if (edge.Orientation() == TopAbs_FORWARD && edgenext.Orientation() == TopAbs_FORWARD)
           {
-            if (p2d2.Distance(p2d1next) > Precision::PConfusion())
+            if (p2d2.Distance(p2d1next) > math::precision::Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d2.XY() + p2d1next.XY());
 
@@ -273,7 +273,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           }
           if (edge.Orientation() == TopAbs_FORWARD && edgenext.Orientation() == TopAbs_REVERSED)
           {
-            if (p2d2.Distance(p2d2next) > Precision::PConfusion())
+            if (p2d2.Distance(p2d2next) > math::precision::Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d2.XY() + p2d2next.XY());
 
@@ -283,7 +283,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           }
           if (edge.Orientation() == TopAbs_REVERSED && edgenext.Orientation() == TopAbs_FORWARD)
           {
-            if (p2d1.Distance(p2d1next) > Precision::PConfusion())
+            if (p2d1.Distance(p2d1next) > math::precision::Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d1.XY() + p2d1next.XY());
 
@@ -293,7 +293,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
           }
           if (edge.Orientation() == TopAbs_REVERSED && edgenext.Orientation() == TopAbs_REVERSED)
           {
-            if (p2d1.Distance(p2d2next) > Precision::PConfusion())
+            if (p2d1.Distance(p2d2next) > math::precision::Precision::PConfusion())
             {
               gp_Pnt2d pmid = 0.5 * (p2d1.XY() + p2d2next.XY());
 
@@ -345,17 +345,17 @@ occ::handle<ShapeUpgrade_FaceDivide> ShapeUpgrade_ShapeConvertToBezier::GetSplit
   return tool;
 }
 
-Message_Msg ShapeUpgrade_ShapeConvertToBezier::GetFaceMsg() const
+System::log::Message_Msg ShapeUpgrade_ShapeConvertToBezier::GetFaceMsg() const
 {
   return "ShapeDivide.FaceConvertToBezier.MSG0";
 }
 
-Message_Msg ShapeUpgrade_ShapeConvertToBezier::GetWireMsg() const
+System::log::Message_Msg ShapeUpgrade_ShapeConvertToBezier::GetWireMsg() const
 {
   return "ShapeDivide.WireConvertToBezier.MSG0";
 }
 
-Message_Msg ShapeUpgrade_ShapeConvertToBezier::GetEdgeMsg() const
+System::log::Message_Msg ShapeUpgrade_ShapeConvertToBezier::GetEdgeMsg() const
 {
   return "ShapeDivide.EdgeConvertToBezier.MSG0";
 }

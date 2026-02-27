@@ -39,7 +39,7 @@ Standard_EXPORT bool FUN_tool_onapex(const gp_Pnt2d& p2d, const occ::handle<Geom
 {
   bool                isapex = false;
   GeomAdaptor_Surface GS(S);
-  double              tol   = Precision::Confusion();
+  double              tol   = math::precision::Precision::Confusion();
   GeomAbs_SurfaceType ST    = GS.GetType();
   double              toluv = 1.e-8;
   if (ST == GeomAbs_Cone)
@@ -70,7 +70,7 @@ Standard_EXPORT gp_Dir FUN_tool_ngS(const gp_Pnt2d& p2d, const occ::handle<Geom_
 
   double du    = d1u.Magnitude();
   double dv    = d1v.Magnitude();
-  double tol   = Precision::Confusion();
+  double tol   = math::precision::Precision::Confusion();
   bool   kpart = (du < tol) || (dv < tol);
   if (kpart)
   {

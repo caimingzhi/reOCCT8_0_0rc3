@@ -69,7 +69,7 @@ public:
     myumin      = theUmin;
     myusup      = theUsup;
     type        = TheCurveTool::GetType(theC);
-    double tolu = TheCurveTool::Resolution(theC, Precision::Confusion());
+    double tolu = TheCurveTool::Resolution(theC, math::precision::Precision::Confusion());
     if ((type == GeomAbs_BSplineCurve) || (type == GeomAbs_BezierCurve)
         || (type == GeomAbs_OffsetCurve) || (type == GeomAbs_OtherCurve))
     {
@@ -156,7 +156,7 @@ public:
               {
                 TheCurveTool::D1(*myC, myintuinf, P1, V1);
                 s2sup = (TheVector(theP, P1) * V1);
-                if (Precision::IsInfinite(s2sup) || Precision::IsInfinite(s1sup))
+                if (math::precision::Precision::IsInfinite(s2sup) || math::precision::Precision::IsInfinite(s1sup))
                 {
                   break;
                 }
@@ -193,7 +193,7 @@ public:
               {
                 TheCurveTool::D1(*myC, myintusup, P1, V1);
                 s1inf = (TheVector(theP, P1) * V1);
-                if (Precision::IsInfinite(s2inf) || Precision::IsInfinite(s1inf))
+                if (math::precision::Precision::IsInfinite(s2inf) || math::precision::Precision::IsInfinite(s1inf))
                 {
                   break;
                 }

@@ -7,11 +7,14 @@
 
 #include <TopoDS_Shape.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
 
-class TopoDS_AlertAttribute : public Message_AttributeStream
+
+class TopoDS_AlertAttribute : public System::log::Message_AttributeStream
 {
-  DEFINE_STANDARD_RTTIEXT(TopoDS_AlertAttribute, Message_AttributeStream)
+  DEFINE_STANDARD_RTTIEXT(TopoDS_AlertAttribute, System::log::Message_AttributeStream)
 public:
   Standard_EXPORT TopoDS_AlertAttribute(
     const TopoDS_Shape&            theShape,
@@ -20,7 +23,7 @@ public:
   const TopoDS_Shape& GetShape() const { return myShape; }
 
 public:
-  Standard_EXPORT static void Send(const occ::handle<Message_Messenger>& theMessenger,
+  Standard_EXPORT static void Send(const occ::handle<System::log::Message_Messenger>& theMessenger,
                                    const TopoDS_Shape&                   theShape);
 
   Standard_EXPORT void DumpJson(Standard_OStream& theOStream, int theDepth = -1) const override;
@@ -29,8 +32,8 @@ private:
   TopoDS_Shape myShape;
 };
 
-inline const occ::handle<Message_Messenger>& operator<<(
-  const occ::handle<Message_Messenger>& theMessenger,
+inline const occ::handle<System::log::Message_Messenger>& operator<<(
+  const occ::handle<System::log::Message_Messenger>& theMessenger,
   const TopoDS_Shape&                   theShape)
 {
   TopoDS_AlertAttribute::Send(theMessenger, theShape);

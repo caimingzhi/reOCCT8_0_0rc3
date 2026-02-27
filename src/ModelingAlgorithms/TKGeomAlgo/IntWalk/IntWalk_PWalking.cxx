@@ -34,22 +34,22 @@ void IntWalk_PWalking::ComputePasInit(const double theDeltaU1,
   const double aDeltaU2 = std::abs(UM2 - Um2);
   const double aDeltaV2 = std::abs(VM2 - Vm2);
 
-  if (!Precision::IsInfinite(aDeltaU1))
+  if (!math::precision::Precision::IsInfinite(aDeltaU1))
     pasuv[0] = std::max(Increment * std::max(theDeltaU1, aRangePart * aDeltaU1), pasuv[0]);
   else
     pasuv[0] = std::max(Increment * theDeltaU1, pasuv[0]);
 
-  if (!Precision::IsInfinite(aDeltaV1))
+  if (!math::precision::Precision::IsInfinite(aDeltaV1))
     pasuv[1] = std::max(Increment * std::max(theDeltaV1, aRangePart * aDeltaV1), pasuv[1]);
   else
     pasuv[1] = std::max(Increment * theDeltaV1, pasuv[1]);
 
-  if (!Precision::IsInfinite(aDeltaU2))
+  if (!math::precision::Precision::IsInfinite(aDeltaU2))
     pasuv[2] = std::max(Increment * std::max(theDeltaU2, aRangePart * aDeltaU2), pasuv[2]);
   else
     pasuv[2] = std::max(Increment * theDeltaU2, pasuv[2]);
 
-  if (!Precision::IsInfinite(aDeltaV2))
+  if (!math::precision::Precision::IsInfinite(aDeltaV2))
     pasuv[3] = std::max(Increment * std::max(theDeltaV2, aRangePart * aDeltaV2), pasuv[3]);
   else
     pasuv[3] = std::max(Increment * theDeltaV2, pasuv[3]);
@@ -133,13 +133,13 @@ static bool AdjustToDomain(const int           theNbElem,
   bool aRetVal = false;
   for (int i = 0; i < theNbElem; i++)
   {
-    if ((theParam[i] - theLowBorder[i]) < -Precision::PConfusion())
+    if ((theParam[i] - theLowBorder[i]) < -math::precision::Precision::PConfusion())
     {
       theParam[i] = theLowBorder[i];
       aRetVal     = true;
     }
 
-    if ((theParam[i] - theUppBorder[i]) > Precision::PConfusion())
+    if ((theParam[i] - theUppBorder[i]) > math::precision::Precision::PConfusion())
     {
       theParam[i] = theUppBorder[i];
       aRetVal     = true;
@@ -185,11 +185,11 @@ IntWalk_PWalking::IntWalk_PWalking(const occ::handle<Adaptor3d_Surface>& Caro1,
   UM2 = Adaptor3d_HSurfaceTool::LastUParameter(Caro2);
   VM2 = Adaptor3d_HSurfaceTool::LastVParameter(Caro2);
 
-  ResoU1 = Adaptor3d_HSurfaceTool::UResolution(Caro1, Precision::Confusion());
-  ResoV1 = Adaptor3d_HSurfaceTool::VResolution(Caro1, Precision::Confusion());
+  ResoU1 = Adaptor3d_HSurfaceTool::UResolution(Caro1, math::precision::Precision::Confusion());
+  ResoV1 = Adaptor3d_HSurfaceTool::VResolution(Caro1, math::precision::Precision::Confusion());
 
-  ResoU2 = Adaptor3d_HSurfaceTool::UResolution(Caro2, Precision::Confusion());
-  ResoV2 = Adaptor3d_HSurfaceTool::VResolution(Caro2, Precision::Confusion());
+  ResoU2 = Adaptor3d_HSurfaceTool::UResolution(Caro2, math::precision::Precision::Confusion());
+  ResoV2 = Adaptor3d_HSurfaceTool::VResolution(Caro2, math::precision::Precision::Confusion());
 
   double NEWRESO;
   double MAXVAL;
@@ -358,11 +358,11 @@ IntWalk_PWalking::IntWalk_PWalking(const occ::handle<Adaptor3d_Surface>& Caro1,
   UM2 = Adaptor3d_HSurfaceTool::LastUParameter(Caro2);
   VM2 = Adaptor3d_HSurfaceTool::LastVParameter(Caro2);
 
-  ResoU1 = Adaptor3d_HSurfaceTool::UResolution(Caro1, Precision::Confusion());
-  ResoV1 = Adaptor3d_HSurfaceTool::VResolution(Caro1, Precision::Confusion());
+  ResoU1 = Adaptor3d_HSurfaceTool::UResolution(Caro1, math::precision::Precision::Confusion());
+  ResoV1 = Adaptor3d_HSurfaceTool::VResolution(Caro1, math::precision::Precision::Confusion());
 
-  ResoU2 = Adaptor3d_HSurfaceTool::UResolution(Caro2, Precision::Confusion());
-  ResoV2 = Adaptor3d_HSurfaceTool::VResolution(Caro2, Precision::Confusion());
+  ResoU2 = Adaptor3d_HSurfaceTool::UResolution(Caro2, math::precision::Precision::Confusion());
+  ResoV2 = Adaptor3d_HSurfaceTool::VResolution(Caro2, math::precision::Precision::Confusion());
 
   double NEWRESO, MAXVAL, MAXVAL2;
 
@@ -1811,7 +1811,7 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
                 gp_Pnt pf = line->Value(1).Value();
                 gp_Pnt pl = previousPoint.Value();
 
-                if (pf.Distance(pl) < Precision::Confusion())
+                if (pf.Distance(pl) < math::precision::Precision::Confusion())
                 {
                   dIncKey++;
                   if (dIncKey == 5000)
@@ -1893,7 +1893,7 @@ bool IntWalk_PWalking::ExtendLineInCommonZone(const IntImp_ConstIsoparametric th
                     gp_Pnt pf = line->Value(1).Value();
                     gp_Pnt pl = previousPoint.Value();
 
-                    if (pf.Distance(pl) < Precision::Confusion())
+                    if (pf.Distance(pl) < math::precision::Precision::Confusion())
                     {
                       dIncKey++;
                       if (dIncKey == 5000)
@@ -2076,7 +2076,7 @@ bool IntWalk_PWalking::DistanceMinimizeByGradient(const occ::handle<Adaptor3d_Su
 {
   const int        aNbIterMAX = 60;
   const double     aTol       = 1.0e-14;
-  constexpr double aTolNul    = 1.0 / Precision::Infinite();
+  constexpr double aTolNul    = 1.0 / math::precision::Precision::Infinite();
 
   const double aMinAddValU1 = std::max(Epsilon(theInit(1)), aTolNul);
   const double aMinAddValV1 = std::max(Epsilon(theInit(2)), aTolNul);
@@ -2263,8 +2263,8 @@ bool IntWalk_PWalking::HandleSingleSingularPoint(const occ::handle<Adaptor3d_Sur
 
   for (int i = 1; i <= 4; ++i)
   {
-    if (std::abs(thePnt(i) - aLowBorder[i - 1]) < Precision::PConfusion()
-        || std::abs(thePnt(i) - aUppBorder[i - 1]) < Precision::PConfusion())
+    if (std::abs(thePnt(i) - aLowBorder[i - 1]) < math::precision::Precision::PConfusion()
+        || std::abs(thePnt(i) - aUppBorder[i - 1]) < math::precision::Precision::PConfusion())
     {
 
       anInt.Perform(thePnt, aRsnld, aLockedDir[i - 1]);
@@ -2291,7 +2291,7 @@ bool IntWalk_PWalking::HandleSingleSingularPoint(const occ::handle<Adaptor3d_Sur
         iv = iu + 1;
         aSurfs[k]->D1(aPars[iu], aPars[iv], aPInt, aDU, aDV);
         double aMod = aDU.Magnitude();
-        if (aMod > Precision::Confusion())
+        if (aMod > math::precision::Precision::Confusion())
         {
           double aTolU = the3DTol / aMod;
           if (std::abs(aLowBorder[iu] - aPars[iu]) < aTolU)
@@ -2308,7 +2308,7 @@ bool IntWalk_PWalking::HandleSingleSingularPoint(const occ::handle<Adaptor3d_Sur
           }
         }
         aMod = aDV.Magnitude();
-        if (aMod > Precision::Confusion())
+        if (aMod > math::precision::Precision::Confusion())
         {
           double aTolV = the3DTol / aMod;
           if (std::abs(aLowBorder[iv] - aPars[iv]) < aTolV)
@@ -2334,8 +2334,8 @@ bool IntWalk_PWalking::HandleSingleSingularPoint(const occ::handle<Adaptor3d_Sur
       bool isInDomain = true;
       for (j = 1; isInDomain && (j <= 4); ++j)
       {
-        if ((thePnt(j) - aLowBorder[j - 1] + Precision::PConfusion())
-              * (thePnt(j) - aUppBorder[j - 1] - Precision::PConfusion())
+        if ((thePnt(j) - aLowBorder[j - 1] + math::precision::Precision::PConfusion())
+              * (thePnt(j) - aUppBorder[j - 1] - math::precision::Precision::PConfusion())
             > 0.0)
         {
           isInDomain = false;
@@ -2369,12 +2369,12 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
                                 theASurf2->LastUParameter(),
                                 theASurf2->LastVParameter()};
 
-  const double aRes1  = std::max(Precision::PConfusion() / theASurf1->UResolution(1.0),
-                                Precision::PConfusion() / theASurf1->VResolution(1.0));
-  const double aRes2  = std::max(Precision::PConfusion() / theASurf2->UResolution(1.0),
-                                Precision::PConfusion() / theASurf2->VResolution(1.0));
+  const double aRes1  = std::max(math::precision::Precision::PConfusion() / theASurf1->UResolution(1.0),
+                                math::precision::Precision::PConfusion() / theASurf1->VResolution(1.0));
+  const double aRes2  = std::max(math::precision::Precision::PConfusion() / theASurf2->UResolution(1.0),
+                                math::precision::Precision::PConfusion() / theASurf2->VResolution(1.0));
   const double a3DTol = std::max(aRes1, aRes2);
-  const double aTol   = std::max(Precision::Confusion(), a3DTol);
+  const double aTol   = std::max(math::precision::Precision::Confusion(), a3DTol);
 
   NCollection_Array1<double> aPnt(1, 4);
   aPnt(1) = theU1;
@@ -2435,7 +2435,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
       for (; aPInd <= aNbPnts; aPInd++)
       {
         aP1.SetXYZ(line->Value(aPInd).Value().XYZ());
-        if (aP1.SquareDistance(aPInt) > Precision::SquareConfusion())
+        if (aP1.SquareDistance(aPInt) > math::precision::Precision::SquareConfusion())
         {
           break;
         }
@@ -2444,7 +2444,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
       for (++aPInd; aPInd <= aNbPnts; aPInd++)
       {
         aP2.SetXYZ(line->Value(aPInd).Value().XYZ());
-        if (aP1.SquareDistance(aP2) > Precision::SquareConfusion())
+        if (aP1.SquareDistance(aP2) > math::precision::Precision::SquareConfusion())
           break;
       }
 
@@ -2465,7 +2465,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
     }
 
     aP1.SetXYZ(line->Value(1).Value().XYZ());
-    if (aP1.SquareDistance(aPInt) <= Precision::SquareConfusion())
+    if (aP1.SquareDistance(aPInt) <= math::precision::Precision::SquareConfusion())
     {
       RemoveAPoint(1);
     }
@@ -2484,7 +2484,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
       for (; aPInd > 0; aPInd--)
       {
         aPCurr.SetXYZ(line->Value(aPInd).Value().XYZ());
-        if (aPCurr.SquareDistance(aPInt) > Precision::SquareConfusion())
+        if (aPCurr.SquareDistance(aPInt) > math::precision::Precision::SquareConfusion())
         {
           break;
         }
@@ -2493,7 +2493,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
       for (--aPInd; aPInd > 0; aPInd--)
       {
         aPPrev.SetXYZ(line->Value(aPInd).Value().XYZ());
-        if (aPCurr.SquareDistance(aPPrev) > Precision::SquareConfusion())
+        if (aPCurr.SquareDistance(aPPrev) > math::precision::Precision::SquareConfusion())
           break;
       }
 
@@ -2515,7 +2515,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
 
     int aNbPnts = line->NbPoints();
     aP1.SetXYZ(line->Value(aNbPnts).Value().XYZ());
-    if (aP1.SquareDistance(aPInt) <= Precision::SquareConfusion())
+    if (aP1.SquareDistance(aPInt) <= math::precision::Precision::SquareConfusion())
     {
       RemoveAPoint(aNbPnts);
     }
@@ -2530,7 +2530,7 @@ bool IntWalk_PWalking::SeekPointOnBoundary(const occ::handle<Adaptor3d_Surface>&
 bool IntWalk_PWalking::PutToBoundary(const occ::handle<Adaptor3d_Surface>& theASurf1,
                                      const occ::handle<Adaptor3d_Surface>& theASurf2)
 {
-  constexpr double aTolMin = Precision::Confusion();
+  constexpr double aTolMin = math::precision::Precision::Confusion();
 
   bool hasBeenAdded = false;
 
@@ -2999,7 +2999,7 @@ IntWalk_StatusDeflection IntWalk_PWalking::TestDeflection(const IntImp_ConstIsop
 
   const double aSqDist = previousPoint.Value().SquareDistance(CurrentPoint.Value());
 
-  if (aSqDist < Precision::SquareConfusion())
+  if (aSqDist < math::precision::Precision::SquareConfusion())
   {
     pasInit[0] = std::max(pasInit[0], 5.0 * ResoU1);
     pasInit[1] = std::max(pasInit[1], 5.0 * ResoV1);
@@ -3011,7 +3011,7 @@ IntWalk_StatusDeflection IntWalk_PWalking::TestDeflection(const IntImp_ConstIsop
       pasuv[i] = std::max(pasuv[i], std::min(1.5 * pasuv[i], pasInit[i]));
     }
 
-    if (std::abs(pasuv[choixIso] - pasInit[choixIso]) <= Precision::Confusion())
+    if (std::abs(pasuv[choixIso] - pasInit[choixIso]) <= math::precision::Precision::Confusion())
     {
       double CurU, CurV;
       if (choixIso == IntImp_UIsoparametricOnCaro1 || choixIso == IntImp_VIsoparametricOnCaro1)
@@ -3077,8 +3077,8 @@ IntWalk_StatusDeflection IntWalk_PWalking::TestDeflection(const IntImp_ConstIsop
   }
 
   double tolArea = 100.0;
-  if (ResoU1 < Precision::PConfusion() || ResoV1 < Precision::PConfusion()
-      || ResoU2 < Precision::PConfusion() || ResoV2 < Precision::PConfusion())
+  if (ResoU1 < math::precision::Precision::PConfusion() || ResoV1 < math::precision::Precision::PConfusion()
+      || ResoU2 < math::precision::Precision::PConfusion() || ResoV2 < math::precision::Precision::PConfusion())
     tolArea = tolArea * 2.0;
 
   double Cosi1, CosRef1, Ang1, AngRef1, ResoUV1, Duv1, d1, tolCoeff1;
@@ -3090,7 +3090,7 @@ IntWalk_StatusDeflection IntWalk_PWalking::TestDeflection(const IntImp_ConstIsop
   ResoUV1 = ResoU1 * ResoU1 + ResoV1 * ResoV1;
   ResoUV2 = ResoU2 * ResoU2 + ResoV2 * ResoV2;
 
-  double aMinDiv2 = Precision::Confusion();
+  double aMinDiv2 = math::precision::Precision::Confusion();
   aMinDiv2        = aMinDiv2 * aMinDiv2;
 
   d1 = d;

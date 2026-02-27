@@ -107,7 +107,7 @@ double ShapeAnalysis_Curve::Project(const occ::handle<Geom_Curve>& C3D,
   if (C3D->IsKind(STANDARD_TYPE(Geom_BoundedCurve)))
   {
 
-    double prec = (AdjustToEnds ? preci : Precision::Confusion());
+    double prec = (AdjustToEnds ? preci : math::precision::Precision::Confusion());
 
     gp_Pnt LowBound = GAC.Value(uMin);
     gp_Pnt HigBound = GAC.Value(uMax);
@@ -151,12 +151,12 @@ double ShapeAnalysis_Curve::Project(const Adaptor3d_Curve& C3D,
   double uMin = C3D.FirstParameter();
   double uMax = C3D.LastParameter();
 
-  if (Precision::IsInfinite(uMin) && Precision::IsInfinite(uMax))
+  if (math::precision::Precision::IsInfinite(uMin) && math::precision::Precision::IsInfinite(uMax))
     return ProjectAct(C3D, P3D, preci, proj, param);
 
-  double distmin_L = Precision::Infinite(), distmin_H = Precision::Infinite();
+  double distmin_L = math::precision::Precision::Infinite(), distmin_H = math::precision::Precision::Infinite();
 
-  double prec = (AdjustToEnds ? preci : Precision::Confusion());
+  double prec = (AdjustToEnds ? preci : math::precision::Precision::Confusion());
 
   gp_Pnt LowBound = C3D.Value(uMin);
   gp_Pnt HigBound = C3D.Value(uMax);
@@ -178,8 +178,8 @@ double ShapeAnalysis_Curve::Project(const Adaptor3d_Curve& C3D,
   }
 
   double distProj = ProjectAct(C3D, P3D, preci, proj, param);
-  if (distProj < distmin_L + Precision::Confusion()
-      && distProj < distmin_H + Precision::Confusion())
+  if (distProj < distmin_L + math::precision::Precision::Confusion()
+      && distProj < distmin_H + math::precision::Precision::Confusion())
     return distProj;
 
   if (distmin_L < distmin_H)
@@ -244,8 +244,8 @@ double ShapeAnalysis_Curve::ProjectAct(const Adaptor3d_Curve& theCurve,
   bool   anIsClosedCurve = false;
   double aCurvePeriod    = 0.;
 
-  double aProjDistance = Precision::Infinite();
-  double aModMin       = Precision::Infinite();
+  double aProjDistance = math::precision::Precision::Infinite();
+  double aModMin       = math::precision::Precision::Infinite();
 
   const double aComputedParam = theProjParam;
   const gp_Pnt aComputedProj  = theProjPoint;
@@ -331,7 +331,7 @@ double ShapeAnalysis_Curve::ProjectAct(const Adaptor3d_Curve& theCurve,
       default:
       {
 
-        aProjDistance = Precision::Infinite();
+        aProjDistance = math::precision::Precision::Infinite();
         ProjectOnSegments(theCurve,
                           thePoint,
                           25,
@@ -416,12 +416,12 @@ double ShapeAnalysis_Curve::NextProject(const double                   paramPrev
 {
   double            uMin    = (cf < cl ? cf : cl);
   double            uMax    = (cf < cl ? cl : cf);
-  double            distmin = Precision::Infinite();
+  double            distmin = math::precision::Precision::Infinite();
   GeomAdaptor_Curve GAC(C3D, uMin, uMax);
   if (C3D->IsKind(STANDARD_TYPE(Geom_BoundedCurve)))
   {
 
-    double prec = (AdjustToEnds ? preci : Precision::Confusion());
+    double prec = (AdjustToEnds ? preci : math::precision::Precision::Confusion());
 
     gp_Pnt LowBound = GAC.Value(uMin);
     gp_Pnt HigBound = GAC.Value(uMax);
@@ -504,7 +504,7 @@ bool ShapeAnalysis_Curve::ValidateRange(const occ::handle<Geom_Curve>& theCurve,
   if (ShapeAnalysis_Curve::IsPeriodic(theCurve))
   {
 
-    ElCLib::AdjustPeriodic(cf, cl, Precision::PConfusion(), First, Last);
+    ElCLib::AdjustPeriodic(cf, cl, math::precision::Precision::PConfusion(), First, Last);
   }
   else if (First < Last)
   {
@@ -512,10 +512,10 @@ bool ShapeAnalysis_Curve::ValidateRange(const occ::handle<Geom_Curve>& theCurve,
   else if (theCurve->IsClosed())
   {
 
-    if (std::abs(Last - cf) < Precision::PConfusion())
+    if (std::abs(Last - cf) < math::precision::Precision::PConfusion())
       Last = cl;
 
-    else if (std::abs(First - cl) < Precision::PConfusion())
+    else if (std::abs(First - cl) < math::precision::Precision::PConfusion())
       First = cf;
 
     else
@@ -540,10 +540,10 @@ bool ShapeAnalysis_Curve::ValidateRange(const occ::handle<Geom_Curve>& theCurve,
     if (aBSpline->StartPoint().Distance(aBSpline->EndPoint()) <= preci)
     {
 
-      if (std::abs(Last - cf) < Precision::PConfusion())
+      if (std::abs(Last - cf) < math::precision::Precision::PConfusion())
         Last = cl;
 
-      else if (std::abs(First - cl) < Precision::PConfusion())
+      else if (std::abs(First - cl) < math::precision::Precision::PConfusion())
         First = cf;
 
       else
@@ -580,8 +580,8 @@ bool ShapeAnalysis_Curve::ValidateRange(const occ::handle<Geom_Curve>& theCurve,
 
     if (First == Last)
     {
-      First -= Precision::PConfusion();
-      Last += Precision::PConfusion();
+      First -= math::precision::Precision::PConfusion();
+      Last += math::precision::Precision::PConfusion();
     }
     return false;
   }
@@ -608,7 +608,7 @@ static int SearchForExtremum(const occ::handle<Geom2d_Curve>& C2d,
       return true;
 
     par -= (D1 * dir) / Det;
-    if (std::abs(par - prevpar) < Precision::PConfusion())
+    if (std::abs(par - prevpar) < math::precision::Precision::PConfusion())
       return true;
 
     if (par < First)
@@ -781,13 +781,13 @@ int ShapeAnalysis_Curve::SelectForwardSeam(const occ::handle<Geom2d_Curve>& C1,
 static gp_XYZ GetAnyNormal(const gp_XYZ& orig)
 {
   gp_XYZ Norm;
-  if (std::abs(orig.Z()) < Precision::Confusion())
+  if (std::abs(orig.Z()) < math::precision::Precision::Confusion())
     Norm.SetCoord(0, 0, 1);
   else
   {
     Norm.SetCoord(orig.Z(), 0, -orig.X());
     double nrm = Norm.Modulus();
-    if (nrm < Precision::Confusion())
+    if (nrm < math::precision::Precision::Confusion())
       Norm.SetCoord(0, 0, 1);
     else
       Norm = Norm / nrm;
@@ -886,7 +886,7 @@ bool ShapeAnalysis_Curve::IsPlanar(const NCollection_Array1<gp_Pnt>& pnts,
                                    gp_XYZ&                           Normal,
                                    const double                      preci)
 {
-  double precision = (preci > 0.0) ? preci : Precision::Confusion();
+  double precision = (preci > 0.0) ? preci : math::precision::Precision::Confusion();
   bool   noNorm    = (Normal.SquareModulus() == 0);
 
   if (pnts.Length() < 3)
@@ -897,7 +897,7 @@ bool ShapeAnalysis_Curve::IsPlanar(const NCollection_Array1<gp_Pnt>& pnts,
       Normal = GetAnyNormal(N1);
       return true;
     }
-    return std::abs(N1 * Normal) < Precision::Confusion();
+    return std::abs(N1 * Normal) < math::precision::Precision::Confusion();
   }
 
   gp_XYZ aMaxDir;
@@ -927,7 +927,7 @@ bool ShapeAnalysis_Curve::IsPlanar(const NCollection_Array1<gp_Pnt>& pnts,
   }
 
   double nrm = Normal.Modulus();
-  if (nrm < Precision::Confusion())
+  if (nrm < math::precision::Precision::Confusion())
   {
     Normal = GetAnyNormal(aMaxDir);
     return true;
@@ -951,7 +951,7 @@ bool ShapeAnalysis_Curve::IsPlanar(const occ::handle<Geom_Curve>& curve,
                                    gp_XYZ&                        Normal,
                                    const double                   preci)
 {
-  double precision = (preci > 0.0) ? preci : Precision::Confusion();
+  double precision = (preci > 0.0) ? preci : math::precision::Precision::Confusion();
   bool   noNorm    = (Normal.SquareModulus() == 0);
 
   if (curve->IsKind(STANDARD_TYPE(Geom_Line)))
@@ -964,7 +964,7 @@ bool ShapeAnalysis_Curve::IsPlanar(const occ::handle<Geom_Curve>& curve,
       Normal = GetAnyNormal(N1);
       return true;
     }
-    return std::abs(N1 * Normal) < Precision::Confusion();
+    return std::abs(N1 * Normal) < math::precision::Precision::Confusion();
   }
 
   if (curve->IsKind(STANDARD_TYPE(Geom_Conic)))
@@ -978,7 +978,7 @@ bool ShapeAnalysis_Curve::IsPlanar(const occ::handle<Geom_Curve>& curve,
       return true;
     }
     gp_XYZ aVecMul = N1 ^ Normal;
-    return aVecMul.SquareModulus() < Precision::SquareConfusion();
+    return aVecMul.SquareModulus() < math::precision::Precision::SquareConfusion();
   }
 
   if (curve->IsKind(STANDARD_TYPE(Geom_TrimmedCurve)))
@@ -1101,13 +1101,13 @@ bool ShapeAnalysis_Curve::IsClosed(const occ::handle<Geom_Curve>& theCurve, cons
   if (theCurve->IsClosed())
     return true;
 
-  double prec = std::max(preci, Precision::Confusion());
+  double prec = std::max(preci, math::precision::Precision::Confusion());
 
   double f, l;
   f = theCurve->FirstParameter();
   l = theCurve->LastParameter();
 
-  if (Precision::IsInfinite(f) || Precision::IsInfinite(l))
+  if (math::precision::Precision::IsInfinite(f) || math::precision::Precision::IsInfinite(l))
     return false;
 
   double aClosedVal = theCurve->Value(f).SquareDistance(theCurve->Value(l));

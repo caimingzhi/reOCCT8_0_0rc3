@@ -69,21 +69,21 @@ bool ChFi2d_ChamferAPI::Perform()
   myCurve1 = BRep_Tool::Curve(myEdge1, myStart1, myEnd1);
   myCurve2 = BRep_Tool::Curve(myEdge2, myStart2, myEnd2);
 
-  if (myCurve1->Value(myStart1).IsEqual(myCurve2->Value(myEnd2), Precision::Confusion()))
+  if (myCurve1->Value(myStart1).IsEqual(myCurve2->Value(myEnd2), math::precision::Precision::Confusion()))
   {
     myCommonStart1 = true;
     myCommonStart2 = false;
   }
   else
   {
-    if (myCurve1->Value(myEnd1).IsEqual(myCurve2->Value(myStart2), Precision::Confusion()))
+    if (myCurve1->Value(myEnd1).IsEqual(myCurve2->Value(myStart2), math::precision::Precision::Confusion()))
     {
       myCommonStart1 = false;
       myCommonStart2 = true;
     }
     else
     {
-      if (myCurve1->Value(myEnd1).IsEqual(myCurve2->Value(myEnd2), Precision::Confusion()))
+      if (myCurve1->Value(myEnd1).IsEqual(myCurve2->Value(myEnd2), math::precision::Precision::Confusion()))
       {
         myCommonStart1 = false;
         myCommonStart2 = false;

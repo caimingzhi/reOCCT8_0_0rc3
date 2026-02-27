@@ -4,5 +4,5 @@
 StepToTopoDS_Root::StepToTopoDS_Root()
     : done(false)
 {
-  myPrecision = myMaxTol = Precision::Confusion();
+  myPrecision = myMaxTol = math::precision::Precision::Confusion();
 }

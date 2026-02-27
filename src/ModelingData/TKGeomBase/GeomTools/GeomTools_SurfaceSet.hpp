@@ -32,10 +32,10 @@ public:
 
   Standard_EXPORT void Write(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theProgress = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT void Read(Standard_IStream&            IS,
-                            const Message_ProgressRange& theProgress = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void PrintSurface(const occ::handle<Geom_Surface>& S,
                                            Standard_OStream&                OS,

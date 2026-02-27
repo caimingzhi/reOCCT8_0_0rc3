@@ -602,15 +602,15 @@ static int fixshape(Draw_Interpretor& di, int argc, const char** argv)
     TopoDS_Compound                                   aCompound;
     BRep_Builder                                      aBuilder;
     aBuilder.MakeCompound(aCompound);
-    const NCollection_DataMap<TopoDS_Shape, NCollection_List<Message_Msg>, TopTools_ShapeMapHasher>&
+    const NCollection_DataMap<TopoDS_Shape, NCollection_List<System::log::Message_Msg>, TopTools_ShapeMapHasher>&
       map = msg->MapShape();
 
-    for (NCollection_DataMap<TopoDS_Shape, NCollection_List<Message_Msg>, TopTools_ShapeMapHasher>::
+    for (NCollection_DataMap<TopoDS_Shape, NCollection_List<System::log::Message_Msg>, TopTools_ShapeMapHasher>::
            Iterator it(map);
          it.More();
          it.Next())
     {
-      for (NCollection_List<Message_Msg>::Iterator iter(it.Value()); iter.More(); iter.Next())
+      for (NCollection_List<System::log::Message_Msg>::Iterator iter(it.Value()); iter.More(); iter.Next())
       {
         if (aMapOfNumberOfFixes.IsBound(iter.Value().Value()))
         {
@@ -813,7 +813,7 @@ static int checkoverlapedges(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  double aTol        = Precision::Confusion();
+  double aTol        = math::precision::Precision::Confusion();
   double aDistDomain = 0.0;
   int    k           = 3;
   if (k < n)
@@ -853,7 +853,7 @@ static int checkfclass2d(Draw_Interpretor& di, int n, const char** a)
     di << "Invalid arguments\n";
     return 1;
   }
-  double tol = Precision::Confusion();
+  double tol = math::precision::Precision::Confusion();
   if (n > 4)
   {
     tol = Atof(a[4]);
@@ -887,7 +887,7 @@ static int connectedges(Draw_Interpretor& di, int n, const char** a)
     di << "Shape is null\n";
     return 1;
   }
-  double aTol = Precision::Confusion();
+  double aTol = math::precision::Precision::Confusion();
   if (n > 3)
     aTol = Draw::Atof(a[3]);
 

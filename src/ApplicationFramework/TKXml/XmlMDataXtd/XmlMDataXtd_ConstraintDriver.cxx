@@ -48,7 +48,7 @@ IMPLEMENT_DOMSTRING(ConRoundString, "round")
 IMPLEMENT_DOMSTRING(ConOffsetString, "offset")
 
 XmlMDataXtd_ConstraintDriver::XmlMDataXtd_ConstraintDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

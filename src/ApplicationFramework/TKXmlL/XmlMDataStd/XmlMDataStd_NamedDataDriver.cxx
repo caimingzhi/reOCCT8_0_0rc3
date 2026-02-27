@@ -32,7 +32,7 @@ IMPLEMENT_DOMSTRING(Value, "value")
 #endif
 
 XmlMDataStd_NamedDataDriver::XmlMDataStd_NamedDataDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

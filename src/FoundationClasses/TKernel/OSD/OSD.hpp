@@ -12,6 +12,7 @@ enum OSD_SignalMode
   OSD_SignalMode_Unset
 };
 
+namespace System { namespace os {
 class OSD
 {
 public:
@@ -47,3 +48,5 @@ public:
 
   Standard_EXPORT static void SetSignalStackTraceLength(int theLength);
 };
+}} // namespace System::os
+

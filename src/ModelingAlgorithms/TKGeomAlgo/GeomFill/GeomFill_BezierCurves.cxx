@@ -17,7 +17,7 @@ static void SetSameWeights(NCollection_Array1<double>& W1,
                            NCollection_Array1<double>& W3,
                            NCollection_Array1<double>& W4)
 {
-  constexpr double Eps = Precision::Confusion();
+  constexpr double Eps = math::precision::Precision::Confusion();
 
   int NU = W1.Length();
   int NV = W2.Length();
@@ -142,7 +142,7 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
 
   occ::handle<Geom_BezierCurve> CC1, CC2, CC3, CC4;
 
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 #ifndef No_Exception
   bool IsOK =
 #endif
@@ -267,7 +267,7 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
 {
   occ::handle<Geom_BezierCurve> C4;
   NCollection_Array1<gp_Pnt>    Poles(1, 2);
-  double                        Tol = Precision::Confusion();
+  double                        Tol = math::precision::Precision::Confusion();
   Tol                               = Tol * Tol;
   if (C1->StartPoint().SquareDistance(C2->StartPoint()) > Tol
       && C1->StartPoint().SquareDistance(C2->EndPoint()) > Tol)
@@ -351,7 +351,7 @@ void GeomFill_BezierCurves::Init(const occ::handle<Geom_BezierCurve>& C1,
     NCollection_Array1<gp_Pnt> P1(1, Deg1 + 1);
     NCollection_Array1<gp_Pnt> P2(1, Deg2 + 1);
 
-    constexpr double Eps  = Precision::Confusion();
+    constexpr double Eps  = math::precision::Precision::Confusion();
     bool             IsOK = false;
     if (CC1->StartPoint().IsEqual(CC2->StartPoint(), Eps))
     {

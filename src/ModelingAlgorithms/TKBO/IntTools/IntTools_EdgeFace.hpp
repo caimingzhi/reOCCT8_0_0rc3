@@ -50,7 +50,7 @@ public:
 
   void SetFuzzyValue(const double theFuzz)
   {
-    myFuzzyValue = (std::max)(theFuzz, Precision::Confusion());
+    myFuzzyValue = (std::max)(theFuzz, math::precision::Precision::Confusion());
   }
 
   double FuzzyValue() const { return myFuzzyValue; }

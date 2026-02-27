@@ -57,13 +57,13 @@ bool StepToTopoDS_TranslateCurveBoundedSurface::Init(
   }
 
   BRep_Builder B;
-  B.MakeFace(myFace, Surf, Precision::Confusion());
+  B.MakeFace(myFace, Surf, math::precision::Precision::Confusion());
 
   if (CBS->ImplicitOuter())
   {
     if (Surf->IsKind(STANDARD_TYPE(Geom_BoundedSurface)))
     {
-      BRepBuilderAPI_MakeFace mf(Surf, Precision::Confusion());
+      BRepBuilderAPI_MakeFace mf(Surf, math::precision::Precision::Confusion());
       myFace = mf.Face();
     }
     else

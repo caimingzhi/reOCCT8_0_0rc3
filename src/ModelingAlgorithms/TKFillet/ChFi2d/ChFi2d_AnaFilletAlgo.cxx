@@ -52,12 +52,12 @@ static bool isCW(const BRepAdaptor_Curve& AC)
 
 static bool IsEqual(const gp_Pnt& p1, const gp_Pnt& p2)
 {
-  return p1.SquareDistance(p2) < Precision::SquareConfusion();
+  return p1.SquareDistance(p2) < math::precision::Precision::SquareConfusion();
 }
 
 static bool IsEqual(const gp_Pnt2d& p1, const gp_Pnt2d& p2)
 {
-  return p1.SquareDistance(p2) < Precision::SquareConfusion();
+  return p1.SquareDistance(p2) < math::precision::Precision::SquareConfusion();
 }
 
 ChFi2d_AnaFilletAlgo::ChFi2d_AnaFilletAlgo()
@@ -259,7 +259,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Edge& theEdge1,
 bool ChFi2d_AnaFilletAlgo::Perform(const double radius)
 {
   bool bRet(false);
-  if (e1.IsNull() || e2.IsNull() || radius < Precision::Confusion())
+  if (e1.IsNull() || e2.IsNull() || radius < math::precision::Precision::Confusion())
   {
     return bRet;
   }
@@ -281,7 +281,7 @@ bool ChFi2d_AnaFilletAlgo::Perform(const double radius)
       if (mkFace.IsDone())
       {
         const TopoDS_Face& F = mkFace.Face();
-        ShapeAnalysis_Wire analyzer(W, F, Precision::Confusion());
+        ShapeAnalysis_Wire analyzer(W, F, math::precision::Precision::Confusion());
         if (analyzer.CheckSelfIntersection())
         {
 
@@ -328,7 +328,7 @@ bool ChFi2d_AnaFilletAlgo::Perform(const double radius)
   if (!isCut && (start > delta1 || end > delta2))
   {
 
-    const double little = 100.0 * Precision::Confusion();
+    const double little = 100.0 * math::precision::Precision::Confusion();
     const double d1     = fabs(start - delta1);
     const double d2     = fabs(end - delta2);
     if (d1 < little || d2 < little)
@@ -495,7 +495,7 @@ bool ChFi2d_AnaFilletAlgo::SegmentFilletSegment(const double radius,
 
   gp_Vec2d bisec = 0.5 * (v1 + v2);
 
-  if (bisec.SquareMagnitude() < Precision::SquareConfusion())
+  if (bisec.SquareMagnitude() < math::precision::Precision::SquareConfusion())
     return false;
 
   bisec.Normalize();
@@ -540,7 +540,7 @@ bool ChFi2d_AnaFilletAlgo::SegmentFilletArc(const double radius,
     v2.Rotate(-M_PI_2);
 
   double angle = v1.Angle(v2);
-  if (fabs(angle) < Precision::Angular())
+  if (fabs(angle) < math::precision::Precision::Angular())
     return false;
 
   v2.Normalize();
@@ -609,7 +609,7 @@ bool ChFi2d_AnaFilletAlgo::SegmentFilletArc(const double radius,
     const gp_Pnt2d&          p    = intp.Value();
 
     const double d2 = p.SquareDistance(pc);
-    if (fabs(d2 - Rf2) < Precision::Confusion())
+    if (fabs(d2 - Rf2) < math::precision::Precision::Confusion())
     {
       p.Coord(xend, yend);
       break;
@@ -647,7 +647,7 @@ bool ChFi2d_AnaFilletAlgo::ArcFilletSegment(const double radius,
     v1.Rotate(+M_PI_2);
 
   double angle = v1.Angle(v2);
-  if (fabs(angle) < Precision::Angular())
+  if (fabs(angle) < math::precision::Precision::Angular())
     return false;
 
   v1.Normalize();
@@ -716,7 +716,7 @@ bool ChFi2d_AnaFilletAlgo::ArcFilletSegment(const double radius,
     const gp_Pnt2d&          p    = intp.Value();
 
     const double d2 = p.SquareDistance(pc);
-    if (fabs(d2 - Rf2) < Precision::SquareConfusion())
+    if (fabs(d2 - Rf2) < math::precision::Precision::SquareConfusion())
     {
       p.Coord(xstart, ystart);
       break;
@@ -792,7 +792,7 @@ bool ChFi2d_AnaFilletAlgo::ArcFilletArc(const double radius,
   pc.Coord(xc, yc);
 
   double angle = v1.Angle(v2);
-  if (fabs(angle) < Precision::Angular())
+  if (fabs(angle) < math::precision::Precision::Angular())
   {
     angle = gp_Vec2d(pc, pc1).Angle(gp_Vec2d(pc, pc2));
     cw    = angle < 0.0;
@@ -822,11 +822,11 @@ bool ChFi2d_AnaFilletAlgo::Cut(const gp_Pln& thePlane, TopoDS_Edge& theE1, TopoD
     for (i = 1; i <= nb; ++i)
     {
       const double d = extrema.Distance(i);
-      if (d < Precision::Confusion())
+      if (d < math::precision::Precision::Confusion())
       {
         extrema.Parameters(i, param1, param2);
-        if (fabs(l1 - param1) > Precision::Confusion()
-            && fabs(f2 - param2) > Precision::Confusion())
+        if (fabs(l1 - param1) > math::precision::Precision::Confusion()
+            && fabs(f2 - param2) > math::precision::Precision::Confusion())
         {
           found = true;
           extrema.Points(i, p, p);

@@ -52,7 +52,7 @@ TopoDS_Shape HLRAppli_ReflectLines::GetCompoundOf3dEdges(const HLRBRep_TypeOfRes
 
   TopoDS_Shape theCompound = aHLRToShape.CompoundOfEdges(type, visible, In3d);
 
-  BRepLib::SameParameter(theCompound, Precision::PConfusion(), false);
+  BRepLib::SameParameter(theCompound, math::precision::Precision::PConfusion(), false);
 
   return theCompound;
 }

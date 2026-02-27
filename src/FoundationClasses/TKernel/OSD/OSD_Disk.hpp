@@ -4,6 +4,7 @@
 #include <OSD_Error.hpp>
 #include <OSD_Path.hpp>
 
+namespace System { namespace os {
 class OSD_Disk
 {
 public:
@@ -35,3 +36,5 @@ private:
   TCollection_AsciiString myDiskName;
   OSD_Error               myError;
 };
+}} // namespace System::os
+

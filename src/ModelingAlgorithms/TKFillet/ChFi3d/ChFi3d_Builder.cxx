@@ -40,7 +40,7 @@
 #ifdef OCCT_DEBUG
   #include <OSD_Chronometer.hpp>
 
-OSD_Chronometer cl_total, cl_extent, cl_perfsetofsurf, cl_perffilletonvertex, cl_filds,
+System::os::OSD_Chronometer cl_total, cl_extent, cl_perfsetofsurf, cl_perffilletonvertex, cl_filds,
   cl_reconstruction, cl_setregul, cl_perform1corner, cl_perform2corner, cl_performatend,
   cl_perform3corner, cl_performmore3corner;
 
@@ -52,8 +52,8 @@ Standard_EXPORT double t_total, t_extent, t_perfsetofsurf, t_perffilletonvertex,
   t_t3cornerinit, t_spherique, t_torique, t_notfilling, t_filling, t_sameparam, t_computedata,
   t_completedata, t_t2cornerDS, t_t3cornerDS;
 
-extern void ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 extern bool ChFi3d_GettraceCHRON();
 #endif
 
@@ -564,7 +564,7 @@ void ChFi3d_Builder::Compute()
 
   if (IsDone())
   {
-    double                                   SameParTol = Precision::Confusion();
+    double                                   SameParTol = math::precision::Precision::Confusion();
     int                                      aNbSurfaces, iF;
     NCollection_List<TopoDS_Shape>::Iterator aIt;
 

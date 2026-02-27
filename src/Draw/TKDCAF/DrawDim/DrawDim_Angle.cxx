@@ -66,7 +66,7 @@ void DrawDim_Angle::DrawOn(Draw_Display&) const
     return;
   if (!DrawDim::Pln(myPlane2, pln2))
     return;
-  IntAna_QuadQuadGeo ip(pln1, pln2, Precision::Confusion(), Precision::Angular());
+  IntAna_QuadQuadGeo ip(pln1, pln2, math::precision::Precision::Confusion(), math::precision::Precision::Angular());
   if (!ip.IsDone())
     return;
 
@@ -93,7 +93,7 @@ void DrawDim_Angle::DrawOn(Draw_Display&) const
     curpos          = myFAttach.Rotated(AxePos, myVal / 2.);
     myCenter        = ElCLib::Value(ElCLib::Parameter(theaxis, curpos), theaxis);
     double thedista = myCenter.Distance(myFAttach);
-    if (thedista > Precision::Confusion())
+    if (thedista > math::precision::Precision::Confusion())
     {
       curpos.Scale(myCenter, 1.05);
     }

@@ -236,7 +236,7 @@ Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
 
   double f, l;
   FUN_tool_bounds(E, f, l);
-  double tolp = Precision::Parametric(Precision::Confusion());
+  double tolp = math::precision::Precision::Parametric(math::precision::Precision::Confusion());
   bool   onf  = std::abs(f - param) < tolp;
   if (onf)
     param = f;

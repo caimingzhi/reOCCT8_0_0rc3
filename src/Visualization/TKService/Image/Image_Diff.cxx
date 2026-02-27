@@ -71,12 +71,12 @@ bool Image_Diff::Init(const occ::handle<Image_PixMap>& theImageRef,
       || theImageRef->SizeY() != theImageNew->SizeY()
       || theImageRef->Format() != theImageNew->Format())
   {
-    Message::SendFail("Error: Images have different format or dimensions");
+    System::log::Message::SendFail("Error: Images have different format or dimensions");
     return false;
   }
   else if (theImageRef->SizeX() >= 0xFFFF || theImageRef->SizeY() >= 0xFFFF)
   {
-    Message::SendFail("Error: Images are too large");
+    System::log::Message::SendFail("Error: Images are too large");
     return false;
   }
 
@@ -98,7 +98,7 @@ bool Image_Diff::Init(const TCollection_AsciiString& theImgPathRef,
   occ::handle<Image_AlienPixMap> anImgNew = new Image_AlienPixMap();
   if (!anImgRef->Load(theImgPathRef) || !anImgNew->Load(theImgPathNew))
   {
-    Message::SendFail("Error: Failed to load image(s) file(s)");
+    System::log::Message::SendFail("Error: Failed to load image(s) file(s)");
     return false;
   }
   return Init(anImgRef, anImgNew, theToBlackWhite);

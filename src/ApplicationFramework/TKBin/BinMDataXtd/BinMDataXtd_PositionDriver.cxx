@@ -8,7 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PositionDriver, BinMDF_ADriver)
 
 BinMDataXtd_PositionDriver::BinMDataXtd_PositionDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataXtd_Position)->Name())
 {
 }

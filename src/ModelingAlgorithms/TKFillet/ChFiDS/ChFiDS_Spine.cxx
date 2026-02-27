@@ -21,7 +21,7 @@ ChFiDS_Spine::ChFiDS_Spine()
       myTypeOfConcavity(ChFiDS_Other),
       firstState(ChFiDS_OnSame),
       lastState(ChFiDS_OnSame),
-      tolesp(Precision::Confusion()),
+      tolesp(math::precision::Precision::Confusion()),
       firstparam(0.0),
       lastparam(0.0),
       firstprolon(false),
@@ -154,7 +154,7 @@ double ChFiDS_Spine::LastParameter() const
 void ChFiDS_Spine::SetFirstParameter(const double Par)
 {
 #ifdef OCCT_DEBUG
-  if (Par >= Precision::Confusion())
+  if (Par >= math::precision::Precision::Confusion())
     std::cout << "Interior extension at the start of guideline" << std::endl;
   if (IsPeriodic())
     std::cout << "WARNING!!! Extension on periodic guideline." << std::endl;
@@ -167,7 +167,7 @@ void ChFiDS_Spine::SetLastParameter(const double Par)
 {
 #ifdef OCCT_DEBUG
   double lll = abscissa->Value(abscissa->Upper());
-  if ((Par - lll) <= -Precision::Confusion())
+  if ((Par - lll) <= -math::precision::Precision::Confusion())
     std::cout << "Interior extension at the end of guideline" << std::endl;
   if (IsPeriodic())
     std::cout << "WARNING!!! Extension on periodic guideline." << std::endl;
@@ -266,7 +266,7 @@ void ChFiDS_Spine::SetFirstTgt(const double W)
   if (IsPeriodic())
     throw Standard_Failure("No extension by tangent on periodic contours");
 #ifdef OCCT_DEBUG
-  if (W >= Precision::Confusion())
+  if (W >= math::precision::Precision::Confusion())
     std::cout << "Interior extension at start of the guideline" << std::endl;
 #endif
 
@@ -284,7 +284,7 @@ void ChFiDS_Spine::SetLastTgt(const double W)
 
 #ifdef OCCT_DEBUG
   double L = W - abscissa->Value(abscissa->Upper());
-  if (L <= -Precision::Confusion())
+  if (L <= -math::precision::Precision::Confusion())
     std::cout << "Interior extension at the end of guideline" << std::endl;
 #endif
 
@@ -328,7 +328,7 @@ int ChFiDS_Spine::Index(const double W, const bool Forward) const
 {
   int    ind, len = abscissa->Length();
   double par = W, last = abscissa->Value(abscissa->Upper());
-  double f = 0., l = 0., t = std::max(tolesp, Precision::Confusion());
+  double f = 0., l = 0., t = std::max(tolesp, math::precision::Precision::Confusion());
 
   if (IsPeriodic() && std::abs(par) >= t && std::abs(par - last) >= t)
     par = ElCLib::InPeriod(par, 0., last);
@@ -469,7 +469,7 @@ void ChFiDS_Spine::Parameter(const int Index, const double AbsC, double& U, cons
 
 void ChFiDS_Spine::Prepare(double& L, int& Ind) const
 {
-  double tol  = std::max(tolesp, Precision::Confusion());
+  double tol  = std::max(tolesp, math::precision::Precision::Confusion());
   double last = abscissa->Value(abscissa->Upper());
   int    len  = abscissa->Length();
   if (IsPeriodic() && std::abs(L) >= tol && std::abs(L - last) >= tol)
@@ -518,12 +518,12 @@ void ChFiDS_Spine::Prepare(double& L, int& Ind) const
     {
       if (L >= valref && Ind != 1)
       {
-        if (std::abs(L - abscissa->Value(Ind - 1)) <= Precision::Confusion())
+        if (std::abs(L - abscissa->Value(Ind - 1)) <= math::precision::Precision::Confusion())
           Ind--;
       }
       else if (L <= valref && Ind != len)
       {
-        if (std::abs(L - abscissa->Value(Ind)) <= Precision::Confusion())
+        if (std::abs(L - abscissa->Value(Ind)) <= math::precision::Precision::Confusion())
           Ind++;
       }
     }

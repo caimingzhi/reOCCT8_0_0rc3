@@ -112,15 +112,15 @@ public:
                                const double U2,
                                const double V1,
                                const double V2,
-                               const double theUTolerance = Precision::PConfusion(),
-                               const double theVTolerance = Precision::PConfusion());
+                               const double theUTolerance = math::precision::Precision::PConfusion(),
+                               const double theVTolerance = math::precision::Precision::PConfusion());
 
   Standard_EXPORT void CheckAndSegment(const double U1,
                                        const double U2,
                                        const double V1,
                                        const double V2,
-                                       const double theUTolerance = Precision::PConfusion(),
-                                       const double theVTolerance = Precision::PConfusion());
+                                       const double theUTolerance = math::precision::Precision::PConfusion(),
+                                       const double theVTolerance = math::precision::Precision::PConfusion());
 
   Standard_EXPORT void SetUKnot(const int UIndex, const double K);
 

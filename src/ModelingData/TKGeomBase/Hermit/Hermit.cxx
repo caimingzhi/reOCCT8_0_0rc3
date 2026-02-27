@@ -701,8 +701,8 @@ occ::handle<Geom2d_BSplineCurve> Hermit::Solution(const occ::handle<Geom_BSpline
            Upos1,
            Upos2,
            zeroboucle,
-           Precision::Confusion(),
-           Precision::Confusion(),
+           math::precision::Precision::Confusion(),
+           math::precision::Precision::Confusion(),
            1.0,
            0.0);
 
@@ -802,8 +802,8 @@ occ::handle<Geom2d_BSplineCurve> Hermit::Solution(const occ::handle<Geom2d_BSpli
            Upos1,
            Upos2,
            zeroboucle,
-           Precision::Confusion(),
-           Precision::Confusion(),
+           math::precision::Precision::Confusion(),
+           math::precision::Precision::Confusion(),
            1.0,
            0.0);
 
@@ -904,8 +904,8 @@ void Hermit::Solutionbis(const occ::handle<Geom_BSplineCurve>& BS,
            Upos1,
            Upos2,
            zeroboucle,
-           Precision::Confusion(),
-           Precision::Confusion(),
+           math::precision::Precision::Confusion(),
+           math::precision::Precision::Confusion(),
            1.0,
            0.0);
 

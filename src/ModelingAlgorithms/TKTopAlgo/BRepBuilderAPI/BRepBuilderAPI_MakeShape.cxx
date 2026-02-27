@@ -3,7 +3,7 @@
 
 BRepBuilderAPI_MakeShape::BRepBuilderAPI_MakeShape() = default;
 
-void BRepBuilderAPI_MakeShape::Build(const Message_ProgressRange&) {}
+void BRepBuilderAPI_MakeShape::Build(const System::log::Message_ProgressRange&) {}
 
 const TopoDS_Shape& BRepBuilderAPI_MakeShape::Shape()
 {

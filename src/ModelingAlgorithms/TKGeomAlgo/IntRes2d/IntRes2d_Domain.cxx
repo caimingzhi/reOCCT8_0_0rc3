@@ -1,7 +1,7 @@
 #include <IntRes2d_Domain.hpp>
 #include <Precision.hpp>
 
-const double infVal = Precision::Infinite();
+const double infVal = math::precision::Precision::Infinite();
 
 static inline double LimitInfinite(const double Val)
 {

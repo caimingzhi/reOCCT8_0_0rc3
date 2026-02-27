@@ -489,8 +489,8 @@ void BRepBlend_RstRstConstRad::Section(const double Param,
     C.SetPosition(gp_Ax2(Center, np, ns));
     Pfin = ElCLib::Parameter(C, ptrst2);
   }
-  if (Pfin < Precision::PConfusion())
-    Pfin += Precision::PConfusion();
+  if (Pfin < math::precision::Precision::PConfusion())
+    Pfin += math::precision::Precision::PConfusion();
 }
 
 bool BRepBlend_RstRstConstRad::IsRational() const

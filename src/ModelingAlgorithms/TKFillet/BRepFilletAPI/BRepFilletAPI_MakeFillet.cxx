@@ -90,7 +90,7 @@ void BRepFilletAPI_MakeFillet::SetRadius(const double R1,
 {
   double r1, r2;
 
-  if (std::abs(R1 - R2) < Precision::Confusion())
+  if (std::abs(R1 - R2) < math::precision::Precision::Confusion())
     r1 = r2 = (R1 + R2) * 0.5;
   else
   {
@@ -262,7 +262,7 @@ occ::handle<TopOpeBRepBuild_HBuilder> BRepFilletAPI_MakeFillet::Builder() const
   return myBuilder.Builder();
 }
 
-void BRepFilletAPI_MakeFillet::Build(const Message_ProgressRange&)
+void BRepFilletAPI_MakeFillet::Build(const System::log::Message_ProgressRange&)
 {
   myBuilder.Compute();
   if (myBuilder.IsDone())

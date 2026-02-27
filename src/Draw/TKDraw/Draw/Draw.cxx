@@ -113,7 +113,7 @@ static void setOcctTclEnv(const TCollection_AsciiString& theName, TCollection_As
   }
 
   thePath.ChangeAll('\\', '/');
-  OSD_Environment aRedPathEnv(theName);
+  System::os::OSD_Environment aRedPathEnv(theName);
   aRedPathEnv.SetValue(thePath);
   aRedPathEnv.Build();
 
@@ -142,33 +142,33 @@ static bool searchResources(TCollection_AsciiString&       theCasRoot,
     TCollection_AsciiString("/src"),
     TCollection_AsciiString("")};
 
-  const TCollection_AsciiString anExeDir(OSD_Process::ExecutableFolder());
+  const TCollection_AsciiString anExeDir(System::os::OSD_Process::ExecutableFolder());
   for (int aLayIter = 0;; ++aLayIter)
   {
     const TCollection_AsciiString& aResLayout = aResLayouts[aLayIter];
     const TCollection_AsciiString  aProbeFile = aResLayout + "/" + theProbeFile;
-    if (OSD_File(anExeDir + aProbeFile).Exists())
+    if (System::os::OSD_File(anExeDir + aProbeFile).Exists())
     {
       theCasRoot = anExeDir;
       theResRoot = theCasRoot + aResLayout;
       return true;
     }
 
-    else if (OSD_File(anExeDir + "../" + aProbeFile).Exists())
+    else if (System::os::OSD_File(anExeDir + "../" + aProbeFile).Exists())
     {
       theCasRoot = anExeDir + "..";
       theResRoot = theCasRoot + aResLayout;
       return true;
     }
 
-    else if (OSD_File(anExeDir + "../../" + aProbeFile).Exists())
+    else if (System::os::OSD_File(anExeDir + "../../" + aProbeFile).Exists())
     {
       theCasRoot = anExeDir + "../..";
       theResRoot = theCasRoot + aResLayout;
       return true;
     }
 
-    else if (OSD_File(anExeDir + "../../../" + aProbeFile).Exists())
+    else if (System::os::OSD_File(anExeDir + "../../../" + aProbeFile).Exists())
     {
       theCasRoot = anExeDir + "../../..";
       theResRoot = theCasRoot + aResLayout;
@@ -222,7 +222,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
 {
 
 #ifdef _WIN32
-  OSD_Environment                  aUserDllEnv("CSF_UserDllPath");
+  System::os::OSD_Environment                  aUserDllEnv("CSF_UserDllPath");
   const TCollection_ExtendedString aUserDllPath(aUserDllEnv.Value());
   if (!aUserDllPath.IsEmpty())
   {
@@ -315,7 +315,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
     }
   }
 
-  OSD::SetSignal(false);
+  System::os::OSD::SetSignal(false);
 
 #ifdef _WIN32
 
@@ -367,7 +367,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
   Tcl_CreateExitHandler(exitProc, nullptr);
 #endif
 
-  const TCollection_AsciiString aDrawDef(OSD_Environment("DRAWDEFAULT").Value());
+  const TCollection_AsciiString aDrawDef(System::os::OSD_Environment("DRAWDEFAULT").Value());
   if (!aDrawDef.IsEmpty())
   {
     ReadInitFile(aDrawDef);
@@ -375,7 +375,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
   else
   {
     TCollection_AsciiString aDrawHome;
-    TCollection_AsciiString aCasRoot(OSD_Environment("CSF_OCCTResourcePath").Value());
+    TCollection_AsciiString aCasRoot(System::os::OSD_Environment("CSF_OCCTResourcePath").Value());
     if (!aCasRoot.IsEmpty())
     {
       aDrawHome = aCasRoot + "/DrawResources";
@@ -393,7 +393,7 @@ void Draw_Appli(int argc, char** argv, const FDraw_InitAppli Draw_InitAppli)
       }
 
       TCollection_AsciiString aTestsPath;
-      if (OSD_Environment("CSF_TestScriptsPath").Value().IsEmpty()
+      if (System::os::OSD_Environment("CSF_TestScriptsPath").Value().IsEmpty()
           && searchResources(aCasRoot, aTestsPath, "tests", "parse.rules"))
       {
         setOcctTclEnv("CSF_TestScriptsPath", aTestsPath);
@@ -517,7 +517,7 @@ bool Draw_Interprete(const char* com)
 
   bool wasspying = Draw_Spying;
 
-  OSD_Timer tictac;
+  System::os::OSD_Timer tictac;
   bool      hadchrono = Draw_Chrono;
   if (hadchrono)
     tictac.Start();
@@ -545,12 +545,12 @@ bool Draw_Interprete(const char* com)
   {
     if (c > 0 && theCommands.ToColorize())
     {
-      Message_PrinterOStream::SetConsoleTextColor(&std::cout, Message_ConsoleColor_Red, true);
+      System::log::Message_PrinterOStream::SetConsoleTextColor(&std::cout, Message_ConsoleColor_Red, true);
     }
     std::cout << theCommands.Result();
     if (c > 0 && theCommands.ToColorize())
     {
-      Message_PrinterOStream::SetConsoleTextColor(&std::cout, Message_ConsoleColor_Default, false);
+      System::log::Message_PrinterOStream::SetConsoleTextColor(&std::cout, Message_ConsoleColor_Default, false);
     }
     std::cout << std::endl;
   }
@@ -590,13 +590,13 @@ void Draw::Load(Draw_Interpretor&              theDI,
   if (!theMapOfFunctions.Find(theKey, aFunc))
   {
     TCollection_AsciiString       aPluginLibrary;
-    occ::handle<Resource_Manager> aPluginResource = new Resource_Manager(theResourceFileName,
+    occ::handle<System::resource::Resource_Manager> aPluginResource = new System::resource::Resource_Manager(theResourceFileName,
                                                                          theDefaultsDirectory,
                                                                          theUserDefaultsDirectory,
                                                                          theIsVerbose);
     if (!aPluginResource->Find(theKey, aPluginLibrary))
     {
-      Message::SendFail() << "could not find the resource:" << theKey;
+      System::log::Message::SendFail() << "could not find the resource:" << theKey;
       Standard_SStream aMsg;
       aMsg << "Could not find the resource:" << theKey << std::endl;
       throw Draw_Failure(aMsg.str().c_str());
@@ -614,7 +614,7 @@ void Draw::Load(Draw_Interpretor&              theDI,
 #else
     aPluginLibrary += ".so";
 #endif
-    OSD_SharedLibrary aSharedLibrary(aPluginLibrary.ToCString());
+    System::os::OSD_SharedLibrary aSharedLibrary(aPluginLibrary.ToCString());
     if (!aSharedLibrary.DlOpen(OSD_RTLD_LAZY))
     {
       const TCollection_AsciiString anError(aSharedLibrary.DlError());

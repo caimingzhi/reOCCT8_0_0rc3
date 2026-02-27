@@ -307,7 +307,7 @@ TEST(MathGlobOptMinTest, FunctionalMinimalValue)
   math_GlobOptMin aSolver(&aFunc, aLowerBorder, aUpperBorder);
 
   double aDefaultMin = aSolver.GetFunctionalMinimalValue();
-  EXPECT_EQ(aDefaultMin, -Precision::Infinite()) << "Default should be negative infinity";
+  EXPECT_EQ(aDefaultMin, -math::precision::Precision::Infinite()) << "Default should be negative infinity";
 
   aSolver.SetFunctionalMinimalValue(-1.0);
   EXPECT_NEAR(aSolver.GetFunctionalMinimalValue(), -1.0, 1.0e-12)

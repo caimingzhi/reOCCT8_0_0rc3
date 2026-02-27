@@ -126,13 +126,13 @@ static int readstl(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown argument '" << theArgv[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error: unknown argument '" << theArgv[anArgIter] << "'";
       return 1;
     }
   }
   if (aFilePath.IsEmpty())
   {
-    Message::SendFail() << "Syntax error: not enough arguments";
+    System::log::Message::SendFail() << "Syntax error: not enough arguments";
     return 1;
   }
 
@@ -206,7 +206,7 @@ static int createmesh(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
     return 0;
   }
 
-  OSD_Path                            aFile(theArgVec[2]);
+  System::os::OSD_Path                            aFile(theArgVec[2]);
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI, 1);
   occ::handle<Poly_Triangulation>     aSTLMesh  = RWStl::ReadFile(aFile, aProgress->Start());
 
@@ -738,7 +738,7 @@ static int meshcolors(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
             aDataSource->GetGeom(anIter.Key(), false, aCoords, aNbNodes, aType);
 
             double aScaleValue;
-            if (aDelta > Precision::Confusion())
+            if (aDelta > math::precision::Precision::Confusion())
             {
               aScaleValue = (aCoords.Value(1) - aMinX) / aDelta;
             }

@@ -58,7 +58,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
   gp_Pnt2d                   center1(C1.Location());
   NCollection_Array1<double> Radius(1, 2);
 
-  if (Point2.IsEqual(Point3, Precision::Confusion()))
+  if (Point2.IsEqual(Point3, math::precision::Precision::Confusion()))
   {
     WellDone = false;
     return;

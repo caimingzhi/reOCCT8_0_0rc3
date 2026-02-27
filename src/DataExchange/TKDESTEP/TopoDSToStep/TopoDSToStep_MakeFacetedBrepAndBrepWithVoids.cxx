@@ -33,7 +33,7 @@ TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::TopoDSToStep_MakeFacetedBrepAndBre
   const TopoDS_Solid&                        aSolid,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   done = false;
   TopoDS_Iterator                                                                             It;
@@ -59,12 +59,12 @@ TopoDSToStep_MakeFacetedBrepAndBrepWithVoids::TopoDSToStep_MakeFacetedBrepAndBre
     for (It.Initialize(aSolid); It.More(); It.Next())
       if (It.Value().ShapeType() == TopAbs_SHELL)
         nbshapes++;
-    Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
+    System::log::Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
     for (It.Initialize(aSolid); It.More() && aPS.More(); It.Next())
     {
       if (It.Value().ShapeType() == TopAbs_SHELL)
       {
-        Message_ProgressRange aRange       = aPS.Next();
+        System::log::Message_ProgressRange aRange       = aPS.Next();
         TopoDS_Shell          CurrentShell = TopoDS::Shell(It.Value());
         if (It.Value().Closed())
         {

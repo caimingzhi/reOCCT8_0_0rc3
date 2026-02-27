@@ -40,13 +40,13 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
   {
     double UF, UL, VF, VL;
     mySurface->Bounds(UF, UL, VF, VL);
-    if (!Precision::IsInfinite(UF))
+    if (!math::precision::Precision::IsInfinite(UF))
       myUSplitValues->SetValue(1, UF);
-    if (!Precision::IsInfinite(UL))
+    if (!math::precision::Precision::IsInfinite(UL))
       myUSplitValues->SetValue(myUSplitValues->Length(), UL);
-    if (!Precision::IsInfinite(VF))
+    if (!math::precision::Precision::IsInfinite(VF))
       myVSplitValues->SetValue(1, VF);
-    if (!Precision::IsInfinite(VL))
+    if (!math::precision::Precision::IsInfinite(VL))
       myVSplitValues->SetValue(myVSplitValues->Length(), VL);
   }
 
@@ -54,7 +54,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
   double           ULast     = myUSplitValues->Value(myUSplitValues->Length());
   double           VFirst    = myVSplitValues->Value(1);
   double           VLast     = myVSplitValues->Value(myVSplitValues->Length());
-  constexpr double precision = Precision::PConfusion();
+  constexpr double precision = math::precision::Precision::PConfusion();
 
   if (mySurface->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))
   {
@@ -322,7 +322,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Compute(const bool Segment)
     {
       occ::handle<Geom_SurfaceOfRevolution> rev =
         new Geom_SurfaceOfRevolution(curves->Value(i), axis);
-      if (UFirst - Umin < Precision::PConfusion() && Umax - ULast < Precision::PConfusion())
+      if (UFirst - Umin < math::precision::Precision::PConfusion() && Umax - ULast < math::precision::Precision::PConfusion())
         surf->SetValue(1, i, rev);
       else
       {
@@ -461,7 +461,7 @@ static occ::handle<Geom_Surface> GetSegment(const occ::handle<Geom_Surface>& sur
   if (surf->IsKind(STANDARD_TYPE(Geom_BezierSurface)))
   {
     occ::handle<Geom_BezierSurface> bezier = occ::down_cast<Geom_BezierSurface>(surf->Copy());
-    constexpr double                prec   = Precision::PConfusion();
+    constexpr double                prec   = math::precision::Precision::PConfusion();
     if (U1 < prec && U2 > 1 - prec && V1 < prec && V2 > 1 - prec)
       return bezier;
 
@@ -507,8 +507,8 @@ static occ::handle<Geom_Surface> GetSegment(const occ::handle<Geom_Surface>& sur
                 << std::endl;
 #endif
     }
-    if (std::abs(U1 - Umin) < Precision::PConfusion()
-        && std::abs(U2 - Umax) < Precision::PConfusion())
+    if (std::abs(U1 - Umin) < math::precision::Precision::PConfusion()
+        && std::abs(U2 - Umax) < math::precision::Precision::PConfusion())
       return revol;
 
     occ::handle<Geom_RectangularTrimmedSurface> res =
@@ -519,8 +519,8 @@ static occ::handle<Geom_Surface> GetSegment(const occ::handle<Geom_Surface>& sur
   {
     double Umin, Umax, Vmin, Vmax;
     surf->Bounds(Umin, Umax, Vmin, Vmax);
-    if (U1 - Umin < Precision::PConfusion() && Umax - U2 < Precision::PConfusion()
-        && V1 - Vmin < Precision::PConfusion() && Vmax - V2 < Precision::PConfusion())
+    if (U1 - Umin < math::precision::Precision::PConfusion() && Umax - U2 < math::precision::Precision::PConfusion()
+        && V1 - Vmin < math::precision::Precision::PConfusion() && Vmax - V2 < math::precision::Precision::PConfusion())
       return surf;
 
     occ::handle<Geom_RectangularTrimmedSurface> res =
@@ -549,7 +549,7 @@ void ShapeUpgrade_ConvertSurfaceToBezierBasis::Build(const bool)
     offsetValue                            = offSur->Offset();
   }
 
-  constexpr double                         prec           = Precision::PConfusion();
+  constexpr double                         prec           = math::precision::Precision::PConfusion();
   occ::handle<NCollection_HArray1<double>> myUSplitParams = mySegments->UJointValues();
   occ::handle<NCollection_HArray1<double>> myVSplitParams = mySegments->VJointValues();
   int                                      nbU            = myUSplitValues->Length();

@@ -12,8 +12,8 @@ ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity()
   myCurve3dCriterion = GeomAbs_C1;
   myCurve2dCriterion = GeomAbs_C1;
   mySurfaceCriterion = GeomAbs_C1;
-  myTolerance3d      = Precision::Confusion();
-  myTolerance2d      = Precision::PConfusion();
+  myTolerance3d      = math::precision::Precision::Confusion();
+  myTolerance2d      = math::precision::Precision::PConfusion();
 }
 
 ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity(const TopoDS_Shape& S)
@@ -22,8 +22,8 @@ ShapeUpgrade_ShapeDivideContinuity::ShapeUpgrade_ShapeDivideContinuity(const Top
   myCurve3dCriterion = GeomAbs_C1;
   myCurve2dCriterion = GeomAbs_C1;
   mySurfaceCriterion = GeomAbs_C1;
-  myTolerance3d      = Precision::Confusion();
-  myTolerance2d      = Precision::PConfusion();
+  myTolerance3d      = math::precision::Precision::Confusion();
+  myTolerance2d      = math::precision::Precision::PConfusion();
 }
 
 void ShapeUpgrade_ShapeDivideContinuity::SetTolerance(const double Tol)

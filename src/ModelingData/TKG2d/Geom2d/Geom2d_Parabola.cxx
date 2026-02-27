@@ -89,12 +89,12 @@ double Geom2d_Parabola::ReversedParameter(const double U) const
 
 double Geom2d_Parabola::FirstParameter() const
 {
-  return -Precision::Infinite();
+  return -math::precision::Precision::Infinite();
 }
 
 double Geom2d_Parabola::LastParameter() const
 {
-  return Precision::Infinite();
+  return math::precision::Precision::Infinite();
 }
 
 bool Geom2d_Parabola::IsClosed() const
@@ -171,7 +171,7 @@ void Geom2d_Parabola::Transform(const Trsf2d& T)
 
 double Geom2d_Parabola::TransformedParameter(const double U, const gp_Trsf2d& T) const
 {
-  if (Precision::IsInfinite(U))
+  if (math::precision::Precision::IsInfinite(U))
     return U;
   return U * std::abs(T.ScaleFactor());
 }

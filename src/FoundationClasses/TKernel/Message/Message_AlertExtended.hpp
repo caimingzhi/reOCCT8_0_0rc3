@@ -4,12 +4,22 @@
 #include <Message_Gravity.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace log {
 class Message_Attribute;
+}} // namespace System::log
+
+namespace System { namespace log {
 class Message_Report;
+}} // namespace System::log
 
+
+namespace System { namespace log {
 class Message_CompositeAlerts;
+}} // namespace System::log
 
-class Message_AlertExtended : public Message_Alert
+
+namespace System { namespace log {
+class Message_AlertExtended : public System::log::Message_Alert
 {
 public:
   Standard_EXPORT static occ::handle<Message_Alert> AddAlert(
@@ -48,3 +58,5 @@ protected:
 
   occ::handle<Message_Attribute> myAttribute;
 };
+}} // namespace System::log
+

@@ -27,8 +27,8 @@ void IGESGeom_ToolConicArc::ReadOwnParams(const occ::handle<IGESGeom_ConicArc>& 
                                           IGESData_ParamReader& PR) const
 {
 
-  Message_Msg Msg83("XSTEP_83");
-  Message_Msg Msg84("XSTEP_84");
+  System::log::Message_Msg Msg83("XSTEP_83");
+  System::log::Message_Msg Msg84("XSTEP_84");
 
   double A, B = 0., C = 0., D = 0., E = 0., F = 0., ZT;
   gp_XY  tempStart, tempEnd;
@@ -37,13 +37,13 @@ void IGESGeom_ToolConicArc::ReadOwnParams(const occ::handle<IGESGeom_ConicArc>& 
       || (!PR.ReadReal(PR.Current(), C)) || (!PR.ReadReal(PR.Current(), D))
       || (!PR.ReadReal(PR.Current(), E)) || (!PR.ReadReal(PR.Current(), F)))
   {
-    Message_Msg Msg81("XSTEP_81");
+    System::log::Message_Msg Msg81("XSTEP_81");
     PR.SendFail(Msg81);
   }
 
   if (!PR.ReadReal(PR.Current(), ZT))
   {
-    Message_Msg Msg82("XSTEP_82");
+    System::log::Message_Msg Msg82("XSTEP_82");
     PR.SendFail(Msg82);
   }
   PR.ReadXY(PR.CurrentList(1, 2), Msg83, tempStart);
@@ -123,7 +123,7 @@ void IGESGeom_ToolConicArc::OwnCheck(const occ::handle<IGESGeom_ConicArc>& ent,
 
   else if (fn != 0 && fn != cfn)
   {
-    Message_Msg Msg71("XSTEP_71");
+    System::log::Message_Msg Msg71("XSTEP_71");
     ach->SendFail(Msg71);
   }
 }

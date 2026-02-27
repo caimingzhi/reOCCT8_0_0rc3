@@ -423,7 +423,7 @@ static int OCC30182(Draw_Interpretor& di, int theNbArgs, const char** theArgVec)
   }
   else
   {
-    const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
     std::shared_ptr<std::istream>      aFile =
       aFileSystem->OpenIStream(anImgPath, std::ios::in | std::ios::binary);
     if (aFile.get() == nullptr)
@@ -520,7 +520,7 @@ static int OCC31956(Draw_Interpretor& di, int theNbArgs, const char** theArgVec)
   aPrsName                                               = theArgVec[1];
   anImgPath                                              = theArgVec[2];
   occ::handle<Image_AlienPixMap>             anImage     = new Image_AlienPixMap();
-  const occ::handle<OSD_FileSystem>&         aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>&         aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   opencascade::std::shared_ptr<std::istream> aFile =
     aFileSystem->OpenIStream(anImgPath, std::ios::in | std::ios::binary);
   if (aFile.get() == nullptr)

@@ -10,7 +10,10 @@
 #include <NCollection_IndexedMap.hpp>
 #include <Standard_IStream.hpp>
 #include <Standard_OStream.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 class BinTools_LocationSet;
@@ -20,7 +23,7 @@ class BinMNaming_NamedShapeDriver : public BinMDF_ADriver
 
 public:
   Standard_EXPORT BinMNaming_NamedShapeDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 
@@ -35,12 +38,12 @@ public:
 
   Standard_EXPORT void ReadShapeSection(
     Standard_IStream&            theIS,
-    const Message_ProgressRange& therange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& therange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void WriteShapeSection(
     Standard_OStream&            theOS,
     const int                    theDocVer,
-    const Message_ProgressRange& therange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& therange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Clear();
 

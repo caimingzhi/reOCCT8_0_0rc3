@@ -12,7 +12,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_AsciiStringDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "asciiguid")
 
 XmlMDataStd_AsciiStringDriver::XmlMDataStd_AsciiStringDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

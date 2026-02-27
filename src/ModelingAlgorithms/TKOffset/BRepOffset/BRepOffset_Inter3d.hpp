@@ -30,7 +30,7 @@ public:
 
   Standard_EXPORT void CompletInt(const NCollection_List<TopoDS_Shape>& SetOfFaces,
                                   const BRepAlgo_Image&                 InitOffsetFace,
-                                  const Message_ProgressRange&          theRange);
+                                  const System::log::Message_ProgressRange&          theRange);
 
   Standard_EXPORT void FaceInter(const TopoDS_Face&    F1,
                                  const TopoDS_Face&    F2,
@@ -40,7 +40,7 @@ public:
                                       const TopoDS_Shape&                   ShapeInit,
                                       const BRepOffset_Analyse&             Analyse,
                                       const BRepAlgo_Image&                 InitOffsetFace,
-                                      const Message_ProgressRange&          theRange);
+                                      const System::log::Message_ProgressRange&          theRange);
 
   Standard_EXPORT void ConnexIntByInt(
     const TopoDS_Shape&                                                                  SI,
@@ -49,7 +49,7 @@ public:
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            MES,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            Build,
     NCollection_List<TopoDS_Shape>&                                                      Failed,
-    const Message_ProgressRange&                                                         theRange,
+    const System::log::Message_ProgressRange&                                                         theRange,
     const bool bIsPlanar = false);
 
   Standard_EXPORT void ContextIntByInt(
@@ -60,7 +60,7 @@ public:
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            MES,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            Build,
     NCollection_List<TopoDS_Shape>&                                                      Failed,
-    const Message_ProgressRange&                                                         theRange,
+    const System::log::Message_ProgressRange&                                                         theRange,
     const bool bIsPlanar = false);
 
   Standard_EXPORT void ContextIntByArc(
@@ -69,7 +69,7 @@ public:
     const BRepOffset_Analyse&                                            Analyse,
     const BRepAlgo_Image&                                                InitOffsetFace,
     BRepAlgo_Image&                                                      InitOffsetEdge,
-    const Message_ProgressRange&                                         theRange);
+    const System::log::Message_ProgressRange&                                         theRange);
 
   Standard_EXPORT void SetDone(const TopoDS_Face& F1, const TopoDS_Face& F2);
 

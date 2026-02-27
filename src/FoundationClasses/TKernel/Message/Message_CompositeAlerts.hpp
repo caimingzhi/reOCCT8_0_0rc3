@@ -5,6 +5,7 @@
 #include <NCollection_List.hpp>
 #include <Standard_Transient.hpp>
 
+namespace System { namespace log {
 class Message_CompositeAlerts : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Message_CompositeAlerts, Standard_Transient)
@@ -36,3 +37,5 @@ public:
 protected:
   NCollection_List<occ::handle<Message_Alert>> myAlerts[Message_Fail + 1];
 };
+}} // namespace System::log
+

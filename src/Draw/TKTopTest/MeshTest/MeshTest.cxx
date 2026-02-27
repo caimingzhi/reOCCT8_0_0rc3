@@ -51,10 +51,10 @@ Standard_IMPORT Draw_Viewer dout;
 #ifdef OCCT_DEBUG_MESH_CHRONO
   #include <OSD_Chronometer.hpp>
 int             D0Control, D0Internal, D0Unif, D0Edges, NbControls;
-OSD_Chronometer chTotal, chInternal, chControl, chUnif, chAddPoint;
-OSD_Chronometer chEdges, chMaillEdges, chEtuInter, chLastControl, chStock;
-OSD_Chronometer chAdd11, chAdd12, chAdd2, chUpdate, chPointValid;
-OSD_Chronometer chIsos, chPointsOnIsos;
+System::os::OSD_Chronometer chTotal, chInternal, chControl, chUnif, chAddPoint;
+System::os::OSD_Chronometer chEdges, chMaillEdges, chEtuInter, chLastControl, chStock;
+System::os::OSD_Chronometer chAdd11, chAdd12, chAdd2, chUpdate, chPointValid;
+System::os::OSD_Chronometer chIsos, chPointsOnIsos;
 #endif
 
 static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
@@ -143,7 +143,7 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
              && anArgIter + 1 < theNbArgs)
     {
       double aVal = Draw::Atof(theArgVec[++anArgIter]) * M_PI / 180.;
-      if (aVal <= Precision::Angular())
+      if (aVal <= math::precision::Precision::Angular())
       {
         theDI << "Syntax error: invalid input parameter '" << theArgVec[anArgIter] << "'";
         return 1;
@@ -154,7 +154,7 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
     else if (aNameCase == "-ai" && anArgIter + 1 < theNbArgs)
     {
       double aVal = Draw::Atof(theArgVec[++anArgIter]) * M_PI / 180.;
-      if (aVal <= Precision::Angular())
+      if (aVal <= math::precision::Precision::Angular())
       {
         theDI << "Syntax error: invalid input parameter '" << theArgVec[anArgIter] << "'";
         return 1;
@@ -164,7 +164,7 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
     else if (aNameCase == "-min" && anArgIter + 1 < theNbArgs)
     {
       double aVal = Draw::Atof(theArgVec[++anArgIter]);
-      if (aVal <= Precision::Confusion())
+      if (aVal <= math::precision::Precision::Confusion())
       {
         theDI << "Syntax error: invalid input parameter '" << theArgVec[anArgIter] << "'";
         return 1;
@@ -174,7 +174,7 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
     else if (aNameCase == "-di" && anArgIter + 1 < theNbArgs)
     {
       double aVal = Draw::Atof(theArgVec[++anArgIter]);
-      if (aVal <= Precision::Confusion())
+      if (aVal <= math::precision::Precision::Confusion())
       {
         theDI << "Syntax error: invalid input parameter '" << theArgVec[anArgIter] << "'";
         return 1;
@@ -183,8 +183,8 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
     }
     else if (aNameCase.IsRealValue(true) && !hasDefl)
     {
-      aMeshParams.Deflection = std::max(Draw::Atof(theArgVec[anArgIter]), Precision::Confusion());
-      if (aMeshParams.DeflectionInterior < Precision::Confusion())
+      aMeshParams.Deflection = std::max(Draw::Atof(theArgVec[anArgIter]), math::precision::Precision::Confusion());
+      if (aMeshParams.DeflectionInterior < math::precision::Precision::Confusion())
       {
         aMeshParams.DeflectionInterior = aMeshParams.Deflection;
       }
@@ -205,7 +205,7 @@ static int incrementalmesh(Draw_Interpretor& theDI, int theNbArgs, const char** 
 
   if (aListOfShapes.IsEmpty())
   {
-    Message::SendFail("Syntax error: wrong number of arguments.");
+    System::log::Message::SendFail("Syntax error: wrong number of arguments.");
     return 1;
   }
 
@@ -302,7 +302,7 @@ static int tessellate(Draw_Interpretor&, int nbarg, const char** argv)
 {
   if (nbarg != 5)
   {
-    Message::SendFail() << "Builds regular triangulation with specified number of triangles\n"
+    System::log::Message::SendFail() << "Builds regular triangulation with specified number of triangles\n"
                            "    Usage: tessellate result {surface|face} nbu nbv\n"
                            "    Triangulation is put into the face with natural bounds (result);\n"
                            "    it will have 2*nbu*nbv triangles and (nbu+1)*(nbv+1) nodes";
@@ -316,7 +316,7 @@ static int tessellate(Draw_Interpretor&, int nbarg, const char** argv)
 
   if (aNbU <= 0 || aNbV <= 0)
   {
-    Message::SendFail() << "Error: Arguments nbu and nbv must be both greater than 0";
+    System::log::Message::SendFail() << "Error: Arguments nbu and nbv must be both greater than 0";
     return 1;
   }
 
@@ -331,30 +331,30 @@ static int tessellate(Draw_Interpretor&, int nbarg, const char** argv)
     TopoDS_Shape aShape = DBRep::Get(aSrcName);
     if (aShape.IsNull() || aShape.ShapeType() != TopAbs_FACE)
     {
-      Message::SendFail() << "Error: " << aSrcName << " is not a face";
+      System::log::Message::SendFail() << "Error: " << aSrcName << " is not a face";
       return 1;
     }
     TopoDS_Face aFace = TopoDS::Face(aShape);
     aSurf             = BRep_Tool::Surface(aFace);
     if (aSurf.IsNull())
     {
-      Message::SendFail() << "Error: Face " << aSrcName << " has no surface";
+      System::log::Message::SendFail() << "Error: Face " << aSrcName << " has no surface";
       return 1;
     }
 
     BRepTools::UVBounds(aFace, aUMin, aUMax, aVMin, aVMax);
   }
-  if (Precision::IsInfinite(aUMin) || Precision::IsInfinite(aUMax) || Precision::IsInfinite(aVMin)
-      || Precision::IsInfinite(aVMax))
+  if (math::precision::Precision::IsInfinite(aUMin) || math::precision::Precision::IsInfinite(aUMax) || math::precision::Precision::IsInfinite(aVMin)
+      || math::precision::Precision::IsInfinite(aVMax))
   {
-    Message::SendFail() << "Error: surface has infinite parametric range, aborting";
+    System::log::Message::SendFail() << "Error: surface has infinite parametric range, aborting";
     return 1;
   }
 
-  BRepBuilderAPI_MakeFace aFaceMaker(aSurf, aUMin, aUMax, aVMin, aVMax, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aSurf, aUMin, aUMax, aVMin, aVMax, math::precision::Precision::Confusion());
   if (!aFaceMaker.IsDone())
   {
-    Message::SendFail() << "Error: cannot build face with natural bounds, aborting";
+    System::log::Message::SendFail() << "Error: cannot build face with natural bounds, aborting";
     return 1;
   }
   TopoDS_Face aFace = aFaceMaker;
@@ -498,7 +498,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
           int anIndexToLoad = aLoadArg.IntegerValue();
           if (anIndexToLoad < -1)
           {
-            Message::SendWarning("Invalid negative triangulation index to be loaded");
+            System::log::Message::SendWarning("Invalid negative triangulation index to be loaded");
             continue;
           }
           if (BRepTools::LoadTriangulation(aShape, anIndexToLoad))
@@ -539,7 +539,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
           int anIndexToUnload = anUnloadArg.IntegerValue();
           if (anIndexToUnload < -1)
           {
-            Message::SendWarning("Invalid negative triangulation index to be unloaded");
+            System::log::Message::SendWarning("Invalid negative triangulation index to be unloaded");
             continue;
           }
           if (BRepTools::UnloadTriangulation(aShape, anIndexToUnload))
@@ -563,7 +563,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
       int anIndexToActivate = TCollection_AsciiString(theArgVec[++anArgIter]).IntegerValue();
       if (anIndexToActivate < 0)
       {
-        Message::SendWarning("Invalid negative triangulation index to be activated");
+        System::log::Message::SendWarning("Invalid negative triangulation index to be activated");
         continue;
       }
       if (BRepTools::ActivateTriangulation(aShape, anIndexToActivate, false))
@@ -579,7 +579,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
       int anIndexToActivate = TCollection_AsciiString(theArgVec[++anArgIter]).IntegerValue();
       if (anIndexToActivate < 0)
       {
-        Message::SendWarning("Invalid negative triangulation index to be activated");
+        System::log::Message::SendWarning("Invalid negative triangulation index to be activated");
         continue;
       }
       if (BRepTools::ActivateTriangulation(aShape, anIndexToActivate, true))
@@ -598,7 +598,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
       }
       if (anIndexToSingleLoad < -1)
       {
-        Message::SendWarning("Invalid negative triangulation index to be single loaded");
+        System::log::Message::SendWarning("Invalid negative triangulation index to be single loaded");
         continue;
       }
 
@@ -631,7 +631,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
       }
       if (anIndexToSingleLoad <= -1)
       {
-        Message::SendWarning("Invalid negative triangulation index to be single loaded");
+        System::log::Message::SendWarning("Invalid negative triangulation index to be single loaded");
         continue;
       }
 
@@ -660,7 +660,7 @@ static int trianglesinfo(Draw_Interpretor& theDI, int theNbArgs, const char** th
 {
   if (theNbArgs < 2)
   {
-    Message::SendFail("Syntax error: not enough arguments");
+    System::log::Message::SendFail("Syntax error: not enough arguments");
     return 1;
   }
   TopoDS_Shape aShape = DBRep::Get(theArgVec[1]);
@@ -1324,11 +1324,11 @@ static int wavefront(Draw_Interpretor&, int nbarg, const char** argv)
           V = Tr->UVNode(i).Y();
 
           BS.D1(U, V, P, D1U, D1V);
-          CSLib::Normal(D1U, D1V, Precision::Angular(), aStatus, Nor);
+          CSLib::Normal(D1U, D1V, math::precision::Precision::Angular(), aStatus, Nor);
           if (aStatus != CSLib_Done)
           {
             BS.D2(U, V, P, D1U, D1V, D2U, D2V, D2UV);
-            CSLib::Normal(D1U, D1V, D2U, D2V, D2UV, Precision::Angular(), OK, NStat, Nor);
+            CSLib::Normal(D1U, D1V, D2U, D2V, D2UV, math::precision::Precision::Angular(), OK, NStat, Nor);
           }
           if (F.Orientation() == TopAbs_REVERSED)
             Nor.Reverse();

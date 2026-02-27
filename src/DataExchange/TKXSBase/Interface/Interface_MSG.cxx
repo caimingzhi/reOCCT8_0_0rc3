@@ -371,7 +371,7 @@ void Interface_MSG::TDate(const char* text,
   if (yy == 0 && ss != 0)
   {
 
-    OSD_Process   pourdate;
+    System::os::OSD_Process   pourdate;
     Quantity_Date ladate = pourdate.SystemDate();
     if (yy == 0)
     {

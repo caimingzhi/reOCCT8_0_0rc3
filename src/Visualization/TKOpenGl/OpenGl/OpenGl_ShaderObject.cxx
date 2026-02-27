@@ -261,8 +261,8 @@ static bool dumpShaderSource(const TCollection_AsciiString& theFileName,
                              const TCollection_AsciiString& theSource,
                              bool                           theToBeautify)
 {
-  OSD_File aFile(theFileName);
-  aFile.Build(OSD_WriteOnly, OSD_Protection());
+  System::os::OSD_File aFile(theFileName);
+  aFile.Build(OSD_WriteOnly, System::os::OSD_Protection());
   TCollection_AsciiString aSource = theSource;
   if (theToBeautify)
   {
@@ -272,7 +272,7 @@ static bool dumpShaderSource(const TCollection_AsciiString& theFileName,
   }
   if (!aFile.IsOpen())
   {
-    Message::SendFail(TCollection_AsciiString("Error: File '") + theFileName
+    System::log::Message::SendFail(TCollection_AsciiString("Error: File '") + theFileName
                       + "' cannot be opened to save shader");
     return false;
   }
@@ -282,18 +282,18 @@ static bool dumpShaderSource(const TCollection_AsciiString& theFileName,
     aFile.Write(aSource.ToCString(), aSource.Length());
   }
   aFile.Close();
-  Message::SendWarning(TCollection_AsciiString("Shader source dumped into '") + theFileName + "'");
+  System::log::Message::SendWarning(TCollection_AsciiString("Shader source dumped into '") + theFileName + "'");
   return true;
 }
 
 static bool restoreShaderSource(TCollection_AsciiString&       theSource,
                                 const TCollection_AsciiString& theFileName)
 {
-  OSD_File aFile(theFileName);
-  aFile.Open(OSD_ReadOnly, OSD_Protection());
+  System::os::OSD_File aFile(theFileName);
+  aFile.Open(OSD_ReadOnly, System::os::OSD_Protection());
   if (!aFile.IsOpen())
   {
-    Message::SendFail(TCollection_AsciiString("File '") + theFileName
+    System::log::Message::SendFail(TCollection_AsciiString("File '") + theFileName
                       + "' cannot be opened to load shader");
     return false;
   }
@@ -305,7 +305,7 @@ static bool restoreShaderSource(TCollection_AsciiString&       theSource,
     aFile.Read(theSource, aSize);
   }
   aFile.Close();
-  Message::SendWarning(TCollection_AsciiString("Restored shader dump from '") + theFileName + "'");
+  System::log::Message::SendWarning(TCollection_AsciiString("Restored shader dump from '") + theFileName + "'");
   return true;
 }
 
@@ -319,7 +319,7 @@ bool OpenGl_ShaderObject::updateDebugDump(const occ::handle<OpenGl_Context>& the
     theFolder + "/" + theProgramId + getShaderExtension(myType);
   if (!theToReset)
   {
-    OSD_File aFile(aFileName);
+    System::os::OSD_File aFile(aFileName);
     if (aFile.Exists())
     {
       const Quantity_Date aDate = aFile.AccessMoment();
@@ -356,6 +356,6 @@ bool OpenGl_ShaderObject::updateDebugDump(const occ::handle<OpenGl_Context>& the
   {
     dumpShaderSource(aFileName, "", false);
   }
-  myDumpDate = OSD_Process().SystemDate();
+  myDumpDate = System::os::OSD_Process().SystemDate();
   return false;
 }

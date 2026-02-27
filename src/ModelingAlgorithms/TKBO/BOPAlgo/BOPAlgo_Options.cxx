@@ -20,18 +20,18 @@ namespace
       return;
     BOPAlgo_InitMessages = true;
 
-    if (!Message_MsgFile::HasMsg("BOPAlgo_LOAD_CHECKER"))
+    if (!System::log::Message_MsgFile::HasMsg("BOPAlgo_LOAD_CHECKER"))
     {
-      Message_MsgFile::LoadFromString(BOPAlgo_BOPAlgo_msg);
+      System::log::Message_MsgFile::LoadFromString(BOPAlgo_BOPAlgo_msg);
     }
   }
 } // namespace
 
 BOPAlgo_Options::BOPAlgo_Options()
     : myAllocator(NCollection_BaseAllocator::CommonBaseAllocator()),
-      myReport(new Message_Report),
+      myReport(new System::log::Message_Report),
       myRunParallel(myGlobalRunParallel),
-      myFuzzyValue(Precision::Confusion()),
+      myFuzzyValue(math::precision::Precision::Confusion()),
       myUseOBB(false)
 {
   BOPAlgo_LoadMessages();
@@ -39,9 +39,9 @@ BOPAlgo_Options::BOPAlgo_Options()
 
 BOPAlgo_Options::BOPAlgo_Options(const occ::handle<NCollection_BaseAllocator>& theAllocator)
     : myAllocator(theAllocator),
-      myReport(new Message_Report),
+      myReport(new System::log::Message_Report),
       myRunParallel(myGlobalRunParallel),
-      myFuzzyValue(Precision::Confusion()),
+      myFuzzyValue(math::precision::Precision::Confusion()),
       myUseOBB(false)
 {
   BOPAlgo_LoadMessages();
@@ -71,10 +71,10 @@ bool BOPAlgo_Options::GetParallelMode()
 
 void BOPAlgo_Options::SetFuzzyValue(const double theFuzz)
 {
-  myFuzzyValue = std::max(theFuzz, Precision::Confusion());
+  myFuzzyValue = std::max(theFuzz, math::precision::Precision::Confusion());
 }
 
-bool BOPAlgo_Options::UserBreak(const Message_ProgressScope& thePS)
+bool BOPAlgo_Options::UserBreak(const System::log::Message_ProgressScope& thePS)
 {
   if (thePS.UserBreak())
   {

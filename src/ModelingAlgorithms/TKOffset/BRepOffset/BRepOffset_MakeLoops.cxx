@@ -24,15 +24,15 @@ void BRepOffset_MakeLoops::Build(const NCollection_List<TopoDS_Shape>& LF,
                                  const occ::handle<BRepAlgo_AsDes>&    AsDes,
                                  BRepAlgo_Image&                       Image,
                                  BRepAlgo_Image&                       theImageVV,
-                                 const Message_ProgressRange&          theRange)
+                                 const System::log::Message_ProgressRange&          theRange)
 {
   NCollection_List<TopoDS_Shape>::Iterator it(LF);
   NCollection_List<TopoDS_Shape>::Iterator itl, itLCE;
   BRepAlgo_Loop                            Loops;
   Loops.VerticesForSubstitute(myVerVerMap);
   Loops.SetImageVV(theImageVV);
-  Message_ProgressScope aPSOuter(theRange, nullptr, 2);
-  Message_ProgressScope aPS1(aPSOuter.Next(), "Init loops", LF.Size());
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 2);
+  System::log::Message_ProgressScope aPS1(aPSOuter.Next(), "Init loops", LF.Size());
   for (; it.More(); it.Next(), aPS1.Next())
   {
     if (!aPS1.More())
@@ -93,7 +93,7 @@ void BRepOffset_MakeLoops::Build(const NCollection_List<TopoDS_Shape>& LF,
   if (myVerVerMap.IsEmpty())
     return;
   BRep_Builder          BB;
-  Message_ProgressScope aPS2(aPSOuter.Next(), "Building loops", LF.Size());
+  System::log::Message_ProgressScope aPS2(aPSOuter.Next(), "Building loops", LF.Size());
   for (it.Initialize(LF); it.More(); it.Next(), aPS2.Next())
   {
     if (!aPS2.More())
@@ -170,7 +170,7 @@ void BRepOffset_MakeLoops::BuildOnContext(const NCollection_List<TopoDS_Shape>& 
                                           const occ::handle<BRepAlgo_AsDes>&    AsDes,
                                           BRepAlgo_Image&                       Image,
                                           const bool                            InSide,
-                                          const Message_ProgressRange&          theRange)
+                                          const System::log::Message_ProgressRange&          theRange)
 {
 
   NCollection_List<TopoDS_Shape>::Iterator it(LContext);
@@ -180,7 +180,7 @@ void BRepOffset_MakeLoops::BuildOnContext(const NCollection_List<TopoDS_Shape>& 
   TopExp_Explorer                                        exp;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> MapExtent;
 
-  Message_ProgressScope aPS(theRange, "Building deepening faces", LContext.Extent());
+  System::log::Message_ProgressScope aPS(theRange, "Building deepening faces", LContext.Extent());
   for (; it.More(); it.Next(), aPS.Next())
   {
     if (!aPS.More())
@@ -350,7 +350,7 @@ void BRepOffset_MakeLoops::BuildOnContext(const NCollection_List<TopoDS_Shape>& 
 void BRepOffset_MakeLoops::BuildFaces(const NCollection_List<TopoDS_Shape>& LF,
                                       const occ::handle<BRepAlgo_AsDes>&    AsDes,
                                       BRepAlgo_Image&                       Image,
-                                      const Message_ProgressRange&          theRange)
+                                      const System::log::Message_ProgressRange&          theRange)
 {
   NCollection_List<TopoDS_Shape>::Iterator itr, itl, itLCE;
   bool                                     ToRebuild;
@@ -358,7 +358,7 @@ void BRepOffset_MakeLoops::BuildFaces(const NCollection_List<TopoDS_Shape>& LF,
   Loops.VerticesForSubstitute(myVerVerMap);
   BRep_Builder B;
 
-  Message_ProgressScope aPS(theRange, "Building faces", LF.Size());
+  System::log::Message_ProgressScope aPS(theRange, "Building faces", LF.Size());
   for (itr.Initialize(LF); itr.More(); itr.Next(), aPS.Next())
   {
     if (!aPS.More())

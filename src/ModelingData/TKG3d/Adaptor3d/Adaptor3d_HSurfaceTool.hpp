@@ -258,7 +258,7 @@ public:
 
   Standard_EXPORT static bool IsSurfG1(const occ::handle<Adaptor3d_Surface>& theSurf,
                                        const bool                            theAlongU,
-                                       const double theAngTol = Precision::Angular());
+                                       const double theAngTol = math::precision::Precision::Angular());
 
   Standard_EXPORT static int NbSamplesU(const occ::handle<Adaptor3d_Surface>& S);
 

@@ -98,7 +98,7 @@ TEST_F(CanonicalRecognitionApproxTest, CylinderRecognition_A2)
 
   gp_Ax2                               aAxis(gp_Pnt(0, 0, 0), gp_Dir(1, 1, 1));
   occ::handle<Geom_CylindricalSurface> aCylSurf = new Geom_CylindricalSurface(aAxis, 1.0);
-  BRepBuilderAPI_MakeFace aFaceMaker(aCylSurf, 0, 2 * M_PI, 0, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aCylSurf, 0, 2 * M_PI, 0, 1, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create cylindrical face";
   const TopoDS_Face aFace = aFaceMaker.Face();
@@ -122,7 +122,7 @@ TEST_F(CanonicalRecognitionApproxTest, ConicalSurfaceRecognition_A3)
   const double                     aHalfAngle = M_PI / 6.0;
   gp_Ax2                           aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_ConicalSurface> aConeSurf = new Geom_ConicalSurface(aAxis, aHalfAngle, 2.0);
-  BRepBuilderAPI_MakeFace          aFaceMaker(aConeSurf, 0, 2 * M_PI, 0, 3, Precision::Confusion());
+  BRepBuilderAPI_MakeFace          aFaceMaker(aConeSurf, 0, 2 * M_PI, 0, 3, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create conical face";
   const TopoDS_Face aFace = aFaceMaker.Face();
@@ -145,7 +145,7 @@ TEST_F(CanonicalRecognitionApproxTest, SphericalSurfaceRecognition_A4)
 
   gp_Ax2                             aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_SphericalSurface> aSphereSurf = new Geom_SphericalSurface(aAxis, 1.0);
-  BRepBuilderAPI_MakeFace aFaceMaker(aSphereSurf, 0, 2 * M_PI, 0, M_PI / 2, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aSphereSurf, 0, 2 * M_PI, 0, M_PI / 2, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create spherical face";
   const TopoDS_Face aFace = aFaceMaker.Face();
@@ -357,7 +357,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, TrimmedPlaneRecognition_B1)
 
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pln());
 
-  BRepBuilderAPI_MakeFace aFaceMaker(aPlane, -1, 1, -1, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aPlane, -1, 1, -1, 1, math::precision::Precision::Confusion());
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create planar face";
   TopoDS_Face aFace = aFaceMaker.Face();
 
@@ -381,7 +381,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, TrimmedCylinderRecognition_B2)
   gp_Ax2                               aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_CylindricalSurface> aCylSurf = new Geom_CylindricalSurface(aAxis, 1.0);
 
-  BRepBuilderAPI_MakeFace aFaceMaker(aCylSurf, 0, 2 * M_PI, -1, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aCylSurf, 0, 2 * M_PI, -1, 1, math::precision::Precision::Confusion());
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create cylindrical face";
   TopoDS_Face aFace = aFaceMaker.Face();
 
@@ -404,7 +404,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, TrimmedConeRecognition_B3)
   gp_Ax2                           aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_ConicalSurface> aConeSurf = new Geom_ConicalSurface(aAxis, aSemiAngle, 0);
 
-  BRepBuilderAPI_MakeFace aFaceMaker(aConeSurf, 0, 2 * M_PI, -1, 0, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aConeSurf, 0, 2 * M_PI, -1, 0, math::precision::Precision::Confusion());
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create conical face";
   TopoDS_Face aFace = aFaceMaker.Face();
 
@@ -427,7 +427,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, ConvertedSphereRecognition_B4)
   occ::handle<Geom_SphericalSurface> aSphereSurf = new Geom_SphericalSurface(aAxis, 1.0);
 
   occ::handle<Geom_BSplineSurface> aBSplineSurf = GeomConvert::SurfaceToBSplineSurface(aSphereSurf);
-  BRepBuilderAPI_MakeFace          aFaceMaker(aBSplineSurf, Precision::Confusion());
+  BRepBuilderAPI_MakeFace          aFaceMaker(aBSplineSurf, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create spherical face";
   const TopoDS_Face aFace = aFaceMaker.Face();
@@ -445,10 +445,10 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, SewnPlanarSurfaceRecognition_B5)
 
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pln());
 
-  BRepBuilderAPI_MakeFace aFaceMaker1(aPlane, -1, 0, -1, 0, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker2(aPlane, -1, 0, 0, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker3(aPlane, 0, 1, 0, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker4(aPlane, 0, 1, -1, 0, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker1(aPlane, -1, 0, -1, 0, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker2(aPlane, -1, 0, 0, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker3(aPlane, 0, 1, 0, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker4(aPlane, 0, 1, -1, 0, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker1.IsDone() && aFaceMaker2.IsDone() && aFaceMaker3.IsDone()
               && aFaceMaker4.IsDone())
@@ -484,10 +484,10 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, SewnCylindricalSurfaceRecognition_B6
   gp_Ax2                               aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_CylindricalSurface> aCylSurf = new Geom_CylindricalSurface(aAxis, 1.0);
 
-  BRepBuilderAPI_MakeFace aFaceMaker1(aCylSurf, 0, 3, -1, 0, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker2(aCylSurf, 0, 3, 0, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker3(aCylSurf, 3, 6, 0, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker4(aCylSurf, 3, 6, -1, 0, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker1(aCylSurf, 0, 3, -1, 0, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker2(aCylSurf, 0, 3, 0, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker3(aCylSurf, 3, 6, 0, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker4(aCylSurf, 3, 6, -1, 0, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker1.IsDone() && aFaceMaker2.IsDone() && aFaceMaker3.IsDone()
               && aFaceMaker4.IsDone())
@@ -522,10 +522,10 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, SewnConicalSurfaceRecognition_B7)
   gp_Ax2                           aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_ConicalSurface> aConeSurf = new Geom_ConicalSurface(aAxis, aSemiAngle, 0);
 
-  BRepBuilderAPI_MakeFace aFaceMaker1(aConeSurf, 0, 3, 0, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker2(aConeSurf, 0, 3, 1, 2, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker3(aConeSurf, 3, 6, 1, 2, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker4(aConeSurf, 3, 6, 0, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker1(aConeSurf, 0, 3, 0, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker2(aConeSurf, 0, 3, 1, 2, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker3(aConeSurf, 3, 6, 1, 2, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker4(aConeSurf, 3, 6, 0, 1, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker1.IsDone() && aFaceMaker2.IsDone() && aFaceMaker3.IsDone()
               && aFaceMaker4.IsDone())
@@ -561,10 +561,10 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, SewnSphericalSurfaceRecognition_B8)
 
   occ::handle<Geom_BSplineSurface> aBSplineSurf = GeomConvert::SurfaceToBSplineSurface(aSphereSurf);
 
-  BRepBuilderAPI_MakeFace aFaceMaker1(aBSplineSurf, 0, 3, -1.5, 0, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker2(aBSplineSurf, 0, 3, 0, 1.5, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker3(aBSplineSurf, 3, 6, 0, 1.5, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker4(aBSplineSurf, 3, 6, -1.5, 0, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker1(aBSplineSurf, 0, 3, -1.5, 0, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker2(aBSplineSurf, 0, 3, 0, 1.5, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker3(aBSplineSurf, 3, 6, 0, 1.5, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker4(aBSplineSurf, 3, 6, -1.5, 0, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker1.IsDone() && aFaceMaker2.IsDone() && aFaceMaker3.IsDone()
               && aFaceMaker4.IsDone())
@@ -594,10 +594,10 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, ComplexCylindricalRecognitionWithSec
   gp_Ax2                               aAxis(gp_Pnt(0, 0, 0), gp_Dir(gp_Dir::D::Z));
   occ::handle<Geom_CylindricalSurface> aCylSurf = new Geom_CylindricalSurface(aAxis, 1.0);
 
-  BRepBuilderAPI_MakeFace aFaceMaker1(aCylSurf, 0, 1, -1, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker2(aCylSurf, 1, 2, -1, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker3(aCylSurf, 2, 3, -1, 1, Precision::Confusion());
-  BRepBuilderAPI_MakeFace aFaceMaker4(aCylSurf, 3, 4, -1, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker1(aCylSurf, 0, 1, -1, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker2(aCylSurf, 1, 2, -1, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker3(aCylSurf, 2, 3, -1, 1, math::precision::Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker4(aCylSurf, 3, 4, -1, 1, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker1.IsDone() && aFaceMaker2.IsDone() && aFaceMaker3.IsDone()
               && aFaceMaker4.IsDone())
@@ -635,7 +635,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, ExtrudedCylindricalSurfaceRecognitio
   gp_Pln                  aPlane(gp_Pnt(0, 0, 0), aNormal);
   occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(aPlane);
 
-  GeomAPI_IntSS anIntersector(aCylSurf, aGeomPlane, Precision::Confusion());
+  GeomAPI_IntSS anIntersector(aCylSurf, aGeomPlane, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(anIntersector.IsDone()) << "Surface-surface intersection failed";
   ASSERT_GT(anIntersector.NbLines(), 0) << "No intersection curves found";
@@ -649,7 +649,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, ExtrudedCylindricalSurfaceRecognitio
 
   double uMin, uMax, vMin, vMax;
   anExtSurf->Bounds(uMin, uMax, vMin, vMax);
-  BRepBuilderAPI_MakeFace aFaceMaker(anExtSurf, uMin, uMax, -1, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(anExtSurf, uMin, uMax, -1, 1, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create face from extruded surface";
   TopoDS_Face aFace = aFaceMaker.Face();
@@ -670,7 +670,7 @@ TEST_F(CanonicalRecognitionBaseSurfaceTest, PlaneDetectionWithGapValidation_Bug3
 {
 
   occ::handle<Geom_Plane> aBasePlane = new Geom_Plane(gp_Pln());
-  BRepBuilderAPI_MakeFace aFaceMaker(aBasePlane, -1, 1, -1, 1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace aFaceMaker(aBasePlane, -1, 1, -1, 1, math::precision::Precision::Confusion());
 
   ASSERT_TRUE(aFaceMaker.IsDone()) << "Failed to create base planar face";
   const TopoDS_Face aFace = aFaceMaker.Face();

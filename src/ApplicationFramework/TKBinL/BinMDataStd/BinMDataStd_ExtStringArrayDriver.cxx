@@ -10,7 +10,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ExtStringArrayDriver, BinMDF_ADriver)
 
 BinMDataStd_ExtStringArrayDriver::BinMDataStd_ExtStringArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_ExtStringArray)->Name())
 {
 }

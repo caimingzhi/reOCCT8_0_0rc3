@@ -7,7 +7,10 @@
 #include <XmlObjMgt_RRelocationTable.hpp>
 #include <XmlObjMgt_SRelocationTable.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
@@ -15,7 +18,7 @@ class XmlMXCAFDoc_AssemblyItemRefDriver : public XmlMDF_ADriver
 {
 public:
   Standard_EXPORT XmlMXCAFDoc_AssemblyItemRefDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

@@ -40,7 +40,7 @@
 
 static double FUN_tolang()
 {
-  return Precision::Angular() * 1.e6;
+  return math::precision::Precision::Angular() * 1.e6;
 }
 
 TopOpeBRepTool_makeTransition::TopOpeBRepTool_makeTransition() = default;
@@ -109,7 +109,7 @@ bool TopOpeBRepTool_makeTransition::HasRest() const
 
 static bool FUN_nullcurv(const double curv)
 {
-  double tol = Precision::Confusion() * 1.e+2;
+  double tol = math::precision::Precision::Confusion() * 1.e+2;
   return (curv < tol);
 }
 

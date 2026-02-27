@@ -30,7 +30,7 @@
 
 static double FUN_tola()
 {
-  double tola = Precision::Angular();
+  double tola = math::precision::Precision::Angular();
   return tola;
 }
 

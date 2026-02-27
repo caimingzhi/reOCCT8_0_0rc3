@@ -65,7 +65,7 @@ public:
   Standard_EXPORT void ComputePCurveOn2(const bool B);
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT bool HasAncestorFaceOn1(const TopoDS_Shape& E, TopoDS_Shape& F) const;
 

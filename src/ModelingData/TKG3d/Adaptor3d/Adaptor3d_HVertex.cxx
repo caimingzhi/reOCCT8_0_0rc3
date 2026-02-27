@@ -46,5 +46,5 @@ TopAbs_Orientation Adaptor3d_HVertex::Orientation()
 
 bool Adaptor3d_HVertex::IsSame(const occ::handle<Adaptor3d_HVertex>& Other)
 {
-  return (myPnt.Distance(Other->Value()) <= Precision::Confusion());
+  return (myPnt.Distance(Other->Value()) <= math::precision::Precision::Confusion());
 }

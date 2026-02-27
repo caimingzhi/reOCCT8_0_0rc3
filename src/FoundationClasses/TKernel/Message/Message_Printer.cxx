@@ -4,14 +4,14 @@
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_Printer, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_Printer, Standard_Transient)
 
-Message_Printer::Message_Printer()
+System::log::Message_Printer::Message_Printer()
     : myTraceLevel(Message_Info)
 {
 }
 
-void Message_Printer::Send(const char* theString, const Message_Gravity theGravity) const
+void System::log::Message_Printer::Send(const char* theString, const Message_Gravity theGravity) const
 {
   if (theGravity >= myTraceLevel)
   {
@@ -19,7 +19,7 @@ void Message_Printer::Send(const char* theString, const Message_Gravity theGravi
   }
 }
 
-void Message_Printer::Send(const TCollection_ExtendedString& theString,
+void System::log::Message_Printer::Send(const TCollection_ExtendedString& theString,
                            const Message_Gravity             theGravity) const
 {
   if (theGravity >= myTraceLevel)
@@ -28,7 +28,7 @@ void Message_Printer::Send(const TCollection_ExtendedString& theString,
   }
 }
 
-void Message_Printer::Send(const TCollection_AsciiString& theString,
+void System::log::Message_Printer::Send(const TCollection_AsciiString& theString,
                            const Message_Gravity          theGravity) const
 {
   if (theGravity >= myTraceLevel)
@@ -37,7 +37,7 @@ void Message_Printer::Send(const TCollection_AsciiString& theString,
   }
 }
 
-void Message_Printer::SendStringStream(const Standard_SStream& theStream,
+void System::log::Message_Printer::SendStringStream(const Standard_SStream& theStream,
                                        const Message_Gravity   theGravity) const
 {
   if (theGravity >= myTraceLevel)
@@ -46,7 +46,7 @@ void Message_Printer::SendStringStream(const Standard_SStream& theStream,
   }
 }
 
-void Message_Printer::SendObject(const occ::handle<Standard_Transient>& theObject,
+void System::log::Message_Printer::SendObject(const occ::handle<Standard_Transient>& theObject,
                                  const Message_Gravity                  theGravity) const
 {
   if (!theObject.IsNull() && theGravity >= myTraceLevel)

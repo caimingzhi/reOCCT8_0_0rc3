@@ -16,7 +16,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntPackedMapDriver, BinMDF_ADriver)
 
 BinMDataStd_IntPackedMapDriver::BinMDataStd_IntPackedMapDriver(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
     : BinMDF_ADriver(theMessageDriver, STANDARD_TYPE(TDataStd_IntPackedMap)->Name())
 {
 }

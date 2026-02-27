@@ -2,7 +2,8 @@
 
 #include <OSD_FileSystem.hpp>
 
-class OSD_LocalFileSystem : public OSD_FileSystem
+namespace System { namespace os {
+class OSD_LocalFileSystem : public System::os::OSD_FileSystem
 {
   DEFINE_STANDARD_RTTIEXT(OSD_LocalFileSystem, OSD_FileSystem)
 public:
@@ -20,3 +21,5 @@ public:
     const int64_t                  theOffset     = 0,
     int64_t*                       theOutBufSize = nullptr) override;
 };
+}} // namespace System::os
+

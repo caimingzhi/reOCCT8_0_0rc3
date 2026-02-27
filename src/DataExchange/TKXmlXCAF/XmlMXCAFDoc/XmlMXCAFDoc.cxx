@@ -19,7 +19,7 @@
 #include <XmlMXCAFDoc_VisMaterialToolDriver.hpp>
 
 void XmlMXCAFDoc::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
-                             const occ::handle<Message_Messenger>&   anMsgDrv)
+                             const occ::handle<System::log::Message_Messenger>&   anMsgDrv)
 {
   aDriverTable->AddDriver(new XmlMXCAFDoc_CentroidDriver(anMsgDrv));
   aDriverTable->AddDriver(new XmlMXCAFDoc_ColorDriver(anMsgDrv));

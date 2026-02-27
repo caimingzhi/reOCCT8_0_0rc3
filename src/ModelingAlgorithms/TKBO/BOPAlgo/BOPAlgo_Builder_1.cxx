@@ -18,9 +18,9 @@
 #include <NCollection_Map.hpp>
 class BOPDS_PaveBlock;
 
-void BOPAlgo_Builder::FillImagesVertices(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillImagesVertices(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Filling splits of vertices", myDS->ShapesSD().Size());
+  System::log::Message_ProgressScope aPS(theRange, "Filling splits of vertices", myDS->ShapesSD().Size());
   NCollection_DataMap<int, int>::Iterator aIt(myDS->ShapesSD());
   for (; aIt.More(); aIt.Next(), aPS.Next())
   {
@@ -45,10 +45,10 @@ void BOPAlgo_Builder::FillImagesVertices(const Message_ProgressRange& theRange)
   }
 }
 
-void BOPAlgo_Builder::FillImagesEdges(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillImagesEdges(const System::log::Message_ProgressRange& theRange)
 {
   int                   i, aNbS = myDS->NbSourceShapes();
-  Message_ProgressScope aPS(theRange, "Filling splits of edges", aNbS);
+  System::log::Message_ProgressScope aPS(theRange, "Filling splits of edges", aNbS);
   for (i = 0; i < aNbS; ++i, aPS.Next())
   {
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);
@@ -132,13 +132,13 @@ void BOPAlgo_Builder::BuildResult(const TopAbs_ShapeEnum theType)
 }
 
 void BOPAlgo_Builder::FillImagesContainers(const TopAbs_ShapeEnum       theType,
-                                           const Message_ProgressRange& theRange)
+                                           const System::log::Message_ProgressRange& theRange)
 {
   int                                                    i, aNbS;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFP(100, myAllocator);
 
   aNbS = myDS->NbSourceShapes();
-  Message_ProgressScope aPS(theRange, "Building splits of containers", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Building splits of containers", 1);
   for (i = 0; i < aNbS; ++i)
   {
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);
@@ -154,13 +154,13 @@ void BOPAlgo_Builder::FillImagesContainers(const TopAbs_ShapeEnum       theType,
   }
 }
 
-void BOPAlgo_Builder::FillImagesCompounds(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillImagesCompounds(const System::log::Message_ProgressRange& theRange)
 {
   int                                                    i, aNbS;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMFP(100, myAllocator);
 
   aNbS = myDS->NbSourceShapes();
-  Message_ProgressScope aPS(theRange, "Building splits of compounds", aNbS);
+  System::log::Message_ProgressScope aPS(theRange, "Building splits of compounds", aNbS);
   for (i = 0; i < aNbS; ++i, aPS.Next())
   {
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);

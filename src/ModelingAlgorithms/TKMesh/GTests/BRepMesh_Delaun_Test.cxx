@@ -27,11 +27,11 @@ TEST(BRepMesh_DelaunTest, Vec2dAngleSignConvention)
 
   const double anAngleCCW = aVecUp.Angle(aVecRight);
   EXPECT_LT(anAngleCCW, 0.0) << "CCW rotation should give negative angle in OCCT convention";
-  EXPECT_NEAR(anAngleCCW, -M_PI_2, Precision::Angular());
+  EXPECT_NEAR(anAngleCCW, -M_PI_2, math::precision::Precision::Angular());
 
   const double anAngleCW = aVecRight.Angle(aVecUp);
   EXPECT_GT(anAngleCW, 0.0) << "CW rotation should give positive angle in OCCT convention";
-  EXPECT_NEAR(anAngleCW, M_PI_2, Precision::Angular());
+  EXPECT_NEAR(anAngleCW, M_PI_2, math::precision::Precision::Angular());
 }
 
 TEST(BRepMesh_DelaunTest, WindingAngleCCWPolygon)
@@ -54,12 +54,12 @@ TEST(BRepMesh_DelaunTest, WindingAngleCCWPolygon)
     aPrevDir = aCurDir;
   }
 
-  EXPECT_NEAR(std::abs(aTotalAngle), 2.0 * M_PI, Precision::Angular())
+  EXPECT_NEAR(std::abs(aTotalAngle), 2.0 * M_PI, math::precision::Precision::Angular())
     << "Winding angle magnitude should be 2*PI for point inside polygon";
 
   const double Angle2PI       = 2.0 * M_PI;
-  const bool   isInsideOldFix = std::abs(Angle2PI - aTotalAngle) <= Precision::Angular();
-  const bool   isInsideNewFix = std::abs(std::abs(aTotalAngle) - Angle2PI) <= Precision::Angular();
+  const bool   isInsideOldFix = std::abs(Angle2PI - aTotalAngle) <= math::precision::Precision::Angular();
+  const bool   isInsideNewFix = std::abs(std::abs(aTotalAngle) - Angle2PI) <= math::precision::Precision::Angular();
 
   EXPECT_FALSE(isInsideOldFix) << "Old check fails for CCW polygon (angle is negative)";
   EXPECT_TRUE(isInsideNewFix) << "New check handles both CCW and CW polygons";
@@ -85,12 +85,12 @@ TEST(BRepMesh_DelaunTest, WindingAngleCWPolygon)
     aPrevDir = aCurDir;
   }
 
-  EXPECT_NEAR(aTotalAngle, 2.0 * M_PI, Precision::Angular())
+  EXPECT_NEAR(aTotalAngle, 2.0 * M_PI, math::precision::Precision::Angular())
     << "Winding angle should be +2*PI for CW polygon";
 
   const double Angle2PI       = 2.0 * M_PI;
-  const bool   isInsideOldFix = std::abs(Angle2PI - aTotalAngle) <= Precision::Angular();
-  const bool   isInsideNewFix = std::abs(std::abs(aTotalAngle) - Angle2PI) <= Precision::Angular();
+  const bool   isInsideOldFix = std::abs(Angle2PI - aTotalAngle) <= math::precision::Precision::Angular();
+  const bool   isInsideNewFix = std::abs(std::abs(aTotalAngle) - Angle2PI) <= math::precision::Precision::Angular();
 
   EXPECT_TRUE(isInsideOldFix) << "Old check works for CW polygon";
   EXPECT_TRUE(isInsideNewFix) << "New check also works for CW polygon";

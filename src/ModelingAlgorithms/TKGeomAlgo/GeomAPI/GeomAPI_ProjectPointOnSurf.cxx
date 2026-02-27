@@ -77,7 +77,7 @@ void GeomAPI_ProjectPointOnSurf::Init(const gp_Pnt&                    P,
                                       const Extrema_ExtAlgo            theProjAlgo)
 
 {
-  Init(P, Surface, Precision::Confusion(), theProjAlgo);
+  Init(P, Surface, math::precision::Precision::Confusion(), theProjAlgo);
 }
 
 void GeomAPI_ProjectPointOnSurf::Init(const gp_Pnt&                    P,
@@ -106,7 +106,7 @@ void GeomAPI_ProjectPointOnSurf::Init(const gp_Pnt&                    P,
                                       const double                     Vsup,
                                       const Extrema_ExtAlgo            theProjAlgo)
 {
-  constexpr double Tolerance = Precision::PConfusion();
+  constexpr double Tolerance = math::precision::Precision::PConfusion();
 
   myGeomAdaptor.Load(Surface, Umin, Usup, Vmin, Vsup);
 
@@ -142,7 +142,7 @@ void GeomAPI_ProjectPointOnSurf::Init(const occ::handle<Geom_Surface>& Surface,
                                       const double                     Vsup,
                                       const Extrema_ExtAlgo            theProjAlgo)
 {
-  constexpr double Tolerance = Precision::PConfusion();
+  constexpr double Tolerance = math::precision::Precision::PConfusion();
 
   myGeomAdaptor.Load(Surface, Umin, Usup, Vmin, Vsup);
 

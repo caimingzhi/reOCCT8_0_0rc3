@@ -301,11 +301,11 @@ void BinTools_SurfaceSet::WriteSurface(const occ::handle<Geom_Surface>& S, BinTo
   }
 }
 
-void BinTools_SurfaceSet::Write(Standard_OStream& OS, const Message_ProgressRange& theRange) const
+void BinTools_SurfaceSet::Write(Standard_OStream& OS, const System::log::Message_ProgressRange& theRange) const
 {
 
   int                   i, nbsurf = myMap.Extent();
-  Message_ProgressScope aPS(theRange, "Writing surfaces", nbsurf);
+  System::log::Message_ProgressScope aPS(theRange, "Writing surfaces", nbsurf);
   OS << "Surfaces " << nbsurf << "\n";
   BinTools_OStream aStream(OS);
   for (i = 1; i <= nbsurf && aPS.More(); i++, aPS.Next())
@@ -669,7 +669,7 @@ Standard_IStream& BinTools_SurfaceSet::ReadSurface(Standard_IStream&          IS
   return IS;
 }
 
-void BinTools_SurfaceSet::Read(Standard_IStream& IS, const Message_ProgressRange& theRange)
+void BinTools_SurfaceSet::Read(Standard_IStream& IS, const System::log::Message_ProgressRange& theRange)
 {
   char buffer[255];
   IS >> buffer;
@@ -687,7 +687,7 @@ void BinTools_SurfaceSet::Read(Standard_IStream& IS, const Message_ProgressRange
   occ::handle<Geom_Surface> S;
   int                       i, nbsurf;
   IS >> nbsurf;
-  Message_ProgressScope aPS(theRange, "Reading surfaces", nbsurf);
+  System::log::Message_ProgressScope aPS(theRange, "Reading surfaces", nbsurf);
   IS.get();
   for (i = 1; i <= nbsurf && aPS.More(); i++, aPS.Next())
   {

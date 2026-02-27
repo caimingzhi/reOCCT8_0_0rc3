@@ -28,7 +28,7 @@ public:
     ObjectSentry& operator=(const ObjectSentry&) = delete;
   };
 
-  Standard_EXPORT StdObjMgt_ReadData(const occ::handle<Storage_BaseDriver>& theDriver,
+  Standard_EXPORT StdObjMgt_ReadData(const occ::handle<app::storage::Storage_BaseDriver>& theDriver,
                                      const int                              theNumberOfObjects);
 
   template <class Instantiator>
@@ -79,7 +79,7 @@ public:
   StdObjMgt_ReadData& operator>>(float& theValue) { return ReadValue(theValue); }
 
 private:
-  occ::handle<Storage_BaseDriver>                       myDriver;
+  occ::handle<app::storage::Storage_BaseDriver>                       myDriver;
   NCollection_Array1<occ::handle<StdObjMgt_Persistent>> myPersistentObjects;
 };
 

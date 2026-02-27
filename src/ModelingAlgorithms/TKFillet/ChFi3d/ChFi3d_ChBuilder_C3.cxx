@@ -51,7 +51,7 @@ static bool CoPlanar(const gp_Pnt& PntA, const gp_Pnt& PntB, const gp_Pnt& PntC,
 
   double Alpha = nor2AB * nor2AC - ProABAC * ProABAC;
 
-  if (Alpha < Precision::Confusion())
+  if (Alpha < math::precision::Precision::Confusion())
   {
     return true;
   }
@@ -62,7 +62,7 @@ static bool CoPlanar(const gp_Pnt& PntA, const gp_Pnt& PntB, const gp_Pnt& PntC,
   double Alpha2  = ProACAD * nor2AB - ProABAC * ProABAD;
   gp_Vec vecDABC = Alpha1 * vecAB + Alpha2 * vecAC - Alpha * vecAD;
 
-  return (vecDABC.Magnitude() / Alpha) < Precision::Confusion();
+  return (vecDABC.Magnitude() / Alpha) < math::precision::Precision::Confusion();
 }
 
 static occ::handle<GeomAdaptor_Surface> BoundSurf(const occ::handle<Geom_Surface>& S,
@@ -550,7 +550,7 @@ void ChFi3d_ChBuilder::PerformThreeCorner(const int Jndex)
       BRepAdaptor_Surface       facebid(face[pivot]);
       occ::handle<Geom_Surface> surfbid =
         occ::down_cast<Geom_Surface>(facebid.Surface().Surface()->Transformed(facebid.Trsf()));
-      inter.Perform(gpl, surfbid, Precision::Intersection());
+      inter.Perform(gpl, surfbid, math::precision::Precision::Intersection());
       if (inter.IsDone())
       {
         int nbl = inter.NbLines();

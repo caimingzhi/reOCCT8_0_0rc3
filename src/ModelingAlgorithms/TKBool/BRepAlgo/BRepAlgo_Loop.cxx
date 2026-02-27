@@ -748,7 +748,7 @@ void BRepAlgo_Loop::CutEdge(const TopoDS_Edge&                    E,
     TopoDS_Edge EE = TopoDS::Edge(it.Value());
     double      fpar, lpar;
     BRep_Tool::Range(EE, fpar, lpar);
-    if (lpar - fpar <= Precision::Confusion())
+    if (lpar - fpar <= math::precision::Precision::Confusion())
       NE.Remove(it);
     else
     {

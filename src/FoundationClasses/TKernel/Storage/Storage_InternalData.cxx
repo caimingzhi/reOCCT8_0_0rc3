@@ -3,15 +3,15 @@
 #include <Storage_InternalData.hpp>
 #include <Storage_Schema.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Storage_InternalData, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(app::storage::Storage_InternalData, Standard_Transient)
 
-Storage_InternalData::Storage_InternalData()
+app::storage::Storage_InternalData::Storage_InternalData()
     : myObjId(1),
       myTypeId(1)
 {
 }
 
-void Storage_InternalData::Clear()
+void app::storage::Storage_InternalData::Clear()
 {
   myTypeId = 1;
   myObjId  = 1;

@@ -110,8 +110,8 @@ LocOpe_Pipe::LocOpe_Pipe(const TopoDS_Wire& Spine, const TopoDS_Shape& Profile)
             P = occ::down_cast<Geom_RectangularTrimmedSurface>(P)->BasisSurface();
           }
           gp_Pln Pl = occ::down_cast<Geom_Plane>(P)->Pln();
-          if (Pl.Axis().IsParallel(Plref.Axis(), Precision::Angular())
-              && Plref.Contains(Pl.Location(), Precision::Confusion()))
+          if (Pl.Axis().IsParallel(Plref.Axis(), math::precision::Precision::Angular())
+              && Plref.Contains(Pl.Location(), math::precision::Precision::Confusion()))
           {
             FacFuse.Append(itm.Key());
           }

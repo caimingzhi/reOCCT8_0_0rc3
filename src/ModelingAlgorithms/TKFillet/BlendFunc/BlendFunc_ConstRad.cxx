@@ -735,7 +735,7 @@ void BlendFunc_ConstRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound)
 
   for (int i = 1; i <= 4; i++)
   {
-    if (!Precision::IsInfinite(InfBound(i)) && !Precision::IsInfinite(SupBound(i)))
+    if (!math::precision::Precision::IsInfinite(InfBound(i)) && !math::precision::Precision::IsInfinite(SupBound(i)))
     {
       double range = (SupBound(i) - InfBound(i));
       InfBound(i) -= range;
@@ -1046,8 +1046,8 @@ void BlendFunc_ConstRad::Section(const double Param,
     C.SetPosition(gp_Ax2(Center, np, ns1));
     Pfin = ElCLib::Parameter(C, pts2);
   }
-  if (Pfin < Precision::PConfusion())
-    Pfin += Precision::PConfusion();
+  if (Pfin < math::precision::Precision::PConfusion())
+    Pfin += math::precision::Precision::PConfusion();
 }
 
 bool BlendFunc_ConstRad::IsRational() const

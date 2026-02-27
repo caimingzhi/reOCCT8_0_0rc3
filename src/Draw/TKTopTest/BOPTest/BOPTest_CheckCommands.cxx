@@ -227,7 +227,7 @@ int bopcheck(Draw_Interpretor& di, int n, const char** a)
   aChecker.SetRunParallel(bRunParallel);
   aChecker.SetFuzzyValue(aTol);
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);

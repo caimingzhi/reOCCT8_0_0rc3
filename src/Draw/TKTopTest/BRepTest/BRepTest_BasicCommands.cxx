@@ -184,7 +184,7 @@ static int transform(Draw_Interpretor&, int n, const char** a)
       TopoDS_Shape S = DBRep::Get(a[i]);
       if (S.IsNull())
       {
-        Message::SendFail() << "Error: " << a[i] << " is not a valid shape";
+        System::log::Message::SendFail() << "Error: " << a[i] << " is not a valid shape";
         return 1;
       }
       else
@@ -203,7 +203,7 @@ static int transform(Draw_Interpretor&, int n, const char** a)
         catch (const Standard_DomainError&)
         {
           TCollection_AsciiString aScale(T.ScaleFactor());
-          Message::SendWarning() << "Operation is not done: " << aName
+          System::log::Message::SendWarning() << "Operation is not done: " << aName
                                  << " is not a valid transformation - scale = " << aScale;
           return 0;
         }
@@ -218,7 +218,7 @@ static int transform(Draw_Interpretor&, int n, const char** a)
       TopoDS_Shape S = DBRep::Get(a[i]);
       if (S.IsNull())
       {
-        Message::SendFail() << "Error: " << a[i] << " is not a valid shape";
+        System::log::Message::SendFail() << "Error: " << a[i] << " is not a valid shape";
         return 1;
       }
       else
@@ -294,7 +294,7 @@ static int tcopy(Draw_Interpretor& di, int n, const char** a)
 
   if (n < 3 || (n - iFirst) % 2)
   {
-    Message::SendFail() << "Use: " << a[0]
+    System::log::Message::SendFail() << "Use: " << a[0]
                         << " [-n(ogeom)] [-m(esh)] shape1 copy1 [shape2 copy2 [...]]\n"
                         << "Option -n forbids copying of geometry (it will be shared)\n"
                         << "Option -m forces copying of mesh (disabled by default)";
@@ -574,25 +574,25 @@ static int BoundBox(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
     }
     else
     {
-      Message::SendFail() << "Syntax error at argument '" << theArgVal[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error at argument '" << theArgVal[anArgIter] << "'";
       return 1;
     }
   }
 
   if (anAABB.IsVoid() && aShape.IsNull())
   {
-    Message::SendFail() << "Syntax error: input is not specified (neither shape nor coordinates)";
+    System::log::Message::SendFail() << "Syntax error: input is not specified (neither shape nor coordinates)";
     return 1;
   }
   else if (!anAABB.IsVoid() && (isOBB || isOptimal || isTolerUsed))
   {
-    Message::SendFail() << "Syntax error: Options -obb, -optimal and -extToler cannot be used for "
+    System::log::Message::SendFail() << "Syntax error: Options -obb, -optimal and -extToler cannot be used for "
                            "explicitly defined AABB";
     return 1;
   }
   else if (isOBB && !anOutVars[0].IsEmpty())
   {
-    Message::SendFail() << "Error: Option -save works only with axes-aligned boxes";
+    System::log::Message::SendFail() << "Error: Option -save works only with axes-aligned boxes";
     return 1;
   }
 
@@ -819,9 +819,9 @@ static int gbounding(Draw_Interpretor& di, int n, const char** a)
 
       GeomAdaptor_Surface aGAS(S);
       if (IsOptimal)
-        BndLib_AddSurface::AddOptimal(aGAS, Precision::Confusion(), B);
+        BndLib_AddSurface::AddOptimal(aGAS, math::precision::Precision::Confusion(), B);
       else
-        BndLib_AddSurface::Add(aGAS, Precision::Confusion(), B);
+        BndLib_AddSurface::Add(aGAS, math::precision::Precision::Confusion(), B);
     }
     else
     {
@@ -831,9 +831,9 @@ static int gbounding(Draw_Interpretor& di, int n, const char** a)
 
         GeomAdaptor_Curve aGAC(C);
         if (IsOptimal)
-          BndLib_Add3dCurve::AddOptimal(aGAC, Precision::Confusion(), B);
+          BndLib_Add3dCurve::AddOptimal(aGAC, math::precision::Precision::Confusion(), B);
         else
-          BndLib_Add3dCurve::Add(aGAC, Precision::Confusion(), B);
+          BndLib_Add3dCurve::Add(aGAC, math::precision::Precision::Confusion(), B);
       }
       else
       {
@@ -846,13 +846,13 @@ static int gbounding(Draw_Interpretor& di, int n, const char** a)
             BndLib_Add2dCurve::AddOptimal(C2d,
                                           C2d->FirstParameter(),
                                           C2d->LastParameter(),
-                                          Precision::Confusion(),
+                                          math::precision::Precision::Confusion(),
                                           B2d);
           else
             BndLib_Add2dCurve::Add(C2d,
                                    C2d->FirstParameter(),
                                    C2d->LastParameter(),
-                                   Precision::Confusion(),
+                                   math::precision::Precision::Confusion(),
                                    B2d);
         }
         else
@@ -914,7 +914,7 @@ static int precision(Draw_Interpretor& di, int n, const char** a)
   if (n == 0)
   {
 
-    di << " Current Precision = " << BRepBuilderAPI::Precision() << "\n";
+    di << " Current math::precision::Precision = " << BRepBuilderAPI::Precision() << "\n";
   }
   else
   {

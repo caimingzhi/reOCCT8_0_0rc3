@@ -1010,7 +1010,7 @@ bool StepAP209_Construct::CreateAddingEntities(
   smodel->AddWithRefs(ASCA);
   smodel->SetIdentLabel(ASCA, smodel->Number(ASCA));
 
-  OSD_Process   sys;
+  System::os::OSD_Process   sys;
   Quantity_Date date = sys.SystemDate();
 
   occ::handle<StepBasic_CalendarDate> CDate = new StepBasic_CalendarDate;

@@ -24,7 +24,7 @@ void Convert_CompBezierCurvesToBSplineCurve::AddCurve(const NCollection_Array1<g
     P2 = Poles(Poles.Lower());
 
 #ifdef OCCT_DEBUG
-    if (!P1.IsEqual(P2, Precision::Confusion()))
+    if (!P1.IsEqual(P2, math::precision::Precision::Confusion()))
       std::cout << "Convert_CompBezierCurvesToBSplineCurve::Addcurve" << std::endl;
 #endif
   }

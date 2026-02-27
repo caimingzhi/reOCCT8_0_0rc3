@@ -38,7 +38,7 @@ public:
 
   Standard_EXPORT TopoDS_Shape
     TransferBRepEntity(const occ::handle<IGESData_IGESEntity>& start,
-                       const Message_ProgressRange& theProgress = Message_ProgressRange());
+                       const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT TopoDS_Vertex TransferVertex(const occ::handle<IGESSolid_VertexList>& start,
                                                const int                                index);
@@ -55,9 +55,9 @@ public:
 
   Standard_EXPORT TopoDS_Shape
     TransferShell(const occ::handle<IGESSolid_Shell>& start,
-                  const Message_ProgressRange&        theProgress = Message_ProgressRange());
+                  const System::log::Message_ProgressRange&        theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT TopoDS_Shape
     TransferManifoldSolid(const occ::handle<IGESSolid_ManifoldSolid>& start,
-                          const Message_ProgressRange& theProgress = Message_ProgressRange());
+                          const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 };

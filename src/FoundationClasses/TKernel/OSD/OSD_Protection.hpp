@@ -6,6 +6,7 @@
 
 #include <OSD_SingleProtection.hpp>
 
+namespace System { namespace os {
 class OSD_Protection
 {
 public:
@@ -60,3 +61,5 @@ private:
   OSD_SingleProtection g;
   OSD_SingleProtection w;
 };
+}} // namespace System::os
+

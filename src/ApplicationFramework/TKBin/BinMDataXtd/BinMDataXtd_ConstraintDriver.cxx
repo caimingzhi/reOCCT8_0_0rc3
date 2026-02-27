@@ -10,7 +10,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_ConstraintDriver, BinMDF_ADriver)
 
 BinMDataXtd_ConstraintDriver::BinMDataXtd_ConstraintDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }

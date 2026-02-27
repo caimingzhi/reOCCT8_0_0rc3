@@ -10,7 +10,7 @@ TopOpeBRepDS_Curve::TopOpeBRepDS_Curve()
     : myFirst(0.0),
       myLast(0.0),
       myRangeDefined(false),
-      myTolerance(Precision::Confusion()),
+      myTolerance(math::precision::Precision::Confusion()),
       myIsWalk(false),
       myKeep(true),
       myMother(0),

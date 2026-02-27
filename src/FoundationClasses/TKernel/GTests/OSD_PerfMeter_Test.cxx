@@ -14,13 +14,13 @@
 class OSD_PerfMeterTest : public ::testing::Test
 {
 protected:
-  void SetUp() override { OSD_PerfMeter::ResetALL(); }
+  void SetUp() override { System::os::OSD_PerfMeter::ResetALL(); }
 
-  void TearDown() override { OSD_PerfMeter::ResetALL(); }
+  void TearDown() override { System::os::OSD_PerfMeter::ResetALL(); }
 
   static void DoSomeWork(const double theTimeInSec = 0.1)
   {
-    OSD_PerfMeter meter("WorkMeter", true);
+    System::os::OSD_PerfMeter meter("WorkMeter", true);
     while (meter.Elapsed() < theTimeInSec)
     {
 
@@ -46,7 +46,7 @@ protected:
 TEST_F(OSD_PerfMeterTest, BasicCreationWithAutoStart)
 {
 
-  OSD_PerfMeter meter("TestMeter", true);
+  System::os::OSD_PerfMeter meter("TestMeter", true);
 
   DoSomeWork();
 
@@ -59,7 +59,7 @@ TEST_F(OSD_PerfMeterTest, BasicCreationWithAutoStart)
 TEST_F(OSD_PerfMeterTest, ManualStartStop)
 {
 
-  OSD_PerfMeter meter("ManualMeter", false);
+  System::os::OSD_PerfMeter meter("ManualMeter", false);
 
   meter.Start();
 
@@ -74,7 +74,7 @@ TEST_F(OSD_PerfMeterTest, ManualStartStop)
 TEST_F(OSD_PerfMeterTest, DefaultConstructorAndInit)
 {
 
-  OSD_PerfMeter meter;
+  System::os::OSD_PerfMeter meter;
 
   meter.Init("InitializedMeter");
 
@@ -90,11 +90,11 @@ TEST_F(OSD_PerfMeterTest, SharedMetersByName)
 {
   const char* meterName = "SharedMeter";
 
-  OSD_PerfMeter meter1(meterName);
+  System::os::OSD_PerfMeter meter1(meterName);
 
   DoSomeWork();
 
-  OSD_PerfMeter meter2;
+  System::os::OSD_PerfMeter meter2;
   meter2.Init(meterName);
 
   DoSomeWork();
@@ -112,7 +112,7 @@ TEST_F(OSD_PerfMeterTest, SharedMetersByName)
 TEST_F(OSD_PerfMeterTest, RestartMeter)
 {
 
-  OSD_PerfMeter meter("RestartMeter");
+  System::os::OSD_PerfMeter meter("RestartMeter");
 
   DoSomeWork(0.1);
 
@@ -134,8 +134,8 @@ TEST_F(OSD_PerfMeterTest, RestartMeter)
 TEST_F(OSD_PerfMeterTest, RelativeTimingAccuracy)
 {
 
-  OSD_PerfMeter meter1("ShortMeter");
-  OSD_PerfMeter meter2("LongMeter");
+  System::os::OSD_PerfMeter meter1("ShortMeter");
+  System::os::OSD_PerfMeter meter2("LongMeter");
 
   DoSomeWork(0.1);
   meter1.Stop();
@@ -154,19 +154,19 @@ TEST_F(OSD_PerfMeterTest, RelativeTimingAccuracy)
 TEST_F(OSD_PerfMeterTest, PrintALL)
 {
 
-  OSD_PerfMeter meter1("Meter1");
+  System::os::OSD_PerfMeter meter1("Meter1");
   DoSomeWork(0.1);
   meter1.Stop();
 
-  OSD_PerfMeter meter2("Meter2");
+  System::os::OSD_PerfMeter meter2("Meter2");
   DoSomeWork(0.2);
   meter2.Stop();
 
-  OSD_PerfMeter meter3("Meter3");
+  System::os::OSD_PerfMeter meter3("Meter3");
   DoSomeWork(0.3);
   meter3.Stop();
 
-  std::string output = OSD_PerfMeter::PrintALL().ToCString();
+  std::string output = System::os::OSD_PerfMeter::PrintALL().ToCString();
 
   EXPECT_TRUE(output.find("Meter1") != std::string::npos)
     << "PrintALL output should contain Meter1";
@@ -179,18 +179,18 @@ TEST_F(OSD_PerfMeterTest, PrintALL)
 TEST_F(OSD_PerfMeterTest, ResetALL)
 {
 
-  OSD_PerfMeter meter1("ResetMeter1");
+  System::os::OSD_PerfMeter meter1("ResetMeter1");
   DoSomeWork(0.1);
   meter1.Stop();
 
-  OSD_PerfMeter meter2("ResetMeter2");
+  System::os::OSD_PerfMeter meter2("ResetMeter2");
   DoSomeWork(0.2);
   meter2.Stop();
 
   EXPECT_GT(meter1.Elapsed(), 0.0);
   EXPECT_GT(meter2.Elapsed(), 0.0);
 
-  OSD_PerfMeter::ResetALL();
+  System::os::OSD_PerfMeter::ResetALL();
 
   EXPECT_EQ(meter1.Elapsed(), 0.0) << "Elapsed time should be zero after ResetALL";
   EXPECT_EQ(meter2.Elapsed(), 0.0) << "Elapsed time should be zero after ResetALL";
@@ -199,7 +199,7 @@ TEST_F(OSD_PerfMeterTest, ResetALL)
 TEST_F(OSD_PerfMeterTest, UnusedMeter)
 {
 
-  OSD_PerfMeter meter("UnusedMeter", false);
+  System::os::OSD_PerfMeter meter("UnusedMeter", false);
 
   EXPECT_EQ(meter.Elapsed(), 0.0) << "Unused meter should have zero elapsed time, actual";
 
@@ -211,7 +211,7 @@ TEST_F(OSD_PerfMeterTest, PrintMethod)
 {
 
   const TCollection_AsciiString meterName = "PrintTestMeter";
-  OSD_PerfMeter                 meter(meterName);
+  System::os::OSD_PerfMeter                 meter(meterName);
 
   DoSomeWork();
 
@@ -232,7 +232,7 @@ TEST_F(OSD_PerfMeterTest, PrintMethod)
 TEST_F(OSD_PerfMeterTest, KillMethod)
 {
 
-  OSD_PerfMeter meter("KillTestMeter");
+  System::os::OSD_PerfMeter meter("KillTestMeter");
 
   DoSomeWork();
 
@@ -246,7 +246,7 @@ TEST_F(OSD_PerfMeterTest, KillMethod)
   double elapsedAfterKill = meter.Elapsed();
   EXPECT_EQ(elapsedAfterKill, 0.0) << "Elapsed time should be reset after Kill";
 
-  std::string allMeters = OSD_PerfMeter::PrintALL().ToCString();
+  std::string allMeters = System::os::OSD_PerfMeter::PrintALL().ToCString();
   EXPECT_TRUE(allMeters.find("KillTestMeter") == std::string::npos)
     << "Killed meter should not appear in PrintALL output";
 }
@@ -254,7 +254,7 @@ TEST_F(OSD_PerfMeterTest, KillMethod)
 TEST_F(OSD_PerfMeterTest, KillRunningMeter)
 {
 
-  OSD_PerfMeter meter("KillRunningMeter");
+  System::os::OSD_PerfMeter meter("KillRunningMeter");
 
   meter.Kill();
 

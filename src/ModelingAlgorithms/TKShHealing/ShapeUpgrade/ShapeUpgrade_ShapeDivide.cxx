@@ -22,7 +22,7 @@
 ShapeUpgrade_ShapeDivide::ShapeUpgrade_ShapeDivide()
     : myStatus(0)
 {
-  myPrecision = myMinTol = Precision::Confusion();
+  myPrecision = myMinTol = math::precision::Precision::Confusion();
   myMaxTol               = 1;
   mySplitFaceTool        = new ShapeUpgrade_FaceDivide;
   myContext              = new ShapeBuild_ReShape;
@@ -34,7 +34,7 @@ ShapeUpgrade_ShapeDivide::ShapeUpgrade_ShapeDivide()
 ShapeUpgrade_ShapeDivide::ShapeUpgrade_ShapeDivide(const TopoDS_Shape& S)
     : myStatus(0)
 {
-  myPrecision = myMinTol = Precision::Confusion();
+  myPrecision = myMinTol = math::precision::Precision::Confusion();
   myMaxTol               = 1;
   mySplitFaceTool        = new ShapeUpgrade_FaceDivide;
   myContext              = new ShapeBuild_ReShape;
@@ -131,7 +131,7 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
       SplitWire->SetMinTolerance(myMinTol);
       SplitWire->SetEdgeMode(myEdgeMode);
     }
-    Message_Msg doneMsg = GetFaceMsg();
+    System::log::Message_Msg doneMsg = GetFaceMsg();
 
     for (TopExp_Explorer exp(myShape, TopAbs_FACE); exp.More(); exp.Next())
     {
@@ -195,7 +195,7 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
     SplitWire->SetMaxTolerance(myMaxTol);
     SplitWire->SetMinTolerance(myMinTol);
     SplitWire->SetEdgeMode(myEdgeMode);
-    Message_Msg doneMsg = GetWireMsg();
+    System::log::Message_Msg doneMsg = GetWireMsg();
 
     TopExp_Explorer exp;
     for (exp.Init(myShape, TopAbs_WIRE, TopAbs_FACE); exp.More(); exp.Next())
@@ -223,7 +223,7 @@ bool ShapeUpgrade_ShapeDivide::Perform(const bool newContext)
       }
     }
 
-    Message_Msg edgeDoneMsg = GetEdgeMsg();
+    System::log::Message_Msg edgeDoneMsg = GetEdgeMsg();
     for (exp.Init(myShape, TopAbs_EDGE, TopAbs_WIRE); exp.More(); exp.Next())
     {
 
@@ -308,24 +308,24 @@ occ::handle<ShapeExtend_BasicMsgRegistrator> ShapeUpgrade_ShapeDivide::MsgRegist
 }
 
 void ShapeUpgrade_ShapeDivide::SendMsg(const TopoDS_Shape&   shape,
-                                       const Message_Msg&    message,
+                                       const System::log::Message_Msg&    message,
                                        const Message_Gravity gravity) const
 {
   if (!myMsgReg.IsNull())
     myMsgReg->Send(shape, message, gravity);
 }
 
-Message_Msg ShapeUpgrade_ShapeDivide::GetFaceMsg() const
+System::log::Message_Msg ShapeUpgrade_ShapeDivide::GetFaceMsg() const
 {
   return "ShapeDivide.FaceDivide.MSG0";
 }
 
-Message_Msg ShapeUpgrade_ShapeDivide::GetWireMsg() const
+System::log::Message_Msg ShapeUpgrade_ShapeDivide::GetWireMsg() const
 {
   return "ShapeDivide.WireDivide.MSG0";
 }
 
-Message_Msg ShapeUpgrade_ShapeDivide::GetEdgeMsg() const
+System::log::Message_Msg ShapeUpgrade_ShapeDivide::GetEdgeMsg() const
 {
   return "ShapeDivide.EdgeDivide.MSG0";
 }

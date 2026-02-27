@@ -20,7 +20,7 @@ namespace
       return 0;
     }
 
-    if (theCircle.Radius() > Precision::Confusion())
+    if (theCircle.Radius() > math::precision::Precision::Confusion())
     {
       const bool isSector =
         theIsFilled && std::abs(std::abs(theU2 - theU1) - 2.0 * M_PI) > gp::Resolution();

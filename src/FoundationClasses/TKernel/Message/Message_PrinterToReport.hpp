@@ -3,9 +3,13 @@
 #include <Message_Printer.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace log {
 class Message_Report;
+}} // namespace System::log
 
-class Message_PrinterToReport : public Message_Printer
+
+namespace System { namespace log {
+class Message_PrinterToReport : public System::log::Message_Printer
 {
   DEFINE_STANDARD_RTTIEXT(Message_PrinterToReport, Message_Printer)
 public:
@@ -34,3 +38,5 @@ private:
   mutable TCollection_AsciiString myName;
   occ::handle<Message_Report>     myReport;
 };
+}} // namespace System::log
+

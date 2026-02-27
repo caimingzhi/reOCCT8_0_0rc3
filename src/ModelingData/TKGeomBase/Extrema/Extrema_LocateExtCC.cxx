@@ -11,8 +11,8 @@ Extrema_LocateExtCC::Extrema_LocateExtCC(const Adaptor3d_Curve& C1,
                                          const double           V0)
     : mySqDist(RealLast())
 {
-  double          TolU = C1.Resolution(Precision::Confusion());
-  double          TolV = C2.Resolution(Precision::Confusion());
+  double          TolU = C1.Resolution(math::precision::Precision::Confusion());
+  double          TolV = C2.Resolution(math::precision::Precision::Confusion());
   Extrema_POnCurv P1, P2;
 
   Extrema_LocECC Xtrem(C1, C2, U0, V0, TolU, TolV);

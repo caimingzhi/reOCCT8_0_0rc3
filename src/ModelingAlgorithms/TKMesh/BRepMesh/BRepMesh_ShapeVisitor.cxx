@@ -70,7 +70,7 @@ bool BRepMesh_ShapeVisitor::addWire(const TopoDS_Wire&            theWire,
   }
 
   occ::handle<ShapeExtend_WireData> aWireData = new ShapeExtend_WireData(theWire, true, false);
-  ShapeAnalysis_Wire aWireTool(aWireData, theDFace->GetFace(), Precision::Confusion());
+  ShapeAnalysis_Wire aWireTool(aWireData, theDFace->GetFace(), math::precision::Precision::Confusion());
 
   ShapeAnalysis_WireOrder aOrderTool;
   aWireTool.CheckOrder(aOrderTool, true, false);

@@ -40,7 +40,7 @@ void StdPrs_WFRestrictedFace::Add(
   for (aToolRst.Init(); aToolRst.More(); aToolRst.Next())
   {
     const Adaptor2d_Curve2d& aRCurve = aToolRst.Value();
-    BndLib_Add2dCurve::Add(aRCurve, Precision::PConfusion(), aBndBox);
+    BndLib_Add2dCurve::Add(aRCurve, math::precision::Precision::PConfusion(), aBndBox);
   }
   if (!aBndBox.IsVoid())
     aBndBox.Get(aUMin, aVMin, aUMax, aVMax);

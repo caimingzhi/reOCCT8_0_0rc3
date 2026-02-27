@@ -113,11 +113,11 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
     BRep_Builder aVBuilder;
     gp_Pnt2d     aPnt[2] = {vecCurve(0).Point(false), vecCurve(vecCurve.Length() - 1).Point(true)};
     double       aDist   = aPnt[0].Distance(aPnt[1]);
-    if (aDist > aMaxTol + Precision::Confusion())
-      aDist = Precision::Confusion();
+    if (aDist > aMaxTol + math::precision::Precision::Confusion())
+      aDist = math::precision::Precision::Confusion();
     else
     {
-      aDist   = 0.5 * aDist + Precision::Confusion();
+      aDist   = 0.5 * aDist + math::precision::Precision::Confusion();
       aPnt[0] = 0.5 * (aPnt[0].XY() + aPnt[1].XY());
     }
     gp_Pnt aPnt3d;
@@ -137,10 +137,10 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
       {
         aPnt[1] = vecCurve(0).Point(false);
         aDist   = aPnt[0].Distance(aPnt[1]);
-        if (aDist > aMaxTol + Precision::Confusion())
+        if (aDist > aMaxTol + math::precision::Precision::Confusion())
         {
           aSurf->D0(aPnt[0].X(), aPnt[0].Y(), aPnt3d);
-          aVBuilder.MakeVertex(aNextVertex, aPnt3d, Precision::Confusion());
+          aVBuilder.MakeVertex(aNextVertex, aPnt3d, math::precision::Precision::Confusion());
         }
         else
         {
@@ -150,7 +150,7 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
       else
       {
         aPnt[1] = vecCurve(iCrv + 1).Point(false);
-        aDist   = 0.5 * (aPnt[0].Distance(aPnt[1])) + Precision::Confusion();
+        aDist   = 0.5 * (aPnt[0].Distance(aPnt[1])) + math::precision::Precision::Confusion();
         aPnt[0] = 0.5 * (aPnt[0].XY() + aPnt[1].XY());
         aSurf->D0(aPnt[0].X(), aPnt[0].Y(), aPnt3d);
         aVBuilder.MakeVertex(aNextVertex, aPnt3d, aDist);
@@ -191,7 +191,7 @@ TopoDS_Face BRepAlgo::ConvertFace(const TopoDS_Face& theFace, const double theAn
 {
   TopoDS_Face                     aResult;
   const occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(theFace);
-  BRepBuilderAPI_MakeFace         aMkFace(aSurf, Precision::Confusion());
+  BRepBuilderAPI_MakeFace         aMkFace(aSurf, math::precision::Precision::Confusion());
 
   TopExp_Explorer anExp(theFace, TopAbs_WIRE);
   for (; anExp.More(); anExp.Next())
@@ -246,7 +246,7 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
       occ::handle<Geom_TrimmedCurve> aTrCurve = new Geom_TrimmedCurve(aCurve, First, Last);
       tab(index)                              = GeomConvert::CurveToBSplineCurve(aTrCurve);
       tab(index)->Transform(L.Transformation());
-      GeomConvert::C0BSplineToC1BSplineCurve(tab(index), Precision::Confusion());
+      GeomConvert::C0BSplineToC1BSplineCurve(tab(index), math::precision::Precision::Confusion());
 
       if (index >= 1)
       {
@@ -326,7 +326,7 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
     occ::handle<Geom_BSplineCurve> aBS =
       GeomConvert::CurveToBSplineCurve(new Geom_TrimmedCurve(aC, First, Last));
     aBS->Transform(L.Transformation());
-    GeomConvert::C0BSplineToC1BSplineCurve(aBS, Precision::Confusion());
+    GeomConvert::C0BSplineToC1BSplineCurve(aBS, math::precision::Precision::Confusion());
     if (edge.Orientation() == TopAbs_REVERSED)
     {
       aBS->Reverse();
@@ -341,8 +341,8 @@ TopoDS_Wire BRepAlgo::ConcatenateWire(const TopoDS_Wire&  W,
 
 TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
 {
-  double LinTol = Precision::Confusion();
-  double AngTol = Precision::Angular();
+  double LinTol = math::precision::Precision::Confusion();
+  double AngTol = math::precision::Precision::Angular();
 
   TopoDS_Edge ResEdge;
 
@@ -382,7 +382,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
     {
       ElCLib::AdjustPeriodic(aBasisCurve->FirstParameter(),
                              aBasisCurve->LastParameter(),
-                             Precision::PConfusion(),
+                             math::precision::Precision::PConfusion(),
                              fpar,
                              lpar);
     }
@@ -547,7 +547,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
 
             ElCLib::AdjustPeriodic(LparSeq.Last(),
                                    LparSeq.Last() + aPeriod,
-                                   Precision::PConfusion(),
+                                   math::precision::Precision::PConfusion(),
                                    NewFpar,
                                    NewLpar);
           }
@@ -556,7 +556,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
 
             ElCLib::AdjustPeriodic(FparSeq.Last() - aPeriod,
                                    FparSeq.Last(),
-                                   Precision::PConfusion(),
+                                   math::precision::Precision::PConfusion(),
                                    NewFpar,
                                    NewLpar);
           }
@@ -637,7 +637,7 @@ TopoDS_Edge BRepAlgo::ConcatenateWireC0(const TopoDS_Wire& aWire)
       occ::handle<Geom_TrimmedCurve> aTrCurve =
         new Geom_TrimmedCurve(CurveSeq(i), FparSeq(i), LparSeq(i));
       tab(i - 1) = GeomConvert::CurveToBSplineCurve(aTrCurve);
-      GeomConvert::C0BSplineToC1BSplineCurve(tab(i - 1), Precision::Confusion());
+      GeomConvert::C0BSplineToC1BSplineCurve(tab(i - 1), math::precision::Precision::Confusion());
 
       if (!IsFwdSeq(i))
       {

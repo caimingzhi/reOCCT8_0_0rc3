@@ -84,8 +84,8 @@ void PrsDim_RadiusDimension::SetMeasuredGeometry(const TopoDS_Shape& theShape,
 bool PrsDim_RadiusDimension::CheckPlane(const gp_Pln& thePlane) const
 {
 
-  return thePlane.Contains(myAnchorPoint, Precision::Confusion())
-         || thePlane.Contains(myCircle.Location(), Precision::Confusion());
+  return thePlane.Contains(myAnchorPoint, math::precision::Precision::Confusion())
+         || thePlane.Contains(myCircle.Location(), math::precision::Precision::Confusion());
 }
 
 void PrsDim_RadiusDimension::ComputePlane()
@@ -145,7 +145,7 @@ void PrsDim_RadiusDimension::Compute(const occ::handle<PrsMgr_PresentationManage
 
 bool PrsDim_RadiusDimension::IsValidCircle(const gp_Circ& theCircle) const
 {
-  return theCircle.Radius() > Precision::Confusion();
+  return theCircle.Radius() > math::precision::Precision::Confusion();
 }
 
 bool PrsDim_RadiusDimension::IsValidAnchor(const gp_Circ& theCircle, const gp_Pnt& theAnchor) const
@@ -153,8 +153,8 @@ bool PrsDim_RadiusDimension::IsValidAnchor(const gp_Circ& theCircle, const gp_Pn
   gp_Pln aCirclePlane(theCircle.Location(), theCircle.Axis().Direction());
   double anAnchorDist = theAnchor.Distance(theCircle.Location());
 
-  return anAnchorDist > Precision::Confusion()
-         && aCirclePlane.Contains(theAnchor, Precision::Confusion());
+  return anAnchorDist > math::precision::Precision::Confusion()
+         && aCirclePlane.Contains(theAnchor, math::precision::Precision::Confusion());
 }
 
 gp_Pnt PrsDim_RadiusDimension::GetTextPosition() const

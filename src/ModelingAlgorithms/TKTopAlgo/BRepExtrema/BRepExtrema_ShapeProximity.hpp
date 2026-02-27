@@ -12,11 +12,11 @@ class BRepExtrema_ShapeProximity
 {
 
 public:
-  Standard_EXPORT BRepExtrema_ShapeProximity(const double theTolerance = Precision::Infinite());
+  Standard_EXPORT BRepExtrema_ShapeProximity(const double theTolerance = math::precision::Precision::Infinite());
 
   Standard_EXPORT BRepExtrema_ShapeProximity(const TopoDS_Shape& theShape1,
                                              const TopoDS_Shape& theShape2,
-                                             const double theTolerance = Precision::Infinite());
+                                             const double theTolerance = math::precision::Precision::Infinite());
 
 public:
   double Tolerance() const { return myTolerance; }

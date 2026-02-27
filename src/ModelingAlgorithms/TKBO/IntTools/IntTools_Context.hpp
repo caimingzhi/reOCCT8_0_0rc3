@@ -53,7 +53,7 @@ public:
   Standard_EXPORT BRepAdaptor_Surface& SurfaceAdaptor(const TopoDS_Face& theFace);
 
   Standard_EXPORT Bnd_OBB& OBB(const TopoDS_Shape& theShape,
-                               const double        theFuzzyValue = Precision::Confusion());
+                               const double        theFuzzyValue = math::precision::Precision::Confusion());
 
   Standard_EXPORT void UVBounds(const TopoDS_Face& theFace,
                                 double&            UMin,
@@ -71,14 +71,14 @@ public:
                                 const TopoDS_Edge&   theE,
                                 double&              theT,
                                 double&              theTol,
-                                const double         theFuzz = Precision::Confusion());
+                                const double         theFuzz = math::precision::Precision::Confusion());
 
   Standard_EXPORT int ComputeVF(const TopoDS_Vertex& theVertex,
                                 const TopoDS_Face&   theFace,
                                 double&              theU,
                                 double&              theV,
                                 double&              theTol,
-                                const double         theFuzz = Precision::Confusion());
+                                const double         theFuzz = math::precision::Precision::Confusion());
 
   Standard_EXPORT TopAbs_State StatePointFace(const TopoDS_Face& aF, const gp_Pnt2d& aP2D);
 

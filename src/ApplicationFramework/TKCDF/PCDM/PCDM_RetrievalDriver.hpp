@@ -9,7 +9,10 @@
 #include <NCollection_Sequence.hpp>
 
 class CDM_MetaData;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class PCDM_RetrievalDriver : public PCDM_Reader
 {
@@ -18,10 +21,10 @@ class PCDM_RetrievalDriver : public PCDM_Reader
 
 public:
   Standard_EXPORT static int DocumentVersion(const TCollection_ExtendedString&     theFileName,
-                                             const occ::handle<Message_Messenger>& theMsgDriver);
+                                             const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT static int ReferenceCounter(const TCollection_ExtendedString&     theFileName,
-                                              const occ::handle<Message_Messenger>& theMsgDriver);
+                                              const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT void SetFormat(const TCollection_ExtendedString& aformat);
 
@@ -32,7 +35,7 @@ public:
 private:
   Standard_EXPORT static void References(const TCollection_ExtendedString&     theFileName,
                                          NCollection_Sequence<PCDM_Reference>& theReferences,
-                                         const occ::handle<Message_Messenger>& theMsgDriver);
+                                         const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   TCollection_ExtendedString myFormat;
 };

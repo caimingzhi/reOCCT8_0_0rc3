@@ -5,7 +5,7 @@
 #include <Message_Messenger.hpp>
 
 void BinMDocStd::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
-                            const occ::handle<Message_Messenger>&   theMsgDriver)
+                            const occ::handle<System::log::Message_Messenger>&   theMsgDriver)
 {
   theDriverTable->AddDriver(new BinMDocStd_XLinkDriver(theMsgDriver));
 }

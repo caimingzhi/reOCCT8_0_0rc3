@@ -194,7 +194,7 @@ static int projface(Draw_Interpretor& di, int argc, const char** argv)
   }
   TopoDS_Face               F       = TopoDS::Face(Shape);
   occ::handle<Geom_Surface> thesurf = BRep_Tool::Surface(F);
-  BRepTopAdaptor_FClass2d   aClassifier(F, Precision::Confusion());
+  BRepTopAdaptor_FClass2d   aClassifier(F, math::precision::Precision::Confusion());
 
   double X, Y, Z, U, V;
   X = U = Draw::Atof(argv[2]);
@@ -207,13 +207,13 @@ static int projface(Draw_Interpretor& di, int argc, const char** argv)
     double uf, ul, vf, vl;
     thesurf->Bounds(uf, ul, vf, vl);
 
-    if (Precision::IsInfinite(uf))
+    if (math::precision::Precision::IsInfinite(uf))
       uf = -1000;
-    if (Precision::IsInfinite(ul))
+    if (math::precision::Precision::IsInfinite(ul))
       ul = 1000;
-    if (Precision::IsInfinite(vf))
+    if (math::precision::Precision::IsInfinite(vf))
       vf = -1000;
-    if (Precision::IsInfinite(vl))
+    if (math::precision::Precision::IsInfinite(vl))
       vl = 1000;
     double du = std::abs(ul - uf) / 10;
     double dv = std::abs(vl - vf) / 10;
@@ -322,7 +322,7 @@ static int projcurve(Draw_Interpretor& di, int argc, const char** argv)
   X = Draw::Atof(argv[2 + i0]);
   Y = Draw::Atof(argv[3 + i0]);
   Z = Draw::Atof(argv[4 + i0]);
-  di << "Precision (BRepBuilderAPI) : " << BRepBuilderAPI::Precision() << "  Projection : " << X
+  di << "math::precision::Precision (BRepBuilderAPI) : " << BRepBuilderAPI::Precision() << "  Projection : " << X
      << "  " << Y << "  " << Z << "\n";
 
   gp_Pnt P3D(X, Y, Z);
@@ -850,7 +850,7 @@ static int XSHAPE_comptoledge(Draw_Interpretor& di, int argc, const char** argv)
     TopoDS_Edge edge = TopoDS::Edge(exp.Current());
     sae.CheckSameParameter(edge, tol, nbpnts);
     double t   = BRep_Tool::Tolerance(edge);
-    double rel = tol / (t > Precision::Confusion() ? t : Precision::Confusion());
+    double rel = tol / (t > math::precision::Precision::Confusion() ? t : math::precision::Precision::Confusion());
     ave += tol;
     relave += rel;
     if (!num)
@@ -1150,7 +1150,7 @@ static int checkselfintersection(Draw_Interpretor& di, int argc, const char** ar
     }
   }
 
-  ShapeAnalysis_Wire analyser(TopoDS::Wire(wire), TopoDS::Face(face), Precision::Confusion());
+  ShapeAnalysis_Wire analyser(TopoDS::Wire(wire), TopoDS::Face(face), math::precision::Precision::Confusion());
   bool               result = analyser.CheckSelfIntersection();
 
   if (result)
@@ -1380,7 +1380,7 @@ int getanacurve(Draw_Interpretor& di, int n, const char** a)
       icurv = 2;
   }
 
-  double tol = Precision::Confusion();
+  double tol = math::precision::Precision::Confusion();
   if (n > 4)
     tol = Draw::Atof(a[4]);
 

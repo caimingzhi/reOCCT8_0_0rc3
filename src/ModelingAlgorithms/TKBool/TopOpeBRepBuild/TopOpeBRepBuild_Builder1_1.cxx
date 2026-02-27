@@ -667,7 +667,7 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
     if (delta < resol)
     {
       double dist = BRep_Tool::Pnt(aV1).Distance(BRep_Tool::Pnt(aV2));
-      if (dist < tolMax || delta < Precision::PConfusion())
+      if (dist < tolMax || delta < math::precision::Precision::PConfusion())
       {
 
         TopOpeBRepDS_Kind IntType1 = aPave1->InterferenceType();

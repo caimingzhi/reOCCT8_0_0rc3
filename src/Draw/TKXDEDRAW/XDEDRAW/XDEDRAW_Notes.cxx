@@ -368,9 +368,9 @@ static int noteCreateBinData(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<XCAFDoc_Note> aNote;
   if (aFromFile)
   {
-    OSD_Path aPath(aFilename);
-    OSD_File aFile(aPath);
-    aFile.Open(OSD_ReadOnly, OSD_Protection());
+    System::os::OSD_Path aPath(aFilename);
+    System::os::OSD_File aFile(aPath);
+    aFile.Open(OSD_ReadOnly, System::os::OSD_Protection());
     aNote = aNotesTool->CreateBinData(aUsername, aTimestamp, aTitle, aMIMEtype, aFile);
   }
   else if (aFromData)

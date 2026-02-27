@@ -84,7 +84,7 @@ Convert_CircleToBSplineCurve::Convert_CircleToBSplineCurve(
     : Convert_ConicToBSplineCurve(0, 0, 0)
 {
   double delta = ULast - UFirst;
-  double Eps   = Precision::PConfusion();
+  double Eps   = math::precision::Precision::PConfusion();
 
   if ((delta > (2 * M_PI + Eps)) || (delta <= 0.0e0))
   {

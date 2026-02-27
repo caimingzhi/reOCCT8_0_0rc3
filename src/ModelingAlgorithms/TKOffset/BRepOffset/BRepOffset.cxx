@@ -28,7 +28,7 @@ occ::handle<Geom_Surface> BRepOffset::Surface(const occ::handle<Geom_Surface>& S
                                               BRepOffset_Status&               theStatus,
                                               bool                             allowC0)
 {
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   theStatus = BRepOffset_Good;
   occ::handle<Geom_Surface> Result;

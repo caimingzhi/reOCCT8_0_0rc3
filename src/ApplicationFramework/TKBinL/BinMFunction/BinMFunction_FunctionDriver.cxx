@@ -12,7 +12,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMFunction_FunctionDriver, BinMDF_ADriver)
 
 BinMFunction_FunctionDriver::BinMFunction_FunctionDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TFunction_Function)->Name())
 {
 }

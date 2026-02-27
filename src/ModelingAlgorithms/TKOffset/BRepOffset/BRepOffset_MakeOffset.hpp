@@ -42,7 +42,7 @@ public:
     const GeomAbs_JoinType       Join           = GeomAbs_Arc,
     const bool                   Thickening     = false,
     const bool                   RemoveIntEdges = false,
-    const Message_ProgressRange& theRange       = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange       = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Initialize(const TopoDS_Shape&    S,
                                   const double           Offset,
@@ -63,10 +63,10 @@ public:
   Standard_EXPORT void SetOffsetOnFace(const TopoDS_Face& F, const double Off);
 
   Standard_EXPORT void MakeOffsetShape(
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void MakeThickSolid(
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT const BRepOffset_Analyse& GetAnalyse() const;
 
@@ -87,7 +87,7 @@ public:
   Standard_EXPORT const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&
                         ClosingFaces() const;
 
-  Standard_EXPORT bool CheckInputData(const Message_ProgressRange& theRange);
+  Standard_EXPORT bool CheckInputData(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT const TopoDS_Shape& GetBadShape() const;
 
@@ -111,36 +111,36 @@ private:
 
   Standard_EXPORT void BuildFaceComp();
 
-  Standard_EXPORT void BuildOffsetByArc(const Message_ProgressRange& theRange);
+  Standard_EXPORT void BuildOffsetByArc(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void BuildOffsetByInter(const Message_ProgressRange& theRange);
+  Standard_EXPORT void BuildOffsetByInter(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void MakeOffsetFaces(
     NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher>& theMapSF,
-    const Message_ProgressRange&                                                   theRange);
+    const System::log::Message_ProgressRange&                                                   theRange);
 
   Standard_EXPORT void SelfInter(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif);
 
   Standard_EXPORT void Intersection3D(BRepOffset_Inter3d&          Inter,
-                                      const Message_ProgressRange& theRange);
+                                      const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void Intersection2D(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif,
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& NewEdges,
-    const Message_ProgressRange&                                         theRange);
+    const System::log::Message_ProgressRange&                                         theRange);
 
   Standard_EXPORT void MakeLoops(
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif,
-    const Message_ProgressRange&                                   theRange);
+    const System::log::Message_ProgressRange&                                   theRange);
 
   Standard_EXPORT void MakeLoopsOnContext(
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif);
 
   Standard_EXPORT void MakeFaces(
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif,
-    const Message_ProgressRange&                                   theRange);
+    const System::log::Message_ProgressRange&                                   theRange);
 
-  Standard_EXPORT void MakeShells(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeShells(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void SelectShells();
 
@@ -148,7 +148,7 @@ private:
 
   Standard_EXPORT void ReplaceRoots();
 
-  Standard_EXPORT void MakeSolid(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeSolid(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void ToContext(
     NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher>& MapSF);
@@ -157,7 +157,7 @@ private:
 
   Standard_EXPORT void CorrectConicalFaces();
 
-  Standard_EXPORT void MakeMissingWalls(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeMissingWalls(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void RemoveInternalEdges();
 
@@ -168,7 +168,7 @@ private:
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&      theBuild,
     occ::handle<BRepAlgo_AsDes>&                                                   theAsDes,
     occ::handle<BRepAlgo_AsDes>&                                                   theAsDes2d,
-    const Message_ProgressRange&                                                   theRange);
+    const System::log::Message_ProgressRange&                                                   theRange);
 
   Standard_EXPORT void BuildSplitsOfExtendedFaces(
     const NCollection_List<TopoDS_Shape>& theLF,
@@ -179,12 +179,12 @@ private:
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theFacesOrigins,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theETrimEInf,
     BRepAlgo_Image&                                                           theImage,
-    const Message_ProgressRange&                                              theRange);
+    const System::log::Message_ProgressRange&                                              theRange);
 
   Standard_EXPORT void BuildSplitsOfTrimmedFaces(const NCollection_List<TopoDS_Shape>& theLF,
                                                  const occ::handle<BRepAlgo_AsDes>&    theAsDes,
                                                  BRepAlgo_Image&                       theImage,
-                                                 const Message_ProgressRange&          theRange);
+                                                 const System::log::Message_ProgressRange&          theRange);
 
   double                                                             myOffset;
   double                                                             myTol;

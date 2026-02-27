@@ -9,7 +9,10 @@
 #include <Standard_Integer.hpp>
 #include <XmlObjMgt_RRelocationTable.hpp>
 #include <XmlObjMgt_SRelocationTable.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
@@ -35,18 +38,18 @@ public:
                                      XmlObjMgt_Persistent&             aTarget,
                                      XmlObjMgt_SRelocationTable&       aRelocTable) const = 0;
 
-  const occ::handle<Message_Messenger>& MessageDriver() const { return myMessageDriver; }
+  const occ::handle<System::log::Message_Messenger>& MessageDriver() const { return myMessageDriver; }
 
   DEFINE_STANDARD_RTTIEXT(XmlMDF_ADriver, Standard_Transient)
 
 protected:
-  Standard_EXPORT XmlMDF_ADriver(const occ::handle<Message_Messenger>& theMessageDriver,
+  Standard_EXPORT XmlMDF_ADriver(const occ::handle<System::log::Message_Messenger>& theMessageDriver,
                                  const char*                           theNamespace,
                                  const char*                           theName = nullptr);
 
   TCollection_AsciiString        myTypeName;
   TCollection_AsciiString        myNamespace;
-  occ::handle<Message_Messenger> myMessageDriver;
+  occ::handle<System::log::Message_Messenger> myMessageDriver;
 
 private:
   friend class XmlMDF;

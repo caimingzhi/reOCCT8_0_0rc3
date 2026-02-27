@@ -20,7 +20,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom2d_OffsetCurve, Geom2d_Curve)
 
-static const double MyAngularToleranceForG1 = Precision::Angular();
+static const double MyAngularToleranceForG1 = math::precision::Precision::Angular();
 
 occ::handle<Geom2d_Geometry> Geom2d_OffsetCurve::Copy() const
 {

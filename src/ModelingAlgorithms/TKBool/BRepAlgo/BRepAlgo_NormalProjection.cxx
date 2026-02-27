@@ -32,19 +32,19 @@
 #ifdef OCCT_DEBUG_CHRONO
   #include <OSD_Timer.hpp>
 
-OSD_Chronometer chr_total, chr_init, chr_approx, chr_booltool;
+System::os::OSD_Chronometer chr_total, chr_init, chr_approx, chr_booltool;
 
 double                 t_total, t_init, t_approx, t_booltool;
 Standard_IMPORT double t_init_point, t_dicho_bound;
 Standard_IMPORT int    init_point_count, dicho_bound_count;
 
-void InitChron(OSD_Chronometer& ch)
+void InitChron(System::os::OSD_Chronometer& ch)
 {
   ch.Reset();
   ch.Start();
 }
 
-void ResultChron(OSD_Chronometer& ch, double& time)
+void ResultChron(System::os::OSD_Chronometer& ch, double& time)
 {
   double tch;
   ch.Stop();
@@ -427,7 +427,7 @@ void BRepAlgo_NormalProjection::Build()
               {
 
                 BRepTopAdaptor_FClass2d classifier(TopoDS::Face(Faces->Value(j)),
-                                                   Precision::Confusion());
+                                                   math::precision::Precision::Confusion());
                 gp_Pnt2d                Puv;
                 double                  f    = PCur2d->FirstParameter();
                 double                  l    = PCur2d->LastParameter();
@@ -451,7 +451,7 @@ void BRepAlgo_NormalProjection::Build()
 #endif
 
               BRepTopAdaptor_FClass2d classifier(TopoDS::Face(Faces->Value(j)),
-                                                 Precision::Confusion());
+                                                 math::precision::Precision::Confusion());
               gp_Pnt2d                Puv;
               double                  f    = PCur2d->FirstParameter();
               double                  l    = PCur2d->LastParameter();

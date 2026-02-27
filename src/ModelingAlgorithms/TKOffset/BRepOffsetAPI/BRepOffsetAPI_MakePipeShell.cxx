@@ -146,7 +146,7 @@ void BRepOffsetAPI_MakePipeShell::Simulate(const int N, NCollection_List<TopoDS_
   myPipe->Simulate(N, R);
 }
 
-void BRepOffsetAPI_MakePipeShell::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_MakePipeShell::Build(const System::log::Message_ProgressRange&)
 {
   bool Ok;
   Ok = myPipe->Build();

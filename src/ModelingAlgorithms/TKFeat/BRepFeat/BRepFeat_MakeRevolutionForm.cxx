@@ -167,9 +167,9 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
   myAngle1 = asin(H1 / Rad) + M_PI / 10.;
   myAngle2 = asin(H2 / Rad) + M_PI / 10.;
 
-  if ((myAngle1 - M_PI / 2) > Precision::Confusion())
+  if ((myAngle1 - M_PI / 2) > math::precision::Precision::Confusion())
     myAngle1 = M_PI / 2;
-  if ((myAngle2 - M_PI / 2) > Precision::Confusion())
+  if ((myAngle2 - M_PI / 2) > math::precision::Precision::Confusion())
     myAngle2 = M_PI / 2;
 
   mySkface.Nullify();
@@ -186,7 +186,7 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
   }
 #endif
 
-  myTol = Precision::Confusion();
+  myTol = math::precision::Precision::Confusion();
 
   exx.Init(W, TopAbs_VERTEX);
   for (; exx.More(); exx.Next())
@@ -369,10 +369,10 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
 
     BRep_Builder  Bu;
     TopoDS_Vertex v1, v2, v3, v4;
-    Bu.MakeVertex(v1, RFirstPnt2, Precision::Confusion());
-    Bu.MakeVertex(v2, RFirstPnt1, Precision::Confusion());
-    Bu.MakeVertex(v3, RLastPnt2, Precision::Confusion());
-    Bu.MakeVertex(v4, RLastPnt1, Precision::Confusion());
+    Bu.MakeVertex(v1, RFirstPnt2, math::precision::Precision::Confusion());
+    Bu.MakeVertex(v2, RFirstPnt1, math::precision::Precision::Confusion());
+    Bu.MakeVertex(v3, RLastPnt2, math::precision::Precision::Confusion());
+    Bu.MakeVertex(v4, RLastPnt1, math::precision::Precision::Confusion());
 
     BRepLib_MakeEdge ee1(theFC, v1, v2);
     BRepLib_MakeEdge ee2(theLC, v3, v4);
@@ -380,13 +380,13 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
     if (Sliding && !PtOnFirstEdge)
     {
       BRepExtrema_ExtCF ext1(TopoDS::Edge(ee1.Shape()), FirstFace);
-      if (ext1.NbExt() < 1 || ext1.SquareDistance(1) > Precision::SquareConfusion())
+      if (ext1.NbExt() < 1 || ext1.SquareDistance(1) > math::precision::Precision::SquareConfusion())
         Sliding = false;
     }
     if (Sliding && !PtOnLastEdge)
     {
       BRepExtrema_ExtCF ext2(ee2, LastFace);
-      if (ext2.NbExt() < 1 || ext2.SquareDistance(1) > Precision::SquareConfusion())
+      if (ext2.NbExt() < 1 || ext2.SquareDistance(1) > math::precision::Precision::SquareConfusion())
         Sliding = false;
     }
     if (Sliding && PtOnFirstEdge)
@@ -401,14 +401,14 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
         gp_Circ                  Circ = C1->Circ();
         FirstCircle                   = Circ;
         gp_Ax1 circax                 = FirstCircle.Axis();
-        if (!circax.IsCoaxial(myAxe, Precision::Confusion(), Precision::Confusion()))
+        if (!circax.IsCoaxial(myAxe, math::precision::Precision::Confusion(), math::precision::Precision::Confusion()))
           Sliding = false;
         else
         {
 
           if (fabs(FirstCircle.Radius() - FirstRayon) >=
 
-              Precision::Confusion())
+              math::precision::Precision::Confusion())
             Sliding = false;
         }
       }
@@ -426,13 +426,13 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
         gp_Circ                  Circ = C1->Circ();
         LastCircle                    = Circ;
         gp_Ax1 circax                 = LastCircle.Axis();
-        if (!circax.IsCoaxial(myAxe, Precision::Confusion(), Precision::Confusion()))
+        if (!circax.IsCoaxial(myAxe, math::precision::Precision::Confusion(), math::precision::Precision::Confusion()))
           Sliding = false;
         else
         {
           double rad = LastCircle.Radius();
 
-          if (fabs(rad - LastRayon) >= Precision::Confusion())
+          if (fabs(rad - LastRayon) >= math::precision::Precision::Confusion())
           {
 
             Sliding = false;
@@ -851,7 +851,7 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
       occ::handle<Geom_Curve> ln = BRep_Tool::Curve(e, f, l);
 
       occ::handle<Geom2d_Curve> l2d = GeomAPI::To2d(ln, Plane->Pln());
-      Geom2dAPI_InterCurveCurve intcc(l2d, ln2d, Precision::Confusion());
+      Geom2dAPI_InterCurveCurve intcc(l2d, ln2d, math::precision::Precision::Confusion());
       TopoDS_Vertex             VV;
       VV.Nullify();
 
@@ -863,7 +863,7 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
         double par = IntPar(ln, point);
         if (f <= par && l >= par)
         {
-          Bu.MakeVertex(VV, point, Precision::Confusion());
+          Bu.MakeVertex(VV, point, math::precision::Precision::Confusion());
         }
       }
 
@@ -903,7 +903,7 @@ void BRepFeat_MakeRevolutionForm::Init(const TopoDS_Shape&            Sbase,
     BRepLib_MakeFace newbndface(myPln->Pln(), Wiwiwi, true);
     TopoDS_Face      NewBndFace = TopoDS::Face(newbndface.Shape());
 
-    BRepTopAdaptor_FClass2d Cl(NewBndFace, Precision::Confusion());
+    BRepTopAdaptor_FClass2d Cl(NewBndFace, math::precision::Precision::Confusion());
     double                  paru, parv;
     ElSLib::Parameters(myPln->Pln(), CheckPnt, paru, parv);
     gp_Pnt2d checkpnt2d(paru, parv);

@@ -346,7 +346,7 @@ occ::handle<Standard_Transient> XSControl_WorkSession::Result(
 }
 
 int XSControl_WorkSession::TransferReadOne(const occ::handle<Standard_Transient>& ent,
-                                           const Message_ProgressRange&           theProgress)
+                                           const System::log::Message_ProgressRange&           theProgress)
 {
   occ::handle<Interface_InterfaceModel> model = Model();
   if (ent == model)
@@ -359,7 +359,7 @@ int XSControl_WorkSession::TransferReadOne(const occ::handle<Standard_Transient>
     return myTransferReader->TransferList(list, true, theProgress);
 }
 
-int XSControl_WorkSession::TransferReadRoots(const Message_ProgressRange& theProgress)
+int XSControl_WorkSession::TransferReadRoots(const System::log::Message_ProgressRange& theProgress)
 {
   return myTransferReader->TransferRoots(Graph(), theProgress);
 }
@@ -385,7 +385,7 @@ occ::handle<Interface_InterfaceModel> XSControl_WorkSession::NewModel()
 IFSelect_ReturnStatus XSControl_WorkSession::TransferWriteShape(
   const TopoDS_Shape&          shape,
   const bool                   compgraph,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   const std::lock_guard<std::mutex> aLock(GetGlobalMutex());
   IFSelect_ReturnStatus             status;

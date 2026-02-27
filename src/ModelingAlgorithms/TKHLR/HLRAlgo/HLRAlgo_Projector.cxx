@@ -304,19 +304,19 @@ void HLRAlgo_Projector::SetDirection()
 {
   gp_Vec V1(1, 0, 0);
   V1.Transform(myTrsf);
-  if ((std::abs(V1.X()) + std::abs(V1.Y())) < Precision::Angular())
+  if ((std::abs(V1.X()) + std::abs(V1.Y())) < math::precision::Precision::Angular())
     V1.SetCoord(1, 1, 0);
   gp_Vec2d D1(V1.X(), V1.Y());
   myD1.SetCoord(-D1.Y(), D1.X());
   gp_Vec V2(0, 1, 0);
   V2.Transform(myTrsf);
-  if ((std::abs(V2.X()) + std::abs(V2.Y())) < Precision::Angular())
+  if ((std::abs(V2.X()) + std::abs(V2.Y())) < math::precision::Precision::Angular())
     V2.SetCoord(1, 1, 0);
   gp_Vec2d D2(V2.X(), V2.Y());
   myD2.SetCoord(-D2.Y(), D2.X());
   gp_Vec V3(0, 0, 1);
   V3.Transform(myTrsf);
-  if ((std::abs(V3.X()) + std::abs(V3.Y())) < Precision::Angular())
+  if ((std::abs(V3.X()) + std::abs(V3.Y())) < math::precision::Precision::Angular())
     V3.SetCoord(1, 1, 0);
   gp_Vec2d D3(V3.X(), V3.Y());
   myD3.SetCoord(-D3.Y(), D3.X());

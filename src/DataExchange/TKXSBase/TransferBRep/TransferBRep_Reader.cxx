@@ -89,7 +89,7 @@ bool TransferBRep_Reader::CheckStatusModel(const bool withprint) const
   Interface_CheckIterator chl = cht.CompleteCheckList();
   if (withprint && !theProc.IsNull() && !theProc->Messenger().IsNull())
   {
-    Message_Messenger::StreamBuffer aBuffer = theProc->Messenger()->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aBuffer = theProc->Messenger()->SendInfo();
     chl.Print(aBuffer, theModel, false);
   }
   return chl.IsEmpty(true);
@@ -140,7 +140,7 @@ void TransferBRep_Reader::EndTransfer()
 
 void TransferBRep_Reader::PrepareTransfer() {}
 
-void TransferBRep_Reader::TransferRoots(const Message_ProgressRange& theProgress)
+void TransferBRep_Reader::TransferRoots(const System::log::Message_ProgressRange& theProgress)
 {
   Clear();
   if (!BeginTransfer())
@@ -151,7 +151,7 @@ void TransferBRep_Reader::TransferRoots(const Message_ProgressRange& theProgress
   EndTransfer();
 }
 
-bool TransferBRep_Reader::Transfer(const int num, const Message_ProgressRange& theProgress)
+bool TransferBRep_Reader::Transfer(const int num, const System::log::Message_ProgressRange& theProgress)
 {
   if (!BeginTransfer())
     return false;
@@ -162,7 +162,7 @@ bool TransferBRep_Reader::Transfer(const int num, const Message_ProgressRange& t
 
   if (theProc->TraceLevel() > 1)
   {
-    Message_Messenger::StreamBuffer sout = theProc->Messenger()->SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = theProc->Messenger()->SendInfo();
     sout << "--  Transfer(Read) : ";
     theModel->Print(ent, sout);
     sout << std::endl;
@@ -175,7 +175,7 @@ bool TransferBRep_Reader::Transfer(const int num, const Message_ProgressRange& t
 
 void TransferBRep_Reader::TransferList(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
-  const Message_ProgressRange&                                               theProgress)
+  const System::log::Message_ProgressRange&                                               theProgress)
 {
   if (!BeginTransfer())
     return;
@@ -183,14 +183,14 @@ void TransferBRep_Reader::TransferList(
     return;
   Transfer_TransferOutput         TP(theProc, theModel);
   int                             i, nb = list->Length();
-  Message_Messenger::StreamBuffer sout = theProc->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = theProc->Messenger()->SendInfo();
 
   if (theProc->TraceLevel() > 1)
     sout << "--  Transfer(Read-List) : " << nb << " Items" << std::endl;
-  Message_ProgressScope aPS(theProgress, nullptr, nb);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nb);
   for (i = 1; i <= nb && aPS.More(); i++)
   {
-    Message_ProgressRange           aRange = aPS.Next();
+    System::log::Message_ProgressRange           aRange = aPS.Next();
     occ::handle<Standard_Transient> ent    = list->Value(i);
     if (theModel->Number(ent) == 0)
       continue;
@@ -274,7 +274,7 @@ bool TransferBRep_Reader::CheckStatusResult(const bool withprint) const
     chl = theProc->CheckList(false);
   if (withprint && !theProc.IsNull() && !theProc->Messenger().IsNull())
   {
-    Message_Messenger::StreamBuffer aBuffer = theProc->Messenger()->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aBuffer = theProc->Messenger()->SendInfo();
     chl.Print(aBuffer, theModel, false);
   }
   return chl.IsEmpty(true);

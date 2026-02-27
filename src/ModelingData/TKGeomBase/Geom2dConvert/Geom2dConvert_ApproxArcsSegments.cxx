@@ -56,7 +56,7 @@ Geom2dConvert_ApproxArcsSegments::Geom2dConvert_ApproxArcsSegments(
     {
 
       const double aDist = myExt[0].Dist(myExt[1]);
-      if (aDist > Precision::Confusion())
+      if (aDist > math::precision::Precision::Confusion())
       {
         const gp_Ax2d anAx2d(myExt[0].Point(), gp_Vec2d(myExt[0].Point(), myExt[1].Point()));
         const occ::handle<Geom2d_Line> aLine = new Geom2d_Line(anAx2d);
@@ -122,9 +122,9 @@ bool Geom2dConvert_ApproxArcsSegments::makeArc(const Geom2dConvert_PPoint&      
 
   const gp_XY aDelta = aP2 - aP1;
   double      aSense = aVec ^ aDelta;
-  if (aSense > Precision::Angular())
+  if (aSense > math::precision::Precision::Angular())
     aSense = 1.;
-  else if (aSense < -Precision::Angular())
+  else if (aSense < -math::precision::Precision::Angular())
     aSense = -1.;
   else
   {
@@ -356,7 +356,7 @@ void Geom2dConvert_ApproxArcsSegments::getLinearParts(
 
   gp_XY        aDir  = myExt[1].Point() - myExt[0].Point();
   const double aMod2 = aDir.SquareModulus();
-  if (aMod2 > Precision::Confusion())
+  if (aMod2 > math::precision::Precision::Confusion())
   {
     bool isLinear = true;
     aDir /= sqrt(aMod2);
@@ -473,7 +473,7 @@ bool Geom2dConvert_ApproxArcsSegments::makeApproximation(Geom2dConvert_PPoint& t
       isDone                                 = !aCurve.IsNull();
       if (isDone && mySeqCurves.Length())
         isDone = checkContinuity(mySeqCurves.Last(), aCurve, myAngleTolerance);
-      if (isDone || aDistance < Precision::Confusion())
+      if (isDone || aDistance < math::precision::Precision::Confusion())
       {
         mySeqCurves.Append(aCurve);
         return isDone;
@@ -517,7 +517,7 @@ bool Geom2dConvert_ApproxArcsSegments::calculateBiArcs(Geom2dConvert_PPoint& the
   if (anAngle2 < 0.)
     anAngle2 = -anAngle2;
 
-  double anAngleThreshold(Precision::Angular() * 10.);
+  double anAngleThreshold(math::precision::Precision::Angular() * 10.);
   if (theFirstParam != myExt[0] || theLastParam != myExt[1])
     anAngleThreshold = myAngleTolerance * 0.1;
   if (fabs(anAngle1 - anAngle2) < anAngleThreshold)
@@ -654,8 +654,8 @@ bool Geom2dConvert_ApproxArcsSegments::checkCurve(const occ::handle<Geom2d_Curve
 
     double aParam =
       (isUniformDone ? mySeqParams.Value(i).Parameter() : (theFirstParam + i * aParamStep));
-    if (aParam < (theFirstParam - Precision::PConfusion())
-        || aParam > (theLastParam + Precision::PConfusion()))
+    if (aParam < (theFirstParam - math::precision::Precision::PConfusion())
+        || aParam > (theLastParam + math::precision::Precision::PConfusion()))
       continue;
 
     gp_Pnt2d aPointAdaptor(0., 0.);
@@ -675,7 +675,7 @@ bool Geom2dConvert_ApproxArcsSegments::checkCurve(const occ::handle<Geom2d_Curve
       aProjPoint      = ElCLib::Value(aParameterCurve, aCirc2d);
     }
 
-    isLess = (aProjPoint.Distance(aPointAdaptor) < myTolerance + Precision::PConfusion());
+    isLess = (aProjPoint.Distance(aPointAdaptor) < myTolerance + math::precision::Precision::PConfusion());
   }
   return isLess;
 }
@@ -708,24 +708,24 @@ Geom2dConvert_PPoint getParameter(const gp_XY&             theXY1,
   {
     aResult       = Geom2dConvert_PPoint(af1, theCurve);
     double adist1 = (theXY1 - aResult.Point()).Modulus();
-    if (adist1 < Precision::Confusion())
+    if (adist1 < math::precision::Precision::Confusion())
     {
       return aResult;
     }
 
     aResult       = Geom2dConvert_PPoint(af2, theCurve);
     double adist2 = (theXY1 - aResult.Point()).Modulus();
-    if (adist2 < Precision::Confusion())
+    if (adist2 < math::precision::Precision::Confusion())
     {
       return aResult;
     }
 
-    if (aMinDist <= adist2 - Precision::Confusion() && aMinDist <= adist1 - Precision::Confusion())
+    if (aMinDist <= adist2 - math::precision::Precision::Confusion() && aMinDist <= adist1 - math::precision::Precision::Confusion())
     {
       break;
     }
 
-    if (adist1 < adist2 - Precision::Confusion())
+    if (adist1 < adist2 - math::precision::Precision::Confusion())
     {
       prevParam = af1;
       aMinDist  = adist1;

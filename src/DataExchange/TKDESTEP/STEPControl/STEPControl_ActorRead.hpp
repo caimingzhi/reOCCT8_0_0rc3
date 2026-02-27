@@ -47,7 +47,7 @@ public:
   Standard_EXPORT occ::handle<Transfer_Binder> Transfer(
     const occ::handle<Standard_Transient>&        start,
     const occ::handle<Transfer_TransientProcess>& TP,
-    const Message_ProgressRange&                  theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&                  theProgress = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT occ::handle<Transfer_Binder> TransferShape(
     const occ::handle<Standard_Transient>&        start,
@@ -55,7 +55,7 @@ public:
     const StepData_Factors&                       theLocalFactors = StepData_Factors(),
     const bool                                    isManifold      = true,
     const bool                                    theUseTrsf      = false,
-    const Message_ProgressRange&                  theProgress     = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                  theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void PrepareUnits(const occ::handle<StepRepr_Representation>&   rep,
                                     const occ::handle<Transfer_TransientProcess>& TP,
@@ -88,13 +88,13 @@ protected:
     const occ::handle<Transfer_TransientProcess>&   TP,
     const StepData_Factors&                         theLocalFactors = StepData_Factors(),
     const bool                                      theUseTrsf      = false,
-    const Message_ProgressRange&                    theProgress     = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                    theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& NAUO,
     const occ::handle<Transfer_TransientProcess>&            TP,
     const StepData_Factors&                                  theLocalFactors = StepData_Factors(),
-    const Message_ProgressRange&                             theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                             theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepShape_ShapeRepresentation>& sr,
@@ -102,13 +102,13 @@ protected:
     const StepData_Factors&                           theLocalFactors,
     bool&                                             isBound,
     const bool                                        theUseTrsf  = false,
-    const Message_ProgressRange&                      theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                      theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepShape_ContextDependentShapeRepresentation>& CDSR,
     const occ::handle<Transfer_TransientProcess>&                     TP,
     const StepData_Factors&      theLocalFactors = StepData_Factors(),
-    const Message_ProgressRange& theProgress     = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepRepr_ShapeRepresentationRelationship>& und,
@@ -116,26 +116,26 @@ protected:
     const StepData_Factors&                                      theLocalFactors,
     const int                                                    nbrep      = 0,
     const bool                                                   theUseTrsf = false,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepGeom_GeometricRepresentationItem>& git,
     const occ::handle<Transfer_TransientProcess>&            TP,
     const StepData_Factors&                                  theLocalFactors,
     const bool                                               isManifold,
-    const Message_ProgressRange&                             theProgress);
+    const System::log::Message_ProgressRange&                             theProgress);
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepRepr_MappedItem>&       mapit,
     const occ::handle<Transfer_TransientProcess>& TP,
     const StepData_Factors&                       theLocalFactors,
-    const Message_ProgressRange&                  theProgress);
+    const System::log::Message_ProgressRange&                  theProgress);
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepShape_FaceSurface>&     fs,
     const occ::handle<Transfer_TransientProcess>& TP,
     const StepData_Factors&                       theLocalFactors,
-    const Message_ProgressRange&                  theProgress);
+    const System::log::Message_ProgressRange&                  theProgress);
 
   occ::handle<TransferBRep_ShapeBinder> TransferEntity(
     const occ::handle<StepRepr_ConstructiveGeometryRepresentationRelationship>& theCGRR,
@@ -146,12 +146,12 @@ protected:
     const occ::handle<StepRepr_MechanicalDesignAndDraughtingRelationship>& theMDADR,
     const occ::handle<Transfer_TransientProcess>&                          theTP,
     const StepData_Factors&                                                theLocalFactors,
-    const Message_ProgressRange&                                           theProgress);
+    const System::log::Message_ProgressRange&                                           theProgress);
 
   Standard_EXPORT occ::handle<TransferBRep_ShapeBinder> OldWay(
     const occ::handle<Standard_Transient>&        start,
     const occ::handle<Transfer_TransientProcess>& TP,
-    const Message_ProgressRange&                  theProgress);
+    const System::log::Message_ProgressRange&                  theProgress);
 
 private:
   Standard_EXPORT TopoDS_Shell closeIDEASShell(const TopoDS_Shell&                   shell,
@@ -170,7 +170,7 @@ private:
                        const bool                                        theReadConstructiveGeomRR,
                        const StepData_Factors&                           theLocalFactors,
                        TopoDS_Compound&                                  theCund,
-                       Message_ProgressScope&                            thePS);
+                       System::log::Message_ProgressScope&                            thePS);
 
 private:
   StepToTopoDS_NMTool                   myNMTool;

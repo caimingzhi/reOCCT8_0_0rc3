@@ -8,7 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_GraphNodeDriver, BinMDF_ADriver)
 
 BinMXCAFDoc_GraphNodeDriver::BinMXCAFDoc_GraphNodeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_GraphNode)->Name())
 {
 }

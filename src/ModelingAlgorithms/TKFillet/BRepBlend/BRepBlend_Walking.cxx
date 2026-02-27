@@ -836,7 +836,7 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
       Nor1.Normalize();
       Nor2.Normalize();
       double testra = Tgp1.Dot(Nor1.Crossed(V1));
-      if (std::abs(testra) > Precision::Confusion())
+      if (std::abs(testra) > math::precision::Precision::Confusion())
       {
         tras1 = IntSurf_In;
         if ((testra > 0. && !loctwist1) || (testra < 0. && loctwist1))
@@ -845,7 +845,7 @@ Blend_Status BRepBlend_Walking::TestArret(Blend_Function&    Function,
         }
 
         testra = Tgp2.Dot(Nor2.Crossed(V2));
-        if (std::abs(testra) > Precision::Confusion())
+        if (std::abs(testra) > math::precision::Precision::Confusion())
         {
           tras2 = IntSurf_Out;
           if ((testra > 0. && !loctwist2) || (testra < 0. && loctwist2))
@@ -1344,7 +1344,7 @@ bool BRepBlend_Walking::Recadre(Blend_FuncInv&                  FuncInv,
       dist      = distaux;
     }
 
-    if (dist > Precision::PConfusion())
+    if (dist > math::precision::Precision::PConfusion())
     {
       prm = pmin;
       if (OnFirst)
@@ -1993,7 +1993,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
           SavedParams[1]              = theElSpine.GetSavedLastParameter();
           for (int ind = 0; ind < 2; ind++)
           {
-            if (!Precision::IsInfinite(SavedParams[ind]))
+            if (!math::precision::Precision::IsInfinite(SavedParams[ind]))
             {
 
               gp_Pnt Pnt0;
@@ -2014,7 +2014,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
                 SameDirs[ind] = true;
             }
           }
-          double theParam = Precision::Infinite();
+          double theParam = math::precision::Precision::Infinite();
 
           if (SameDirs[0] && SameDirs[1])
             theParam = (std::abs(param - SavedParams[0]) < std::abs(param - SavedParams[1]))
@@ -2035,7 +2035,7 @@ void BRepBlend_Walking::InternalPerform(Blend_Function& Func,
               theParam = NewParam;
           }
 
-          if (!Precision::IsInfinite(theParam))
+          if (!math::precision::Precision::IsInfinite(theParam))
             param = theParam;
         }
         else if (recad1)
@@ -2397,7 +2397,7 @@ bool BRepBlend_Walking::CorrectExtremityOnOneRst(const int     IndexOfRst,
   double Ends[2];
   Ends[0]                = BRepBlend_HCurve2dTool::FirstParameter(DomainOfRst->Value());
   Ends[1]                = BRepBlend_HCurve2dTool::LastParameter(DomainOfRst->Value());
-  double GlobalMinSqDist = Precision::Infinite();
+  double GlobalMinSqDist = math::precision::Precision::Infinite();
   double ParamOnGuide    = 0;
   gp_Pnt PointOnGuide;
   for (int k = 0; k < 2; k++)
@@ -2407,7 +2407,7 @@ bool BRepBlend_Walking::CorrectExtremityOnOneRst(const int     IndexOfRst,
     Extrema_ExtPC projoncurv(PntOnEnd, theElSpine);
     if (!projoncurv.IsDone())
       continue;
-    double MinSqDist = Precision::Infinite();
+    double MinSqDist = math::precision::Precision::Infinite();
     int    imin      = 0;
     for (int ind = 1; ind <= projoncurv.NbExt(); ind++)
     {
@@ -2434,7 +2434,7 @@ bool BRepBlend_Walking::CorrectExtremityOnOneRst(const int     IndexOfRst,
       NewParam += sign * Period;
   }
 
-  GlobalMinSqDist = Precision::Infinite();
+  GlobalMinSqDist = math::precision::Precision::Infinite();
   gp_Ax1 theAx1;
   for (int ind = 1; ind <= theElSpine.NbVertices(); ind++)
   {
@@ -2480,12 +2480,12 @@ bool BRepBlend_Walking::CorrectExtremityOnOneRst(const int     IndexOfRst,
 
   Extrema_ExtPS projonsurf(PntOnPlane,
                            *AnotherSurf,
-                           Precision::PConfusion(),
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            Extrema_ExtFlag_MIN);
   if (projonsurf.IsDone())
   {
-    double MinSqDist = Precision::Infinite();
+    double MinSqDist = math::precision::Precision::Infinite();
     int    imin      = 0;
     for (int ind = 1; ind <= projonsurf.NbExt(); ind++)
     {

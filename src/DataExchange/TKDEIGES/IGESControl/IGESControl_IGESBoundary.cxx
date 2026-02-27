@@ -69,14 +69,14 @@ void IGESControl_IGESBoundary::Check(const bool result,
     if (okCurve3d && mysewd3d->NbEdges() > 0)
     {
 
-      Message_Msg Msg1070("IGES_1070");
+      System::log::Message_Msg Msg1070("IGES_1070");
       Msg1070.Arg(3);
       myCS.SendWarning(myentity, Msg1070);
       mysewd = mysewd3d;
     }
     else if (okCurve2d && mysewd2d->NbEdges() > 0)
     {
-      Message_Msg Msg1070("IGES_1070");
+      System::log::Message_Msg Msg1070("IGES_1070");
 
       Msg1070.Arg(2);
       myCS.SendWarning(myentity, Msg1070);
@@ -327,7 +327,7 @@ bool IGESControl_IGESBoundary::Transfer(
 #ifdef OCCT_DEBUG
             std::cout << "Warning: IGESToBRep_IGESBoundary: Deviation = " << maxdev << std::endl;
 #endif
-            ShapeFix_ShapeTolerance().SetTolerance(edge3d, Precision::Confusion());
+            ShapeFix_ShapeTolerance().SetTolerance(edge3d, math::precision::Precision::Confusion());
             for (int ie = 1; ie <= iedge; ie++)
               ShapeBuild_Edge().RemovePCurve(Lsewd3d->Edge(ie), myface);
             if (Preferred3d)

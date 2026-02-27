@@ -35,7 +35,7 @@ public:
   Standard_EXPORT const occ::handle<IntTools_Context>& Context();
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   static void MakeWire(NCollection_List<TopoDS_Shape>& theLE, TopoDS_Wire& theW);
 
@@ -46,7 +46,7 @@ public:
 protected:
   Standard_EXPORT void CheckData() override;
 
-  Standard_EXPORT void MakeWires(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeWires(const System::log::Message_ProgressRange& theRange);
 
   BOPAlgo_PWireEdgeSet                      myWES;
   NCollection_List<BOPTools_ConnexityBlock> myLCB;

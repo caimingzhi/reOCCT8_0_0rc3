@@ -114,13 +114,13 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
       const TopoDS_Vertex& aV = TopoDS::Vertex(anExp.Current());
       dfVertToler             = std::max(BRep_Tool::Tolerance(aV), dfVertToler);
     }
-    if (dfVertToler < Precision::Confusion())
+    if (dfVertToler < math::precision::Precision::Confusion())
     {
 
       for (TopoDS_Iterator it(W); it.More(); it.Next())
         dfVertToler = std::max(BRep_Tool::Tolerance(TopoDS::Edge(it.Value())), dfVertToler);
 
-      if (dfVertToler < Precision::Confusion())
+      if (dfVertToler < math::precision::Precision::Confusion())
 
         return;
     }
@@ -135,14 +135,14 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
       double tol1, tol2, maxtol = .0005 * (UMax - UMin);
       double a = aD1U.Magnitude();
 
-      if (a <= Precision::Confusion())
+      if (a <= math::precision::Precision::Confusion())
         tol1 = maxtol;
       else
         tol1 = std::min(maxtol, dfVertToler / a);
 
       aGAS.D1(UMin, VMax, aP, aD1U, aD1V);
       a = aD1U.Magnitude();
-      if (a <= Precision::Confusion())
+      if (a <= math::precision::Precision::Confusion())
         tol2 = maxtol;
       else
         tol2 = std::min(maxtol, dfVertToler / a);
@@ -221,12 +221,12 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
 
       if (Eori == TopAbs_FORWARD)
       {
-        if (aF == -Precision::Infinite())
+        if (aF == -math::precision::Precision::Infinite())
           anInfEmap.Add(E);
       }
       else
       {
-        if (aL == Precision::Infinite())
+        if (aL == math::precision::Precision::Infinite())
           anInfEmap.Add(E);
       }
     }
@@ -270,8 +270,8 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W,
         double             aL;
 
         BRep_Tool::Range(anEdge, aF, aL);
-        if ((anOri == TopAbs_FORWARD && aF == -Precision::Infinite())
-            || (anOri == TopAbs_REVERSED && aL == Precision::Infinite()))
+        if ((anOri == TopAbs_FORWARD && aF == -math::precision::Precision::Infinite())
+            || (anOri == TopAbs_REVERSED && aL == math::precision::Precision::Infinite()))
         {
           myEdge   = anEdge;
           myVertex = TopoDS_Vertex();
@@ -510,7 +510,7 @@ void BRepTools_WireExplorer::Next()
             else
               aPCurve->D0(dfFPar, aPEb);
 
-            if (std::abs(dfLPar - dfFPar) > Precision::PConfusion())
+            if (std::abs(dfLPar - dfFPar) > math::precision::Precision::PConfusion())
             {
               isrevese = (E.Orientation() == TopAbs_REVERSED);
               isrevese = !isrevese;
@@ -542,7 +542,7 @@ void BRepTools_WireExplorer::Next()
             if (dfCurAngle <= dfMinAngle)
             {
               double d = PRef.SquareDistance(aPEb);
-              if (d <= Precision::PConfusion())
+              if (d <= math::precision::Precision::PConfusion())
                 d = 0.;
               if (std::abs(aPEb.X() - PRef.X()) < myTolU && std::abs(aPEb.Y() - PRef.Y()) < myTolV)
               {

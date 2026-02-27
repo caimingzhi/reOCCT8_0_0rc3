@@ -94,7 +94,7 @@ void Extrema_ExtPElC::Perform(const gp_Pnt&  P,
   double Usol[2];
   Usol[0] = C.XAxis().Direction().AngleWithRef(OPp, Axe);
 
-  constexpr double aAngTol = Precision::Angular();
+  constexpr double aAngTol = math::precision::Precision::Angular();
   if (Usol[0] + M_PI < aAngTol)
     Usol[0] = -M_PI;
   else if (Usol[0] - M_PI > -aAngTol)
@@ -106,7 +106,7 @@ void Extrema_ExtPElC::Perform(const gp_Pnt&  P,
 
   double TolU, aR;
   aR   = C.Radius();
-  TolU = Precision::Infinite();
+  TolU = math::precision::Precision::Infinite();
   if (aR > gp::Resolution())
   {
     TolU = Tol / aR;
@@ -325,7 +325,7 @@ void Extrema_ExtPElC::Perform(const gp_Pnt&   P,
       DejaEnr = false;
       for (NoExt = 0; NoExt < myNbExt; NoExt++)
       {
-        if (TbExt[NoExt].SquareDistance(Cu) < Precision::SquareConfusion())
+        if (TbExt[NoExt].SquareDistance(Cu) < math::precision::Precision::SquareConfusion())
         {
           DejaEnr = true;
           break;

@@ -135,18 +135,18 @@ occ::handle<Standard_Transient> XSControl_Reader::RootForTransfer(const int num)
   return theroots.Value(num);
 }
 
-bool XSControl_Reader::TransferOneRoot(const int num, const Message_ProgressRange& theProgress)
+bool XSControl_Reader::TransferOneRoot(const int num, const System::log::Message_ProgressRange& theProgress)
 {
   return TransferEntity(RootForTransfer(num), theProgress);
 }
 
-bool XSControl_Reader::TransferOne(const int num, const Message_ProgressRange& theProgress)
+bool XSControl_Reader::TransferOne(const int num, const System::log::Message_ProgressRange& theProgress)
 {
   return TransferEntity(thesession->StartingEntity(num), theProgress);
 }
 
 bool XSControl_Reader::TransferEntity(const occ::handle<Standard_Transient>& start,
-                                      const Message_ProgressRange&           theProgress)
+                                      const System::log::Message_ProgressRange&           theProgress)
 {
   if (start.IsNull())
     return false;
@@ -163,7 +163,7 @@ bool XSControl_Reader::TransferEntity(const occ::handle<Standard_Transient>& sta
 
 int XSControl_Reader::TransferList(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
-  const Message_ProgressRange&                                               theProgress)
+  const System::log::Message_ProgressRange&                                               theProgress)
 {
   if (list.IsNull())
     return 0;
@@ -174,7 +174,7 @@ int XSControl_Reader::TransferList(
   InitializeMissingParameters();
   ClearShapes();
   ShapeExtend_Explorer  STU;
-  Message_ProgressScope PS(theProgress, nullptr, nb);
+  System::log::Message_ProgressScope PS(theProgress, nullptr, nb);
   for (i = 1; i <= nb && PS.More(); i++)
   {
     occ::handle<Standard_Transient> start = list->Value(i);
@@ -189,7 +189,7 @@ int XSControl_Reader::TransferList(
   return nbt;
 }
 
-int XSControl_Reader::TransferRoots(const Message_ProgressRange& theProgress)
+int XSControl_Reader::TransferRoots(const System::log::Message_ProgressRange& theProgress)
 {
   NbRootsForTransfer();
   int                                          nbt = 0;
@@ -200,7 +200,7 @@ int XSControl_Reader::TransferRoots(const Message_ProgressRange& theProgress)
   InitializeMissingParameters();
   ClearShapes();
   ShapeExtend_Explorer  STU;
-  Message_ProgressScope PS(theProgress, "Root", nb);
+  System::log::Message_ProgressScope PS(theProgress, "Root", nb);
   for (i = 1; i <= nb && PS.More(); i++)
   {
     occ::handle<Standard_Transient> start = theroots.Value(i);
@@ -261,7 +261,7 @@ void XSControl_Reader::PrintCheckLoad(Standard_OStream&         theStream,
 
 void XSControl_Reader::PrintCheckLoad(const bool failsonly, const IFSelect_PrintCount mode) const
 {
-  Message_Messenger::StreamBuffer aBuffer = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer aBuffer = System::log::Message::SendInfo();
   PrintCheckLoad(aBuffer, failsonly, mode);
 }
 
@@ -278,7 +278,7 @@ void XSControl_Reader::PrintCheckTransfer(Standard_OStream&         theStream,
 void XSControl_Reader::PrintCheckTransfer(const bool                failsonly,
                                           const IFSelect_PrintCount mode) const
 {
-  Message_Messenger::StreamBuffer aBuffer = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer aBuffer = System::log::Message::SendInfo();
   PrintCheckTransfer(aBuffer, failsonly, mode);
 }
 
@@ -291,7 +291,7 @@ void XSControl_Reader::PrintStatsTransfer(Standard_OStream& theStream,
 
 void XSControl_Reader::PrintStatsTransfer(const int what, const int mode) const
 {
-  Message_Messenger::StreamBuffer aBuffer = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer aBuffer = System::log::Message::SendInfo();
   PrintStatsTransfer(aBuffer, what, mode);
 }
 

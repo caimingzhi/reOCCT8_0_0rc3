@@ -444,7 +444,7 @@ static bool ComputeFaceCrvtInSec(const TopoDS_Face& aFace,
   int                 cn = BRepLProp_SurfaceTool::Continuity(aSurf);
   if (cn < 2)
     return false;
-  BRepLProp_SLProps aProp(aSurf, aP2d.X(), aP2d.Y(), 2, Precision::Confusion());
+  BRepLProp_SLProps aProp(aSurf, aP2d.X(), aP2d.Y(), 2, math::precision::Precision::Confusion());
   if (!aProp.IsCurvatureDefined())
     return false;
 
@@ -490,7 +490,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
   const TopoDS_Face& FS  = TopoDS::Face(BDS.Shape(SI));
   int                iFS = BDS.Shape(FS);
 
-  double tola = Precision::Angular() * 1.e3;
+  double tola = math::precision::Precision::Angular() * 1.e3;
 
   TopAbs_Orientation oFOR = BDS.Shape(iFOR).Orientation();
   TopAbs_Orientation oFS  = BDS.Shape(iFS).Orientation();
@@ -842,7 +842,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
           crvFS = -crvFS;
         if (ntdot < 0.)
           crvFS = -crvFS;
-        double eps       = Precision::Confusion();
+        double eps       = math::precision::Precision::Confusion();
         double absCrvFOR = std::abs(crvFOR), absCrvFS = std::abs(crvFS);
         if (absCrvFOR <= eps && absCrvFS <= eps)
           return;
@@ -2013,7 +2013,7 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
         else
         {
           const TopoDS_Face& FF    = TopoDS::Face(lfor.First());
-          double             tola1 = Precision::Angular() * 1.e2;
+          double             tola1 = math::precision::Precision::Angular() * 1.e2;
           double             parEG;
           bool               ok1 = FUN_tool_parE(eON, parON, EG, parEG, tolEG);
           if (!ok1)

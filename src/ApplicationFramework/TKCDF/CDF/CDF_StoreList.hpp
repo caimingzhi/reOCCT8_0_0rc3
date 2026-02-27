@@ -24,7 +24,7 @@ public:
   Standard_EXPORT PCDM_StoreStatus
     Store(occ::handle<CDM_MetaData>&   aMetaData,
           TCollection_ExtendedString&  aStatusAssociatedText,
-          const Message_ProgressRange& theRange = Message_ProgressRange());
+          const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init();
 

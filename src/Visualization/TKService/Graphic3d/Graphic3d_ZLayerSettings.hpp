@@ -12,8 +12,8 @@ struct Graphic3d_ZLayerSettings
 {
 
   Graphic3d_ZLayerSettings()
-      : myCullingDistance(Precision::Infinite()),
-        myCullingSize(Precision::Infinite()),
+      : myCullingDistance(math::precision::Precision::Infinite()),
+        myCullingSize(math::precision::Precision::Infinite()),
         myIsImmediate(false),
         myToRaytrace(true),
         myUseEnvironmentTexture(true),
@@ -50,7 +50,7 @@ struct Graphic3d_ZLayerSettings
 
   bool HasCullingDistance() const
   {
-    return !Precision::IsInfinite(myCullingDistance) && myCullingDistance > 0.0;
+    return !math::precision::Precision::IsInfinite(myCullingDistance) && myCullingDistance > 0.0;
   }
 
   double CullingDistance() const { return myCullingDistance; }
@@ -59,7 +59,7 @@ struct Graphic3d_ZLayerSettings
 
   bool HasCullingSize() const
   {
-    return !Precision::IsInfinite(myCullingSize) && myCullingSize > 0.0;
+    return !math::precision::Precision::IsInfinite(myCullingSize) && myCullingSize > 0.0;
   }
 
   double CullingSize() const { return myCullingSize; }

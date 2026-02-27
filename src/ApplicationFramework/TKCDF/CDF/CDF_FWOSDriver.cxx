@@ -38,15 +38,15 @@ bool CDF_FWOSDriver::Find(const TCollection_ExtendedString& aFolder,
                           const TCollection_ExtendedString&)
 {
 
-  OSD_Path      thePath = UTL::Path(aFolder);
-  OSD_Directory theDirectory(thePath);
+  System::os::OSD_Path      thePath = UTL::Path(aFolder);
+  System::os::OSD_Directory theDirectory(thePath);
   if (theDirectory.Exists())
   {
     TCollection_ExtendedString f(aFolder);
     PutSlash(f);
     f += aName;
-    OSD_Path p2 = UTL::Path(f);
-    OSD_File theFile(p2);
+    System::os::OSD_Path p2 = UTL::Path(f);
+    System::os::OSD_File theFile(p2);
     return theFile.Exists();
   }
   return false;
@@ -57,7 +57,7 @@ bool CDF_FWOSDriver::HasReadPermission(const TCollection_ExtendedString& aFolder
                                        const TCollection_ExtendedString&)
 {
   OSD_SingleProtection theProtection =
-    OSD_File(UTL::Path(Concatenate(aFolder, aName))).Protection().User();
+    System::os::OSD_File(UTL::Path(Concatenate(aFolder, aName))).Protection().User();
   switch (theProtection)
   {
     case OSD_None:
@@ -108,8 +108,8 @@ TCollection_ExtendedString CDF_FWOSDriver::BuildFileName(const occ::handle<CDM_D
 bool CDF_FWOSDriver::FindFolder(const TCollection_ExtendedString& aFolder)
 {
 
-  OSD_Path      thePath = UTL::Path(aFolder);
-  OSD_Directory theDirectory(thePath);
+  System::os::OSD_Path      thePath = UTL::Path(aFolder);
+  System::os::OSD_Directory theDirectory(thePath);
   return theDirectory.Exists();
 }
 

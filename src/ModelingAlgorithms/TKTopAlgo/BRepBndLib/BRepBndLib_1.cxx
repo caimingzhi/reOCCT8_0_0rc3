@@ -208,7 +208,7 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
 
 static int IsWCS(const gp_Dir& theDir)
 {
-  constexpr double aToler = Precision::Angular() * Precision::Angular();
+  constexpr double aToler = math::precision::Precision::Angular() * math::precision::Precision::Angular();
 
   const double aX = theDir.X(), aY = theDir.Y(), aZ = theDir.Z();
 

@@ -3322,7 +3322,7 @@ void BSplCLib::TangExtendToConstraint(const NCollection_Array1<double>& FlatKnot
   BSplCLib::KnotSequence(NewK2, NewM2, NewFK2);
 
   double Ratio = 1, Delta;
-  if ((L1 > Precision::Confusion()) && (L2 > Precision::Confusion()))
+  if ((L1 > math::precision::Precision::Confusion()) && (L2 > math::precision::Precision::Confusion()))
   {
     Ratio = L2 / L1;
   }

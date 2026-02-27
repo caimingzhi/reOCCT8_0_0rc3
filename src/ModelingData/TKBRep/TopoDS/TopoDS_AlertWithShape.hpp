@@ -3,7 +3,7 @@
 #include <Message_Alert.hpp>
 #include <TopoDS_Shape.hpp>
 
-class TopoDS_AlertWithShape : public Message_Alert
+class TopoDS_AlertWithShape : public System::log::Message_Alert
 {
 public:
   Standard_EXPORT TopoDS_AlertWithShape(const TopoDS_Shape& theShape);
@@ -14,9 +14,9 @@ public:
 
   Standard_EXPORT bool SupportsMerge() const override;
 
-  Standard_EXPORT bool Merge(const occ::handle<Message_Alert>& theTarget) override;
+  Standard_EXPORT bool Merge(const occ::handle<System::log::Message_Alert>& theTarget) override;
 
-  DEFINE_STANDARD_RTTIEXT(TopoDS_AlertWithShape, Message_Alert)
+  DEFINE_STANDARD_RTTIEXT(TopoDS_AlertWithShape, System::log::Message_Alert)
 
 private:
   TopoDS_Shape myShape;

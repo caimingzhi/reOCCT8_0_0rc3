@@ -238,10 +238,10 @@ void CSLib::Normal(const int                         theMaxOrder,
   double aInf = -M_PI;
   double aSup = M_PI;
 
-  const bool isFU = (std::abs(theU - theUmin) < Precision::PConfusion());
-  const bool isLU = (std::abs(theU - theUmax) < Precision::PConfusion());
-  const bool isFV = (std::abs(theV - theVmin) < Precision::PConfusion());
-  const bool isLV = (std::abs(theV - theVmax) < Precision::PConfusion());
+  const bool isFU = (std::abs(theU - theUmin) < math::precision::Precision::PConfusion());
+  const bool isLU = (std::abs(theU - theUmax) < math::precision::Precision::PConfusion());
+  const bool isFV = (std::abs(theV - theVmin) < math::precision::Precision::PConfusion());
+  const bool isLV = (std::abs(theV - theVmax) < math::precision::Precision::PConfusion());
 
   if (isLU)
   {
@@ -290,8 +290,8 @@ void CSLib::Normal(const int                         theMaxOrder,
                                 aSup,
                                 THE_MAX_ROOT_ITERATIONS,
                                 THE_ROOT_FINDING_TOL,
-                                Precision::Confusion(),
-                                Precision::Confusion());
+                                math::precision::Precision::Confusion(),
+                                math::precision::Precision::Confusion());
 
   if (aFindRoots.IsDone() && aFindRoots.NbSolutions() > 0)
   {
@@ -311,7 +311,7 @@ void CSLib::Normal(const int                         theMaxOrder,
     int aFirst = 0;
     for (int aIntervalIdx = 0; aIntervalIdx <= aNbSol; ++aIntervalIdx)
     {
-      if (std::abs(aSol(aIntervalIdx + 1) - aSol(aIntervalIdx)) > Precision::PConfusion())
+      if (std::abs(aSol(aIntervalIdx + 1) - aSol(aIntervalIdx)) > math::precision::Precision::PConfusion())
       {
         aPoly.Value((aSol(aIntervalIdx) + aSol(aIntervalIdx + 1)) / 2.0, aVsuiv);
         if (aFirst == 0)

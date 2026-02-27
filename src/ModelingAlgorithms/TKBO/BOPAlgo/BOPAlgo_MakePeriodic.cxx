@@ -46,9 +46,9 @@ void BOPAlgo_MakePeriodic::Perform()
 
 void BOPAlgo_MakePeriodic::CheckData()
 {
-  if ((!IsXPeriodic() || XPeriod() < Precision::Confusion())
-      && (!IsYPeriodic() || YPeriod() < Precision::Confusion())
-      && (!IsZPeriodic() || ZPeriod() < Precision::Confusion()))
+  if ((!IsXPeriodic() || XPeriod() < math::precision::Precision::Confusion())
+      && (!IsYPeriodic() || YPeriod() < math::precision::Precision::Confusion())
+      && (!IsZPeriodic() || ZPeriod() < math::precision::Precision::Confusion()))
   {
 
     AddError(new BOPAlgo_AlertNoPeriodicityRequired());
@@ -338,7 +338,7 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
     return myRepeatedShape;
 
   const int id = BOPAlgo_MakePeriodic::ToDirectionID(theDir);
-  if (myRepeatPeriod[id] < Precision::Confusion())
+  if (myRepeatPeriod[id] < math::precision::Precision::Confusion())
     myRepeatPeriod[id] = Period(id);
   const double aPeriod = myRepeatPeriod[id];
 

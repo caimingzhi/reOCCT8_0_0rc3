@@ -43,9 +43,9 @@ TEST(Standard_AtomicTest, OCC22980_AtomicOperations)
   aSum        = 0;
   const int N = 1 << 24;
 
-  OSD_Parallel::For(0, N, IncrementerDecrementer(&aSum, true));
+  System::os::OSD_Parallel::For(0, N, IncrementerDecrementer(&aSum, true));
   EXPECT_EQ(N, aSum);
 
-  OSD_Parallel::For(0, N, IncrementerDecrementer(&aSum, false));
+  System::os::OSD_Parallel::For(0, N, IncrementerDecrementer(&aSum, false));
   EXPECT_EQ(0, aSum);
 }

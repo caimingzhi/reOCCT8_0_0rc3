@@ -316,7 +316,7 @@ static int OCC23952sweep(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   const int  NBTHREADS = 100;
-  OSD_Thread aThread[NBTHREADS];
+  System::os::OSD_Thread aThread[NBTHREADS];
   for (int i = 0; i < NBTHREADS; i++)
   {
     aThread[i].SetFunction(GeomConvertTest);
@@ -351,7 +351,7 @@ static void* GeomIntSSTest(void* data)
 {
   GeomIntSSTest_Data* info = (GeomIntSSTest_Data*)data;
   GeomInt_IntSS       anInter;
-  anInter.Perform(info->surf1, info->surf2, Precision::Confusion(), true);
+  anInter.Perform(info->surf1, info->surf2, math::precision::Precision::Confusion(), true);
   if (!anInter.IsDone())
   {
     std::cout << "An intersection is not done!" << std::endl;
@@ -391,7 +391,7 @@ static int OCC23952intersect(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   const int  NBTHREADS = 100;
-  OSD_Thread aThread[NBTHREADS];
+  System::os::OSD_Thread aThread[NBTHREADS];
   for (int i = 0; i < NBTHREADS; i++)
   {
     aThread[i].SetFunction(GeomIntSSTest);
@@ -511,7 +511,7 @@ static int OCC24008(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
   ShapeConstruct_ProjectCurveOnSurface aProj;
-  aProj.Init(aSurf, Precision::Confusion());
+  aProj.Init(aSurf, math::precision::Precision::Confusion());
   try
   {
     occ::handle<Geom2d_Curve> aPCurve;
@@ -617,10 +617,10 @@ static int OCC24005(Draw_Interpretor& theDI, int theNArg, const char** theArgv)
 
   BRep_Builder builder;
   TopoDS_Face  face1, face2;
-  builder.MakeFace(face1, plane, Precision::Confusion());
-  builder.MakeFace(face2, cylinder, Precision::Confusion());
+  builder.MakeFace(face1, plane, math::precision::Precision::Confusion());
+  builder.MakeFace(face2, cylinder, math::precision::Precision::Confusion());
   IntTools_FaceFace anInters;
-  anInters.SetParameters(false, true, true, Precision::Confusion());
+  anInters.SetParameters(false, true, true, math::precision::Precision::Confusion());
   anInters.Perform(face1, face2);
 
   if (!anInters.IsDone())
@@ -759,12 +759,12 @@ static int OCC24137(Draw_Interpretor& theDI, int theNArg, const char** theArgv)
   math_FunctionSetRoot aRoot(anExtFunc, aNbIts);
 
   math_Vector aTolUV(1, 2), aUVinf(1, 2), aUVsup(1, 2), aFromUV(1, 2);
-  aTolUV(1)  = Precision::Confusion();
-  aTolUV(2)  = Precision::Confusion();
-  aUVinf(1)  = -Precision::Infinite();
-  aUVinf(2)  = -Precision::Infinite();
-  aUVsup(1)  = Precision::Infinite();
-  aUVsup(2)  = Precision::Infinite();
+  aTolUV(1)  = math::precision::Precision::Confusion();
+  aTolUV(2)  = math::precision::Precision::Confusion();
+  aUVinf(1)  = -math::precision::Precision::Infinite();
+  aUVinf(2)  = -math::precision::Precision::Infinite();
+  aUVsup(1)  = math::precision::Precision::Infinite();
+  aUVsup(2)  = math::precision::Precision::Infinite();
   aFromUV(1) = aUFrom;
   aFromUV(2) = aVFrom;
 
@@ -847,8 +847,8 @@ static int OCC24370(Draw_Interpretor& di, int argc, const char** argv)
 
   TopoDS_Face  aFace;
   BRep_Builder aB;
-  aB.MakeFace(aFace, aS, Precision::Confusion());
-  aB.UpdateEdge(anEdge, aC, aFace, Precision::Confusion());
+  aB.MakeFace(aFace, aS, math::precision::Precision::Confusion());
+  aB.UpdateEdge(anEdge, aC, aFace, math::precision::Precision::Confusion());
   aB.Range(anEdge, aFace, aC->FirstParameter(), aC->LastParameter());
 
   ShapeFix_EdgeProjAux aProj(aFace, anEdge);
@@ -927,8 +927,8 @@ static int OCC23951(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  const occ::handle<Message_Messenger>&              aMsgMgr = Message::DefaultMessenger();
-  NCollection_Sequence<occ::handle<Message_Printer>> aPrinters;
+  const occ::handle<System::log::Message_Messenger>&              aMsgMgr = System::log::Message::DefaultMessenger();
+  NCollection_Sequence<occ::handle<System::log::Message_Printer>> aPrinters;
   aPrinters.Append(aMsgMgr->ChangePrinters());
   aMsgMgr->AddPrinter(new Draw_Printer(di));
 
@@ -976,8 +976,8 @@ static int OCC23950(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  const occ::handle<Message_Messenger>&              aMsgMgr = Message::DefaultMessenger();
-  NCollection_Sequence<occ::handle<Message_Printer>> aPrinters;
+  const occ::handle<System::log::Message_Messenger>&              aMsgMgr = System::log::Message::DefaultMessenger();
+  NCollection_Sequence<occ::handle<System::log::Message_Printer>> aPrinters;
   aPrinters.Append(aMsgMgr->ChangePrinters());
   aMsgMgr->AddPrinter(new Draw_Printer(di));
 
@@ -1339,7 +1339,7 @@ public:
   Test_TDocStd_Application()
   {
 
-    myResources = new Resource_Manager("");
+    myResources = new System::resource::Resource_Manager("");
     myResources->SetResource("xml.FileFormat", THE_QATEST_DOC_FORMAT);
     myResources->SetResource(THE_QATEST_DOC_FORMAT ".Description", "Test XML Document");
     myResources->SetResource(THE_QATEST_DOC_FORMAT ".FileExtension", "xml");
@@ -1691,7 +1691,7 @@ static int OCC24826(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   NCollection_Array1<double> anY1     = anY;
   double                     aTimeSeq = 0.0;
   {
-    OSD_Timer aTimer;
+    System::os::OSD_Timer aTimer;
     aTimer.Start();
     const ParallelTest_Saxpy aFunctor(aX, anY1, 1e-6);
     for (int i = 0; i < aLength; ++i)
@@ -1708,7 +1708,7 @@ static int OCC24826(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   for (int aMode = 0; aMode <= 4; ++aMode)
   {
     NCollection_Array1<double> anY2 = anY;
-    OSD_Timer                  aTimer;
+    System::os::OSD_Timer                  aTimer;
     aTimer.Start();
     const char*                   aModeDesc = nullptr;
     const ParallelTest_Saxpy      aFunctor1(aX, anY2, 1e-6);
@@ -1717,27 +1717,27 @@ static int OCC24826(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     {
       case 0:
       {
-        aModeDesc = "OSD_Parallel::For()";
-        OSD_Parallel::For(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
+        aModeDesc = "System::os::OSD_Parallel::For()";
+        System::os::OSD_Parallel::For(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
       case 1:
       {
-        aModeDesc = "OSD_ThreadPool::Launcher";
-        OSD_ThreadPool::Launcher aLauncher(*OSD_ThreadPool::DefaultPool());
+        aModeDesc = "System::os::OSD_ThreadPool::Launcher";
+        System::os::OSD_ThreadPool::Launcher aLauncher(*System::os::OSD_ThreadPool::DefaultPool());
         aLauncher.Perform(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
       case 2:
       {
-        aModeDesc = "OSD_Parallel::Batched()";
-        OSD_Parallel::For(aFunctor2.Begin(), aFunctor2.End(), aFunctor2);
+        aModeDesc = "System::os::OSD_Parallel::Batched()";
+        System::os::OSD_Parallel::For(aFunctor2.Begin(), aFunctor2.End(), aFunctor2);
         break;
       }
       case 3:
       {
-        aModeDesc = "OSD_ThreadPool::Launcher, Batched";
-        OSD_ThreadPool::Launcher aLauncher(*OSD_ThreadPool::DefaultPool());
+        aModeDesc = "System::os::OSD_ThreadPool::Launcher, Batched";
+        System::os::OSD_ThreadPool::Launcher aLauncher(*System::os::OSD_ThreadPool::DefaultPool());
         aLauncher.Perform(aFunctor2.Begin(), aFunctor2.End(), aFunctor2);
         break;
       }
@@ -1849,7 +1849,7 @@ static int OCC29935(Draw_Interpretor&, int theArgc, const char** theArgv)
 
   double aTimeSeq = 0.0;
   {
-    OSD_Timer aTimer;
+    System::os::OSD_Timer aTimer;
     aTimer.Start();
     ParallelTest_MatMult aFunctor(aMat1, aMat2, aMatResRef, aSize);
     for (int i = aFunctor.Begin(); i < aFunctor.End(); ++i)
@@ -1867,7 +1867,7 @@ static int OCC29935(Draw_Interpretor&, int theArgc, const char** theArgv)
   {
     aMatRes.Init(0.0);
 
-    OSD_Timer aTimer;
+    System::os::OSD_Timer aTimer;
     aTimer.Start();
     const char*          aModeDesc = nullptr;
     ParallelTest_MatMult aFunctor1(aMat1, aMat2, aMatRes, aSize);
@@ -1875,14 +1875,14 @@ static int OCC29935(Draw_Interpretor&, int theArgc, const char** theArgv)
     {
       case 0:
       {
-        aModeDesc = "OSD_Parallel::For()";
-        OSD_Parallel::For(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
+        aModeDesc = "System::os::OSD_Parallel::For()";
+        System::os::OSD_Parallel::For(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
       case 1:
       {
-        aModeDesc = "OSD_ThreadPool::Launcher";
-        OSD_ThreadPool::Launcher aLauncher(*OSD_ThreadPool::DefaultPool());
+        aModeDesc = "System::os::OSD_ThreadPool::Launcher";
+        System::os::OSD_ThreadPool::Launcher aLauncher(*System::os::OSD_ThreadPool::DefaultPool());
         aLauncher.Perform(aFunctor1.Begin(), aFunctor1.End(), aFunctor1);
         break;
       }
@@ -1938,7 +1938,7 @@ static int OCC25100(Draw_Interpretor& di, int argc, const char** argv)
   TopExp_Explorer                  aFaceExp(S, TopAbs_FACE);
   const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(TopoDS::Face(aFaceExp.Current()));
 
-  GeomAPI_IntSS anIntersector(aSurf, aSurf, Precision::Confusion());
+  GeomAPI_IntSS anIntersector(aSurf, aSurf, math::precision::Precision::Confusion());
 
   if (!anIntersector.IsDone())
   {
@@ -1964,7 +1964,7 @@ static int OCC25413(Draw_Interpretor& di, int narg, const char** a)
   TopoDS_Shape aShape = DBRep::Get(a[1]);
 
   IntCurvesFace_ShapeIntersector Inter;
-  Inter.Load(aShape, Precision::Confusion());
+  Inter.Load(aShape, math::precision::Precision::Confusion());
 
   Bnd_Box aBndBox;
   BRepBndLib::Add(aShape, aBndBox);
@@ -2176,7 +2176,7 @@ static int OCC26139(Draw_Interpretor& theDI, int argc, const char** argv)
     }
   }
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   for (NCollection_List<occ::handle<AIS_Shape>>::Iterator aCompIter(aCompounds); aCompIter.More();
        aCompIter.Next())
   {
@@ -2237,7 +2237,7 @@ static int OCC24881(Draw_Interpretor& di, int narg, const char** a)
 
   TopoDS_Shape aShape = DBRep::Get(a[1]);
 
-  OSD::SetSignal();
+  System::os::OSD::SetSignal();
   occ::handle<ShapeFix_Wire> aWireFix = new ShapeFix_Wire;
 
   NCollection_DataMap<int, int> aStatusNbDMap;
@@ -2441,7 +2441,7 @@ int xprojponf(Draw_Interpretor& di, int n, const char** a)
 
 static bool inspect_point(const gp_XY& thePoint, const gp_XY& theCenter, const double theRadius)
 {
-  static double aPrecision   = Precision::PConfusion();
+  static double aPrecision   = math::precision::Precision::PConfusion();
   static double aSqPrecision = aPrecision * aPrecision;
   const gp_XY   aDistVec     = thePoint - theCenter;
   return aDistVec.SquareModulus() - (theRadius * theRadius) < aSqPrecision;
@@ -2454,7 +2454,7 @@ static int OCC24923(Draw_Interpretor& theDI, int argc, const char** argv)
   const double  aMaxDeviation = (argc > 1) ? Draw::Atof(argv[1]) : 0.01;
   const int     aPointsNb     = 10000000;
   const double  aMinAngle     = 5 * M_PI / 180.;
-  static double aSqPrecision  = Precision::PConfusion() * Precision::PConfusion();
+  static double aSqPrecision  = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
 
   int aFailedNb = 0;
   for (int i = 0; i < aPointsNb; ++i)
@@ -2584,11 +2584,11 @@ static int OCC25574(Draw_Interpretor& theDI, int, const char**)
       gp_XYZ v2 = v;
       aT.Transforms(v2);
 
-      if ((v - v2).SquareModulus() > Precision::SquareConfusion())
+      if ((v - v2).SquareModulus() > math::precision::Precision::SquareConfusion())
       {
 
         for (int k = 1; k <= 3; k++)
-          if (std::abs(v2.Coord(k)) < Precision::Confusion())
+          if (std::abs(v2.Coord(k)) < math::precision::Precision::Confusion())
             v2.SetCoord(k, 0.);
 
         isTestOk = false;
@@ -2744,7 +2744,7 @@ int OCC26446(Draw_Interpretor& di, int n, const char** a)
   NCollection_Array1<occ::handle<Geom_BSplineCurve>> aCurves(0, 1);
   NCollection_Array1<double>                         aTolerances(0, 0);
   double                                             aTolConf    = 1.e-3;
-  constexpr double                                   aTolClosure = Precision::Confusion();
+  constexpr double                                   aTolClosure = math::precision::Precision::Confusion();
   occ::handle<NCollection_HArray1<occ::handle<Geom_BSplineCurve>>> aConcatCurves;
   occ::handle<NCollection_HArray1<int>>                            anIndices;
 
@@ -3020,8 +3020,8 @@ static int OCC26195(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
 
   gp_Pnt aNearPnt = aMgr->GetNearPickedPnt();
   gp_Pnt aFarPnt  = aMgr->GetFarPickedPnt();
-  if (Precision::IsInfinite(aFarPnt.X()) || Precision::IsInfinite(aFarPnt.Y())
-      || Precision::IsInfinite(aFarPnt.Z()))
+  if (math::precision::Precision::IsInfinite(aFarPnt.X()) || math::precision::Precision::IsInfinite(aFarPnt.Y())
+      || math::precision::Precision::IsInfinite(aFarPnt.Z()))
   {
     theDI << "Near: " << aNearPnt.X() << " " << aNearPnt.Y() << " " << aNearPnt.Z() << "\n";
     theDI << "Far: infinite point " << "\n";
@@ -3261,7 +3261,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      int anInv = FSD_BinaryFile::InverseInt(anIntArr[i]);
+      int anInv = app::file::stream::FSD_BinaryFile::InverseInt(anIntArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3269,7 +3269,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     int anInv[10];
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseInt(anIntArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseInt(anIntArr[i]);
     if (memcmp(anInv, anIntRef, sizeof(anIntRef)) != 0)
     {
       theDI << "Error: incorrect conversion of an integer value\n";
@@ -3286,7 +3286,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      int anInv = FSD_BinaryFile::InverseInt(aRndIntArr[i]);
+      int anInv = app::file::stream::FSD_BinaryFile::InverseInt(aRndIntArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3294,7 +3294,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     int anInv[10];
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseInt(aRndIntArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseInt(aRndIntArr[i]);
     if (memcmp(anInv, aRndIntRef, sizeof(aRndIntRef)) != 0)
     {
       theDI << "Error: incorrect conversion of a dispersed integer value\n";
@@ -3313,7 +3313,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      double anInv = FSD_BinaryFile::InverseReal(aRealArr[i]);
+      double anInv = app::file::stream::FSD_BinaryFile::InverseReal(aRealArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3321,7 +3321,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     double anInv[10];
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseReal(aRealArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseReal(aRealArr[i]);
     if (memcmp(anInv, aRealRef, sizeof(aRealRef)) != 0)
     {
       theDI << "Error: incorrect conversion of a real value\n";
@@ -3340,7 +3340,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      double anInv = FSD_BinaryFile::InverseReal(aRndRealArr[i]);
+      double anInv = app::file::stream::FSD_BinaryFile::InverseReal(aRndRealArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3348,7 +3348,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     double anInv[10];
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseReal(aRndRealArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseReal(aRndRealArr[i]);
     if (memcmp(anInv, aRndRealRef, sizeof(aRndRealRef)) != 0)
     {
       theDI << "Error: incorrect conversion of a dispersed real value\n";
@@ -3365,7 +3365,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      float anInv = FSD_BinaryFile::InverseShortReal(aShortRealArr[i]);
+      float anInv = app::file::stream::FSD_BinaryFile::InverseShortReal(aShortRealArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3373,7 +3373,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     float anInv[10];
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseShortReal(aShortRealArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseShortReal(aShortRealArr[i]);
     if (memcmp(anInv, aShortRealRef, sizeof(aShortRealRef)) != 0)
     {
       theDI << "Error: incorrect conversion of a short real value\n";
@@ -3391,7 +3391,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      float anInv = FSD_BinaryFile::InverseShortReal(aRndShortRealArr[i]);
+      float anInv = app::file::stream::FSD_BinaryFile::InverseShortReal(aRndShortRealArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3399,7 +3399,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     float anInv[10];
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseShortReal(aRndShortRealArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseShortReal(aRndShortRealArr[i]);
     if (memcmp(anInv, aRndShortRealRef, sizeof(aRndShortRealRef)) != 0)
     {
       theDI << "Error: incorrect conversion of a dispersed short real value\n";
@@ -3412,7 +3412,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
   {
     for (int i = 0; i < 10; ++i)
     {
-      size_t anInv = FSD_BinaryFile::InverseSize(aSizeArr[i]);
+      size_t anInv = app::file::stream::FSD_BinaryFile::InverseSize(aSizeArr[i]);
       aF.write(reinterpret_cast<char*>(&anInv), sizeof(anInv));
     }
   }
@@ -3421,7 +3421,7 @@ static int OCC24537(Draw_Interpretor& theDI, int argc, const char** argv)
     size_t               anInv[10];
     const unsigned char* aSizeRef = SizeRef<sizeof(size_t)>();
     for (int i = 0; i < 10; ++i)
-      anInv[i] = FSD_BinaryFile::InverseSize(aSizeArr[i]);
+      anInv[i] = app::file::stream::FSD_BinaryFile::InverseSize(aSizeArr[i]);
     if (memcmp(anInv, aSizeRef, sizeof(size_t) * 10) != 0)
     {
       theDI << "Error: incorrect conversion of a size value\n";
@@ -3532,7 +3532,7 @@ static int OCC26750(Draw_Interpretor& theDI, int, const char**)
   const gp_Vec2d aVec1(1.0, 0.0);
   const gp_Vec2d aVec2(0.0, -1.0);
 
-  if (aVec1.IsNormal(aVec2, Precision::Angular()))
+  if (aVec1.IsNormal(aVec2, math::precision::Precision::Angular()))
   {
     theDI << "gp_Vec2d OK. Vectors are normal.\n";
   }
@@ -3544,7 +3544,7 @@ static int OCC26750(Draw_Interpretor& theDI, int, const char**)
   const gp_Dir2d aD1(gp_Dir2d::D::X);
   const gp_Dir2d aD2(gp_Dir2d::D::NY);
 
-  if (aD1.IsNormal(aD2, Precision::Angular()))
+  if (aD1.IsNormal(aD2, math::precision::Precision::Angular()))
   {
     theDI << "gp_Dir2d OK. Vectors are normal.\n";
   }

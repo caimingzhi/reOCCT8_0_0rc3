@@ -545,7 +545,7 @@ void PrsDim_Dimension::DrawLinearDimension(const occ::handle<Prs3d_Presentation>
                                            const bool                             theIsOneSide)
 {
 
-  if (theFirstPoint.IsEqual(theSecondPoint, Precision::Confusion()))
+  if (theFirstPoint.IsEqual(theSecondPoint, math::precision::Precision::Confusion()))
   {
     throw Standard_ProgramError("Can not build presentation for equal points.");
   }
@@ -964,7 +964,7 @@ bool PrsDim_Dimension::CircleFromEdge(const TopoDS_Edge& theEdge,
     case GeomAbs_Ellipse:
     {
       gp_Elips anEll = anAdaptedCurve.Ellipse();
-      if ((anEll.MinorRadius() - anEll.MajorRadius()) >= Precision::Confusion())
+      if ((anEll.MinorRadius() - anEll.MajorRadius()) >= math::precision::Precision::Confusion())
       {
         return false;
       }
@@ -1120,7 +1120,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
       return false;
   }
 
-  theIsClosed = aFirstPoint.IsEqual(aLastPoint, Precision::Confusion());
+  theIsClosed = aFirstPoint.IsEqual(aLastPoint, math::precision::Precision::Confusion());
 
   gp_Pnt aCenter = theCircle.Location();
 
@@ -1385,7 +1385,7 @@ bool PrsDim_Dimension::AdjustParametersForLinear(
   gp_Vec aTargetPointsVec(theFirstPoint, theSecondPoint);
 
   gp_Lin aTargetPointsLin(theFirstPoint, aTargetPointsDir);
-  if (!aTargetPointsLin.Contains(theTextPos, Precision::Confusion()))
+  if (!aTargetPointsLin.Contains(theTextPos, math::precision::Precision::Confusion()))
   {
 
     thePlane      = gce_MakePln(theTextPos, theFirstPoint, theSecondPoint);
@@ -1395,7 +1395,7 @@ bool PrsDim_Dimension::AdjustParametersForLinear(
   gp_Dir aPlaneNormal    = GetPlane().Axis().Direction();
   gp_Dir aPositiveFlyout = aPlaneNormal ^ aTargetPointsDir;
 
-  if (aPlaneNormal.IsParallel(aTargetPointsDir, Precision::Angular()))
+  if (aPlaneNormal.IsParallel(aTargetPointsDir, math::precision::Precision::Angular()))
   {
     return false;
   }
@@ -1410,9 +1410,9 @@ bool PrsDim_Dimension::AdjustParametersForLinear(
   gp_Vec aFlyoutVector = gp_Vec(aTextPosProj, theTextPos);
 
   theFlyout = 0.0;
-  if (aFlyoutVector.Magnitude() > Precision::Confusion())
+  if (aFlyoutVector.Magnitude() > math::precision::Precision::Confusion())
   {
-    theFlyout = gp_Dir(aFlyoutVector).IsOpposite(aPositiveFlyout, Precision::Angular())
+    theFlyout = gp_Dir(aFlyoutVector).IsOpposite(aPositiveFlyout, math::precision::Precision::Angular())
                   ? -aFlyoutVector.Magnitude()
                   : aFlyoutVector.Magnitude();
   }

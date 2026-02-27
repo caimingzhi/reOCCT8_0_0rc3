@@ -25,7 +25,7 @@ void IGESGeom_ToolTabulatedCylinder::ReadOwnParams(
   IGESData_ParamReader&                          PR) const
 {
 
-  Message_Msg Msg157("XSTEP_157");
+  System::log::Message_Msg Msg157("XSTEP_157");
 
   occ::handle<IGESData_IGESEntity> aDirectrix;
   gp_XYZ                           anEnd;
@@ -33,19 +33,19 @@ void IGESGeom_ToolTabulatedCylinder::ReadOwnParams(
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aDirectrix))
   {
-    Message_Msg Msg156("XSTEP_156");
+    System::log::Message_Msg Msg156("XSTEP_156");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg156.Arg(Msg216.Value());
         PR.SendFail(Msg156);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg156.Arg(Msg217.Value());
         PR.SendFail(Msg156);
         break;

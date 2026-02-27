@@ -260,7 +260,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
     return;
   }
 
-  dT  = Precision::PConfusion();
+  dT  = math::precision::Precision::PConfusion();
   aTF = aSR.First();
   aTL = aSR.Last();
 
@@ -330,7 +330,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
 
   aNewSR = aSR;
 
-  dT  = Precision::PConfusion();
+  dT  = math::precision::Precision::PConfusion();
   aTF = aSR.First();
   aTL = aSR.Last();
 

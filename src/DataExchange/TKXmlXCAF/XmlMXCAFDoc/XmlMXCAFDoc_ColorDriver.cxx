@@ -7,7 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_ColorDriver, XmlMDF_ADriver)
 
-XmlMXCAFDoc_ColorDriver::XmlMXCAFDoc_ColorDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMXCAFDoc_ColorDriver::XmlMXCAFDoc_ColorDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Color")
 {
 }

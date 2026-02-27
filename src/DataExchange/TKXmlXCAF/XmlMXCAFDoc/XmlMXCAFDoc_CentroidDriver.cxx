@@ -9,7 +9,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_CentroidDriver, XmlMDF_ADriver)
 
 XmlMXCAFDoc_CentroidDriver::XmlMXCAFDoc_CentroidDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Centroid")
 {
 }

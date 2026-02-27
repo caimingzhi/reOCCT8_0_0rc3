@@ -77,7 +77,7 @@ IGESToBRep_BRepEntity::IGESToBRep_BRepEntity(const double eps,
 
 TopoDS_Shape IGESToBRep_BRepEntity::TransferBRepEntity(
   const occ::handle<IGESData_IGESEntity>& start,
-  const Message_ProgressRange&            theProgress)
+  const System::log::Message_ProgressRange&            theProgress)
 {
   TopoDS_Shape res;
 
@@ -98,7 +98,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferBRepEntity(
   }
   else
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
   }
   return res;
@@ -119,7 +119,7 @@ TopoDS_Vertex IGESToBRep_BRepEntity::TransferVertex(const occ::handle<IGESSolid_
       point.Scale(gp_Pnt(0, 0, 0), GetUnitFactor());
       TopoDS_Vertex V;
 
-      B.MakeVertex(V, point, Precision::Confusion());
+      B.MakeVertex(V, point, math::precision::Precision::Confusion());
       AddShapeResult(start, V);
     }
   }
@@ -127,7 +127,7 @@ TopoDS_Vertex IGESToBRep_BRepEntity::TransferVertex(const occ::handle<IGESSolid_
   TopoDS_Shape Sh = GetShapeResult(start, index);
   if (Sh.IsNull())
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("vertex");
     Msg1156.Arg(label);
@@ -163,7 +163,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferEdge(const occ::handle<IGESSolid_Edg
           || thecurve->IsKind(STANDARD_TYPE(IGESGeom_CurveOnSurface))
           || thecurve->IsKind(STANDARD_TYPE(IGESGeom_Boundary)))
       {
-        Message_Msg Msg1306("IGES_1306");
+        System::log::Message_Msg Msg1306("IGES_1306");
         Msg1306.Arg(inum);
         SendWarning(start, Msg1306);
         TopoDS_Edge Sh;
@@ -204,7 +204,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferEdge(const occ::handle<IGESSolid_Edg
             double dist2f = p2.Distance(pf);
             double dist1l = p1.Distance(pl);
             double dist2l = p2.Distance(pl);
-            if (V1.IsSame(V2) || dist1f + dist2l <= dist1l + dist2f + Precision::Confusion())
+            if (V1.IsSame(V2) || dist1f + dist2l <= dist1l + dist2f + math::precision::Precision::Confusion())
             {
 
               V1.Orientation(TopAbs_FORWARD);
@@ -235,7 +235,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferEdge(const occ::handle<IGESSolid_Edg
           else if (Sh.ShapeType() == TopAbs_WIRE)
           {
 
-            Message_Msg Msg1325("IGES_1325");
+            System::log::Message_Msg Msg1325("IGES_1325");
 
             Msg1325.Arg(inum);
             SendWarning(start, Msg1325);
@@ -244,7 +244,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferEdge(const occ::handle<IGESSolid_Edg
         }
         else
         {
-          Message_Msg                           Msg1156("IGES_1156");
+          System::log::Message_Msg                           Msg1156("IGES_1156");
           occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(thecurve);
           Msg1156.Arg("underlying curve");
           Msg1156.Arg(label);
@@ -258,7 +258,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferEdge(const occ::handle<IGESSolid_Edg
   TopoDS_Shape Sh = GetShapeResult(start, index);
   if (Sh.IsNull())
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("edge");
     Msg1156.Arg(label);
@@ -297,7 +297,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferLoop(const occ::handle<IGESSolid_Loo
       int                              nbparam     = start->NbParameterCurves(iedge);
       if (theedge.IsNull())
       {
-        Message_Msg Msg1365("IGES_1365");
+        System::log::Message_Msg Msg1365("IGES_1365");
         Msg1365.Arg(iedge);
         SendWarning(start, Msg1365);
       }
@@ -333,7 +333,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferLoop(const occ::handle<IGESSolid_Loo
         }
         else
         {
-          Message_Msg                           Msg1365("IGES_1365");
+          System::log::Message_Msg                           Msg1365("IGES_1365");
           occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
           Msg1365.Arg(iedge);
           SendWarning(start, Msg1365);
@@ -390,7 +390,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferLoop(const occ::handle<IGESSolid_Loo
   TopoDS_Shape Sh = GetShapeResult(start);
   if (Sh.IsNull())
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("loop");
     Msg1156.Arg(label);
@@ -417,7 +417,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferFace(const occ::handle<IGESSolid_Fac
         || surf->IsKind(STANDARD_TYPE(IGESGeom_TrimmedSurface))
         || surf->IsKind(STANDARD_TYPE(IGESBasic_SingleParent)))
     {
-      Message_Msg Msg196("XSTEP_196");
+      System::log::Message_Msg Msg196("XSTEP_196");
       SendWarning(start, Msg196);
 
       TopoDS_Shape Sh;
@@ -456,7 +456,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferFace(const occ::handle<IGESSolid_Fac
       }
       else
       {
-        Message_Msg                           Msg1156("IGES_1156");
+        System::log::Message_Msg                           Msg1156("IGES_1156");
         occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(surf);
         Msg1156.Arg("surface");
         Msg1156.Arg(label);
@@ -471,7 +471,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferFace(const occ::handle<IGESSolid_Fac
   TopoDS_Shape Sh = GetShapeResult(start);
   if (Sh.IsNull())
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("face");
     Msg1156.Arg(label);
@@ -481,7 +481,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferFace(const occ::handle<IGESSolid_Fac
 }
 
 TopoDS_Shape IGESToBRep_BRepEntity::TransferShell(const occ::handle<IGESSolid_Shell>& start,
-                                                  const Message_ProgressRange&        theProgress)
+                                                  const System::log::Message_ProgressRange&        theProgress)
 {
   TopoDS_Shape res;
 
@@ -494,7 +494,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferShell(const occ::handle<IGESSolid_Sh
     if (nbfaces != 0)
     {
       bool                  closed = true;
-      Message_ProgressScope aPS(theProgress, "Face", nbfaces);
+      System::log::Message_ProgressScope aPS(theProgress, "Face", nbfaces);
       for (int iface = 1; iface <= nbfaces && aPS.More(); iface++, aPS.Next())
       {
         occ::handle<IGESSolid_Face> face        = start->Face(iface);
@@ -512,7 +512,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferShell(const occ::handle<IGESSolid_Sh
       }
       if (!closed)
       {
-        Message_Msg Msg1360("IGES_1360");
+        System::log::Message_Msg Msg1360("IGES_1360");
         SendFail(start, Msg1360);
       }
 
@@ -522,7 +522,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferShell(const occ::handle<IGESSolid_Sh
     }
     else
     {
-      Message_Msg Msg200("XSTEP_200");
+      System::log::Message_Msg Msg200("XSTEP_200");
       SendFail(start, Msg200);
     }
   }
@@ -530,7 +530,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferShell(const occ::handle<IGESSolid_Sh
   TopoDS_Shape Sh = GetShapeResult(start);
   if (Sh.IsNull())
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("shell");
     Msg1156.Arg(label);
@@ -543,7 +543,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferShell(const occ::handle<IGESSolid_Sh
 
 TopoDS_Shape IGESToBRep_BRepEntity::TransferManifoldSolid(
   const occ::handle<IGESSolid_ManifoldSolid>& start,
-  const Message_ProgressRange&                theProgress)
+  const System::log::Message_ProgressRange&                theProgress)
 {
   TopoDS_Shape res;
 
@@ -569,7 +569,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferManifoldSolid(
       if (nbshell != 0)
       {
 
-        Message_ProgressScope aPS(theProgress, nullptr, nbshell);
+        System::log::Message_ProgressScope aPS(theProgress, nullptr, nbshell);
         for (int ishell = 1; ishell <= nbshell && aPS.More(); ishell++)
         {
           occ::handle<IGESSolid_Shell> voidshell = start->VoidShell(ishell);
@@ -600,7 +600,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferManifoldSolid(
   TopoDS_Shape Sh = GetShapeResult(start);
   if (Sh.IsNull())
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("solid");
     Msg1156.Arg(label);

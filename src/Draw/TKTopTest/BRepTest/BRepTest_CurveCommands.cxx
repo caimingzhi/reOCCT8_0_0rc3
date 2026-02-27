@@ -646,12 +646,12 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
         {
           gp_Vec vn(Draw::Atof(a[i - 5]), Draw::Atof(a[i - 4]), Draw::Atof(a[i - 3]));
           gp_Vec vx(Draw::Atof(a[i - 2]), Draw::Atof(a[i - 1]), Draw::Atof(a[i]));
-          if (vn.Magnitude() <= Precision::Confusion())
+          if (vn.Magnitude() <= math::precision::Precision::Confusion())
           {
             di << "profile : null direction";
             return 1;
           }
-          if (vx.Magnitude() <= Precision::Confusion())
+          if (vx.Magnitude() <= math::precision::Precision::Confusion())
           {
             di << "profile : null direction";
             return 1;
@@ -741,7 +741,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
             vy -= y;
           }
           length = std::sqrt(vx * vx + vy * vy);
-          if (length > Precision::Confusion())
+          if (length > math::precision::Precision::Confusion())
           {
             move = line;
             dx   = vx / length;
@@ -780,7 +780,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
           double vx = Draw::Atof(a[i - 1]);
           double vy = Draw::Atof(a[i]);
           length    = std::sqrt(vx * vx + vy * vy);
-          if (length > Precision::Confusion())
+          if (length > math::precision::Precision::Confusion())
           {
 
             dx = vx / length;
@@ -795,7 +795,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
         if (i >= n)
           goto badargs;
         radius = Draw::Atof(a[i - 1]);
-        if (std::abs(radius) > Precision::Confusion())
+        if (std::abs(radius) > math::precision::Precision::Confusion())
         {
           angle = Draw::Atof(a[i]) * (M_PI / 180.0);
           move  = circle;
@@ -810,7 +810,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
         length = Draw::Atof(a[i]);
         if ((a[i - 1][1] == 'X') || (a[i - 1][1] == 'x'))
         {
-          if (std::abs(dx) < Precision::Confusion())
+          if (std::abs(dx) < math::precision::Precision::Confusion())
           {
             di << "Profile : cannot intersect, arg " << i - 1;
             return 1;
@@ -820,7 +820,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
         }
         else if ((a[i - 1][1] == 'Y') || (a[i - 1][1] == 'y'))
         {
-          if (std::abs(dy) < Precision::Confusion())
+          if (std::abs(dy) < math::precision::Precision::Confusion())
           {
             di << "Profile : cannot intersect, arg " << i - 1;
             return 1;
@@ -914,7 +914,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
       dx     = x0 - x;
       dy     = y0 - y;
       length = std::sqrt(dx * dx + dy * dy);
-      if (length > Precision::Confusion())
+      if (length > math::precision::Precision::Confusion())
       {
         move = line;
         dx   = dx / length;
@@ -931,7 +931,7 @@ static int profile(Draw_Interpretor& di, int n, const char** a)
     else
     {
       BRepBuilderAPI_MakeFace MFace;
-      MFace.Init(Surface, false, Precision::Confusion());
+      MFace.Init(Surface, false, math::precision::Precision::Confusion());
       MFace.Add(MW.Wire());
       S = MFace.Face();
     }
@@ -1157,7 +1157,7 @@ static int bsplineprof(Draw_Interpretor& di, int n, const char** a)
     else
     {
       BRepBuilderAPI_MakeFace MFace;
-      MFace.Init(Surface, false, Precision::Confusion());
+      MFace.Init(Surface, false, math::precision::Precision::Confusion());
       MFace.Add(MW.Wire());
       S = MFace.Face();
     }
@@ -1307,7 +1307,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
             vy -= y;
           }
           length = std::sqrt(vx * vx + vy * vy);
-          if (length > Precision::Confusion())
+          if (length > math::precision::Precision::Confusion())
           {
             move = line;
             dx   = vx / length;
@@ -1346,7 +1346,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
           double vx = Draw::Atof(a[i - 1]);
           double vy = Draw::Atof(a[i]);
           length    = std::sqrt(vx * vx + vy * vy);
-          if (length > Precision::Confusion())
+          if (length > math::precision::Precision::Confusion())
           {
 
             dx = vx / length;
@@ -1361,7 +1361,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
         if (i >= n)
           goto badargs;
         radius = Draw::Atof(a[i - 1]);
-        if (std::abs(radius) > Precision::Confusion())
+        if (std::abs(radius) > math::precision::Precision::Confusion())
         {
           angle = Draw::Atof(a[i]) * (M_PI / 180.0);
           move  = circle;
@@ -1376,7 +1376,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
         length = Draw::Atof(a[i]);
         if ((a[i - 1][1] == 'X') || (a[i - 1][1] == 'x'))
         {
-          if (std::abs(dx) < Precision::Confusion())
+          if (std::abs(dx) < math::precision::Precision::Confusion())
           {
             di << "Profile : cannot intersect, arg " << i - 1;
             return 1;
@@ -1386,7 +1386,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
         }
         else if ((a[i - 1][1] == 'Y') || (a[i - 1][1] == 'y'))
         {
-          if (std::abs(dy) < Precision::Confusion())
+          if (std::abs(dy) < math::precision::Precision::Confusion())
           {
             di << "Profile : cannot intersect, arg " << i - 1;
             return 1;
@@ -1478,7 +1478,7 @@ static int profile2d(Draw_Interpretor& di, int n, const char** a)
       dx     = x0 - x;
       dy     = y0 - y;
       length = std::sqrt(dx * dx + dy * dy);
-      if (length > Precision::Confusion())
+      if (length > math::precision::Precision::Confusion())
       {
         move = line;
         dx   = dx / length;
@@ -1711,7 +1711,7 @@ int edgeintersector(Draw_Interpretor& di, int n, const char** a)
   BRep_Builder B;
 
   int              NbV = 0;
-  constexpr double Tol = Precision::PConfusion();
+  constexpr double Tol = math::precision::Precision::PConfusion();
 
   bool rejectreducedsegmentpoints = true;
   EInter.InitPoint(rejectreducedsegmentpoints);

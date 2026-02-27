@@ -75,9 +75,9 @@ void IntTools_ShrunkRange::Perform()
   myIsDone       = false;
   myIsSplittable = false;
 
-  double aDTol = Precision::Confusion();
+  double aDTol = math::precision::Precision::Confusion();
 
-  double aPDTol = Precision::PConfusion();
+  double aPDTol = math::precision::Precision::PConfusion();
 
   if (myT2 - myT1 < aPDTol)
   {

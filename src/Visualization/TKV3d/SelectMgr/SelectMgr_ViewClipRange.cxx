@@ -32,7 +32,7 @@ void SelectMgr_ViewClipRange::AddClippingPlanes(const Graphic3d_SequenceOfHClipP
       double        aDistance    = -aNearPnt.XYZ().Dot(aPlaneDirXYZ) - aPlaneABCD[3];
       double        aDistToPln   = 0.0;
 
-      if (std::abs(aDotProduct) < Precision::Angular())
+      if (std::abs(aDotProduct) < math::precision::Precision::Angular())
       {
         if (aDistance < 0.0)
         {

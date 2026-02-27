@@ -2,7 +2,8 @@
 
 #include <OSD_FileSystem.hpp>
 
-class OSD_CachedFileSystem : public OSD_FileSystem
+namespace System { namespace os {
+class OSD_CachedFileSystem : public System::os::OSD_FileSystem
 {
   DEFINE_STANDARD_RTTIEXT(OSD_CachedFileSystem, OSD_FileSystem)
 public:
@@ -56,3 +57,5 @@ protected:
   OSD_CachedStream            myStream;
   occ::handle<OSD_FileSystem> myLinkedFS;
 };
+}} // namespace System::os
+

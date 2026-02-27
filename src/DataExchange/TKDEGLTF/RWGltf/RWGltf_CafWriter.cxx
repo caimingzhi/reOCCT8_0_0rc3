@@ -159,7 +159,7 @@ namespace
 class DracoEncodingFunctor
 {
 public:
-  DracoEncodingFunctor(const Message_ProgressRange&                                theProgress,
+  DracoEncodingFunctor(const System::log::Message_ProgressRange&                                theProgress,
                        draco::Encoder&                                             theDracoEncoder,
                        const std::vector<std::shared_ptr<RWGltf_CafWriter::Mesh>>& theMeshes,
                        std::vector<std::shared_ptr<draco::EncoderBuffer>>& theEncoderBuffers)
@@ -183,7 +183,7 @@ public:
       return;
     }
 
-    Message_ProgressScope aScope(myRanges[theMeshIndex], nullptr, 1);
+    System::log::Message_ProgressScope aScope(myRanges[theMeshIndex], nullptr, 1);
 
     draco::Mesh aMesh;
     writeNodesToDracoMesh(aMesh, aCurrentMesh->NodesVec);
@@ -212,9 +212,9 @@ public:
   }
 
 private:
-  Message_ProgressScope                                       myProgress;
+  System::log::Message_ProgressScope                                       myProgress;
   draco::Encoder*                                             myDracoEncoder;
-  NCollection_Array1<Message_ProgressRange>                   myRanges;
+  NCollection_Array1<System::log::Message_ProgressRange>                   myRanges;
   const std::vector<std::shared_ptr<RWGltf_CafWriter::Mesh>>* myMeshes;
   std::vector<std::shared_ptr<draco::EncoderBuffer>>*         myEncoderBuffers;
 };
@@ -237,8 +237,8 @@ RWGltf_CafWriter::RWGltf_CafWriter(const TCollection_AsciiString& theFile, bool 
   myCSTrsf.SetOutputCoordinateSystem(RWMesh_CoordinateSystem_glTF);
 
   TCollection_AsciiString aFolder, aFileName, aShortFileNameBase, aFileExt;
-  OSD_Path::FolderAndFileFromPath(theFile, aFolder, aFileName);
-  OSD_Path::FileNameAndExtension(aFileName, aShortFileNameBase, aFileExt);
+  System::os::OSD_Path::FolderAndFileFromPath(theFile, aFolder, aFileName);
+  System::os::OSD_Path::FileNameAndExtension(aFileName, aShortFileNameBase, aFileExt);
 
   myBinFileNameShort = aShortFileNameBase + ".bin" + (myIsBinary ? ".tmp" : "");
   myBinFileNameFull  = !aFolder.IsEmpty() ? aFolder + myBinFileNameShort : myBinFileNameShort;
@@ -577,7 +577,7 @@ void RWGltf_CafWriter::saveIndices(RWGltf_GltfFace&                             
 bool RWGltf_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&                                                theDocument,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
   NCollection_Sequence<TDF_Label> aRoots;
   occ::handle<XCAFDoc_ShapeTool>  aShapeTool = XCAFDoc_DocumentTool::ShapeTool(theDocument->Main());
@@ -590,7 +590,7 @@ bool RWGltf_CafWriter::Perform(
   const NCollection_Sequence<TDF_Label>&          theRootLabels,
   const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
   double aLengthUnit = 1.;
   if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument, aLengthUnit))
@@ -601,7 +601,7 @@ bool RWGltf_CafWriter::Perform(
   myMaterialMap           = new RWGltf_GltfMaterialMap(myFile, aDefSamplerId);
   myMaterialMap->SetDefaultStyle(myDefaultStyle);
 
-  Message_ProgressScope aPSentry(theProgress, "Writing glTF file", 2);
+  System::log::Message_ProgressScope aPSentry(theProgress, "Writing glTF file", 2);
   if (!writeBinData(theDocument, theRootLabels, theLabelFilter, aPSentry.Next()))
   {
     return false;
@@ -617,7 +617,7 @@ bool RWGltf_CafWriter::Perform(
 
 void RWGltf_CafWriter::dispatchShapes(
   const XCAFPrs_DocumentNode&                                       theDocNode,
-  const Message_ProgressScope&                                      thePSentryBin,
+  const System::log::Message_ProgressScope&                                      thePSentryBin,
   NCollection_DataMap<XCAFPrs_Style, occ::handle<RWGltf_GltfFace>>& theMergedFaces,
   RWMesh_ShapeIterator&                                             theShapeIter)
 {
@@ -704,7 +704,7 @@ bool RWGltf_CafWriter::writeShapesToBin(RWGltf_GltfFace&      theGltfFace,
                                         int&                  theAccessorNb,
                                         const std::shared_ptr<RWGltf_CafWriter::Mesh>& theMesh,
                                         const RWGltf_GltfArrayType                     theArrType,
-                                        const Message_ProgressScope& thePSentryBin)
+                                        const System::log::Message_ProgressScope& thePSentryBin)
 {
   for (; theShapeIter.More() && thePSentryBin.More(); theShapeIter.Next())
   {
@@ -749,7 +749,7 @@ bool RWGltf_CafWriter::writeShapesToBin(RWGltf_GltfFace&      theGltfFace,
 
     if (!theBinFile.good())
     {
-      Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
+      System::log::Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
                         + "' cannot be written");
       return false;
     }
@@ -760,12 +760,12 @@ bool RWGltf_CafWriter::writeShapesToBin(RWGltf_GltfFace&      theGltfFace,
 bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&            theDocument,
                                     const NCollection_Sequence<TDF_Label>&          theRootLabels,
                                     const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
-                                    const Message_ProgressRange&                    theProgress)
+                                    const System::log::Message_ProgressRange&                    theProgress)
 {
 #ifndef HAVE_DRACO
   if (myDracoParameters.DracoCompression)
   {
-    Message::SendFail("Error: cannot use Draco compression, Draco library missing.");
+    System::log::Message::SendFail("Error: cannot use Draco compression, Draco library missing.");
     return false;
   }
 #endif
@@ -798,21 +798,21 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
   myBinDataMap.Clear();
   myBinDataLen64 = 0;
 
-  Message_ProgressScope aScope(theProgress,
+  System::log::Message_ProgressScope aScope(theProgress,
                                "Write binary data",
                                myDracoParameters.DracoCompression ? 2 : 1);
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aBinFile =
     aFileSystem->OpenOStream(myBinFileNameFull, std::ios::out | std::ios::binary);
   if (aBinFile.get() == nullptr || !aBinFile->good())
   {
-    Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
+    System::log::Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
                       + "' can not be created");
     return false;
   }
 
-  Message_ProgressScope      aPSentryBin(aScope.Next(), "Binary data", 4);
+  System::log::Message_ProgressScope      aPSentryBin(aScope.Next(), "Binary data", 4);
   const RWGltf_GltfArrayType anArrTypes[4] = {RWGltf_GltfArrayType_Position,
                                               RWGltf_GltfArrayType_Normal,
                                               RWGltf_GltfArrayType_TCoord0,
@@ -1050,7 +1050,7 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
   if (myDracoParameters.DracoCompression)
   {
 #ifdef HAVE_DRACO
-    OSD_Timer aDracoTimer;
+    System::os::OSD_Timer aDracoTimer;
     aDracoTimer.Start();
     draco::Encoder aDracoEncoder;
     aDracoEncoder.SetAttributeQuantization(draco::GeometryAttribute::POSITION,
@@ -1068,7 +1068,7 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
 
     std::vector<std::shared_ptr<draco::EncoderBuffer>> anEncoderBuffers(aMeshes.size());
     DracoEncodingFunctor aFunctor(aScope.Next(), aDracoEncoder, aMeshes, anEncoderBuffers);
-    OSD_Parallel::For(0, int(aMeshes.size()), aFunctor, !myToParallel);
+    System::os::OSD_Parallel::For(0, int(aMeshes.size()), aFunctor, !myToParallel);
 
     int aNbSkippedBuffers = 0;
     for (size_t aBuffInd = 0; aBuffInd != anEncoderBuffers.size(); ++aBuffInd)
@@ -1077,10 +1077,10 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
       {
         if (aBuffViewId == 0)
         {
-          Message::SendFail() << "Error: mesh not encoded in draco buffer.";
+          System::log::Message::SendFail() << "Error: mesh not encoded in draco buffer.";
           return false;
         }
-        Message::SendWarning() << "Warning: mesh is not encoded as a Draco buffer and has been "
+        System::log::Message::SendWarning() << "Warning: mesh is not encoded as a Draco buffer and has been "
                                   "loaded into a regular buffer.";
         aNbSkippedBuffers++;
         continue;
@@ -1092,7 +1092,7 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
       aBinFile->write(anEncoderBuff.data(), std::streamsize(anEncoderBuff.size()));
       if (!aBinFile->good())
       {
-        Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
+        System::log::Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
                           + "' cannot be written");
         return false;
       }
@@ -1108,7 +1108,7 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
       myBuffViewsDraco.push_back(aBuffViewDraco);
     }
     aDracoTimer.Stop();
-    Message::SendInfo(TCollection_AsciiString("Draco compression time: ")
+    System::log::Message::SendInfo(TCollection_AsciiString("Draco compression time: ")
                       + aDracoTimer.ElapsedTime() + " s");
 #endif
   }
@@ -1149,7 +1149,7 @@ bool RWGltf_CafWriter::writeBinData(const occ::handle<TDocStd_Document>&        
   aBinFile->flush();
   if (!aBinFile->good())
   {
-    Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
+    System::log::Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
                       + "' cannot be written");
     return false;
   }
@@ -1162,23 +1162,23 @@ bool RWGltf_CafWriter::writeJson(
   const NCollection_Sequence<TDF_Label>&          theRootLabels,
   const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
 #ifdef HAVE_RAPIDJSON
   myWriter.reset();
 
-  Message_ProgressScope aPSentryBin(theProgress, "Header data", 2);
+  System::log::Message_ProgressScope aPSentryBin(theProgress, "Header data", 2);
 
   const int aBinDataBufferId = 0;
   const int aDefSceneId      = 0;
 
   const TCollection_AsciiString      aFileNameGltf = myFile;
-  const occ::handle<OSD_FileSystem>& aFileSystem   = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem   = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aGltfContentFile =
     aFileSystem->OpenOStream(aFileNameGltf, std::ios::out | std::ios::binary);
   if (aGltfContentFile.get() == nullptr || !aGltfContentFile->good())
   {
-    Message::SendFail(TCollection_AsciiString("File '") + aFileNameGltf + "' can not be created");
+    System::log::Message::SendFail(TCollection_AsciiString("File '") + aFileNameGltf + "' can not be created");
     return false;
   }
   if (myIsBinary)
@@ -1248,7 +1248,7 @@ bool RWGltf_CafWriter::writeJson(
 
       const TCollection_AsciiString aNodeName =
         formatName(RWMesh_NameFormat_ProductOrInstance, aDocNode.Label, aDocNode.RefLabel);
-      Message::SendWarning(TCollection_AsciiString("RWGltf_CafWriter skipped node '") + aNodeName
+      System::log::Message::SendWarning(TCollection_AsciiString("RWGltf_CafWriter skipped node '") + aNodeName
                            + "' without geometry data");
     }
   }
@@ -1290,7 +1290,7 @@ bool RWGltf_CafWriter::writeJson(
     aGltfContentFile->flush();
     if (!aGltfContentFile->good())
     {
-      Message::SendFail(TCollection_AsciiString("File '") + aFileNameGltf + "' can not be written");
+      System::log::Message::SendFail(TCollection_AsciiString("File '") + aFileNameGltf + "' can not be written");
       return false;
     }
     aGltfContentFile.reset();
@@ -1317,7 +1317,7 @@ bool RWGltf_CafWriter::writeJson(
         aFileSystem->OpenIStream(myBinFileNameFull, std::ios::in | std::ios::binary);
       if (aBinFile.get() == nullptr || !aBinFile->good())
       {
-        Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
+        System::log::Message::SendFail(TCollection_AsciiString("File '") + myBinFileNameFull
                           + "' cannot be opened");
         return false;
       }
@@ -1333,17 +1333,17 @@ bool RWGltf_CafWriter::writeJson(
         aGltfContentFile->write(aBuffer, aReadLen);
       }
     }
-    OSD_Path aBinFilePath(myBinFileNameFull);
-    OSD_File(aBinFilePath).Remove();
-    if (OSD_File(aBinFilePath).Exists())
+    System::os::OSD_Path aBinFilePath(myBinFileNameFull);
+    System::os::OSD_File(aBinFilePath).Remove();
+    if (System::os::OSD_File(aBinFilePath).Exists())
     {
-      Message::SendFail(TCollection_AsciiString("Unable to remove temporary glTF content file '")
+      System::log::Message::SendFail(TCollection_AsciiString("Unable to remove temporary glTF content file '")
                         + myBinFileNameFull + "'");
     }
   }
   else
   {
-    Message::SendFail("glTF file content is too big for binary format");
+    System::log::Message::SendFail("glTF file content is too big for binary format");
     return false;
   }
 
@@ -1356,7 +1356,7 @@ bool RWGltf_CafWriter::writeJson(
   aGltfContentFile->flush();
   if (!aGltfContentFile->good())
   {
-    Message::SendFail(TCollection_AsciiString("File '") + aFileNameGltf + "' can not be written");
+    System::log::Message::SendFail(TCollection_AsciiString("File '") + aFileNameGltf + "' can not be written");
     return false;
   }
   aGltfContentFile.reset();
@@ -1368,7 +1368,7 @@ bool RWGltf_CafWriter::writeJson(
   (void)theLabelFilter;
   (void)theFileInfo;
   (void)theProgress;
-  Message::SendFail("Error: glTF writer is unavailable - OCCT has been built without RapidJSON "
+  System::log::Message::SendFail("Error: glTF writer is unavailable - OCCT has been built without RapidJSON "
                     "support [HAVE_RAPIDJSON undefined]");
   return false;
 #endif
@@ -2231,7 +2231,7 @@ void RWGltf_CafWriter::writeNodes(const occ::handle<TDocStd_Document>&          
                                  || std::abs(aQuaternion.Z()) > gp::Resolution()
                                  || std::abs(aQuaternion.W() - 1.0) > gp::Resolution();
         const double  aScaleFactor   = aTrsf.ScaleFactor();
-        const bool    hasScale       = std::abs(aScaleFactor - 1.0) > Precision::Confusion();
+        const bool    hasScale       = std::abs(aScaleFactor - 1.0) > math::precision::Precision::Confusion();
         const gp_XYZ& aTranslPart    = aTrsf.TranslationPart();
         const bool    hasTranslation = aTranslPart.SquareModulus() > gp::Resolution();
 

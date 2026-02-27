@@ -12,7 +12,7 @@ IMPLEMENT_STANDARD_RTTIEXT(CDM_Application, Standard_Transient)
 
 CDM_Application::CDM_Application()
 {
-  myMessenger = new Message_Messenger;
+  myMessenger = new System::log::Message_Messenger;
 }
 
 void CDM_Application::SetDocumentVersion(const occ::handle<CDM_Document>& aDocument,
@@ -27,7 +27,7 @@ void CDM_Application::SetReferenceCounter(const occ::handle<CDM_Document>& aDocu
   aDocument->SetReferenceCounter(aReferenceCounter);
 }
 
-occ::handle<Message_Messenger> CDM_Application::MessageDriver()
+occ::handle<System::log::Message_Messenger> CDM_Application::MessageDriver()
 {
   return myMessenger;
 }

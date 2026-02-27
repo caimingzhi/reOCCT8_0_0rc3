@@ -303,15 +303,15 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRWire ::TransferEdge(
       double                           uShift = 0., vShift = 0.;
       double                           U0, U1, V0, V1;
       Surf->Bounds(U0, U1, V0, V1);
-      if (aBSpline->IsUPeriodic() && std::abs(Ufirst - U0) > Precision::PConfusion())
+      if (aBSpline->IsUPeriodic() && std::abs(Ufirst - U0) > math::precision::Precision::PConfusion())
       {
         uShift = ShapeAnalysis::AdjustToPeriod(Ufirst, U0, U1);
       }
-      if (aBSpline->IsVPeriodic() && std::abs(Vfirst - V0) > Precision::PConfusion())
+      if (aBSpline->IsVPeriodic() && std::abs(Vfirst - V0) > math::precision::Precision::PConfusion())
       {
         vShift = ShapeAnalysis::AdjustToPeriod(Vfirst, V0, V1);
       }
-      if (std::abs(uShift) > Precision::PConfusion() || std::abs(vShift) > Precision::PConfusion())
+      if (std::abs(uShift) > math::precision::Precision::PConfusion() || std::abs(vShift) > math::precision::Precision::PConfusion())
       {
         gp_Trsf2d TR;
         TR.SetTranslation(gp_Pnt2d(0., 0.), gp_Pnt2d(uShift, vShift));
@@ -509,7 +509,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRWire ::TransferWire(
   if (TE.More())
   {
 
-    occ::handle<ShapeFix_Wire> aSFW = new ShapeFix_Wire(theWire, theFace, Precision::Confusion());
+    occ::handle<ShapeFix_Wire> aSFW = new ShapeFix_Wire(theWire, theFace, math::precision::Precision::Confusion());
     aSFW->FixReorder();
     occ::handle<ShapeExtend_WireData> aSEWD = aSFW->WireData();
     int                               nbE   = aSEWD->NbEdges();

@@ -48,7 +48,7 @@ math_GlobOptMin::math_GlobOptMin(math_MultipleVarFunction* theFunc,
       myCellSize(0, myN - 1),
       myFilter(theFunc->NbVariables()),
       myCont(2),
-      myF(Precision::Infinite())
+      myF(math::precision::Precision::Infinite())
 {
   int i;
 
@@ -56,7 +56,7 @@ math_GlobOptMin::math_GlobOptMin(math_MultipleVarFunction* theFunc,
   myC                      = theC;
   myInitC                  = theC;
   myIsFindSingleSolution   = false;
-  myFunctionalMinimalValue = -Precision::Infinite();
+  myFunctionalMinimalValue = -math::precision::Precision::Infinite();
   myZ                      = -1;
   mySolCount               = 0;
 
@@ -172,7 +172,7 @@ void math_GlobOptMin::Perform(const bool isFindSingleSolution)
     myV(i) = 0.0;
   }
 
-  if (minLength < Precision::PConfusion())
+  if (minLength < math::precision::Precision::PConfusion())
   {
 #ifdef OCCT_DEBUG
     std::cout << "math_GlobOptMin::Perform(): Degenerated parameters space" << std::endl;
@@ -358,7 +358,7 @@ void math_GlobOptMin::computeGlobalExtremum(int j)
         double aSaveParam = myX(1);
 
         double aParam = (2 * myX(1) - myV(1)) * 0.5 + (aPrevVal - d) * 0.5 / myC;
-        if (Precision::IsInfinite(aPrevVal))
+        if (math::precision::Precision::IsInfinite(aPrevVal))
           aParam = myX(1) - myV(1) * 0.5;
 
         myX(1)      = aParam;
@@ -443,7 +443,7 @@ bool math_GlobOptMin::isStored(const math_Vector& thePnt)
   }
   else
   {
-    NCollection_CellFilter_Inspector anInspector(myN, Precision::PConfusion());
+    NCollection_CellFilter_Inspector anInspector(myN, math::precision::Precision::PConfusion());
     if (isFirstCellFilterInvoke)
     {
       myFilter.Reset(myCellSize);
@@ -488,7 +488,7 @@ void math_GlobOptMin::initCellSize()
   for (int anIdx = 1; anIdx <= myN; anIdx++)
   {
     myCellSize(anIdx - 1) =
-      (myGlobB(anIdx) - myGlobA(anIdx)) * Precision::PConfusion() / (2.0 * M_SQRT2);
+      (myGlobB(anIdx) - myGlobA(anIdx)) * math::precision::Precision::PConfusion() / (2.0 * M_SQRT2);
   }
 }
 

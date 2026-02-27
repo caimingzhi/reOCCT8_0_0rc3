@@ -112,7 +112,7 @@ void PrsDim_DiameterDimension::SetMeasuredGeometry(const TopoDS_Shape& theShape)
 bool PrsDim_DiameterDimension::CheckPlane(const gp_Pln& thePlane) const
 {
 
-  return thePlane.Contains(myCircle.Location(), Precision::Confusion());
+  return thePlane.Contains(myCircle.Location(), math::precision::Precision::Confusion());
 }
 
 void PrsDim_DiameterDimension::ComputePlane()
@@ -229,7 +229,7 @@ void PrsDim_DiameterDimension::ComputeSidePoints(const gp_Circ& theCircle,
 
 bool PrsDim_DiameterDimension::IsValidCircle(const gp_Circ& theCircle) const
 {
-  return (theCircle.Radius() * 2.0) > Precision::Confusion();
+  return (theCircle.Radius() * 2.0) > math::precision::Precision::Confusion();
 }
 
 bool PrsDim_DiameterDimension::IsValidAnchor(const gp_Circ& theCircle,
@@ -239,8 +239,8 @@ bool PrsDim_DiameterDimension::IsValidAnchor(const gp_Circ& theCircle,
   double anAnchorDist = theAnchor.Distance(theCircle.Location());
   double aRadius      = myCircle.Radius();
 
-  return std::abs(anAnchorDist - aRadius) > Precision::Confusion()
-         && aCirclePlane.Contains(theAnchor, Precision::Confusion());
+  return std::abs(anAnchorDist - aRadius) > math::precision::Precision::Confusion()
+         && aCirclePlane.Contains(theAnchor, math::precision::Precision::Confusion());
 }
 
 gp_Pnt PrsDim_DiameterDimension::GetTextPosition() const

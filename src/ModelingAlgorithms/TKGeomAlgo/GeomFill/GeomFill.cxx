@@ -66,15 +66,15 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
     gp_Dir D1 = L1.Direction();
     gp_Dir D2 = L2.Direction();
 
-    if (D1.IsParallel(D2, Precision::Angular()))
+    if (D1.IsParallel(D2, math::precision::Precision::Angular()))
     {
       gp_Vec P1P2(L1.Location(), L2.Location());
       double proj = P1P2.Dot(D1);
 
-      if (D1.IsEqual(D2, Precision::Angular()))
+      if (D1.IsEqual(D2, math::precision::Precision::Angular()))
       {
-        if (std::abs(a1 - proj - a2) <= Precision::Confusion()
-            && std::abs(b1 - proj - b2) <= Precision::Confusion())
+        if (std::abs(a1 - proj - a2) <= math::precision::Precision::Confusion()
+            && std::abs(b1 - proj - b2) <= math::precision::Precision::Confusion())
         {
           gp_Ax3                  Ax(L1.Location(), gp_Dir(D1.Crossed(P1P2)), D1);
           occ::handle<Geom_Plane> P = new Geom_Plane(Ax);
@@ -83,10 +83,10 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
           IsDone = true;
         }
       }
-      if (D1.IsOpposite(D2, Precision::Angular()))
+      if (D1.IsOpposite(D2, math::precision::Precision::Angular()))
       {
-        if (std::abs(a1 - proj + b2) <= Precision::Confusion()
-            && std::abs(b1 - proj + a2) <= Precision::Confusion())
+        if (std::abs(a1 - proj + b2) <= math::precision::Precision::Confusion()
+            && std::abs(b1 - proj + a2) <= math::precision::Precision::Confusion())
         {
           gp_Ax3                  Ax(L1.Location(), gp_Dir(D1.Crossed(P1P2)), D1);
           occ::handle<Geom_Plane> P = new Geom_Plane(Ax);
@@ -108,12 +108,12 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
     gp_Ax3 A1 = C1.Position();
     gp_Ax3 A2 = C2.Position();
 
-    if (A1.Axis().IsCoaxial(A2.Axis(), Precision::Angular(), Precision::Confusion()))
+    if (A1.Axis().IsCoaxial(A2.Axis(), math::precision::Precision::Angular(), math::precision::Precision::Confusion()))
     {
       double V = gp_Vec(A1.Location(), A2.Location()).Dot(gp_Vec(A1.Direction()));
       if (!Trim1 && !Trim2)
       {
-        if (std::abs(C1.Radius() - C2.Radius()) < Precision::Confusion())
+        if (std::abs(C1.Radius() - C2.Radius()) < math::precision::Precision::Confusion())
         {
           occ::handle<Geom_CylindricalSurface> C = new Geom_CylindricalSurface(A1, C1.Radius());
           Surf = new Geom_RectangularTrimmedSurface(C, std::min(0., V), std::max(0., V), false);
@@ -145,7 +145,7 @@ occ::handle<Geom_Surface> GeomFill::Surface(const occ::handle<Geom_Curve>& Curve
     GeomFill_Generator Generator;
     Generator.AddCurve(Curve1);
     Generator.AddCurve(Curve2);
-    Generator.Perform(Precision::PConfusion());
+    Generator.Perform(math::precision::Precision::PConfusion());
     Surf = Generator.Surface();
   }
 
@@ -213,7 +213,7 @@ void GeomFill::GetMinimalWeights(const Convert_ParameterisationType TConv,
     CtoBspl->Weights(Weights);
 
     NCollection_Array1<double> poids(Weights.Lower(), Weights.Upper());
-    double                     angle_min = std::max(Precision::PConfusion(), MinAng);
+    double                     angle_min = std::max(math::precision::Precision::PConfusion(), MinAng);
 
     occ::handle<Geom_TrimmedCurve> Sect2 = new Geom_TrimmedCurve(new Geom_Circle(C), 0., angle_min);
     CtoBspl                              = GeomConvert::CurveToBSplineCurve(Sect2, TConv);

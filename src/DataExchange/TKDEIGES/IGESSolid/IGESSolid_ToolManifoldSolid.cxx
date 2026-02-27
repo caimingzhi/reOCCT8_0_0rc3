@@ -25,7 +25,7 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
                                                 IGESData_ParamReader& PR) const
 {
 
-  Message_Msg Msg180("XSTEP_180");
+  System::log::Message_Msg Msg180("XSTEP_180");
 
   bool                                                           abool, shellFlag;
   int                                                            nbshells, i;
@@ -37,19 +37,19 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, shell))
   {
-    Message_Msg Msg178("XSTEP_178");
+    System::log::Message_Msg Msg178("XSTEP_178");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg178.Arg(Msg216.Value());
         PR.SendFail(Msg178);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg178.Arg(Msg217.Value());
         PR.SendFail(Msg178);
         break;
@@ -64,7 +64,7 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
   bool st = PR.ReadInteger(PR.Current(), nbshells);
   if (!st)
   {
-    Message_Msg Msg181("XSTEP_181");
+    System::log::Message_Msg Msg181("XSTEP_181");
     PR.SendFail(Msg181);
   }
 
@@ -80,26 +80,26 @@ void IGESSolid_ToolManifoldSolid::ReadOwnParams(const occ::handle<IGESSolid_Mani
         voidShells->SetValue(i, ashell);
       else
       {
-        Message_Msg Msg179("XSTEP_179");
+        System::log::Message_Msg Msg179("XSTEP_179");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg179.Arg(Msg216.Value());
             PR.SendFail(Msg179);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg179.Arg(Msg217.Value());
             PR.SendFail(Msg179);
             break;
           }
           case IGESData_TypeError:
           {
-            Message_Msg Msg218("IGES_218");
+            System::log::Message_Msg Msg218("IGES_218");
             Msg179.Arg(Msg218.Value());
             PR.SendFail(Msg179);
             break;

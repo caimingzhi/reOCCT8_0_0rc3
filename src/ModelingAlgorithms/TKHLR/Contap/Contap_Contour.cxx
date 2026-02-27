@@ -272,7 +272,7 @@ static void LineConstructor(NCollection_Sequence<Contap_Line>&      slin,
                             const occ::handle<Adaptor3d_Surface>&   Surf)
 {
 
-  constexpr double Tol  = Precision::PConfusion();
+  constexpr double Tol  = math::precision::Precision::PConfusion();
   Contap_IType     typl = L.TypeContour();
 
   if (typl == Contap_Walking)
@@ -507,7 +507,7 @@ static void KeepInsidePoints(const Contap_TheSearchInside&                solins
       if (projok)
       {
         gp_Pnt pprojete = Adaptor3d_HSurfaceTool::Value(Surf, Ptproj.X(), Ptproj.Y());
-        if (pti.Value().Distance(pprojete) <= Precision::Confusion())
+        if (pti.Value().Distance(pprojete) <= math::precision::Precision::Confusion())
         {
           tokeep = false;
           break;
@@ -573,7 +573,7 @@ static void ComputeTangency(const Contap_TheSearch&                  solrst,
 
           gp_Pnt pprojete = Adaptor3d_HSurfaceTool::Value(Surf, pproj.X(), pproj.Y());
 
-          if ((PStart.Value()).Distance(pprojete) <= Precision::Confusion())
+          if ((PStart.Value()).Distance(pprojete) <= math::precision::Precision::Confusion())
           {
             SurUneRestrictionSolution = true;
           }
@@ -1080,7 +1080,7 @@ void ComputeInternalPointsOnRstr(Contap_Line&         Line,
   int Nbpnts = Contap_HContTool::NbSamplesOnArc(thearc);
   indexinf   = 1;
   vecregard  = SFunc.Direction();
-  toler      = Contap_HCurve2dTool::Resolution(thearc, Precision::Confusion());
+  toler      = Contap_HCurve2dTool::Resolution(thearc, math::precision::Precision::Confusion());
   found      = false;
 
   do
@@ -1479,12 +1479,12 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_TopolTool>& Domain)
   Contap_Point                   ptdeb, ptfin;
   Contap_ThePathPointOfTheSearch PStartf, PStartl;
 
-  double TolArc = Precision::Confusion();
+  double TolArc = math::precision::Precision::Confusion();
 
   const occ::handle<Adaptor3d_Surface>& Surf = mySFunc.Surface();
 
-  double EpsU  = Adaptor3d_HSurfaceTool::UResolution(Surf, Precision::Confusion());
-  double EpsV  = Adaptor3d_HSurfaceTool::VResolution(Surf, Precision::Confusion());
+  double EpsU  = Adaptor3d_HSurfaceTool::UResolution(Surf, math::precision::Precision::Confusion());
+  double EpsV  = Adaptor3d_HSurfaceTool::VResolution(Surf, math::precision::Precision::Confusion());
   double Preci = std::min(EpsU, EpsV);
 
   double Fleche = 0.01;
@@ -1498,10 +1498,10 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_TopolTool>& Domain)
   double Usup = Surf->LastUParameter();
   double Vsup = Surf->LastVParameter();
 
-  bool Uinfinfinite = Precision::IsNegativeInfinite(Uinf);
-  bool Usupinfinite = Precision::IsPositiveInfinite(Usup);
-  bool Vinfinfinite = Precision::IsNegativeInfinite(Vinf);
-  bool Vsupinfinite = Precision::IsPositiveInfinite(Vsup);
+  bool Uinfinfinite = math::precision::Precision::IsNegativeInfinite(Uinf);
+  bool Usupinfinite = math::precision::Precision::IsPositiveInfinite(Usup);
+  bool Vinfinfinite = math::precision::Precision::IsNegativeInfinite(Vinf);
+  bool Vsupinfinite = math::precision::Precision::IsPositiveInfinite(Vsup);
 
   if (Uinfinfinite || Usupinfinite || Vinfinfinite || Vsupinfinite)
   {
@@ -1532,7 +1532,7 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_TopolTool>& Domain)
   Fleche *= dx;
   TolArc *= dx;
 
-  mySFunc.Set(Precision::Confusion());
+  mySFunc.Set(math::precision::Precision::Confusion());
 
   bool RecheckOnRegularity = true;
   solrst.Perform(myAFunc, Domain, TolArc, TolArc, RecheckOnRegularity);
@@ -1551,7 +1551,7 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_TopolTool>& Domain)
     ComputeTangency(solrst, Domain, mySFunc, seqpdep, Destination);
   }
 
-  solins.Perform(mySFunc, Surf, Domain, Precision::Confusion());
+  solins.Perform(mySFunc, Surf, Domain, math::precision::Precision::Confusion());
 
   NbPointIns = solins.NbPoints();
   NCollection_Sequence<IntSurf_InteriorPoint> seqpins;
@@ -1571,7 +1571,7 @@ void Contap_Contour::Perform(const occ::handle<Adaptor3d_TopolTool>& Domain)
           gp_Dir   aTorDir  = aTor.Axis().Direction();
           gp_Dir   aProjDir = mySFunc.Direction();
 
-          if (aTorDir.Dot(aProjDir) < Precision::Confusion())
+          if (aTorDir.Dot(aProjDir) < math::precision::Precision::Confusion())
           {
             bKeepAllPoints = true;
           }
@@ -1949,7 +1949,7 @@ static void PutPointsOnLine(const Contap_TheSearch&               solrst,
         else
         {
 
-          if (std::abs(d2d.Y()) <= Precision::Confusion())
+          if (std::abs(d2d.Y()) <= math::precision::Precision::Confusion())
           {
             tgtrst = d1v.Crossed(normale);
             if (d2d.X() < 0.0)
@@ -2064,7 +2064,7 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
         case Contap_ContourStd:
         {
           gp_Dir Dirpln(pl.Axis().Direction());
-          if (std::abs(mySFunc.Direction().Dot(Dirpln)) > Precision::Angular())
+          if (std::abs(mySFunc.Direction().Dot(Dirpln)) > math::precision::Precision::Angular())
           {
 
             PerformSolRst = false;
@@ -2074,7 +2074,7 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
         case Contap_ContourPrs:
         {
           gp_Pnt Eye(mySFunc.Eye());
-          if (pl.Distance(Eye) > Precision::Confusion())
+          if (pl.Distance(Eye) > math::precision::Precision::Confusion())
           {
 
             PerformSolRst = false;
@@ -2085,7 +2085,7 @@ void Contap_Contour::PerformAna(const occ::handle<Adaptor3d_TopolTool>& Domain)
         {
           gp_Dir Dirpln(pl.Axis().Direction());
           double Sina = std::sin(mySFunc.Angle());
-          if (std::abs(mySFunc.Direction().Dot(Dirpln) + Sina) > Precision::Angular())
+          if (std::abs(mySFunc.Direction().Dot(Dirpln) + Sina) > math::precision::Precision::Angular())
           {
 
             PerformSolRst = false;

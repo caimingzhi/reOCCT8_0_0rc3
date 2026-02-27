@@ -56,10 +56,10 @@ void DsgPrs_EqualRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& 
   TCollection_ExtendedString aText("==");
 
   double Dist = FirstCenter.Distance(SecondCenter);
-  if (Dist > Precision::Confusion())
+  if (Dist > math::precision::Precision::Confusion())
   {
     SmallDist = Dist * 0.05;
-    if (SmallDist <= Precision::Confusion())
+    if (SmallDist <= math::precision::Precision::Confusion())
       SmallDist = Dist;
     gp_Dir LineDir = gce_MakeDir(FirstCenter, SecondCenter);
     gp_Dir OrtDir  = Plane->Pln().Axis().Direction() ^ LineDir;
@@ -73,7 +73,7 @@ void DsgPrs_EqualRadiusPresentation::Add(const occ::handle<Prs3d_Presentation>& 
     double Rad = std::max(FirstCenter.Distance(FirstPoint), SecondCenter.Distance(SecondPoint));
 
     SmallDist = Rad * 0.05;
-    if (SmallDist <= Precision::Confusion())
+    if (SmallDist <= math::precision::Precision::Confusion())
       SmallDist = Rad;
 
     gp_Vec aVec(SmallDist, SmallDist, SmallDist);

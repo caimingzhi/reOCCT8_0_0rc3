@@ -6,8 +6,12 @@
 #include <TCollection_AsciiString.hpp>
 #include <Standard_Integer.hpp>
 #include <Standard_Transient.hpp>
+namespace app { namespace storage {
 class Storage_CallBack;
+}} // namespace app::storage
 
+
+namespace app { namespace storage {
 class Storage_TypedCallBack : public Standard_Transient
 {
 
@@ -36,3 +40,5 @@ private:
   occ::handle<Storage_CallBack> myCallBack;
   int                           myIndex;
 };
+}} // namespace app::storage
+

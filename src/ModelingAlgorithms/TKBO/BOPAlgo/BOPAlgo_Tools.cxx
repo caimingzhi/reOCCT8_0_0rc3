@@ -799,7 +799,7 @@ bool FindEdgeTangent(const BRepAdaptor_Curve& theCurve, gp_Vec& theTangent)
   {
     gp_Pnt aP;
     theCurve.D1(aT, aP, theTangent);
-    if (theTangent.Magnitude() > Precision::Confusion())
+    if (theTangent.Magnitude() > math::precision::Precision::Confusion())
     {
       return true;
     }
@@ -853,7 +853,7 @@ bool FindPlane(const BRepAdaptor_Curve& theCurve, gp_Pln& thePlane)
         theCurve.D1(aT, aP2, aV2);
 
         aVN = aV1 ^ aV2;
-        if (aVN.Magnitude() > Precision::Confusion())
+        if (aVN.Magnitude() > math::precision::Precision::Confusion())
         {
           bFound = true;
           break;
@@ -907,7 +907,7 @@ bool FindPlane(const TopoDS_Shape&                                     theWire,
         continue;
       }
 
-      if (aDTE1.IsParallel(aDTE2, Precision::Angular()))
+      if (aDTE1.IsParallel(aDTE2, math::precision::Precision::Angular()))
       {
         continue;
       }
@@ -943,7 +943,7 @@ class BOPAlgo_PairVerticesSelector : public BOPTools_BoxPairSelector
 public:
   BOPAlgo_PairVerticesSelector()
       : myVertices(nullptr),
-        myFuzzyValue(Precision::Confusion())
+        myFuzzyValue(math::precision::Precision::Confusion())
   {
   }
 
@@ -1161,7 +1161,7 @@ private:
 
 void BOPAlgo_FillIn3DParts::Perform()
 {
-  Message_ProgressScope aPSOuter(myProgressRange, nullptr, 2);
+  System::log::Message_ProgressScope aPSOuter(myProgressRange, nullptr, 2);
   if (UserBreak(aPSOuter))
   {
     return;
@@ -1236,7 +1236,7 @@ void BOPAlgo_FillIn3DParts::Perform()
 
   NCollection_List<TopoDS_Shape> aLCBF(aTmpAlloc);
 
-  Message_ProgressScope aPSLoop(aPSOuter.Next(), nullptr, aNbFP);
+  System::log::Message_ProgressScope aPSLoop(aPSOuter.Next(), nullptr, aNbFP);
   for (k = 0; k < aNbFP; ++k, aPSLoop.Next())
   {
     if (UserBreak(aPSLoop))
@@ -1285,7 +1285,7 @@ void BOPAlgo_FillIn3DParts::Perform()
     bool bIsIN = BOPTools_AlgoTools::IsInternalFace(aFaceToClassify,
                                                     mySolid,
                                                     aMEFDS,
-                                                    Precision::Confusion(),
+                                                    math::precision::Precision::Confusion(),
                                                     myContext);
     if (bIsIN)
     {
@@ -1386,11 +1386,11 @@ void BOPAlgo_Tools::ClassifyFaces(
   const NCollection_DataMap<TopoDS_Shape, Bnd_Box, TopTools_ShapeMapHasher>& theShapeBoxMap,
   const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                theSolidsIF,
-  const Message_ProgressRange& theRange)
+  const System::log::Message_ProgressRange& theRange)
 {
   occ::handle<NCollection_BaseAllocator> anAlloc = new NCollection_IncAllocator;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
 
   BOPAlgo_VectorOfShapeBox aVSB(256, anAlloc);
 
@@ -1466,7 +1466,7 @@ void BOPAlgo_Tools::ClassifyFaces(
   aPSOuter.Next();
 
   int                   aNbS = aVFIP.Length();
-  Message_ProgressScope aPSParallel(aPSOuter.Next(9),
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(9),
                                     "Classification of faces relatively solids",
                                     aNbS);
   for (int iFS = 0; iFS < aNbS; ++iFS)
@@ -1560,7 +1560,7 @@ void BOPAlgo_Tools::FillInternals(
     {
       TopoDS_Shape aPart = itLP.Value();
       TopAbs_State aState =
-        BOPTools_AlgoTools::ComputeStateByOnePoint(aPart, aSd, Precision::Confusion(), theContext);
+        BOPTools_AlgoTools::ComputeStateByOnePoint(aPart, aSd, math::precision::Precision::Confusion(), theContext);
       if (aState == TopAbs_IN)
       {
         if (aPart.ShapeType() == TopAbs_FACE)

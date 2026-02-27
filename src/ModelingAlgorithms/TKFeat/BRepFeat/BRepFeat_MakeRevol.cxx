@@ -181,7 +181,7 @@ void BRepFeat_MakeRevol::Perform(const double Angle)
   myGluedF.Clear();
   myPerfSelection = BRepFeat_NoSelection;
   PerfSelectionValid();
-  bool            RevolComp = (2 * M_PI - std::abs(Angle) <= Precision::Angular());
+  bool            RevolComp = (2 * M_PI - std::abs(Angle) <= math::precision::Precision::Angular());
   LocOpe_Revol    theRevol;
   double          angledec = 0.;
   TopExp_Explorer exp;
@@ -837,8 +837,8 @@ bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
   occ::handle<Geom_Surface>  S1, S2;
   TopLoc_Location            loc1, loc2;
   occ::handle<Standard_Type> typS1, typS2;
-  constexpr double           tollin = Precision::Confusion();
-  constexpr double           tolang = Precision::Angular();
+  constexpr double           tollin = math::precision::Precision::Confusion();
+  constexpr double           tolang = math::precision::Precision::Angular();
 
   S1 = BRep_Tool::Surface(F1, loc1);
   S2 = BRep_Tool::Surface(F2, loc2);

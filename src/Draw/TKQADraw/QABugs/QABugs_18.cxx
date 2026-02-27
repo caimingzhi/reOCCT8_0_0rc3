@@ -77,7 +77,7 @@ static int OCC181(Draw_Interpretor& di, int argc, const char** argv)
 
   di.Eval(Env1.ToCString());
 
-  Resource_Manager aManager(aFileName, verboseBool);
+  System::resource::Resource_Manager aManager(aFileName, verboseBool);
 
   di.Eval(Env2.ToCString());
 
@@ -105,7 +105,7 @@ static int OCC27849(Draw_Interpretor& di, int argc, const char** argv)
   const char* aEnvName = argv[1];
   const char* aResName = argv[2];
 
-  Resource_Manager aManager(aEnvName);
+  System::resource::Resource_Manager aManager(aEnvName);
   if (aManager.Find(aResName))
   {
     di << aManager.Value(aResName);

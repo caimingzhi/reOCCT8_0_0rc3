@@ -23,9 +23,9 @@ static NCollection_DataMap<TCollection_AsciiString, int>                        
 static NCollection_DataMap<TCollection_AsciiString, occ::handle<Standard_Transient>> defms;
 static bool                                                                          stachr = false;
 
-static OSD_Timer& chrono()
+static System::os::OSD_Timer& chrono()
 {
-  static OSD_Timer chr;
+  static System::os::OSD_Timer chr;
   return chr;
 }
 
@@ -432,11 +432,11 @@ bool MoniTool_CaseData::Integer(const int nd, int& val) const
   return true;
 }
 
-Message_Msg MoniTool_CaseData::Msg() const
+System::log::Message_Msg MoniTool_CaseData::Msg() const
 {
   const char* defm = DefMsg(thecase.ToCString());
 
-  Message_Msg mess;
+  System::log::Message_Msg mess;
   mess.Set(defm);
 
   return mess;

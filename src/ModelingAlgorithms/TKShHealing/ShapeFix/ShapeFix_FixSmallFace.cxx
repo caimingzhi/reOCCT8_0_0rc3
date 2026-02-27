@@ -43,7 +43,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_FixSmallFace, ShapeFix_Root)
 ShapeFix_FixSmallFace::ShapeFix_FixSmallFace()
 {
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
-  SetPrecision(Precision::Confusion());
+  SetPrecision(math::precision::Precision::Confusion());
 }
 
 void ShapeFix_FixSmallFace::Init(const TopoDS_Shape& S)
@@ -187,7 +187,7 @@ bool ShapeFix_FixSmallFace::RemoveFacesInCaseOfSpot(const TopoDS_Face& F) const
     Context()->Remove(Ed);
   }
   Context()->Remove(F);
-  SendWarning(F, Message_Msg("FixAdvFace.FixSpotFace.MSG0"));
+  SendWarning(F, System::log::Message_Msg("FixAdvFace.FixSpotFace.MSG0"));
   return true;
 }
 
@@ -323,7 +323,7 @@ bool ShapeFix_FixSmallFace::ReplaceInCaseOfStrip(TopoDS_Face& F,
 bool ShapeFix_FixSmallFace::RemoveFacesInCaseOfStrip(const TopoDS_Face& F) const
 {
   Context()->Remove(F);
-  SendWarning(F, Message_Msg("FixAdvFace.FixStripFace.MSG0"));
+  SendWarning(F, System::log::Message_Msg("FixAdvFace.FixStripFace.MSG0"));
   return true;
 }
 
@@ -476,7 +476,7 @@ TopoDS_Edge ShapeFix_FixSmallFace::ComputeSharedEdgeForStripFace(const TopoDS_Fa
   {
     the2dcurve1 = BRep_Tool::CurveOnSurface(E1, F1, fp1, lp1);
     if (!the2dcurve1.IsNull() && fp1 != f && lp1 != l)
-      GeomLib::SameRange(Precision::Confusion(), the2dcurve1, fp1, lp1, f, l, thenew1);
+      GeomLib::SameRange(math::precision::Precision::Confusion(), the2dcurve1, fp1, lp1, f, l, thenew1);
   }
 
   double maxdev;
@@ -583,13 +583,13 @@ bool ShapeFix_FixSmallFace::SplitOneFace(TopoDS_Face& F, TopoDS_Compound& theSpl
         if (dist <= vt)
         {
           theBuilder.MakeVertex(theNewVertex);
-          theBuilder.UpdateVertex(theNewVertex, proj, Precision::Confusion());
+          theBuilder.UpdateVertex(theNewVertex, proj, math::precision::Precision::Confusion());
           theBuilder.MakeEdge(theFirstEdge);
           theBuilder.MakeEdge(theSecondEdge);
           double                  f, l;
           occ::handle<Geom_Curve> the3dcurve = BRep_Tool::Curve(E, f, l);
-          theBuilder.UpdateEdge(theFirstEdge, the3dcurve, Precision::Confusion());
-          theBuilder.UpdateEdge(theSecondEdge, the3dcurve, Precision::Confusion());
+          theBuilder.UpdateEdge(theFirstEdge, the3dcurve, math::precision::Precision::Confusion());
+          theBuilder.UpdateEdge(theSecondEdge, the3dcurve, math::precision::Precision::Confusion());
           if (V1.Orientation() == TopAbs_FORWARD)
           {
             theBuilder.Add(theFirstEdge, V1);
@@ -632,7 +632,7 @@ bool ShapeFix_FixSmallFace::SplitOneFace(TopoDS_Face& F, TopoDS_Compound& theSpl
       double                  lastparam  = ElCLib::Parameter(lin, proj);
       occ::handle<Geom_Line>  L          = new Geom_Line(vp, gp_Vec(vp, proj));
       occ::handle<Geom_Curve> the3dc     = L;
-      theBuilder.MakeEdge(theSplitEdge, the3dc, Precision::Confusion());
+      theBuilder.MakeEdge(theSplitEdge, the3dc, math::precision::Precision::Confusion());
       theBuilder.Add(theSplitEdge, V.Oriented(TopAbs_FORWARD));
       theBuilder.Add(theSplitEdge, theNewVertex.Oriented(TopAbs_REVERSED));
       theBuilder.Range(theSplitEdge, firstparam, lastparam);
@@ -648,7 +648,7 @@ bool ShapeFix_FixSmallFace::SplitOneFace(TopoDS_Face& F, TopoDS_Compound& theSpl
       if (itw.More())
         return false;
       occ::handle<ShapeFix_Wire> sfw = new ShapeFix_Wire;
-      sfw->Init(wireonface, F, Precision::Confusion());
+      sfw->Init(wireonface, F, math::precision::Precision::Confusion());
       sfw->FixReorder();
       wireonface = sfw->Wire();
 
@@ -666,7 +666,7 @@ bool ShapeFix_FixSmallFace::SplitOneFace(TopoDS_Face& F, TopoDS_Compound& theSpl
           theBuilder.Add(wireonface, theSecondEdge.Oriented(TopAbs_FORWARD));
         }
       }
-      sfw->Init(wireonface, F, Precision::Confusion());
+      sfw->Init(wireonface, F, math::precision::Precision::Confusion());
       sfw->FixReorder();
       wireonface = sfw->Wire();
 
@@ -699,8 +699,8 @@ bool ShapeFix_FixSmallFace::SplitOneFace(TopoDS_Face& F, TopoDS_Compound& theSpl
 
       TopoDS_Face F1;
       TopoDS_Face F2;
-      theBuilder.MakeFace(F1, BRep_Tool::Surface(F), Precision::Confusion());
-      theBuilder.MakeFace(F2, BRep_Tool::Surface(F), Precision::Confusion());
+      theBuilder.MakeFace(F1, BRep_Tool::Surface(F), math::precision::Precision::Confusion());
+      theBuilder.MakeFace(F2, BRep_Tool::Surface(F), math::precision::Precision::Confusion());
       theBuilder.Add(F1, w1);
       theBuilder.Add(F2, w2);
       TopoDS_Compound tf;

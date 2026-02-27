@@ -418,7 +418,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   gp_Pnt p1 = ComputePoint(V, AdjEdge1, D1, param1);
   gp_Pnt p2 = ComputePoint(V, AdjEdge2, D2, param2);
 
-  double       tol = Precision::Confusion();
+  double       tol = math::precision::Precision::Confusion();
   BRep_Builder B;
   B.MakeVertex(NewExtr1, p1, tol);
   B.MakeVertex(NewExtr2, p2, tol);
@@ -487,7 +487,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   gp_Pnt aPoint;
   gp_Vec tan;
   c.D1(first, aPoint, tan);
-  if (aPoint.Distance(p) > Precision::Confusion())
+  if (aPoint.Distance(p) > math::precision::Precision::Confusion())
   {
     c.D1(last, aPoint, tan);
   }
@@ -507,10 +507,10 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   gp_Dir                 myDir(vecLin);
   occ::handle<Geom_Line> newLine = new Geom_Line(p1, myDir);
   BRep_Builder           B1;
-  B1.MakeEdge(chamfer, newLine, Precision::Confusion());
+  B1.MakeEdge(chamfer, newLine, math::precision::Precision::Confusion());
   gp_Pnt p2 = ComputePoint(refFace, newLine, AdjEdge2, param2);
 
-  double       tol = Precision::Confusion();
+  double       tol = math::precision::Precision::Confusion();
   BRep_Builder B;
   B.MakeVertex(NewExtr1, p1, tol);
   B.MakeVertex(NewExtr2, p2, tol);
@@ -622,7 +622,7 @@ gp_Pnt ComputePoint(const TopoDS_Vertex& V, const TopoDS_Edge& E, const double D
     }
 
     const GeomAdaptor_Curve& cc = c.Curve();
-    if (p.Distance(c.Value(first)) <= Precision::Confusion())
+    if (p.Distance(c.Value(first)) <= math::precision::Precision::Confusion())
     {
       GCPnts_AbscissaPoint computePoint(cc, D, first);
       Param = computePoint.Parameter();
@@ -652,8 +652,8 @@ gp_Pnt ComputePoint(const TopoDS_Face&            F,
   Geom2dAdaptor_Curve adaptorC(c2d);
   Geom2dInt_GInter    Intersection(adaptorL,
                                 adaptorC,
-                                Precision::PIntersection(),
-                                Precision::PIntersection());
+                                math::precision::Precision::PIntersection(),
+                                math::precision::Precision::PIntersection());
   double              paramOnLine = 1E300;
   gp_Pnt2d            p2d;
   if (Intersection.IsDone())

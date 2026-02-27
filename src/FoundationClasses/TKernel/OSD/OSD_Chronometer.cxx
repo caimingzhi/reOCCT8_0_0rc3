@@ -32,7 +32,7 @@
     #include <mach/mach.h>
   #endif
 
-void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSeconds)
+void System::os::OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSeconds)
 {
   #if defined(__linux__) || defined(__FreeBSD__) || defined(__ANDROID__) || defined(__QNX__)       \
     || defined(__EMSCRIPTEN__)
@@ -48,7 +48,7 @@ void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSec
   theSystemSeconds = (double)aCurrentTMS.tms_stime / aCLK_TCK;
 }
 
-void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeconds)
+void System::os::OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeconds)
 {
   theUserSeconds = theSystemSeconds = 0.0;
   #if (defined(__APPLE__))
@@ -101,7 +101,7 @@ static inline __int64 EncodeFILETIME(PFILETIME pFt)
   return qw;
 }
 
-void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSeconds)
+void System::os::OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSeconds)
 {
   #ifndef OCCT_UWP
   FILETIME ftStart, ftExit, ftKernel, ftUser;
@@ -114,7 +114,7 @@ void OSD_Chronometer::GetProcessCPU(double& theUserSeconds, double& theSystemSec
   #endif
 }
 
-void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeconds)
+void System::os::OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeconds)
 {
   #ifndef OCCT_UWP
   FILETIME ftStart, ftExit, ftKernel, ftUser;
@@ -129,7 +129,7 @@ void OSD_Chronometer::GetThreadCPU(double& theUserSeconds, double& theSystemSeco
 
 #endif
 
-OSD_Chronometer::OSD_Chronometer(bool theThisThreadOnly)
+System::os::OSD_Chronometer::OSD_Chronometer(bool theThisThreadOnly)
     : myStartCpuUser(0.0),
       myStartCpuSys(0.0),
       myCumulCpuUser(0.0),
@@ -139,31 +139,31 @@ OSD_Chronometer::OSD_Chronometer(bool theThisThreadOnly)
 {
 }
 
-OSD_Chronometer::~OSD_Chronometer() = default;
+System::os::OSD_Chronometer::~OSD_Chronometer() = default;
 
-void OSD_Chronometer::SetThisThreadOnly(bool theIsThreadOnly)
+void System::os::OSD_Chronometer::SetThisThreadOnly(bool theIsThreadOnly)
 {
   if (!myIsStopped)
   {
-    throw Standard_ProgramError("OSD_Chronometer::SetThreadOnly() called for started Timer");
+    throw Standard_ProgramError("System::os::OSD_Chronometer::SetThreadOnly() called for started Timer");
   }
   myIsThreadOnly = theIsThreadOnly;
 }
 
-void OSD_Chronometer::Reset()
+void System::os::OSD_Chronometer::Reset()
 {
   myIsStopped    = true;
   myStartCpuUser = myStartCpuSys = 0.;
   myCumulCpuUser = myCumulCpuSys = 0.;
 }
 
-void OSD_Chronometer::Restart()
+void System::os::OSD_Chronometer::Restart()
 {
   Reset();
   Start();
 }
 
-void OSD_Chronometer::Stop()
+void System::os::OSD_Chronometer::Stop()
 {
   if (!myIsStopped)
   {
@@ -180,7 +180,7 @@ void OSD_Chronometer::Stop()
   }
 }
 
-void OSD_Chronometer::Start()
+void System::os::OSD_Chronometer::Start()
 {
   if (myIsStopped)
   {
@@ -193,12 +193,12 @@ void OSD_Chronometer::Start()
   }
 }
 
-void OSD_Chronometer::Show() const
+void System::os::OSD_Chronometer::Show() const
 {
   Show(std::cout);
 }
 
-void OSD_Chronometer::Show(Standard_OStream& theOStream) const
+void System::os::OSD_Chronometer::Show(Standard_OStream& theOStream) const
 {
   double aCumulUserSec = 0.0, aCumulSysSec = 0.0;
   Show(aCumulUserSec, aCumulSysSec);
@@ -208,7 +208,7 @@ void OSD_Chronometer::Show(Standard_OStream& theOStream) const
   theOStream.precision(prec);
 }
 
-void OSD_Chronometer::Show(double& theUserSec, double& theSystemSec) const
+void System::os::OSD_Chronometer::Show(double& theUserSec, double& theSystemSec) const
 {
   theUserSec   = myCumulCpuUser;
   theSystemSec = myCumulCpuSys;

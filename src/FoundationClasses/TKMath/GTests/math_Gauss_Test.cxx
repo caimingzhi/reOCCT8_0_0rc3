@@ -82,9 +82,9 @@ namespace
     math_Vector aX(1, 3);
     aGauss.Solve(aB, aX);
 
-    EXPECT_NEAR(aX(1), 5.0, Precision::Confusion()) << "Identity matrix solution X(1)";
-    EXPECT_NEAR(aX(2), 7.0, Precision::Confusion()) << "Identity matrix solution X(2)";
-    EXPECT_NEAR(aX(3), 9.0, Precision::Confusion()) << "Identity matrix solution X(3)";
+    EXPECT_NEAR(aX(1), 5.0, math::precision::Precision::Confusion()) << "Identity matrix solution X(1)";
+    EXPECT_NEAR(aX(2), 7.0, math::precision::Precision::Confusion()) << "Identity matrix solution X(2)";
+    EXPECT_NEAR(aX(3), 9.0, math::precision::Precision::Confusion()) << "Identity matrix solution X(3)";
   }
 
   TEST(MathGaussTest, DiagonalMatrix)
@@ -112,9 +112,9 @@ namespace
     math_Vector aX(1, 3);
     aGauss.Solve(aB, aX);
 
-    EXPECT_NEAR(aX(1), 4.0, Precision::Confusion()) << "Diagonal matrix solution X(1)";
-    EXPECT_NEAR(aX(2), 5.0, Precision::Confusion()) << "Diagonal matrix solution X(2)";
-    EXPECT_NEAR(aX(3), 5.0, Precision::Confusion()) << "Diagonal matrix solution X(3)";
+    EXPECT_NEAR(aX(1), 4.0, math::precision::Precision::Confusion()) << "Diagonal matrix solution X(1)";
+    EXPECT_NEAR(aX(2), 5.0, math::precision::Precision::Confusion()) << "Diagonal matrix solution X(2)";
+    EXPECT_NEAR(aX(3), 5.0, math::precision::Precision::Confusion()) << "Diagonal matrix solution X(3)";
   }
 
   TEST(MathGaussTest, InPlaceSolve)

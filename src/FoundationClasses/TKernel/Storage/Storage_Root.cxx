@@ -5,14 +5,14 @@
 #include <Storage_Schema.hpp>
 #include <TCollection_AsciiString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Storage_Root, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(app::storage::Storage_Root, Standard_Transient)
 
-Storage_Root::Storage_Root()
+app::storage::Storage_Root::Storage_Root()
     : myRef(0)
 {
 }
 
-Storage_Root::Storage_Root(const TCollection_AsciiString&          theName,
+app::storage::Storage_Root::Storage_Root(const TCollection_AsciiString&          theName,
                            const occ::handle<Standard_Persistent>& theObject)
     : myName(theName),
       myObject(theObject),
@@ -20,7 +20,7 @@ Storage_Root::Storage_Root(const TCollection_AsciiString&          theName,
 {
 }
 
-Storage_Root::Storage_Root(const TCollection_AsciiString& theName,
+app::storage::Storage_Root::Storage_Root(const TCollection_AsciiString& theName,
                            const int                      theRef,
                            const TCollection_AsciiString& theType)
     : myName(theName),
@@ -29,42 +29,42 @@ Storage_Root::Storage_Root(const TCollection_AsciiString& theName,
 {
 }
 
-void Storage_Root::SetName(const TCollection_AsciiString& theName)
+void app::storage::Storage_Root::SetName(const TCollection_AsciiString& theName)
 {
   myName = theName;
 }
 
-TCollection_AsciiString Storage_Root::Name() const
+TCollection_AsciiString app::storage::Storage_Root::Name() const
 {
   return myName;
 }
 
-void Storage_Root::SetObject(const occ::handle<Standard_Persistent>& anObject)
+void app::storage::Storage_Root::SetObject(const occ::handle<Standard_Persistent>& anObject)
 {
   myObject = anObject;
 }
 
-occ::handle<Standard_Persistent> Storage_Root::Object() const
+occ::handle<Standard_Persistent> app::storage::Storage_Root::Object() const
 {
   return myObject;
 }
 
-TCollection_AsciiString Storage_Root::Type() const
+TCollection_AsciiString app::storage::Storage_Root::Type() const
 {
   return myType;
 }
 
-void Storage_Root::SetReference(const int aRef)
+void app::storage::Storage_Root::SetReference(const int aRef)
 {
   myRef = aRef;
 }
 
-int Storage_Root::Reference() const
+int app::storage::Storage_Root::Reference() const
 {
   return myRef;
 }
 
-void Storage_Root::SetType(const TCollection_AsciiString& aType)
+void app::storage::Storage_Root::SetType(const TCollection_AsciiString& aType)
 {
   myType = aType;
 }

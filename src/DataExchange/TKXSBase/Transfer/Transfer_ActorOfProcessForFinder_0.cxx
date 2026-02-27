@@ -22,7 +22,7 @@ bool Transfer_ActorOfProcessForFinder::Recognize(const occ::handle<Transfer_Find
 occ::handle<Transfer_Binder> Transfer_ActorOfProcessForFinder::Transferring(
   const occ::handle<Transfer_Finder>&,
   const occ::handle<Transfer_ProcessForFinder>&,
-  const Message_ProgressRange&)
+  const System::log::Message_ProgressRange&)
 {
   return NullResult();
 }

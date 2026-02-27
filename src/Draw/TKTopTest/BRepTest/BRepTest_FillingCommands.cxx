@@ -284,7 +284,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
 
   Henri.Surface()->Bounds(Umin, Umax, Vmin, Vmax);
 
-  BRepBuilderAPI_MakeFace MF(Surf, Umin, Umax, Vmin, Vmax, Precision::Confusion());
+  BRepBuilderAPI_MakeFace MF(Surf, Umin, Umax, Vmin, Vmax, math::precision::Precision::Confusion());
 
   DBRep::Set(a[1], MF.Face());
   return 0;
@@ -427,7 +427,7 @@ static int filling(Draw_Interpretor& di, int n, const char** a)
 {
 #ifdef OCCT_DEBUG
 
-  OSD_Chronometer Chrono;
+  System::os::OSD_Chronometer Chrono;
   Chrono.Reset();
   Chrono.Start();
 #endif

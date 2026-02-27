@@ -664,7 +664,7 @@ TCollection_ExtendedString GetResource(const TCollection_ExtendedString& aFormat
   return theResource;
 }
 
-static void FIND(const occ::handle<Resource_Manager>& theDocumentResource,
+static void FIND(const occ::handle<System::resource::Resource_Manager>& theDocumentResource,
                  const TCollection_ExtendedString&    theResourceName,
                  bool&                                IsDef,
                  TCollection_ExtendedString&          theValue)
@@ -674,7 +674,7 @@ static void FIND(const occ::handle<Resource_Manager>& theDocumentResource,
     theValue = UTL::Value(theDocumentResource, theResourceName);
 }
 
-occ::handle<Resource_Manager> CDM_Document::StorageResource()
+occ::handle<System::resource::Resource_Manager> CDM_Document::StorageResource()
 {
   if (myApplication.IsNull())
   {
@@ -690,7 +690,7 @@ void CDM_Document::LoadResources()
 {
   if (!myResourcesAreLoaded)
   {
-    occ::handle<Resource_Manager> theDocumentResource = StorageResource();
+    occ::handle<System::resource::Resource_Manager> theDocumentResource = StorageResource();
 
     TCollection_ExtendedString theFormat = StorageFormat();
     theFormat += ".";

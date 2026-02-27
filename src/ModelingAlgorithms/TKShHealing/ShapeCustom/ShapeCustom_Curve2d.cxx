@@ -50,7 +50,7 @@ bool ShapeCustom_Curve2d::IsLinear(const NCollection_Array1<gp_Pnt2d>& thePoles,
       }
     }
 
-  constexpr double dPreci = Precision::PConfusion() * Precision::PConfusion();
+  constexpr double dPreci = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
   if (dMax < dPreci)
     return false;
 
@@ -136,7 +136,7 @@ bool ShapeCustom_Curve2d::SimplifyBSpline2d(occ::handle<Geom2d_BSplineCurve>& th
       gp_Vec2d aVec1 = theBSpline2d->LocalDN(U, aKnotIndx - 1, aKnotIndx, DegMult);
       gp_Vec2d aVec2 = theBSpline2d->LocalDN(U, aKnotIndx, aKnotIndx + 1, DegMult);
 
-      if (aVec1.IsParallel(aVec2, Precision::Angular()))
+      if (aVec1.IsParallel(aVec2, math::precision::Precision::Angular()))
       {
 
         try

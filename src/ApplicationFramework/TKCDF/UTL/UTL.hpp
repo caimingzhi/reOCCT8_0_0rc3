@@ -9,13 +9,28 @@
 #include <Storage_OpenMode.hpp>
 #include <Standard_Integer.hpp>
 class TCollection_ExtendedString;
+namespace app { namespace storage {
 class Storage_BaseDriver;
+}} // namespace app::storage
+
+namespace app { namespace storage {
 class Storage_Data;
+}} // namespace app::storage
+
+namespace System { namespace os {
 class OSD_Path;
+}} // namespace System::os
+
+namespace System { namespace os {
 class OSD_FileIterator;
+}} // namespace System::os
+
 class TCollection_AsciiString;
 class Standard_GUID;
+namespace System { namespace resource {
 class Resource_Manager;
+}} // namespace System::resource
+
 
 class UTL
 {
@@ -24,24 +39,24 @@ public:
 
   Standard_EXPORT static TCollection_ExtendedString xgetenv(const char* aCString);
 
-  Standard_EXPORT static Storage_Error OpenFile(const occ::handle<Storage_BaseDriver>& aFile,
+  Standard_EXPORT static Storage_Error OpenFile(const occ::handle<app::storage::Storage_BaseDriver>& aFile,
                                                 const TCollection_ExtendedString&      aName,
                                                 const Storage_OpenMode                 aMode);
 
-  Standard_EXPORT static void AddToUserInfo(const occ::handle<Storage_Data>&  aData,
+  Standard_EXPORT static void AddToUserInfo(const occ::handle<app::storage::Storage_Data>&  aData,
                                             const TCollection_ExtendedString& anInfo);
 
-  Standard_EXPORT static OSD_Path Path(const TCollection_ExtendedString& aFileName);
+  Standard_EXPORT static System::os::OSD_Path Path(const TCollection_ExtendedString& aFileName);
 
-  Standard_EXPORT static TCollection_ExtendedString Disk(const OSD_Path& aPath);
+  Standard_EXPORT static TCollection_ExtendedString Disk(const System::os::OSD_Path& aPath);
 
-  Standard_EXPORT static TCollection_ExtendedString Trek(const OSD_Path& aPath);
+  Standard_EXPORT static TCollection_ExtendedString Trek(const System::os::OSD_Path& aPath);
 
-  Standard_EXPORT static TCollection_ExtendedString Name(const OSD_Path& aPath);
+  Standard_EXPORT static TCollection_ExtendedString Name(const System::os::OSD_Path& aPath);
 
-  Standard_EXPORT static TCollection_ExtendedString Extension(const OSD_Path& aPath);
+  Standard_EXPORT static TCollection_ExtendedString Extension(const System::os::OSD_Path& aPath);
 
-  Standard_EXPORT static OSD_FileIterator FileIterator(const OSD_Path&                   aPath,
+  Standard_EXPORT static System::os::OSD_FileIterator FileIterator(const System::os::OSD_Path&                   aPath,
                                                        const TCollection_ExtendedString& aMask);
 
   Standard_EXPORT static TCollection_ExtendedString Extension(
@@ -54,11 +69,11 @@ public:
 
   Standard_EXPORT static Standard_GUID GUID(const TCollection_ExtendedString& anXString);
 
-  Standard_EXPORT static bool Find(const occ::handle<Resource_Manager>& aResourceManager,
+  Standard_EXPORT static bool Find(const occ::handle<System::resource::Resource_Manager>& aResourceManager,
                                    const TCollection_ExtendedString&    aResourceName);
 
   Standard_EXPORT static TCollection_ExtendedString Value(
-    const occ::handle<Resource_Manager>& aResourceManager,
+    const occ::handle<System::resource::Resource_Manager>& aResourceManager,
     const TCollection_ExtendedString&    aResourceName);
 
   Standard_EXPORT static int IntegerValue(const TCollection_ExtendedString& anExtendedString);

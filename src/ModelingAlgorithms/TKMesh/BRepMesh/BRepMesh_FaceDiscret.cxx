@@ -18,7 +18,7 @@ BRepMesh_FaceDiscret::~BRepMesh_FaceDiscret() = default;
 class BRepMesh_FaceDiscret::FaceListFunctor
 {
 public:
-  FaceListFunctor(BRepMesh_FaceDiscret* theAlgo, const Message_ProgressRange& theRange)
+  FaceListFunctor(BRepMesh_FaceDiscret* theAlgo, const System::log::Message_ProgressRange& theRange)
       : myAlgo(theAlgo),
         myScope(theRange, "Face Discret", theAlgo->myModel->FacesNb())
   {
@@ -35,19 +35,19 @@ public:
     {
       return;
     }
-    Message_ProgressScope aFaceScope(myRanges[theFaceIndex], nullptr, 1);
+    System::log::Message_ProgressScope aFaceScope(myRanges[theFaceIndex], nullptr, 1);
     myAlgo->process(theFaceIndex, aFaceScope.Next());
   }
 
 private:
   mutable BRepMesh_FaceDiscret*      myAlgo;
-  Message_ProgressScope              myScope;
-  std::vector<Message_ProgressRange> myRanges;
+  System::log::Message_ProgressScope              myScope;
+  std::vector<System::log::Message_ProgressRange> myRanges;
 };
 
 bool BRepMesh_FaceDiscret::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                            const IMeshTools_Parameters&        theParameters,
-                                           const Message_ProgressRange&        theRange)
+                                           const System::log::Message_ProgressRange&        theRange)
 {
   myModel      = theModel;
   myParameters = theParameters;
@@ -57,7 +57,7 @@ bool BRepMesh_FaceDiscret::performInternal(const occ::handle<IMeshData_Model>& t
   }
 
   FaceListFunctor aFunctor(this, theRange);
-  OSD_Parallel::For(0,
+  System::os::OSD_Parallel::For(0,
                     myModel->FacesNb(),
                     aFunctor,
                     !myParameters.InParallel || myModel->FacesNb() <= 1);
@@ -71,7 +71,7 @@ bool BRepMesh_FaceDiscret::performInternal(const occ::handle<IMeshData_Model>& t
 }
 
 void BRepMesh_FaceDiscret::process(const int                    theFaceIndex,
-                                   const Message_ProgressRange& theRange) const
+                                   const System::log::Message_ProgressRange& theRange) const
 {
   const IMeshData::IFaceHandle& aDFace = myModel->GetFace(theFaceIndex);
   if (aDFace->IsSet(IMeshData_Failure) || aDFace->IsSet(IMeshData_Reused))

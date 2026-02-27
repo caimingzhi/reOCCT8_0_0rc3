@@ -75,7 +75,7 @@ public:
     myProjector.Initialize(myCurveAdaptor,
                            myCurveAdaptor.FirstParameter(),
                            myCurveAdaptor.LastParameter(),
-                           Precision::PConfusion());
+                           math::precision::Precision::PConfusion());
   }
 
   double Parameter(const int theIndex, const gp_Pnt& thePoint3d) const

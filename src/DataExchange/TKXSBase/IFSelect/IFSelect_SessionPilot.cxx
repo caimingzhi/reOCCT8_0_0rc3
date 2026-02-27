@@ -368,7 +368,7 @@ IFSelect_ReturnStatus IFSelect_SessionPilot::ExecuteCounter(
     }
     counter->AddWithGraph(list, thesession->Graph());
   }
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   counter->PrintList(sout, thesession->Model(), mode);
   return IFSelect_RetVoid;
 }

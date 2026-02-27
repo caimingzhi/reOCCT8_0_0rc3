@@ -92,7 +92,7 @@ void StepData_StepReaderData::cleanText(const occ::handle<TCollection_HAsciiStri
   }
   TCollection_ExtendedString aResString;
   const bool                 toConversion = mySourceCodePage != Resource_FormatType_NoConversion;
-  Resource_Unicode::ConvertFormatToUnicode(mySourceCodePage, theVal->ToCString() + 1, aResString);
+  System::resource::Resource_Unicode::ConvertFormatToUnicode(mySourceCodePage, theVal->ToCString() + 1, aResString);
   int                        aResStringSize = aResString.Length() - 1;
   TCollection_ExtendedString aTempExtString;
   int                        aSetCharInd = 1;
@@ -130,7 +130,7 @@ void StepData_StepReaderData::cleanText(const occ::handle<TCollection_HAsciiStri
       {
         char       aResChar         = static_cast<char>(aResString.Value(aStringInd + 3) | 0x80);
         const char aStrForCovert[2] = {aResChar, '\0'};
-        Resource_Unicode::ConvertFormatToUnicode(aLocalFormatType, aStrForCovert, aTempExtString);
+        System::resource::Resource_Unicode::ConvertFormatToUnicode(aLocalFormatType, aStrForCovert, aTempExtString);
         isConverted = true;
         aStringInd += 3;
       }
@@ -365,7 +365,7 @@ void StepData_StepReaderData::SetRecord(const int   num,
                 break;
             }
 
-            Message_Messenger::StreamBuffer sout = Message::SendTrace();
+            System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendTrace();
             sout << "  ***  Incorrect record " << num << " (on " << NbRecords() << " -> "
                  << num * 100 / NbRecords() << " % in File)  ***";
             if (prev > 0)
@@ -1762,7 +1762,7 @@ int StepData_StepReaderData::FindEntityNumber(const int num, const int id) const
 
 void StepData_StepReaderData::SetEntityNumbers(const bool withmap)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendTrace();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendTrace();
 
   int                                   nbdirec = NbRecords();
   occ::handle<NCollection_IncAllocator> anAlloc =
@@ -1816,7 +1816,7 @@ void StepData_StepReaderData::SetEntityNumbers(const bool withmap)
         int numsub = FP.EntityNumber();
         if (numsub > thelastn)
         {
-          Message::SendInfo() << "Bad Sub.N0, Record " << num << " Param " << na << ":$" << numsub
+          System::log::Message::SendInfo() << "Bad Sub.N0, Record " << num << " Param " << na << ":$" << numsub
                               << std::endl;
           continue;
         }

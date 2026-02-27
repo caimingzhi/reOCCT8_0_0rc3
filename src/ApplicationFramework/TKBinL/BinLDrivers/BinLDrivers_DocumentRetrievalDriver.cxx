@@ -47,15 +47,15 @@ void BinLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
                                                const occ::handle<CDM_Document>&      theNewDocument,
                                                const occ::handle<CDM_Application>&   theApplication,
                                                const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                               const Message_ProgressRange&          theRange)
+                                               const System::log::Message_ProgressRange&          theRange)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aFileStream =
     aFileSystem->OpenIStream(theFileName, std::ios::in | std::ios::binary);
 
   if (aFileStream.get() != nullptr && aFileStream->good())
   {
-    occ::handle<Storage_Data>  dData;
+    occ::handle<app::storage::Storage_Data>  dData;
     TCollection_ExtendedString aFormat = PCDM_ReadWriter::FileFormat(*aFileStream, dData);
 
     Read(*aFileStream, dData, theNewDocument, theApplication, theFilter, theRange);
@@ -78,11 +78,11 @@ void BinLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
 #define END_TYPES "END_TYPES"
 
 void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                     theIStream,
-                                               const occ::handle<Storage_Data>&      theStorageData,
+                                               const occ::handle<app::storage::Storage_Data>&      theStorageData,
                                                const occ::handle<CDM_Document>&      theDoc,
                                                const occ::handle<CDM_Application>&   theApplication,
                                                const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                               const Message_ProgressRange&          theRange)
+                                               const System::log::Message_ProgressRange&          theRange)
 {
   myReaderStatus = PCDM_RS_DriverFailure;
   myMsgDriver    = theApplication->MessageDriver();
@@ -99,7 +99,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
     return;
   }
 
-  occ::handle<Storage_HeaderData> aHeaderData;
+  occ::handle<app::storage::Storage_HeaderData> aHeaderData;
 
   if (!theStorageData.IsNull())
   {
@@ -161,7 +161,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
       {
 #ifdef DATATYPE_MIGRATION
         TCollection_AsciiString newName;
-        if (Storage_Schema::CheckTypeMigration(aStr, newName))
+        if (app::storage::Storage_Schema::CheckTypeMigration(aStr, newName))
         {
   #ifdef OCCT_DEBUG
           std::cout << "CheckTypeMigration:OldType = " << aStr << " Len = " << aStr.Length()
@@ -202,7 +202,7 @@ void BinLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&                
   occ::handle<TDF_Data> aData =
     (!theFilter.IsNull() && theFilter->IsAppendMode()) ? aDoc->GetData() : new TDF_Data();
 
-  Message_ProgressScope aPS(theRange, "Reading data", 3);
+  System::log::Message_ProgressScope aPS(theRange, "Reading data", 3);
   bool                  aQuickPart = IsQuickPart(aFileVer);
 
   if (aFileVer >= TDocStd_FormatVersion_VERSION_3)
@@ -364,12 +364,12 @@ int BinLDrivers_DocumentRetrievalDriver::ReadSubTree(
   const occ::handle<PCDM_ReaderFilter>& theFilter,
   const bool&                           theQuickPart,
   const bool                            theReadMissing,
-  const Message_ProgressRange&          theRange)
+  const System::log::Message_ProgressRange&          theRange)
 {
   int                        nbRead = 0;
   TCollection_ExtendedString aMethStr("BinLDrivers_DocumentRetrievalDriver: ");
 
-  Message_ProgressScope aPS(theRange, "Reading sub tree", 2, true);
+  System::log::Message_ProgressScope aPS(theRange, "Reading sub tree", 2, true);
 
   bool aSkipAttrs = false;
   if (!theFilter.IsNull() && theFilter->IsPartTree())
@@ -554,7 +554,7 @@ int BinLDrivers_DocumentRetrievalDriver::ReadSubTree(
 }
 
 occ::handle<BinMDF_ADriverTable> BinLDrivers_DocumentRetrievalDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return BinLDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -568,7 +568,7 @@ void BinLDrivers_DocumentRetrievalDriver::ReadSection(BinLDrivers_DocumentSectio
 void BinLDrivers_DocumentRetrievalDriver::ReadShapeSection(BinLDrivers_DocumentSection& theSection,
                                                            Standard_IStream&,
                                                            const bool isMess,
-                                                           const Message_ProgressRange&)
+                                                           const System::log::Message_ProgressRange&)
 
 {
   if (isMess && theSection.Length())

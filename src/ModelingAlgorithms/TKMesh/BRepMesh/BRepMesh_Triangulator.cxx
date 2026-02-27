@@ -70,7 +70,7 @@ bool BRepMesh_Triangulator::Perform(NCollection_List<Poly_Triangle>& thePolyTria
 
   if (myMess.IsNull())
   {
-    myMess = Message::DefaultMessenger();
+    myMess = System::log::Message::DefaultMessenger();
   }
 
   if (myWires.Extent() == 1)
@@ -149,8 +149,8 @@ bool BRepMesh_Triangulator::checkCondition(const int (&theNodes)[4],
 
   const gp_XYZ aCross1 = aV0.Crossed(aV1);
   const gp_XYZ aCross2 = aV0.Crossed(aV2);
-  return (aCross1.SquareModulus() < Precision::SquareConfusion()
-          || aCross2.SquareModulus() < Precision::SquareConfusion()
+  return (aCross1.SquareModulus() < math::precision::Precision::SquareConfusion()
+          || aCross2.SquareModulus() < math::precision::Precision::SquareConfusion()
           || gp_Dir(aCross1).IsEqual(gp_Dir(aCross2), 0.01));
 }
 

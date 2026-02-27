@@ -8,6 +8,7 @@
 #include <Standard_Transient.hpp>
 class Standard_Persistent;
 
+namespace app { namespace storage {
 class Storage_Root : public Standard_Transient
 {
 
@@ -47,3 +48,5 @@ private:
   occ::handle<Standard_Persistent> myObject;
   int                              myRef;
 };
+}} // namespace app::storage
+

@@ -48,11 +48,11 @@ public:
 
   Standard_EXPORT virtual void Write(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void Read(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Dump(const TopoDS_Shape& S, Standard_OStream& OS) const;
 
@@ -66,11 +66,11 @@ public:
 
   Standard_EXPORT virtual void WriteGeometry(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void ReadGeometry(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void DumpGeometry(const TopoDS_Shape& S, Standard_OStream& OS) const;
 

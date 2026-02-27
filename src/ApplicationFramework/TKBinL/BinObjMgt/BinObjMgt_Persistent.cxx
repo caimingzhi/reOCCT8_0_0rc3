@@ -826,7 +826,7 @@ void BinObjMgt_Persistent::inverseExtCharData(const int theIndex,
     int       aLenInPiece = std::min(aLen, BP_PIECESIZE - anOffset);
     char16_t* aData       = (char16_t*)((char*)myData(anIndex) + anOffset);
     for (int i = 0; i < aLenInPiece / BP_EXTCHARSIZE; i++)
-      aData[i] = FSD_BinaryFile::InverseExtChar(aData[i]);
+      aData[i] = app::file::stream::FSD_BinaryFile::InverseExtChar(aData[i]);
     aLen -= aLenInPiece;
     anOffset += aLenInPiece;
     if (anOffset >= BP_PIECESIZE)
@@ -849,7 +849,7 @@ void BinObjMgt_Persistent::inverseIntData(const int theIndex,
     int  aLenInPiece = std::min(aLen, BP_PIECESIZE - anOffset);
     int* aData       = (int*)((char*)myData(anIndex) + anOffset);
     for (int i = 0; i < aLenInPiece / BP_INTSIZE; i++)
-      aData[i] = FSD_BinaryFile::InverseInt(aData[i]);
+      aData[i] = app::file::stream::FSD_BinaryFile::InverseInt(aData[i]);
     aLen -= aLenInPiece;
     anOffset += aLenInPiece;
     if (anOffset >= BP_PIECESIZE)
@@ -884,14 +884,14 @@ void BinObjMgt_Persistent::inverseRealData(const int theIndex,
     if (aPrevPtr)
     {
       int aTmp;
-      aTmp                 = FSD_BinaryFile::InverseInt(*(int*)aPrevPtr);
-      *(int*)aPrevPtr      = FSD_BinaryFile::InverseInt(*aWrapUnion.aIntData);
+      aTmp                 = app::file::stream::FSD_BinaryFile::InverseInt(*(int*)aPrevPtr);
+      *(int*)aPrevPtr      = app::file::stream::FSD_BinaryFile::InverseInt(*aWrapUnion.aIntData);
       *aWrapUnion.aIntData = aTmp;
       aWrapUnion.aIntData++;
       aPrevPtr = nullptr;
     }
     for (int i = 0; i < aLenInPiece / BP_REALSIZE; i++)
-      aWrapUnion.aRealData[i] = FSD_BinaryFile::InverseReal(aWrapUnion.aRealData[i]);
+      aWrapUnion.aRealData[i] = app::file::stream::FSD_BinaryFile::InverseReal(aWrapUnion.aRealData[i]);
     if (aLenInPiece % BP_REALSIZE)
       aPrevPtr = &aWrapUnion.aRealData[aLenInPiece / BP_REALSIZE];
     aLen -= aLenInPiece;
@@ -916,7 +916,7 @@ void BinObjMgt_Persistent::inverseShortRealData(const int theIndex,
     int    aLenInPiece = std::min(aLen, BP_PIECESIZE - anOffset);
     float* aData       = (float*)((char*)myData(anIndex) + anOffset);
     for (int i = 0; i < aLenInPiece / BP_INTSIZE; i++)
-      aData[i] = FSD_BinaryFile::InverseShortReal(aData[i]);
+      aData[i] = app::file::stream::FSD_BinaryFile::InverseShortReal(aData[i]);
     aLen -= aLenInPiece;
     anOffset += aLenInPiece;
     if (anOffset >= BP_PIECESIZE)

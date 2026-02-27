@@ -21,18 +21,18 @@ occ::handle<TObj_Application> TObj_Application::GetInstance()
 TObj_Application::TObj_Application()
     : myIsError(false)
 {
-  if (!Message_MsgFile::HasMsg("TObj_Appl_SUnknownFailure"))
+  if (!System::log::Message_MsgFile::HasMsg("TObj_Appl_SUnknownFailure"))
   {
 
-    Message_MsgFile::LoadFromString(TObj_TObj_msg, sizeof(TObj_TObj_msg) - 1);
-    if (!Message_MsgFile::HasMsg("TObj_Appl_SUnknownFailure"))
+    System::log::Message_MsgFile::LoadFromString(TObj_TObj_msg, sizeof(TObj_TObj_msg) - 1);
+    if (!System::log::Message_MsgFile::HasMsg("TObj_Appl_SUnknownFailure"))
     {
       throw Standard_ProgramError(
         "Critical Error - message resources for TObj_Application are invalid or undefined!");
     }
   }
 
-  myMessenger = new Message_Messenger;
+  myMessenger = new System::log::Message_Messenger;
   myIsVerbose = false;
 }
 
@@ -77,7 +77,7 @@ bool TObj_Application::LoadDocument(const TCollection_ExtendedString& theSourceF
     catch (Standard_Failure const& anException)
     {
 #ifdef OCCT_DEBUG
-      ErrorMessage(Message_Msg("TObj_Appl_Exception") << anException.what());
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_Exception") << anException.what());
 #endif
       (void)anException;
     }
@@ -102,7 +102,7 @@ bool TObj_Application::LoadDocument(Standard_IStream&              theIStream,
     catch (Standard_Failure const& anException)
     {
 #ifdef OCCT_DEBUG
-      ErrorMessage(Message_Msg("TObj_Appl_Exception") << anException.what());
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_Exception") << anException.what());
 #endif
       (void)anException;
     }
@@ -144,25 +144,25 @@ void TObj_Application::SetError(const PCDM_StoreStatus            theStatus,
   switch (theStatus)
   {
     case PCDM_SS_DriverFailure:
-      ErrorMessage(Message_Msg("TObj_Appl_SDriverFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SDriverFailure") << theInfo);
       break;
     case PCDM_SS_WriteFailure:
-      ErrorMessage(Message_Msg("TObj_Appl_SWriteFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SWriteFailure") << theInfo);
       break;
     case PCDM_SS_Failure:
-      ErrorMessage(Message_Msg("TObj_Appl_SFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SFailure") << theInfo);
       break;
     case PCDM_SS_Doc_IsNull:
-      ErrorMessage(Message_Msg("TObj_Appl_SDocIsNull") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SDocIsNull") << theInfo);
       break;
     case PCDM_SS_No_Obj:
-      ErrorMessage(Message_Msg("TObj_Appl_SNoObj") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SNoObj") << theInfo);
       break;
     case PCDM_SS_Info_Section_Error:
-      ErrorMessage(Message_Msg("TObj_Appl_SInfoSectionError") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SInfoSectionError") << theInfo);
       break;
     default:
-      ErrorMessage(Message_Msg("TObj_Appl_SUnknownFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_SUnknownFailure") << theInfo);
       break;
   }
 }
@@ -173,55 +173,55 @@ void TObj_Application::SetError(const PCDM_ReaderStatus           theStatus,
   switch (theStatus)
   {
     case PCDM_RS_UnknownDocument:
-      ErrorMessage(Message_Msg("TObj_Appl_RUnknownDocument") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RUnknownDocument") << theInfo);
       break;
     case PCDM_RS_AlreadyRetrieved:
-      ErrorMessage(Message_Msg("TObj_Appl_RAlreadyRetrieved") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RAlreadyRetrieved") << theInfo);
       break;
     case PCDM_RS_AlreadyRetrievedAndModified:
-      ErrorMessage(Message_Msg("TObj_Appl_RAlreadyRetrievedAndModified") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RAlreadyRetrievedAndModified") << theInfo);
       break;
     case PCDM_RS_NoDriver:
-      ErrorMessage(Message_Msg("TObj_Appl_RNoDriver") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RNoDriver") << theInfo);
       break;
     case PCDM_RS_UnknownFileDriver:
-      ErrorMessage(Message_Msg("TObj_Appl_RNoDriver") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RNoDriver") << theInfo);
       break;
     case PCDM_RS_OpenError:
-      ErrorMessage(Message_Msg("TObj_Appl_ROpenError") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_ROpenError") << theInfo);
       break;
     case PCDM_RS_NoVersion:
-      ErrorMessage(Message_Msg("TObj_Appl_RNoVersion") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RNoVersion") << theInfo);
       break;
     case PCDM_RS_NoModel:
-      ErrorMessage(Message_Msg("TObj_Appl_RNoModel") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RNoModel") << theInfo);
       break;
     case PCDM_RS_NoDocument:
-      ErrorMessage(Message_Msg("TObj_Appl_RNoDocument") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RNoDocument") << theInfo);
       break;
     case PCDM_RS_FormatFailure:
-      ErrorMessage(Message_Msg("TObj_Appl_RFormatFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RFormatFailure") << theInfo);
       break;
     case PCDM_RS_TypeNotFoundInSchema:
-      ErrorMessage(Message_Msg("TObj_Appl_RTypeNotFound") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RTypeNotFound") << theInfo);
       break;
     case PCDM_RS_UnrecognizedFileFormat:
-      ErrorMessage(Message_Msg("TObj_Appl_RBadFileFormat") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RBadFileFormat") << theInfo);
       break;
     case PCDM_RS_MakeFailure:
-      ErrorMessage(Message_Msg("TObj_Appl_RMakeFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RMakeFailure") << theInfo);
       break;
     case PCDM_RS_PermissionDenied:
-      ErrorMessage(Message_Msg("TObj_Appl_RPermissionDenied") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RPermissionDenied") << theInfo);
       break;
     case PCDM_RS_DriverFailure:
-      ErrorMessage(Message_Msg("TObj_Appl_RDriverFailure") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RDriverFailure") << theInfo);
       break;
     case PCDM_RS_ReaderException:
-      ErrorMessage(Message_Msg("TObj_Appl_RException") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RException") << theInfo);
       break;
     default:
-      ErrorMessage(Message_Msg("TObj_Appl_RUnknownFail") << theInfo);
+      ErrorMessage(System::log::Message_Msg("TObj_Appl_RUnknownFail") << theInfo);
       break;
   }
 }

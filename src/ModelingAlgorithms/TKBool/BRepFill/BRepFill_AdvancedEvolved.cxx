@@ -119,7 +119,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
 
     aN2 = aT1.Crossed(aT2);
 
-    if (aN2.SquareMagnitude() > Precision::SquareConfusion())
+    if (aN2.SquareMagnitude() > math::precision::Precision::SquareConfusion())
     {
       aLoc = BRep_Tool::Pnt(aVC);
       break;
@@ -129,7 +129,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
   BRepExtrema_DistShapeShape anExtr;
   anExtr.LoadS1(theSpine);
 
-  if (aN2.SquareMagnitude() > Precision::SquareConfusion())
+  if (aN2.SquareMagnitude() > math::precision::Precision::SquareConfusion())
   {
     const gp_Pln     aPln(aLoc, aN2);
     BRepLib_MakeFace aMF(aPln, theProfile);
@@ -165,7 +165,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
 
   BRepExtrema_SupportType anExtrType2 = anExtr.SupportTypeShape2(anIdxMin);
 
-  if (aDistMin < Precision::Confusion())
+  if (aDistMin < math::precision::Precision::Confusion())
   {
     anExtrType2 = BRepExtrema_IsInFace;
   }
@@ -198,8 +198,8 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
         anAC1.D1(aPar1, aP, aT1);
         anAC1.D1(aPar2, aP, aT2);
 
-        const double aSqT1 = std::max(aT1.SquareMagnitude(), 1.0 / Precision::Infinite());
-        const double aSqT2 = std::max(aT2.SquareMagnitude(), 1.0 / Precision::Infinite());
+        const double aSqT1 = std::max(aT1.SquareMagnitude(), 1.0 / math::precision::Precision::Infinite());
+        const double aSqT2 = std::max(aT2.SquareMagnitude(), 1.0 / math::precision::Precision::Infinite());
 
         const double aSqSin1 = aT1.CrossSquareMagnitude(aN2) / aSqT1;
         const double aSqSin2 = aT2.CrossSquareMagnitude(aN2) / aSqT2;
@@ -278,10 +278,10 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
         double aSqT1 = aT1.SquareMagnitude();
         double aSqT2 = aT2.SquareMagnitude();
 
-        if (aSqT1 < Precision::SquareConfusion())
+        if (aSqT1 < math::precision::Precision::SquareConfusion())
           aSqT1 = RealLast();
 
-        if (aSqT2 < Precision::SquareConfusion())
+        if (aSqT2 < math::precision::Precision::SquareConfusion())
           aSqT2 = RealLast();
 
         const double aDP1 = aT1.Dot(aN1);
@@ -310,7 +310,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
 
       const gp_Pnt& aPnear = anExtr.PointOnShape2(anIdxMin);
 
-      BRepClass_FaceClassifier aFClass(aFSpine, aPnear, Precision::Confusion());
+      BRepClass_FaceClassifier aFClass(aFSpine, aPnear, math::precision::Precision::Confusion());
       if (aFClass.State() != TopAbs_OUT)
       {
         if (aN1.Dot(aTanV) < 0.0)
@@ -364,7 +364,7 @@ void BRepFill_AdvancedEvolved::Perform(const TopoDS_Wire& theSpine,
 {
   myErrorStatus = BRepFill_AdvancedEvolved_Empty;
 
-  if (myFuzzyValue < Precision::Confusion())
+  if (myFuzzyValue < math::precision::Precision::Confusion())
   {
     myFuzzyValue = theTolerance;
   }
@@ -530,7 +530,7 @@ void BRepFill_AdvancedEvolved::GetLids()
     anAC.D1(0.5 * (anAC.FirstParameter() + anAC.LastParameter()), aPtmp, aTan);
 
     const double aSqModulus = aTan.SquareMagnitude();
-    if (aSqModulus < Precision::Confusion())
+    if (aSqModulus < math::precision::Precision::Confusion())
       continue;
 
     const double aDP = aTan.XYZ().Dot(aNormal.XYZ());
@@ -589,12 +589,12 @@ void BRepFill_AdvancedEvolved::GetLids()
         const gp_XYZ aDelta = aP - aLocP;
         const double aSqD   = aDelta.SquareModulus();
 
-        if (aSqD < Precision::SquareConfusion())
+        if (aSqD < math::precision::Precision::SquareConfusion())
           continue;
 
         const double aDP = aDelta.Dot(aNorm);
 
-        if (aDP * aDP < aSqD * Precision::SquareConfusion())
+        if (aDP * aDP < aSqD * math::precision::Precision::SquareConfusion())
         {
 
           continue;
@@ -1059,8 +1059,8 @@ static bool MakeEdgeDegenerated(const TopoDS_Vertex&            theV,
   aBB.MakeEdge(anEdegen1);
   aBB.MakeEdge(anEdegen2);
 
-  aBB.UpdateEdge(anEdegen1, aL1, theFace, Precision::Confusion());
-  aBB.UpdateEdge(anEdegen2, aL2, theFace, Precision::Confusion());
+  aBB.UpdateEdge(anEdegen1, aL1, theFace, math::precision::Precision::Confusion());
+  aBB.UpdateEdge(anEdegen2, aL2, theFace, math::precision::Precision::Confusion());
 
   anEdegen1.Orientation(TopAbs_FORWARD);
   anEdegen2.Orientation(TopAbs_FORWARD);

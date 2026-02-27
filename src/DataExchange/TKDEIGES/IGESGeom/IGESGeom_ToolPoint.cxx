@@ -25,7 +25,7 @@ void IGESGeom_ToolPoint::ReadOwnParams(const occ::handle<IGESGeom_Point>&       
                                        IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg73("XSTEP_73");
+  System::log::Message_Msg Msg73("XSTEP_73");
 
   gp_XYZ                              aPoint;
   occ::handle<IGESBasic_SubfigureDef> aSymbol;
@@ -42,26 +42,26 @@ void IGESGeom_ToolPoint::ReadOwnParams(const occ::handle<IGESGeom_Point>&       
                        aSymbol,
                        true))
     {
-      Message_Msg Msg74("XSTEP_74");
+      System::log::Message_Msg Msg74("XSTEP_74");
       switch (aStatus)
       {
         case IGESData_ReferenceError:
         {
-          Message_Msg Msg216("IGES_216");
+          System::log::Message_Msg Msg216("IGES_216");
           Msg74.Arg(Msg216.Value());
           PR.SendFail(Msg74);
           break;
         }
         case IGESData_EntityError:
         {
-          Message_Msg Msg217("IGES_217");
+          System::log::Message_Msg Msg217("IGES_217");
           Msg74.Arg(Msg217.Value());
           PR.SendFail(Msg74);
           break;
         }
         case IGESData_TypeError:
         {
-          Message_Msg Msg218("IGES_218");
+          System::log::Message_Msg Msg218("IGES_218");
           Msg74.Arg(Msg218.Value());
           PR.SendFail(Msg74);
           break;

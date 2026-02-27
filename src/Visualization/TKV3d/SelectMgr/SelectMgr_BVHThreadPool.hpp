@@ -17,7 +17,7 @@ public:
   Standard_EXPORT ~SelectMgr_BVHThreadPool() override;
 
 public:
-  class BVHThread : public OSD_Thread
+  class BVHThread : public System::os::OSD_Thread
   {
     friend class SelectMgr_BVHThreadPool;
 
@@ -30,7 +30,7 @@ public:
     }
 
     BVHThread(const BVHThread& theOther)
-        : OSD_Thread(theOther),
+        : System::os::OSD_Thread(theOther),
           myPool(theOther.myPool),
 
           myToCatchFpe(theOther.myToCatchFpe)
@@ -47,7 +47,7 @@ public:
 
     void Assign(const BVHThread& theCopy)
     {
-      OSD_Thread::Assign(theCopy);
+      System::os::OSD_Thread::Assign(theCopy);
       myPool       = theCopy.myPool;
       myToCatchFpe = theCopy.myToCatchFpe;
     }

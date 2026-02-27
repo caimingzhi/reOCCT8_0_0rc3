@@ -6,13 +6,19 @@
 #include <Transfer_Binder.hpp>
 #include <Message_ProgressRange.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class Transfer_Binder;
 class Transfer_ActorOfProcessForTransient;
 class Interface_InterfaceError;
 class Transfer_TransferFailure;
 class Transfer_IteratorOfProcessForTransient;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 class Interface_Check;
 class Interface_CheckIterator;
 
@@ -22,7 +28,7 @@ class Transfer_ProcessForTransient : public Standard_Transient
 public:
   Standard_EXPORT Transfer_ProcessForTransient(const int nb = 10000);
 
-  Standard_EXPORT Transfer_ProcessForTransient(const occ::handle<Message_Messenger>& printer,
+  Standard_EXPORT Transfer_ProcessForTransient(const occ::handle<System::log::Message_Messenger>& printer,
                                                const int                             nb = 10000);
 
   Standard_EXPORT void Clear();
@@ -53,22 +59,22 @@ public:
   Standard_EXPORT occ::handle<Transfer_Binder> FindElseBind(
     const occ::handle<Standard_Transient>& start);
 
-  Standard_EXPORT void SetMessenger(const occ::handle<Message_Messenger>& messenger);
+  Standard_EXPORT void SetMessenger(const occ::handle<System::log::Message_Messenger>& messenger);
 
-  Standard_EXPORT occ::handle<Message_Messenger> Messenger() const;
+  Standard_EXPORT occ::handle<System::log::Message_Messenger> Messenger() const;
 
   Standard_EXPORT void SetTraceLevel(const int tracelev);
 
   Standard_EXPORT int TraceLevel() const;
 
   Standard_EXPORT void SendFail(const occ::handle<Standard_Transient>& start,
-                                const Message_Msg&                     amsg);
+                                const System::log::Message_Msg&                     amsg);
 
   Standard_EXPORT void SendWarning(const occ::handle<Standard_Transient>& start,
-                                   const Message_Msg&                     amsg);
+                                   const System::log::Message_Msg&                     amsg);
 
   Standard_EXPORT void SendMsg(const occ::handle<Standard_Transient>& start,
-                               const Message_Msg&                     amsg);
+                               const System::log::Message_Msg&                     amsg);
 
   Standard_EXPORT void AddFail(const occ::handle<Standard_Transient>& start,
                                const char*                            mess,
@@ -79,14 +85,14 @@ public:
                                 const char*                            orig = "");
 
   Standard_EXPORT void AddFail(const occ::handle<Standard_Transient>& start,
-                               const Message_Msg&                     amsg);
+                               const System::log::Message_Msg&                     amsg);
 
   Standard_EXPORT void AddWarning(const occ::handle<Standard_Transient>& start,
                                   const char*                            mess,
                                   const char*                            orig = "");
 
   Standard_EXPORT void AddWarning(const occ::handle<Standard_Transient>& start,
-                                  const Message_Msg&                     amsg);
+                                  const System::log::Message_Msg&                     amsg);
 
   Standard_EXPORT void Mend(const occ::handle<Standard_Transient>& start, const char* pref = "");
 
@@ -140,10 +146,10 @@ public:
 
   Standard_EXPORT occ::handle<Transfer_Binder> Transferring(
     const occ::handle<Standard_Transient>& start,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const occ::handle<Standard_Transient>& start,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void SetErrorHandle(const bool err);
 
@@ -196,11 +202,11 @@ private:
 
   Standard_EXPORT occ::handle<Transfer_Binder> TransferProduct(
     const occ::handle<Standard_Transient>& start,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange());
 
   bool                                             theerrh;
   int                                              thetrace;
-  occ::handle<Message_Messenger>                   themessenger;
+  occ::handle<System::log::Message_Messenger>                   themessenger;
   int                                              thelevel;
   int                                              therootl;
   bool                                             therootm;

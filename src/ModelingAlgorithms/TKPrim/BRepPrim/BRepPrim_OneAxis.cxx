@@ -165,7 +165,7 @@ void BRepPrim_OneAxis::VMax(const double V)
 
 bool BRepPrim_OneAxis::MeridianOnAxis(const double V) const
 {
-  return std::abs(MeridianValue(V).X()) < Precision::Confusion();
+  return std::abs(MeridianValue(V).X()) < math::precision::Precision::Confusion();
 }
 
 bool BRepPrim_OneAxis::MeridianClosed() const
@@ -174,17 +174,17 @@ bool BRepPrim_OneAxis::MeridianClosed() const
     return false;
   if (VMinInfinite())
     return false;
-  return MeridianValue(myVMin).IsEqual(MeridianValue(myVMax), Precision::Confusion());
+  return MeridianValue(myVMin).IsEqual(MeridianValue(myVMax), math::precision::Precision::Confusion());
 }
 
 bool BRepPrim_OneAxis::VMaxInfinite() const
 {
-  return Precision::IsPositiveInfinite(myVMax);
+  return math::precision::Precision::IsPositiveInfinite(myVMax);
 }
 
 bool BRepPrim_OneAxis::VMinInfinite() const
 {
-  return Precision::IsNegativeInfinite(myVMin);
+  return math::precision::Precision::IsNegativeInfinite(myVMin);
 }
 
 bool BRepPrim_OneAxis::isHeightInverted() const
@@ -196,7 +196,7 @@ bool BRepPrim_OneAxis::isHeightInverted() const
   const double yMax = MeridianValue(myVMax).Y();
   const double yMin = MeridianValue(myVMin).Y();
 
-  return yMax < yMin - Precision::Confusion();
+  return yMax < yMin - math::precision::Precision::Confusion();
 }
 
 bool BRepPrim_OneAxis::areHeightsEqual() const
@@ -207,7 +207,7 @@ bool BRepPrim_OneAxis::areHeightsEqual() const
   }
   const double yMax = MeridianValue(myVMax).Y();
   const double yMin = MeridianValue(myVMin).Y();
-  return std::abs(yMax - yMin) < Precision::Confusion();
+  return std::abs(yMax - yMin) < math::precision::Precision::Confusion();
 }
 
 bool BRepPrim_OneAxis::HasTop() const
@@ -234,7 +234,7 @@ bool BRepPrim_OneAxis::HasBottom() const
 
 bool BRepPrim_OneAxis::HasSides() const
 {
-  return 2 * M_PI - myAngle > Precision::Angular();
+  return 2 * M_PI - myAngle > math::precision::Precision::Angular();
 }
 
 const TopoDS_Shell& BRepPrim_OneAxis::Shell()
@@ -436,7 +436,7 @@ const TopoDS_Face& BRepPrim_OneAxis::StartFace()
                           gp_Lin2d(gp_Pnt2d(0, 0), gp_Dir2d(gp_Dir2d::D::Y)));
 
     const double aPCurveOffset =
-      areHeightsEqual() ? Precision::Confusion() * THE_PCURVE_OFFSET_FACTOR : 0.0;
+      areHeightsEqual() ? math::precision::Precision::Confusion() * THE_PCURVE_OFFSET_FACTOR : 0.0;
     if (EdgesBuilt[ETOPSTART])
       myBuilder.SetPCurve(
         myEdges[ETOPSTART],
@@ -484,7 +484,7 @@ const TopoDS_Face& BRepPrim_OneAxis::EndFace()
                           gp_Lin2d(gp_Pnt2d(0, 0), gp_Dir2d(gp_Dir2d::D::Y)));
 
     const double aPCurveOffset =
-      areHeightsEqual() ? Precision::Confusion() * THE_PCURVE_OFFSET_FACTOR : 0.0;
+      areHeightsEqual() ? math::precision::Precision::Confusion() * THE_PCURVE_OFFSET_FACTOR : 0.0;
     if (EdgesBuilt[ETOPEND])
       myBuilder.SetPCurve(
         myEdges[ETOPEND],

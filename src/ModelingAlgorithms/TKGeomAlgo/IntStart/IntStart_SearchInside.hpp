@@ -52,8 +52,8 @@ void IntStart_SearchInside::Perform(TheFunction&                     Func,
   du /= (double)NbsampleU * 0.5;
   dv /= (double)NbsampleV * 0.5;
 
-  double toler1 = toler(1) = ThePSurfaceTool::UResolution(PS, Precision::Confusion());
-  double toler2 = toler(2) = ThePSurfaceTool::VResolution(PS, Precision::Confusion());
+  double toler1 = toler(1) = ThePSurfaceTool::UResolution(PS, math::precision::Precision::Confusion());
+  double toler2 = toler(2) = ThePSurfaceTool::VResolution(PS, math::precision::Precision::Confusion());
   double Maxtoler1toler2   = toler1;
   if (toler2 > Maxtoler1toler2)
     Maxtoler1toler2 = toler2;
@@ -235,8 +235,8 @@ void IntStart_SearchInside::Perform(TheFunction&       Func,
   Bsup(1) = ThePSurfaceTool::LastUParameter(PS);
   Bsup(2) = ThePSurfaceTool::LastVParameter(PS);
 
-  toler(1) = ThePSurfaceTool::UResolution(PS, Precision::Confusion());
-  toler(2) = ThePSurfaceTool::VResolution(PS, Precision::Confusion());
+  toler(1) = ThePSurfaceTool::UResolution(PS, math::precision::Precision::Confusion());
+  toler(2) = ThePSurfaceTool::VResolution(PS, math::precision::Precision::Confusion());
 
   if (UStart - Binf(1) > -toler(1) && UStart - Bsup(1) < toler(1) && VStart - Binf(2) > -toler(2)
       && VStart - Bsup(2) < toler(2))

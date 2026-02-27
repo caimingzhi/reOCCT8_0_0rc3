@@ -7,7 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_ColorDriver, BinMDF_ADriver)
 
-BinMXCAFDoc_ColorDriver::BinMXCAFDoc_ColorDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+BinMXCAFDoc_ColorDriver::BinMXCAFDoc_ColorDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_Color)->Name())
 {
 }

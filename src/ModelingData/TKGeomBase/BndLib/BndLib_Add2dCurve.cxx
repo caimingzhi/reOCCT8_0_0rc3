@@ -69,7 +69,7 @@ protected:
 
   void PerformOnePoint();
 
-  void PerformGenCurv(const double Tol = Precision::PConfusion());
+  void PerformGenCurv(const double Tol = math::precision::Precision::PConfusion());
 
   int NbSamples();
 
@@ -360,7 +360,7 @@ void BndLib_Box2dCurve::PerformBezier()
     aTb[1] = aT2;
   }
 
-  constexpr double anEps = Precision::PConfusion();
+  constexpr double anEps = math::precision::Precision::PConfusion();
   if (std::abs(aT1 - aTb[0]) > anEps || std::abs(aT2 - aTb[1]) > anEps)
   {
     aG = aCBz->Copy();
@@ -416,7 +416,7 @@ void BndLib_Box2dCurve::PerformBSpline()
     aTb[1] = aT2;
   }
 
-  constexpr double eps = Precision::PConfusion();
+  constexpr double eps = math::precision::Precision::PConfusion();
   if (std::abs(aT1 - aTb[0]) > eps || std::abs(aT2 - aTb[1]) > eps)
   {
     aG = aCBS->Copy();
@@ -503,7 +503,7 @@ double BndLib_Box2dCurve::AdjustExtr(const double UMin,
   double Du = (myCurve->LastParameter() - myCurve->FirstParameter());
 
   Geom2dAdaptor_Curve aGAC(myCurve);
-  double              UTol   = std::max(aGAC.Resolution(Tol), Precision::PConfusion());
+  double              UTol   = std::max(aGAC.Resolution(Tol), math::precision::Precision::PConfusion());
   double              reltol = UTol / std::max(std::abs(UMin), std::abs(UMax));
   if (UMax - UMin < 0.01 * Du)
   {
@@ -807,13 +807,13 @@ void BndLib_Box2dCurve::PerformLineConic()
 
   for (i = 0; i < 2; ++i)
   {
-    if (Precision::IsNegativeInfinite(aTb[i]))
+    if (math::precision::Precision::IsNegativeInfinite(aTb[i]))
     {
       D0(aTb[i], aP2D);
       aBox2D.Add(aP2D);
       ++iInf[0];
     }
-    else if (Precision::IsPositiveInfinite(aTb[i]))
+    else if (math::precision::Precision::IsPositiveInfinite(aTb[i]))
     {
       D0(aTb[i], aP2D);
       aBox2D.Add(aP2D);
@@ -868,7 +868,7 @@ void BndLib_Box2dCurve::Compute(const occ::handle<Geom2d_Conic>& aConic2D,
     return;
   }
 
-  aEps   = Precision::Angular();
+  aEps   = math::precision::Precision::Angular();
   aTwoPI = 2. * M_PI;
   dT     = aT2 - aT1;
 
@@ -977,7 +977,7 @@ int BndLib_Box2dCurve::Compute(const occ::handle<Geom2d_Conic>& aConic2D,
     double                       aA1, aA2;
     occ::handle<Geom2d_Parabola> aPR2D;
 
-    aEps = Precision::Angular();
+    aEps = math::precision::Precision::Angular();
 
     aPR2D = occ::down_cast<Geom2d_Parabola>(aConic2D);
     aFc   = aPR2D->Focal();
@@ -1009,7 +1009,7 @@ int BndLib_Box2dCurve::Compute(const occ::handle<Geom2d_Conic>& aConic2D,
     double                        aEps, aB1, aB2, aB12, aB22, aZ, aD;
     occ::handle<Geom2d_Hyperbola> aHP2D;
 
-    aEps = Precision::Angular();
+    aEps = math::precision::Precision::Angular();
 
     aHP2D = occ::down_cast<Geom2d_Hyperbola>(aConic2D);
     aR1   = aHP2D->MajorRadius();

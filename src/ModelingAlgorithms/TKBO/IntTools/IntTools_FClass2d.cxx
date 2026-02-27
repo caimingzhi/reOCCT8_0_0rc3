@@ -71,7 +71,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
   NCollection_Sequence<gp_Vec2d> aD1Prev;
   NCollection_Sequence<gp_Vec2d> aD1Next;
 
-  aPrCf    = Precision::Confusion();
+  aPrCf    = math::precision::Precision::Confusion();
   aPrCf2   = aPrCf * aPrCf;
   myIsHole = true;
 
@@ -172,7 +172,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         gp_Pnt P3da       = C3d.Value(0.5 * (pfbid + plbid));
         du                = plbid - pfbid;
         const int NBSTEPS = 10;
-        double    aPrec2  = 0.25 * Precision::Confusion() * Precision::Confusion();
+        double    aPrec2  = 0.25 * math::precision::Precision::Confusion() * math::precision::Precision::Confusion();
         degenerated       = true;
         for (int i = 0; i <= NBSTEPS; i++)
         {
@@ -463,7 +463,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
 
         TabClass.Append(CSLib_Class2d(SeqPnt2d, FlecheU, FlecheV, Umin, Vmin, Umax, Vmax));
 
-        if (std::abs(aS) < Precision::SquareConfusion())
+        if (std::abs(aS) < math::precision::Precision::SquareConfusion())
         {
           BadWire = 1;
           TabOrien.Append(-1);

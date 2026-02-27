@@ -24,12 +24,12 @@ public:
 
   void Interpolate(double theT, gp_Trsf& theResult) const
   {
-    if (std::abs(theT - 0.0) < Precision::Confusion())
+    if (std::abs(theT - 0.0) < math::precision::Precision::Confusion())
     {
       theResult = myTrsfStart;
       return;
     }
-    else if (std::abs(theT - 1.0) < Precision::Confusion())
+    else if (std::abs(theT - 1.0) < math::precision::Precision::Confusion())
     {
       theResult = myTrsfEnd;
       return;

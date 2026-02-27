@@ -64,7 +64,7 @@ occ::handle<RWObj_TriangulationReader> RWObj_CafReader::createReaderContext()
 
 bool RWObj_CafReader::performMesh(std::istream&                  theStream,
                                   const TCollection_AsciiString& theFile,
-                                  const Message_ProgressRange&   theProgress,
+                                  const System::log::Message_ProgressRange&   theProgress,
                                   const bool                     theToProbe)
 {
   occ::handle<RWObj_TriangulationReader> aCtx = createReaderContext();

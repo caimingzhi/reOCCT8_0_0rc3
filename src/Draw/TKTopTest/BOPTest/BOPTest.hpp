@@ -6,7 +6,10 @@
 #include <BOPAlgo_Operation.hpp>
 
 #include <Draw_Interpretor.hpp>
+namespace System { namespace log {
 class Message_Report;
+}} // namespace System::log
+
 
 class BOPTest
 {
@@ -45,7 +48,7 @@ public:
 
   Standard_EXPORT static void MkConnectedCommands(Draw_Interpretor& aDI);
 
-  Standard_EXPORT static void ReportAlerts(const occ::handle<Message_Report>& theReport);
+  Standard_EXPORT static void ReportAlerts(const occ::handle<System::log::Message_Report>& theReport);
 
   Standard_EXPORT static BOPAlgo_Operation GetOperationType(const char* theOp);
 };

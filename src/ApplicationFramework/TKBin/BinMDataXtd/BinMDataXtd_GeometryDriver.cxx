@@ -8,7 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_GeometryDriver, BinMDF_ADriver)
 
 BinMDataXtd_GeometryDriver::BinMDataXtd_GeometryDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }

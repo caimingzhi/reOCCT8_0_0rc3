@@ -46,7 +46,7 @@ XSAlgo_ShapeProcessor::XSAlgo_ShapeProcessor(const DE_ShapeFixParameters& thePar
 
 TopoDS_Shape XSAlgo_ShapeProcessor::ProcessShape(const TopoDS_Shape&                  theShape,
                                                  const ShapeProcess::OperationsFlags& theOperations,
-                                                 const Message_ProgressRange&         theProgress)
+                                                 const System::log::Message_ProgressRange&         theProgress)
 {
   if (theShape.IsNull())
   {
@@ -93,16 +93,16 @@ void XSAlgo_ShapeProcessor::addMessages(const occ::handle<ShapeExtend_MsgRegistr
     return;
   }
 
-  const NCollection_List<Message_Msg>* aShapeMessages = theMessages->MapShape().Seek(theShape);
+  const NCollection_List<System::log::Message_Msg>* aShapeMessages = theMessages->MapShape().Seek(theShape);
   if (!aShapeMessages)
   {
     return;
   }
 
-  for (NCollection_List<Message_Msg>::Iterator aMsgIter(*aShapeMessages); aMsgIter.More();
+  for (NCollection_List<System::log::Message_Msg>::Iterator aMsgIter(*aShapeMessages); aMsgIter.More();
        aMsgIter.Next())
   {
-    const Message_Msg& aMessage = aMsgIter.Value();
+    const System::log::Message_Msg& aMessage = aMsgIter.Value();
     theBinder->AddWarning(TCollection_AsciiString(aMessage.Value()).ToCString(),
                           TCollection_AsciiString(aMessage.Original()).ToCString());
   }

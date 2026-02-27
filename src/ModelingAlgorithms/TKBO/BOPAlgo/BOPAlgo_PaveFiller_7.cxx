@@ -96,7 +96,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -104,7 +104,7 @@ public:
     myTol = BOPAlgo_Tools::ComputeToleranceOfCB(myCB, myDS, myContext);
     BOPTools_AlgoTools::MakeSplitEdge(myE, myV1, myT1, myV2, myT2, myESp);
     BRepBndLib::Add(myESp, myBox);
-    myBox.SetGap(myBox.GetGap() + Precision::Confusion());
+    myBox.SetGap(myBox.GetGap() + math::precision::Precision::Confusion());
   }
 
 protected:
@@ -170,7 +170,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -275,11 +275,11 @@ public:
 
   bool IsToUpdate() const { return myToUpdate; }
 
-  void SetRange(const Message_ProgressRange& theRange) { myRange = theRange; }
+  void SetRange(const System::log::Message_ProgressRange& theRange) { myRange = theRange; }
 
   void Perform()
   {
-    Message_ProgressScope aPS(myRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myRange, nullptr, 1);
     if (!aPS.More())
     {
       return;
@@ -294,17 +294,17 @@ protected:
   bool                      myToUpdate;
 
 private:
-  Message_ProgressRange myRange;
+  System::log::Message_ProgressRange myRange;
 };
 
 typedef NCollection_Vector<BOPAlgo_BPC> BOPAlgo_VectorOfBPC;
 
-void BOPAlgo_PaveFiller::MakeSplitEdges(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::MakeSplitEdges(const System::log::Message_ProgressRange& theRange)
 {
   NCollection_Vector<NCollection_List<occ::handle<BOPDS_PaveBlock>>>& aPBP =
     myDS->ChangePaveBlocksPool();
   int                   aNbPBP = aPBP.Length();
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
   if (!aNbPBP)
   {
     return;
@@ -421,7 +421,7 @@ void BOPAlgo_PaveFiller::MakeSplitEdges(const Message_ProgressRange& theRange)
   }
 
   aNbVBSE = aVBSE.Length();
-  Message_ProgressScope aPS(aPSOuter.Next(), "Splitting edges", aNbVBSE);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(), "Splitting edges", aNbVBSE);
   for (k = 0; k < aNbVBSE; k++)
   {
     BOPAlgo_SplitEdge& aBSE = aVBSE.ChangeValue(k);
@@ -499,15 +499,15 @@ int BOPAlgo_PaveFiller::SplitEdge(const int    nE,
 
   Bnd_Box& aBox = aSI.ChangeBox();
   BRepBndLib::Add(aSp, aBox);
-  aBox.SetGap(aBox.GetGap() + Precision::Confusion());
+  aBox.SetGap(aBox.GetGap() + math::precision::Precision::Confusion());
 
   nSp = myDS->Append(aSI);
   return nSp;
 }
 
-void BOPAlgo_PaveFiller::MakePCurves(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::MakePCurves(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
   if (myAvoidBuildPCurve || (!mySectionAttribute.PCurveOnS1() && !mySectionAttribute.PCurveOnS2()))
     return;
   bool                                                     bHasPC;
@@ -667,7 +667,7 @@ void BOPAlgo_PaveFiller::MakePCurves(const Message_ProgressRange& theRange)
     }
   }
 
-  Message_ProgressScope aPS(aPSOuter.Next(), "Projecting edges on faces", aVMPC.Length());
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(), "Projecting edges on faces", aVMPC.Length());
   for (i = 0; i < aVMPC.Length(); i++)
   {
     BOPAlgo_MPC& aMPC = aVMPC.ChangeValue(i);
@@ -747,7 +747,7 @@ void UpdateVertices(const TopoDS_Edge& aE, const TopoDS_Face& aF)
   }
 }
 
-void BOPAlgo_PaveFiller::Prepare(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::Prepare(const System::log::Message_ProgressRange& theRange)
 {
   if (myNonDestructive)
   {
@@ -761,7 +761,7 @@ void BOPAlgo_PaveFiller::Prepare(const Message_ProgressRange& theRange)
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMF;
 
   aNb = 3;
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
   for (i = 0; i < aNb; ++i)
   {
     myIterator->Initialize(aType[i], aType[2]);
@@ -799,7 +799,7 @@ void BOPAlgo_PaveFiller::Prepare(const Message_ProgressRange& theRange)
     }
   }
 
-  Message_ProgressScope aPS(aPSOuter.Next(), "Building 2d curves on planar faces", aVBPC.Length());
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(), "Building 2d curves on planar faces", aVBPC.Length());
   for (i = 0; i < aVBPC.Length(); i++)
   {
     BOPAlgo_BPC& aBPC = aVBPC.ChangeValue(i);

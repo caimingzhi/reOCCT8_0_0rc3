@@ -61,15 +61,15 @@ public:
   Standard_EXPORT virtual void PrepareTransfer();
 
   Standard_EXPORT virtual void TransferRoots(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Transfer(
     const int                    num,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void TransferList(
     const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool IsDone() const;
 

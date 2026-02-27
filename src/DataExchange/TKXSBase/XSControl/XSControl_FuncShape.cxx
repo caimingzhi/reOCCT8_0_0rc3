@@ -42,7 +42,7 @@ static IFSelect_ReturnStatus XSControl_tpdraw(const occ::handle<IFSelect_Session
   const char*                                   arg3 = pilot->Arg(3);
   const occ::handle<Transfer_TransientProcess>& TP =
     XSControl::Session(pilot)->TransferReader()->TransientProcess();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (TP.IsNull())
   {
     sout << "No Transfer Read" << std::endl;
@@ -308,7 +308,7 @@ static IFSelect_ReturnStatus XSControl_tpcompound(const occ::handle<IFSelect_Ses
   const char*                                   arg1 = pilot->Arg(1);
   const occ::handle<Transfer_TransientProcess>& TP =
     XSControl::Session(pilot)->TransferReader()->TransientProcess();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (TP.IsNull())
   {
     sout << "No Transfer Read" << std::endl;
@@ -361,7 +361,7 @@ static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_Sessi
   bool                    cassave = (pilot->Word(0).Location(1, 's', 1, 5) > 0);
   TCollection_AsciiString nomsh, noms;
   const occ::handle<XSControl_TransferReader>& TR   = XSControl::Session(pilot)->TransferReader();
-  Message_Messenger::StreamBuffer              sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer              sout = System::log::Message::SendInfo();
   if (TR.IsNull())
   {
     sout << " manque init" << std::endl;
@@ -467,7 +467,7 @@ static IFSelect_ReturnStatus XSControl_fromshape(const occ::handle<IFSelect_Sess
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give name of a DRAW Shape" << std::endl;
@@ -656,7 +656,7 @@ static IFSelect_ReturnStatus XSControl_trconnexentities(
   occ::handle<Transfer_TransientProcess>       TP;
   if (!TR.IsNull())
     TP = TR->TransientProcess();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (TP.IsNull())
   {
     sout << "no transfer map" << std::endl;
@@ -698,7 +698,7 @@ static IFSelect_ReturnStatus XSControl_trimport(const occ::handle<IFSelect_Sessi
   occ::handle<XSControl_WorkSession> WS = XSControl::Session(pilot);
 
   int                             argc = pilot->NbWords();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 4)
   {
     sout << "Give : filename or . for current model;  varname or . to take fileroot\n  GiveList, * "
@@ -822,7 +822,7 @@ static IFSelect_ReturnStatus XSControl_twrite(const occ::handle<IFSelect_Session
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer       sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer       sout = System::log::Message::SendInfo();
   occ::handle<XSControl_TransferWriter> TW   = XSControl::Session(pilot)->TransferWriter();
   if (argc < 2)
   {
@@ -910,7 +910,7 @@ int XSControl_FuncShape::MoreShapes(const occ::handle<XSControl_WorkSession>&   
                                     const char*                                       name)
 {
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (list.IsNull())
     list = new NCollection_HSequence<TopoDS_Shape>();
   if (name[0] == '*' && (name[1] == '\0' || (name[1] == '*' && name[2] == '\0')))

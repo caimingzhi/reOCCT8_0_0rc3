@@ -16,7 +16,7 @@ RWMesh_TriangulationSource::RWMesh_TriangulationSource()
 RWMesh_TriangulationSource::~RWMesh_TriangulationSource() = default;
 
 bool RWMesh_TriangulationSource::loadDeferredData(
-  const occ::handle<OSD_FileSystem>&     theFileSystem,
+  const occ::handle<System::os::OSD_FileSystem>&     theFileSystem,
   const occ::handle<Poly_Triangulation>& theDestTriangulation) const
 {
   myStatisticOfDegeneratedTriNb = 0;

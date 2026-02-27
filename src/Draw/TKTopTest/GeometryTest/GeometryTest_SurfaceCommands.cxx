@@ -266,11 +266,11 @@ static int appsurf(Draw_Interpretor& di, int n, const char** a)
     Section.AddCurve(C);
   }
 
-  Section.Perform(Precision::PConfusion());
+  Section.Perform(math::precision::Precision::PConfusion());
 
   occ::handle<GeomFill_Line> Line = new GeomFill_Line(n - 2);
   int                        NbIt = 0;
-  GeomFill_AppSurf           App(3, 8, Precision::Confusion(), Precision::PConfusion(), NbIt);
+  GeomFill_AppSurf           App(3, 8, math::precision::Precision::Confusion(), math::precision::Precision::PConfusion(), NbIt);
 
   App.Perform(Line, Section);
 

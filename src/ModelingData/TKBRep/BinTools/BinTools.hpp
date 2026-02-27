@@ -39,7 +39,7 @@ public:
 
   static void Write(const TopoDS_Shape&          theShape,
                     Standard_OStream&            theStream,
-                    const Message_ProgressRange& theRange = Message_ProgressRange())
+                    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange())
   {
     Write(theShape, theStream, true, false, BinTools_FormatVersion_CURRENT, theRange);
   }
@@ -50,15 +50,15 @@ public:
     const bool                   theWithTriangles,
     const bool                   theWithNormals,
     const BinTools_FormatVersion theVersion,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void Read(TopoDS_Shape&                theShape,
                                    Standard_IStream&            theStream,
-                                   const Message_ProgressRange& theRange = Message_ProgressRange());
+                                   const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   static bool Write(const TopoDS_Shape&          theShape,
                     const char*                  theFile,
-                    const Message_ProgressRange& theRange = Message_ProgressRange())
+                    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange())
   {
     return Write(theShape, theFile, true, false, BinTools_FormatVersion_CURRENT, theRange);
   }
@@ -69,9 +69,9 @@ public:
     const bool                   theWithTriangles,
     const bool                   theWithNormals,
     const BinTools_FormatVersion theVersion,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static bool Read(TopoDS_Shape&                theShape,
                                    const char*                  theFile,
-                                   const Message_ProgressRange& theRange = Message_ProgressRange());
+                                   const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 };

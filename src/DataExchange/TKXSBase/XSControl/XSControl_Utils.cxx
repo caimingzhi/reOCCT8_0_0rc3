@@ -37,13 +37,13 @@ XSControl_Utils::XSControl_Utils() = default;
 
 void XSControl_Utils::TraceLine(const char* line) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   sout << line << std::endl;
 }
 
 void XSControl_Utils::TraceLines(const occ::handle<Standard_Transient>& lines) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   int                             i, nb;
   DeclareAndCast(NCollection_HSequence<occ::handle<TCollection_HAsciiString>>, linha, lines);
   if (!linha.IsNull())

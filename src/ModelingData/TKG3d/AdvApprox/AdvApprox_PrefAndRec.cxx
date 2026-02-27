@@ -20,7 +20,7 @@ AdvApprox_PrefAndRec::AdvApprox_PrefAndRec(const NCollection_Array1<double>& Rec
 bool AdvApprox_PrefAndRec::Value(const double a, const double b, double& cuttingvalue) const
 {
 
-  constexpr double lgmin = 10 * Precision::PConfusion();
+  constexpr double lgmin = 10 * math::precision::Precision::PConfusion();
   int              i;
   double           cut, mil = (a + b) / 2, dist;
   bool             isfound = false;

@@ -445,7 +445,7 @@ void TopOpeBRepBuild_Tools::GetNormalInNearestPoint(const TopoDS_Face& F,
   BS.D1(newU, newV, aP1, aTg1, aTg2);
 
   gp_Pnt2d                aP2d(newU, newV);
-  BRepTopAdaptor_FClass2d FC(F, Precision::PConfusion());
+  BRepTopAdaptor_FClass2d FC(F, math::precision::Precision::PConfusion());
   TopAbs_State            aState = FC.Perform(aP2d);
 
   if (aState == TopAbs_OUT)

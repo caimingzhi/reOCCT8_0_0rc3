@@ -29,7 +29,7 @@ public:
     const char*                      thePrscfile,
     const char*                      thePseq,
     occ::handle<Standard_Transient>& theInfo,
-    const Message_ProgressRange&     theProgress       = Message_ProgressRange(),
+    const System::log::Message_ProgressRange&     theProgress       = System::log::Message_ProgressRange(),
     const bool                       theNonManifold    = false,
     const TopAbs_ShapeEnum           theDetailingLevel = TopAbs_VERTEX) const;
 

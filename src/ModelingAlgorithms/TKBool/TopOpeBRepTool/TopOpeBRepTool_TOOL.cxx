@@ -106,7 +106,7 @@ static bool CheckEdgeLength(const TopoDS_Edge& E)
     p1 = p2;
   }
 
-  return (ln > Precision::Confusion());
+  return (ln > math::precision::Precision::Confusion());
 }
 
 int TopOpeBRepTool_TOOL::OriinSor(const TopoDS_Shape& sub,
@@ -734,7 +734,7 @@ bool TopOpeBRepTool_TOOL::CurvE(const TopoDS_Edge& E,
   BRepAdaptor_Curve BAC(E);
   GeomAbs_CurveType CT   = BAC.GetType();
   bool              line = (CT == GeomAbs_Line);
-  double            tola = Precision::Angular() * 1.e3;
+  double            tola = math::precision::Precision::Angular() * 1.e3;
   if (line)
   {
     gp_Dir dir = BAC.Line().Direction();
@@ -742,13 +742,13 @@ bool TopOpeBRepTool_TOOL::CurvE(const TopoDS_Edge& E,
     return std::abs(1 - dot) >= tola;
   }
 
-  BRepLProp_CLProps clprops(BAC, par, 2, Precision::Confusion());
+  BRepLProp_CLProps clprops(BAC, par, 2, math::precision::Precision::Confusion());
   bool              tgdef = clprops.IsTangentDefined();
   if (!tgdef)
     return false;
   curv = std::abs(clprops.Curvature());
 
-  double tol      = Precision::Confusion() * 1.e+2;
+  double tol      = math::precision::Precision::Confusion() * 1.e+2;
   bool   nullcurv = (curv < tol);
   if (nullcurv)
   {
@@ -839,7 +839,7 @@ static bool FUN_analyticcS(const gp_Pnt2d&                  uv0,
     }
     if (isMaxAcurv)
     {
-      GeomLProp_SLProps slprops(S, uv0.X(), uv0.Y(), 2, Precision::Confusion());
+      GeomLProp_SLProps slprops(S, uv0.X(), uv0.Y(), 2, math::precision::Precision::Confusion());
       bool              curdef = slprops.IsCurvatureDefined();
       if (curdef)
       {
@@ -880,7 +880,7 @@ bool TopOpeBRepTool_TOOL::CurvF(const TopoDS_Face& F,
   if (analyticcontour)
     return true;
 
-  GeomLProp_SLProps slprops(S, uv.X(), uv.Y(), 2, Precision::Confusion());
+  GeomLProp_SLProps slprops(S, uv.X(), uv.Y(), 2, math::precision::Precision::Confusion());
   bool              curdef = slprops.IsCurvatureDefined();
   if (curdef)
   {
@@ -928,8 +928,8 @@ bool TopOpeBRepTool_TOOL::UVISO(const occ::handle<Geom2d_Curve>& PC,
 
   occ::handle<Geom2d_Line> L = occ::down_cast<Geom2d_Line>(LLL);
   d2d                        = L->Direction();
-  isoU                       = (std::abs(d2d.X()) < Precision::Parametric(Precision::Confusion()));
-  isoV                       = (std::abs(d2d.Y()) < Precision::Parametric(Precision::Confusion()));
+  isoU                       = (std::abs(d2d.X()) < math::precision::Precision::Parametric(math::precision::Precision::Confusion()));
+  isoV                       = (std::abs(d2d.Y()) < math::precision::Precision::Parametric(math::precision::Precision::Confusion()));
   bool isoUV                 = isoU || isoV;
   if (!isoUV)
     return false;
@@ -1035,7 +1035,7 @@ double TopOpeBRepTool_TOOL::Matter(const gp_Vec& d1, const gp_Vec& dR2, const gp
 {
   gp_Vec d2 = dR2.Reversed();
 
-  double tola  = Precision::Angular();
+  double tola  = math::precision::Precision::Angular();
   double ang   = d1.Angle(d2);
   bool   equal = (ang < tola);
   if (equal)
@@ -1120,7 +1120,7 @@ bool TopOpeBRepTool_TOOL::Getduv(const TopoDS_Face& f,
   if ((S->IsUPeriodic()) && (std::abs(DUV.X()) > S->UPeriod() / 2.))
   {
     double U1 = uv.X(), U2 = uvtr.X(), period = S->UPeriod();
-    ElCLib::AdjustPeriodic(0., period, Precision::PConfusion(), U1, U2);
+    ElCLib::AdjustPeriodic(0., period, math::precision::Precision::PConfusion(), U1, U2);
     double dx = U2 - U1;
     if (dx > period / 2.)
       dx -= period;
@@ -1129,7 +1129,7 @@ bool TopOpeBRepTool_TOOL::Getduv(const TopoDS_Face& f,
   if ((S->IsVPeriodic()) && (std::abs(DUV.Y()) > S->VPeriod() / 2.))
   {
     double V1 = uv.Y(), V2 = uvtr.Y(), period = S->VPeriod();
-    ElCLib::AdjustPeriodic(0., period, Precision::PConfusion(), V1, V2);
+    ElCLib::AdjustPeriodic(0., period, math::precision::Precision::PConfusion(), V1, V2);
     double dy = V2 - V1;
     if (dy > period / 2.)
       dy -= period;
@@ -1168,7 +1168,7 @@ bool TopOpeBRepTool_TOOL::XX(const gp_Pnt2d&    uv,
   gp_Vec ng     = FUN_tool_nggeomF(uv, f);
   gp_Vec geomxx = FUN_tool_getgeomxx(f, e, par, ng);
 
-  double tol    = Precision::Confusion() * 1.e2;
+  double tol    = math::precision::Precision::Confusion() * 1.e2;
   bool   nullng = (geomxx.Magnitude() < tol);
   if (nullng)
     return false;
@@ -1529,7 +1529,7 @@ bool TopOpeBRepTool_TOOL::EdgeONFace(const double       par,
     return true;
   }
 
-  double tola = Precision::Angular() * 1.e2;
+  double tola = math::precision::Precision::Angular() * 1.e2;
   gp_Vec tge;
   bool   ok = TopOpeBRepTool_TOOL::TggeomE(par, ed, tge);
   if (!ok)

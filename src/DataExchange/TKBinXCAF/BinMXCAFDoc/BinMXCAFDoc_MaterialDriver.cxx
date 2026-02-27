@@ -9,7 +9,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_MaterialDriver, BinMDF_ADriver)
 
 BinMXCAFDoc_MaterialDriver::BinMXCAFDoc_MaterialDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_Material)->Name())
 {
 }

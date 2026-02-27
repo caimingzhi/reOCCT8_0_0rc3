@@ -17,7 +17,7 @@ public:
 
   Standard_EXPORT math_Gauss(const math_Matrix&           A,
                              const double                 MinPivot    = 1.0e-20,
-                             const Message_ProgressRange& theProgress = Message_ProgressRange());
+                             const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   bool IsDone() const { return Done; }
 

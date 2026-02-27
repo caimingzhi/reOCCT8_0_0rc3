@@ -93,9 +93,9 @@ bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& 
     if (Or == TopAbs_FORWARD || Or == TopAbs_REVERSED)
     {
       double aFPar = E.FirstParameter(), aLPar = E.LastParameter();
-      if (Precision::IsNegativeInfinite(aFPar))
+      if (math::precision::Precision::IsNegativeInfinite(aFPar))
       {
-        if (Precision::IsPositiveInfinite(aLPar))
+        if (math::precision::Precision::IsPositiveInfinite(aLPar))
         {
           aFPar = -1.;
           aLPar = 1.;
@@ -103,7 +103,7 @@ bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& 
         else
           aFPar = aLPar - 1.;
       }
-      else if (Precision::IsPositiveInfinite(aLPar))
+      else if (math::precision::Precision::IsPositiveInfinite(aLPar))
         aLPar = aFPar + 1.;
 
       for (; myCurEdgePar < Probing_End; myCurEdgePar += Probing_Step)
@@ -114,11 +114,11 @@ bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& 
         E.D1(aParam, aPOnC, aTanVec);
         gp_Vec2d aLinVec(P, aPOnC);
         Par = aLinVec.SquareMagnitude();
-        if (Par > Precision::SquarePConfusion())
+        if (Par > math::precision::Precision::SquarePConfusion())
         {
           gp_Dir2d aLinDir(aLinVec);
           double   aTanMod = aTanVec.SquareMagnitude();
-          if (aTanMod < Precision::SquarePConfusion())
+          if (aTanMod < math::precision::Precision::SquarePConfusion())
             continue;
 
           aTanVec /= std::sqrt(aTanMod);
@@ -133,10 +133,10 @@ bool Geom2dHatch_Elements::OtherSegment(const gp_Pnt2d& P, gp_Lin2d& L, double& 
           L = gp_Lin2d(P, aLinDir);
 
           aPOnC = E.Value(aFPar);
-          if (L.SquareDistance(aPOnC) > Precision::SquarePConfusion())
+          if (L.SquareDistance(aPOnC) > math::precision::Precision::SquarePConfusion())
           {
             aPOnC = E.Value(aLPar);
-            if (L.SquareDistance(aPOnC) > Precision::SquarePConfusion())
+            if (L.SquareDistance(aPOnC) > math::precision::Precision::SquarePConfusion())
             {
               myCurEdgePar += Probing_Step;
               if (myCurEdgePar >= Probing_End)

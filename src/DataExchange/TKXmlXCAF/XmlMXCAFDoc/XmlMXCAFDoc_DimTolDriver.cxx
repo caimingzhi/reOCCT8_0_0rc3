@@ -14,7 +14,7 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(ValueIndexString, "values")
 
 XmlMXCAFDoc_DimTolDriver::XmlMXCAFDoc_DimTolDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "DimTol")
 {
 }

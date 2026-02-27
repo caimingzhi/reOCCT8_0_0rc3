@@ -292,7 +292,7 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
           segment = true;
         }
         if (segment)
-          bsp = GeomConvert::SplitBSplineCurve(bsp, fbsp, lbsp, ::Precision::Confusion());
+          bsp = GeomConvert::SplitBSplineCurve(bsp, fbsp, lbsp, math::precision::Precision::Confusion());
       }
       else if (c->IsKind(STANDARD_TYPE(Geom_Conic)))
       {
@@ -478,8 +478,8 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
       u2 = AdjustOnPeriodic3d(c2, !reversed2, first2, last2, u2);
 
       gp_Pnt p1 = c1->Value(u1), p2 = c2->Value(u2);
-      if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > ::Precision::PConfusion()
-          && std::abs(clast2 - u2) > ::Precision::PConfusion()
+      if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > math::precision::Precision::PConfusion()
+          && std::abs(clast2 - u2) > math::precision::Precision::PConfusion()
           && (((u1 > first1) && (u1 < last1)) || ((u2 > first2) && (u2 < last2))
               || (cpnt1.Distance(p1) <= gap) || (cpnt2.Distance(p2) <= gap)))
       {
@@ -530,7 +530,7 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
               uu2 = AdjustOnPeriodic3d(c2, !reversed2, first2, last2, uu2);
               pp1 = c1->Value(uu1);
               pp2 = c2->Value(uu2);
-              if (pp1.Distance(pp2) < ::Precision::Confusion())
+              if (pp1.Distance(pp2) < math::precision::Precision::Confusion())
               {
 
                 pardist = std::abs(cfirst1 - uu1);
@@ -568,8 +568,8 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
             uu2 = AdjustOnPeriodic3d(c2, !reversed2, first2, last2, uu2);
 
             pp1 = c1->Value(uu1), pp2 = c2->Value(uu2);
-            if (pp1.Distance(pp2) <= gap && std::abs(cfirst1 - uu1) > ::Precision::PConfusion()
-                && std::abs(clast2 - uu2) > ::Precision::PConfusion()
+            if (pp1.Distance(pp2) <= gap && std::abs(cfirst1 - uu1) > math::precision::Precision::PConfusion()
+                && std::abs(clast2 - uu2) > math::precision::Precision::PConfusion()
                 && (((uu1 > first1) && (uu1 < last1)) || ((uu2 > first2) && (uu2 < last2))
                     || (cpnt1.Distance(pp1) <= gap) || (cpnt2.Distance(pp2) <= gap)))
             {
@@ -650,7 +650,7 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
 
     TopoDS_Shape  emptyCopiedV2 = V2.EmptyCopied();
     TopoDS_Vertex newV2         = TopoDS::Vertex(emptyCopiedV2);
-    SFST.SetTolerance(newV2, ::Precision::Confusion());
+    SFST.SetTolerance(newV2, math::precision::Precision::Confusion());
     Context()->Replace(V2, newV2);
     if (V1.IsSame(V2))
 
@@ -663,7 +663,7 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
 
       TopoDS_Shape emptyCopied = V1.EmptyCopied();
       newV1                    = TopoDS::Vertex(emptyCopied);
-      SFST.SetTolerance(newV1, ::Precision::Confusion());
+      SFST.SetTolerance(newV1, math::precision::Precision::Confusion());
       Context()->Replace(V1, newV1);
     }
 
@@ -675,7 +675,7 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
       TopoDS_Shape tmpE1 = newE1.Oriented(TopAbs_FORWARD);
       B.UpdateEdge(TopoDS::Edge(tmpE1), c1, 0.);
       SBE.SetRange3d(TopoDS::Edge(tmpE1), first1, last1);
-      SFST.SetTolerance(newE1, ::Precision::Confusion(), TopAbs_EDGE);
+      SFST.SetTolerance(newE1, math::precision::Precision::Confusion(), TopAbs_EDGE);
       B.SameRange(newE1, false);
 
       TopoDS_Iterator aItv(E1, false);
@@ -704,7 +704,7 @@ bool ShapeFix_Wire::FixGap3d(const int num, const bool convert)
       TopoDS_Shape tmpE2 = newE2.Oriented(TopAbs_FORWARD);
       B.UpdateEdge(TopoDS::Edge(tmpE2), c2, 0.);
       SBE.SetRange3d(TopoDS::Edge(tmpE2), first2, last2);
-      SFST.SetTolerance(newE2, ::Precision::Confusion(), TopAbs_EDGE);
+      SFST.SetTolerance(newE2, math::precision::Precision::Confusion(), TopAbs_EDGE);
       B.SameRange(newE2, false);
 
       TopoDS_Iterator aItv(E2, false);
@@ -763,7 +763,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
   if (Context().IsNull())
     SetContext(new ShapeBuild_ReShape);
 
-  constexpr double preci = ::Precision::PConfusion();
+  constexpr double preci = math::precision::Precision::PConfusion();
 
   occ::handle<ShapeExtend_WireData> sbwd = WireData();
   int                               n2   = (num > 0 ? num : sbwd->NbEdges());
@@ -906,7 +906,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
           segment = true;
         }
         if (segment)
-          bsp = Geom2dConvert::SplitBSplineCurve(bsp, fbsp, lbsp, ::Precision::PConfusion());
+          bsp = Geom2dConvert::SplitBSplineCurve(bsp, fbsp, lbsp, math::precision::Precision::PConfusion());
       }
       else if (pc->IsKind(STANDARD_TYPE(Geom2d_Conic)))
       {
@@ -1065,7 +1065,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
       double ipar1 = clast1, ipar2 = cfirst2;
 
       Geom2dInt_GInter Inter;
-      constexpr double tolint = ::Precision::PConfusion();
+      constexpr double tolint = math::precision::Precision::PConfusion();
 
       Geom2dAdaptor_Curve AC1(pc1), AC2(pc2);
 
@@ -1189,8 +1189,8 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
           double u2 = AdjustOnPeriodic2d(pc2, !reversed2, first2, last2, IP.ParamOnSecond());
 
           gp_Pnt2d p1 = pc1->Value(u1), p2 = pc2->Value(u2);
-          if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > ::Precision::PConfusion()
-              && std::abs(clast2 - u2) > ::Precision::PConfusion()
+          if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > math::precision::Precision::PConfusion()
+              && std::abs(clast2 - u2) > math::precision::Precision::PConfusion()
               && (((u1 > first1) && (u1 < last1)) || ((u2 > first2) && (u2 < last2))
                   || (cpnt1.Distance(p1) <= gap) || (cpnt2.Distance(p2) <= gap)))
           {
@@ -1213,8 +1213,8 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
           u2 = AdjustOnPeriodic2d(pc2, !reversed2, first2, last2, u2);
 
           gp_Pnt2d p1 = pc1->Value(u1), p2 = pc2->Value(u2);
-          if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > ::Precision::PConfusion()
-              && std::abs(clast2 - u2) > ::Precision::PConfusion()
+          if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > math::precision::Precision::PConfusion()
+              && std::abs(clast2 - u2) > math::precision::Precision::PConfusion()
               && (((u1 > first1) && (u1 < last1)) || ((u2 > first2) && (u2 < last2))
                   || (cpnt1.Distance(p1) <= gap) || (cpnt2.Distance(p2) <= gap)))
           {
@@ -1324,8 +1324,8 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
         u2 = AdjustOnPeriodic2d(pc2, !reversed2, first2, last2, u2);
 
         gp_Pnt2d p1 = pc1->Value(u1), p2 = pc2->Value(u2);
-        if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > ::Precision::PConfusion()
-            && std::abs(clast2 - u2) > ::Precision::PConfusion()
+        if (p1.Distance(p2) <= gap && std::abs(cfirst1 - u1) > math::precision::Precision::PConfusion()
+            && std::abs(clast2 - u2) > math::precision::Precision::PConfusion()
             && (((u1 > first1) && (u1 < last1)) || ((u2 > first2) && (u2 < last2))
                 || (cpnt1.Distance(p1) <= gap) || (cpnt2.Distance(p2) <= gap)))
         {
@@ -1343,18 +1343,18 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
 
           double umin, umax, vmin, vmax;
           myAnalyzer->Surface()->Surface()->Bounds(umin, umax, vmin, vmax);
-          if (::Precision::IsInfinite(umin) || ::Precision::IsInfinite(umax)
-              || ::Precision::IsInfinite(vmin) || ::Precision::IsInfinite(vmax))
+          if (math::precision::Precision::IsInfinite(umin) || math::precision::Precision::IsInfinite(umax)
+              || math::precision::Precision::IsInfinite(vmin) || math::precision::Precision::IsInfinite(vmax))
           {
             double fumin, fumax, fvmin, fvmax;
             BRepTools::UVBounds(face, fumin, fumax, fvmin, fvmax);
-            if (::Precision::IsInfinite(umin))
+            if (math::precision::Precision::IsInfinite(umin))
               umin = fumin - preci;
-            if (::Precision::IsInfinite(umax))
+            if (math::precision::Precision::IsInfinite(umax))
               umax = fumax + preci;
-            if (::Precision::IsInfinite(vmin))
+            if (math::precision::Precision::IsInfinite(vmin))
               vmin = fvmin - preci;
-            if (::Precision::IsInfinite(vmax))
+            if (math::precision::Precision::IsInfinite(vmax))
               vmax = fvmax + preci;
           }
 
@@ -1522,12 +1522,12 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
                                             fpar,
                                             lpar,
                                             IP.ParamOnSecond());
-                    if (j == 1 && std::abs(cfirst1 - uu) > ::Precision::PConfusion())
+                    if (j == 1 && std::abs(cfirst1 - uu) > math::precision::Precision::PConfusion())
                     {
                       ipar1 = uu;
                       ipnt  = IP.Value();
                     }
-                    if (j == 2 && std::abs(clast2 - uu) > ::Precision::PConfusion())
+                    if (j == 2 && std::abs(clast2 - uu) > math::precision::Precision::PConfusion())
                     {
                       ipar2 = uu;
                       ipnt  = IP.Value();
@@ -1627,7 +1627,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
 
     TopoDS_Shape  emptyCopiedV2 = V2.EmptyCopied();
     TopoDS_Vertex newV2         = TopoDS::Vertex(emptyCopiedV2);
-    SFST.SetTolerance(newV2, ::Precision::Confusion());
+    SFST.SetTolerance(newV2, math::precision::Precision::Confusion());
     Context()->Replace(V2, newV2);
     if (V1.IsSame(V2))
 
@@ -1640,7 +1640,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
 
       TopoDS_Shape emptyCopiedV1 = V1.EmptyCopied();
       newV1                      = TopoDS::Vertex(emptyCopiedV1);
-      SFST.SetTolerance(newV1, ::Precision::Confusion());
+      SFST.SetTolerance(newV1, math::precision::Precision::Confusion());
       Context()->Replace(V1, newV1);
     }
 
@@ -1652,7 +1652,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
       TopoDS_Shape tmpE1 = newE1.Oriented(TopAbs_FORWARD);
       B.UpdateEdge(TopoDS::Edge(tmpE1), pc1, face, 0.);
       B.Range(TopoDS::Edge(tmpE1), face, first1, last1);
-      SFST.SetTolerance(newE1, ::Precision::Confusion(), TopAbs_EDGE);
+      SFST.SetTolerance(newE1, math::precision::Precision::Confusion(), TopAbs_EDGE);
       B.SameRange(newE1, false);
 
       TopoDS_Iterator aItv(E1, false);
@@ -1681,7 +1681,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
       TopoDS_Shape tmpE2 = newE2.Oriented(TopAbs_FORWARD);
       B.UpdateEdge(TopoDS::Edge(tmpE2), pc2, face, 0.);
       B.Range(TopoDS::Edge(tmpE2), face, first2, last2);
-      SFST.SetTolerance(newE2, ::Precision::Confusion(), TopAbs_EDGE);
+      SFST.SetTolerance(newE2, math::precision::Precision::Confusion(), TopAbs_EDGE);
       B.SameRange(newE2, false);
 
       TopoDS_Iterator aItv(E2, false);

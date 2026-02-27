@@ -124,7 +124,7 @@ bool MyDirFunction::Value(const math_Vector& Sol,
     GH.TMultiply(DF, FF);
     for (int i = GH.Lower(); i <= GH.Upper(); i++)
     {
-      if (Precision::IsInfinite((GH.Value(i))))
+      if (math::precision::Precision::IsInfinite((GH.Value(i))))
       {
         return false;
       }
@@ -202,7 +202,7 @@ static bool MinimizeDirection(const math_Vector& P,
                               MyDirFunction&     F)
 
 {
-  if (Precision::IsInfinite(PValue) || Precision::IsInfinite(PDirValue))
+  if (math::precision::Precision::IsInfinite(PValue) || math::precision::Precision::IsInfinite(PDirValue))
   {
     return false;
   }
@@ -305,7 +305,7 @@ static bool MinimizeDirection(const math_Vector& P,
         good   = true;
         Result = Sol.Minimum();
 
-        if (Gradient.Norm2() > 1.0 / Precision::SquareConfusion() && tsol > ax && tsol < cx)
+        if (Gradient.Norm2() > 1.0 / math::precision::Precision::SquareConfusion() && tsol > ax && tsol < cx)
         {
 
           Sol.Perform(F, ax, (ax + tsol) / 2.0, tsol);
@@ -668,8 +668,8 @@ void math_FunctionSetRoot::Perform(math_FunctionSetWithDerivatives& F,
   math_IntegerVector aConstraints(1, Ninc);
   for (i = 1; i <= Ninc; i++)
   {
-    const double aSupBound  = std::min(theSupBound(i), Precision::Infinite());
-    const double anInfBound = std::max(theInfBound(i), -Precision::Infinite());
+    const double aSupBound  = std::min(theSupBound(i), math::precision::Precision::Infinite());
+    const double anInfBound = std::max(theInfBound(i), -math::precision::Precision::Infinite());
     InvLengthMax(i)         = 1. / std::max((aSupBound - anInfBound) / 4, 1.e-9);
   }
 

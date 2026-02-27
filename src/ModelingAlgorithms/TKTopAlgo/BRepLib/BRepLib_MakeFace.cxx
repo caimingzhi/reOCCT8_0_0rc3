@@ -48,31 +48,31 @@ BRepLib_MakeFace::BRepLib_MakeFace(const TopoDS_Face& F)
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Pln& P)
 {
   occ::handle<Geom_Plane> GP = new Geom_Plane(P);
-  Init(GP, true, Precision::Confusion());
+  Init(GP, true, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cylinder& C)
 {
   occ::handle<Geom_CylindricalSurface> GC = new Geom_CylindricalSurface(C);
-  Init(GC, true, Precision::Confusion());
+  Init(GC, true, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cone& C)
 {
   occ::handle<Geom_ConicalSurface> GC = new Geom_ConicalSurface(C);
-  Init(GC, true, Precision::Confusion());
+  Init(GC, true, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Sphere& S)
 {
   occ::handle<Geom_SphericalSurface> GS = new Geom_SphericalSurface(S);
-  Init(GS, true, Precision::Confusion());
+  Init(GS, true, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Torus& T)
 {
   occ::handle<Geom_ToroidalSurface> GT = new Geom_ToroidalSurface(T);
-  Init(GT, true, Precision::Confusion());
+  Init(GT, true, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const occ::handle<Geom_Surface>& S, const double TolDegen)
@@ -87,7 +87,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Pln& P,
                                    const double  VMax)
 {
   occ::handle<Geom_Plane> GP = new Geom_Plane(P);
-  Init(GP, UMin, UMax, VMin, VMax, Precision::Confusion());
+  Init(GP, UMin, UMax, VMin, VMax, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cylinder& C,
@@ -97,7 +97,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cylinder& C,
                                    const double       VMax)
 {
   occ::handle<Geom_CylindricalSurface> GC = new Geom_CylindricalSurface(C);
-  Init(GC, UMin, UMax, VMin, VMax, Precision::Confusion());
+  Init(GC, UMin, UMax, VMin, VMax, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cone& C,
@@ -107,7 +107,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cone& C,
                                    const double   VMax)
 {
   occ::handle<Geom_ConicalSurface> GC = new Geom_ConicalSurface(C);
-  Init(GC, UMin, UMax, VMin, VMax, Precision::Confusion());
+  Init(GC, UMin, UMax, VMin, VMax, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Sphere& S,
@@ -117,7 +117,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Sphere& S,
                                    const double     VMax)
 {
   occ::handle<Geom_SphericalSurface> GS = new Geom_SphericalSurface(S);
-  Init(GS, UMin, UMax, VMin, VMax, Precision::Confusion());
+  Init(GS, UMin, UMax, VMin, VMax, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Torus& T,
@@ -127,7 +127,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Torus& T,
                                    const double    VMax)
 {
   occ::handle<Geom_ToroidalSurface> GT = new Geom_ToroidalSurface(T);
-  Init(GT, UMin, UMax, VMin, VMax, Precision::Confusion());
+  Init(GT, UMin, UMax, VMin, VMax, math::precision::Precision::Confusion());
 }
 
 BRepLib_MakeFace::BRepLib_MakeFace(const occ::handle<Geom_Surface>& S,
@@ -211,7 +211,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const TopoDS_Wire& W, const bool OnlyPlane)
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Pln& P, const TopoDS_Wire& W, const bool Inside)
 {
   occ::handle<Geom_Plane> Pl = new Geom_Plane(P);
-  Init(Pl, false, Precision::Confusion());
+  Init(Pl, false, math::precision::Precision::Confusion());
   Add(W);
   if (Inside && BRep_Tool::IsClosed(W))
     CheckInside();
@@ -220,7 +220,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Pln& P, const TopoDS_Wire& W, const 
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cylinder& C, const TopoDS_Wire& W, const bool Inside)
 {
   occ::handle<Geom_CylindricalSurface> GC = new Geom_CylindricalSurface(C);
-  Init(GC, false, Precision::Confusion());
+  Init(GC, false, math::precision::Precision::Confusion());
   Add(W);
   if (Inside && BRep_Tool::IsClosed(W))
     CheckInside();
@@ -229,7 +229,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cylinder& C, const TopoDS_Wire& W, c
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cone& C, const TopoDS_Wire& W, const bool Inside)
 {
   occ::handle<Geom_ConicalSurface> GC = new Geom_ConicalSurface(C);
-  Init(GC, false, Precision::Confusion());
+  Init(GC, false, math::precision::Precision::Confusion());
   Add(W);
   if (Inside && BRep_Tool::IsClosed(W))
     CheckInside();
@@ -238,7 +238,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Cone& C, const TopoDS_Wire& W, const
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Sphere& S, const TopoDS_Wire& W, const bool Inside)
 {
   occ::handle<Geom_SphericalSurface> GS = new Geom_SphericalSurface(S);
-  Init(GS, false, Precision::Confusion());
+  Init(GS, false, math::precision::Precision::Confusion());
   Add(W);
   if (Inside && BRep_Tool::IsClosed(W))
     CheckInside();
@@ -247,7 +247,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const gp_Sphere& S, const TopoDS_Wire& W, con
 BRepLib_MakeFace::BRepLib_MakeFace(const gp_Torus& T, const TopoDS_Wire& W, const bool Inside)
 {
   occ::handle<Geom_ToroidalSurface> GT = new Geom_ToroidalSurface(T);
-  Init(GT, false, Precision::Confusion());
+  Init(GT, false, math::precision::Precision::Confusion());
   Add(W);
   if (Inside && BRep_Tool::IsClosed(W))
     CheckInside();
@@ -257,7 +257,7 @@ BRepLib_MakeFace::BRepLib_MakeFace(const occ::handle<Geom_Surface>& S,
                                    const TopoDS_Wire&               W,
                                    const bool                       Inside)
 {
-  Init(S, false, Precision::Confusion());
+  Init(S, false, math::precision::Precision::Confusion());
   Add(W);
   if (Inside && BRep_Tool::IsClosed(W))
     CheckInside();
@@ -298,7 +298,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& S,
   else
   {
     BRep_Builder B;
-    B.MakeFace(TopoDS::Face(myShape), S, Precision::Confusion());
+    B.MakeFace(TopoDS::Face(myShape), S, math::precision::Precision::Confusion());
   }
   BRep_Builder B;
   B.NaturalRestriction(TopoDS::Face(myShape), true);
@@ -309,7 +309,7 @@ bool BRepLib_MakeFace::IsDegenerated(const occ::handle<Geom_Curve>& theCurve,
                                      double&                        theActTol)
 {
   GeomAdaptor_Curve AC(theCurve);
-  double            aConfusion = Precision::Confusion();
+  double            aConfusion = math::precision::Precision::Confusion();
   theActTol                    = aConfusion;
   GeomAbs_CurveType Type       = AC.GetType();
 
@@ -387,7 +387,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
 
   bool OffsetSurface = (BS->DynamicType() == STANDARD_TYPE(Geom_OffsetSurface));
 
-  constexpr double epsilon = Precision::PConfusion();
+  constexpr double epsilon = math::precision::Precision::PConfusion();
 
   BS->Bounds(umin, umax, vmin, vmax);
 
@@ -398,14 +398,14 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
 
     if (Base->DynamicType() == STANDARD_TYPE(Geom_SurfaceOfLinearExtrusion))
     {
-      if (Precision::IsInfinite(umin) || Precision::IsInfinite(umax))
+      if (math::precision::Precision::IsInfinite(umin) || math::precision::Precision::IsInfinite(umax))
         S = new Geom_RectangularTrimmedSurface(OS, UMin, UMax, VMin, VMax);
       else
         S = new Geom_RectangularTrimmedSurface(OS, VMin, VMax, false);
     }
     else if (Base->DynamicType() == STANDARD_TYPE(Geom_SurfaceOfRevolution))
     {
-      if (Precision::IsInfinite(vmin) || Precision::IsInfinite(vmax))
+      if (math::precision::Precision::IsInfinite(vmin) || math::precision::Precision::IsInfinite(vmax))
         S = new Geom_RectangularTrimmedSurface(OS, VMin, VMax, false);
     }
   }
@@ -442,10 +442,10 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
     }
   }
 
-  bool umininf = Precision::IsNegativeInfinite(UMin);
-  bool umaxinf = Precision::IsPositiveInfinite(UMax);
-  bool vmininf = Precision::IsNegativeInfinite(VMin);
-  bool vmaxinf = Precision::IsPositiveInfinite(VMax);
+  bool umininf = math::precision::Precision::IsNegativeInfinite(UMin);
+  bool umaxinf = math::precision::Precision::IsPositiveInfinite(UMax);
+  bool vmininf = math::precision::Precision::IsNegativeInfinite(VMin);
+  bool vmaxinf = math::precision::Precision::IsPositiveInfinite(VMax);
 
   bool uclosed =
     S->IsUClosed() && std::abs(UMin - umin) < epsilon && std::abs(UMax - umax) < epsilon;
@@ -457,8 +457,8 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
   occ::handle<Geom_Curve> Cumin, Cumax, Cvmin, Cvmax;
   bool                    Dumin, Dumax, Dvmin, Dvmax;
   Dumin = Dumax = Dvmin = Dvmax = false;
-  double uminTol = Precision::Confusion(), umaxTol = Precision::Confusion(),
-         vminTol = Precision::Confusion(), vmaxTol = Precision::Confusion();
+  double uminTol = math::precision::Precision::Confusion(), umaxTol = math::precision::Precision::Confusion(),
+         vminTol = math::precision::Precision::Confusion(), vmaxTol = math::precision::Precision::Confusion();
 
   if (!umininf)
   {
@@ -532,7 +532,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
     Lvmax = new Geom2d_Line(gp_Pnt2d(0, VMax), gp_Dir2d(gp_Dir2d::D::X));
 
   TopoDS_Face& F = TopoDS::Face(myShape);
-  B.MakeFace(F, S, Precision::Confusion());
+  B.MakeFace(F, S, math::precision::Precision::Confusion());
 
   TopoDS_Edge eumin, eumax, evmin, evmax;
 
@@ -685,7 +685,7 @@ void BRepLib_MakeFace::Init(const occ::handle<Geom_Surface>& SS,
   if (OffsetSurface)
   {
 
-    BRepLib::SameParameter(F, Precision::Confusion(), true);
+    BRepLib::SameParameter(F, math::precision::Precision::Confusion(), true);
   }
 
   Done();

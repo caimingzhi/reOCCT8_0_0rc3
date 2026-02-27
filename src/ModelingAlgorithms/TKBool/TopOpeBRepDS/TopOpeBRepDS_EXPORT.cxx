@@ -250,7 +250,7 @@ Standard_EXPORT bool FDS_aresamdom(const TopOpeBRepDS_DataStructure& BDS,
       BRep_Tool::UVPoints(TopoDS::Edge(ES), TopoDS::Face(F1), p2d1, p2d2);
       gp_Dir d1   = FUN_tool_ngS(p2d1, su1);
       gp_Dir d2   = FUN_tool_ngS(p2d2, su2);
-      double tola = Precision::Angular();
+      double tola = math::precision::Precision::Angular();
       double dot  = d1.Dot(d2);
       trfa_samdom = (std::abs(1. - std::abs(dot)) < tola);
     }
@@ -1164,7 +1164,7 @@ Standard_EXPORT bool FUN_ds_shareG(const occ::handle<TopOpeBRepDS_HDataStructure
   const TopoDS_Face& F2 = TopoDS::Face(BDS.Shape(iF2));
   const TopoDS_Edge& E2 = TopoDS::Edge(BDS.Shape(iE2));
 
-  double tol = Precision::Confusion() * 1.e3;
+  double tol = math::precision::Precision::Confusion() * 1.e3;
   double f = 0.0, l = 0.0;
   FUN_tool_bounds(Esp, f, l);
   double x   = 0.45678;
@@ -1245,7 +1245,7 @@ Standard_EXPORT bool FUN_ds_mkTonFsdm(const occ::handle<TopOpeBRepDS_HDataStruct
   const TopoDS_Edge& EG = TopoDS::Edge(BDS.Shape(iEG));
 
   bool   EGisE2 = (iEG == iE2);
-  double tol    = Precision::Confusion() * 1.e3;
+  double tol    = math::precision::Precision::Confusion() * 1.e3;
 
   bool   ok = false;
   gp_Pnt P;
@@ -1304,7 +1304,7 @@ Standard_EXPORT bool FUN_ds_mkTonFsdm(const occ::handle<TopOpeBRepDS_HDataStruct
     return false;
 
   double prod = beafter.Dot(nxx2);
-  double tola = Precision::Angular() * 1.e3;
+  double tola = math::precision::Precision::Angular() * 1.e3;
   ok          = (std::abs(1 - std::abs(prod)) < tola);
   if (!ok)
     return false;
@@ -2759,12 +2759,12 @@ Standard_EXPORT bool FDS_LOIinfsup(
   TopoDS_Vertex v;
   bool          Eclosed = TopOpeBRepTool_TOOL::ClosedE(E, v);
   double        tole    = BRep_Tool::Tolerance(E);
-  double        tol     = Precision::Parametric(tole);
+  double        tol     = math::precision::Precision::Parametric(tole);
   isonboundper          = false;
   if (Eclosed)
   {
     double tolv = BRep_Tool::Tolerance(v);
-    tolv        = Precision::Parametric(tolv);
+    tolv        = math::precision::Precision::Parametric(tolv);
     if (tolv > tol)
       tol = tolv;
     bool pEisEf  = (std::abs(pE - f) <= tol);

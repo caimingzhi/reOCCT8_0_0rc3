@@ -18,7 +18,7 @@ ShapeUpgrade_SplitSurfaceContinuity::ShapeUpgrade_SplitSurfaceContinuity()
     : myCont(0)
 {
   myCriterion = GeomAbs_C1;
-  myTolerance = Precision::Confusion();
+  myTolerance = math::precision::Precision::Confusion();
 }
 
 void ShapeUpgrade_SplitSurfaceContinuity::SetCriterion(const GeomAbs_Shape Criterion)
@@ -53,13 +53,13 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
   {
     double UF, UL, VF, VL;
     mySurface->Bounds(UF, UL, VF, VL);
-    if (!Precision::IsInfinite(UF))
+    if (!math::precision::Precision::IsInfinite(UF))
       myUSplitValues->SetValue(1, UF);
-    if (!Precision::IsInfinite(UL))
+    if (!math::precision::Precision::IsInfinite(UL))
       myUSplitValues->SetValue(myUSplitValues->Length(), UL);
-    if (!Precision::IsInfinite(VF))
+    if (!math::precision::Precision::IsInfinite(VF))
       myVSplitValues->SetValue(1, VF);
-    if (!Precision::IsInfinite(VL))
+    if (!math::precision::Precision::IsInfinite(VL))
       myVSplitValues->SetValue(myVSplitValues->Length(), VL);
   }
 
@@ -67,7 +67,7 @@ void ShapeUpgrade_SplitSurfaceContinuity::Compute(const bool Segment)
   double           ULast     = myUSplitValues->Value(myUSplitValues->Length());
   double           VFirst    = myVSplitValues->Value(1);
   double           VLast     = myVSplitValues->Value(myVSplitValues->Length());
-  constexpr double precision = Precision::Confusion();
+  constexpr double precision = math::precision::Precision::Confusion();
 
   if (mySurface->Continuity() < myCriterion)
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE2);

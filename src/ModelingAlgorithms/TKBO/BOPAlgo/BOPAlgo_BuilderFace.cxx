@@ -80,9 +80,9 @@ void BOPAlgo_BuilderFace::CheckData()
   }
 }
 
-void BOPAlgo_BuilderFace::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_BuilderFace::Perform(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 100);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 100);
 
   GetReport()->Clear();
 
@@ -113,7 +113,7 @@ void BOPAlgo_BuilderFace::Perform(const Message_ProgressRange& theRange)
   PerformInternalShapes(aPS.Next(9));
 }
 
-void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theRange)
+void BOPAlgo_BuilderFace::PerformShapesToAvoid(const System::log::Message_ProgressRange& theRange)
 {
   bool bFound;
   int  i, aNbV, aNbE;
@@ -123,7 +123,7 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
 
   myShapesToAvoid.Clear();
 
-  Message_ProgressScope aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 1);
 
   for (;;)
   {
@@ -196,7 +196,7 @@ void BOPAlgo_BuilderFace::PerformShapesToAvoid(const Message_ProgressRange& theR
   }
 }
 
-void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
+void BOPAlgo_BuilderFace::PerformLoops(const System::log::Message_ProgressRange& theRange)
 {
   bool                                     bFlag;
   int                                      i, aNbEA;
@@ -209,7 +209,7 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
   BOPAlgo_WireEdgeSet           aWES(myAllocator);
   BOPAlgo_WireSplitter          aWSp(myAllocator);
 
-  Message_ProgressScope aMainScope(theRange, "Making wires", 10);
+  System::log::Message_ProgressScope aMainScope(theRange, "Making wires", 10);
 
   myLoops.Clear();
   aWES.SetFace(myFace);
@@ -338,7 +338,7 @@ void BOPAlgo_BuilderFace::PerformLoops(const Message_ProgressRange& theRange)
   }
 }
 
-void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
+void BOPAlgo_BuilderFace::PerformAreas(const System::log::Message_ProgressRange& theRange)
 {
   myAreas.Clear();
   BRep_Builder aBB;
@@ -349,7 +349,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
 
   double aTol = BRep_Tool::Tolerance(myFace);
 
-  Message_ProgressScope aMainScope(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aMainScope(theRange, nullptr, 10);
 
   if (myLoops.IsEmpty())
   {
@@ -370,7 +370,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMHE;
 
-  Message_ProgressScope aPSClass(aMainScope.Next(5), "Making faces", myLoops.Size());
+  System::log::Message_ProgressScope aPSClass(aMainScope.Next(5), "Making faces", myLoops.Size());
   NCollection_List<TopoDS_Shape>::Iterator aItLL(myLoops);
   for (; aItLL.More(); aItLL.Next(), aPSClass.Next())
   {
@@ -430,7 +430,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
   BOPTools_Box2dTreeSelector aSelector;
   aSelector.SetBVHSet(&aBoxTree);
 
-  Message_ProgressScope aPSHoles(aMainScope.Next(4), "Adding holes", aNewFaces.Extent());
+  System::log::Message_ProgressScope aPSHoles(aMainScope.Next(4), "Adding holes", aNewFaces.Extent());
   NCollection_List<TopoDS_Shape>::Iterator aItLS(aNewFaces);
   for (; aItLS.More(); aItLS.Next(), aPSHoles.Next())
   {
@@ -510,7 +510,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
     }
   }
 
-  Message_ProgressScope aPSU(aMainScope.Next(), nullptr, aNewFaces.Size());
+  System::log::Message_ProgressScope aPSU(aMainScope.Next(), nullptr, aNewFaces.Size());
   aItLS.Initialize(aNewFaces);
   for (; aItLS.More(); aItLS.Next(), aPSU.Next())
   {
@@ -540,7 +540,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const Message_ProgressRange& theRange)
   }
 }
 
-void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& theRange)
+void BOPAlgo_BuilderFace::PerformInternalShapes(const System::log::Message_ProgressRange& theRange)
 {
   if (myAvoidInternalShapes)
 
@@ -554,7 +554,7 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdgesMap;
 
-  Message_ProgressScope aMainScope(theRange, "Adding internal shapes", 3);
+  System::log::Message_ProgressScope aMainScope(theRange, "Adding internal shapes", 3);
 
   NCollection_List<TopoDS_Shape>::Iterator itLE(myLoopsInternal);
   for (; itLE.More(); itLE.Next())
@@ -583,7 +583,7 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const Message_ProgressRange& the
 
   NCollection_Map<int> aMEDone;
 
-  Message_ProgressScope                    aPSClass(aMainScope.Next(), nullptr, myAreas.Size());
+  System::log::Message_ProgressScope                    aPSClass(aMainScope.Next(), nullptr, myAreas.Size());
   NCollection_List<TopoDS_Shape>::Iterator itLF(myAreas);
   for (; itLF.More(); itLF.Next(), aPSClass.Next())
   {

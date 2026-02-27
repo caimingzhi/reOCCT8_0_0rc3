@@ -41,7 +41,7 @@ static double GetDeflection(const Adaptor3d_Curve&           aCurve,
       m = std::max(m, std::abs(aZmax - aZmin));
 
     m = std::min(m, aDrawer->MaximalParameterValue());
-    m = std::max(m, Precision::Confusion());
+    m = std::max(m, math::precision::Precision::Confusion());
 
     TheDeflection = m * aDrawer->DeviationCoefficient();
   }
@@ -58,8 +58,8 @@ static bool FindLimits(const Adaptor3d_Curve& aCurve,
 {
   First         = aCurve.FirstParameter();
   Last          = aCurve.LastParameter();
-  bool firstInf = Precision::IsNegativeInfinite(First);
-  bool lastInf  = Precision::IsPositiveInfinite(Last);
+  bool firstInf = math::precision::Precision::IsNegativeInfinite(First);
+  bool lastInf  = math::precision::Precision::IsPositiveInfinite(Last);
 
   if (firstInf || lastInf)
   {
@@ -209,7 +209,7 @@ static bool MatchCurve(const double           X,
     case GeomAbs_Circle:
     {
       const double Radius = aCurve.Circle().Radius();
-      if (!Precision::IsInfinite(Radius))
+      if (!math::precision::Precision::IsInfinite(Radius))
       {
         const double DU = std::sqrt(8.0 * TheDeflection / Radius);
         const double Er = std::abs(U2 - U1) / DU;
@@ -314,9 +314,9 @@ void StdPrs_DeflectionCurve::Add(const occ::handle<Prs3d_Presentation>& aPresent
   double V1 = U1;
   double V2 = U2;
 
-  if (Precision::IsNegativeInfinite(V1))
+  if (math::precision::Precision::IsNegativeInfinite(V1))
     V1 = -aDrawer->MaximalParameterValue();
-  if (Precision::IsPositiveInfinite(V2))
+  if (math::precision::Precision::IsPositiveInfinite(V2))
     V2 = aDrawer->MaximalParameterValue();
 
   NCollection_Sequence<gp_Pnt> Points;
@@ -438,9 +438,9 @@ bool StdPrs_DeflectionCurve::Match(const double                     X,
   double V1 = U1;
   double V2 = U2;
 
-  if (Precision::IsNegativeInfinite(V1))
+  if (math::precision::Precision::IsNegativeInfinite(V1))
     V1 = -aDrawer->MaximalParameterValue();
-  if (Precision::IsPositiveInfinite(V2))
+  if (math::precision::Precision::IsPositiveInfinite(V2))
     V2 = aDrawer->MaximalParameterValue();
 
   return MatchCurve(X,

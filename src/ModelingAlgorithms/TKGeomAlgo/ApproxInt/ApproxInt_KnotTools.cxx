@@ -38,13 +38,13 @@ static double EvalCurv(const double dim, const double* V1, const double* V2)
     q += V1[i] * V1[i];
   }
 
-  if (q < 1 / Precision::Infinite())
+  if (q < 1 / math::precision::Precision::Infinite())
   {
 
-    return Precision::Infinite();
+    return math::precision::Precision::Infinite();
   }
 
-  q = std::min(q, Precision::Infinite());
+  q = std::min(q, math::precision::Precision::Infinite());
   q *= q * q;
 
   double curv = std::sqrt(mp / q);
@@ -154,7 +154,7 @@ void ApproxInt_KnotTools::ComputeKnotInds(const NCollection_LocalArray<double>& 
 #endif
 
   theInds.Append(aCurv.Lower());
-  if (aMaxCurv <= Precision::Confusion())
+  if (aMaxCurv <= math::precision::Precision::Confusion())
   {
 
     theInds.Append(aCurv.Upper());
@@ -417,7 +417,7 @@ bool ApproxInt_KnotTools::InsKnotBefI(const int                             theI
   {
     mid = 0;
 
-    if (theCurv(j) > Precision::Confusion() && theCurv(anInd) > Precision::Confusion())
+    if (theCurv(j) > math::precision::Precision::Confusion() && theCurv(anInd) > math::precision::Precision::Confusion())
     {
       if (theCurv(j) / theCurv(anInd) > aLimitCurvatureChange
           || theCurv(j) / theCurv(anInd) < 1.0 / aLimitCurvatureChange)
@@ -695,7 +695,7 @@ Approx_ParametrizationType ApproxInt_KnotTools::DefineParType(
   double                     aMaxCurv = 0.;
   BuildCurvature(aCoords, aDim, aPars, aCurv, aMaxCurv);
 
-  if (aMaxCurv < Precision::PConfusion() || Precision::IsPositiveInfinite(aMaxCurv))
+  if (aMaxCurv < math::precision::Precision::PConfusion() || math::precision::Precision::IsPositiveInfinite(aMaxCurv))
   {
 
     return aParType;

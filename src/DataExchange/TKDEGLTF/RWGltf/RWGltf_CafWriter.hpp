@@ -74,7 +74,10 @@ public:
 
 #include <memory>
 
+namespace System { namespace log {
 class Message_ProgressRange;
+}} // namespace System::log
+
 class RWMesh_ShapeIterator;
 class RWMesh_FaceIterator;
 class RWMesh_EdgeIterator;
@@ -163,26 +166,26 @@ public:
     const NCollection_Sequence<TDF_Label>&          theRootLabels,
     const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
     const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-    const Message_ProgressRange& theProgress);
+    const System::log::Message_ProgressRange& theProgress);
 
   Standard_EXPORT virtual bool Perform(
     const occ::handle<TDocStd_Document>&                                                theDocument,
     const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-    const Message_ProgressRange& theProgress);
+    const System::log::Message_ProgressRange& theProgress);
 
 protected:
   Standard_EXPORT virtual bool writeBinData(
     const occ::handle<TDocStd_Document>&            theDocument,
     const NCollection_Sequence<TDF_Label>&          theRootLabels,
     const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
-    const Message_ProgressRange&                    theProgress);
+    const System::log::Message_ProgressRange&                    theProgress);
 
   Standard_EXPORT virtual bool writeJson(
     const occ::handle<TDocStd_Document>&            theDocument,
     const NCollection_Sequence<TDF_Label>&          theRootLabels,
     const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
     const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-    const Message_ProgressRange& theProgress);
+    const System::log::Message_ProgressRange& theProgress);
 
 protected:
   Standard_EXPORT virtual TopAbs_ShapeEnum getShapeType(const TopoDS_Shape& theShape) const;
@@ -296,7 +299,7 @@ protected:
 
   Standard_EXPORT virtual void dispatchShapes(
     const XCAFPrs_DocumentNode&                                       theDocNode,
-    const Message_ProgressScope&                                      thePSentryBin,
+    const System::log::Message_ProgressScope&                                      thePSentryBin,
     NCollection_DataMap<XCAFPrs_Style, occ::handle<RWGltf_GltfFace>>& theMergedFaces,
     RWMesh_ShapeIterator&                                             theShapeIter);
 
@@ -306,7 +309,7 @@ protected:
                                         int&                  theAccessorNb,
                                         const std::shared_ptr<RWGltf_CafWriter::Mesh>& theMesh,
                                         const RWGltf_GltfArrayType                     theArrType,
-                                        const Message_ProgressScope& thePSentryBin);
+                                        const System::log::Message_ProgressScope& thePSentryBin);
 
   Standard_EXPORT virtual void writeShapes(
     RWMesh_ShapeIterator&          theShapeIter,

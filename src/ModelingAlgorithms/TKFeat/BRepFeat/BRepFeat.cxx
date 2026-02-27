@@ -301,7 +301,7 @@ void BRepFeat::ParametricMinMax(const TopoDS_Shape&            S,
 
 static bool IsIn(BRepTopAdaptor_FClass2d& FC, const Geom2dAdaptor_Curve& AC)
 {
-  constexpr double              Def = 100 * Precision::Confusion();
+  constexpr double              Def = 100 * math::precision::Precision::Confusion();
   GCPnts_QuasiUniformDeflection QU(AC, Def);
 
   for (int i = 1; i <= QU.NbPoints(); i++)
@@ -431,7 +431,7 @@ bool BRepFeat::IsInside(const TopoDS_Face& F1, const TopoDS_Face& F2)
     vperiod = S->VPeriod();
   }
   TopoDS_Shape            aLocalShape = F2.Oriented(TopAbs_FORWARD);
-  BRepTopAdaptor_FClass2d FC(TopoDS::Face(aLocalShape), Precision::Confusion());
+  BRepTopAdaptor_FClass2d FC(TopoDS::Face(aLocalShape), math::precision::Precision::Confusion());
 
   for (; exp.More(); exp.Next())
   {
@@ -554,7 +554,7 @@ void BRepFeat::FaceUntil(const TopoDS_Shape& Sbase, TopoDS_Face& FUntil)
     return;
   }
 
-  FUntil = BRepLib_MakeFace(str, Precision::Confusion());
+  FUntil = BRepLib_MakeFace(str, math::precision::Precision::Confusion());
 }
 
 TopoDS_Solid BRepFeat::Tool(const TopoDS_Shape&      SRef,

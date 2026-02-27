@@ -60,27 +60,27 @@ void BRepPrim_FaceBuilder::Init(const BRep_Builder&              B,
   if (VMax > VSMax)
     throw Standard_ConstructionError("BRepPrim_FaceBuilder");
 
-  B.MakeVertex(myVertex[0], S->Value(UMin, VMin), Precision::Confusion());
-  B.MakeVertex(myVertex[1], S->Value(UMax, VMin), Precision::Confusion());
-  B.MakeVertex(myVertex[2], S->Value(UMax, VMax), Precision::Confusion());
-  B.MakeVertex(myVertex[3], S->Value(UMin, VMax), Precision::Confusion());
+  B.MakeVertex(myVertex[0], S->Value(UMin, VMin), math::precision::Precision::Confusion());
+  B.MakeVertex(myVertex[1], S->Value(UMax, VMin), math::precision::Precision::Confusion());
+  B.MakeVertex(myVertex[2], S->Value(UMax, VMax), math::precision::Precision::Confusion());
+  B.MakeVertex(myVertex[3], S->Value(UMin, VMax), math::precision::Precision::Confusion());
 
   B.MakeEdge(myEdges[0]);
   B.MakeEdge(myEdges[1]);
   B.MakeEdge(myEdges[2]);
   B.MakeEdge(myEdges[3]);
 
-  B.MakeFace(myFace, S, Precision::Confusion());
+  B.MakeFace(myFace, S, math::precision::Precision::Confusion());
 
   occ::handle<Geom2d_Line> L;
   L = new Geom2d_Line(gp_Pnt2d(UMin, VMin), gp_Dir2d(gp_Dir2d::D::X));
-  B.UpdateEdge(myEdges[0], L, myFace, Precision::Confusion());
+  B.UpdateEdge(myEdges[0], L, myFace, math::precision::Precision::Confusion());
   L = new Geom2d_Line(gp_Pnt2d(UMax, VMin), gp_Dir2d(gp_Dir2d::D::Y));
-  B.UpdateEdge(myEdges[1], L, myFace, Precision::Confusion());
+  B.UpdateEdge(myEdges[1], L, myFace, math::precision::Precision::Confusion());
   L = new Geom2d_Line(gp_Pnt2d(UMax, VMax), gp_Dir2d(gp_Dir2d::D::NX));
-  B.UpdateEdge(myEdges[2], L, myFace, Precision::Confusion());
+  B.UpdateEdge(myEdges[2], L, myFace, math::precision::Precision::Confusion());
   L = new Geom2d_Line(gp_Pnt2d(UMin, VMax), gp_Dir2d(gp_Dir2d::D::NY));
-  B.UpdateEdge(myEdges[3], L, myFace, Precision::Confusion());
+  B.UpdateEdge(myEdges[3], L, myFace, math::precision::Precision::Confusion());
 
   B.UpdateVertex(myVertex[0], 0, myEdges[0], 0);
   B.UpdateVertex(myVertex[1], UMax - UMin, myEdges[0], 0);

@@ -32,10 +32,10 @@ public:
     const bool                            SelfInter      = false,
     const GeomAbs_JoinType                Join           = GeomAbs_Arc,
     const bool                            RemoveIntEdges = false,
-    const Message_ProgressRange&          theRange       = Message_ProgressRange());
+    const System::log::Message_ProgressRange&          theRange       = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Modified(const TopoDS_Shape& S) override;
 };

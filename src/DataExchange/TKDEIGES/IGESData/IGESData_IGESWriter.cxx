@@ -96,7 +96,7 @@ void IGESData_IGESWriter::SendStartLine(const char* startline)
 
 void IGESData_IGESWriter::SendModel(const occ::handle<IGESData_Protocol>& protocol)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   IGESData_WriterLib              lib(protocol);
 
   int nb = themodel->NbEntities();

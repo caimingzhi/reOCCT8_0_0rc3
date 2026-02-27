@@ -276,7 +276,7 @@ IFSelect_ReturnStatus STEPCAFControl_Writer::Write(const char* theFileName)
 
   TCollection_AsciiString aDirPath;
   {
-    OSD_Path aMainFile(theFileName);
+    System::os::OSD_Path aMainFile(theFileName);
     aMainFile.SetName("");
     aMainFile.SetExtension("");
     aMainFile.SystemName(aDirPath);
@@ -294,12 +294,12 @@ IFSelect_ReturnStatus STEPCAFControl_Writer::Write(const char* theFileName)
     }
 
     TCollection_AsciiString aFileName =
-      OSD_Path::AbsolutePath(aDirPath, anExtFile->GetName()->String());
+      System::os::OSD_Path::AbsolutePath(aDirPath, anExtFile->GetName()->String());
     if (aFileName.Length() <= 0)
     {
       aFileName = anExtFile->GetName()->String();
     }
-    Message::SendTrace() << "Writing external file: " << aFileName << "\n";
+    System::log::Message::SendTrace() << "Writing external file: " << aFileName << "\n";
 
     const IFSelect_ReturnStatus anExtStatus = anExtFile->GetWS()->SendAll(aFileName.ToCString());
     anExtFile->SetWriteStatus(anExtStatus);
@@ -344,7 +344,7 @@ IFSelect_ReturnStatus STEPCAFControl_Writer::WriteStream(std::ostream& theStream
 bool STEPCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& theDoc,
                                      const STEPControl_StepModelType      theMode,
                                      const char*                          theMulti,
-                                     const Message_ProgressRange&         theProgress)
+                                     const System::log::Message_ProgressRange&         theProgress)
 {
   const occ::handle<StepData_StepModel> aModel =
     occ::down_cast<StepData_StepModel>(myWriter.WS()->Model());
@@ -356,7 +356,7 @@ bool STEPCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& theDoc
                                      const DESTEP_Parameters&             theParams,
                                      const STEPControl_StepModelType      theMode,
                                      const char*                          theMulti,
-                                     const Message_ProgressRange&         theProgress)
+                                     const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XCAFDoc_ShapeTool> aShTool = XCAFDoc_DocumentTool::ShapeTool(theDoc->Main());
   if (aShTool.IsNull())
@@ -375,7 +375,7 @@ bool STEPCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& theDoc
 bool STEPCAFControl_Writer::Transfer(const TDF_Label&                theLabel,
                                      const STEPControl_StepModelType theMode,
                                      const char*                     theIsMulti,
-                                     const Message_ProgressRange&    theProgress)
+                                     const System::log::Message_ProgressRange&    theProgress)
 {
   const occ::handle<StepData_StepModel> aModel =
     occ::down_cast<StepData_StepModel>(myWriter.WS()->Model());
@@ -387,7 +387,7 @@ bool STEPCAFControl_Writer::Transfer(const TDF_Label&                theLabel,
                                      const DESTEP_Parameters&        theParams,
                                      const STEPControl_StepModelType theMode,
                                      const char*                     theIsMulti,
-                                     const Message_ProgressRange&    theProgress)
+                                     const System::log::Message_ProgressRange&    theProgress)
 {
   if (theLabel.IsNull())
   {
@@ -406,7 +406,7 @@ bool STEPCAFControl_Writer::Transfer(const TDF_Label&                theLabel,
 bool STEPCAFControl_Writer::Transfer(const NCollection_Sequence<TDF_Label>& theLabels,
                                      const STEPControl_StepModelType        theMode,
                                      const char*                            theIsMulti,
-                                     const Message_ProgressRange&           theProgress)
+                                     const System::log::Message_ProgressRange&           theProgress)
 {
   const occ::handle<StepData_StepModel> aModel =
     occ::down_cast<StepData_StepModel>(myWriter.WS()->Model());
@@ -418,7 +418,7 @@ bool STEPCAFControl_Writer::Transfer(const NCollection_Sequence<TDF_Label>& theL
                                      const DESTEP_Parameters&               theParams,
                                      const STEPControl_StepModelType        theMode,
                                      const char*                            theIsMulti,
-                                     const Message_ProgressRange&           theProgress)
+                                     const System::log::Message_ProgressRange&           theProgress)
 {
   myRootLabels.Clear();
   for (NCollection_Sequence<TDF_Label>::Iterator aLabelIter(theLabels); aLabelIter.More();
@@ -438,7 +438,7 @@ bool STEPCAFControl_Writer::Transfer(const NCollection_Sequence<TDF_Label>& theL
 
 bool STEPCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& theDoc,
                                     const char*                          theFileName,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (!Transfer(theDoc, STEPControl_AsIs, nullptr, theProgress))
     return false;
@@ -448,7 +448,7 @@ bool STEPCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& theDoc,
 bool STEPCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& theDoc,
                                     const char*                          theFileName,
                                     const DESTEP_Parameters&             theParams,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (!Transfer(theDoc, theParams, STEPControl_AsIs, nullptr, theProgress))
     return false;
@@ -457,7 +457,7 @@ bool STEPCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& theDoc,
 
 bool STEPCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& theDoc,
                                     const TCollection_AsciiString&       theFileName,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (!Transfer(theDoc, STEPControl_AsIs, nullptr, theProgress))
     return false;
@@ -523,7 +523,7 @@ bool STEPCAFControl_Writer::transfer(STEPControl_Writer&                    theW
                                      const STEPControl_StepModelType        theMode,
                                      const char*                            theIsMulti,
                                      const bool                             theIsExternFile,
-                                     const Message_ProgressRange&           theProgress)
+                                     const System::log::Message_ProgressRange&           theProgress)
 {
   if (theLabels.IsEmpty())
     return false;
@@ -537,13 +537,13 @@ bool STEPCAFControl_Writer::transfer(STEPControl_Writer&                    theW
   prepareUnit(theLabels.First(), aModel, aLocalFactors);
 
   NCollection_Sequence<TDF_Label> aSubLabels;
-  Message_ProgressScope           aPS(theProgress, "Labels", theLabels.Length());
+  System::log::Message_ProgressScope           aPS(theProgress, "Labels", theLabels.Length());
 
   for (NCollection_Sequence<TDF_Label>::Iterator aLabelIter(theLabels);
        aLabelIter.More() && aPS.More();
        aLabelIter.Next())
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     TDF_Label             aCurL  = aLabelIter.Value();
     if (myLabels.IsBound(aCurL))
       continue;
@@ -627,7 +627,7 @@ bool STEPCAFControl_Writer::transfer(STEPControl_Writer&                    theW
     else
     {
 
-      Message_ProgressScope aPS1(aRange, nullptr, 2);
+      System::log::Message_ProgressScope aPS1(aRange, nullptr, 2);
       TopoDS_Shape          aSass =
         transferExternFiles(aCurL, theMode, aSubLabels, aLocalFactors, theIsMulti, aPS1.Next());
       if (aPS1.UserBreak())
@@ -738,7 +738,7 @@ TopoDS_Shape STEPCAFControl_Writer::transferExternFiles(const TDF_Label&        
                                                         NCollection_Sequence<TDF_Label>& theLabels,
                                                         const StepData_Factors& theLocalFactors,
                                                         const char*             thePrefix,
-                                                        const Message_ProgressRange& theProgress)
+                                                        const System::log::Message_ProgressRange& theProgress)
 {
 
   if (myLabels.IsBound(theLabel))
@@ -810,7 +810,7 @@ TopoDS_Shape STEPCAFControl_Writer::transferExternFiles(const TDF_Label&        
     XCAFDoc_ShapeTool::GetComponents(theLabel, aCompLabels, false);
 
   theLabels.Append(aLabel);
-  Message_ProgressScope aPS(theProgress, nullptr, aCompLabels.Length());
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, aCompLabels.Length());
 
   for (NCollection_Sequence<TDF_Label>::Iterator aLabelIter(aCompLabels);
        aLabelIter.More() && aPS.More();
@@ -862,7 +862,7 @@ bool STEPCAFControl_Writer::writeExternRefs(const occ::handle<XSControl_WorkSess
                                  STANDARD_TYPE(StepShape_ShapeDefinitionRepresentation),
                                  aSDR))
     {
-      Message::SendTrace() << "Warning: Cannot find SDR for "
+      System::log::Message::SendTrace() << "Warning: Cannot find SDR for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
     }
@@ -873,7 +873,7 @@ bool STEPCAFControl_Writer::writeExternRefs(const occ::handle<XSControl_WorkSess
     occ::handle<StepRepr_PropertyDefinition> aPropDef = aRD.PropertyDefinition();
     if (aPropDef.IsNull())
     {
-      Message::SendTrace() << "Warning: STEPCAFControl_Writer::writeExternRefs "
+      System::log::Message::SendTrace() << "Warning: STEPCAFControl_Writer::writeExternRefs "
                               "StepRepr_PropertyDefinition is null for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
@@ -882,7 +882,7 @@ bool STEPCAFControl_Writer::writeExternRefs(const occ::handle<XSControl_WorkSess
     occ::handle<StepBasic_ProductDefinition> aPD      = aCharDef.ProductDefinition();
     if (aPD.IsNull())
     {
-      Message::SendTrace() << "Warning: STEPCAFControl_Writer::writeExternRefs "
+      System::log::Message::SendTrace() << "Warning: STEPCAFControl_Writer::writeExternRefs "
                               "StepBasic_ProductDefinition is null for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
@@ -1132,7 +1132,7 @@ static void MakeSTEPStyles(
       NCollection_Sequence<occ::handle<Standard_Transient>> aSeqRI;
       int aNbEntities = FindEntities(theStyles.FinderProcess(), theShape, aLocation, aSeqRI);
       if (aNbEntities <= 0)
-        Message::SendTrace() << "Warning: Cannot find RI for "
+        System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                              << theShape.TShape()->DynamicType()->Name() << "\n";
 
       if (theIsComponent && aNbEntities > 0)
@@ -1223,8 +1223,8 @@ bool STEPCAFControl_Writer::writeColors(const occ::handle<XSControl_WorkSession>
 
     if (XCAFDoc_ShapeTool::IsAssembly(aLabel))
     {
-      Message::SendTrace() << "Warning: Cannot write color  for Assembly" << "\n";
-      Message::SendTrace() << "Info: Check for colors assigned to components in assembly" << "\n";
+      System::log::Message::SendTrace() << "Warning: Cannot write color  for Assembly" << "\n";
+      System::log::Message::SendTrace() << "Info: Check for colors assigned to components in assembly" << "\n";
 
       NCollection_Sequence<TDF_Label> compLabels;
       if (!aSTool->GetComponents(aLabel, compLabels))
@@ -1329,7 +1329,7 @@ bool STEPCAFControl_Writer::writeColors(const occ::handle<XSControl_WorkSession>
     {
       if (myMapCompMDGPR.IsBound(aTopSh))
       {
-        Message::SendTrace() << "Error: Current Top-Level shape have MDGPR already " << "\n";
+        System::log::Message::SendTrace() << "Error: Current Top-Level shape have MDGPR already " << "\n";
       }
       Styles.CreateMDGPR(aContext, aMDGPR, aStepModel);
       if (!aMDGPR.IsNull())
@@ -1474,7 +1474,7 @@ bool STEPCAFControl_Writer::writeNames(const occ::handle<XSControl_WorkSession>&
     }
     else
     {
-      Message::SendTrace() << "Warning: Cannot find RI for "
+      System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
     }
@@ -1804,7 +1804,7 @@ bool STEPCAFControl_Writer::writeLayers(const occ::handle<XSControl_WorkSession>
       int             aNb = FindEntities(aFP, anOneShape, aLoc, aSeqRI);
       if (aNb <= 0)
       {
-        Message::SendTrace() << "Warning: Cannot find RI for "
+        System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                              << anOneShape.TShape()->DynamicType()->Name() << "\n";
       }
     }
@@ -1819,7 +1819,7 @@ bool STEPCAFControl_Writer::writeLayers(const occ::handle<XSControl_WorkSession>
     if (aLayerL.FindAttribute(XCAFDoc::InvisibleGUID(), aUAttr))
     {
       aDescr = new TCollection_HAsciiString("invisible");
-      Message::SendTrace() << "\tLayer \"" << aHName->String().ToCString() << "\" is invisible"
+      System::log::Message::SendTrace() << "\tLayer \"" << aHName->String().ToCString() << "\" is invisible"
                            << "\n";
       isLinv = true;
     }
@@ -2003,7 +2003,7 @@ static bool writeSHUO(const occ::handle<XCAFDoc_GraphNode>&                 theS
   {
 
     if (aNextUsageLabs.Length() > 1)
-      Message::SendTrace() << "Warning: store only one next_usage of current SHUO" << "\n";
+      System::log::Message::SendTrace() << "Warning: store only one next_usage of current SHUO" << "\n";
     XCAFDoc_ShapeTool::GetSHUO(aNextUsageLabs.Value(1), aNuSHUO);
     occ::handle<StepRepr_SpecifiedHigherUsageOccurrence> aNUEntSHUO =
       new StepRepr_SpecifiedHigherUsageOccurrence;
@@ -2020,7 +2020,7 @@ static bool writeSHUO(const occ::handle<XCAFDoc_GraphNode>&                 theS
     if (!getProDefinitionOfNAUO(theWS, aUUSh, nullPD, UUNAUO, true)
         || !getProDefinitionOfNAUO(theWS, aNUSh, aRelatedPD, NUNAUO, false))
     {
-      Message::SendTrace() << "Warning: cannot get related or relating PD" << "\n";
+      System::log::Message::SendTrace() << "Warning: cannot get related or relating PD" << "\n";
       return false;
     }
     aNUEntSHUO->Init(anEmptyString,
@@ -2116,7 +2116,7 @@ static bool createSHUOStyledItem(
   NCollection_Sequence<occ::handle<Standard_Transient>> aSeqRI;
   FindEntities(aFP, theShape, aLocation, aSeqRI);
   if (aSeqRI.Length() <= 0)
-    Message::SendTrace() << "Warning: Cannot find RI for "
+    System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                          << theShape.TShape()->DynamicType()->Name() << "\n";
   anItem = occ::down_cast<StepRepr_RepresentationItem>(aSeqRI(1));
 
@@ -2129,7 +2129,7 @@ static bool createSHUOStyledItem(
   if (!aTopSh.IsNull() && !theMapCompMDGPR.IsBound(aTopSh))
   {
 
-    Message::SendTrace() << "Warning: " << __FILE__ << ": Create new MDGPR for SHUO instance"
+    System::log::Message::SendTrace() << "Warning: " << __FILE__ << ": Create new MDGPR for SHUO instance"
                          << "\n";
     occ::handle<StepVisual_MechanicalDesignGeometricPresentationRepresentation> aMDGPR;
     aStyles.CreateMDGPR(aContext, aMDGPR, aStepModel);
@@ -2166,7 +2166,7 @@ static bool createSHUOStyledItem(
   else
   {
     theWS->Model()->AddWithRefs(aSTEPstyle);
-    Message::SendTrace() << "Warning: " << __FILE__
+    System::log::Message::SendTrace() << "Warning: " << __FILE__
                          << ": adds styled item of SHUO as root, cause cannot find MDGPR" << "\n";
   }
 
@@ -2240,7 +2240,7 @@ bool STEPCAFControl_Writer::writeSHUOs(const occ::handle<XSControl_WorkSession>&
         XCAFPrs_Style aSHUOstyle;
         if (!getSHUOstyle(aSHUOlab, aSHUOstyle))
         {
-          Message::SendTrace() << "Warning: " << __FILE__
+          System::log::Message::SendTrace() << "Warning: " << __FILE__
                                << ": do not store SHUO without any style to the STEP model" << "\n";
           continue;
         }
@@ -2253,11 +2253,11 @@ bool STEPCAFControl_Writer::writeSHUOs(const occ::handle<XSControl_WorkSession>&
         writeSHUO(aSHUO, theWS, anEntOfSHUO, aNAUOShape, aRelatingPD, isDeepest);
         if (anEntOfSHUO.IsNull() || aNAUOShape.IsNull())
         {
-          Message::SendTrace() << "Warning: " << __FILE__ << ": Cannot store SHUO" << "\n";
+          System::log::Message::SendTrace() << "Warning: " << __FILE__ << ": Cannot store SHUO" << "\n";
           continue;
         }
 
-        Message::SendTrace() << "Info: " << __FILE__ << ": Create NEW PDS for current SHUO "
+        System::log::Message::SendTrace() << "Info: " << __FILE__ << ": Create NEW PDS for current SHUO "
                              << "\n";
         occ::handle<StepRepr_ProductDefinitionShape> aPDS = new StepRepr_ProductDefinitionShape;
         occ::handle<TCollection_HAsciiString> aPDSname    = new TCollection_HAsciiString("SHUO");
@@ -2599,7 +2599,7 @@ occ::handle<StepRepr_ShapeAspect> STEPCAFControl_Writer::writeShapeAspect(
   FindEntities(aFP, theShape, aLoc, aSeqRI);
   if (aSeqRI.Length() <= 0)
   {
-    Message::SendTrace() << "Warning: Cannot find RI for "
+    System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                          << theShape.TShape()->DynamicType()->Name() << "\n";
     return nullptr;
   }
@@ -2785,7 +2785,7 @@ occ::handle<StepDimTol_Datum> STEPCAFControl_Writer::writeDatumAP242(
     FindEntities(aFP, aShape, aLoc, aSeqRI);
     if (aSeqRI.Length() <= 0)
     {
-      Message::SendTrace() << "Warning: Cannot find RI for "
+      System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
     }
@@ -3920,7 +3920,7 @@ bool STEPCAFControl_Writer::writeDGTs(const occ::handle<XSControl_WorkSession>& 
     FindEntities(aFP, aShape, aLoc, aSeqRI);
     if (aSeqRI.IsEmpty())
     {
-      Message::SendTrace() << "Warning: Cannot find RI for "
+      System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
     }
@@ -4024,7 +4024,7 @@ bool STEPCAFControl_Writer::writeDGTs(const occ::handle<XSControl_WorkSession>& 
     FindEntities(aFP, aShape, aLoc, seqRI);
     if (seqRI.IsEmpty())
     {
-      Message::SendTrace() << "Warning: Cannot find RI for "
+      System::log::Message::SendTrace() << "Warning: Cannot find RI for "
                            << aShape.TShape()->DynamicType()->Name() << "\n";
       continue;
     }

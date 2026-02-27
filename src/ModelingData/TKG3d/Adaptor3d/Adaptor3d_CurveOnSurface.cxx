@@ -145,7 +145,7 @@ static void CompareBounds(gp_Pnt2d& P1, gp_Pnt2d& P2)
 static void Hunt(const NCollection_Array1<double>& Arr, const double Coord, int& Iloc)
 {
 
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   int              i   = 1;
   while ((i <= Arr.Upper()) && (std::abs(Coord - Arr(i)) > Tol))
   {
@@ -196,7 +196,7 @@ static void FindBounds(const NCollection_Array1<double>& Arr,
 
 {
   int              N   = 0;
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   Hunt(Arr, Coord, N);
   DerNull = false;
 
@@ -253,7 +253,7 @@ static void Locate1Coord(const int                             Index,
                          gp_Pnt2d&                             RightTop)
 {
   double                     Comp1 = 0, DComp1 = 0, cur, f = 0.0, l = 0.0;
-  constexpr double           Tol     = Precision::PConfusion() / 10;
+  constexpr double           Tol     = math::precision::Precision::PConfusion() / 10;
   int                        i       = 1, Bnd1, Bnd2;
   bool                       DIsNull = false;
   NCollection_Array1<double> Arr(1, BSplC->NbKnots());
@@ -422,7 +422,7 @@ static void Locate1Coord(const int                               Index,
                          gp_Pnt2d&                               RightTop)
 {
   double           Comp1 = 0, DComp1 = 0;
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   int              i = 1, Up = 0, Up1, Up2, Down = 0, Down1, Down2;
   double           cur = 0.;
 
@@ -632,7 +632,7 @@ static void Locate2Coord(const int       Index,
                          gp_Pnt2d&       LeftBot,
                          gp_Pnt2d&       RightTop)
 {
-  constexpr double Tol   = Precision::PConfusion() / 10;
+  constexpr double Tol   = math::precision::Precision::PConfusion() / 10;
   double           Comp1 = 0, DComp1 = 0;
   if (Index == 1)
   {
@@ -740,7 +740,7 @@ static void Locate2Coord(const int                               Index,
                          gp_Pnt2d&                               RightTop)
 {
   double           Comp = 0, DComp = 0, Tmp1 = 0.0, Tmp2 = 0.0;
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   int              N = 0, NUp = 0, NLo = 0;
   if (Index == 1)
   {
@@ -983,7 +983,7 @@ int Adaptor3d_CurveOnSurface::NbIntervals(const GeomAbs_Shape S) const
 
   myCurve->Intervals(TabC, S);
 
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
 
   occ::handle<NCollection_HSequence<double>> aIntervals = new NCollection_HSequence<double>;
   for (int i = 1; i <= nc + 1; i++)
@@ -1107,7 +1107,7 @@ void Adaptor3d_CurveOnSurface::D1(const double U, gp_Pnt& P, gp_Vec& V) const
   double FP = myCurve->FirstParameter();
   double LP = myCurve->LastParameter();
 
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   if ((std::abs(U - FP) < Tol) && (!myFirstSurf.IsNull()))
   {
     myCurve->D1(U, Puv, Duv);
@@ -1141,7 +1141,7 @@ void Adaptor3d_CurveOnSurface::D2(const double U, gp_Pnt& P, gp_Vec& V1, gp_Vec&
   double FP = myCurve->FirstParameter();
   double LP = myCurve->LastParameter();
 
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   if ((std::abs(U - FP) < Tol) && (!myFirstSurf.IsNull()))
   {
     myCurve->D2(U, UV, DW, D2W);
@@ -1185,7 +1185,7 @@ void Adaptor3d_CurveOnSurface::D3(const double U,
                                   gp_Vec&      V3) const
 {
 
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   gp_Pnt2d         UV;
   gp_Vec2d         DW, D2W, D3W;
   gp_Vec           D1U, D1V, D2U, D2V, D2UV, D3U, D3V, D3UUV, D3UVV;
@@ -1440,12 +1440,12 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
     if (CTy == GeomAbs_Line)
     {
       gp_Dir2d D = myCurve->Line().Direction();
-      if (D.IsParallel(gp::DX2d(), Precision::Angular()))
+      if (D.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
       {
         if (STy == GeomAbs_Sphere)
         {
           gp_Pnt2d P = myCurve->Line().Location();
-          if (std::abs(std::abs(P.Y()) - M_PI / 2.) >= Precision::PConfusion())
+          if (std::abs(std::abs(P.Y()) - M_PI / 2.) >= math::precision::Precision::PConfusion())
           {
             myType         = GeomAbs_Circle;
             gp_Sphere Sph  = mySurface->Sphere();
@@ -1454,7 +1454,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
             gp_Dir DRev    = Axis.XDirection().Crossed(Axis.YDirection());
             gp_Ax1 AxeRev(Axis.Location(), DRev);
             myCirc.Rotate(AxeRev, P.X());
-            if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+            if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             {
               gp_Ax2 Ax = myCirc.Position();
               Ax.SetDirection(Ax.Direction().Reversed());
@@ -1472,7 +1472,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           gp_Dir DRev      = Axis.XDirection().Crossed(Axis.YDirection());
           gp_Ax1 AxeRev(Axis.Location(), DRev);
           myCirc.Rotate(AxeRev, P.X());
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
           {
             gp_Ax2 Ax = myCirc.Position();
             Ax.SetDirection(Ax.Direction().Reversed());
@@ -1489,7 +1489,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           gp_Dir DRev   = Axis.XDirection().Crossed(Axis.YDirection());
           gp_Ax1 AxeRev(Axis.Location(), DRev);
           myCirc.Rotate(AxeRev, P.X());
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
           {
             gp_Ax2 Ax = myCirc.Position();
             Ax.SetDirection(Ax.Direction().Reversed());
@@ -1506,7 +1506,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           gp_Dir DRev   = Axis.XDirection().Crossed(Axis.YDirection());
           gp_Ax1 AxeRev(Axis.Location(), DRev);
           myCirc.Rotate(AxeRev, P.X());
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
           {
             gp_Ax2 Ax = myCirc.Position();
             Ax.SetDirection(Ax.Direction().Reversed());
@@ -1514,7 +1514,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           }
         }
       }
-      else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
+      else if (D.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
       {
         if (STy == GeomAbs_Sphere)
         {
@@ -1533,7 +1533,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           AxeRev = gp_Ax1(Axis.Location(), DRev);
           myCirc.Rotate(AxeRev, P.X());
 
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
           {
             gp_Ax2 Ax = myCirc.Position();
             Ax.SetDirection(Ax.Direction().Reversed());
@@ -1549,7 +1549,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           gp_Vec Tr(myLin.Direction());
           Tr.Multiply(P.Y());
           myLin.Translate(Tr);
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             myLin.Reverse();
         }
         else if (STy == GeomAbs_Cone)
@@ -1561,7 +1561,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           gp_Vec Tr(myLin.Direction());
           Tr.Multiply(P.Y());
           myLin.Translate(Tr);
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             myLin.Reverse();
         }
         else if (STy == GeomAbs_Torus)
@@ -1573,7 +1573,7 @@ void Adaptor3d_CurveOnSurface::EvalKPart()
           myCirc        = ElSLib::TorusUIso(Axis, Tore.MajorRadius(), Tore.MinorRadius(), P.X());
           myCirc.Rotate(myCirc.Axis(), P.Y());
 
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
           {
             gp_Ax2 Ax = myCirc.Position();
             Ax.SetDirection(Ax.Direction().Reversed());
@@ -1590,7 +1590,7 @@ void Adaptor3d_CurveOnSurface::EvalFirstLastSurf()
   double           FirstPar, LastPar;
   gp_Pnt2d         UV, LeftBot, RightTop;
   gp_Vec2d         DUV;
-  constexpr double Tol = Precision::PConfusion() / 10;
+  constexpr double Tol = math::precision::Precision::PConfusion() / 10;
   bool             Ok  = true;
 
   FirstPar = myCurve->FirstParameter();

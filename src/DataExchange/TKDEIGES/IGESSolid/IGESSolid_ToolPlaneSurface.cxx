@@ -28,26 +28,26 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Point), tempLocation))
   {
-    Message_Msg Msg174("XSTEP_174");
+    System::log::Message_Msg Msg174("XSTEP_174");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg174.Arg(Msg216.Value());
         PR.SendFail(Msg174);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg174.Arg(Msg217.Value());
         PR.SendFail(Msg174);
         break;
       }
       case IGESData_TypeError:
       {
-        Message_Msg Msg218("IGES_218");
+        System::log::Message_Msg Msg218("IGES_218");
         Msg174.Arg(Msg218.Value());
         PR.SendFail(Msg174);
         break;
@@ -60,26 +60,26 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Direction), tempNormal))
   {
-    Message_Msg Msg175("XSTEP_175");
+    System::log::Message_Msg Msg175("XSTEP_175");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg175.Arg(Msg216.Value());
         PR.SendFail(Msg175);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg175.Arg(Msg217.Value());
         PR.SendFail(Msg175);
         break;
       }
       case IGESData_TypeError:
       {
-        Message_Msg Msg218("IGES_218");
+        System::log::Message_Msg Msg218("IGES_218");
         Msg175.Arg(Msg218.Value());
         PR.SendFail(Msg175);
         break;
@@ -95,26 +95,26 @@ void IGESSolid_ToolPlaneSurface::ReadOwnParams(const occ::handle<IGESSolid_Plane
 
     if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Direction), tempRefdir))
     {
-      Message_Msg Msg176("XSTEP_176");
+      System::log::Message_Msg Msg176("XSTEP_176");
       switch (aStatus)
       {
         case IGESData_ReferenceError:
         {
-          Message_Msg Msg216("IGES_216");
+          System::log::Message_Msg Msg216("IGES_216");
           Msg176.Arg(Msg216.Value());
           PR.SendFail(Msg176);
           break;
         }
         case IGESData_EntityError:
         {
-          Message_Msg Msg217("IGES_217");
+          System::log::Message_Msg Msg217("IGES_217");
           Msg176.Arg(Msg217.Value());
           PR.SendFail(Msg176);
           break;
         }
         case IGESData_TypeError:
         {
-          Message_Msg Msg218("IGES_218");
+          System::log::Message_Msg Msg218("IGES_218");
           Msg176.Arg(Msg218.Value());
           PR.SendFail(Msg176);
           break;
@@ -189,7 +189,7 @@ void IGESSolid_ToolPlaneSurface::OwnCheck(const occ::handle<IGESSolid_PlaneSurfa
     fn = 1;
   if (fn != ent->FormNumber())
   {
-    Message_Msg Msg177("XSTEP_177");
+    System::log::Message_Msg Msg177("XSTEP_177");
     ach->SendFail(Msg177);
   }
 }

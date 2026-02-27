@@ -8,7 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataXtd_PresentationDriver, BinMDF_ADriver)
 
 BinMDataXtd_PresentationDriver::BinMDataXtd_PresentationDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataXtd_Presentation)->Name())
 {
 }

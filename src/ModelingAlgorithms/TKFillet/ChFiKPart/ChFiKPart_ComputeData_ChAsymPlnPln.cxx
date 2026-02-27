@@ -49,7 +49,7 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
     D2.Reverse();
   }
 
-  IntAna_QuadQuadGeo LInt(Pl1, Pl2, Precision::Angular(), Precision::Confusion());
+  IntAna_QuadQuadGeo LInt(Pl1, Pl2, math::precision::Precision::Angular(), math::precision::Precision::Confusion());
 
   gp_Pnt P;
   double Fint;

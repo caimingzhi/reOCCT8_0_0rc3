@@ -82,8 +82,8 @@
 #ifdef OCCT_DEBUG
 
 extern double t_same, t_inter, t_sameinter;
-extern void   ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void   ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void   ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void   ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 #include <Geom2dAPI_ProjectPointOnCurve.hpp>
 #include <math_FunctionSample.hpp>
@@ -162,8 +162,8 @@ static bool Update(const occ::handle<Adaptor3d_Surface>& fb,
   if (Intersection.IsDone())
   {
     int    nbp = Intersection.NbPoints(), i, isol = 0, isolbis = 0;
-    double dist    = Precision::Infinite();
-    double distbis = Precision::Infinite();
+    double dist    = math::precision::Precision::Infinite();
+    double distbis = math::precision::Precision::Infinite();
     for (i = 1; i <= nbp; i++)
     {
       w = Intersection.Point(i).W();
@@ -456,7 +456,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
   TopOpeBRepDS_DataStructure& DStr = myDS->ChangeDS();
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
 #endif
 
   const TopoDS_Vertex& Vtx = myVDataMap.FindKey(Index);
@@ -827,7 +827,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
             distmin2 = extCC.SquareDistance(i);
             imin     = i;
           }
-        if (distmin2 <= Precision::SquareConfusion())
+        if (distmin2 <= math::precision::Precision::SquareConfusion())
         {
           Extrema_POnCurv ponc1, ponc2;
           extCC.Points(imin, ponc1, ponc2);
@@ -941,7 +941,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
         if (IsEqual(anOtherPCurve.LastParameter(), anOtherPCurve.FirstParameter()))
 
           continue;
-        anIntersector.Perform(aCorkPCurve, anOtherPCurve, tol2d, Precision::PConfusion());
+        anIntersector.Perform(aCorkPCurve, anOtherPCurve, tol2d, math::precision::Precision::PConfusion());
         if (anIntersector.NbSegments() > 0 || anIntersector.NbPoints() > 0)
           throw StdFail_NotDone("OneCorner : fillets have too big radiuses");
       }
@@ -963,7 +963,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
       Geom2dAdaptor_Curve anOtherPCurve(anOtherIntrf->PCurve(),
                                         anOtherCur->FirstParameter(),
                                         anOtherCur->LastParameter());
-      anIntersector.Perform(aCorkPCurve, anOtherPCurve, tol2d, Precision::PConfusion());
+      anIntersector.Perform(aCorkPCurve, anOtherPCurve, tol2d, math::precision::Precision::PConfusion());
       if (anIntersector.NbSegments() > 0 || anIntersector.NbPoints() > 0)
         throw StdFail_NotDone("OneCorner : fillets have too big radiuses");
     }
@@ -1507,7 +1507,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
 {
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
 #endif
 
   TopOpeBRepDS_DataStructure&                            DStr = myDS->ChangeDS();
@@ -1722,23 +1722,23 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
   HGs->D0(P2d2.X(), P2d2.Y(), aP2);
   double Fi1Length = aP1.Distance(aP2);
 
-  checkShrink = (Fi1Length <= Precision::Confusion());
+  checkShrink = (Fi1Length <= math::precision::Precision::Confusion());
 
   gp_Pnt2d P2d3 = Fi2.PCurveOnSurf()->Value(Fi2.Parameter(isfirst));
   gp_Pnt2d P2d4 = Fi2.PCurveOnSurf()->Value(Fi2.Parameter(!isfirst));
   HGs->D0(P2d3.X(), P2d3.Y(), aP1);
   HGs->D0(P2d4.X(), P2d4.Y(), aP2);
   double Fi2Length = aP1.Distance(aP2);
-  checkShrink      = checkShrink || (Fi2Length <= Precision::Confusion());
+  checkShrink      = checkShrink || (Fi2Length <= math::precision::Precision::Confusion());
 
   if (checkShrink)
   {
-    if (std::abs(P2d2.Y() - P2d4.Y()) <= Precision::PConfusion())
+    if (std::abs(P2d2.Y() - P2d4.Y()) <= math::precision::Precision::PConfusion())
     {
       isUShrink     = false;
       checkShrParam = P2d2.Y();
     }
-    else if (std::abs(P2d2.X() - P2d4.X()) <= Precision::PConfusion())
+    else if (std::abs(P2d2.X() - P2d4.X()) <= math::precision::Precision::PConfusion())
     {
       isUShrink     = true;
       checkShrParam = P2d2.X();
@@ -2772,7 +2772,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
           Geom2dAPI_ProjectPointOnCurve Projector(P2d, C2dint1);
           par          = Projector.LowerDistanceParameter();
           double shift = par - ParVtx;
-          if (std::abs(shift) > Precision::Confusion())
+          if (std::abs(shift) > math::precision::Precision::Confusion())
           {
             par1 += shift;
             par2 += shift;
@@ -2837,7 +2837,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
     }
 
     if (checkShrink
-        && IsShrink(Ps, p1, p2, checkShrParam, isUShrink, Precision::Parametric(tolreached)))
+        && IsShrink(Ps, p1, p2, checkShrParam, isUShrink, math::precision::Precision::Parametric(tolreached)))
     {
       shrink[nb - 1] = 1;
 
@@ -2991,7 +2991,7 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
     double              tol   = Pds.Tolerance();
 
     Geom2dAdaptor_Curve PC1(Ps), PC2(PCend);
-    Geom2dInt_GInter    Intersector(PC1, PC2, Precision::PConfusion(), Precision::PConfusion());
+    Geom2dInt_GInter    Intersector(PC1, PC2, math::precision::Precision::PConfusion(), math::precision::Precision::PConfusion());
     if (!Intersector.IsDone())
       return;
     for (nb = 1; nb <= Intersector.NbPoints(); nb++)
@@ -3808,7 +3808,7 @@ void ChFi3d_Builder::IntersectMoreCorner(const int Index)
   TopOpeBRepDS_DataStructure& DStr = myDS->ChangeDS();
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
 #endif
 
   NCollection_List<occ::handle<ChFiDS_Stripe>>::Iterator StrIt;
@@ -4140,7 +4140,7 @@ void ChFi3d_Builder::IntersectMoreCorner(const int Index)
             dist2min = extCC.SquareDistance(i);
             imin     = i;
           }
-        if (dist2min <= Precision::SquareConfusion())
+        if (dist2min <= math::precision::Precision::SquareConfusion())
         {
           Extrema_POnCurv ponc1, ponc2;
           extCC.Points(imin, ponc1, ponc2);

@@ -15,13 +15,13 @@ IMPLEMENT_STANDARD_RTTIEXT(Approx_CurvlinFunc, Standard_Transient)
 
 #ifdef OCCT_DEBUG_CHRONO
   #include <OSD_Timer.hpp>
-static OSD_Chronometer chr_uparam;
+static System::os::OSD_Chronometer chr_uparam;
 Standard_EXPORT int    uparam_count;
 Standard_EXPORT double t_uparam;
 
-Standard_IMPORT void InitChron(OSD_Chronometer& ch);
+Standard_IMPORT void InitChron(System::os::OSD_Chronometer& ch);
 
-Standard_IMPORT void ResultChron(OSD_Chronometer& ch, double& time);
+Standard_IMPORT void ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
 static double cubic(const double X, const double* Xi, const double* Yi)

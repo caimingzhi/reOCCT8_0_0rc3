@@ -37,7 +37,7 @@ TopoDS_Face BRepPrim_Sphere::MakeEmptyLateralFace() const
 {
   occ::handle<Geom_SphericalSurface> S = new Geom_SphericalSurface(Axes(), myRadius);
   TopoDS_Face                        F;
-  myBuilder.Builder().MakeFace(F, S, Precision::Confusion());
+  myBuilder.Builder().MakeFace(F, S, math::precision::Precision::Confusion());
   return F;
 }
 

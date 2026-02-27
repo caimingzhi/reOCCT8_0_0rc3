@@ -52,7 +52,7 @@ bool BRepExtrema_ShapeProximity::LoadShape1(const TopoDS_Shape& theShape1)
 {
   myIsInitS1 = initSubShapes(theShape1, myShapeList1, myElementSet1);
 
-  if (myTolerance == Precision::Infinite())
+  if (myTolerance == math::precision::Precision::Infinite())
   {
     myProxValTool.MarkDirty();
   }
@@ -68,7 +68,7 @@ bool BRepExtrema_ShapeProximity::LoadShape2(const TopoDS_Shape& theShape2)
 {
   myIsInitS2 = initSubShapes(theShape2, myShapeList2, myElementSet2);
 
-  if (myTolerance == Precision::Infinite())
+  if (myTolerance == math::precision::Precision::Infinite())
   {
     myProxValTool.MarkDirty();
   }
@@ -82,7 +82,7 @@ bool BRepExtrema_ShapeProximity::LoadShape2(const TopoDS_Shape& theShape2)
 
 void BRepExtrema_ShapeProximity::Perform()
 {
-  if (myTolerance == Precision::Infinite())
+  if (myTolerance == math::precision::Precision::Infinite())
   {
     if (!myIsInitS1 || !myIsInitS2 || myProxValTool.IsDone())
     {

@@ -56,7 +56,7 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedLin& Qualified1,
   gp_Dir2d dir1(L1.Direction());
   gp_Dir2d normL1(-dir1.Y(), dir1.X());
 
-  if (Point2.IsEqual(Point3, Precision::Confusion()))
+  if (Point2.IsEqual(Point3, math::precision::Precision::Confusion()))
   {
     WellDone = false;
     return;

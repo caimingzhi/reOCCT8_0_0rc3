@@ -315,7 +315,7 @@ double TopOpeBRep_FaceEdgeIntersector::ToleranceMax(const TopoDS_Shape&    S,
 {
   TopExp_Explorer e(S, T);
   if (!e.More())
-    return Precision::Intersection();
+    return math::precision::Precision::Intersection();
   else
   {
     double tol = RealFirst();

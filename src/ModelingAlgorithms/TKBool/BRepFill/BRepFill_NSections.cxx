@@ -71,7 +71,7 @@ static occ::handle<Geom_BSplineCurve> EdgeToBSpline(const TopoDS_Edge& theEdge)
     occ::handle<Geom_TrimmedCurve> aTrimCurve = new Geom_TrimmedCurve(aCurve, aFirst, aLast);
 
     const occ::handle<Geom_Curve>& aCurveTemp = aTrimCurve;
-    GeomConvert_ApproxCurve        anAppr(aCurveTemp, Precision::Confusion(), GeomAbs_C1, 16, 14);
+    GeomConvert_ApproxCurve        anAppr(aCurveTemp, math::precision::Precision::Confusion(), GeomAbs_C1, 16, 14);
     if (anAppr.HasResult())
       aBSCurve = anAppr.Curve();
 
@@ -162,7 +162,7 @@ static occ::handle<Geom_BSplineSurface> totalsurf(const NCollection_Array2<TopoD
         if (Bof)
           epsV = BRep_Tool::Tolerance(ComV);
         else
-          epsV = Precision::Confusion();
+          epsV = math::precision::Precision::Confusion();
         Bof = CompBS.Add(curvBS, epsV, true, false, 1);
         if (!Bof)
           Bof = CompBS.Add(curvBS, 200 * epsV, true, false, 1);
@@ -204,7 +204,7 @@ static occ::handle<Geom_BSplineSurface> totalsurf(const NCollection_Array2<TopoD
     HPar->SetValue(i, params(i));
   }
   section.SetParam(HPar);
-  section.Perform(Precision::PConfusion());
+  section.Perform(math::precision::Precision::PConfusion());
   occ::handle<GeomFill_Line> line = new GeomFill_Line(NbSects);
   int                        nbIt = 0, degmin = 2, degmax = 6;
   bool                       knownP = true;
@@ -467,7 +467,7 @@ void BRepFill_NSections::Init(const NCollection_Sequence<double>& P, const bool 
 
   myLaws = new (NCollection_HArray1<occ::handle<GeomFill_SectionLaw>>)(1, NbEdge);
 
-  constexpr double tol = Precision::Confusion();
+  constexpr double tol = math::precision::Precision::Confusion();
   mySurface            = totalsurf(myEdges->Array2(),
                         myShapes.Length(),
                         NbEdge,
@@ -565,7 +565,7 @@ TopoDS_Vertex BRepFill_NSections::Vertex(const int Index, const double Param) co
       occ::down_cast<Geom_BSplineCurve>(myLaws->Value(Index)->BSplineSurface()->VIso(Param));
     double first = Curve->FirstParameter();
     Curve->D0(first, P);
-    B.UpdateVertex(V, P, Precision::Confusion());
+    B.UpdateVertex(V, P, math::precision::Precision::Confusion());
   }
   else if (Index == myEdges->ColLength() + 1)
   {
@@ -573,7 +573,7 @@ TopoDS_Vertex BRepFill_NSections::Vertex(const int Index, const double Param) co
       occ::down_cast<Geom_BSplineCurve>(myLaws->Value(Index - 1)->BSplineSurface()->VIso(Param));
     double last = Curve->LastParameter();
     Curve->D0(last, P);
-    B.UpdateVertex(V, P, Precision::Confusion());
+    B.UpdateVertex(V, P, math::precision::Precision::Confusion());
   }
 
   return V;
@@ -581,7 +581,7 @@ TopoDS_Vertex BRepFill_NSections::Vertex(const int Index, const double Param) co
 
 double BRepFill_NSections::VertexTol(const int Index, const double Param) const
 {
-  double Tol = Precision::Confusion();
+  double Tol = math::precision::Precision::Confusion();
   int    I1, I2;
   if ((Index == 0) || (Index == myEdges->ColLength()))
   {

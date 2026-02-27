@@ -41,7 +41,7 @@ public:
 
 public:
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 public:
   void Clear() override
@@ -57,9 +57,9 @@ public:
 protected:
   Standard_EXPORT void CheckData() override;
 
-  Standard_EXPORT void PrepareFeatures(const Message_ProgressRange& theRange);
+  Standard_EXPORT void PrepareFeatures(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void RemoveFeatures(const Message_ProgressRange& theRange);
+  Standard_EXPORT void RemoveFeatures(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void RemoveFeature(
     const TopoDS_Shape&                                                  theFeature,
@@ -71,11 +71,11 @@ protected:
                                      TopTools_ShapeMapHasher>&           theAdjFaces,
     const occ::handle<BRepTools_History>&                                theAdjFacesHistory,
     const bool                                                           theSolidsHistoryNeeded,
-    const Message_ProgressRange&                                         theRange);
+    const System::log::Message_ProgressRange&                                         theRange);
 
-  Standard_EXPORT void UpdateHistory(const Message_ProgressRange& theRange);
+  Standard_EXPORT void UpdateHistory(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void SimplifyResult(const Message_ProgressRange& theRange);
+  Standard_EXPORT void SimplifyResult(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void PostTreat();
 

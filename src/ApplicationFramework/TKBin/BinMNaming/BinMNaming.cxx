@@ -6,7 +6,7 @@
 #include <Message_Messenger.hpp>
 
 void BinMNaming::AddDrivers(const occ::handle<BinMDF_ADriverTable>& aDriverTable,
-                            const occ::handle<Message_Messenger>&   aMessageDriver)
+                            const occ::handle<System::log::Message_Messenger>&   aMessageDriver)
 {
   aDriverTable->AddDriver(new BinMNaming_NamedShapeDriver(aMessageDriver));
   aDriverTable->AddDriver(new BinMNaming_NamingDriver(aMessageDriver));

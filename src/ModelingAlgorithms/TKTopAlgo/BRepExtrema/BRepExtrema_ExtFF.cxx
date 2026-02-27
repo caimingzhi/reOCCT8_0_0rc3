@@ -20,9 +20,9 @@ void BRepExtrema_ExtFF::Initialize(const TopoDS_Face& F2)
     return;
 
   myHS       = new BRepAdaptor_Surface(Surf);
-  double Tol = std::min(BRep_Tool::Tolerance(F2), Precision::Confusion());
+  double Tol = std::min(BRep_Tool::Tolerance(F2), math::precision::Precision::Confusion());
   Tol        = std::min(Surf.UResolution(Tol), Surf.VResolution(Tol));
-  Tol        = std::max(Tol, Precision::PConfusion());
+  Tol        = std::max(Tol, math::precision::Precision::PConfusion());
   double U1, U2, V1, V2;
   BRepTools::UVBounds(F2, U1, U2, V1, V2);
   myExtSS.Initialize(*myHS, U1, U2, V1, V2, Tol);
@@ -39,9 +39,9 @@ void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
     return;
 
   occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface(Surf1);
-  double Tol1                          = std::min(BRep_Tool::Tolerance(F1), Precision::Confusion());
+  double Tol1                          = std::min(BRep_Tool::Tolerance(F1), math::precision::Precision::Confusion());
   Tol1                                 = std::min(Surf1.UResolution(Tol1), Surf1.VResolution(Tol1));
-  Tol1                                 = std::max(Tol1, Precision::PConfusion());
+  Tol1                                 = std::max(Tol1, math::precision::Precision::PConfusion());
   double U1, U2, V1, V2;
   BRepTools::UVBounds(F1, U1, U2, V1, V2);
   myExtSS.Perform(*HS1, U1, U2, V1, V2, Tol1);

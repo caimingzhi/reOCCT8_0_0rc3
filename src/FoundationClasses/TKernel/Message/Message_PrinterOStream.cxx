@@ -8,13 +8,13 @@
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_PrinterOStream, Message_Printer)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_PrinterOStream, System::log::Message_Printer)
 
 #if !defined(_MSC_VER)
   #include <strings.h>
 #endif
 
-Message_PrinterOStream::Message_PrinterOStream(const Message_Gravity theTraceLevel)
+System::log::Message_PrinterOStream::Message_PrinterOStream(const Message_Gravity theTraceLevel)
     : myStream(&std::cout),
       myIsFile(false),
       myToColorize(true)
@@ -22,7 +22,7 @@ Message_PrinterOStream::Message_PrinterOStream(const Message_Gravity theTraceLev
   myTraceLevel = theTraceLevel;
 }
 
-Message_PrinterOStream::Message_PrinterOStream(const char*           theFileName,
+System::log::Message_PrinterOStream::Message_PrinterOStream(const char*           theFileName,
                                                const bool            theToAppend,
                                                const Message_Gravity theTraceLevel)
     : myStream(&std::cout),
@@ -66,7 +66,7 @@ Message_PrinterOStream::Message_PrinterOStream(const char*           theFileName
   }
 }
 
-void Message_PrinterOStream::Close()
+void System::log::Message_PrinterOStream::Close()
 {
   if (!myStream)
     return;
@@ -83,7 +83,7 @@ void Message_PrinterOStream::Close()
   }
 }
 
-void Message_PrinterOStream::send(const TCollection_AsciiString& theString,
+void System::log::Message_PrinterOStream::send(const TCollection_AsciiString& theString,
                                   const Message_Gravity          theGravity) const
 {
   if (theGravity < myTraceLevel || myStream == nullptr)
@@ -133,7 +133,7 @@ void Message_PrinterOStream::send(const TCollection_AsciiString& theString,
   (*aStream) << std::endl;
 }
 
-void Message_PrinterOStream::SetConsoleTextColor(Standard_OStream*    theOStream,
+void System::log::Message_PrinterOStream::SetConsoleTextColor(Standard_OStream*    theOStream,
                                                  Message_ConsoleColor theTextColor,
                                                  bool                 theIsIntenseText)
 {

@@ -221,7 +221,7 @@ bool ShapeAnalysis_FreeBoundsProperties::CheckNotches(const TopoDS_Wire& wire,
                                                       double&            distMax,
                                                       const double)
 {
-  double                            tol = std::max(myTolerance, Precision::Confusion());
+  double                            tol = std::max(myTolerance, math::precision::Precision::Confusion());
   occ::handle<ShapeExtend_WireData> wdt = new ShapeExtend_WireData(wire);
   BRep_Builder                      B;
   B.MakeWire(notch);

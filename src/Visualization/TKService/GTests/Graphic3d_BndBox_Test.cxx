@@ -173,7 +173,7 @@ TEST(Graphic3d_BndBox3dTest, TransformationRotation)
   NCollection_Vec3<double> aCornerMin = aBox.CornerMin();
   NCollection_Vec3<double> aCornerMax = aBox.CornerMax();
 
-  double aPrecision = Precision::Confusion();
+  double aPrecision = math::precision::Precision::Confusion();
 
   EXPECT_TRUE(std::abs(aCornerMin.x() - -1) < aPrecision) << "Xmin should be rotated";
   EXPECT_TRUE(std::abs(aCornerMin.y() - 1) < aPrecision) << "Ymin should be rotated";

@@ -54,10 +54,10 @@ void BOPAlgo_WireSplitter::CheckData()
   }
 }
 
-void BOPAlgo_WireSplitter::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_WireSplitter::Perform(const System::log::Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
-  Message_ProgressScope aPS(theRange, "Building wires", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Building wires", 1);
 
   CheckData();
   if (HasErrors())
@@ -100,11 +100,11 @@ public:
 
   const occ::handle<IntTools_Context>& Context() const { return myContext; }
 
-  void SetProgressRange(const Message_ProgressRange& theRange) { myRange = theRange; }
+  void SetProgressRange(const System::log::Message_ProgressRange& theRange) { myRange = theRange; }
 
   void Perform()
   {
-    Message_ProgressScope aPS(myRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myRange, nullptr, 1);
     if (!aPS.More())
     {
       return;
@@ -116,12 +116,12 @@ protected:
   TopoDS_Face                   myFace;
   BOPTools_ConnexityBlock       myCB;
   occ::handle<IntTools_Context> myContext;
-  Message_ProgressRange         myRange;
+  System::log::Message_ProgressRange         myRange;
 };
 
 typedef NCollection_Vector<BOPAlgo_WS_ConnexityBlock> BOPAlgo_VectorOfConnexityBlock;
 
-void BOPAlgo_WireSplitter::MakeWires(const Message_ProgressRange& theRange)
+void BOPAlgo_WireSplitter::MakeWires(const System::log::Message_ProgressRange& theRange)
 {
   bool                                                bIsRegular;
   int                                                 aNbVCB, k;
@@ -130,7 +130,7 @@ void BOPAlgo_WireSplitter::MakeWires(const Message_ProgressRange& theRange)
   NCollection_List<TopoDS_Shape>::Iterator            aIt;
   BOPAlgo_VectorOfConnexityBlock                      aVCB;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
 
   const TopoDS_Face& aF = myWES->Face();
 
@@ -158,7 +158,7 @@ void BOPAlgo_WireSplitter::MakeWires(const Message_ProgressRange& theRange)
     }
   }
   aNbVCB = aVCB.Length();
-  Message_ProgressScope aPSParallel(aPSOuter.Next(), nullptr, aNbVCB);
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(), nullptr, aNbVCB);
   for (int iW = 0; iW < aNbVCB; ++iW)
   {
     aVCB.ChangeValue(iW).SetProgressRange(aPSParallel.Next());

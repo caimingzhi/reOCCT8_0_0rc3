@@ -28,7 +28,7 @@ public:
     const occ::handle<BRepTools_Modification>&                                M,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& context,
     BRepTools_Modifier&                                                       MD,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange(),
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange(),
     const occ::handle<ShapeBuild_ReShape>& aReShape    = nullptr);
 
   Standard_EXPORT static TopoDS_Shape DirectFaces(const TopoDS_Shape& S);

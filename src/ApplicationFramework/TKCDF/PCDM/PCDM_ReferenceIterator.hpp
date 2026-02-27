@@ -8,7 +8,10 @@
 #include <TCollection_ExtendedString.hpp>
 #include <NCollection_DataMap.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class CDM_Document;
 class CDM_MetaData;
 class CDM_Application;
@@ -17,7 +20,7 @@ class PCDM_ReferenceIterator : public Standard_Transient
 {
 
 public:
-  Standard_EXPORT PCDM_ReferenceIterator(const occ::handle<Message_Messenger>& theMessageDriver);
+  Standard_EXPORT PCDM_ReferenceIterator(const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT void LoadReferences(const occ::handle<CDM_Document>&    aDocument,
                                       const occ::handle<CDM_MetaData>&    aMetaData,
@@ -44,5 +47,5 @@ private:
 private:
   NCollection_Sequence<PCDM_Reference> myReferences;
   int                                  myIterator;
-  occ::handle<Message_Messenger>       myMessageDriver;
+  occ::handle<System::log::Message_Messenger>       myMessageDriver;
 };

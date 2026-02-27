@@ -125,7 +125,7 @@ void ViewerTest_CmdParser::Parse(const int theArgsNb, const char* const* const t
       }
       else
       {
-        Message::SendFail() << "Error: unknown argument '" << anOptionName << "'";
+        System::log::Message::SendFail() << "Error: unknown argument '" << anOptionName << "'";
         return;
       }
     }
@@ -202,7 +202,7 @@ bool ViewerTest_CmdParser::HasOption(const ViewerTest_CommandOptionKey theOption
   const bool             aResult           = (anOptionArguments.size() >= theMandatoryArgsNb);
   if (isFatal && !aResult)
   {
-    Message::SendFail() << "Error: wrong syntax at option '" << myOptionStorage[theOptionKey].Name
+    System::log::Message::SendFail() << "Error: wrong syntax at option '" << myOptionStorage[theOptionKey].Name
                         << "'\n"
                         << "At least " << theMandatoryArgsNb << "expected, but only "
                         << anOptionArguments.size() << "provided.";

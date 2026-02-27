@@ -31,14 +31,14 @@ BinLDrivers_DocumentStorageDriver::BinLDrivers_DocumentStorageDriver() = default
 
 void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  theDocument,
                                               const TCollection_ExtendedString& theFileName,
-                                              const Message_ProgressRange&      theRange)
+                                              const System::log::Message_ProgressRange&      theRange)
 {
   SetIsError(false);
   SetStoreStatus(PCDM_SS_OK);
 
   myFileName = theFileName;
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aFileStream =
     aFileSystem->OpenOStream(theFileName, std::ios::out | std::ios::binary);
 
@@ -55,7 +55,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  
 
 void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& theDoc,
                                               Standard_OStream&                theOStream,
-                                              const Message_ProgressRange&     theRange)
+                                              const System::log::Message_ProgressRange&     theRange)
 {
   myMsgDriver = theDoc->Application()->MessageDriver();
   myMapUnsupported.Clear();
@@ -112,7 +112,7 @@ void BinLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
     if (aQuickPart)
       myPAtt.SetOStream(theOStream);
 
-    Message_ProgressScope aPS(theRange, "Writing document", 3);
+    System::log::Message_ProgressScope aPS(theRange, "Writing document", 3);
 
     WriteSubTree(aData->Root(), theOStream, aQuickPart, aPS.Next());
     if (!aPS.More())
@@ -202,7 +202,7 @@ void BinLDrivers_DocumentStorageDriver::UnsupportedAttrMsg(
 void BinLDrivers_DocumentStorageDriver::WriteSubTree(const TDF_Label&             theLabel,
                                                      Standard_OStream&            theOS,
                                                      const bool&                  theQuickPart,
-                                                     const Message_ProgressRange& theRange)
+                                                     const System::log::Message_ProgressRange& theRange)
 {
 
   if (!myEmptyLabels.IsEmpty() && myEmptyLabels.First() == theLabel)
@@ -210,7 +210,7 @@ void BinLDrivers_DocumentStorageDriver::WriteSubTree(const TDF_Label&           
     myEmptyLabels.RemoveFirst();
     return;
   }
-  Message_ProgressScope aPS(theRange, "Writing sub tree", 2, true);
+  System::log::Message_ProgressScope aPS(theRange, "Writing sub tree", 2, true);
 
   int aTag = theLabel.Tag();
 #ifdef DO_INVERSE
@@ -296,7 +296,7 @@ void BinLDrivers_DocumentStorageDriver::WriteSubTree(const TDF_Label&           
 }
 
 occ::handle<BinMDF_ADriverTable> BinLDrivers_DocumentStorageDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return BinLDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -361,7 +361,7 @@ void BinLDrivers_DocumentStorageDriver::WriteInfoSection(const occ::handle<CDM_D
                                                          Standard_OStream& theOStream)
 {
 
-  theOStream.write(FSD_BinaryFile::MagicNumber(), strlen(FSD_BinaryFile::MagicNumber()));
+  theOStream.write(app::file::stream::FSD_BinaryFile::MagicNumber(), strlen(app::file::stream::FSD_BinaryFile::MagicNumber()));
 
   FSD_FileHeader aHeader;
 
@@ -398,9 +398,9 @@ void BinLDrivers_DocumentStorageDriver::WriteInfoSection(const occ::handle<CDM_D
 
   aHeader.binfo = (int)theOStream.tellp();
 
-  aHeader.einfo = aHeader.binfo + FSD_BinaryFile::WriteHeader(theOStream, aHeader, true);
+  aHeader.einfo = aHeader.binfo + app::file::stream::FSD_BinaryFile::WriteHeader(theOStream, aHeader, true);
 
-  occ::handle<Storage_Data> theData = new Storage_Data;
+  occ::handle<app::storage::Storage_Data> theData = new app::storage::Storage_Data;
   PCDM_ReadWriter::WriteFileFormat(theData, theDoc);
   PCDM_ReadWriter::Writer()->WriteReferenceCounter(theData, theDoc);
   PCDM_ReadWriter::Writer()->WriteReferences(theData, theDoc, myFileName);
@@ -427,10 +427,10 @@ void BinLDrivers_DocumentStorageDriver::WriteInfoSection(const occ::handle<CDM_D
 
   occ::handle<TDocStd_Document> aDoc    = occ::down_cast<TDocStd_Document>(theDoc);
   const int                     aDocVer = aDoc->StorageFormatVersion();
-  aHeader.einfo += FSD_BinaryFile::WriteInfo(theOStream,
+  aHeader.einfo += app::file::stream::FSD_BinaryFile::WriteInfo(theOStream,
                                              aObjNb,
                                              aDocVer,
-                                             Storage_Schema::ICreationDate(),
+                                             app::storage::Storage_Schema::ICreationDate(),
                                              "",
                                              aShemaVer,
                                              theData->ApplicationName(),
@@ -449,16 +449,16 @@ void BinLDrivers_DocumentStorageDriver::WriteInfoSection(const occ::handle<CDM_D
 
   aHeader.bcomment = aHeader.einfo;
   aHeader.ecomment =
-    aHeader.bcomment + FSD_BinaryFile::WriteComment(theOStream, theData->Comments(), true);
+    aHeader.bcomment + app::file::stream::FSD_BinaryFile::WriteComment(theOStream, theData->Comments(), true);
 
   aHeader.edata = aHeader.ecomment;
 
-  FSD_BinaryFile::WriteHeader(theOStream, aHeader);
+  app::file::stream::FSD_BinaryFile::WriteHeader(theOStream, aHeader);
 
-  FSD_BinaryFile::WriteInfo(theOStream,
+  app::file::stream::FSD_BinaryFile::WriteInfo(theOStream,
                             aObjNb,
                             aDocVer,
-                            Storage_Schema::ICreationDate(),
+                            app::storage::Storage_Schema::ICreationDate(),
                             "",
                             aShemaVer,
                             theData->ApplicationName(),
@@ -466,7 +466,7 @@ void BinLDrivers_DocumentStorageDriver::WriteInfoSection(const occ::handle<CDM_D
                             theData->DataType(),
                             theData->UserInfo());
 
-  FSD_BinaryFile::WriteComment(theOStream, theData->Comments());
+  app::file::stream::FSD_BinaryFile::WriteComment(theOStream, theData->Comments());
 }
 
 void BinLDrivers_DocumentStorageDriver::AddSection(const TCollection_AsciiString& theName,
@@ -484,7 +484,7 @@ void BinLDrivers_DocumentStorageDriver::WriteSection(const TCollection_AsciiStri
 void BinLDrivers_DocumentStorageDriver::WriteShapeSection(BinLDrivers_DocumentSection& theSection,
                                                           Standard_OStream&            theOS,
                                                           const TDocStd_FormatVersion  theDocVer,
-                                                          const Message_ProgressRange&)
+                                                          const System::log::Message_ProgressRange&)
 {
   const size_t aShapesSectionOffset = (size_t)theOS.tellp();
   theSection.Write(theOS, aShapesSectionOffset, theDocVer);

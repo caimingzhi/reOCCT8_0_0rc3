@@ -75,7 +75,7 @@ public:
   {
   #if defined(__EMSCRIPTEN_PTHREADS__)
     std::string* aCmdPtr = new std::string(theCommand);
-    OSD_Thread   aThread(&evalAsyncEntry);
+    System::os::OSD_Thread   aThread(&evalAsyncEntry);
     aThread.Run(aCmdPtr);
   #else
 
@@ -88,7 +88,7 @@ public:
 private:
   static void* evalAsyncEntry(void* theData)
   {
-    OSD::SetSignal(false);
+    System::os::OSD::SetSignal(false);
     std::string*      aCmdPtr = (std::string*)theData;
     const std::string aCmd    = *aCmdPtr;
     delete aCmdPtr;
@@ -116,9 +116,9 @@ EM_JS(void, occJSPrintMessage, (const char* theStr, int theGravity), {
   }
 });
 
-class DRAWEXE_WasmModulePrinter : public Message_Printer
+class DRAWEXE_WasmModulePrinter : public System::log::Message_Printer
 {
-  DEFINE_STANDARD_RTTI_INLINE(DRAWEXE_WasmModulePrinter, Message_Printer)
+  DEFINE_STANDARD_RTTI_INLINE(DRAWEXE_WasmModulePrinter, System::log::Message_Printer)
 public:
   DRAWEXE_WasmModulePrinter(const Message_Gravity theTraceLevel = Message_Info)
   {
@@ -240,13 +240,13 @@ void Draw_InitAppli(Draw_Interpretor& theDI)
 #if defined(__EMSCRIPTEN__)
 
   Message_Gravity                       aGravity = Message_Info;
-  occ::handle<Message_PrinterSystemLog> aJSConsolePrinter =
-    new Message_PrinterSystemLog("DRAWEXE", aGravity);
-  Message::DefaultMessenger()->AddPrinter(aJSConsolePrinter);
+  occ::handle<System::log::Message_PrinterSystemLog> aJSConsolePrinter =
+    new System::log::Message_PrinterSystemLog("DRAWEXE", aGravity);
+  System::log::Message::DefaultMessenger()->AddPrinter(aJSConsolePrinter);
 
-  Message::DefaultMessenger()->RemovePrinters(STANDARD_TYPE(Message_PrinterOStream));
+  System::log::Message::DefaultMessenger()->RemovePrinters(STANDARD_TYPE(System::log::Message_PrinterOStream));
   occ::handle<DRAWEXE_WasmModulePrinter> aJSModulePrinter = new DRAWEXE_WasmModulePrinter(aGravity);
-  Message::DefaultMessenger()->AddPrinter(aJSModulePrinter);
+  System::log::Message::DefaultMessenger()->AddPrinter(aJSModulePrinter);
 #endif
 
   Draw::Commands(theDI);
@@ -258,7 +258,7 @@ void Draw_InitAppli(Draw_Interpretor& theDI)
             "pload [[Key1] [Key2] ...]: Loads Draw plugins",
             __FILE__,
             Pload,
-            "Draw Plugin");
+            "Draw System::plugin::Plugin");
 #endif
 }
 

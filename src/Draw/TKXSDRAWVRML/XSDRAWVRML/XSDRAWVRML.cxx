@@ -75,7 +75,7 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
       aFileUnitFactor = UnitsAPI::AnyToSI(1.0, aUnitStr.ToCString());
       if (aFileUnitFactor <= 0.0)
       {
-        Message::SendFail() << "Error: wrong length unit '" << aUnitStr << "'";
+        System::log::Message::SendFail() << "Error: wrong length unit '" << aUnitStr << "'";
         return 1;
       }
     }
@@ -83,7 +83,7 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     {
       if (!parseCoordinateSystem(theArgv[++anArgIt], aFileCoordSys))
       {
-        Message::SendFail() << "Error: unknown coordinate system '" << theArgv[anArgIt] << "'";
+        System::log::Message::SendFail() << "Error: unknown coordinate system '" << theArgv[anArgIt] << "'";
         return 1;
       }
     }
@@ -91,7 +91,7 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     {
       if (!parseCoordinateSystem(theArgv[++anArgIt], aSystemCoordSys))
       {
-        Message::SendFail() << "Error: unknown coordinate system '" << theArgv[anArgIt] << "'";
+        System::log::Message::SendFail() << "Error: unknown coordinate system '" << theArgv[anArgIt] << "'";
         return 1;
       }
     }
@@ -118,14 +118,14 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << theArgv[anArgIt] << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << theArgv[anArgIt] << "'";
       return 1;
     }
   }
 
   if (aFilePath.IsEmpty() || aDocName == nullptr)
   {
-    Message::SendFail() << "Syntax error: wrong number of arguments";
+    System::log::Message::SendFail() << "Syntax error: wrong number of arguments";
     return 1;
   }
 
@@ -133,7 +133,7 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   {
     if (toUseExistingDoc)
     {
-      Message::SendFail() << "Error: document with name " << aDocName << " does not exist";
+      System::log::Message::SendFail() << "Error: document with name " << aDocName << " does not exist";
       return 1;
     }
     occ::handle<TDocStd_Application> anApp = DDocStd::GetApplication();
@@ -141,7 +141,7 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   }
   else if (!toUseExistingDoc)
   {
-    Message::SendFail() << "Error: document with name " << aDocName << " already exists\n";
+    System::log::Message::SendFail() << "Error: document with name " << aDocName << " already exists\n";
     return 1;
   }
 
@@ -165,10 +165,10 @@ static int ReadVrml(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   {
     if (aVrmlReader.ExtraStatus() != RWMesh_CafReaderStatusEx_Partial)
     {
-      Message::SendFail() << "Error: file reading failed '" << aFilePath << "'";
+      System::log::Message::SendFail() << "Error: file reading failed '" << aFilePath << "'";
       return 1;
     }
-    Message::SendWarning() << "Warning: file has been read paratially (due to unexpected EOF, "
+    System::log::Message::SendWarning() << "Warning: file has been read paratially (due to unexpected EOF, "
                               "syntax error, memory limit) "
                            << aFilePath;
   }
@@ -233,7 +233,7 @@ static int loadvrml(Draw_Interpretor& di, int argc, const char** argv)
     if (aFic.open(argv[2], std::ios::in))
     {
 
-      OSD_Path                aPath(argv[2]);
+      System::os::OSD_Path                aPath(argv[2]);
       TCollection_AsciiString aVrmlDir(".");
       TCollection_AsciiString aDisk = aPath.Disk();
       TCollection_AsciiString aTrek = aPath.Trek();

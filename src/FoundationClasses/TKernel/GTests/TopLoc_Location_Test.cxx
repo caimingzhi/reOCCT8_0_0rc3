@@ -65,7 +65,7 @@ TEST(TopLoc_Location_Test, OCC25545_ConcurrentTransformationAccess)
 
   TopLocTransformFunctor aFunc(aShapeVec);
 
-  OSD_Parallel::For(0, n, aFunc);
+  System::os::OSD_Parallel::For(0, n, aFunc);
 
   EXPECT_EQ(aFunc.myIsRaceDetected, 0)
     << "Data race detected in concurrent TopLoc_Location::Transformation() access";

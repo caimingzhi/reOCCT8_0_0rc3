@@ -1253,7 +1253,7 @@ static int DDataStd_KeepUTF(Draw_Interpretor& di, int nb, const char** arg)
     if (!anIS)
     {
 
-      Message::SendFail() << "Error: can't open file " << aFileName;
+      System::log::Message::SendFail() << "Error: can't open file " << aFileName;
       return 1;
     }
     char  buf[1024];
@@ -1312,7 +1312,7 @@ static int DDataStd_GetUTFtoFile(Draw_Interpretor& di, int nb, const char** arg)
 
     if (!aES.Length())
     {
-      Message::SendFail() << "Data is not found in the Document";
+      System::log::Message::SendFail() << "Data is not found in the Document";
       return 1;
     }
 
@@ -1393,7 +1393,7 @@ static int DDataStd_SetByteArray(Draw_Interpretor& di, int nb, const char** arg)
         int ival = Draw::Atoi(arg[j]);
         if (ival < 0 || 255 < ival)
         {
-          Message::SendFail() << "Bad value = " << ival;
+          System::log::Message::SendFail() << "Bad value = " << ival;
           return 1;
         }
         A->SetValue(i, (uint8_t)ival);
@@ -1422,7 +1422,7 @@ static int DDataStd_SetByteArrayValue(Draw_Interpretor&, int, const char** arg)
 
   if (value < 0 || 255 < value)
   {
-    Message::SendFail() << "Bad value = " << value;
+    System::log::Message::SendFail() << "Bad value = " << value;
     return 1;
   }
 
@@ -1485,7 +1485,7 @@ static int DDataStd_SetBooleanArray(Draw_Interpretor& di, int nb, const char** a
         int ival = Draw::Atoi(arg[j]);
         if (ival > 1)
         {
-          Message::SendFail() << "Bad value (" << i << ") = " << ival << ". 0 or 1 is expected.";
+          System::log::Message::SendFail() << "Bad value (" << i << ") = " << ival << ". 0 or 1 is expected.";
           return 1;
         }
         A->SetValue(i, ival != 0);
@@ -1672,7 +1672,7 @@ static int DDataStd_SetBooleanList(Draw_Interpretor& di, int nb, const char** ar
       int ival = Draw::Atoi(arg[i]);
       if (ival > 1)
       {
-        Message::SendFail() << "Bad value = " << ival << ". 0 or 1 is expected.";
+        System::log::Message::SendFail() << "Bad value = " << ival << ". 0 or 1 is expected.";
         return 1;
       }
       A->Append(ival != 0);
@@ -2985,7 +2985,7 @@ static int DDataStd_SetNDataIntAr2(Draw_Interpretor& di, int nb, const char** ar
       anAtt = TDataStd_NamedData::Set(aLabel);
     if (anAtt.IsNull())
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3065,7 +3065,7 @@ static int DDataStd_GetAsciiString(Draw_Interpretor& di, int nb, const char** ar
     occ::handle<TDataStd_AsciiString> anAtt;
     if (!aLabel.FindAttribute(aGuid, anAtt))
     {
-      Message::SendFail() << "AsciiString attribute is not found or not set";
+      System::log::Message::SendFail() << "AsciiString attribute is not found or not set";
       return 1;
     }
 
@@ -3130,7 +3130,7 @@ static int DDataStd_GetNDIntegers(Draw_Interpretor& di, int nb, const char** arg
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3168,7 +3168,7 @@ static int DDataStd_GetNDInteger(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3210,7 +3210,7 @@ static int DDataStd_SetNDataReals(Draw_Interpretor& di, int nb, const char** arg
       anAtt = TDataStd_NamedData::Set(aLabel);
     if (anAtt.IsNull())
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3246,7 +3246,7 @@ static int DDataStd_GetNDReals(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3281,7 +3281,7 @@ static int DDataStd_GetNDReal(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3291,7 +3291,7 @@ static int DDataStd_GetNDReal(Draw_Interpretor& di, int nb, const char** arg)
     TCollection_ExtendedString aKey(arg[3], true);
     if (!anAtt->HasReal(aKey))
     {
-      Message::SendFail() << "There is no data specified by Key = " << arg[3];
+      System::log::Message::SendFail() << "There is no data specified by Key = " << arg[3];
       return 1;
     }
     else
@@ -3369,7 +3369,7 @@ static int DDataStd_GetNDStrings(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3426,7 +3426,7 @@ static int DDataStd_GetNDString(Draw_Interpretor& di, int nb, const char** arg)
     TCollection_ExtendedString aKey(arg[3], true);
     if (!anAtt->HasString(aKey))
     {
-      Message::SendFail() << "There is no data specified by Key = " << arg[3];
+      System::log::Message::SendFail() << "There is no data specified by Key = " << arg[3];
       return 1;
     }
     else
@@ -3459,7 +3459,7 @@ static int DDataStd_SetNDataBytes(Draw_Interpretor& di, int nb, const char** arg
       anAtt = TDataStd_NamedData::Set(aLabel);
     if (anAtt.IsNull())
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3493,7 +3493,7 @@ static int DDataStd_GetNDBytes(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3530,7 +3530,7 @@ static int DDataStd_GetNDByte(Draw_Interpretor& di, int nb, const char** arg)
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3540,7 +3540,7 @@ static int DDataStd_GetNDByte(Draw_Interpretor& di, int nb, const char** arg)
     TCollection_ExtendedString aKey(arg[3], true);
     if (!anAtt->HasByte(aKey))
     {
-      Message::SendFail() << "There is no data specified by Key = " << arg[3];
+      System::log::Message::SendFail() << "There is no data specified by Key = " << arg[3];
       return 1;
     }
     else
@@ -3576,7 +3576,7 @@ static int DDataStd_SetNDataIntAr(Draw_Interpretor& di, int nb, const char** arg
       anAtt = TDataStd_NamedData::Set(aLabel);
     if (anAtt.IsNull())
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3611,7 +3611,7 @@ static int DDataStd_GetNDIntArrays(Draw_Interpretor& di, int nb, const char** ar
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3661,7 +3661,7 @@ static int DDataStd_GetNDIntArray(Draw_Interpretor& di, int nb, const char** arg
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3671,7 +3671,7 @@ static int DDataStd_GetNDIntArray(Draw_Interpretor& di, int nb, const char** arg
     TCollection_ExtendedString aKey(arg[3], true);
     if (!anAtt->HasArrayOfIntegers(aKey))
     {
-      Message::SendFail() << "There is no data specified by Key = " << arg[3];
+      System::log::Message::SendFail() << "There is no data specified by Key = " << arg[3];
       return 1;
     }
     else
@@ -3719,7 +3719,7 @@ static int DDataStd_SetNDataRealAr(Draw_Interpretor& di, int nb, const char** ar
       anAtt = TDataStd_NamedData::Set(aLabel);
     if (anAtt.IsNull())
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 
@@ -3754,7 +3754,7 @@ static int DDataStd_GetNDRealArrays(Draw_Interpretor& di, int nb, const char** a
     occ::handle<TDataStd_NamedData> anAtt;
     if (!aLabel.FindAttribute(TDataStd_NamedData::GetID(), anAtt))
     {
-      Message::SendFail() << "NamedData attribute is not found or not set";
+      System::log::Message::SendFail() << "NamedData attribute is not found or not set";
       return 1;
     }
 

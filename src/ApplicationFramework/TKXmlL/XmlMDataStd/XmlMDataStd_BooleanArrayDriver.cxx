@@ -13,7 +13,7 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(AttributeIDString, "boolarrattguid")
 
 XmlMDataStd_BooleanArrayDriver::XmlMDataStd_BooleanArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

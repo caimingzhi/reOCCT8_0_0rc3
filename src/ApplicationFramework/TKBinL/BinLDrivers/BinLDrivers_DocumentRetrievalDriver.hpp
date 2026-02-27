@@ -14,7 +14,10 @@
 #include <Storage_Data.hpp>
 
 class BinMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TCollection_ExtendedString;
 class CDM_Document;
 class CDM_Application;
@@ -32,18 +35,18 @@ public:
     const occ::handle<CDM_Document>&      theNewDocument,
     const occ::handle<CDM_Application>&   theApplication,
     const occ::handle<PCDM_ReaderFilter>& theFilter   = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theProgress = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Read(
     Standard_IStream&                     theIStream,
-    const occ::handle<Storage_Data>&      theStorageData,
+    const occ::handle<app::storage::Storage_Data>&      theStorageData,
     const occ::handle<CDM_Document>&      theDoc,
     const occ::handle<CDM_Application>&   theApplication,
     const occ::handle<PCDM_ReaderFilter>& theFilter   = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theProgress = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT virtual occ::handle<BinMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   DEFINE_STANDARD_RTTIEXT(BinLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 
@@ -54,7 +57,7 @@ protected:
     const occ::handle<PCDM_ReaderFilter>& theFilter,
     const bool&                           theQuickPart,
     const bool                            theReadMissing,
-    const Message_ProgressRange&          theRanges = Message_ProgressRange());
+    const System::log::Message_ProgressRange&          theRanges = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void ReadSection(BinLDrivers_DocumentSection&     theSection,
                                            const occ::handle<CDM_Document>& theDoc,
@@ -64,7 +67,7 @@ protected:
     BinLDrivers_DocumentSection& theSection,
     Standard_IStream&            theIS,
     const bool                   isMess   = false,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void CheckShapeSection(const Storage_Position& thePos,
                                                  Standard_IStream&       theIS);
@@ -76,13 +79,13 @@ protected:
 
   static bool IsQuickPart(const int theFileVer);
 
-  Standard_EXPORT virtual void EnableQuickPartReading(const occ::handle<Message_Messenger>&, bool)
+  Standard_EXPORT virtual void EnableQuickPartReading(const occ::handle<System::log::Message_Messenger>&, bool)
   {
   }
 
   occ::handle<BinMDF_ADriverTable> myDrivers;
   BinObjMgt_RRelocationTable       myRelocTable;
-  occ::handle<Message_Messenger>   myMsgDriver;
+  occ::handle<System::log::Message_Messenger>   myMsgDriver;
 
 private:
   BinObjMgt_Persistent                            myPAtt;

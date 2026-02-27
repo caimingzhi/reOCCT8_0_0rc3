@@ -32,7 +32,7 @@ void ShapeUpgrade_SplitCurve2d::Init(const occ::handle<Geom2d_Curve>& C,
   occ::handle<Geom2d_Curve> CopyOfC = occ::down_cast<Geom2d_Curve>(C->Copy());
   myCurve                           = CopyOfC;
 
-  constexpr double          precision = Precision::PConfusion();
+  constexpr double          precision = math::precision::Precision::PConfusion();
   double                    firstPar  = First;
   double                    lastPar   = Last;
   occ::handle<Geom2d_Curve> aCurve    = myCurve;
@@ -126,8 +126,8 @@ void ShapeUpgrade_SplitCurve2d::Build(const bool Segment)
   if (myNbCurves == 1)
   {
     bool filled = true;
-    if (std::abs(myCurve->FirstParameter() - First) < Precision::PConfusion()
-        && std::abs(myCurve->LastParameter() - Last) < Precision::PConfusion())
+    if (std::abs(myCurve->FirstParameter() - First) < math::precision::Precision::PConfusion()
+        && std::abs(myCurve->LastParameter() - Last) < math::precision::Precision::PConfusion())
       myResultingCurves->SetValue(1, myCurve);
 
     else if (!Segment
@@ -183,9 +183,9 @@ void ShapeUpgrade_SplitCurve2d::Build(const bool Segment)
       double spval = mySplitValues->Value(ii);
       for (; j <= LastInd; j++)
       {
-        if (spval > BsCurve->Knot(j) + Precision::PConfusion())
+        if (spval > BsCurve->Knot(j) + math::precision::Precision::PConfusion())
           continue;
-        if (spval < BsCurve->Knot(j) - Precision::PConfusion())
+        if (spval < BsCurve->Knot(j) - math::precision::Precision::PConfusion())
           break;
         mySplitValues->SetValue(ii, BsCurve->Knot(j));
       }

@@ -8,25 +8,25 @@
 #include <Precision.hpp>
 #include <Standard_Dump.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_AttributeMeter, Message_Attribute)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_AttributeMeter, System::log::Message_Attribute)
 
-Message_AttributeMeter::Message_AttributeMeter(const TCollection_AsciiString& theName)
-    : Message_Attribute(theName)
+System::log::Message_AttributeMeter::Message_AttributeMeter(const TCollection_AsciiString& theName)
+    : System::log::Message_Attribute(theName)
 {
 }
 
-bool Message_AttributeMeter::HasMetric(const Message_MetricType& theMetric) const
+bool System::log::Message_AttributeMeter::HasMetric(const Message_MetricType& theMetric) const
 {
   return myMetrics.Contains(theMetric);
 }
 
-bool Message_AttributeMeter::IsMetricValid(const Message_MetricType& theMetric) const
+bool System::log::Message_AttributeMeter::IsMetricValid(const Message_MetricType& theMetric) const
 {
-  return std::abs(StartValue(theMetric) - UndefinedMetricValue()) > Precision::Confusion()
-         && std::abs(StopValue(theMetric) - UndefinedMetricValue()) > Precision::Confusion();
+  return std::abs(StartValue(theMetric) - UndefinedMetricValue()) > math::precision::Precision::Confusion()
+         && std::abs(StopValue(theMetric) - UndefinedMetricValue()) > math::precision::Precision::Confusion();
 }
 
-double Message_AttributeMeter::StartValue(const Message_MetricType& theMetric) const
+double System::log::Message_AttributeMeter::StartValue(const Message_MetricType& theMetric) const
 {
   if (!HasMetric(theMetric))
   {
@@ -36,7 +36,7 @@ double Message_AttributeMeter::StartValue(const Message_MetricType& theMetric) c
   return myMetrics.Seek(theMetric)->first;
 }
 
-void Message_AttributeMeter::SetStartValue(const Message_MetricType& theMetric,
+void System::log::Message_AttributeMeter::SetStartValue(const Message_MetricType& theMetric,
                                            const double              theValue)
 {
   if (StartToStopValue* aValPtr = myMetrics.ChangeSeek(theMetric))
@@ -49,7 +49,7 @@ void Message_AttributeMeter::SetStartValue(const Message_MetricType& theMetric,
   }
 }
 
-double Message_AttributeMeter::StopValue(const Message_MetricType& theMetric) const
+double System::log::Message_AttributeMeter::StopValue(const Message_MetricType& theMetric) const
 {
   if (!HasMetric(theMetric))
   {
@@ -58,7 +58,7 @@ double Message_AttributeMeter::StopValue(const Message_MetricType& theMetric) co
   return myMetrics.Seek(theMetric)->second;
 }
 
-void Message_AttributeMeter::SetStopValue(const Message_MetricType& theMetric,
+void System::log::Message_AttributeMeter::SetStopValue(const Message_MetricType& theMetric,
                                           const double              theValue)
 {
   if (StartToStopValue* aValPtr = myMetrics.ChangeSeek(theMetric))
@@ -67,7 +67,7 @@ void Message_AttributeMeter::SetStopValue(const Message_MetricType& theMetric,
   }
 }
 
-void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExtended>& theAlert,
+void System::log::Message_AttributeMeter::SetAlertMetrics(const occ::handle<System::log::Message_AlertExtended>& theAlert,
                                              const bool theStartValue)
 {
   if (theAlert.IsNull())
@@ -75,21 +75,21 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
     return;
   }
 
-  occ::handle<Message_AttributeMeter> aMeterAttribute =
-    occ::down_cast<Message_AttributeMeter>(theAlert->Attribute());
+  occ::handle<System::log::Message_AttributeMeter> aMeterAttribute =
+    occ::down_cast<System::log::Message_AttributeMeter>(theAlert->Attribute());
   if (aMeterAttribute.IsNull())
   {
     return;
   }
 
-  occ::handle<Message_Report>                       aReport         = Message::DefaultReport(true);
+  occ::handle<System::log::Message_Report>                       aReport         = System::log::Message::DefaultReport(true);
   const NCollection_IndexedMap<Message_MetricType>& anActiveMetrics = aReport->ActiveMetrics();
 
   if (anActiveMetrics.Contains(Message_MetricType_WallClock))
   {
-    OSD_Timer aTimer;
+    System::os::OSD_Timer aTimer;
     aTimer.Start();
-    double aTime = OSD_Timer::GetWallClockTime();
+    double aTime = System::os::OSD_Timer::GetWallClockTime();
     if (theStartValue)
       aMeterAttribute->SetStartValue(Message_MetricType_WallClock, aTime);
     else
@@ -104,7 +104,7 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
         || anActiveMetrics.Contains(Message_MetricType_ProcessCPUSystemTime))
     {
       double aProcessUserTime, aProcessSystemTime;
-      OSD_Chronometer::GetProcessCPU(aProcessUserTime, aProcessSystemTime);
+      System::os::OSD_Chronometer::GetProcessCPU(aProcessUserTime, aProcessSystemTime);
       if (anActiveMetrics.Contains(Message_MetricType_ProcessCPUUserTime))
       {
         if (theStartValue)
@@ -134,7 +134,7 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
         || anActiveMetrics.Contains(Message_MetricType_ThreadCPUSystemTime))
     {
       double aThreadUserTime, aThreadSystemTime;
-      OSD_Chronometer::GetThreadCPU(aThreadUserTime, aThreadSystemTime);
+      System::os::OSD_Chronometer::GetThreadCPU(aThreadUserTime, aThreadSystemTime);
       if (anActiveMetrics.Contains(Message_MetricType_ThreadCPUUserTime))
       {
         if (theStartValue)
@@ -160,15 +160,15 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
     }
   }
 
-  OSD_MemInfo aMemInfo(false);
+  System::os::OSD_MemInfo aMemInfo(false);
   aMemInfo.SetActive(false);
-  NCollection_IndexedMap<OSD_MemInfo::Counter> aCounters;
+  NCollection_IndexedMap<System::os::OSD_MemInfo::Counter> aCounters;
   for (NCollection_IndexedMap<Message_MetricType>::Iterator anIterator(anActiveMetrics);
        anIterator.More();
        anIterator.Next())
   {
-    OSD_MemInfo::Counter anInfoCounter;
-    if (!Message::ToOSDMetric(anIterator.Value(), anInfoCounter))
+    System::os::OSD_MemInfo::Counter anInfoCounter;
+    if (!System::log::Message::ToOSDMetric(anIterator.Value(), anInfoCounter))
     {
       continue;
     }
@@ -183,11 +183,11 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
 
   aMemInfo.Update();
   Message_MetricType aMetricType;
-  for (NCollection_IndexedMap<OSD_MemInfo::Counter>::Iterator anIterator(aCounters);
+  for (NCollection_IndexedMap<System::os::OSD_MemInfo::Counter>::Iterator anIterator(aCounters);
        anIterator.More();
        anIterator.Next())
   {
-    if (!Message::ToMessageMetric(anIterator.Value(), aMetricType))
+    if (!System::log::Message::ToMessageMetric(anIterator.Value(), aMetricType))
     {
       continue;
     }
@@ -205,10 +205,10 @@ void Message_AttributeMeter::SetAlertMetrics(const occ::handle<Message_AlertExte
   }
 }
 
-void Message_AttributeMeter::DumpJson(Standard_OStream& theOStream, int theDepth) const
+void System::log::Message_AttributeMeter::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)
-  OCCT_DUMP_BASE_CLASS(theOStream, theDepth, Message_Attribute)
+  OCCT_DUMP_BASE_CLASS(theOStream, theDepth, System::log::Message_Attribute)
 
   for (NCollection_IndexedDataMap<Message_MetricType, StartToStopValue>::Iterator anIterator(
          myMetrics);
@@ -216,7 +216,7 @@ void Message_AttributeMeter::DumpJson(Standard_OStream& theOStream, int theDepth
        anIterator.Next())
   {
     OCCT_DUMP_VECTOR_CLASS(theOStream,
-                           Message::MetricToString(anIterator.Key()),
+                           System::log::Message::MetricToString(anIterator.Key()),
                            2,
                            anIterator.Value().first,
                            anIterator.Value().second)

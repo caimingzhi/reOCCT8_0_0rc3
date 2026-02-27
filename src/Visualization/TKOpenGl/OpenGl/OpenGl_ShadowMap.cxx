@@ -79,12 +79,12 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
       myShadowCamera->SetZeroToOneDepth(theView.Camera()->IsZeroToOneDepth());
       myShadowCamera->SetProjectionType(Graphic3d_Camera::Projection_Orthographic);
       myShadowCamera->SetDirection(gp_Dir(aDir.x(), aDir.y(), aDir.z()));
-      myShadowCamera->SetUp(!myShadowCamera->Direction().IsParallel(gp::DY(), Precision::Angular())
+      myShadowCamera->SetUp(!myShadowCamera->Direction().IsParallel(gp::DY(), math::precision::Precision::Angular())
                               ? gp::DY()
                               : gp::DX());
       myShadowCamera->OrthogonalizeUp();
 
-      if (myShadowCamera->FitMinMax(aMinMaxBox, 10.0 * Precision::Confusion(), false))
+      if (myShadowCamera->FitMinMax(aMinMaxBox, 10.0 * math::precision::Precision::Confusion(), false))
       {
 
         myShadowCamera->SetScale(std::max(myShadowCamera->ViewDimensions().X() * 1.1,
@@ -130,7 +130,7 @@ bool OpenGl_ShadowMap::UpdateCamera(const Graphic3d_CView& theView, const gp_XYZ
       myShadowCamera->SetDistance(aDistance);
       myShadowCamera->MoveEyeTo(aLightPos);
       myShadowCamera->SetDirectionFromEye(myShadowLight->Direction());
-      myShadowCamera->SetUp(!myShadowCamera->Direction().IsParallel(gp::DY(), Precision::Angular())
+      myShadowCamera->SetUp(!myShadowCamera->Direction().IsParallel(gp::DY(), math::precision::Precision::Angular())
                               ? gp::DY()
                               : gp::DX());
       myShadowCamera->OrthogonalizeUp();

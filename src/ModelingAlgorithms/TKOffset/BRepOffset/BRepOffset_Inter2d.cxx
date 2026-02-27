@@ -432,7 +432,7 @@ static void EdgeInter(
     {
       double aT1 = ResParamsOnE1(i);
       double aT2 = ResParamsOnE2(i);
-      if (Precision::IsInfinite(aT1) || Precision::IsInfinite(aT2))
+      if (math::precision::Precision::IsInfinite(aT1) || math::precision::Precision::IsInfinite(aT2))
       {
 #ifdef OCCT_DEBUG
         std::cout << "Inter2d : Solution rejected due to infinite parameter" << std::endl;
@@ -719,7 +719,7 @@ static void RefEdgeInter(
   {
     double aT1 = ResParamsOnE1(i);
     double aT2 = ResParamsOnE2(i);
-    if (Precision::IsInfinite(aT1) || Precision::IsInfinite(aT2))
+    if (math::precision::Precision::IsInfinite(aT1) || math::precision::Precision::IsInfinite(aT2))
     {
 #ifdef OCCT_DEBUG
       std::cout << "Inter2d : Solution rejected due to infinite parameter" << std::endl;
@@ -1003,7 +1003,7 @@ static bool ExtendPCurve(const occ::handle<Geom2d_Curve>& aPCurve,
   occ::handle<Geom2d_Line>              aLin;
   occ::handle<Geom2d_TrimmedCurve>      aSegment;
   Geom2dConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_RationalC1);
-  constexpr double                      aTol   = Precision::Confusion();
+  constexpr double                      aTol   = math::precision::Precision::Confusion();
   double                                aDelta = std::max(a2Offset, 1.);
 
   if (FirstPar > anEf - a2Offset)
@@ -1097,25 +1097,25 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       double                    Umin, Umax, Vmin, Vmax;
       theSurf->Bounds(Umin, Umax, Vmin, Vmax);
       NCollection_Sequence<occ::handle<Geom2d_Curve>> BoundLines;
-      if (!Precision::IsInfinite(Vmin))
+      if (!math::precision::Precision::IsInfinite(Vmin))
       {
         occ::handle<Geom2d_Line> aLine =
           new Geom2d_Line(gp_Pnt2d(0., Vmin), gp_Dir2d(gp_Dir2d::D::X));
         BoundLines.Append(aLine);
       }
-      if (!Precision::IsInfinite(Umin))
+      if (!math::precision::Precision::IsInfinite(Umin))
       {
         occ::handle<Geom2d_Line> aLine =
           new Geom2d_Line(gp_Pnt2d(Umin, 0.), gp_Dir2d(gp_Dir2d::D::Y));
         BoundLines.Append(aLine);
       }
-      if (!Precision::IsInfinite(Vmax))
+      if (!math::precision::Precision::IsInfinite(Vmax))
       {
         occ::handle<Geom2d_Line> aLine =
           new Geom2d_Line(gp_Pnt2d(0., Vmax), gp_Dir2d(gp_Dir2d::D::X));
         BoundLines.Append(aLine);
       }
-      if (!Precision::IsInfinite(Umax))
+      if (!math::precision::Precision::IsInfinite(Umax))
       {
         occ::handle<Geom2d_Line> aLine =
           new Geom2d_Line(gp_Pnt2d(Umax, 0.), gp_Dir2d(gp_Dir2d::D::Y));
@@ -1128,7 +1128,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       for (i = 1; i <= BoundLines.Length(); i++)
       {
         Geom2dAdaptor_Curve GAline(BoundLines(i));
-        IntCC.Perform(GAcurve, GAline, Precision::PConfusion(), Precision::PConfusion());
+        IntCC.Perform(GAcurve, GAline, math::precision::Precision::PConfusion(), math::precision::Precision::PConfusion());
         if (IntCC.IsDone())
         {
           for (j = 1; j <= IntCC.NbPoints(); j++)
@@ -1237,7 +1237,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
         f = FirstParOnPC;
         l = LastParOnPC;
         GeomAPI_ProjectPointOnCurve Projector;
-        if (!Precision::IsInfinite(FirstParOnPC))
+        if (!math::precision::Precision::IsInfinite(FirstParOnPC))
         {
           gp_Pnt2d P2d1 = MinPC->Value(FirstParOnPC);
           gp_Pnt   P1   = MinSurf->Value(P2d1.X(), P2d1.Y());
@@ -1250,7 +1250,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
             std::cout << "ProjectPointOnCurve not done" << std::endl;
 #endif
         }
-        if (!Precision::IsInfinite(LastParOnPC))
+        if (!math::precision::Precision::IsInfinite(LastParOnPC))
         {
           gp_Pnt2d P2d2 = MinPC->Value(LastParOnPC);
           gp_Pnt   P2   = MinSurf->Value(P2d2.X(), P2d2.Y());
@@ -1265,14 +1265,14 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
         }
       }
       BB.Range(NE, f, l);
-      if (!Precision::IsInfinite(f) && !Precision::IsInfinite(l))
-        BRepLib::SameParameter(NE, Precision::Confusion(), true);
+      if (!math::precision::Precision::IsInfinite(f) && !math::precision::Precision::IsInfinite(l))
+        BRepLib::SameParameter(NE, math::precision::Precision::Confusion(), true);
     }
     else if (!BRep_Tool::Degenerated(E))
     {
       MinSurf = occ::down_cast<Geom_Surface>(MinSurf->Transformed(MinLoc.Transformation()));
       double max_deviation = 0.;
-      if (Precision::IsInfinite(FirstParOnPC) || Precision::IsInfinite(LastParOnPC))
+      if (math::precision::Precision::IsInfinite(FirstParOnPC) || math::precision::Precision::IsInfinite(LastParOnPC))
       {
         if (MinPC->IsInstance(STANDARD_TYPE(Geom2d_Line)))
         {
@@ -1284,7 +1284,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
           {
             occ::handle<Geom2d_Line> theLine = occ::down_cast<Geom2d_Line>(MinPC);
             gp_Dir2d                 LineDir = theLine->Direction();
-            if (LineDir.IsParallel(gp::DY2d(), Precision::Angular()))
+            if (LineDir.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
               IsLine = true;
           }
           if (IsLine)
@@ -1308,7 +1308,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
         GeomAbs_Shape                    Continuity = GeomAbs_C1;
         int                              MaxDegree  = 14;
         int                              MaxSegment = evaluateMaxSegment(ConS);
-        GeomLib::BuildCurve3d(Precision::Confusion(),
+        GeomLib::BuildCurve3d(math::precision::Precision::Confusion(),
                               ConS,
                               FirstParOnPC,
                               LastParOnPC,
@@ -1338,8 +1338,8 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
               continue;
             FirstPar = (occ::down_cast<BRep_GCurve>(CurveRep))->First();
             LastPar  = (occ::down_cast<BRep_GCurve>(CurveRep))->Last();
-            if (std::abs(FirstPar - FirstParOnPC) > Precision::PConfusion()
-                || std::abs(LastPar - LastParOnPC) > Precision::PConfusion())
+            if (std::abs(FirstPar - FirstParOnPC) > math::precision::Precision::PConfusion()
+                || std::abs(LastPar - LastParOnPC) > math::precision::Precision::PConfusion())
             {
               theLoc  = E.Location() * theLoc;
               theSurf = occ::down_cast<Geom_Surface>(theSurf->Transformed(theLoc.Transformation()));
@@ -1348,18 +1348,18 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
                   && theSurf->IsKind(STANDARD_TYPE(Geom_BoundedSurface)))
               {
                 gp_Dir2d theDir = occ::down_cast<Geom2d_Line>(theCurve)->Direction();
-                if (theDir.IsParallel(gp::DX2d(), Precision::Angular())
-                    || theDir.IsParallel(gp::DY2d(), Precision::Angular()))
+                if (theDir.IsParallel(gp::DX2d(), math::precision::Precision::Angular())
+                    || theDir.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
                 {
                   double U1, U2, V1, V2;
                   theSurf->Bounds(U1, U2, V1, V2);
                   gp_Pnt2d Origin = occ::down_cast<Geom2d_Line>(theCurve)->Location();
-                  if (std::abs(Origin.X() - U1) <= Precision::Confusion()
-                      || std::abs(Origin.X() - U2) <= Precision::Confusion()
-                      || std::abs(Origin.Y() - V1) <= Precision::Confusion()
-                      || std::abs(Origin.Y() - V2) <= Precision::Confusion())
+                  if (std::abs(Origin.X() - U1) <= math::precision::Precision::Confusion()
+                      || std::abs(Origin.X() - U2) <= math::precision::Precision::Confusion()
+                      || std::abs(Origin.Y() - V1) <= math::precision::Precision::Confusion()
+                      || std::abs(Origin.Y() - V2) <= math::precision::Precision::Confusion())
                   {
-                    BRepLib::SameParameter(NE, Precision::Confusion(), true);
+                    BRepLib::SameParameter(NE, math::precision::Precision::Confusion(), true);
                     break;
                   }
                 }
@@ -1385,7 +1385,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       else
       {
         BB.Range(NE, FirstParOnPC, LastParOnPC, true);
-        BRepLib::SameParameter(NE, Precision::Confusion(), true);
+        BRepLib::SameParameter(NE, math::precision::Precision::Confusion(), true);
       }
     }
   }
@@ -1406,7 +1406,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       occ::handle<Geom_Line>              aLin;
       occ::handle<Geom_TrimmedCurve>      aSegment;
       GeomConvert_CompCurveToBSplineCurve aCompCurve(aTrCurve, Convert_RationalC1);
-      constexpr double                    aTol   = Precision::Confusion();
+      constexpr double                    aTol   = math::precision::Precision::Confusion();
       double                              aDelta = std::max(a2Offset, 1.);
 
       if (FirstPar > anEf - a2Offset)
@@ -1435,7 +1435,7 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
       C3d      = aCompCurve.BSplineCurve();
       FirstPar = C3d->FirstParameter();
       LastPar  = C3d->LastParameter();
-      BB.UpdateEdge(NE, C3d, Precision::Confusion());
+      BB.UpdateEdge(NE, C3d, math::precision::Precision::Confusion());
     }
     else if (C3d->IsPeriodic())
     {
@@ -1461,7 +1461,7 @@ static bool UpdateVertex(const TopoDS_Vertex& V, TopoDS_Edge& OE, TopoDS_Edge& N
   double            Nf     = NC.FirstParameter();
   double            Nl     = NC.LastParameter();
   double            U      = 0.;
-  constexpr double  ParTol = Precision::PConfusion();
+  constexpr double  ParTol = math::precision::Precision::PConfusion();
   gp_Pnt            P      = BRep_Tool::Pnt(V);
   bool              OK     = false;
 
@@ -1502,7 +1502,7 @@ void BRepOffset_Inter2d::Compute(
     theEdgeIntEdges,
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                theDMVV,
-  const Message_ProgressRange& theRange)
+  const System::log::Message_ProgressRange& theRange)
 {
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> EdgesOfFace;
@@ -1518,7 +1518,7 @@ void BRepOffset_Inter2d::Compute(
   int                                   j, i = 1;
   BRepAdaptor_Surface                   BAsurf(F);
 
-  Message_ProgressScope aPS(theRange, "Intersecting edges on faces", LE.Size());
+  System::log::Message_ProgressScope aPS(theRange, "Intersecting edges on faces", LE.Size());
   for (it1LE.Initialize(LE); it1LE.More(); it1LE.Next(), aPS.Next())
   {
     if (!aPS.More())
@@ -1589,12 +1589,12 @@ bool BRepOffset_Inter2d::ConnexIntByInt(
     theEdgeIntEdges,
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                theDMVV,
-  const Message_ProgressRange& theRange)
+  const System::log::Message_ProgressRange& theRange)
 {
 
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher> MVE;
   BRepOffset_Tool::MapVertexEdges(FI, MVE);
-  Message_ProgressScope aPS(theRange,
+  System::log::Message_ProgressScope aPS(theRange,
                             "Intersecting edges obtained as intersection of faces",
                             1,
                             true);
@@ -1823,7 +1823,7 @@ void BRepOffset_Inter2d::ConnexIntByIntInVert(
   const BRepOffset_Analyse&                                                       Analyse,
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                theDMVV,
-  const Message_ProgressRange& theRange)
+  const System::log::Message_ProgressRange& theRange)
 {
   TopoDS_Face FIO = TopoDS::Face(OFI.Face());
   if (MES.IsBound(FIO))
@@ -1840,7 +1840,7 @@ void BRepOffset_Inter2d::ConnexIntByIntInVert(
 
   BRepAdaptor_Surface BAsurf(FIO);
 
-  Message_ProgressScope aPS(theRange, "Intersecting edges created from vertices", 1, true);
+  System::log::Message_ProgressScope aPS(theRange, "Intersecting edges created from vertices", 1, true);
   TopExp_Explorer       exp(FI.Oriented(TopAbs_FORWARD), TopAbs_WIRE);
   for (; exp.More(); exp.Next(), aPS.Next())
   {

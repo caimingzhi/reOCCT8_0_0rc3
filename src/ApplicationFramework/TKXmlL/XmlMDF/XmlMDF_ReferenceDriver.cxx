@@ -8,7 +8,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_ReferenceDriver, XmlMDF_ADriver)
 
-XmlMDF_ReferenceDriver::XmlMDF_ReferenceDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMDF_ReferenceDriver::XmlMDF_ReferenceDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

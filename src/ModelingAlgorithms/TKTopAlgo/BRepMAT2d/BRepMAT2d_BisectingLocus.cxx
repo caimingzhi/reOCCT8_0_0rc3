@@ -190,11 +190,11 @@ Bisector_Bisec BRepMAT2d_BisectingLocus::GeomBis(const occ::handle<MAT_Arc>& anA
 
   occ::handle<Geom2d_Curve> Bis(theTool.GeomBis(anArc->GeomIndex()).Value());
 
-  if (Bis->FirstParameter() <= -Precision::Infinite())
+  if (Bis->FirstParameter() <= -math::precision::Precision::Infinite())
   {
     Reverse = true;
   }
-  else if (Bis->LastParameter() < Precision::Infinite())
+  else if (Bis->LastParameter() < math::precision::Precision::Infinite())
   {
     gp_Pnt2d PF    = Bis->Value(Bis->FirstParameter());
     gp_Pnt2d PL    = Bis->Value(Bis->LastParameter());

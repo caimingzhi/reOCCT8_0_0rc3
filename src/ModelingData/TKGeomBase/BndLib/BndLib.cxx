@@ -127,21 +127,21 @@ namespace
 static void OpenMin(const gp_Dir& V, Bnd_Box& B)
 {
 
-  if (V.IsParallel(gp::DX(), Precision::Angular()))
+  if (V.IsParallel(gp::DX(), math::precision::Precision::Angular()))
   {
     if (V.X() > 0.)
       B.OpenXmin();
     else
       B.OpenXmax();
   }
-  else if (V.IsParallel(gp::DY(), Precision::Angular()))
+  else if (V.IsParallel(gp::DY(), math::precision::Precision::Angular()))
   {
     if (V.Y() > 0.)
       B.OpenYmin();
     else
       B.OpenYmax();
   }
-  else if (V.IsParallel(gp::DZ(), Precision::Angular()))
+  else if (V.IsParallel(gp::DZ(), math::precision::Precision::Angular()))
   {
     if (V.Z() > 0.)
       B.OpenZmin();
@@ -159,21 +159,21 @@ static void OpenMin(const gp_Dir& V, Bnd_Box& B)
 static void OpenMax(const gp_Dir& V, Bnd_Box& B)
 {
 
-  if (V.IsParallel(gp::DX(), Precision::Angular()))
+  if (V.IsParallel(gp::DX(), math::precision::Precision::Angular()))
   {
     if (V.X() > 0.)
       B.OpenXmax();
     else
       B.OpenXmin();
   }
-  else if (V.IsParallel(gp::DY(), Precision::Angular()))
+  else if (V.IsParallel(gp::DY(), math::precision::Precision::Angular()))
   {
     if (V.Y() > 0.)
       B.OpenYmax();
     else
       B.OpenYmin();
   }
-  else if (V.IsParallel(gp::DZ(), Precision::Angular()))
+  else if (V.IsParallel(gp::DZ(), math::precision::Precision::Angular()))
   {
     if (V.Z() > 0.)
       B.OpenZmax();
@@ -190,17 +190,17 @@ static void OpenMax(const gp_Dir& V, Bnd_Box& B)
 
 static void OpenMinMax(const gp_Dir& V, Bnd_Box& B)
 {
-  if (V.IsParallel(gp::DX(), Precision::Angular()))
+  if (V.IsParallel(gp::DX(), math::precision::Precision::Angular()))
   {
     B.OpenXmax();
     B.OpenXmin();
   }
-  else if (V.IsParallel(gp::DY(), Precision::Angular()))
+  else if (V.IsParallel(gp::DY(), math::precision::Precision::Angular()))
   {
     B.OpenYmax();
     B.OpenYmin();
   }
-  else if (V.IsParallel(gp::DZ(), Precision::Angular()))
+  else if (V.IsParallel(gp::DZ(), math::precision::Precision::Angular()))
   {
     B.OpenZmax();
     B.OpenZmin();
@@ -219,14 +219,14 @@ static void OpenMinMax(const gp_Dir& V, Bnd_Box& B)
 static void OpenMin(const gp_Dir2d& V, Bnd_Box2d& B)
 {
 
-  if (V.IsParallel(gp::DX2d(), Precision::Angular()))
+  if (V.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
   {
     if (V.X() > 0.)
       B.OpenXmin();
     else
       B.OpenXmax();
   }
-  else if (V.IsParallel(gp::DY2d(), Precision::Angular()))
+  else if (V.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
   {
     if (V.Y() > 0.)
       B.OpenYmin();
@@ -243,14 +243,14 @@ static void OpenMin(const gp_Dir2d& V, Bnd_Box2d& B)
 static void OpenMax(const gp_Dir2d& V, Bnd_Box2d& B)
 {
 
-  if (V.IsParallel(gp::DX2d(), Precision::Angular()))
+  if (V.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
   {
     if (V.X() > 0.)
       B.OpenXmax();
     else
       B.OpenXmin();
   }
-  else if (V.IsParallel(gp::DY2d(), Precision::Angular()))
+  else if (V.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
   {
     if (V.Y() > 0.)
       B.OpenYmax();
@@ -266,12 +266,12 @@ static void OpenMax(const gp_Dir2d& V, Bnd_Box2d& B)
 
 static void OpenMinMax(const gp_Dir2d& V, Bnd_Box2d& B)
 {
-  if (V.IsParallel(gp::DX2d(), Precision::Angular()))
+  if (V.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
   {
     B.OpenXmax();
     B.OpenXmin();
   }
-  else if (V.IsParallel(gp::DY2d(), Precision::Angular()))
+  else if (V.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
   {
     B.OpenYmax();
     B.OpenYmin();
@@ -288,13 +288,13 @@ static void OpenMinMax(const gp_Dir2d& V, Bnd_Box2d& B)
 void BndLib::Add(const gp_Lin& L, const double P1, const double P2, const double Tol, Bnd_Box& B)
 {
 
-  if (Precision::IsNegativeInfinite(P1))
+  if (math::precision::Precision::IsNegativeInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       OpenMinMax(L.Direction(), B);
       B.Add(ElCLib::Value(0., L));
@@ -305,14 +305,14 @@ void BndLib::Add(const gp_Lin& L, const double P1, const double P2, const double
       B.Add(ElCLib::Value(P2, L));
     }
   }
-  else if (Precision::IsPositiveInfinite(P1))
+  else if (math::precision::Precision::IsPositiveInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       OpenMinMax(L.Direction(), B);
       B.Add(ElCLib::Value(0., L));
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -325,11 +325,11 @@ void BndLib::Add(const gp_Lin& L, const double P1, const double P2, const double
   else
   {
     B.Add(ElCLib::Value(P1, L));
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       OpenMin(L.Direction(), B);
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       OpenMax(L.Direction(), B);
     }
@@ -348,13 +348,13 @@ void BndLib::Add(const gp_Lin2d& L,
                  Bnd_Box2d&      B)
 {
 
-  if (Precision::IsNegativeInfinite(P1))
+  if (math::precision::Precision::IsNegativeInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       OpenMinMax(L.Direction(), B);
       B.Add(ElCLib::Value(0., L));
@@ -365,14 +365,14 @@ void BndLib::Add(const gp_Lin2d& L,
       B.Add(ElCLib::Value(P2, L));
     }
   }
-  else if (Precision::IsPositiveInfinite(P1))
+  else if (math::precision::Precision::IsPositiveInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       OpenMinMax(L.Direction(), B);
       B.Add(ElCLib::Value(0., L));
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -385,11 +385,11 @@ void BndLib::Add(const gp_Lin2d& L,
   else
   {
     B.Add(ElCLib::Value(P1, L));
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       OpenMin(L.Direction(), B);
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       OpenMax(L.Direction(), B);
     }
@@ -782,13 +782,13 @@ void BndLib::Add(const gp_Elips2d& C,
 void BndLib::Add(const gp_Parab& P, const double P1, const double P2, const double Tol, Bnd_Box& B)
 {
 
-  if (Precision::IsNegativeInfinite(P1))
+  if (math::precision::Precision::IsNegativeInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -802,15 +802,15 @@ void BndLib::Add(const gp_Parab& P, const double P1, const double P2, const doub
     B.OpenYmin();
     B.OpenZmin();
   }
-  else if (Precision::IsPositiveInfinite(P1))
+  else if (math::precision::Precision::IsPositiveInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
       B.OpenZmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -825,13 +825,13 @@ void BndLib::Add(const gp_Parab& P, const double P1, const double P2, const doub
   else
   {
     B.Add(ElCLib::Value(P1, P));
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
       B.OpenZmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -854,13 +854,13 @@ void BndLib::Add(const gp_Parab2d& P,
                  Bnd_Box2d&        B)
 {
 
-  if (Precision::IsNegativeInfinite(P1))
+  if (math::precision::Precision::IsNegativeInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -872,14 +872,14 @@ void BndLib::Add(const gp_Parab2d& P,
     B.OpenXmin();
     B.OpenYmin();
   }
-  else if (Precision::IsPositiveInfinite(P1))
+  else if (math::precision::Precision::IsPositiveInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -893,12 +893,12 @@ void BndLib::Add(const gp_Parab2d& P,
   else
   {
     B.Add(ElCLib::Value(P1, P));
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -915,13 +915,13 @@ void BndLib::Add(const gp_Parab2d& P,
 
 void BndLib::Add(const gp_Hypr& H, const double P1, const double P2, const double Tol, Bnd_Box& B)
 {
-  if (Precision::IsNegativeInfinite(P1))
+  if (math::precision::Precision::IsNegativeInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -935,15 +935,15 @@ void BndLib::Add(const gp_Hypr& H, const double P1, const double P2, const doubl
     B.OpenYmin();
     B.OpenZmin();
   }
-  else if (Precision::IsPositiveInfinite(P1))
+  else if (math::precision::Precision::IsPositiveInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
       B.OpenZmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -958,13 +958,13 @@ void BndLib::Add(const gp_Hypr& H, const double P1, const double P2, const doubl
   else
   {
     B.Add(ElCLib::Value(P1, H));
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
       B.OpenZmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -985,13 +985,13 @@ void BndLib::Add(const gp_Hypr2d& H,
                  Bnd_Box2d&       B)
 {
 
-  if (Precision::IsNegativeInfinite(P1))
+  if (math::precision::Precision::IsNegativeInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -1003,14 +1003,14 @@ void BndLib::Add(const gp_Hypr2d& H,
     B.OpenXmin();
     B.OpenYmin();
   }
-  else if (Precision::IsPositiveInfinite(P1))
+  else if (math::precision::Precision::IsPositiveInfinite(P1))
   {
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -1024,12 +1024,12 @@ void BndLib::Add(const gp_Hypr2d& H,
   else
   {
     B.Add(ElCLib::Value(P1, H));
-    if (Precision::IsNegativeInfinite(P2))
+    if (math::precision::Precision::IsNegativeInfinite(P2))
     {
       B.OpenXmin();
       B.OpenYmin();
     }
-    else if (Precision::IsPositiveInfinite(P2))
+    else if (math::precision::Precision::IsPositiveInfinite(P2))
     {
       B.OpenXmax();
       B.OpenYmax();
@@ -1070,13 +1070,13 @@ void BndLib::Add(const gp_Cylinder& S,
 
   const gp_Dir& aDir = S.Axis().Direction();
 
-  if (Precision::IsNegativeInfinite(VMin))
+  if (math::precision::Precision::IsNegativeInfinite(VMin))
   {
-    if (Precision::IsNegativeInfinite(VMax))
+    if (math::precision::Precision::IsNegativeInfinite(VMax))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(VMax))
+    else if (math::precision::Precision::IsPositiveInfinite(VMax))
     {
       OpenMinMax(aDir, B);
     }
@@ -1086,13 +1086,13 @@ void BndLib::Add(const gp_Cylinder& S,
       OpenMin(aDir, B);
     }
   }
-  else if (Precision::IsPositiveInfinite(VMin))
+  else if (math::precision::Precision::IsPositiveInfinite(VMin))
   {
-    if (Precision::IsNegativeInfinite(VMax))
+    if (math::precision::Precision::IsNegativeInfinite(VMax))
     {
       OpenMinMax(aDir, B);
     }
-    else if (Precision::IsPositiveInfinite(VMax))
+    else if (math::precision::Precision::IsPositiveInfinite(VMax))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -1104,12 +1104,12 @@ void BndLib::Add(const gp_Cylinder& S,
   }
   else
   {
-    if (Precision::IsNegativeInfinite(VMax))
+    if (math::precision::Precision::IsNegativeInfinite(VMax))
     {
       ComputeCyl(S, UMin, UMax, VMin, 0., B);
       OpenMin(aDir, B);
     }
-    else if (Precision::IsPositiveInfinite(VMax))
+    else if (math::precision::Precision::IsPositiveInfinite(VMax))
     {
       ComputeCyl(S, UMin, UMax, VMin, 0., B);
       OpenMax(aDir, B);
@@ -1144,7 +1144,7 @@ static void ComputeCone(const gp_Cone& Cone,
   double        R    = Cone.RefRadius();
   double        sang = Cone.SemiAngle();
   gp_Circ       aC   = ElSLib::ConeVIso(aPos, R, sang, VMin);
-  if (aC.Radius() > Precision::Confusion())
+  if (aC.Radius() > math::precision::Precision::Confusion())
   {
     BndLib::Add(aC, UMin, UMax, 0., B);
   }
@@ -1154,7 +1154,7 @@ static void ComputeCone(const gp_Cone& Cone,
   }
 
   aC = ElSLib::ConeVIso(aPos, R, sang, VMax);
-  if (aC.Radius() > Precision::Confusion())
+  if (aC.Radius() > math::precision::Precision::Confusion())
   {
     BndLib::Add(aC, UMin, UMax, 0., B);
   }
@@ -1175,13 +1175,13 @@ void BndLib::Add(const gp_Cone& S,
 
   const gp_Dir& aD = S.Axis().Direction();
 
-  if (Precision::IsNegativeInfinite(VMin))
+  if (math::precision::Precision::IsNegativeInfinite(VMin))
   {
-    if (Precision::IsNegativeInfinite(VMax))
+    if (math::precision::Precision::IsNegativeInfinite(VMax))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
-    else if (Precision::IsPositiveInfinite(VMax))
+    else if (math::precision::Precision::IsPositiveInfinite(VMax))
     {
       OpenMinMax(aD, B);
     }
@@ -1191,13 +1191,13 @@ void BndLib::Add(const gp_Cone& S,
       OpenMin(aD, B);
     }
   }
-  else if (Precision::IsPositiveInfinite(VMin))
+  else if (math::precision::Precision::IsPositiveInfinite(VMin))
   {
-    if (Precision::IsNegativeInfinite(VMax))
+    if (math::precision::Precision::IsNegativeInfinite(VMax))
     {
       OpenMinMax(aD, B);
     }
-    else if (Precision::IsPositiveInfinite(VMax))
+    else if (math::precision::Precision::IsPositiveInfinite(VMax))
     {
       throw Standard_Failure("BndLib::bad parameter");
     }
@@ -1209,12 +1209,12 @@ void BndLib::Add(const gp_Cone& S,
   }
   else
   {
-    if (Precision::IsNegativeInfinite(VMax))
+    if (math::precision::Precision::IsNegativeInfinite(VMax))
     {
       ComputeCone(S, UMin, UMax, VMin, 0., B);
       OpenMin(aD, B);
     }
-    else if (Precision::IsPositiveInfinite(VMax))
+    else if (math::precision::Precision::IsPositiveInfinite(VMax))
     {
       ComputeCone(S, UMin, UMax, VMin, 0., B);
       OpenMax(aD, B);
@@ -1255,8 +1255,8 @@ static void ComputeSphere(const gp_Sphere& Sphere,
   zmin = P.Z() - R;
   zmax = P.Z() + R;
 
-  constexpr double uper = 2. * M_PI - Precision::PConfusion();
-  constexpr double vper = M_PI - Precision::PConfusion();
+  constexpr double uper = 2. * M_PI - math::precision::Precision::PConfusion();
+  constexpr double vper = M_PI - math::precision::Precision::PConfusion();
   if (UMax - UMin >= uper && VMax - VMin >= vper)
   {
 
@@ -1350,8 +1350,8 @@ static void computeDegeneratedTorus(const gp_Torus& theTorus,
 
   double aPhi = std::acos(-aRa / aRi);
 
-  constexpr double anUper = 2. * M_PI - Precision::PConfusion();
-  double           aVper  = 2. * aPhi - Precision::PConfusion();
+  constexpr double anUper = 2. * M_PI - math::precision::Precision::PConfusion();
+  double           aVper  = 2. * aPhi - math::precision::Precision::PConfusion();
   if (theUMax - theUMin >= anUper && theVMax - theVMin >= aVper)
   {
 

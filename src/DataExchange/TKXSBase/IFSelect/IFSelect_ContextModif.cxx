@@ -234,7 +234,7 @@ void IFSelect_ContextModif::TraceModifier(const occ::handle<IFSelect_GeneralModi
   if (modif.IsNull())
     return;
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   sout << "---   Run Modifier:" << std::endl;
   occ::handle<IFSelect_Selection> sel = modif->Selection();
   if (!sel.IsNull())
@@ -259,14 +259,14 @@ void IFSelect_ContextModif::Trace(const char* mess)
 
   if (thecurr <= 0)
     return;
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (ValueOriginal() == ValueResult())
     sout << "--  ContextModif. Entity  n0 " << thecurr << std::endl;
   else
     sout << "--  ContextModif. Entity in Original, n0 " << thecurr << " in Result, n0 " << thecurt
          << std::endl;
   if (mess[0] != '\0')
-    sout << "--  Message:" << mess << std::endl;
+    sout << "--  System::log::Message:" << mess << std::endl;
 }
 
 void IFSelect_ContextModif::AddCheck(const occ::handle<Interface_Check>& check)

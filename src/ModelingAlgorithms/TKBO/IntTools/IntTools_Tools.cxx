@@ -74,7 +74,7 @@ bool IntTools_Tools::IsClosed(const occ::handle<Geom_Curve>& aC3D)
   aC3D->D0(aF, aP1);
   aC3D->D0(aL, aP2);
 
-  aPC   = Precision::Confusion();
+  aPC   = math::precision::Precision::Confusion();
   aPC   = aPC * aPC;
   aDist = aP1.SquareDistance(aP2);
   bRet  = aDist < aPC;
@@ -234,7 +234,7 @@ bool IntTools_Tools::IsVertex(const gp_Pnt& aP, const double aTolPV, const TopoD
 
   aTolV = BRep_Tool::Tolerance(aV);
 
-  dTol  = Precision::Confusion();
+  dTol  = math::precision::Precision::Confusion();
   aTolV = aTolV + aTolPV + dTol;
 
   aPv = BRep_Tool::Pnt(aV);
@@ -502,7 +502,7 @@ bool IntTools_Tools::CheckCurve(const IntTools_Curve& theCurve, Bnd_Box& theBox)
                          std::max(theCurve.Tolerance(), theCurve.TangentialTolerance()),
                          theBox);
 
-  double aTolCmp = 3 * Precision::Confusion();
+  double aTolCmp = 3 * math::precision::Precision::Confusion();
 
   bValid = !theBox.IsThin(aTolCmp);
 
@@ -698,7 +698,7 @@ double IntTools_Tools::ComputeIntRange(const double theTol1,
 {
   double aDt;
 
-  if (std::abs(M_PI_2 - theAngle) < Precision::Angular())
+  if (std::abs(M_PI_2 - theAngle) < math::precision::Precision::Angular())
   {
     aDt = theTol2;
   }

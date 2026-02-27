@@ -19,10 +19,10 @@ static void FindLimits(const occ::handle<Adaptor3d_Surface>& surf,
   VFirst = surf->FirstVParameter();
   VLast  = surf->LastVParameter();
 
-  bool UfirstInf = Precision::IsNegativeInfinite(UFirst);
-  bool UlastInf  = Precision::IsPositiveInfinite(ULast);
-  bool VfirstInf = Precision::IsNegativeInfinite(VFirst);
-  bool VlastInf  = Precision::IsPositiveInfinite(VLast);
+  bool UfirstInf = math::precision::Precision::IsNegativeInfinite(UFirst);
+  bool UlastInf  = math::precision::Precision::IsPositiveInfinite(ULast);
+  bool VfirstInf = math::precision::Precision::IsNegativeInfinite(VFirst);
+  bool VlastInf  = math::precision::Precision::IsPositiveInfinite(VLast);
 
   if (UfirstInf || UlastInf)
   {

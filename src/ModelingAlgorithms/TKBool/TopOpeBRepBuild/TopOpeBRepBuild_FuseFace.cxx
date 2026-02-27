@@ -453,7 +453,7 @@ void TopOpeBRepBuild_FuseFace::PerformFace()
       {
         S = occ::down_cast<Geom_RectangularTrimmedSurface>(S)->BasisSurface();
       }
-      BRepLib_MakeFace MF(S, Precision::Confusion());
+      BRepLib_MakeFace MF(S, math::precision::Precision::Confusion());
 
       for (it2.Initialize(myFaceLW); it2.More(); it2.Next())
       {
@@ -1131,8 +1131,8 @@ bool SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
     return false;
   }
 
-  const double tollin = Precision::Confusion();
-  const double tolang = Precision::Angular();
+  const double tollin = math::precision::Precision::Confusion();
+  const double tolang = math::precision::Precision::Angular();
   if (typC1 == STANDARD_TYPE(Geom_Line))
   {
     gp_Lin li1(occ::down_cast<Geom_Line>(C1)->Lin());

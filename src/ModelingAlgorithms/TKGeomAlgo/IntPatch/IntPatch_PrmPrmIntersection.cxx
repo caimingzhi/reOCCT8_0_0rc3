@@ -96,7 +96,7 @@ static void SeveralWlinesProcessing(const occ::handle<Adaptor3d_Surface>& theSur
 
         if (RmaxS1 < theMaxStepS1 && RmaxS2 < theMaxStepS2)
         {
-          if (pntDMin > tDistance && tDistance > Precision::PConfusion())
+          if (pntDMin > tDistance && tDistance > math::precision::Precision::PConfusion())
           {
             const double aSqDist1 = aPCS1.SquareDistance(aPTS1),
                          aSqDist2 = aPCS2.SquareDistance(aPTS2);
@@ -1677,7 +1677,7 @@ void IntPatch_PrmPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
   NCollection_List<IntSurf_PntOn2S>::Iterator IterLOP1(LOfPnts);
   if (Surf1->IsUClosed() || Surf1->IsVClosed() || Surf2->IsUClosed() || Surf2->IsVClosed())
   {
-    constexpr double                  TolPar = Precision::PConfusion();
+    constexpr double                  TolPar = math::precision::Precision::PConfusion();
     NCollection_List<IntSurf_PntOn2S> AdditionalPnts;
     double                            NewU1, NewV1, NewU2, NewV2;
     for (; IterLOP1.More(); IterLOP1.Next())
@@ -2071,7 +2071,7 @@ void AdjustOnPeriodic(const occ::handle<Adaptor3d_Surface>&             Surf1,
   int    i, j, k, aNbLines, aNbPx, aIndx, aIndq;
   double aPeriod[4], dPeriod[4], ux[4], uq[4], aEps, du;
 
-  aEps = Precision::Confusion();
+  aEps = math::precision::Precision::Confusion();
 
   for (k = 0; k < 4; ++k)
   {

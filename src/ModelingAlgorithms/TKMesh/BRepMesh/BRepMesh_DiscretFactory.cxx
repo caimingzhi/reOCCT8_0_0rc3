@@ -83,7 +83,7 @@ bool BRepMesh_DiscretFactory::SetDefault(const TCollection_AsciiString& theName,
   {
     TCollection_AsciiString aLibName;
     MakeLibName(theName, aLibName);
-    OSD_SharedLibrary aSL(aLibName.ToCString());
+    System::os::OSD_SharedLibrary aSL(aLibName.ToCString());
     if (!aSL.DlOpen(OSD_RTLD_LAZY))
     {
 

@@ -46,7 +46,7 @@ DEGLTF_Provider::DEGLTF_Provider(const occ::handle<DE_ConfigurationNode>& theNod
 bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Read(thePath, theDocument, theProgress);
@@ -55,7 +55,7 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
 bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
@@ -63,7 +63,7 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("reading the file ") + thePath;
   if (!DE_ValidationUtils::ValidateDocument(theDocument, aContext))
@@ -85,7 +85,7 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
                                       UnitsMethods_LengthUnit_Millimeter);
   if (!aReader.Perform(thePath, theProgress))
   {
-    Message::SendFail() << "Error in the DEGLTF_Provider during reading the file " << thePath;
+    System::log::Message::SendFail() << "Error in the DEGLTF_Provider during reading the file " << thePath;
     return false;
   }
 
@@ -94,7 +94,7 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&       thePath,
 
 bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("writing the file ") + thePath;
   if (!DE_ValidationUtils::ValidateConfigurationNode(GetNode(),
@@ -110,14 +110,14 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
   if (!XCAFDoc_DocumentTool::GetLengthUnit(theDocument, aScaleFactorM))
   {
     aConverter.SetInputLengthUnit(aNode->GlobalParameters.SystemUnit / 1000.);
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning in the DEGLTF_Provider during writing the file " << thePath
       << "\t: The document has no information on Units. Using global parameter as initial Unit.";
   }
   aConverter.SetInputCoordinateSystem(aNode->InternalParameters.SystemCS);
   if (aNode->GlobalParameters.LengthUnit != 1000.)
   {
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning during " << aContext
       << ": Target format doesn't support custom units. Model will be scaled to Meters (unit: "
       << aNode->GlobalParameters.LengthUnit << ")";
@@ -148,7 +148,7 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
   aWriter.SetSplitIndices16(aNode->InternalParameters.WriteSplitIndices16);
   if (!aWriter.Perform(theDocument, aFileInfo, theProgress))
   {
-    Message::SendFail() << "Error in the DEGLTF_Provider during writing the file " << thePath;
+    System::log::Message::SendFail() << "Error in the DEGLTF_Provider during writing the file " << thePath;
     return false;
   }
   return true;
@@ -157,7 +157,7 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DEGLTF_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Read(thePath, theShape, theProgress);
@@ -166,7 +166,7 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString&      thePath,
 bool DEGLTF_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Write(thePath, theShape, theProgress);
@@ -174,11 +174,11 @@ bool DEGLTF_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DEGLTF_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(DEGLTF_ConfigurationNode)))
   {
-    Message::SendFail() << "Error in the DEGLTF_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEGLTF_Provider during reading the file " << thePath
                         << "\t: Incorrect or empty Configuration Node";
     return false;
   }
@@ -187,7 +187,7 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString& thePath,
   SetReaderParameters(aReader, aNode);
   if (!aReader.Perform(thePath, theProgress))
   {
-    Message::SendFail() << "Error in the DEGLTF_Provider during reading the file " << thePath;
+    System::log::Message::SendFail() << "Error in the DEGLTF_Provider during reading the file " << thePath;
     return false;
   }
   theShape = aReader.SingleShape();
@@ -196,7 +196,7 @@ bool DEGLTF_Provider::Read(const TCollection_AsciiString& thePath,
 
 bool DEGLTF_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
-                            const Message_ProgressRange&   theProgress)
+                            const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<TDocStd_Document>  aDoc    = new TDocStd_Document("BinXCAF");
   occ::handle<XCAFDoc_ShapeTool> aShTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());

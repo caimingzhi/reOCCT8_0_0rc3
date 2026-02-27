@@ -190,7 +190,7 @@ occ::handle<TopOpeBRepBuild_HBuilder> BRepFilletAPI_MakeChamfer::Builder() const
   return myBuilder.Builder();
 }
 
-void BRepFilletAPI_MakeChamfer::Build(const Message_ProgressRange&)
+void BRepFilletAPI_MakeChamfer::Build(const System::log::Message_ProgressRange&)
 {
   myBuilder.Compute();
   if (myBuilder.IsDone())

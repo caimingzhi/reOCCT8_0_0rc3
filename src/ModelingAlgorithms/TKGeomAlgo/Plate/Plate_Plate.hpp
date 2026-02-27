@@ -61,7 +61,7 @@ public:
 
   Standard_EXPORT void SolveTI(const int                    ord         = 4,
                                const double                 anisotropie = 1.0,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool IsDone() const;
 
@@ -99,13 +99,13 @@ private:
   gp_XY& Points(const int index) const;
 
   Standard_EXPORT void SolveTI1(const int                    IterationNumber,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void SolveTI2(const int                    IterationNumber,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void SolveTI3(const int                    IterationNumber,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void fillXYZmatrix(math_Matrix& mat,
                                      const int    i0,

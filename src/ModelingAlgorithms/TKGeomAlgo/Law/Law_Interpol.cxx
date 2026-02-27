@@ -35,7 +35,7 @@ void Law_Interpol::Set(const NCollection_Array1<gp_Pnt2d>& ParAndRad, const bool
     if (!Periodic || i != nbp)
       rad->SetValue(i, y);
   }
-  Law_Interpolate inter(rad, par, Periodic, Precision::Confusion());
+  Law_Interpolate inter(rad, par, Periodic, math::precision::Precision::Confusion());
   inter.Perform();
   SetCurve(inter.Curve());
 #ifdef OCCT_DEBUG
@@ -65,7 +65,7 @@ void Law_Interpol::SetInRelative(const NCollection_Array1<gp_Pnt2d>& ParAndRad,
     if (!Periodic || i != nbp)
       rad->SetValue(i, y);
   }
-  Law_Interpolate inter(rad, par, Periodic, Precision::Confusion());
+  Law_Interpolate inter(rad, par, Periodic, math::precision::Precision::Confusion());
   inter.Perform();
   SetCurve(inter.Curve());
 #ifdef OCCT_DEBUG
@@ -95,7 +95,7 @@ void Law_Interpol::Set(const NCollection_Array1<gp_Pnt2d>& ParAndRad,
     if (!Periodic || i != nbp)
       rad->SetValue(i, y);
   }
-  Law_Interpolate inter(rad, par, Periodic, Precision::Confusion());
+  Law_Interpolate inter(rad, par, Periodic, math::precision::Precision::Confusion());
   inter.Load(Dd, Df);
   inter.Perform();
   SetCurve(inter.Curve());
@@ -126,7 +126,7 @@ void Law_Interpol::SetInRelative(const NCollection_Array1<gp_Pnt2d>& ParAndRad,
     if (!Periodic || i != nbp)
       rad->SetValue(i, y);
   }
-  Law_Interpolate inter(rad, par, Periodic, Precision::Confusion());
+  Law_Interpolate inter(rad, par, Periodic, math::precision::Precision::Confusion());
   inter.Load(Dd, Df);
   inter.Perform();
   SetCurve(inter.Curve());

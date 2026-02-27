@@ -49,8 +49,8 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedLin& Qualified1,
   gp_Dir2d dirL1(L1.Direction());
   gp_Dir2d normal(-dirL1.Y(), dirL1.X());
 
-  if (dirL1.IsEqual(OnLine.Direction(), Precision::Confusion())
-      && OnLine.Distance(originL1) < Precision::Confusion())
+  if (dirL1.IsEqual(OnLine.Direction(), math::precision::Precision::Confusion())
+      && OnLine.Distance(originL1) < math::precision::Precision::Confusion())
   {
 
     NbrSol = 0;

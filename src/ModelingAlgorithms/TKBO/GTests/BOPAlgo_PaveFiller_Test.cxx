@@ -250,7 +250,7 @@ TEST_F(BOPAlgo_PaveFillerTest, FuseConeWithRemovedPCurve_NullPCurveHandling)
     }
 
     TopoDS_Face aNewFace;
-    aBuilder.MakeFace(aNewFace, aSurf, Precision::Confusion());
+    aBuilder.MakeFace(aNewFace, aSurf, math::precision::Precision::Confusion());
     aBuilder.Add(aNewFace, aNewWire);
 
     TopoDS_Shell aNewShell;

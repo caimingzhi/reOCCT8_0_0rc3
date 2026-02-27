@@ -250,7 +250,7 @@ Extrema_ExtElC::Extrema_ExtElC(const gp_Lin& theC1, const gp_Lin& theC2, const d
   const double  aCosA   = aD1.Dot(aD2);
   const double  aSqSinA = 1.0 - aCosA * aCosA;
   double        aU1 = 0.0, aU2 = 0.0;
-  if (aSqSinA < gp::Resolution() || aD1.IsParallel(aD2, Precision::Angular()))
+  if (aSqSinA < gp::Resolution() || aD1.IsParallel(aD2, math::precision::Precision::Angular()))
   {
     myIsPar = true;
   }
@@ -261,7 +261,7 @@ Extrema_ExtElC::Extrema_ExtElC(const gp_Lin& theC1, const gp_Lin& theC2, const d
     aU1 = (aD1L - aCosA * aD2L) / aSqSinA;
     aU2 = (aCosA * aD1L - aD2L) / aSqSinA;
 
-    myIsPar = Precision::IsInfinite(aU1) || Precision::IsInfinite(aU2);
+    myIsPar = math::precision::Precision::IsInfinite(aU1) || math::precision::Precision::IsInfinite(aU2);
   }
 
   if (myIsPar)
@@ -284,7 +284,7 @@ bool Extrema_ExtElC::PlanarLineCircleExtrema(const gp_Lin& theLin, const gp_Circ
 {
   const gp_Dir &aDirC = theCirc.Axis().Direction(), &aDirL = theLin.Direction();
 
-  if (std::abs(aDirC.Dot(aDirL)) > Precision::Angular())
+  if (std::abs(aDirC.Dot(aDirL)) > math::precision::Precision::Angular())
     return false;
 
   const gp_XYZ& aCLoc = theCirc.Location().XYZ();
@@ -305,7 +305,7 @@ bool Extrema_ExtElC::PlanarLineCircleExtrema(const gp_Lin& theLin, const gp_Circ
   gp_Dir2d aDL(aLDir.Dot(aDCx), aLDir.Dot(aDCy));
   gp_Lin2d aLin2d(aPL, aDL);
 
-  Extrema_ExtElC2d anExt2d(aLin2d, aCirc2d, Precision::Confusion());
+  Extrema_ExtElC2d anExt2d(aLin2d, aCirc2d, math::precision::Precision::Confusion());
 
   IntAna2d_AnaIntersection anInters(aLin2d, aCirc2d);
 
@@ -690,8 +690,8 @@ Extrema_ExtElC::Extrema_ExtElC(const gp_Circ& C1, const gp_Circ& C2)
     mySqDist[anIdx] = RealLast();
   }
 
-  aTolA  = Precision::Angular();
-  aTolD  = Precision::Confusion();
+  aTolA  = math::precision::Precision::Angular();
+  aTolD  = math::precision::Precision::Confusion();
   aTolD2 = aTolD * aTolD;
 
   aPc1 = C1.Location();

@@ -4,6 +4,7 @@
 #include <Standard_DefineAlloc.hpp>
 #include <Standard_Real.hpp>
 
+namespace math { namespace precision {
 class Precision
 {
 public:
@@ -58,3 +59,5 @@ public:
 
   static constexpr double Infinite() { return 2.e+100; }
 };
+}} // namespace math::precision
+

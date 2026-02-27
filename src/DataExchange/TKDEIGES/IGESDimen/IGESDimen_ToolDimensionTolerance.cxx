@@ -46,7 +46,7 @@ void IGESDimen_ToolDimensionTolerance::ReadOwnParams(
   PR.ReadBoolean(PR.Current(), "Sign Suppression Flag", tempSignSupFlag);
   PR.ReadInteger(PR.Current(), "Fraction Flag", tempFracFlag);
 
-  PR.ReadInteger(PR.Current(), "Precision", tempPrecision);
+  PR.ReadInteger(PR.Current(), "math::precision::Precision", tempPrecision);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbProps,
@@ -160,5 +160,5 @@ void IGESDimen_ToolDimensionTolerance::OwnDump(const occ::handle<IGESDimen_Dimen
     << "Lower Tolerance          : " << ent->LowerTolerance() << "\n"
     << "Sign Suppression Flag    : " << (ent->SignSuppressionFlag() ? "True" : "False") << "\n"
     << "Fraction Flag            : " << ent->FractionFlag() << "\n"
-    << "Precision                : " << ent->Precision() << std::endl;
+    << "math::precision::Precision                : " << ent->Precision() << std::endl;
 }

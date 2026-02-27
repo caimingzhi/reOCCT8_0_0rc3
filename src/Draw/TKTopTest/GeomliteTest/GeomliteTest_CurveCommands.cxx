@@ -685,9 +685,9 @@ static int cinsertknot(Draw_Interpretor&, int n, const char** a)
     if (n == 4)
       mult = Draw::Atoi(a[3]);
     if (!GBs.IsNull())
-      GBs->InsertKnot(knot, mult, Precision::PConfusion());
+      GBs->InsertKnot(knot, mult, math::precision::Precision::PConfusion());
     else
-      GBs2d->InsertKnot(knot, mult, Precision::PConfusion());
+      GBs2d->InsertKnot(knot, mult, math::precision::Precision::PConfusion());
   }
 
   else
@@ -705,9 +705,9 @@ static int cinsertknot(Draw_Interpretor&, int n, const char** a)
     }
 
     if (!GBs.IsNull())
-      GBs->InsertKnots(knots, mults, Precision::PConfusion());
+      GBs->InsertKnots(knots, mults, math::precision::Precision::PConfusion());
     else
-      GBs2d->InsertKnots(knots, mults, Precision::PConfusion());
+      GBs2d->InsertKnots(knots, mults, math::precision::Precision::PConfusion());
   }
 
   Draw::Repaint();
@@ -1062,7 +1062,7 @@ static int segment(Draw_Interpretor&, int n, const char** a)
 
   double f = Draw::Atof(a[2]), l = Draw::Atof(a[3]);
 
-  double aTolerance = Precision::PConfusion();
+  double aTolerance = math::precision::Precision::PConfusion();
   if (n == 5)
     aTolerance = Draw::Atof(a[4]);
 
@@ -1296,7 +1296,7 @@ static int localprop(Draw_Interpretor& di, int argc, const char** argv)
     C3d = DrawTrSurf::GetCurve(argv[1]);
     if (C3d.IsNull())
       return 1;
-    GeomLProp_CLProps Prop(C3d, 2, Precision::Confusion());
+    GeomLProp_CLProps Prop(C3d, 2, math::precision::Precision::Confusion());
     Prop.SetParameter(U);
     occ::handle<Draw_Marker3D> drp = new Draw_Marker3D(Prop.Value(), Draw_Plus, Draw_vert);
     dout << drp;
@@ -1305,7 +1305,7 @@ static int localprop(Draw_Interpretor& di, int argc, const char** argv)
       double K = Prop.Curvature();
       di << " Curvature : " << K << "\n";
 
-      if (std::abs(K) > Precision::Confusion())
+      if (std::abs(K) > math::precision::Precision::Confusion())
       {
         double R = 1 / std::abs(K);
         gp_Pnt Center;
@@ -1328,7 +1328,7 @@ static int localprop(Draw_Interpretor& di, int argc, const char** argv)
   }
   else
   {
-    Geom2dLProp_CLProps2d Prop(C2d, 2, Precision::Confusion());
+    Geom2dLProp_CLProps2d Prop(C2d, 2, math::precision::Precision::Confusion());
     Prop.SetParameter(U);
     occ::handle<Draw_Marker2D> drp = new Draw_Marker2D(Prop.Value(), Draw_Plus, Draw_vert);
     dout << drp;
@@ -1339,7 +1339,7 @@ static int localprop(Draw_Interpretor& di, int argc, const char** argv)
 
       di << " Curvature : " << K << "\n";
 
-      if (std::abs(K) > Precision::Confusion())
+      if (std::abs(K) > math::precision::Precision::Confusion())
       {
         double R = 1 / std::abs(K);
         Prop.CentreOfCurvature(Center);
@@ -1373,7 +1373,7 @@ static int rawcont(Draw_Interpretor& di, int n, const char** a)
   gp_Pnt a_point1, a_point2;
   GC1->D0(param1, a_point1);
   GC2->D0(param2, a_point2);
-  if (a_point2.SquareDistance(a_point1) < Precision::Confusion())
+  if (a_point2.SquareDistance(a_point1) < math::precision::Precision::Confusion())
   {
     GeomAbs_Shape cont = GeomLProp::Continuity(GC1,
                                                GC2,
@@ -1381,8 +1381,8 @@ static int rawcont(Draw_Interpretor& di, int n, const char** a)
                                                param2,
                                                true,
                                                true,
-                                               Precision::Confusion(),
-                                               Precision::Angular());
+                                               math::precision::Precision::Confusion(),
+                                               math::precision::Precision::Angular());
     switch (cont)
     {
       case GeomAbs_C0:
@@ -1751,7 +1751,7 @@ static int splitc1(Draw_Interpretor& di, int n, const char** c)
   double f = ACurve->FirstParameter();
   double l = ACurve->LastParameter();
 
-  if (Precision::IsInfinite(f) || Precision::IsInfinite(l))
+  if (math::precision::Precision::IsInfinite(f) || math::precision::Precision::IsInfinite(l))
   {
     di << " Error: Infinite curves\n";
     return 1;
@@ -1802,7 +1802,7 @@ static int splitc12d(Draw_Interpretor& di, int n, const char** c)
   double f = ACurve->FirstParameter();
   double l = ACurve->LastParameter();
 
-  if (Precision::IsInfinite(f) || Precision::IsInfinite(l))
+  if (math::precision::Precision::IsInfinite(f) || math::precision::Precision::IsInfinite(l))
   {
     di << " Error: Infinite curves\n";
     return 1;
@@ -1859,7 +1859,7 @@ static int length(Draw_Interpretor& di, int n, const char** a)
     return 1;
   occ::handle<Geom_Curve>   GC   = DrawTrSurf::GetCurve(a[1]);
   occ::handle<Geom2d_Curve> GC2d = DrawTrSurf::GetCurve2d(a[1]);
-  double                    Tol  = Precision::Confusion(), L;
+  double                    Tol  = math::precision::Precision::Confusion(), L;
   if (n == 3)
     Tol = Draw::Atof(a[2]);
 

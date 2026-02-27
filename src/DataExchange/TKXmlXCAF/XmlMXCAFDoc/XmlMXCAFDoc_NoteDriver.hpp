@@ -7,7 +7,10 @@
 #include <XmlObjMgt_RRelocationTable.hpp>
 #include <XmlObjMgt_SRelocationTable.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
@@ -25,5 +28,5 @@ public:
   DEFINE_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteDriver, XmlMDF_ADriver)
 
 protected:
-  XmlMXCAFDoc_NoteDriver(const occ::handle<Message_Messenger>& theMsgDriver, const char* theName);
+  XmlMXCAFDoc_NoteDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver, const char* theName);
 };

@@ -69,7 +69,7 @@ void OpenGl_VertexBuffer::bindAttribute(const occ::handle<OpenGl_Context>& theCt
     else
     {
 
-      Message::SendFail(
+      System::log::Message::SendFail(
         "Error: OpenGl_VertexBuffer::bindAttribute() does nothing without active GLSL program");
     }
     return;

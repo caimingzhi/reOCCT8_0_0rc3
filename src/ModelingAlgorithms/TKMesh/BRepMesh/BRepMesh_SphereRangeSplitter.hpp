@@ -20,6 +20,6 @@ private:
   {
     const double aDiff      = theRange.second - theRange.first;
     theStepAndOffset.first  = aDiff / ((int)(aDiff / theDefaultStep) + 1);
-    theStepAndOffset.second = theRange.second - Precision::PConfusion();
+    theStepAndOffset.second = theRange.second - math::precision::Precision::PConfusion();
   }
 };

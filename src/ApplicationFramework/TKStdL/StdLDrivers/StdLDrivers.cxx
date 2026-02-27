@@ -16,7 +16,7 @@ occ::handle<Standard_Transient> StdLDrivers::Factory(const Standard_GUID& aGUID)
   if (aGUID == StdLRetrievalDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "StdLDrivers : Retrieval Plugin" << std::endl;
+    std::cout << "StdLDrivers : Retrieval System::plugin::Plugin" << std::endl;
 #endif
 
     static occ::handle<StdLDrivers_DocumentRetrievalDriver> model_rd =

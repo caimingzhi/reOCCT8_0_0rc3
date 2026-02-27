@@ -145,7 +145,7 @@ IFSelect_ReturnStatus IFSelect_WorkSession::ReadFile(const char* filename)
   }
   catch (Standard_Failure const& anException)
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "    ****    ReadFile Interruption by Exception :   ****\n";
     sout << anException.what();
     sout << "\n    Abandon" << std::endl;
@@ -182,7 +182,7 @@ IFSelect_ReturnStatus IFSelect_WorkSession::ReadStream(const char*   theName,
   }
   catch (Standard_Failure const& anException)
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "    ****    ReadFile Interruption by Exception :   ****\n";
     sout << anException.what();
     sout << "\n    Abandon" << std::endl;
@@ -1031,7 +1031,7 @@ Interface_EntityIterator IFSelect_WorkSession::EvalSelection(
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    EvalSelection Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -1066,7 +1066,7 @@ occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>> IFSelect_Wor
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    SelectionResult Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -1357,7 +1357,7 @@ int IFSelect_WorkSession::RunTransformer(const occ::handle<IFSelect_Transformer>
 
   if (!checks.IsEmpty(false))
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "  **    RunTransformer has produced Check Messages :    **" << std::endl;
     checks.Print(sout, myModel, false);
   }
@@ -1545,8 +1545,8 @@ bool IFSelect_WorkSession::SetFileRoot(const occ::handle<IFSelect_Dispatch>& dis
 
 const char* IFSelect_WorkSession::GiveFileRoot(const char* file) const
 {
-  OSD_Path path(file);
-  if (!OSD_Path::IsValid(TCollection_AsciiString(file)))
+  System::os::OSD_Path path(file);
+  if (!System::os::OSD_Path::IsValid(TCollection_AsciiString(file)))
     return file;
   bufstr = path.Name();
   return bufstr.ToCString();
@@ -1615,7 +1615,7 @@ void IFSelect_WorkSession::EvaluateFile()
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    EvaluateFile Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -1630,7 +1630,7 @@ void IFSelect_WorkSession::EvaluateFile()
   checks = thecopier->Copy(R, thelibrary, theprotocol);
   if (!checks.IsEmpty(false))
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "  **    EvaluateFile has produced Check Messages :    **" << std::endl;
     checks.Print(sout, myModel, false);
   }
@@ -1685,7 +1685,7 @@ bool IFSelect_WorkSession::SendSplit()
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    SendSplit Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -1704,7 +1704,7 @@ bool IFSelect_WorkSession::SendSplit()
   }
   if (!IsLoaded())
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << " ***  Data for SendSplit not available  ***" << std::endl;
     checks.CCheck(0)->AddFail("Data not available");
     thecheckrun = checks;
@@ -1720,7 +1720,7 @@ bool IFSelect_WorkSession::SendSplit()
       return false;
     int                             i, nbd = theshareout->NbDispatches();
     int                             nf   = 0;
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << " SendSplit .. ";
     for (i = 1; i <= nbd; i++)
     {
@@ -1806,7 +1806,7 @@ int IFSelect_WorkSession::MaxSendingCount() const
 
 bool IFSelect_WorkSession::SetRemaining(const IFSelect_RemainMode mode)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (!IsLoaded())
     return false;
   if (mode == IFSelect_RemainForget)
@@ -1913,7 +1913,7 @@ IFSelect_ReturnStatus IFSelect_WorkSession::SendAll(const char* filename, const 
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    SendAll Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -1964,7 +1964,7 @@ IFSelect_ReturnStatus IFSelect_WorkSession::SendSelected(const char* filename,
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    SendSelected Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -2391,7 +2391,7 @@ void IFSelect_WorkSession::SetParams(
 
 void IFSelect_WorkSession::TraceStatics(const int use, const int mode) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (use > 0)
   {
     if (mode == 0)
@@ -2480,7 +2480,7 @@ void IFSelect_WorkSession::TraceStatics(const int use, const int mode) const
 
 void IFSelect_WorkSession::DumpShare() const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   sout << "        **********  Definition ShareOut (Complete)  **********" << std::endl;
 
   occ::handle<TCollection_HAsciiString> str = theshareout->Prefix();
@@ -2534,7 +2534,7 @@ void IFSelect_WorkSession::DumpShare() const
 
 void IFSelect_WorkSession::ListItems(const char* lab) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   sout << "        **********  Items in Session  **********" << std::endl;
   int                                   nb = MaxIdent();
   occ::handle<TCollection_HAsciiString> str;
@@ -2562,7 +2562,7 @@ void IFSelect_WorkSession::ListItems(const char* lab) const
 
 void IFSelect_WorkSession::ListFinalModifiers(const bool formodel) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   int                             nb   = theshareout->NbModifiers(formodel);
   sout << "        **********  Modifiers in Session ";
   sout << (formodel ? "(For Model)" : "(For File)");
@@ -2580,7 +2580,7 @@ void IFSelect_WorkSession::ListFinalModifiers(const bool formodel) const
 
 void IFSelect_WorkSession::DumpSelection(const occ::handle<IFSelect_Selection>& sel) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (ItemIdent(sel) == 0)
   {
     sout << "Selection :  Unknown" << std::endl;
@@ -2924,7 +2924,7 @@ void IFSelect_WorkSession::DumpModel(const int level, Standard_OStream& S)
       }
       catch (Standard_Failure const&)
       {
-        Message_Messenger::StreamBuffer sout = Message::SendInfo();
+        System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
         sout << "    ****    DumpModel (Check) Interrupted by Exception    ****\n";
         S << "  ** **  Exception Raised during Check !  ** **\n";
         S << "  -->  what could be determined is listed" << std::endl;
@@ -2942,7 +2942,7 @@ void IFSelect_WorkSession::DumpModel(const int level, Standard_OStream& S)
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "    ****    DumpModel Interrupted by Exception :   ****\n";
       sout << anException.what();
       sout << "\n    Abandon" << std::endl;
@@ -2955,7 +2955,7 @@ void IFSelect_WorkSession::DumpModel(const int level, Standard_OStream& S)
 void IFSelect_WorkSession::TraceDumpModel(const int mode)
 {
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   DumpModel(mode, sout);
 }
@@ -2989,7 +2989,7 @@ void IFSelect_WorkSession::TraceDumpEntity(const occ::handle<Standard_Transient>
                                            const int                              level) const
 {
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   DumpEntity(ent, level, sout);
 }
@@ -3086,7 +3086,7 @@ void IFSelect_WorkSession::PrintSignatureList(Standard_OStream&                 
 
 void IFSelect_WorkSession::EvaluateSelection(const occ::handle<IFSelect_Selection>& sel) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (errhand)
   {
     errhand = false;
@@ -3123,7 +3123,7 @@ void IFSelect_WorkSession::EvaluateSelection(const occ::handle<IFSelect_Selectio
 void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>& disp,
                                             const int                             mode) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (errhand)
   {
     errhand = false;
@@ -3211,7 +3211,7 @@ void IFSelect_WorkSession::EvaluateDispatch(const occ::handle<IFSelect_Dispatch>
 
 void IFSelect_WorkSession::EvaluateComplete(const int mode) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (errhand)
   {
     errhand = false;

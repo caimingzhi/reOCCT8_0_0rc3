@@ -346,7 +346,7 @@ static int project(Draw_Interpretor& di, int n, const char** a)
   if (GC.IsNull())
     return 1;
 
-  double tolerance = Precision::Confusion();
+  double tolerance = math::precision::Precision::Confusion();
 
   double U1, U2, V1, V2;
   GS->Bounds(U1, U2, V1, V2);
@@ -864,7 +864,7 @@ double CompLocalDev(const Adaptor3d_Curve& theCurve, const double u1, const doub
     return std::sqrt(-dmin);
   }
 
-  math_BrentMinimum anOptLoc(Precision::PConfusion());
+  math_BrentMinimum anOptLoc(math::precision::Precision::PConfusion());
   anOptLoc.Perform(aFunc1, x1, aT(1), x2);
 
   if (anOptLoc.IsDone())
@@ -891,7 +891,7 @@ static int crvpoints(Draw_Interpretor& di, int, const char** a)
     TopoDS_Wire aWire = TopoDS::Wire(DBRep::Get(a[2], TopAbs_WIRE));
     if (aWire.IsNull())
     {
-      Message::SendFail() << "cannot evaluate the argument " << a[2] << " as a curve";
+      System::log::Message::SendFail() << "cannot evaluate the argument " << a[2] << " as a curve";
       return 1;
     }
     BRepAdaptor_CompCurve aCompCurve(aWire);
@@ -951,7 +951,7 @@ static int crvpoints(Draw_Interpretor& di, int, const char** a)
 static int crvtpoints(Draw_Interpretor& di, int n, const char** a)
 {
   int    i, nbp, aMinPntsNb = 2;
-  double defl, angle = Precision::Angular();
+  double defl, angle = math::precision::Precision::Angular();
 
   occ::handle<Adaptor3d_Curve> aHCurve;
   occ::handle<Geom_Curve>      C = DrawTrSurf::GetCurve(a[2]);
@@ -961,7 +961,7 @@ static int crvtpoints(Draw_Interpretor& di, int n, const char** a)
     TopoDS_Wire aWire = TopoDS::Wire(DBRep::Get(a[2], TopAbs_WIRE));
     if (aWire.IsNull())
     {
-      Message::SendFail() << "cannot evaluate the argument " << a[2] << " as a curve";
+      System::log::Message::SendFail() << "cannot evaluate the argument " << a[2] << " as a curve";
       return 1;
     }
     BRepAdaptor_CompCurve aCompCurve(aWire);
@@ -1038,12 +1038,12 @@ static int uniformAbscissa(Draw_Interpretor& di, int n, const char** a)
 
   try
   {
-    GeomLProp_CLProps Prop(ellip, 2, Precision::Intersection());
+    GeomLProp_CLProps Prop(ellip, 2, math::precision::Precision::Intersection());
     Prop.SetCurve(ellip);
 
     GeomAdaptor_Curve GAC(ellip);
     di << "Type Of curve: " << GAC.GetType() << "\n";
-    constexpr double Tol = Precision::Confusion();
+    constexpr double Tol = math::precision::Precision::Confusion();
     double           L;
 
     L = GCPnts_AbscissaPoint::Length(GAC, GAC.FirstParameter(), GAC.LastParameter(), Tol);
@@ -1109,12 +1109,12 @@ static int EllipsUniformAbscissa(Draw_Interpretor& di, int n, const char** a)
 
   try
   {
-    GeomLProp_CLProps Prop(ellip, 2, Precision::Intersection());
+    GeomLProp_CLProps Prop(ellip, 2, math::precision::Precision::Intersection());
     Prop.SetCurve(ellip);
 
     GeomAdaptor_Curve GAC(ellip);
     di << "Type Of curve: " << GAC.GetType() << "\n";
-    constexpr double Tol = Precision::Confusion();
+    constexpr double Tol = math::precision::Precision::Confusion();
     double           L;
 
     L = GCPnts_AbscissaPoint::Length(GAC, GAC.FirstParameter(), GAC.LastParameter(), Tol);
@@ -1200,7 +1200,7 @@ static int discrCurve(Draw_Interpretor& di, int theArgNb, const char** theArgVec
   }
 
   GeomAdaptor_Curve      aCurveAdaptor(aCurve);
-  GCPnts_UniformAbscissa aSplitter(aCurveAdaptor, aSrcNbPnts, Precision::Confusion());
+  GCPnts_UniformAbscissa aSplitter(aCurveAdaptor, aSrcNbPnts, math::precision::Precision::Confusion());
   if (!aSplitter.IsDone())
   {
     di << "Error: Invalid result.\n";
@@ -1443,7 +1443,7 @@ static int intersection(Draw_Interpretor& di, int n, const char** a)
   if (GS2.IsNull())
     return 1;
 
-  double tol = Precision::Confusion();
+  double tol = math::precision::Precision::Confusion();
   if (n == 5 || n == 9 || n == 13 || n == 17)
     tol = Draw::Atof(a[n - 1]);
 

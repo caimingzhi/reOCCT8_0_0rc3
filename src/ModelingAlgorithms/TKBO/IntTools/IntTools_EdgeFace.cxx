@@ -33,7 +33,7 @@ static bool IsRadius(const BRepAdaptor_Curve&   aCurve,
 
 IntTools_EdgeFace::IntTools_EdgeFace()
 {
-  myFuzzyValue            = Precision::Confusion();
+  myFuzzyValue            = math::precision::Precision::Confusion();
   myIsDone                = false;
   myErrorStatus           = 1;
   myQuickCoincidenceCheck = false;
@@ -307,7 +307,7 @@ bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
     return theflag;
   }
 
-  Tol = Precision::PConfusion();
+  Tol = math::precision::Precision::PConfusion();
 
   const occ::handle<Geom_Curve>&   Curve   = BRep_Tool::Curve(myC.Edge(), af, al);
   const occ::handle<Geom_Surface>& Surface = BRep_Tool::Surface(myS.Face());
@@ -410,12 +410,12 @@ bool IntTools_EdgeFace::CheckTouch(const IntTools_CommonPrt& aCP, double& aTx)
     return theflag;
   }
 
-  if (fabs(aTx - aTF) < Precision::PConfusion())
+  if (fabs(aTx - aTF) < math::precision::Precision::PConfusion())
   {
     return !theflag;
   }
 
-  if (fabs(aTx - aTL) < Precision::PConfusion())
+  if (fabs(aTx - aTL) < math::precision::Precision::PConfusion())
   {
     return !theflag;
   }
@@ -621,7 +621,7 @@ bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& 
   aDist2 = DistanceFunction(aTm);
   aDist2 *= aDist2;
 
-  Tol = Precision::PConfusion();
+  Tol = math::precision::Precision::PConfusion();
 
   const occ::handle<Geom_Curve>&   Curve   = BRep_Tool::Curve(myC.Edge(), af, al);
   const occ::handle<Geom_Surface>& Surface = BRep_Tool::Surface(myS.Face());

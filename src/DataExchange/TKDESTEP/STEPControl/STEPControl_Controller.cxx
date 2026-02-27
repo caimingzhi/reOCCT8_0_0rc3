@@ -388,7 +388,7 @@ IFSelect_ReturnStatus STEPControl_Controller::TransferWriteShape(
   const occ::handle<Transfer_FinderProcess>&   FP,
   const occ::handle<Interface_InterfaceModel>& model,
   const int                                    modeshape,
-  const Message_ProgressRange&                 theProgress) const
+  const System::log::Message_ProgressRange&                 theProgress) const
 {
   if (modeshape < 0 || modeshape > 4)
     return IFSelect_RetError;

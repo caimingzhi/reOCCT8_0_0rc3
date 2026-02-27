@@ -32,7 +32,7 @@ DEXCAF_Provider::DEXCAF_Provider(const occ::handle<DE_ConfigurationNode>& theNod
 bool DEXCAF_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Read(thePath, theDocument, theProgress);
@@ -41,7 +41,7 @@ bool DEXCAF_Provider::Read(const TCollection_AsciiString&       thePath,
 bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
@@ -49,17 +49,17 @@ bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DEXCAF_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   if (theDocument.IsNull())
   {
-    Message::SendFail() << "Error in the DEXCAF_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEXCAF_Provider during reading the file " << thePath
                         << "\t: theDocument shouldn't be null";
     return false;
   }
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(DEXCAF_ConfigurationNode)))
   {
-    Message::SendFail() << "Error in the DEXCAF_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEXCAF_Provider during reading the file " << thePath
                         << "\t: Incorrect or empty Configuration Node";
     return false;
   }
@@ -102,7 +102,7 @@ bool DEXCAF_Provider::Read(const TCollection_AsciiString&       thePath,
 
   if (anApp->Open(thePath, aDocument, aFilter, theProgress) != PCDM_RS_OK)
   {
-    Message::SendFail() << "Error in the DEXCAF_Provider during reading the file : " << thePath
+    System::log::Message::SendFail() << "Error in the DEXCAF_Provider during reading the file : " << thePath
                         << "\t: Cannot open XDE document";
     return false;
   }
@@ -112,7 +112,7 @@ bool DEXCAF_Provider::Read(const TCollection_AsciiString&       thePath,
 
 bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<TDocStd_Application> anApp = new TDocStd_Application();
   BinXCAFDrivers::DefineFormat(anApp);
@@ -120,7 +120,7 @@ bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
   occ::handle<DEXCAF_ConfigurationNode> aNode = occ::down_cast<DEXCAF_ConfigurationNode>(GetNode());
   if (aNode->GlobalParameters.LengthUnit != 1.0)
   {
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning in the DEXCAF_Provider during writing the file " << thePath
       << "\t: Target Units for writing were changed, but current format doesn't support scaling";
   }
@@ -132,8 +132,8 @@ bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
   }
   else if (!theDocument->IsSaved())
   {
-    Message::SendFail() << "Storage error in the DEXCAF_Provider during writing the file "
-                        << thePath << "\t: Storage error : this document has never been saved";
+    System::log::Message::SendFail() << "app::storage::Storage error in the DEXCAF_Provider during writing the file "
+                        << thePath << "\t: app::storage::Storage error : this document has never been saved";
     return false;
   }
   else
@@ -146,36 +146,36 @@ bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
     case PCDM_SS_OK:
       return true;
     case PCDM_SS_DriverFailure:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error : driver failure";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error : driver failure";
       break;
     case PCDM_SS_WriteFailure:
-      Message::SendFail() << "Error in the DEXCAF_Provider during the writing the file : "
-                          << thePath << "\t: Storage error : write failure";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during the writing the file : "
+                          << thePath << "\t: app::storage::Storage error : write failure";
       break;
     case PCDM_SS_Failure:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error : general failure";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error : general failure";
       break;
     case PCDM_SS_Doc_IsNull:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error :: document is NULL";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error :: document is NULL";
       break;
     case PCDM_SS_No_Obj:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error : no object";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error : no object";
       break;
     case PCDM_SS_Info_Section_Error:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error : section error";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error : section error";
       break;
     case PCDM_SS_UserBreak:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error : user break";
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error : user break";
       break;
     case PCDM_SS_UnrecognizedFormat:
-      Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
-                          << "\t: Storage error : unrecognized document storage format : "
+      System::log::Message::SendFail() << "Error in the DEXCAF_Provider during writing the file : " << thePath
+                          << "\t: app::storage::Storage error : unrecognized document storage format : "
                           << theDocument->StorageFormat();
       break;
   }
@@ -185,7 +185,7 @@ bool DEXCAF_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DEXCAF_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Read(thePath, theShape, theProgress);
@@ -194,7 +194,7 @@ bool DEXCAF_Provider::Read(const TCollection_AsciiString&      thePath,
 bool DEXCAF_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Write(thePath, theShape, theProgress);
@@ -202,11 +202,11 @@ bool DEXCAF_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DEXCAF_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(DEXCAF_ConfigurationNode)))
   {
-    Message::SendFail() << "Error in the DEXCAF_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEXCAF_Provider during reading the file " << thePath
                         << "\t: Incorrect or empty Configuration Node";
     return false;
   }
@@ -220,7 +220,7 @@ bool DEXCAF_Provider::Read(const TCollection_AsciiString& thePath,
   aSTool->GetFreeShapes(aLabels);
   if (aLabels.Length() <= 0)
   {
-    Message::SendFail() << "Error in the DEXCAF_Provider during reading the file : " << thePath
+    System::log::Message::SendFail() << "Error in the DEXCAF_Provider during reading the file : " << thePath
                         << "\t: Document contain no shapes";
     return false;
   }
@@ -246,7 +246,7 @@ bool DEXCAF_Provider::Read(const TCollection_AsciiString& thePath,
 
 bool DEXCAF_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
-                            const Message_ProgressRange&   theProgress)
+                            const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<TDocStd_Document>  aDoc    = new TDocStd_Document("BinXCAF");
   occ::handle<XCAFDoc_ShapeTool> aShTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());

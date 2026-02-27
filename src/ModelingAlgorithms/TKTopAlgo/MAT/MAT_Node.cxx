@@ -93,7 +93,7 @@ bool MAT_Node::OnBasicElt() const
 
 bool MAT_Node::Infinite() const
 {
-  return (Distance() == Precision::Infinite());
+  return (Distance() == math::precision::Precision::Infinite());
 }
 
 void MAT_Node::SetLinkedArc(const occ::handle<MAT_Arc>& LinkedArc)

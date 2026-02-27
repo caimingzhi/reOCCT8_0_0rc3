@@ -84,10 +84,10 @@ bool ChFi2d_FilletAPI::IsAnalytical(const TopoDS_Edge& theEdge1, const TopoDS_Ed
     gp_Pnt p12 = AC1.Value(AC1.LastParameter());
     gp_Pnt p21 = AC2.Value(AC2.FirstParameter());
     gp_Pnt p22 = AC2.Value(AC2.LastParameter());
-    if (p11.SquareDistance(p21) < Precision::SquareConfusion()
-        || p11.SquareDistance(p22) < Precision::SquareConfusion()
-        || p12.SquareDistance(p21) < Precision::SquareConfusion()
-        || p12.SquareDistance(p22) < Precision::SquareConfusion())
+    if (p11.SquareDistance(p21) < math::precision::Precision::SquareConfusion()
+        || p11.SquareDistance(p22) < math::precision::Precision::SquareConfusion()
+        || p12.SquareDistance(p21) < math::precision::Precision::SquareConfusion()
+        || p12.SquareDistance(p22) < math::precision::Precision::SquareConfusion())
     {
       ret = true;
     }

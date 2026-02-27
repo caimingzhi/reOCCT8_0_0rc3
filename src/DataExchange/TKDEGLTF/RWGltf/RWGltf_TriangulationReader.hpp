@@ -27,7 +27,7 @@ protected:
 
   Standard_EXPORT bool load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                             const occ::handle<Poly_Triangulation>&         theDestMesh,
-                            const occ::handle<OSD_FileSystem>& theFileSystem) const override;
+                            const occ::handle<System::os::OSD_FileSystem>& theFileSystem) const override;
 
   Standard_EXPORT bool finalizeLoading(
     const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
@@ -46,7 +46,7 @@ protected:
     const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
     const RWGltf_GltfPrimArrayData&                   theGltfData,
     const occ::handle<Poly_Triangulation>&            theDestMesh,
-    const occ::handle<OSD_FileSystem>&                theFileSystem) const;
+    const occ::handle<System::os::OSD_FileSystem>&                theFileSystem) const;
 
   Standard_EXPORT virtual bool readBuffer(
     const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
@@ -59,7 +59,7 @@ protected:
     const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
     const RWGltf_GltfPrimArrayData&                   theGltfData,
     const occ::handle<Poly_Triangulation>&            theDestMesh,
-    const occ::handle<OSD_FileSystem>&                theFileSystem) const;
+    const occ::handle<System::os::OSD_FileSystem>&                theFileSystem) const;
 
 protected:
   occ::handle<RWMesh_TriangulationSource> myTriangulation;

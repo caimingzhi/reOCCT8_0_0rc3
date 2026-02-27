@@ -235,10 +235,10 @@ void BinTools_Curve2dSet::WriteCurve2d(const occ::handle<Geom2d_Curve>& C, BinTo
   }
 }
 
-void BinTools_Curve2dSet::Write(Standard_OStream& OS, const Message_ProgressRange& theRange) const
+void BinTools_Curve2dSet::Write(Standard_OStream& OS, const System::log::Message_ProgressRange& theRange) const
 {
   int                   i, aNbCurves = myMap.Extent();
-  Message_ProgressScope aPS(theRange, "Writing 2D curves", aNbCurves);
+  System::log::Message_ProgressScope aPS(theRange, "Writing 2D curves", aNbCurves);
   OS << "Curve2ds " << aNbCurves << "\n";
   BinTools_OStream aStream(OS);
   for (i = 1; i <= aNbCurves && aPS.More(); i++, aPS.Next())
@@ -515,7 +515,7 @@ Standard_IStream& BinTools_Curve2dSet::ReadCurve2d(Standard_IStream&          IS
   return IS;
 }
 
-void BinTools_Curve2dSet::Read(Standard_IStream& IS, const Message_ProgressRange& theRange)
+void BinTools_Curve2dSet::Read(Standard_IStream& IS, const System::log::Message_ProgressRange& theRange)
 {
   char buffer[255];
 
@@ -534,7 +534,7 @@ void BinTools_Curve2dSet::Read(Standard_IStream& IS, const Message_ProgressRange
   occ::handle<Geom2d_Curve> C;
   int                       i, aNbCurves;
   IS >> aNbCurves;
-  Message_ProgressScope aPS(theRange, "Reading curves 2d", aNbCurves);
+  System::log::Message_ProgressScope aPS(theRange, "Reading curves 2d", aNbCurves);
   IS.get();
   for (i = 1; i <= aNbCurves && aPS.More(); i++, aPS.Next())
   {

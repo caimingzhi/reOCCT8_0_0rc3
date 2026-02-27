@@ -34,7 +34,7 @@ public:
                             const bool                   theReadTessellatedWhenNoBRepOnly,
                             bool&                        theHasGeom,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT const TopoDS_Shape& Value() const;
 

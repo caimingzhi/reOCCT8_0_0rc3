@@ -51,7 +51,7 @@ double Draft::Angle(const TopoDS_Face& F, const gp_Dir& D)
   {
     gp_Cylinder Cy(occ::down_cast<Geom_CylindricalSurface>(S)->Cylinder());
     double      testdir = D.Dot(Cy.Axis().Direction());
-    if (std::abs(testdir) <= 1. - Precision::Angular())
+    if (std::abs(testdir) <= 1. - math::precision::Precision::Angular())
     {
       throw Standard_DomainError();
     }
@@ -61,7 +61,7 @@ double Draft::Angle(const TopoDS_Face& F, const gp_Dir& D)
   {
     gp_Cone Co(occ::down_cast<Geom_ConicalSurface>(S)->Cone());
     double  testdir = D.Dot(Co.Axis().Direction());
-    if (std::abs(testdir) <= 1. - Precision::Angular())
+    if (std::abs(testdir) <= 1. - math::precision::Precision::Angular())
     {
       throw Standard_DomainError();
     }

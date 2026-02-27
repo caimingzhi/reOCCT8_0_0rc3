@@ -27,7 +27,7 @@ occ::handle<XCAFDoc_NoteBinData> XCAFDoc_NoteBinData::Set(
   const TCollection_ExtendedString& theTimeStamp,
   const TCollection_ExtendedString& theTitle,
   const TCollection_AsciiString&    theMIMEtype,
-  OSD_File&                         theFile)
+  System::os::OSD_File&                         theFile)
 {
   occ::handle<XCAFDoc_NoteBinData> aNoteBinData;
   if (!theLabel.IsNull() && !theLabel.FindAttribute(XCAFDoc_NoteBinData::GetID(), aNoteBinData))
@@ -65,7 +65,7 @@ XCAFDoc_NoteBinData::XCAFDoc_NoteBinData() = default;
 
 bool XCAFDoc_NoteBinData::Set(const TCollection_ExtendedString& theTitle,
                               const TCollection_AsciiString&    theMIMEtype,
-                              OSD_File&                         theFile)
+                              System::os::OSD_File&                         theFile)
 {
   if (!theFile.IsOpen() || !theFile.IsReadable())
     return false;

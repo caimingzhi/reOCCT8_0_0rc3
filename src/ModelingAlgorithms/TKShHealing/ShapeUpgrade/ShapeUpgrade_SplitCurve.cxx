@@ -32,7 +32,7 @@ void ShapeUpgrade_SplitCurve::Init(const double First, const double Last)
 void ShapeUpgrade_SplitCurve::SetSplitValues(
   const occ::handle<NCollection_HSequence<double>>& SplitValues)
 {
-  constexpr double precision = Precision::PConfusion();
+  constexpr double precision = math::precision::Precision::PConfusion();
   if (SplitValues.IsNull())
     return;
   if (SplitValues->Length() == 0)

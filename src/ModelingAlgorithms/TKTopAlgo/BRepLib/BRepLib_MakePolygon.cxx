@@ -80,7 +80,7 @@ void BRepLib_MakePolygon::Add(const gp_Pnt& P)
 {
   BRep_Builder  B;
   TopoDS_Vertex V;
-  B.MakeVertex(V, P, Precision::Confusion());
+  B.MakeVertex(V, P, math::precision::Precision::Confusion());
   Add(V);
 }
 

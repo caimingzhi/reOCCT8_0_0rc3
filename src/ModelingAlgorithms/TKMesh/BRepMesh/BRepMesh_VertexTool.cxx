@@ -14,7 +14,7 @@ NCollection_CellFilter_Action BRepMesh_VertexInspector::Inspect(const int theTar
 
   gp_XY aVec = (myPoint - aVertex.Coord());
   bool  inTol;
-  if (std::abs(myTolerance[1]) < Precision::Confusion())
+  if (std::abs(myTolerance[1]) < math::precision::Precision::Confusion())
   {
     inTol = aVec.SquareModulus() < myTolerance[0];
   }
@@ -41,7 +41,7 @@ BRepMesh_VertexTool::BRepMesh_VertexTool(const occ::handle<NCollection_IncAlloca
       myCellFilter(0., myAllocator),
       mySelector(myAllocator)
 {
-  constexpr double aTol = Precision::Confusion();
+  constexpr double aTol = math::precision::Precision::Confusion();
   SetCellSize(aTol + 0.05 * aTol);
   SetTolerance(aTol, aTol);
 }

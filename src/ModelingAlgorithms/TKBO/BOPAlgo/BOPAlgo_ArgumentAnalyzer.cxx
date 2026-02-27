@@ -93,9 +93,9 @@ void BOPAlgo_ArgumentAnalyzer::Prepare()
   }
 }
 
-void BOPAlgo_ArgumentAnalyzer::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_ArgumentAnalyzer::Perform(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Analyze shapes", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Analyze shapes", 10);
   try
   {
     OCC_CATCH_SIGNALS
@@ -285,9 +285,9 @@ void BOPAlgo_ArgumentAnalyzer::TestTypes()
   }
 }
 
-void BOPAlgo_ArgumentAnalyzer::TestSelfInterferences(const Message_ProgressRange& theRange)
+void BOPAlgo_ArgumentAnalyzer::TestSelfInterferences(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, (!myShape1.IsNull() && !myShape2.IsNull() ? 2 : 1));
+  System::log::Message_ProgressScope aPS(theRange, nullptr, (!myShape1.IsNull() && !myShape2.IsNull() ? 2 : 1));
   int                   ii;
 
   for (ii = 0; ii < 2; ii++)

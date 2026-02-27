@@ -96,8 +96,8 @@ static bool MinMaxSmall(const double minx,
   double dy = maxy - miny;
   double dz = maxz - minz;
 
-  return (dx <= toler || Precision::IsInfinite(dx)) && (dy <= toler || Precision::IsInfinite(dy))
-         && (dz <= toler || Precision::IsInfinite(dz));
+  return (dx <= toler || math::precision::Precision::IsInfinite(dx)) && (dy <= toler || math::precision::Precision::IsInfinite(dy))
+         && (dz <= toler || math::precision::Precision::IsInfinite(dz));
 }
 
 int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
@@ -124,8 +124,8 @@ int ShapeAnalysis_CheckSmallFace::IsSpotFace(const TopoDS_Face& F,
   if (!isWir)
     return true;
   int    nbv  = 0;
-  double minx = 0, miny = 0, minz = 0, maxx = Precision::Infinite(), maxy = Precision::Infinite(),
-         maxz = Precision::Infinite();
+  double minx = 0, miny = 0, minz = 0, maxx = math::precision::Precision::Infinite(), maxy = math::precision::Precision::Infinite(),
+         maxz = math::precision::Precision::Infinite();
   TopoDS_Vertex V0;
   bool          same = true;
   for (TopExp_Explorer iv(F, TopAbs_VERTEX); iv.More(); iv.Next())
@@ -854,7 +854,7 @@ bool ShapeAnalysis_CheckSmallFace::CheckPinFace(
   theCurWire       = sbwd->Wire();
   i                = 1;
   bool        done = false;
-  double      tol  = Precision::Confusion();
+  double      tol  = math::precision::Precision::Confusion();
   TopoDS_Edge theFirstEdge, theSecondEdge;
   double      d1 = 0, d2 = 0;
   for (TopExp_Explorer exp_e(F, TopAbs_EDGE); exp_e.More(); exp_e.Next())

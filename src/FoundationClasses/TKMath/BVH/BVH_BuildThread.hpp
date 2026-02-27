@@ -33,7 +33,7 @@ protected:
 
   BVH_BuildQueue& myBuildQueue;
 
-  OSD_Thread myWorkThread;
+  System::os::OSD_Thread myWorkThread;
 
 public:
   DEFINE_STANDARD_RTTIEXT(BVH_BuildThread, Standard_Transient)

@@ -56,7 +56,7 @@ static int proj(Draw_Interpretor& di, int n, const char** a)
     gp_Pnt2d                      aP1   = proj.Point(i);
     const double                  aDist = P.Distance(aP1);
     const TCollection_AsciiString aName = TCollection_AsciiString("ext_") + i;
-    if (aDist > Precision::PConfusion())
+    if (aDist > math::precision::Precision::PConfusion())
     {
       occ::handle<Geom2d_Line>         L  = new Geom2d_Line(P, gp_Dir2d(aP1.XY() - P.XY()));
       occ::handle<Geom2d_TrimmedCurve> CT = new Geom2d_TrimmedCurve(L, 0., aDist);
@@ -271,7 +271,7 @@ static int extrema(Draw_Interpretor& di, int n, const char** a)
     Ex.Points(i, P1, P2);
     di << "dist " << i << ": " << Ex.Distance(i) << "  ";
     const TCollection_AsciiString aName = TCollection_AsciiString("ext_") + i;
-    if (Ex.Distance(i) <= Precision::PConfusion())
+    if (Ex.Distance(i) <= math::precision::Precision::PConfusion())
     {
       occ::handle<Draw_Marker2D> mark = new Draw_Marker2D(P1, Draw_X, Draw_vert);
       dout << mark;

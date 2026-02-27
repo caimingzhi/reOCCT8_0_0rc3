@@ -62,7 +62,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedLin& Qualified1
   }
   else
   {
-    if (L1.Direction().IsParallel(L2.Direction(), Precision::Angular()))
+    if (L1.Direction().IsParallel(L2.Direction(), math::precision::Precision::Angular()))
     {
       WellDone = true;
     }

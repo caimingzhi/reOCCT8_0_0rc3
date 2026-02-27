@@ -135,7 +135,7 @@ public:
                               NCollection_List<TopoDS_Shape>,
                               TopTools_ShapeMapHasher>& theSolidsIF =
       NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>(),
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void FillInternals(
     const NCollection_List<TopoDS_Shape>&               theSolids,

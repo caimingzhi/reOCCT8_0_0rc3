@@ -176,7 +176,7 @@ void TopOpeBRepTool_ShapeTool::AdjustOnPeriodic(const TopoDS_Shape& F, double& u
   double UFfirst, UFlast, VFfirst, VFlast;
   BRepTools::UVBounds(FF, UFfirst, UFlast, VFfirst, VFlast);
 
-  double tol = Precision::PConfusion();
+  double tol = math::precision::Precision::PConfusion();
 
   if (isUperio)
   {
@@ -279,7 +279,7 @@ double TopOpeBRepTool_ShapeTool::PeriodizeParameter(const double        par,
     occ::handle<Geom2d_Line> HL(occ::down_cast<Geom2d_Line>(PC));
     const gp_Dir2d&          D = HL->Direction();
 
-    double tol  = Precision::Angular();
+    double tol  = math::precision::Precision::Angular();
     bool   isoU = false, isoV = false;
     if (D.IsParallel(gp_Dir2d(gp_Dir2d::D::Y), tol))
       isoU = true;
@@ -515,7 +515,7 @@ double TopOpeBRepTool_ShapeTool::EdgeData(const BRepAdaptor_Curve& BAC,
                                           double&                  C)
 
 {
-  double tol = Precision::Angular();
+  double tol = math::precision::Precision::Angular();
 
   BRepLProp_CLProps BL(BAC, P, 2, tol);
   BL.Tangent(T);

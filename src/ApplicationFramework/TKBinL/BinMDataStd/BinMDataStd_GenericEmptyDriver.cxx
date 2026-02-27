@@ -14,7 +14,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_GenericEmptyDriver, BinMDF_ADriver)
 
 BinMDataStd_GenericEmptyDriver::BinMDataStd_GenericEmptyDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_GenericEmpty)->Name())
 {
 }

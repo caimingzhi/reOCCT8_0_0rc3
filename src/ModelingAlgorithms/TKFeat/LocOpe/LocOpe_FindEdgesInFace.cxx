@@ -38,8 +38,8 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
   gp_Pln                                                 pl;
   gp_Cylinder                                            cy;
 
-  constexpr double Tol    = Precision::Confusion();
-  constexpr double TolAng = Precision::Angular();
+  constexpr double Tol    = math::precision::Precision::Confusion();
+  constexpr double TolAng = math::precision::Precision::Angular();
 
   S  = BRep_Tool::Surface(F);
   Ts = S->DynamicType();
@@ -160,7 +160,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
         {
           ElSLib::Parameters(cy, p[i], U, V);
         }
-        if (TPT.Classify(gp_Pnt2d(U, V), Precision::Confusion()) == TopAbs_OUT)
+        if (TPT.Classify(gp_Pnt2d(U, V), math::precision::Precision::Confusion()) == TopAbs_OUT)
         {
           break;
         }

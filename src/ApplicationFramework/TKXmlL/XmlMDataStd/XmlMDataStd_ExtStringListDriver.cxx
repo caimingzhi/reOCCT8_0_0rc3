@@ -16,7 +16,7 @@ IMPLEMENT_DOMSTRING(ExtString, "string")
 IMPLEMENT_DOMSTRING(AttributeIDString, "extstrlistattguid")
 
 XmlMDataStd_ExtStringListDriver::XmlMDataStd_ExtStringListDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

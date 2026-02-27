@@ -5,7 +5,7 @@
 
 #include <Standard_GUID.hpp>
 
-StdObjMgt_WriteData::StdObjMgt_WriteData(const occ::handle<Storage_BaseDriver>& theDriver)
+StdObjMgt_WriteData::StdObjMgt_WriteData(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
     : myDriver(theDriver)
 {
 }

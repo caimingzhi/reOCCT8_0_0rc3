@@ -73,8 +73,8 @@ void GeomConvert_ApproxSurface_Eval::Evaluate(int* Dimension,
     *ErrorCode = 1;
   }
 
-  myAdaptor = myAdaptor->UTrim(UStartEnd[0], UStartEnd[1], Precision::PConfusion());
-  myAdaptor = myAdaptor->VTrim(VStartEnd[0], VStartEnd[1], Precision::PConfusion());
+  myAdaptor = myAdaptor->UTrim(UStartEnd[0], UStartEnd[1], math::precision::Precision::PConfusion());
+  myAdaptor = myAdaptor->VTrim(VStartEnd[0], VStartEnd[1], math::precision::Precision::PConfusion());
 
   int    Order = *UOrder + *VOrder;
   gp_Pnt pnt;

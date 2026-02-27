@@ -10,7 +10,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_IntegerDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "intattguid")
 
 XmlMDataStd_IntegerDriver::XmlMDataStd_IntegerDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

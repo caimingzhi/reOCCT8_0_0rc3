@@ -269,7 +269,7 @@ void GCPnts_UniformDeflection::initialize(const TheCurve& theC,
                                           const double    theU2,
                                           const bool      theWithControl)
 {
-  const double anEPSILON = theC.Resolution(Precision::Confusion());
+  const double anEPSILON = theC.Resolution(math::precision::Precision::Confusion());
   myDeflection           = theDeflection;
   myDone                 = false;
   myParams.Clear();

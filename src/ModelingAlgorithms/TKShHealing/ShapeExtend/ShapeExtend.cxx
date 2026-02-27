@@ -14,13 +14,13 @@ void ShapeExtend::Init()
 
   init = true;
 
-  if (!Message_MsgFile::HasMsg("ShapeFix.FixSmallSolid.MSG0"))
+  if (!System::log::Message_MsgFile::HasMsg("ShapeFix.FixSmallSolid.MSG0"))
   {
-    if (!Message_MsgFile::LoadFromEnv("CSF_SHMessage", "SHAPE"))
+    if (!System::log::Message_MsgFile::LoadFromEnv("CSF_SHMessage", "SHAPE"))
     {
-      Message_MsgFile::LoadFromString(SHMessage_SHAPE_us, sizeof(SHMessage_SHAPE_us) - 1);
+      System::log::Message_MsgFile::LoadFromString(SHMessage_SHAPE_us, sizeof(SHMessage_SHAPE_us) - 1);
     }
-    if (!Message_MsgFile::HasMsg("ShapeFix.FixSmallSolid.MSG0"))
+    if (!System::log::Message_MsgFile::HasMsg("ShapeFix.FixSmallSolid.MSG0"))
     {
       throw Standard_ProgramError(
         "Critical Error - message resources for ShapeExtend are invalid or undefined!");

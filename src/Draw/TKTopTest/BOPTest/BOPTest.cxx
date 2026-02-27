@@ -58,7 +58,7 @@ void BOPTest::Factory(Draw_Interpretor& theCommands)
 
 DPLUGIN(BOPTest)
 
-void BOPTest::ReportAlerts(const occ::handle<Message_Report>& theReport)
+void BOPTest::ReportAlerts(const occ::handle<System::log::Message_Report>& theReport)
 {
 
   Message_Gravity            anAlertTypes[2] = {Message_Warning, Message_Fail};
@@ -67,23 +67,23 @@ void BOPTest::ReportAlerts(const occ::handle<Message_Report>& theReport)
   {
 
     NCollection_Map<occ::handle<Standard_Transient>>    aPassedTypes;
-    const NCollection_List<occ::handle<Message_Alert>>& aList =
+    const NCollection_List<occ::handle<System::log::Message_Alert>>& aList =
       theReport->GetAlerts(anAlertTypes[iGravity]);
-    for (NCollection_List<occ::handle<Message_Alert>>::Iterator aIt(aList); aIt.More(); aIt.Next())
+    for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator aIt(aList); aIt.More(); aIt.Next())
     {
 
       const occ::handle<Standard_Type>& aType = aIt.Value()->DynamicType();
       if (!aPassedTypes.Add(aType))
         continue;
 
-      Message_Msg                aMsg(aIt.Value()->GetMessageKey());
+      System::log::Message_Msg                aMsg(aIt.Value()->GetMessageKey());
       TCollection_ExtendedString aText = aMsgType[iGravity] + aMsg.Get();
 
       if (BOPTest_Objects::DrawWarnShapes())
       {
         TCollection_AsciiString aShapeList;
         int                     aNbShapes = 0;
-        for (NCollection_List<occ::handle<Message_Alert>>::Iterator aIt2(aIt); aIt2.More();
+        for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator aIt2(aIt); aIt2.More();
              aIt2.Next())
         {
           occ::handle<TopoDS_AlertWithShape> aShapeAlert =

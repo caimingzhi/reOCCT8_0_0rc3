@@ -247,7 +247,7 @@ void AIS_ViewCube::ResetStyles()
 
 void AIS_ViewCube::SetSize(double theValue, bool theToAdaptAnother)
 {
-  const bool isNewSize = std::abs(mySize - theValue) > Precision::Confusion();
+  const bool isNewSize = std::abs(mySize - theValue) > math::precision::Precision::Confusion();
   mySize               = theValue;
   if (theToAdaptAnother)
   {
@@ -271,7 +271,7 @@ void AIS_ViewCube::SetRoundRadius(const double theValue)
 {
   Standard_OutOfRange_Raise_if(theValue < 0.0 || theValue > 0.5,
                                "AIS_ViewCube::SetRoundRadius(): theValue should be in [0; 0.5]");
-  if (std::abs(myRoundRadius - theValue) > Precision::Confusion())
+  if (std::abs(myRoundRadius - theValue) > math::precision::Precision::Confusion())
   {
     myRoundRadius = theValue;
     SetToUpdate();
@@ -819,7 +819,7 @@ void AIS_ViewCube::viewFitAll(const occ::handle<V3d_View>&         theView,
   }
   if (!aBndBox.IsVoid())
   {
-    theView->FitMinMax(theCamera, aBndBox, 0.01, 10.0 * Precision::Confusion());
+    theView->FitMinMax(theCamera, aBndBox, 0.01, 10.0 * math::precision::Precision::Confusion());
   }
 }
 
@@ -845,7 +845,7 @@ void AIS_ViewCube::StartAnimation(const occ::handle<AIS_ViewCubeOwner>& theOwner
     }
 
     const gp_Dir aNewDir = myEndState->Direction();
-    if (!myToResetCameraUp && !aNewDir.IsEqual(myStartState->Direction(), Precision::Angular()))
+    if (!myToResetCameraUp && !aNewDir.IsEqual(myStartState->Direction(), math::precision::Precision::Angular()))
     {
 
       const gp_Ax1 aNewDirAx1(gp::Origin(), aNewDir);
@@ -857,7 +857,7 @@ void AIS_ViewCube::StartAnimation(const occ::handle<AIS_ViewCubeOwner>& theOwner
         myEndState->Up().Rotated(aNewDirAx1, M_PI * 1.5),
       };
 
-      double aBestAngle = Precision::Infinite();
+      double aBestAngle = math::precision::Precision::Infinite();
       gp_Dir anUpBest;
       for (int anUpIter = 0; anUpIter < 4; ++anUpIter)
       {

@@ -140,7 +140,7 @@ void math_NewtonMinimum::Perform(math_MultipleVarFunctionWithHessian& F,
 
       if (aMult != RealLast())
       {
-        if (aMult > Precision::PConfusion())
+        if (aMult > math::precision::Precision::PConfusion())
         {
 
           TheStep *= aMult;
@@ -150,9 +150,9 @@ void math_NewtonMinimum::Perform(math_MultipleVarFunctionWithHessian& F,
 
           for (int anIdx = 1; anIdx <= myLeft.Upper(); anIdx++)
           {
-            if ((std::abs(precedent->Value(anIdx) - myRight(anIdx)) < Precision::PConfusion()
+            if ((std::abs(precedent->Value(anIdx) - myRight(anIdx)) < math::precision::Precision::PConfusion()
                  && TheStep(anIdx) < 0.0)
-                || (std::abs(precedent->Value(anIdx) - myLeft(anIdx)) < Precision::PConfusion()
+                || (std::abs(precedent->Value(anIdx) - myLeft(anIdx)) < math::precision::Precision::PConfusion()
                     && TheStep(anIdx) > 0.0))
             {
               TheStep(anIdx) = 0.0;

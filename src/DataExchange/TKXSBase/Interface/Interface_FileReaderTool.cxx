@@ -30,7 +30,7 @@
 
 Interface_FileReaderTool::Interface_FileReaderTool()
 {
-  themessenger = Message::DefaultMessenger();
+  themessenger = System::log::Message::DefaultMessenger();
   theerrhand   = true;
   thetrace     = 0;
   thenbrep0 = thenbreps = 0;
@@ -63,15 +63,15 @@ occ::handle<Interface_InterfaceModel> Interface_FileReaderTool::Model() const
   return themodel;
 }
 
-void Interface_FileReaderTool::SetMessenger(const occ::handle<Message_Messenger>& messenger)
+void Interface_FileReaderTool::SetMessenger(const occ::handle<System::log::Message_Messenger>& messenger)
 {
   if (messenger.IsNull())
-    themessenger = Message::DefaultMessenger();
+    themessenger = System::log::Message::DefaultMessenger();
   else
     themessenger = messenger;
 }
 
-occ::handle<Message_Messenger> Interface_FileReaderTool::Messenger() const
+occ::handle<System::log::Message_Messenger> Interface_FileReaderTool::Messenger() const
 {
   return themessenger;
 }
@@ -188,7 +188,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
 {
 
-  occ::handle<Message_Messenger> TF = Messenger();
+  occ::handle<System::log::Message_Messenger> TF = Messenger();
 
   occ::handle<Interface_Check> ach = new Interface_Check;
 
@@ -206,7 +206,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
       if (!TF.IsNull())
       {
-        Message_Msg Msg11("XSTEP_11");
+        System::log::Message_Msg Msg11("XSTEP_11");
         TF->Send(Msg11, Message_Info);
       }
     }
@@ -237,7 +237,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
           if (!TF.IsNull())
           {
-            Message_Msg Msg21("XSTEP_21");
+            System::log::Message_Msg Msg21("XSTEP_21");
             Msg21.Arg(amodel->NbEntities());
             TF->Send(Msg21, Message_Info);
           }
@@ -253,10 +253,10 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
       num0 = thereader->FindNextRecord(num);
 
 #ifdef _WIN32
-      if (dynamic_cast<const OSD_Exception*>(&anException) != nullptr)
+      if (dynamic_cast<const System::os::OSD_Exception*>(&anException) != nullptr)
         ierr = 2;
 #else
-      if (dynamic_cast<const OSD_Signal*>(&anException) != nullptr)
+      if (dynamic_cast<const System::os::OSD_Signal*>(&anException) != nullptr)
         ierr = 2;
 #endif
 
@@ -269,7 +269,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
           if (!TF.IsNull())
           {
 
-            Message_Msg Msg21("XSTEP_21");
+            System::log::Message_Msg Msg21("XSTEP_21");
             Msg21.Arg(amodel->NbEntities() + 1);
 
             TF->Send(Msg21, Message_Info);
@@ -279,7 +279,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
       }
       ach = new Interface_Check(anent);
 
-      Message_Msg Msg278("XSTEP_278");
+      System::log::Message_Msg Msg278("XSTEP_278");
       Msg278.Arg(amodel->StringLabel(anent));
       ach->SendFail(Msg278);
 
@@ -288,7 +288,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
         if (!TF.IsNull())
         {
-          Message_Msg Msg22("XSTEP_22");
+          System::log::Message_Msg Msg22("XSTEP_22");
           Msg22.Arg(amodel->StringLabel(anent));
           TF->Send(Msg22, Message_Info);
         }
@@ -305,7 +305,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
           if (!TF.IsNull())
           {
-            Message_Msg Msg23("XSTEP_23");
+            System::log::Message_Msg Msg23("XSTEP_23");
             Msg23.Arg(num);
             TF->Send(Msg23, Message_Info);
           }
@@ -332,7 +332,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
           if (!TF.IsNull())
           {
-            Message_Msg Msg22("XSTEP_22");
+            System::log::Message_Msg Msg22("XSTEP_22");
             Msg22.Arg(amodel->StringLabel(anent));
             TF->Send(Msg22, Message_Info);
           }
@@ -348,7 +348,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
       if (!TF.IsNull())
       {
-        Message_Msg Msg24("XSTEP_24");
+        System::log::Message_Msg Msg24("XSTEP_24");
         Msg24.Arg(thenbreps);
         TF->Send(Msg24, Message_Info);
       }
@@ -378,7 +378,7 @@ void Interface_FileReaderTool::LoadModel(const occ::handle<Interface_InterfaceMo
 
       if (!TF.IsNull())
       {
-        Message_Msg Msg11("XSTEP_11");
+        System::log::Message_Msg Msg11("XSTEP_11");
         TF->Send(Msg11, Message_Info);
       }
     }
@@ -406,10 +406,10 @@ occ::handle<Standard_Transient> Interface_FileReaderTool::LoadedEntity(const int
 
   if (thetrace >= 2 && theproto->IsUnknownEntity(anent))
   {
-    occ::handle<Message_Messenger> TF = Messenger();
+    occ::handle<System::log::Message_Messenger> TF = Messenger();
     if (!TF.IsNull())
     {
-      Message_Msg Msg22("XSTEP_22");
+      System::log::Message_Msg Msg22("XSTEP_22");
 
       Msg22.Arg(themodel->StringLabel(anent)->String());
       TF->Send(Msg22, Message_Info);
@@ -439,7 +439,7 @@ occ::handle<Standard_Transient> Interface_FileReaderTool::LoadedEntity(const int
 
     if (thetrace >= 2 && !Messenger().IsNull())
     {
-      Message_Messenger::StreamBuffer sout = Messenger()->SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = Messenger()->SendInfo();
       ach->Print(sout, 2);
     }
   }

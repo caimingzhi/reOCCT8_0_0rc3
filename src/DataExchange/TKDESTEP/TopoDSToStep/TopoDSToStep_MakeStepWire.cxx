@@ -144,7 +144,7 @@ void TopoDSToStep_MakeStepWire::Init(const TopoDS_Wire&                         
 
     const TopoDS_Wire          ForwardWire = TopoDS::Wire(aWire.Oriented(TopAbs_FORWARD));
     occ::handle<ShapeFix_Wire> STW =
-      new ShapeFix_Wire(ForwardWire, aTool.CurrentFace(), Precision::Confusion());
+      new ShapeFix_Wire(ForwardWire, aTool.CurrentFace(), math::precision::Precision::Confusion());
 
     STW->FixReorder(true);
     occ::handle<ShapeExtend_WireData> anExtWire = STW->WireData();

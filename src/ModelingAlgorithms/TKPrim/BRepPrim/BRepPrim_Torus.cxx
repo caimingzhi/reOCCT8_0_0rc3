@@ -38,7 +38,7 @@ TopoDS_Face BRepPrim_Torus::MakeEmptyLateralFace() const
 {
   occ::handle<Geom_ToroidalSurface> T = new Geom_ToroidalSurface(Axes(), myMajor, myMinor);
   TopoDS_Face                       F;
-  myBuilder.Builder().MakeFace(F, T, Precision::Confusion());
+  myBuilder.Builder().MakeFace(F, T, math::precision::Precision::Confusion());
   return F;
 }
 

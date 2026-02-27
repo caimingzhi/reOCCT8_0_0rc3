@@ -18,7 +18,7 @@ Interface_Check::Interface_Check(const occ::handle<Standard_Transient>& anentity
   theent = anentity;
 }
 
-void Interface_Check::SendFail(const Message_Msg& amsg)
+void Interface_Check::SendFail(const System::log::Message_Msg& amsg)
 {
   AddFail(amsg);
 }
@@ -54,7 +54,7 @@ void Interface_Check::AddFail(const char* amess, const char* orig)
     AddFail(new TCollection_HAsciiString(amess), new TCollection_HAsciiString(orig));
 }
 
-void Interface_Check::AddFail(const Message_Msg& amsg)
+void Interface_Check::AddFail(const System::log::Message_Msg& amsg)
 {
   if (amsg.IsEdited())
     AddFail(new TCollection_HAsciiString(TCollection_AsciiString(amsg.Value())),
@@ -94,7 +94,7 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Interf
   return (final ? thefails : thefailo);
 }
 
-void Interface_Check::SendWarning(const Message_Msg& amsg)
+void Interface_Check::SendWarning(const System::log::Message_Msg& amsg)
 {
   AddWarning(amsg);
 }
@@ -130,7 +130,7 @@ void Interface_Check::AddWarning(const char* amess, const char* orig)
     AddWarning(new TCollection_HAsciiString(amess), new TCollection_HAsciiString(orig));
 }
 
-void Interface_Check::AddWarning(const Message_Msg& amsg)
+void Interface_Check::AddWarning(const System::log::Message_Msg& amsg)
 {
   if (amsg.IsEdited())
     AddWarning(new TCollection_HAsciiString(TCollection_AsciiString(amsg.Value())),
@@ -170,7 +170,7 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> Interf
   return (final ? thewarns : thewarno);
 }
 
-void Interface_Check::SendMsg(const Message_Msg& amsg)
+void Interface_Check::SendMsg(const System::log::Message_Msg& amsg)
 {
   occ::handle<TCollection_HAsciiString> mess = new TCollection_HAsciiString(amsg.Value());
   occ::handle<TCollection_HAsciiString> orig = mess;
@@ -587,7 +587,7 @@ void Interface_Check::Print(Standard_OStream& S, const int level, const int fina
 void Interface_Check::Trace(const int level, const int final) const
 {
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   Print(sout, level, final);
 }

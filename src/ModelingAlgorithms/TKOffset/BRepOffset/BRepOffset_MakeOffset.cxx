@@ -90,7 +90,7 @@ int                    NbAF        = 0;
 int                    NVP         = 0;
 int                    NVM         = 0;
 int                    NVN         = 0;
-static OSD_Chronometer Clock;
+static System::os::OSD_Chronometer Clock;
 char                   name[100];
 
 static void DEBVerticesControl(
@@ -128,14 +128,14 @@ static void DEBVerticesControl(
   BRep_Builder                             B;
   NCollection_List<TopoDS_Shape>::Iterator it1(LVP);
   double                                   TolConf = 1.e-5;
-  double                                   Tol     = Precision::Confusion();
+  double                                   Tol     = math::precision::Precision::Confusion();
 
   i = 1;
   for (; it1.More(); it1.Next())
   {
     TopoDS_Shape                             V1      = it1.Value();
     gp_Pnt                                   P1      = BRep_Tool::Pnt(TopoDS::Vertex(V1));
-    double                                   distmin = Precision::Infinite();
+    double                                   distmin = math::precision::Precision::Infinite();
     NCollection_List<TopoDS_Shape>::Iterator it2(LVP);
     int                                      j = 1;
 
@@ -219,7 +219,7 @@ static void GetEnlargedFaces(
 static bool BuildShellsCompleteInter(const NCollection_List<TopoDS_Shape>& theLF,
                                      BRepAlgo_Image&                       theImage,
                                      TopoDS_Shape&                         theShells,
-                                     const Message_ProgressRange&          theRange);
+                                     const System::log::Message_ProgressRange&          theRange);
 
 static bool GetSubShapes(const TopoDS_Shape&    theShape,
                          const TopAbs_ShapeEnum theSSType,
@@ -375,13 +375,13 @@ static bool FindParameter(const TopoDS_Vertex& V, const TopoDS_Edge& E, double& 
           if (!C.IsNull())
           {
 
-            if (Precision::IsNegativeInfinite(f))
+            if (math::precision::Precision::IsNegativeInfinite(f))
             {
 
               U = pr->Parameter();
               return true;
             }
-            if (Precision::IsPositiveInfinite(l))
+            if (math::precision::Precision::IsPositiveInfinite(l))
             {
 
               U = pr->Parameter();
@@ -539,7 +539,7 @@ BRepOffset_MakeOffset::BRepOffset_MakeOffset(const TopoDS_Shape&          S,
                                              const GeomAbs_JoinType       Join,
                                              const bool                   Thickening,
                                              const bool                   RemoveIntEdges,
-                                             const Message_ProgressRange& theRange)
+                                             const System::log::Message_ProgressRange& theRange)
     : myOffset(Offset),
       myTol(Tol),
       myInitialShape(S),
@@ -721,7 +721,7 @@ void BRepOffset_MakeOffset::SetFacesWithOffset()
   }
 }
 
-void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::MakeOffsetShape(const System::log::Message_ProgressRange& theRange)
 {
   myDone = false;
 
@@ -738,7 +738,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
     RemoveCorks(myFaceComp, myFaces);
   }
 
-  Message_ProgressScope aPS(theRange, "Making offset shape", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Making offset shape", 100);
 
   NCollection_Array1<double> aSteps(0, PIOperation_Last - 1);
   analyzeProgress(100., aSteps);
@@ -756,7 +756,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
 
   EvalMax(myShape, myTol);
 
-  double TolAngleCoeff = std::min(myTol / (std::abs(myOffset * 0.5) + Precision::Confusion()), 1.0);
+  double TolAngleCoeff = std::min(myTol / (std::abs(myOffset * 0.5) + math::precision::Precision::Confusion()), 1.0);
   double TolAngle      = 4 * std::asin(TolAngleCoeff);
   if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
   {
@@ -794,7 +794,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
     return;
   }
 
-  Message_ProgressScope aPSInter(aPS.Next(aSteps(PIOperation_Intersection)), nullptr, 100);
+  System::log::Message_ProgressScope aPSInter(aPS.Next(aSteps(PIOperation_Intersection)), nullptr, 100);
   aPSInter.SetName((myJoin == GeomAbs_Arc) ? "Connect offset faces by arc"
                                            : "Connect offset faces by intersection");
 
@@ -911,7 +911,7 @@ void BRepOffset_MakeOffset::MakeOffsetShape(const Message_ProgressRange& theRang
   myDone = true;
 }
 
-void BRepOffset_MakeOffset::MakeThickSolid(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::MakeThickSolid(const System::log::Message_ProgressRange& theRange)
 {
 
   MakeOffsetShape(theRange);
@@ -1014,7 +1014,7 @@ const TopoDS_Shape& BRepOffset_MakeOffset::Shape() const
 
 void BRepOffset_MakeOffset::MakeOffsetFaces(
   NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher>& theMapSF,
-  const Message_ProgressRange&                                                   theRange)
+  const System::log::Message_ProgressRange&                                                   theRange)
 {
   double                                                                   aCurOffset;
   NCollection_List<TopoDS_Shape>                                           aLF;
@@ -1025,7 +1025,7 @@ void BRepOffset_MakeOffset::MakeOffsetFaces(
 
   BRepLib::SortFaces(myFaceComp, aLF);
 
-  Message_ProgressScope aPS(theRange, "Making offset faces", aLF.Size());
+  System::log::Message_ProgressScope aPS(theRange, "Making offset faces", aLF.Size());
   aItLF.Initialize(aLF);
   for (; aItLF.More(); aItLF.Next(), aPS.Next())
   {
@@ -1081,7 +1081,7 @@ void BRepOffset_MakeOffset::MakeOffsetFaces(
   }
 }
 
-void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::BuildOffsetByInter(const System::log::Message_ProgressRange& theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -1092,7 +1092,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   }
 #endif
 
-  Message_ProgressScope aPSOuter(theRange, "Connect offset faces by intersection", 100);
+  System::log::Message_ProgressScope aPSOuter(theRange, "Connect offset faces by intersection", 100);
 
   enum BuildOffsetByInter_PISteps
   {
@@ -1229,10 +1229,10 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   GetEnlargedFaces(aLFaces, MapSF, MES, aFacesOrigins, IMOE, LFE);
 
   NCollection_List<TopoDS_Shape>::Iterator itLFE(LFE);
-  Message_ProgressScope aPS2d(aPSOuter.Next(aSteps(BuildOffsetByInter_CompleteEdgesIntersection)),
+  System::log::Message_ProgressScope aPS2d(aPSOuter.Next(aSteps(BuildOffsetByInter_CompleteEdgesIntersection)),
                               nullptr,
                               2);
-  Message_ProgressScope aPS2dOffsets(aPS2d.Next(2. * anOffsetsPart), nullptr, LFE.Size());
+  System::log::Message_ProgressScope aPS2dOffsets(aPS2d.Next(2. * anOffsetsPart), nullptr, LFE.Size());
   for (; itLFE.More(); itLFE.Next())
   {
     if (!aPS2dOffsets.More())
@@ -1252,7 +1252,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   }
 
   int                   i;
-  Message_ProgressScope aPS2dCaps(aPS2d.Next(2. * aDeepeningsPart), nullptr, myFaces.Extent());
+  System::log::Message_ProgressScope aPS2dCaps(aPS2d.Next(2. * aDeepeningsPart), nullptr, myFaces.Extent());
   for (i = 1; i <= myFaces.Extent(); i++)
   {
     if (!aPS2dCaps.More())
@@ -1315,7 +1315,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> COES;
 #endif
 
-  Message_ProgressScope aPSHist(aPSOuter.Next(aSteps(BuildOffsetByInter_FillHistoryForOffsets)),
+  System::log::Message_ProgressScope aPSHist(aPSOuter.Next(aSteps(BuildOffsetByInter_FillHistoryForOffsets)),
                                 "Fill history for offset faces",
                                 aLFaces.Size());
   for (NCollection_List<TopoDS_Shape>::Iterator it(aLFaces); it.More(); it.Next(), aPSHist.Next())
@@ -1504,7 +1504,7 @@ void BRepOffset_MakeOffset::BuildOffsetByInter(const Message_ProgressRange& theR
     }
   }
 
-  Message_ProgressScope aPSHist2(aPSOuter.Next(aSteps(BuildOffsetByInter_FillHistoryForDeepenings)),
+  System::log::Message_ProgressScope aPSHist2(aPSOuter.Next(aSteps(BuildOffsetByInter_FillHistoryForDeepenings)),
                                  "Fill history for deepening faces",
                                  myFaces.Extent());
   for (i = 1; i <= myFaces.Extent(); i++, aPSHist2.Next())
@@ -1608,7 +1608,7 @@ void BRepOffset_MakeOffset::BuildFaceComp()
   }
 }
 
-void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::BuildOffsetByArc(const System::log::Message_ProgressRange& theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -1622,7 +1622,7 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
   TopExp_Explorer                                        Exp;
   NCollection_List<TopoDS_Shape>::Iterator               itLF;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> Done;
-  Message_ProgressScope                                  aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope                                  aPSOuter(theRange, nullptr, 10);
 
   NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher> MapSF;
   MakeOffsetFaces(MapSF, aPSOuter.Next());
@@ -1635,7 +1635,7 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
   if (myOffset < 0.)
     OT = ChFiDS_Concave;
 
-  Message_ProgressScope aPS1(aPSOuter.Next(4), "Constructing tubes on edges", 1, true);
+  System::log::Message_ProgressScope aPS1(aPSOuter.Next(4), "Constructing tubes on edges", 1, true);
   for (Exp.Init(myFaceComp, TopAbs_EDGE); Exp.More(); Exp.Next(), aPS1.Next())
   {
     if (!aPS1.More())
@@ -1711,7 +1711,7 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
 
   Done.Clear();
   NCollection_List<TopoDS_Shape>::Iterator it;
-  Message_ProgressScope aPS2(aPSOuter.Next(4), "Constructing spheres on vertices", 1, true);
+  System::log::Message_ProgressScope aPS2(aPSOuter.Next(4), "Constructing spheres on vertices", 1, true);
   for (Exp.Init(myFaceComp, TopAbs_VERTEX); Exp.More(); Exp.Next(), aPS2.Next())
   {
     if (!aPS2.More())
@@ -1774,7 +1774,7 @@ void BRepOffset_MakeOffset::BuildOffsetByArc(const Message_ProgressRange& theRan
   if (myOffset < 0.)
     RT = ChFiDS_Convex;
   NCollection_DataMap<TopoDS_Shape, BRepOffset_Offset, TopTools_ShapeMapHasher>::Iterator It(MapSF);
-  Message_ProgressScope aPS3(aPSOuter.Next(), nullptr, MapSF.Size());
+  System::log::Message_ProgressScope aPS3(aPSOuter.Next(), nullptr, MapSF.Size());
   for (; It.More(); It.Next(), aPS3.Next())
   {
     if (!aPS3.More())
@@ -2131,7 +2131,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
       TopoDS_Vertex v1, v2, FirstVert, EndVert;
       TopExp::Vertices(CurEdge, v1, v2);
       FirstVert = CurFirstVertex;
-      if (lPnt.Distance(FirstPoint) <= Precision::Confusion())
+      if (lPnt.Distance(FirstPoint) <= math::precision::Precision::Confusion())
         EndVert = theFirstVertex;
       else
         EndVert = BRepLib_MakeVertex(lPnt);
@@ -2144,16 +2144,16 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
       double Uf, Vf, Ul, Vl;
       ElSLib::Parameters(theSphere, fPnt, Uf, Vf);
       ElSLib::Parameters(theSphere, lPnt, Ul, Vl);
-      if (std::abs(Ul) <= Precision::Confusion())
+      if (std::abs(Ul) <= math::precision::Precision::Confusion())
         Ul = 2. * M_PI;
       occ::handle<Geom_Curve> aCurv = aSphSurf->VIso(Vf);
 
       occ::handle<Geom_TrimmedCurve> aTrimCurv = new Geom_TrimmedCurve(aCurv, Uf, Ul);
-      BB.UpdateEdge(CurEdge, aTrimCurv, Precision::Confusion());
+      BB.UpdateEdge(CurEdge, aTrimCurv, math::precision::Precision::Confusion());
       BB.Range(CurEdge, Uf, Ul, true);
       occ::handle<Geom2d_Line>         theLin2d     = new Geom2d_Line(gp_Pnt2d(0., Vf), gp::DX2d());
       occ::handle<Geom2d_TrimmedCurve> theTrimLin2d = new Geom2d_TrimmedCurve(theLin2d, Uf, Ul);
-      BB.UpdateEdge(CurEdge, theTrimLin2d, aSphSurf, L, Precision::Confusion());
+      BB.UpdateEdge(CurEdge, theTrimLin2d, aSphSurf, L, math::precision::Precision::Confusion());
       BB.Range(CurEdge, aSphSurf, L, Uf, Ul);
       BRepLib::SameParameter(CurEdge);
       BB.Add(SphereWire, CurEdge);
@@ -2191,14 +2191,14 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
         if (V1.IsSame(v1))
         {
           TopoDS_Vertex NewV =
-            (p2d1.Distance(fPnt2d) <= Precision::Confusion()) ? FirstVert : EndVert;
+            (p2d1.Distance(fPnt2d) <= math::precision::Precision::Confusion()) ? FirstVert : EndVert;
           BB.Remove(Eforward, V1);
           BB.Add(Eforward, NewV.Oriented(TopAbs_FORWARD));
         }
         else
         {
           TopoDS_Vertex NewV =
-            (p2d2.Distance(fPnt2d) <= Precision::Confusion()) ? FirstVert : EndVert;
+            (p2d2.Distance(fPnt2d) <= math::precision::Precision::Confusion()) ? FirstVert : EndVert;
           BB.Remove(Eforward, V2);
           BB.Add(Eforward, NewV.Oriented(TopAbs_REVERSED));
         }
@@ -2239,7 +2239,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
       occ::handle<Geom2d_Curve> aC2d = BRep_Tool::CurveOnSurface(FirstEdge, aSphSurf, L, f, l);
       p2d1                           = aC2d->Value(f);
       p2d2                           = aC2d->Value(l);
-      if (std::abs(p2d1.X() - Ufirst) <= Precision::Confusion())
+      if (std::abs(p2d1.X() - Ufirst) <= math::precision::Precision::Confusion())
       {
         EdgesOfWire.Remove(itl);
         break;
@@ -2276,7 +2276,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
       Vlast  = p2d1.Y();
     }
     TopoDS_Face NewSphericalFace =
-      BRepLib_MakeFace(aSphSurf, Ufirst, Ulast, Vfirst, Vlast, Precision::Confusion());
+      BRepLib_MakeFace(aSphSurf, Ufirst, Ulast, Vfirst, Vlast, math::precision::Precision::Confusion());
     TopoDS_Edge OldEdge, DegEdge;
     for (Explo.Init(NewSphericalFace, TopAbs_EDGE); Explo.More(); Explo.Next())
     {
@@ -2410,7 +2410,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
 }
 
 void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
-                                           const Message_ProgressRange& theRange)
+                                           const System::log::Message_ProgressRange& theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -2420,7 +2420,7 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
     Clock.Start();
   }
 #endif
-  Message_ProgressScope aPS(theRange, nullptr, (myFaces.Extent() && myJoin == GeomAbs_Arc) ? 2 : 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, (myFaces.Extent() && myJoin == GeomAbs_Arc) ? 2 : 1);
 
   if (myInter && (myJoin == GeomAbs_Intersection) && myIsPlanar && !myThickening
       && myFaces.IsEmpty() && IsSolid(myShape))
@@ -2479,7 +2479,7 @@ void BRepOffset_MakeOffset::Intersection3D(BRepOffset_Inter3d&          Inter,
 void BRepOffset_MakeOffset::Intersection2D(
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& NewEdges,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -2493,7 +2493,7 @@ void BRepOffset_MakeOffset::Intersection2D(
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                         aDMVV;
   int                   i;
-  Message_ProgressScope aPS(theRange, "Intersection 2D", Modif.Extent());
+  System::log::Message_ProgressScope aPS(theRange, "Intersection 2D", Modif.Extent());
   for (i = 1; i <= Modif.Extent(); i++)
   {
     if (!aPS.More())
@@ -2519,7 +2519,7 @@ void BRepOffset_MakeOffset::Intersection2D(
 
 void BRepOffset_MakeOffset::MakeLoops(
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Modif,
-  const Message_ProgressRange&                                   theRange)
+  const System::log::Message_ProgressRange&                                   theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -2539,7 +2539,7 @@ void BRepOffset_MakeOffset::MakeLoops(
       LF.Append(Modif(i));
   }
 
-  Message_ProgressScope aPS(theRange, nullptr, LF.Extent() + myFaces.Extent());
+  System::log::Message_ProgressScope aPS(theRange, nullptr, LF.Extent() + myFaces.Extent());
   if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
   {
     BuildSplitsOfTrimmedFaces(LF, myAsDes, myImageOffset, aPS.Next(LF.Extent()));
@@ -2570,7 +2570,7 @@ void BRepOffset_MakeOffset::MakeLoops(
 
 void BRepOffset_MakeOffset::MakeFaces(
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&,
-  const Message_ProgressRange& theRange)
+  const System::log::Message_ProgressRange& theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -2593,7 +2593,7 @@ void BRepOffset_MakeOffset::MakeFaces(
     }
   }
 
-  Message_ProgressScope aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 1);
   if ((myJoin == GeomAbs_Intersection) && myInter && myIsPlanar)
   {
     BuildSplitsOfTrimmedFaces(LOF, myAsDes, myImageOffset, aPS.Next());
@@ -2647,7 +2647,7 @@ static void UpdateInitOffset(BRepAlgo_Image&         myInitOffset,
   myInitOffset = NIOF;
 }
 
-void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::MakeMissingWalls(const System::log::Message_ProgressRange& theRange)
 {
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
@@ -2658,7 +2658,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
 
   FillContours(myFaceComp, myAnalyse, Contours, MapEF);
 
-  Message_ProgressScope aPS(theRange, "Making missing walls", Contours.Extent());
+  System::log::Message_ProgressScope aPS(theRange, "Making missing walls", Contours.Extent());
   for (int ic = 1; ic <= Contours.Extent(); ic++, aPS.Next())
   {
     if (!aPS.More())
@@ -2718,7 +2718,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
         gp_Pnt aPntF  = BRep_Tool::Pnt(V1);
         gp_Pnt aPntL  = BRep_Tool::Pnt(V2);
         double aDistE = aPntF.SquareDistance(aPntL);
-        if (aDistE < Precision::SquareConfusion())
+        if (aDistE < math::precision::Precision::SquareConfusion())
         {
 
           continue;
@@ -2823,17 +2823,17 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
         gp_Circ aCircOE = BAcurveOE.Circle();
         gp_Lin  anAxisLine(aCirc.Axis());
         gp_Dir  CircAxisDir = aCirc.Axis().Direction();
-        if (aCirc.Axis().IsParallel(aCircOE.Axis(), Precision::Confusion())
-            && anAxisLine.Contains(aCircOE.Location(), Precision::Confusion()))
+        if (aCirc.Axis().IsParallel(aCircOE.Axis(), math::precision::Precision::Confusion())
+            && anAxisLine.Contains(aCircOE.Location(), math::precision::Precision::Confusion()))
         {
-          if (std::abs(aCirc.Radius() - aCircOE.Radius()) <= Precision::Confusion())
+          if (std::abs(aCirc.Radius() - aCircOE.Radius()) <= math::precision::Precision::Confusion())
             theSurf = GC_MakeCylindricalSurface(aCirc).Value();
-          else if (aCirc.Location().Distance(aCircOE.Location()) <= Precision::Confusion())
+          else if (aCirc.Location().Distance(aCircOE.Location()) <= math::precision::Precision::Confusion())
           {
             IsPlanar = true;
 
             gp_Pnt PonEL = BAcurve.Value(lpar);
-            if (PonEL.Distance(PonE) <= Precision::PConfusion())
+            if (PonEL.Distance(PonE) <= math::precision::Precision::PConfusion())
             {
               bool                    bIsHole;
               TopoDS_Edge             aE1, aE2;
@@ -2864,9 +2864,9 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
                 TopoDS_Edge& aE = (i == 0) ? aE1 : aE2;
 
                 TopoDS_Face aFace;
-                BB.MakeFace(aFace, aPL, Precision::Confusion());
+                BB.MakeFace(aFace, aPL, math::precision::Precision::Confusion());
                 BB.Add(aFace, aW);
-                aClsf.Init(aFace, Precision::Confusion());
+                aClsf.Init(aFace, math::precision::Precision::Confusion());
                 bIsHole = aClsf.IsHole();
                 if ((bIsHole && !i) || (!bIsHole && i))
                 {
@@ -2876,7 +2876,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
                 }
               }
 
-              BB.MakeFace(NewFace, aPL, Precision::Confusion());
+              BB.MakeFace(NewFace, aPL, math::precision::Precision::Confusion());
               BB.Add(NewFace, aW1);
               BB.Add(NewFace, aW2);
             }
@@ -2898,19 +2898,19 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
           {
             TopLoc_Location Loc;
             EdgeLine2d = new Geom2d_Line(gp_Pnt2d(0., 0.), gp_Dir2d(gp_Dir2d::D::X));
-            BB.UpdateEdge(anEdge, EdgeLine2d, theSurf, Loc, Precision::Confusion());
+            BB.UpdateEdge(anEdge, EdgeLine2d, theSurf, Loc, math::precision::Precision::Confusion());
             double Coeff = (OffsetDir * CircAxisDir > 0.) ? 1. : -1.;
             OELine2d = new Geom2d_Line(gp_Pnt2d(0., OffsetVal * Coeff), gp_Dir2d(gp_Dir2d::D::X));
-            BB.UpdateEdge(OE, OELine2d, theSurf, Loc, Precision::Confusion());
+            BB.UpdateEdge(OE, OELine2d, theSurf, Loc, math::precision::Precision::Confusion());
             aLine2d  = new Geom2d_Line(gp_Pnt2d(ParV2, 0.), gp_Dir2d(0., Coeff));
             aLine2d2 = new Geom2d_Line(gp_Pnt2d(ParV1, 0.), gp_Dir2d(0., Coeff));
             if (E3.IsSame(E4))
             {
               if (Coeff > 0.)
-                BB.UpdateEdge(E3, aLine2d, aLine2d2, theSurf, Loc, Precision::Confusion());
+                BB.UpdateEdge(E3, aLine2d, aLine2d2, theSurf, Loc, math::precision::Precision::Confusion());
               else
               {
-                BB.UpdateEdge(E3, aLine2d2, aLine2d, theSurf, Loc, Precision::Confusion());
+                BB.UpdateEdge(E3, aLine2d2, aLine2d, theSurf, Loc, math::precision::Precision::Confusion());
                 theWire.Nullify();
                 BB.MakeWire(theWire);
                 BB.Add(theWire, anEdge.Oriented(TopAbs_REVERSED));
@@ -2926,9 +2926,9 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
               BB.SameRange(E3, false);
               BB.SameParameter(E4, false);
               BB.SameRange(E4, false);
-              BB.UpdateEdge(E3, aLine2d, theSurf, Loc, Precision::Confusion());
+              BB.UpdateEdge(E3, aLine2d, theSurf, Loc, math::precision::Precision::Confusion());
               BB.Range(E3, theSurf, Loc, 0., OffsetVal);
-              BB.UpdateEdge(E4, aLine2d2, theSurf, Loc, Precision::Confusion());
+              BB.UpdateEdge(E4, aLine2d2, theSurf, Loc, math::precision::Precision::Confusion());
               BB.Range(E4, theSurf, Loc, 0., OffsetVal);
             }
             NewFace = BRepLib_MakeFace(theSurf, theWire);
@@ -2979,24 +2979,24 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
           GeomFill_Generator ThrusecGenerator;
           ThrusecGenerator.AddCurve(TrEdgeCurve);
           ThrusecGenerator.AddCurve(TrOffsetCurve);
-          ThrusecGenerator.Perform(Precision::PConfusion());
+          ThrusecGenerator.Perform(math::precision::Precision::PConfusion());
           theSurf = ThrusecGenerator.Surface();
           double Uf, Ul, Vf, Vl;
           theSurf->Bounds(Uf, Ul, Vf, Vl);
           TopLoc_Location Loc;
           EdgeLine2d = new Geom2d_Line(gp_Pnt2d(0., Vf), gp_Dir2d(gp_Dir2d::D::X));
-          BB.UpdateEdge(anEdge, EdgeLine2d, theSurf, Loc, Precision::Confusion());
+          BB.UpdateEdge(anEdge, EdgeLine2d, theSurf, Loc, math::precision::Precision::Confusion());
           OELine2d = new Geom2d_Line(gp_Pnt2d(0., Vl), gp_Dir2d(gp_Dir2d::D::X));
-          BB.UpdateEdge(OE, OELine2d, theSurf, Loc, Precision::Confusion());
+          BB.UpdateEdge(OE, OELine2d, theSurf, Loc, math::precision::Precision::Confusion());
           double UonV1 = (ToReverse) ? Ul : Uf;
           double UonV2 = (ToReverse) ? Uf : Ul;
           aLine2d      = new Geom2d_Line(gp_Pnt2d(UonV2, 0.), gp_Dir2d(gp_Dir2d::D::Y));
           aLine2d2     = new Geom2d_Line(gp_Pnt2d(UonV1, 0.), gp_Dir2d(gp_Dir2d::D::Y));
           if (E3.IsSame(E4))
           {
-            BB.UpdateEdge(E3, aLine2d, aLine2d2, theSurf, Loc, Precision::Confusion());
+            BB.UpdateEdge(E3, aLine2d, aLine2d2, theSurf, Loc, math::precision::Precision::Confusion());
             occ::handle<Geom_Curve> BSplC34 = theSurf->UIso(Uf);
-            BB.UpdateEdge(E3, BSplC34, Precision::Confusion());
+            BB.UpdateEdge(E3, BSplC34, math::precision::Precision::Confusion());
             BB.Range(E3, Vf, Vl);
           }
           else
@@ -3005,15 +3005,15 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
             BB.SameRange(E3, false);
             BB.SameParameter(E4, false);
             BB.SameRange(E4, false);
-            BB.UpdateEdge(E3, aLine2d, theSurf, Loc, Precision::Confusion());
+            BB.UpdateEdge(E3, aLine2d, theSurf, Loc, math::precision::Precision::Confusion());
             BB.Range(E3, theSurf, Loc, Vf, Vl);
-            BB.UpdateEdge(E4, aLine2d2, theSurf, Loc, Precision::Confusion());
+            BB.UpdateEdge(E4, aLine2d2, theSurf, Loc, math::precision::Precision::Confusion());
             BB.Range(E4, theSurf, Loc, Vf, Vl);
             occ::handle<Geom_Curve> BSplC3 = theSurf->UIso(UonV2);
-            BB.UpdateEdge(E3, BSplC3, Precision::Confusion());
+            BB.UpdateEdge(E3, BSplC3, math::precision::Precision::Confusion());
             BB.Range(E3, Vf, Vl, true);
             occ::handle<Geom_Curve> BSplC4 = theSurf->UIso(UonV1);
-            BB.UpdateEdge(E4, BSplC4, Precision::Confusion());
+            BB.UpdateEdge(E4, BSplC4, math::precision::Precision::Confusion());
             BB.Range(E4, Vf, Vl, true);
           }
           NewFace = BRepLib_MakeFace(theSurf, theWire);
@@ -3024,7 +3024,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
         double          fparOE = BAcurveOE.FirstParameter();
         double          lparOE = BAcurveOE.LastParameter();
         TopLoc_Location Loc;
-        if (std::abs(fpar - fparOE) > Precision::Confusion())
+        if (std::abs(fpar - fparOE) > math::precision::Precision::Confusion())
         {
           const TopoDS_Edge& anE4   = (ToReverse) ? E3 : E4;
           gp_Pnt2d           fp2d   = EdgeLine2d->Value(fpar);
@@ -3038,7 +3038,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
           occ::handle<GeomAdaptor_Surface> HSurf = new GeomAdaptor_Surface(GAsurf);
           Adaptor3d_CurveOnSurface         ConS(HC2d, HSurf);
           double                           max_deviation = 0., average_deviation;
-          GeomLib::BuildCurve3d(Precision::Confusion(),
+          GeomLib::BuildCurve3d(math::precision::Precision::Confusion(),
                                 ConS,
                                 FirstPar,
                                 LastPar,
@@ -3049,7 +3049,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
           BB.UpdateEdge(anE4, aLine2d2, theSurf, Loc, max_deviation);
           BB.Range(anE4, FirstPar, LastPar);
         }
-        if (std::abs(lpar - lparOE) > Precision::Confusion())
+        if (std::abs(lpar - lparOE) > math::precision::Precision::Confusion())
         {
           const TopoDS_Edge& anE3   = (ToReverse) ? E4 : E3;
           gp_Pnt2d           lp2d   = EdgeLine2d->Value(lpar);
@@ -3063,7 +3063,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
           occ::handle<GeomAdaptor_Surface> HSurf = new GeomAdaptor_Surface(GAsurf);
           Adaptor3d_CurveOnSurface         ConS(HC2d, HSurf);
           double                           max_deviation = 0., average_deviation;
-          GeomLib::BuildCurve3d(Precision::Confusion(),
+          GeomLib::BuildCurve3d(math::precision::Precision::Confusion(),
                                 ConS,
                                 FirstPar,
                                 LastPar,
@@ -3151,7 +3151,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const Message_ProgressRange& theRan
   }
 }
 
-void BRepOffset_MakeOffset::MakeShells(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::MakeShells(const System::log::Message_ProgressRange& theRange)
 {
 #ifdef OCCT_DEBUG
   if (ChronBuild)
@@ -3162,7 +3162,7 @@ void BRepOffset_MakeOffset::MakeShells(const Message_ProgressRange& theRange)
   }
 #endif
 
-  Message_ProgressScope aPS(theRange, "Making shells", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Making shells", 1);
 
   NCollection_List<TopoDS_Shape>           aLSF;
   const NCollection_List<TopoDS_Shape>&    R = myImageOffset.Roots();
@@ -3249,7 +3249,7 @@ void BRepOffset_MakeOffset::MakeShells(const Message_ProgressRange& theRange)
   }
 }
 
-void BRepOffset_MakeOffset::MakeSolid(const Message_ProgressRange& theRange)
+void BRepOffset_MakeOffset::MakeSolid(const System::log::Message_ProgressRange& theRange)
 {
   if (myOffsetShape.IsNull())
     return;
@@ -3264,7 +3264,7 @@ void BRepOffset_MakeOffset::MakeSolid(const Message_ProgressRange& theRange)
   TopoDS_Shape    S1;
   B.MakeCompound(NC);
 
-  Message_ProgressScope aPS(theRange, "Making solid", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Making solid", 1);
 
   TopoDS_Solid Sol;
   B.MakeSolid(Sol);
@@ -3580,10 +3580,10 @@ double ComputeMaxDist(const gp_Pln&                  thePlane,
   {
     aPrm = ((NCONTROL - 1 - i) * theFirst + i * theLast) / (NCONTROL - 1);
     aP   = theCrv->Value(aPrm);
-    if (Precision::IsInfinite(aP.X()) || Precision::IsInfinite(aP.Y())
-        || Precision::IsInfinite(aP.Z()))
+    if (math::precision::Precision::IsInfinite(aP.X()) || math::precision::Precision::IsInfinite(aP.Y())
+        || math::precision::Precision::IsInfinite(aP.Z()))
     {
-      return Precision::Infinite();
+      return math::precision::Precision::Infinite();
     }
     aDist2 = thePlane.SquareDistance(aP);
     if (aDist2 > aMaxDist)
@@ -3717,7 +3717,7 @@ void CorrectSolid(TopoDS_Solid& theSol, NCollection_List<TopoDS_Shape>& theSolLi
     aVols.Append(aVProps.Mass());
   }
 
-  if (std::abs(anOuterVol) < Precision::Confusion())
+  if (std::abs(anOuterVol) < math::precision::Precision::Confusion())
   {
     return;
   }
@@ -3771,13 +3771,13 @@ void CorrectSolid(TopoDS_Solid& theSol, NCollection_List<TopoDS_Shape>& theSolLi
   theSol = aNewSol;
 }
 
-bool BRepOffset_MakeOffset::CheckInputData(const Message_ProgressRange& theRange)
+bool BRepOffset_MakeOffset::CheckInputData(const System::log::Message_ProgressRange& theRange)
 {
 
   myError = BRepOffset_NoError;
   TopoDS_Shape aTmpShape;
   myBadShape = aTmpShape;
-  Message_ProgressScope aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 1);
 
   if (std::abs(myOffset) <= myTol)
   {
@@ -3954,13 +3954,13 @@ BRepOffset_Error checkSinglePoint(const double                      theUParam,
   gp_Vec aD1U, aD1V;
   theSurf->D1(theUParam, theVParam, aPnt, aD1U, aD1V);
 
-  if (aD1U.SquareMagnitude() < Precision::SquareConfusion()
-      || aD1V.SquareMagnitude() < Precision::SquareConfusion())
+  if (aD1U.SquareMagnitude() < math::precision::Precision::SquareConfusion()
+      || aD1V.SquareMagnitude() < math::precision::Precision::SquareConfusion())
   {
     bool isKnownBadPnt = false;
     for (int anIdx = theBadPoints.Lower(); anIdx <= theBadPoints.Upper(); ++anIdx)
     {
-      if (aPnt.SquareDistance(theBadPoints(anIdx)) < Precision::SquareConfusion())
+      if (aPnt.SquareDistance(theBadPoints(anIdx)) < math::precision::Precision::SquareConfusion())
       {
         isKnownBadPnt = true;
         break;
@@ -3977,7 +3977,7 @@ BRepOffset_Error checkSinglePoint(const double                      theUParam,
     }
   }
 
-  if (aD1U.IsParallel(aD1V, Precision::Confusion()))
+  if (aD1U.IsParallel(aD1V, math::precision::Precision::Confusion()))
   {
 
     return BRepOffset_BadNormalsOnGeometry;
@@ -4033,15 +4033,15 @@ void BRepOffset_MakeOffset::IntersectEdges(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&      theBuild,
   occ::handle<BRepAlgo_AsDes>&                                                   theAsDes,
   occ::handle<BRepAlgo_AsDes>&                                                   theAsDes2d,
-  const Message_ProgressRange&                                                   theRange)
+  const System::log::Message_ProgressRange&                                                   theRange)
 {
   double aTolF;
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aDMVV;
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMFV;
-  Message_ProgressScope                                         aPSOuter(theRange, nullptr, 2);
-  Message_ProgressScope aPS1(aPSOuter.Next(), nullptr, theFaces.Size());
+  System::log::Message_ProgressScope                                         aPSOuter(theRange, nullptr, 2);
+  System::log::Message_ProgressScope aPS1(aPSOuter.Next(), nullptr, theFaces.Size());
   for (NCollection_List<TopoDS_Shape>::Iterator it(theFaces); it.More(); it.Next())
   {
     const TopoDS_Face& aF = TopoDS::Face(it.Value());
@@ -4072,7 +4072,7 @@ void BRepOffset_MakeOffset::IntersectEdges(
   }
 
   int                   i, aNbF = aMFV.Extent();
-  Message_ProgressScope aPS2(aPSOuter.Next(), "Intersecting edges created from vertices", aNbF);
+  System::log::Message_ProgressScope aPS2(aPSOuter.Next(), "Intersecting edges created from vertices", aNbF);
   for (i = 1; i <= aNbF; ++i)
   {
     const TopoDS_Face& aF = TopoDS::Face(aMFV(i));
@@ -4271,10 +4271,10 @@ bool TrimEdge(
 
   BOPTools_AlgoTools::MakeSplitEdge(NE, V1, aT1, V2, aT2, aSourceEdge);
 
-  constexpr double aSameParTol = Precision::Confusion();
+  constexpr double aSameParTol = math::precision::Precision::Confusion();
 
   double U    = 0.;
-  double UMin = Precision::Infinite();
+  double UMin = math::precision::Precision::Infinite();
   double UMax = -UMin;
 
   const NCollection_List<TopoDS_Shape>& LE = AsDes2d->Descendant(NE);
@@ -4386,9 +4386,9 @@ void GetEnlargedFaces(
 bool BuildShellsCompleteInter(const NCollection_List<TopoDS_Shape>& theLF,
                               BRepAlgo_Image&                       theImage,
                               TopoDS_Shape&                         theShells,
-                              const Message_ProgressRange&          theRange)
+                              const System::log::Message_ProgressRange&          theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 5);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 5);
 
   BOPAlgo_MakerVolume aMV1;
   aMV1.SetArguments(theLF);
@@ -4730,13 +4730,13 @@ bool BRepOffset_MakeOffset::IsPlanar()
       double aTolForFace = BRep_Tool::Tolerance(aF);
 
       occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(aF);
-      GeomLib_IsPlanarSurface   aPlanarityChecker(aSurf, Precision::Confusion());
+      GeomLib_IsPlanarSurface   aPlanarityChecker(aSurf, math::precision::Precision::Confusion());
       if (aPlanarityChecker.IsPlanar())
       {
         gp_Pln aPln = aPlanarityChecker.Plan();
         double u1, u2, v1, v2, um, vm;
         aSurf->Bounds(u1, u2, v1, v2);
-        bool isInf1 = Precision::IsInfinite(u1), isInf2 = Precision::IsInfinite(u2);
+        bool isInf1 = math::precision::Precision::IsInfinite(u1), isInf2 = math::precision::Precision::IsInfinite(u2);
         if (!isInf1 && !isInf2)
         {
           um = (u1 + u2) / 2.;
@@ -4753,7 +4753,7 @@ bool BRepOffset_MakeOffset::IsPlanar()
         {
           um = 0.;
         }
-        isInf1 = Precision::IsInfinite(v1), isInf2 = Precision::IsInfinite(v2);
+        isInf1 = math::precision::Precision::IsInfinite(v1), isInf2 = math::precision::Precision::IsInfinite(v2);
         if (!isInf1 && !isInf2)
         {
           vm = (v1 + v2) / 2.;

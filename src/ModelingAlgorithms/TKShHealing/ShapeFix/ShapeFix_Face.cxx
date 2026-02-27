@@ -68,8 +68,8 @@ static bool IsSurfaceUVInfinite(const occ::handle<Geom_Surface>& theSurf)
   double UMin, UMax, VMin, VMax;
   theSurf->Bounds(UMin, UMax, VMin, VMax);
 
-  return (Precision::IsInfinite(UMin) || Precision::IsInfinite(UMax) || Precision::IsInfinite(VMin)
-          || Precision::IsInfinite(VMax));
+  return (math::precision::Precision::IsInfinite(UMin) || math::precision::Precision::IsInfinite(UMax) || math::precision::Precision::IsInfinite(VMin)
+          || math::precision::Precision::IsInfinite(VMax));
 }
 
 static bool IsSurfaceUVPeriodic(const occ::handle<GeomAdaptor_Surface>& theSurf)
@@ -149,7 +149,7 @@ void ShapeFix_Face::Init(const occ::handle<ShapeAnalysis_Surface>& surf,
   mySurf   = surf;
   SetPrecision(preci);
   BRep_Builder B;
-  B.MakeFace(myFace, mySurf->Surface(), ::Precision::Confusion());
+  B.MakeFace(myFace, mySurf->Surface(), math::precision::Precision::Confusion());
   myShape = myFace;
   myFwd   = fwd;
   if (!fwd)
@@ -300,7 +300,7 @@ bool ShapeFix_Face::Perform()
       double size     = ShapeFix::LeastEdgeSize(S);
       double newpreci = std::min(aSavPreci, size / 2.);
       newpreci        = newpreci * 1.00001;
-      if (aSavPreci > newpreci && newpreci > Precision::Confusion())
+      if (aSavPreci > newpreci && newpreci > math::precision::Precision::Confusion())
       {
         SetPrecision(newpreci);
         theAdvFixWire->SetPrecision(newpreci);
@@ -466,7 +466,7 @@ bool ShapeFix_Face::Perform()
         {
           if (aLoopWires.Length() > 1)
 
-            SendWarning(wire, Message_Msg("FixAdvFace.FixLoopWire.MSG0"));
+            SendWarning(wire, System::log::Message_Msg("FixAdvFace.FixLoopWire.MSG0"));
 
           myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE7);
           fixed = true;
@@ -723,7 +723,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
 
   if (ws.IsEmpty() && !IsSurfaceUVInfinite(mySurf->Surface()))
   {
-    BRepBuilderAPI_MakeFace aFaceBuilder(mySurf->Surface(), Precision::Confusion());
+    BRepBuilderAPI_MakeFace aFaceBuilder(mySurf->Surface(), math::precision::Precision::Confusion());
 
     TopoDS_Face aNewFace = aFaceBuilder.Face();
     aNewFace.Orientation(myFace.Orientation());
@@ -740,7 +740,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
       sfe->FixVertexTolerance(edg, myFace);
     }
 
-    SendWarning(myFace, Message_Msg("FixAdvFace.FixOrientation.MSG0"));
+    SendWarning(myFace, System::log::Message_Msg("FixAdvFace.FixOrientation.MSG0"));
 
     BRepTools::Update(myFace);
     myResult = myFace;
@@ -797,7 +797,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
 
   TopLoc_Location           L;
   occ::handle<Geom_Surface> surf = BRep_Tool::Surface(myFace, L);
-  BRepBuilderAPI_MakeFace   mf(surf, Precision::Confusion());
+  BRepBuilderAPI_MakeFace   mf(surf, math::precision::Precision::Confusion());
   TopoDS_Face               ftmp = mf.Face();
   ftmp.Location(L);
   for (wi.Initialize(ftmp, false); wi.More(); wi.Next())
@@ -806,7 +806,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
       continue;
     TopoDS_Wire wire = TopoDS::Wire(wi.Value());
     ws.Append(wire);
-    if (shift.XY().Modulus() < ::Precision::PConfusion())
+    if (shift.XY().Modulus() < math::precision::Precision::PConfusion())
       continue;
     Shift2dWire(wire, myFace, shift.XY(), mySurf, true);
   }
@@ -867,7 +867,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
   myFace = TopoDS::Face(S);
   BRepTools::Update(myFace);
 
-  SendWarning(myFace, Message_Msg("FixAdvFace.FixOrientation.MSG0"));
+  SendWarning(myFace, System::log::Message_Msg("FixAdvFace.FixOrientation.MSG0"));
 
   return true;
 }
@@ -979,7 +979,7 @@ bool ShapeFix_Face::FixOrientation(
     }
     else
       length = 0;
-    if (length > ::Precision::Confusion())
+    if (length > math::precision::Precision::Confusion())
     {
       ws.Append(wi.Value());
       allSubShapes.Append(wi.Value());
@@ -1014,7 +1014,7 @@ bool ShapeFix_Face::FixOrientation(
       sbdw->Reverse(myFace);
       ws.SetValue(1, sbdw->Wire());
 
-      SendWarning(sbdw->Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+      SendWarning(sbdw->Wire(), System::log::Message_Msg("FixAdvFace.FixOrientation.MSG5"));
 
       done = true;
     }
@@ -1067,7 +1067,7 @@ bool ShapeFix_Face::FixOrientation(
         }
         else
           gac.Load(cw, cf, cl);
-        BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), aBox);
+        BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), aBox);
       }
 
       double aXMin, aXMax, aYMin, aYMax;
@@ -1101,7 +1101,7 @@ bool ShapeFix_Face::FixOrientation(
       B.Add(af, aw);
 
       bool                           CheckShift = true;
-      BRepTopAdaptor_FClass2d        clas(af, ::Precision::PConfusion());
+      BRepTopAdaptor_FClass2d        clas(af, math::precision::Precision::PConfusion());
       TopAbs_State                   sta    = TopAbs_OUT;
       TopAbs_State                   staout = clas.PerformInfinitePoint();
       NCollection_List<TopoDS_Shape> IntWires;
@@ -1118,7 +1118,7 @@ bool ShapeFix_Face::FixOrientation(
         {
           aWireIt--;
           gp_Pnt   aP  = BRep_Tool::Pnt(TopoDS::Vertex(aSh2));
-          gp_Pnt2d p2d = mySurf->ValueOfUV(aP, Precision::Confusion());
+          gp_Pnt2d p2d = mySurf->ValueOfUV(aP, math::precision::Precision::Confusion());
           stb          = clas.Perform(p2d, false);
           if (stb == staout && (uclosed || vclosed))
           {
@@ -1232,7 +1232,7 @@ bool ShapeFix_Face::FixOrientation(
       if (sta == TopAbs_UNKNOWN)
       {
 
-        SendWarning(aw, Message_Msg("FixAdvFace.FixOrientation.MSG11"));
+        SendWarning(aw, System::log::Message_Msg("FixAdvFace.FixOrientation.MSG11"));
       }
       else
       {
@@ -1246,7 +1246,7 @@ bool ShapeFix_Face::FixOrientation(
             sewd.Reverse(myFace);
             ws.SetValue(i, sewd.Wire());
 
-            SendWarning(sewd.Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+            SendWarning(sewd.Wire(), System::log::Message_Msg("FixAdvFace.FixOrientation.MSG5"));
 
             aSeqReversed.Append(i);
             done = true;
@@ -1285,7 +1285,7 @@ bool ShapeFix_Face::FixOrientation(
             sewd.Reverse(myFace);
             ws.SetValue(i, sewd.Wire());
 
-            SendWarning(sewd.Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+            SendWarning(sewd.Wire(), System::log::Message_Msg("FixAdvFace.FixOrientation.MSG5"));
 
             aSeqReversed.Append(i);
             done = true;
@@ -1303,7 +1303,7 @@ bool ShapeFix_Face::FixOrientation(
             sewd.Reverse(myFace);
             ws.SetValue(i, sewd.Wire());
 
-            SendWarning(sewd.Wire(), Message_Msg("FixAdvFace.FixOrientation.MSG5"));
+            SendWarning(sewd.Wire(), System::log::Message_Msg("FixAdvFace.FixOrientation.MSG5"));
 
             aSeqReversed.Append(i);
             done = true;
@@ -1440,37 +1440,37 @@ bool ShapeFix_Face::FixMissingSeam()
   double fU1, fU2, fV1, fV2;
   BRepTools::UVBounds(myFace, fU1, fU2, fV1, fV2);
 
-  if (::Precision::IsInfinite(SUF) || ::Precision::IsInfinite(SUL))
+  if (math::precision::Precision::IsInfinite(SUF) || math::precision::Precision::IsInfinite(SUL))
   {
-    if (::Precision::IsInfinite(SUF))
+    if (math::precision::Precision::IsInfinite(SUF))
       SUF = fU1;
-    if (::Precision::IsInfinite(SUL))
+    if (math::precision::Precision::IsInfinite(SUL))
       SUL = fU2;
-    if (std::abs(SUL - SUF) < ::Precision::PConfusion())
+    if (std::abs(SUL - SUF) < math::precision::Precision::PConfusion())
     {
-      if (::Precision::IsInfinite(SUF))
+      if (math::precision::Precision::IsInfinite(SUF))
         SUF -= 1000.;
       else
         SUL += 1000.;
     }
   }
-  if (::Precision::IsInfinite(SVF) || ::Precision::IsInfinite(SVL))
+  if (math::precision::Precision::IsInfinite(SVF) || math::precision::Precision::IsInfinite(SVL))
   {
-    if (::Precision::IsInfinite(SVF))
+    if (math::precision::Precision::IsInfinite(SVF))
       SVF = fV1;
-    if (::Precision::IsInfinite(SVL))
+    if (math::precision::Precision::IsInfinite(SVL))
       SVL = fV2;
-    if (std::abs(SVL - SVF) < ::Precision::PConfusion())
+    if (std::abs(SVL - SVF) < math::precision::Precision::PConfusion())
     {
-      if (::Precision::IsInfinite(SVF))
+      if (math::precision::Precision::IsInfinite(SVF))
         SVF -= 1000.;
       else
         SVL += 1000.;
     }
   }
 
-  URange = std::min(std::abs(SUL - SUF), Precision::Infinite());
-  VRange = std::min(std::abs(SVL - SVF), Precision::Infinite());
+  URange = std::min(std::abs(SUL - SUF), math::precision::Precision::Infinite());
+  VRange = std::min(std::abs(SVL - SVF), math::precision::Precision::Infinite());
 
   int ismodeu = 0, ismodev = 0;
   int isdeg1 = 0, isdeg2 = 0;
@@ -1586,10 +1586,10 @@ bool ShapeFix_Face::FixMissingSeam()
     {
       double uCoord;
       if (mySurf->Value(SUF, SVF).Distance(mySurf->Value(SUF, (SVF + SVL) / 2))
-          < ::Precision::Confusion())
+          < math::precision::Precision::Confusion())
         uCoord = SUF;
       else if (mySurf->Value(SUL, SVF).Distance(mySurf->Value(SUL, (SVF + SVL) / 2))
-               < ::Precision::Confusion())
+               < math::precision::Precision::Confusion())
         uCoord = SUL;
       else
         return false;
@@ -1602,10 +1602,10 @@ bool ShapeFix_Face::FixMissingSeam()
     {
       double vCoord;
       if (mySurf->Value(SUF, SVF).Distance(mySurf->Value((SUF + SUL) / 2, SVF))
-          < ::Precision::Confusion())
+          < math::precision::Precision::Confusion())
         vCoord = SVF;
       else if (mySurf->Value(SUL, SVL).Distance(mySurf->Value((SUF + SUL) / 2, SVL))
-               < ::Precision::Confusion())
+               < math::precision::Precision::Confusion())
         vCoord = SVL;
       else
         return false;
@@ -1622,10 +1622,10 @@ bool ShapeFix_Face::FixMissingSeam()
     TopoDS_Edge              edge;
     B.MakeEdge(edge);
     B.Degenerated(edge, true);
-    B.UpdateEdge(edge, line, myFace, ::Precision::Confusion());
+    B.UpdateEdge(edge, line, myFace, math::precision::Precision::Confusion());
     B.Range(edge, myFace, 0., aRange);
     TopoDS_Vertex V;
-    B.MakeVertex(V, mySurf->Value(p.X(), p.Y()), ::Precision::Confusion());
+    B.MakeVertex(V, mySurf->Value(p.X(), p.Y()), math::precision::Precision::Confusion());
     V.Orientation(TopAbs_FORWARD);
     B.Add(edge, V);
     V.Orientation(TopAbs_REVERSED);
@@ -1698,7 +1698,7 @@ bool ShapeFix_Face::FixMissingSeam()
   {
     double shiftw2 = ShapeAnalysis::AdjustByPeriod(
       0.5 * (m2[coord][0] + m2[coord][1]),
-      0.5 * (m1[coord][0] + m1[coord][1] + isneg * (period + ::Precision::PConfusion())),
+      0.5 * (m1[coord][0] + m1[coord][1] + isneg * (period + math::precision::Precision::PConfusion())),
       period);
     m1[coord][0] = std::min(m1[coord][0], m2[coord][0] + shiftw2);
     m1[coord][1] = std::max(m1[coord][1], m2[coord][1] + shiftw2);
@@ -1803,7 +1803,7 @@ bool ShapeFix_Face::FixMissingSeam()
       if (uclosed && ismodeu)
       {
         pos2.SetX(pos2.X() + ShapeAnalysis::AdjustByPeriod(pos2.X(), pos1.X(), URange));
-        if (std::abs(pos2.X() - pos1.X()) < ::Precision::PConfusion()
+        if (std::abs(pos2.X() - pos1.X()) < math::precision::Precision::PConfusion()
             && (foundU != 2 || std::abs(pos1.X()) < std::abs(uf)))
         {
           foundU = 2;
@@ -1813,7 +1813,7 @@ bool ShapeFix_Face::FixMissingSeam()
       if (vclosed && !ismodeu)
       {
         pos2.SetY(pos2.Y() + ShapeAnalysis::AdjustByPeriod(pos2.Y(), pos1.Y(), VRange));
-        if (std::abs(pos2.Y() - pos1.Y()) < ::Precision::PConfusion()
+        if (std::abs(pos2.Y() - pos1.Y()) < math::precision::Precision::PConfusion()
             && (foundV != 2 || std::abs(pos1.Y()) < std::abs(vf)))
         {
           foundV = 2;
@@ -1841,7 +1841,7 @@ bool ShapeFix_Face::FixMissingSeam()
     B.Add(tmpF, aSeqNonManif.Value(j));
 
   ShapeFix_ComposeShell CompShell;
-  CompShell.Init(G, L, tmpF, ::Precision::Confusion());
+  CompShell.Init(G, L, tmpF, math::precision::Precision::Confusion());
   if (Context().IsNull())
     SetContext(new ShapeBuild_ReShape);
   CompShell.ClosedMode() = true;
@@ -1901,7 +1901,7 @@ bool ShapeFix_Face::FixMissingSeam()
   }
   myResult = Context()->Apply(myResult);
 
-  SendWarning(Message_Msg("FixAdvFace.FixMissingSeam.MSG0"));
+  SendWarning(System::log::Message_Msg("FixAdvFace.FixMissingSeam.MSG0"));
   return true;
 }
 
@@ -1936,7 +1936,7 @@ bool ShapeFix_Face::FixSmallAreaWire(const bool theIsRemoveSmallFace)
     if (anAnalyzer->CheckSmallArea(aWire))
     {
 
-      SendWarning(aWire, Message_Msg("FixAdvFace.FixSmallAreaWire.MSG0"));
+      SendWarning(aWire, System::log::Message_Msg("FixAdvFace.FixSmallAreaWire.MSG0"));
       ++nbRemoved;
     }
     else
@@ -2023,7 +2023,7 @@ static bool isClosed2D(const TopoDS_Face& aFace, const TopoDS_Wire& aWire)
 {
   bool                            isClosed = true;
   occ::handle<ShapeAnalysis_Wire> asaw =
-    new ShapeAnalysis_Wire(aWire, aFace, Precision::Confusion());
+    new ShapeAnalysis_Wire(aWire, aFace, math::precision::Precision::Confusion());
   for (int i = 1; i <= asaw->NbEdges() && isClosed; i++)
   {
     TopoDS_Edge edge1 = asaw->WireData()->Edge(i);
@@ -2237,7 +2237,7 @@ bool ShapeFix_Face::SplitEdge(
       }
       else
         gac.Load(c2d, cf, cl);
-      BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+      BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
       boxes.Bind(newE1, box);
     }
     if (sae.PCurve(newE2, S, L, c2d, cf, cl, false))
@@ -2253,7 +2253,7 @@ bool ShapeFix_Face::SplitEdge(
       }
       else
         gac.Load(c2d, cf, cl);
-      BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+      BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
       boxes.Bind(newE2, box);
     }
     return true;
@@ -2312,7 +2312,7 @@ bool ShapeFix_Face::SplitEdge(
       }
       else
         gac.Load(c2d, cf, cl);
-      BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+      BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
       boxes.Bind(newE1, box);
     }
     if (sae.PCurve(newE2, S, L, c2d, cf, cl, false))
@@ -2328,7 +2328,7 @@ bool ShapeFix_Face::SplitEdge(
       }
       else
         gac.Load(c2d, cf, cl);
-      BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+      BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
       boxes.Bind(newE2, box);
     }
     return true;
@@ -2462,7 +2462,7 @@ bool ShapeFix_Face::FixSplitFace(
         TopoDS_Face  aFace             = TopoDS::Face(aShapeEmptyCopied);
         aFace.Orientation(TopAbs_FORWARD);
         B.Add(aFace, liter.Value());
-        BRepTopAdaptor_FClass2d clas(aFace, ::Precision::PConfusion());
+        BRepTopAdaptor_FClass2d clas(aFace, math::precision::Precision::PConfusion());
         TopAbs_State            staout = clas.PerformInfinitePoint();
         if (staout == TopAbs_IN)
           B.Add(tmpFace, liter.Value());
@@ -2622,7 +2622,7 @@ bool ShapeFix_Face::FixPeriodicDegenerated()
   double aConeBaseR = aConeBaseCirc->Radius();
   double aSemiAngle = aConeSurf->SemiAngle();
 
-  if (fabs(aSemiAngle) <= Precision::Confusion())
+  if (fabs(aSemiAngle) <= math::precision::Precision::Confusion())
     return false;
 
   double aConeBaseH = aConeBaseR / std::sin(aSemiAngle);

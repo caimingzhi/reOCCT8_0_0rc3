@@ -23,7 +23,7 @@ const occ::handle<Standard_Transient>& BinDrivers::Factory(const Standard_GUID& 
   if (theGUID == BinStorageDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "BinDrivers : Storage Plugin" << std::endl;
+    std::cout << "BinDrivers : app::storage::Storage System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_sd = new BinDrivers_DocumentStorageDriver;
     return model_sd;
@@ -32,7 +32,7 @@ const occ::handle<Standard_Transient>& BinDrivers::Factory(const Standard_GUID& 
   if (theGUID == BinRetrievalDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "BinDrivers : Retrieval Plugin" << std::endl;
+    std::cout << "BinDrivers : Retrieval System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_rd = new BinDrivers_DocumentRetrievalDriver;
     return model_rd;
@@ -51,7 +51,7 @@ void BinDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 }
 
 occ::handle<BinMDF_ADriverTable> BinDrivers::AttributeDrivers(
-  const occ::handle<Message_Messenger>& aMsgDrv)
+  const occ::handle<System::log::Message_Messenger>& aMsgDrv)
 {
   occ::handle<BinMDF_ADriverTable> aTable = new BinMDF_ADriverTable;
 

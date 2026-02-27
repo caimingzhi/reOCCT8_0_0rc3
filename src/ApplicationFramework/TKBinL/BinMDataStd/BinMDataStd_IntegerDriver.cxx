@@ -8,7 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntegerDriver, BinMDF_ADriver)
 
 BinMDataStd_IntegerDriver::BinMDataStd_IntegerDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_Integer)->Name())
 {
 }

@@ -61,10 +61,10 @@ public:
     double aDepth       = Depth - Tolerance;
     double anOtherDepth = theOther.Depth - theOther.Tolerance;
 
-    if (std::abs(aDepth - anOtherDepth) > Precision::Confusion())
+    if (std::abs(aDepth - anOtherDepth) > math::precision::Precision::Confusion())
     {
-      if ((aCos > 0.5 && std::abs(Tolerance - theOther.Tolerance) < Precision::Confusion())
-          || std::abs(aCos - 1.0) < Precision::Confusion())
+      if ((aCos > 0.5 && std::abs(Tolerance - theOther.Tolerance) < math::precision::Precision::Confusion())
+          || std::abs(aCos - 1.0) < math::precision::Precision::Confusion())
       {
         return aDepth < anOtherDepth;
       }
@@ -101,7 +101,7 @@ public:
       return DisplayPriority > theOther.DisplayPriority;
     }
 
-    if (std::abs(Depth - theOther.Depth) <= Precision::Confusion())
+    if (std::abs(Depth - theOther.Depth) <= math::precision::Precision::Confusion())
     {
       return MinDist < theOther.MinDist;
     }

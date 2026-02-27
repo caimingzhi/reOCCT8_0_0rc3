@@ -29,14 +29,14 @@ void IGESGeom_ToolCompositeCurve::ReadOwnParams(const occ::handle<IGESGeom_Compo
 
   if (st && (num > 0))
   {
-    Message_Msg Msg80("XSTEP_80");
+    System::log::Message_Msg Msg80("XSTEP_80");
 
     PR.ReadEnts(IR, PR.CurrentList(num), Msg80, tempEntities);
   }
 
   else
   {
-    Message_Msg Msg79("XSTEP_79");
+    System::log::Message_Msg Msg79("XSTEP_79");
     PR.SendFail(Msg79);
   }
 

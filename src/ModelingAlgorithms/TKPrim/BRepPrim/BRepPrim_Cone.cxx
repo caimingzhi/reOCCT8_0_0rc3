@@ -18,11 +18,11 @@ BRepPrim_Cone::BRepPrim_Cone(const double  Angle,
       myHalfAngle(Angle),
       myRadius(Radius)
 {
-  if (Height < Precision::Confusion())
+  if (Height < math::precision::Precision::Confusion())
     throw Standard_DomainError("cone with null height");
-  if (myHalfAngle * Height < Precision::Confusion())
+  if (myHalfAngle * Height < math::precision::Precision::Confusion())
     throw Standard_DomainError("cone with null angle");
-  if ((M_PI / 2 - myHalfAngle) * Height < Precision::Confusion())
+  if ((M_PI / 2 - myHalfAngle) * Height < math::precision::Precision::Confusion())
     throw Standard_DomainError("cone with angle > PI/2");
 
   VMax(Height / std::cos(myHalfAngle));
@@ -87,7 +87,7 @@ TopoDS_Face BRepPrim_Cone::MakeEmptyLateralFace() const
 {
   occ::handle<Geom_ConicalSurface> C = new Geom_ConicalSurface(Axes(), myHalfAngle, myRadius);
   TopoDS_Face                      F;
-  myBuilder.Builder().MakeFace(F, C, Precision::Confusion());
+  myBuilder.Builder().MakeFace(F, C, math::precision::Precision::Confusion());
   return F;
 }
 
@@ -106,11 +106,11 @@ void BRepPrim_Cone::SetMeridian()
 
 void BRepPrim_Cone::SetParameters(const double R1, const double R2, const double H)
 {
-  if (((R1 != 0) && (R1 < Precision::Confusion())) || ((R2 != 0) && (R2 < Precision::Confusion())))
+  if (((R1 != 0) && (R1 < math::precision::Precision::Confusion())) || ((R2 != 0) && (R2 < math::precision::Precision::Confusion())))
     throw Standard_DomainError("cone with negative or too small radius");
-  if (std::abs(R1 - R2) < Precision::Confusion())
+  if (std::abs(R1 - R2) < math::precision::Precision::Confusion())
     throw Standard_DomainError("cone with two identic radii");
-  if (H < Precision::Confusion())
+  if (H < math::precision::Precision::Confusion())
     throw Standard_DomainError("cone with negative or null height");
 
   myRadius    = R1;

@@ -78,7 +78,7 @@ void ShapeFix_Shell::Init(const TopoDS_Shell& shell)
   myNbShells = 0;
 }
 
-bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
+bool ShapeFix_Shell::Perform(const System::log::Message_ProgressRange& theProgress)
 {
   bool status = false;
   if (Context().IsNull())
@@ -91,7 +91,7 @@ bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
 
     int aNbFaces = S.NbChildren();
 
-    Message_ProgressScope aPS(theProgress, "Fixing face", aNbFaces);
+    System::log::Message_ProgressScope aPS(theProgress, "Fixing face", aNbFaces);
 
     for (TopoDS_Iterator iter(S); iter.More() && aPS.More(); iter.Next(), aPS.Next())
     {
@@ -126,7 +126,7 @@ bool ShapeFix_Shell::Perform(const Message_ProgressRange& theProgress)
       {
         aCurShell.Closed(false);
 
-        SendWarning(Message_Msg("FixAdvShell.FixClosedFlag.MSG0"));
+        SendWarning(System::log::Message_Msg("FixAdvShell.FixClosedFlag.MSG0"));
       }
       aSas.Clear();
     }
@@ -1216,7 +1216,7 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
   {
     myShell.Closed(!isFreeBoundaries);
 
-    SendWarning(Message_Msg("FixAdvShell.FixClosedFlag.MSG0"));
+    SendWarning(System::log::Message_Msg("FixAdvShell.FixClosedFlag.MSG0"));
   }
   bool isGetShells = true;
 
@@ -1292,7 +1292,7 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
     done     = true;
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_FAIL);
 
-    SendWarning(Message_Msg("FixAdvShell.FixOrientation.MSG20"));
+    SendWarning(System::log::Message_Msg("FixAdvShell.FixOrientation.MSG20"));
 
     return true;
   }
@@ -1355,9 +1355,9 @@ bool ShapeFix_Shell::FixFaceOrientation(const TopoDS_Shell& shell,
       Context()->Replace(shell, myShape);
     if (myNbShells == 1)
 
-      SendWarning(Message_Msg("FixAdvShell.FixOrientation.MSG0"));
+      SendWarning(System::log::Message_Msg("FixAdvShell.FixOrientation.MSG0"));
     else
-      SendWarning(Message_Msg("FixAdvShell.FixOrientation.MSG30"));
+      SendWarning(System::log::Message_Msg("FixAdvShell.FixOrientation.MSG30"));
 
     return true;
   }

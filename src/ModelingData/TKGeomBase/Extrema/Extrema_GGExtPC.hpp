@@ -34,10 +34,10 @@ public:
         mytolu(0.0),
         mytolf(0.0),
         mysample(17),
-        myintuinf(Precision::Infinite()),
-        myintusup(Precision::Infinite()),
-        myuinf(Precision::Infinite()),
-        myusup(Precision::Infinite()),
+        myintuinf(math::precision::Precision::Infinite()),
+        myintusup(math::precision::Precision::Infinite()),
+        myuinf(math::precision::Precision::Infinite()),
+        myusup(math::precision::Precision::Infinite()),
         type(GeomAbs_OtherCurve)
   {
   }
@@ -70,7 +70,7 @@ public:
     myintuinf = myuinf = theUinf;
     myintusup = myusup = theUsup;
     mytolf             = theTolF;
-    mytolu             = TheCurveTool::Resolution(*myC, Precision::Confusion());
+    mytolu             = TheCurveTool::Resolution(*myC, math::precision::Precision::Confusion());
     type               = TheCurveTool::GetType(theC);
     mydone             = false;
     mydist1            = RealLast();
@@ -86,9 +86,9 @@ public:
     int    i, NbExt, n;
     double U;
     mysample             = 17;
-    constexpr double t3d = Precision::Confusion();
+    constexpr double t3d = math::precision::Precision::Confusion();
 
-    if (Precision::IsInfinite(myuinf))
+    if (math::precision::Precision::IsInfinite(myuinf))
       mydist1 = RealLast();
     else
     {
@@ -96,7 +96,7 @@ public:
       mydist1 = theP.SquareDistance(Pf);
     }
 
-    if (Precision::IsInfinite(myusup))
+    if (math::precision::Precision::IsInfinite(myusup))
       mydist2 = RealLast();
     else
     {
@@ -150,7 +150,7 @@ public:
         TheCurveTool::BSpline(aCurve)->Knots(aKnots);
 
         double       aPeriodJump = 0.0;
-        const double aTolCoeff   = (myusup - myuinf) * Precision::PConfusion();
+        const double aTolCoeff   = (myusup - myuinf) * math::precision::Precision::PConfusion();
         if (TheCurveTool::IsPeriodic(aCurve))
         {
           int aPeriodShift = int((myuinf - aKnots(aFirstIdx)) / TheCurveTool::Period(aCurve));
@@ -223,10 +223,10 @@ public:
             aMin2             = theP.SquareDistance(aP2);
             double aMinSqDist = std::min(aMin1, aMin2);
             double aMinDer    = std::min(std::abs(aVal1), std::abs(aVal2));
-            if (!(Precision::IsInfinite(aVal1) || Precision::IsInfinite(aVal2)))
+            if (!(math::precision::Precision::IsInfinite(aVal1) || math::precision::Precision::IsInfinite(aVal2)))
             {
-              if (aVal1 * aVal2 <= 0.0 || aMinSqDist < 100. * Precision::SquareConfusion()
-                  || 2. * aMinDer < Precision::Confusion())
+              if (aVal1 * aVal2 <= 0.0 || aMinSqDist < 100. * math::precision::Precision::SquareConfusion()
+                  || 2. * aMinDer < math::precision::Precision::Confusion())
               {
                 myintuinf = aF;
                 myintusup = aL;
@@ -234,7 +234,7 @@ public:
               }
             }
           }
-          if (!Precision::IsInfinite(distmin))
+          if (!math::precision::Precision::IsInfinite(distmin))
           {
             bool isToAdd = true;
             NbExt        = mypoint.Length();
@@ -282,7 +282,7 @@ public:
 
           for (anIdx = aVal.Lower() + 1; anIdx < aVal.Upper(); anIdx++)
           {
-            if (aVal(anIdx) <= Precision::SquareConfusion())
+            if (aVal(anIdx) <= math::precision::Precision::SquareConfusion())
             {
               mySqDist.Append(aVal(anIdx));
               myismin.Append(true);
@@ -297,7 +297,7 @@ public:
             }
           }
 
-          if (mydist1 > Precision::SquareConfusion() && !Precision::IsPositiveInfinite(mydist1))
+          if (mydist1 > math::precision::Precision::SquareConfusion() && !math::precision::Precision::IsPositiveInfinite(mydist1))
           {
             ThePoint  aP1, aP2;
             TheVector aV1, aV2;
@@ -306,10 +306,10 @@ public:
             TheVector aBase1(theP, aP1), aBase2(theP, aP2);
             double    aVal1 = aV1.Dot(aBase1);
             double    aVal2 = aV2.Dot(aBase2);
-            if (!(Precision::IsInfinite(aVal1) || Precision::IsInfinite(aVal2)))
+            if (!(math::precision::Precision::IsInfinite(aVal1) || math::precision::Precision::IsInfinite(aVal2)))
             {
               if (aVal1 * aVal2 <= 0.0 || aBase1.Dot(aBase2) <= 0.0
-                  || 2.0 * std::abs(aVal1) < Precision::Confusion())
+                  || 2.0 * std::abs(aVal1) < math::precision::Precision::Confusion())
               {
                 myintuinf = aParam(aVal.Lower());
                 myintusup = aParam(aVal.Lower() + 1);
@@ -318,7 +318,7 @@ public:
             }
           }
 
-          if (mydist2 > Precision::SquareConfusion() && !Precision::IsPositiveInfinite(mydist2))
+          if (mydist2 > math::precision::Precision::SquareConfusion() && !math::precision::Precision::IsPositiveInfinite(mydist2))
           {
             ThePoint  aP1, aP2;
             TheVector aV1, aV2;
@@ -328,10 +328,10 @@ public:
             double    aVal1 = aV1.Dot(aBase1);
             double    aVal2 = aV2.Dot(aBase2);
 
-            if (!(Precision::IsInfinite(aVal1) || Precision::IsInfinite(aVal2)))
+            if (!(math::precision::Precision::IsInfinite(aVal1) || math::precision::Precision::IsInfinite(aVal2)))
             {
               if (aVal1 * aVal2 <= 0.0 || aBase1.Dot(aBase2) <= 0.0
-                  || 2.0 * std::abs(aVal2) < Precision::Confusion())
+                  || 2.0 * std::abs(aVal2) < math::precision::Precision::Confusion())
               {
                 myintuinf = aParam(aVal.Upper() - 1);
                 myintusup = aParam(aVal.Upper());
@@ -429,7 +429,7 @@ public:
 
     if (type == GeomAbs_BSplineCurve || type == GeomAbs_OffsetCurve || type == GeomAbs_OtherCurve)
     {
-      if (mydist1 < Precision::SquareConfusion() || mydist2 < Precision::SquareConfusion())
+      if (mydist1 < math::precision::Precision::SquareConfusion() || mydist2 < math::precision::Precision::SquareConfusion())
       {
         bool isFirstAdded = false;
         bool isLastAdded  = false;
@@ -442,13 +442,13 @@ public:
           else if (std::abs(myusup - U) < mytolu)
             isLastAdded = true;
         }
-        if (!isFirstAdded && mydist1 < Precision::SquareConfusion())
+        if (!isFirstAdded && mydist1 < math::precision::Precision::SquareConfusion())
         {
           mySqDist.Prepend(mydist1);
           myismin.Prepend(true);
           mypoint.Prepend(ThePOnC(myuinf, Pf));
         }
-        if (!isLastAdded && mydist2 < Precision::SquareConfusion())
+        if (!isLastAdded && mydist2 < math::precision::Precision::SquareConfusion())
         {
           mySqDist.Append(mydist2);
           myismin.Append(true);

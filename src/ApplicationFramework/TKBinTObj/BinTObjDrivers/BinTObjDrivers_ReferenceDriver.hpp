@@ -7,7 +7,7 @@ class BinTObjDrivers_ReferenceDriver : public BinMDF_ADriver
 
 public:
   Standard_EXPORT BinTObjDrivers_ReferenceDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

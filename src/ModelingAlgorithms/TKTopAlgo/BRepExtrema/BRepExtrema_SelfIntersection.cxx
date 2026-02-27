@@ -107,7 +107,7 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
   int anX;
   int anY;
 
-  if (aCrossLine.SquareModulus() < Precision::SquareConfusion())
+  if (aCrossLine.SquareModulus() < math::precision::Precision::SquareConfusion())
   {
     getProjectionAxes(aTrng0Normal, anX, anY);
 
@@ -173,7 +173,7 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::isRegularS
 
   BVH_Vec3d aCrossLine = BVH_Vec3d::Cross(aTrng0Normal, aTrng1Normal);
 
-  if (aCrossLine.SquareModulus() > Precision::SquareConfusion())
+  if (aCrossLine.SquareModulus() > math::precision::Precision::SquareConfusion())
   {
     return BRepExtrema_ElementFilter::NoCheck;
   }
@@ -212,7 +212,7 @@ BRepExtrema_ElementFilter::FilterResult BRepExtrema_SelfIntersection::PreCheckEl
     for (int aVertIdx2 = 0; aVertIdx2 < 3; ++aVertIdx2)
     {
       if ((aTrng0Vtxs[aVertIdx1] - aTrng1Vtxs[aVertIdx2]).SquareModulus()
-          < Precision::SquareConfusion())
+          < math::precision::Precision::SquareConfusion())
       {
         aSharedVtxs.push_back(std::pair<int, int>(aVertIdx1, aVertIdx2));
 

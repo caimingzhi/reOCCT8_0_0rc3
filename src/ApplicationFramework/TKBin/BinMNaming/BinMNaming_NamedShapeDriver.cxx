@@ -147,7 +147,7 @@ static int TranslateFrom(const BinObjMgt_Persistent& theSource,
 }
 
 BinMNaming_NamedShapeDriver::BinMNaming_NamedShapeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TNaming_NamedShape)->Name()),
       myShapeSet(nullptr),
       myWithTriangles(false),
@@ -293,7 +293,7 @@ void BinMNaming_NamedShapeDriver::Paste(
 
 void BinMNaming_NamedShapeDriver::WriteShapeSection(Standard_OStream&            theOS,
                                                     const int                    theDocVer,
-                                                    const Message_ProgressRange& theRange)
+                                                    const System::log::Message_ProgressRange& theRange)
 {
   myIsQuickPart = false;
   theOS << SHAPESET;
@@ -320,7 +320,7 @@ void BinMNaming_NamedShapeDriver::Clear()
 }
 
 void BinMNaming_NamedShapeDriver::ReadShapeSection(Standard_IStream&            theIS,
-                                                   const Message_ProgressRange& theRange)
+                                                   const System::log::Message_ProgressRange& theRange)
 {
   myIsQuickPart = false;
 

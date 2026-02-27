@@ -49,7 +49,7 @@
 
 static double PreciseUpar(const double anUpar, const occ::handle<Geom_BSplineSurface>& aSurface)
 {
-  constexpr double Tol = Precision::PConfusion();
+  constexpr double Tol = math::precision::Precision::PConfusion();
   int              i1, i2;
 
   aSurface->LocateU(anUpar, Tol, i1, i2);
@@ -162,7 +162,7 @@ static TopoDS_Solid MakeSolid(TopoDS_Shell&      shell,
   BB.Add(solid, shell);
 
   BRepClass3d_SolidClassifier clas3d(solid);
-  clas3d.PerformInfinitePoint(Precision::Confusion());
+  clas3d.PerformInfinitePoint(math::precision::Precision::Confusion());
   if (clas3d.State() == TopAbs_IN)
   {
     BB.MakeSolid(solid);
@@ -245,7 +245,7 @@ void BRepOffsetAPI_ThruSections::CheckCompatibility(const bool check)
   myWCheck = check;
 }
 
-void BRepOffsetAPI_ThruSections::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_ThruSections::Build(const System::log::Message_ProgressRange&)
 {
   myStatus = BRepFill_ThruSectionErrorStatus_Done;
   myBFGenerator.Nullify();
@@ -458,7 +458,7 @@ void BRepOffsetAPI_ThruSections::CreateRuled()
       B.Add(solid, shell);
 
       BRepClass3d_SolidClassifier clas3d(solid);
-      clas3d.PerformInfinitePoint(Precision::Confusion());
+      clas3d.PerformInfinitePoint(math::precision::Precision::Confusion());
       if (clas3d.State() == TopAbs_IN)
       {
         B.MakeSolid(solid);
@@ -706,7 +706,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
     if (edge.Orientation() == TopAbs_REVERSED)
       TopExp::Vertices(edge, v2l, v2f);
 
-    B.MakeFace(face, surface, Precision::Confusion());
+    B.MakeFace(face, surface, math::precision::Precision::Confusion());
 
     B.MakeWire(W);
 
@@ -723,7 +723,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
     }
     else
     {
-      B.MakeEdge(edge1, surface->VIso(f2), Precision::Confusion());
+      B.MakeEdge(edge1, surface->VIso(f2), math::precision::Precision::Confusion());
     }
     v1f.Orientation(TopAbs_FORWARD);
     B.Add(edge1, v1f);
@@ -748,7 +748,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
       }
       else
       {
-        B.MakeEdge(edge2, surface->VIso(l2), Precision::Confusion());
+        B.MakeEdge(edge2, surface->VIso(l2), math::precision::Precision::Confusion());
       }
       v2f.Orientation(TopAbs_FORWARD);
       B.Add(edge2, v2f);
@@ -760,7 +760,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
 
     if (i == 1)
     {
-      B.MakeEdge(edge3, surface->UIso(f1), Precision::Confusion());
+      B.MakeEdge(edge3, surface->UIso(f1), math::precision::Precision::Confusion());
       v1f.Orientation(TopAbs_FORWARD);
       B.Add(edge3, v1f);
       v2f.Orientation(TopAbs_REVERSED);
@@ -783,7 +783,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
     }
     else
     {
-      B.MakeEdge(edge4, surface->UIso(l1), Precision::Confusion());
+      B.MakeEdge(edge4, surface->UIso(l1), math::precision::Precision::Confusion());
       v1l.Orientation(TopAbs_FORWARD);
       B.Add(edge4, v1l);
       v2l.Orientation(TopAbs_REVERSED);
@@ -802,7 +802,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
                    new Geom2d_Line(gp_Pnt2d(0, f2), gp_Dir2d(gp_Dir2d::D::X)),
                    new Geom2d_Line(gp_Pnt2d(0, l2), gp_Dir2d(gp_Dir2d::D::X)),
                    face,
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
       B.Range(edge1, face, f1, l1);
     }
     else
@@ -810,12 +810,12 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
       B.UpdateEdge(edge1,
                    new Geom2d_Line(gp_Pnt2d(0, f2), gp_Dir2d(gp_Dir2d::D::X)),
                    face,
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
       B.Range(edge1, face, f1, l1);
       B.UpdateEdge(edge2,
                    new Geom2d_Line(gp_Pnt2d(0, l2), gp_Dir2d(gp_Dir2d::D::X)),
                    face,
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
       B.Range(edge2, face, f1, l1);
     }
 
@@ -825,7 +825,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
                    new Geom2d_Line(gp_Pnt2d(l1, 0), gp_Dir2d(gp_Dir2d::D::Y)),
                    new Geom2d_Line(gp_Pnt2d(f1, 0), gp_Dir2d(gp_Dir2d::D::Y)),
                    face,
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
       B.Range(edge3, face, f2, l2);
     }
     else
@@ -833,12 +833,12 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
       B.UpdateEdge(edge3,
                    new Geom2d_Line(gp_Pnt2d(f1, 0), gp_Dir2d(gp_Dir2d::D::Y)),
                    face,
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
       B.Range(edge3, face, f2, l2);
       B.UpdateEdge(edge4,
                    new Geom2d_Line(gp_Pnt2d(l1, 0), gp_Dir2d(gp_Dir2d::D::Y)),
                    face,
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
       B.Range(edge4, face, f2, l2);
     }
     B.Add(face, W);
@@ -868,7 +868,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
       B.Add(solid, shell);
 
       BRepClass3d_SolidClassifier clas3d(solid);
-      clas3d.PerformInfinitePoint(Precision::Confusion());
+      clas3d.PerformInfinitePoint(math::precision::Precision::Confusion());
       if (clas3d.State() == TopAbs_IN)
       {
         B.MakeSolid(solid);
@@ -990,7 +990,7 @@ static occ::handle<Geom_BSplineCurve> EdgeToBSpline(const TopoDS_Edge& theEdge)
     if (aTrimCurve->BasisCurve()->IsKind(STANDARD_TYPE(Geom_Conic)))
     {
       const occ::handle<Geom_Curve>& aCurveTrimmed = aTrimCurve;
-      GeomConvert_ApproxCurve anAppr(aCurveTrimmed, Precision::Confusion(), GeomAbs_C1, 16, 14);
+      GeomConvert_ApproxCurve anAppr(aCurveTrimmed, math::precision::Precision::Confusion(), GeomAbs_C1, 16, 14);
       if (anAppr.HasResult())
         aBSCurve = anAppr.Curve();
     }
@@ -1076,7 +1076,7 @@ occ::handle<Geom_BSplineSurface> BRepOffsetAPI_ThruSections::TotalSurf(
       {
 
         TopoDS_Edge aNextEdge = TopoDS::Edge(shapes((j - 1) * NbEdges + i));
-        double      aTolV     = Precision::Confusion();
+        double      aTolV     = math::precision::Precision::Confusion();
         TopExp::Vertices(aNextEdge, vf, vl);
         aTolV  = std::max(aTolV, BRep_Tool::Tolerance(vf));
         aTolV  = std::max(aTolV, BRep_Tool::Tolerance(vl));
@@ -1117,7 +1117,7 @@ occ::handle<Geom_BSplineSurface> BRepOffsetAPI_ThruSections::TotalSurf(
     section.AddCurve(BSPoint);
   }
 
-  section.Perform(Precision::PConfusion());
+  section.Perform(math::precision::Precision::PConfusion());
   occ::handle<GeomFill_Line> line = new GeomFill_Line(NbSects);
 
   int nbIt = 3;

@@ -54,89 +54,89 @@ public:
     const TCollection_AsciiString&       thePath,
     const occ::handle<TDocStd_Document>& theDocument,
     occ::handle<XSControl_WorkSession>&  theWS,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     const TCollection_AsciiString&       thePath,
     const occ::handle<TDocStd_Document>& theDocument,
     occ::handle<XSControl_WorkSession>&  theWS,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     ReadStreamList&                      theStreams,
     const occ::handle<TDocStd_Document>& theDocument,
     occ::handle<XSControl_WorkSession>&  theWS,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     WriteStreamList&                     theStreams,
     const occ::handle<TDocStd_Document>& theDocument,
     occ::handle<XSControl_WorkSession>&  theWS,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     const TCollection_AsciiString&       thePath,
     const occ::handle<TDocStd_Document>& theDocument,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     const TCollection_AsciiString&       thePath,
     const occ::handle<TDocStd_Document>& theDocument,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     ReadStreamList&                      theStreams,
     const occ::handle<TDocStd_Document>& theDocument,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     WriteStreamList&                     theStreams,
     const occ::handle<TDocStd_Document>& theDocument,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     const TCollection_AsciiString&      thePath,
     TopoDS_Shape&                       theShape,
     occ::handle<XSControl_WorkSession>& theWS,
-    const Message_ProgressRange&        theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&        theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     const TCollection_AsciiString&      thePath,
     const TopoDS_Shape&                 theShape,
     occ::handle<XSControl_WorkSession>& theWS,
-    const Message_ProgressRange&        theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&        theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     ReadStreamList&                     theStreams,
     TopoDS_Shape&                       theShape,
     occ::handle<XSControl_WorkSession>& theWS,
-    const Message_ProgressRange&        theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&        theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     WriteStreamList&                    theStreams,
     const TopoDS_Shape&                 theShape,
     occ::handle<XSControl_WorkSession>& theWS,
-    const Message_ProgressRange&        theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&        theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     const TCollection_AsciiString& thePath,
     TopoDS_Shape&                  theShape,
-    const Message_ProgressRange&   theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&   theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     const TCollection_AsciiString& thePath,
     const TopoDS_Shape&            theShape,
-    const Message_ProgressRange&   theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&   theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Read(
     ReadStreamList&              theStreams,
     TopoDS_Shape&                theShape,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool Write(
     WriteStreamList&             theStreams,
     const TopoDS_Shape&          theShape,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
 public:
   Standard_EXPORT virtual TCollection_AsciiString GetFormat() const = 0;

@@ -67,7 +67,7 @@ const BRepSweep_Revol& BRepPrimAPI_MakeRevol::Revol() const
   return myRevol;
 }
 
-void BRepPrimAPI_MakeRevol::Build(const Message_ProgressRange&)
+void BRepPrimAPI_MakeRevol::Build(const System::log::Message_ProgressRange&)
 {
   if (myIsBuild)
   {
@@ -210,7 +210,7 @@ static bool IsIntersect(const occ::handle<Adaptor3d_Curve>& theC, const gp_Ax1& 
     gp_Circ       aCirc  = theC->Circle();
     const gp_Pnt& aCentr = aCirc.Location();
     double        anR2   = aCirc.Radius();
-    anR2 -= Precision::Confusion();
+    anR2 -= math::precision::Precision::Confusion();
     anR2 *= anR2;
     if (anAxis.SquareDistance(aCentr) > anR2)
     {
@@ -219,7 +219,7 @@ static bool IsIntersect(const occ::handle<Adaptor3d_Curve>& theC, const gp_Ax1& 
   }
   const occ::handle<Geom_Line> aL = new Geom_Line(anAxis);
   const GeomAdaptor_Curve      aLin(aL);
-  const double                 aParTol = theC->Resolution(Precision::Confusion());
+  const double                 aParTol = theC->Resolution(math::precision::Precision::Confusion());
   const double aParF = theC->FirstParameter() + aParTol, aParL = theC->LastParameter() - aParTol;
 
   Extrema_ExtCC anExtr(*theC, aLin);
@@ -229,7 +229,7 @@ static bool IsIntersect(const occ::handle<Adaptor3d_Curve>& theC, const gp_Ax1& 
     Extrema_POnCurv aP1, aP2;
     for (int i = 1; i <= anExtr.NbExt(); i++)
     {
-      if (anExtr.SquareDistance(i) > Precision::SquareConfusion())
+      if (anExtr.SquareDistance(i) > math::precision::Precision::SquareConfusion())
       {
         continue;
       }
@@ -275,7 +275,7 @@ bool BRepPrimAPI_MakeRevol::CheckValidity(const TopoDS_Shape& theShape, const gp
       PP   = HC->Value(First + (Last - First) / Ratio);
       Dist = gp_Lin(theA).Distance(PP);
       Ratio++;
-    } while (Dist < Precision::Confusion() && Ratio < 100);
+    } while (Dist < math::precision::Precision::Confusion() && Ratio < 100);
 
     if (Ratio >= 100)
     {

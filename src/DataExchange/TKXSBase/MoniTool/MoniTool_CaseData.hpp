@@ -10,7 +10,10 @@
 class TopoDS_Shape;
 class gp_XYZ;
 class gp_XY;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 
 class MoniTool_CaseData : public Standard_Transient
 {
@@ -106,7 +109,7 @@ public:
 
   Standard_EXPORT bool Integer(const int nd, int& val) const;
 
-  Standard_EXPORT Message_Msg Msg() const;
+  Standard_EXPORT System::log::Message_Msg Msg() const;
 
   Standard_EXPORT static void SetDefWarning(const char* acode);
 

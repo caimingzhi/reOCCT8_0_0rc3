@@ -74,7 +74,7 @@ void MAT2d_Circuit::Perform(
 
     if (IsClosed(i))
       Open(i) = false;
-    else if (P1.IsEqual(P2, Precision::Confusion()))
+    else if (P1.IsEqual(P2, math::precision::Precision::Confusion()))
       Open(i) = false;
     else
       Open(i) = true;
@@ -157,7 +157,7 @@ bool MAT2d_Circuit::IsSharpCorner(const occ::handle<Geom2d_Geometry>& Geom1,
   double                           DotProd;
   double                           ProVec = CrossProd(Geom1, Geom2, DotProd);
   int                              NbTest = 1;
-  constexpr double                 DU     = Precision::Confusion();
+  constexpr double                 DU     = math::precision::Precision::Confusion();
   occ::handle<Geom2d_TrimmedCurve> C1, C2;
 
   C1 = occ::down_cast<Geom2d_TrimmedCurve>(Geom1);
@@ -191,7 +191,7 @@ bool MAT2d_Circuit::IsSharpCorner(const occ::handle<Geom2d_Geometry>& Geom1,
     }
 
     double           D;
-    constexpr double Tol   = Precision::Confusion();
+    constexpr double Tol   = math::precision::Precision::Confusion();
     double           MilC1 = (C1->LastParameter() + C1->FirstParameter()) * 0.5;
     double           MilC2 = (C2->LastParameter() + C2->FirstParameter()) * 0.5;
     gp_Pnt2d         P     = C1->Value(C1->LastParameter());
@@ -715,7 +715,7 @@ void MAT2d_DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int)
     double     Limit = 50000.;
     double     delta = 400;
 
-    if (aCurve->LastParameter() == Precision::Infinite())
+    if (aCurve->LastParameter() == math::precision::Precision::Infinite())
     {
 
       if (type == STANDARD_TYPE(Geom2d_Parabola))

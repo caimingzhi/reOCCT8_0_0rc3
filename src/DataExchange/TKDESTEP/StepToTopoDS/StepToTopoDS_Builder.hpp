@@ -35,28 +35,28 @@ public:
   Standard_EXPORT void Init(const occ::handle<StepShape_ManifoldSolidBrep>& theManifoldSolid,
                             const occ::handle<Transfer_TransientProcess>&   theTP,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepShape_BrepWithVoids>&   theBRepWithVoids,
                             const occ::handle<Transfer_TransientProcess>& theTP,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepShape_FacetedBrep>&     theFB,
                             const occ::handle<Transfer_TransientProcess>& theTP,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepShape_FacetedBrepAndBrepWithVoids>& theFBABWV,
                             const occ::handle<Transfer_TransientProcess>&             theTP,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepShape_ShellBasedSurfaceModel>& S,
                             const occ::handle<Transfer_TransientProcess>&        TP,
                             StepToTopoDS_NMTool&                                 NMTool,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepShape_EdgeBasedWireframeModel>& S,
                             const occ::handle<Transfer_TransientProcess>&         TP,
@@ -71,21 +71,21 @@ public:
                             const StepData_Factors& theLocalFactors = StepData_Factors(),
                             const occ::handle<Transfer_ActorOfTransientProcess>& RA = nullptr,
                             const bool                                           isManifold = false,
-                            const Message_ProgressRange& theProgress = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_TessellatedSolid>& theTSo,
                             const occ::handle<Transfer_TransientProcess>&   theTP,
                             const bool                   theReadTessellatedWhenNoBRepOnly,
                             bool&                        theHasGeom,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_TessellatedShell>& theTSh,
                             const occ::handle<Transfer_TransientProcess>&   theTP,
                             const bool                   theReadTessellatedWhenNoBRepOnly,
                             bool&                        theHasGeom,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const occ::handle<StepVisual_TessellatedFace>& theTF,
                             const occ::handle<Transfer_TransientProcess>&  theTP,

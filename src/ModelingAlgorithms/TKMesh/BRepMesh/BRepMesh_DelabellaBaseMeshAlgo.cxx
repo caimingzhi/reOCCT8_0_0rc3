@@ -37,7 +37,7 @@ namespace
         aGravity = Message_Trace;
         break;
     }
-    Message::Send(aBuffer, aGravity);
+    System::log::Message::Send(aBuffer, aGravity);
     return 0;
   }
 } // namespace

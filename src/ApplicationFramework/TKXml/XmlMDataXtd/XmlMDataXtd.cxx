@@ -13,7 +13,7 @@
 static int myDocumentVersion = -1;
 
 void XmlMDataXtd::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
-                             const occ::handle<Message_Messenger>&   anMsgDrv)
+                             const occ::handle<System::log::Message_Messenger>&   anMsgDrv)
 {
   aDriverTable->AddDriver(new XmlMDataXtd_GeometryDriver(anMsgDrv));
   aDriverTable->AddDriver(new XmlMDataXtd_ConstraintDriver(anMsgDrv));

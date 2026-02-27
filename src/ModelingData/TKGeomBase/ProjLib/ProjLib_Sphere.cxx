@@ -41,7 +41,7 @@ static gp_Pnt2d EvalPnt2d(const gp_Vec& P, const gp_Sphere& Sp)
   double Z = P.Dot(gp_Vec(Sp.Position().Direction()));
   double U, V;
 
-  if (std::abs(X) > Precision::PConfusion() || std::abs(Y) > Precision::PConfusion())
+  if (std::abs(X) > math::precision::Precision::PConfusion() || std::abs(Y) > math::precision::Precision::PConfusion())
   {
     double UU = std::atan2(Y, X);
     U         = ElCLib::InPeriod(UU, 0., 2 * M_PI);
@@ -75,7 +75,7 @@ void ProjLib_Sphere::Project(const gp_Circ& C)
   Zs = mySphere.Position().Direction();
 
   bool             isIsoU, isIsoV;
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   isIsoU = Zc.IsNormal(Zs, Tol) && O.IsEqual(C.Location(), Tol);
   isIsoV = Xc.IsNormal(Zs, Tol) && Yc.IsNormal(Zs, Tol);
@@ -91,13 +91,13 @@ void ProjLib_Sphere::Project(const gp_Circ& C)
     P2d2 = EvalPnt2d(gp_Vec(Yc), mySphere);
 
     if (isIsoU
-        && (std::abs(P2d1.Y() - M_PI / 2.) < Precision::PConfusion()
-            || std::abs(P2d1.Y() + M_PI / 2.) < Precision::PConfusion()))
+        && (std::abs(P2d1.Y() - M_PI / 2.) < math::precision::Precision::PConfusion()
+            || std::abs(P2d1.Y() + M_PI / 2.) < math::precision::Precision::PConfusion()))
     {
 
       P2d1.SetX(P2d2.X());
     }
-    else if (std::abs(std::abs(P2d1.X() - P2d2.X()) - M_PI) < Precision::PConfusion())
+    else if (std::abs(std::abs(P2d1.X() - P2d2.X()) - M_PI) < math::precision::Precision::PConfusion())
     {
 
       P2d2.SetX(P2d1.X());

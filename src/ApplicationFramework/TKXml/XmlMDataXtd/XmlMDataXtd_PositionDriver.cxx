@@ -12,7 +12,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataXtd_PositionDriver, XmlMDF_ADriver)
 
 XmlMDataXtd_PositionDriver::XmlMDataXtd_PositionDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

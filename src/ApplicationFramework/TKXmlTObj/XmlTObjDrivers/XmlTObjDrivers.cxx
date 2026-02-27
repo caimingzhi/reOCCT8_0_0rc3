@@ -19,7 +19,7 @@ const occ::handle<Standard_Transient>& XmlTObjDrivers::Factory(const Standard_GU
   if (aGUID == XmlStorageDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "XmlTObjDrivers : Storage Plugin" << std::endl;
+    std::cout << "XmlTObjDrivers : app::storage::Storage System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_sd =
       new XmlTObjDrivers_DocumentStorageDriver("Copyright: Open CASCADE 2004");
@@ -29,7 +29,7 @@ const occ::handle<Standard_Transient>& XmlTObjDrivers::Factory(const Standard_GU
   if (aGUID == XmlRetrievalDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "XmlTObjDrivers : Retrieval Plugin" << std::endl;
+    std::cout << "XmlTObjDrivers : Retrieval System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_rd = new XmlTObjDrivers_DocumentRetrievalDriver;
     return model_rd;
@@ -48,7 +48,7 @@ void XmlTObjDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp
 }
 
 void XmlTObjDrivers::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
-                                const occ::handle<Message_Messenger>&   anMsgDrv)
+                                const occ::handle<System::log::Message_Messenger>&   anMsgDrv)
 {
   aDriverTable->AddDriver(new XmlTObjDrivers_ModelDriver(anMsgDrv));
   aDriverTable->AddDriver(new XmlTObjDrivers_ObjectDriver(anMsgDrv));

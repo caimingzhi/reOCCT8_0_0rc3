@@ -321,12 +321,12 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                     pnttg1sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(ind3) * dc.XY());
 
                     if (cirsol(NbrSol).Location().IsEqual(pnttg1sol(NbrSol),
-                                                          Precision::Confusion()))
+                                                          math::precision::Precision::Confusion()))
                       par1sol(NbrSol) = 1;
                     else
                       par1sol(NbrSol) = ElCLib::Parameter(cirsol(NbrSol), pnttg1sol(NbrSol));
 
-                    if (C1.Location().IsEqual(pnttg1sol(NbrSol), Precision::Confusion()))
+                    if (C1.Location().IsEqual(pnttg1sol(NbrSol), math::precision::Precision::Confusion()))
                       pararg1(NbrSol) = 1;
                     else
                       pararg1(NbrSol) = ElCLib::Parameter(C1, pnttg1sol(NbrSol));
@@ -343,12 +343,12 @@ GccAna_Circ2d3Tan::GccAna_Circ2d3Tan(const GccEnt_QualifiedCirc& Qualified1,
                     pnttg2sol(NbrSol) = gp_Pnt2d(Center.XY() + Radius(ind3) * dc.XY());
 
                     if (cirsol(NbrSol).Location().IsEqual(pnttg1sol(NbrSol),
-                                                          Precision::Confusion()))
+                                                          math::precision::Precision::Confusion()))
                       par1sol(NbrSol) = 1;
                     else
                       par2sol(NbrSol) = ElCLib::Parameter(cirsol(NbrSol), pnttg2sol(NbrSol));
 
-                    if (C2.Location().IsEqual(pnttg2sol(NbrSol), Precision::Confusion()))
+                    if (C2.Location().IsEqual(pnttg2sol(NbrSol), math::precision::Precision::Confusion()))
                       pararg2(NbrSol) = 1;
                     else
                       pararg2(NbrSol) = ElCLib::Parameter(C2, pnttg2sol(NbrSol));

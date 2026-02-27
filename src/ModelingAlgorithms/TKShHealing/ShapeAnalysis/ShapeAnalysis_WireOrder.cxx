@@ -17,7 +17,7 @@ ShapeAnalysis_WireOrder::ShapeAnalysis_WireOrder()
       myKeepLoops(false),
       myMode(Mode3D)
 {
-  myTol = Precision::Confusion();
+  myTol = math::precision::Precision::Confusion();
   Clear();
 }
 
@@ -176,8 +176,8 @@ void ShapeAnalysis_WireOrder::Perform(const bool)
   NCollection_Array1<bool> isEdgeUsed(1, aNbEdges);
   isEdgeUsed.Init(false);
 
-  constexpr double aTol2  = Precision::SquareConfusion();
-  constexpr double aTolP2 = Precision::SquarePConfusion();
+  constexpr double aTol2  = math::precision::Precision::SquareConfusion();
+  constexpr double aTolP2 = math::precision::Precision::SquarePConfusion();
 
   isEdgeUsed(1)        = true;
   gp_Pnt   aFirstPnt3D = aBegins3D(1);

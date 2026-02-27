@@ -2,16 +2,16 @@
 
 #include <Message_ProgressIndicator.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_ProgressIndicator, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_ProgressIndicator, Standard_Transient)
 
-Message_ProgressIndicator::Message_ProgressIndicator()
+System::log::Message_ProgressIndicator::Message_ProgressIndicator()
     : myPosition(0.),
       myRootScope(nullptr)
 {
-  myRootScope = new Message_ProgressScope(this);
+  myRootScope = new System::log::Message_ProgressScope(this);
 }
 
-Message_ProgressIndicator::~Message_ProgressIndicator()
+System::log::Message_ProgressIndicator::~Message_ProgressIndicator()
 {
 
   myRootScope->myProgress = nullptr;
@@ -19,7 +19,7 @@ Message_ProgressIndicator::~Message_ProgressIndicator()
   delete myRootScope;
 }
 
-Message_ProgressRange Message_ProgressIndicator::Start()
+System::log::Message_ProgressRange System::log::Message_ProgressIndicator::Start()
 {
   myPosition           = 0.;
   myRootScope->myValue = 0.;
@@ -28,8 +28,8 @@ Message_ProgressRange Message_ProgressIndicator::Start()
   return myRootScope->Next();
 }
 
-Message_ProgressRange Message_ProgressIndicator::Start(
-  const occ::handle<Message_ProgressIndicator>& theProgress)
+System::log::Message_ProgressRange System::log::Message_ProgressIndicator::Start(
+  const occ::handle<System::log::Message_ProgressIndicator>& theProgress)
 {
-  return theProgress.IsNull() ? Message_ProgressRange() : theProgress->Start();
+  return theProgress.IsNull() ? System::log::Message_ProgressRange() : theProgress->Start();
 }

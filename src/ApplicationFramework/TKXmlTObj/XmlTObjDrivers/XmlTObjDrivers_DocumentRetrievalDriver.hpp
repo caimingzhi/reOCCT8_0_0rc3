@@ -9,7 +9,7 @@ public:
   Standard_EXPORT XmlTObjDrivers_DocumentRetrievalDriver();
 
   Standard_EXPORT occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver) override;
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver) override;
 
 public:
   DEFINE_STANDARD_RTTIEXT(XmlTObjDrivers_DocumentRetrievalDriver,

@@ -682,8 +682,8 @@ TopAbs_State BOPTools_AlgoTools::ComputeState(const TopoDS_Edge&                
     bool   bF2Inf, bL2Inf;
     double dT = 10.;
 
-    bF2Inf = Precision::IsNegativeInfinite(aT1);
-    bL2Inf = Precision::IsPositiveInfinite(aT2);
+    bF2Inf = math::precision::Precision::IsNegativeInfinite(aT1);
+    bL2Inf = math::precision::Precision::IsPositiveInfinite(aT2);
 
     if (bF2Inf && !bL2Inf)
     {
@@ -937,7 +937,7 @@ bool BOPTools_AlgoTools::GetFaceOff(const TopoDS_Edge&                        th
 
   aDTF = aDN1 ^ aDBF;
 
-  constexpr double anAngleCriteria = Precision::Confusion();
+  constexpr double anAngleCriteria = math::precision::Precision::Confusion();
 
   bRet = true;
   aIt.Initialize(theLCSOff);
@@ -960,7 +960,7 @@ bool BOPTools_AlgoTools::GetFaceOff(const TopoDS_Edge&                        th
 
     aAngle = AngleWithRef(aDBF, aDBF2, aDTF);
 
-    if (std::abs(aAngle) < Precision::Angular())
+    if (std::abs(aAngle) < math::precision::Precision::Angular())
     {
       if (aF2 == theF1)
       {
@@ -1061,7 +1061,7 @@ bool BOPTools_AlgoTools::AreFacesSameDomain(const TopoDS_Face&                  
       aTolF2 = aTolEMax;
   }
 
-  double aTol = aTolF1 + aTolF2 + std::max(theFuzz, Precision::Confusion());
+  double aTol = aTolF1 + aTolF2 + std::max(theFuzz, math::precision::Precision::Confusion());
 
   bFacesSD = theContext->IsValidPointForFace(aP1, theF2, aTol);
 
@@ -1160,7 +1160,7 @@ bool BOPTools_AlgoTools::IsSplitToReverse(const TopoDS_Shape&                  t
 bool BOPTools_AlgoTools::IsSplitToReverseWithWarn(const TopoDS_Shape&                  theSplit,
                                                   const TopoDS_Shape&                  theShape,
                                                   const occ::handle<IntTools_Context>& theContext,
-                                                  const occ::handle<Message_Report>&   theReport)
+                                                  const occ::handle<System::log::Message_Report>&   theReport)
 {
   int  anErr;
   bool isToReverse = BOPTools_AlgoTools::IsSplitToReverse(theSplit, theShape, theContext, &anErr);
@@ -1556,7 +1556,7 @@ int BOPTools_AlgoTools::ComputeVV(const TopoDS_Vertex& aV1, const gp_Pnt& aP2, c
 
   aTolV1 = BRep_Tool::Tolerance(aV1);
 
-  aTolSum  = aTolV1 + aTolP2 + Precision::Confusion();
+  aTolSum  = aTolV1 + aTolP2 + math::precision::Precision::Confusion();
   aTolSum2 = aTolSum * aTolSum;
 
   aP1 = BRep_Tool::Pnt(aV1);
@@ -1575,7 +1575,7 @@ int BOPTools_AlgoTools::ComputeVV(const TopoDS_Vertex& aV1,
 {
   double aTolV1, aTolV2, aTolSum, aTolSum2, aD2;
   gp_Pnt aP1, aP2;
-  double aFuzz1 = (aFuzz > Precision::Confusion() ? aFuzz : Precision::Confusion());
+  double aFuzz1 = (aFuzz > math::precision::Precision::Confusion() ? aFuzz : math::precision::Precision::Confusion());
 
   aTolV1   = BRep_Tool::Tolerance(aV1);
   aTolV2   = BRep_Tool::Tolerance(aV2);
@@ -1944,7 +1944,7 @@ bool FindPointInFace(const TopoDS_Face&                   aF,
   bool   bRet;
   gp_Pnt aP1, aPS;
 
-  aDTol = Precision::Angular();
+  aDTol = math::precision::Precision::Angular();
   aPM   = aP.XYZ().Modulus();
   if (aPM > 1000.)
   {
@@ -1952,7 +1952,7 @@ bool FindPointInFace(const TopoDS_Face&                   aF,
   }
   bRet     = false;
   aNbItMax = 15;
-  anEps    = Precision::SquareConfusion();
+  anEps    = math::precision::Precision::SquareConfusion();
 
   GeomAPI_ProjectPointOnSurf& aProj = theContext->ProjPS(aF);
 
@@ -2070,7 +2070,7 @@ double MinStep3D(const TopoDS_Edge&                              theE1,
 
     if (aR > 100.)
     {
-      constexpr double d = 10 * Precision::PConfusion();
+      constexpr double d = 10 * math::precision::Precision::PConfusion();
       aDtMin             = std::max(aDtMin, sqrt(d * d + 2 * d * aR));
     }
   }

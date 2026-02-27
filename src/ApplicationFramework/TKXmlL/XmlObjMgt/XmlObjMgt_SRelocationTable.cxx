@@ -1,11 +1,11 @@
 #include <XmlObjMgt_SRelocationTable.hpp>
 
-const occ::handle<Storage_HeaderData>& XmlObjMgt_SRelocationTable::GetHeaderData() const
+const occ::handle<app::storage::Storage_HeaderData>& XmlObjMgt_SRelocationTable::GetHeaderData() const
 {
   return myHeaderData;
 }
 
-void XmlObjMgt_SRelocationTable::SetHeaderData(const occ::handle<Storage_HeaderData>& theHeaderData)
+void XmlObjMgt_SRelocationTable::SetHeaderData(const occ::handle<app::storage::Storage_HeaderData>& theHeaderData)
 {
   myHeaderData = theHeaderData;
 }

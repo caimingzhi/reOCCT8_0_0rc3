@@ -27,9 +27,9 @@ protected:
   Standard_EXPORT virtual bool checkDocumentEmpty(const TCollection_ExtendedString& theFile);
 
 public:
-  void SetMessenger(const occ::handle<Message_Messenger>& theMsgr) { myMessenger = theMsgr; }
+  void SetMessenger(const occ::handle<System::log::Message_Messenger>& theMsgr) { myMessenger = theMsgr; }
 
-  occ::handle<Message_Messenger> Messenger() const { return myMessenger; }
+  occ::handle<System::log::Message_Messenger> Messenger() const { return myMessenger; }
 
 public:
   Standard_EXPORT virtual bool Load(const TCollection_ExtendedString& theFile);
@@ -161,7 +161,7 @@ public:
 
 private:
   TDF_Label                      myLabel;
-  occ::handle<Message_Messenger> myMessenger;
+  occ::handle<System::log::Message_Messenger> myMessenger;
 
 public:
   DEFINE_STANDARD_RTTIEXT(TObj_Model, Standard_Transient)

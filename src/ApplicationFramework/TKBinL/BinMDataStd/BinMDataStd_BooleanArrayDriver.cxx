@@ -9,7 +9,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_BooleanArrayDriver, BinMDF_ADriver)
 
 BinMDataStd_BooleanArrayDriver::BinMDataStd_BooleanArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_BooleanArray)->Name())
 {
 }

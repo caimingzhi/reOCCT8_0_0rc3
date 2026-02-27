@@ -12,7 +12,10 @@
 
 class ShapeBuild_ReShape;
 class ShapeExtend_BasicMsgRegistrator;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 
 class ShapeFix_Root : public Standard_Transient
 {
@@ -46,18 +49,18 @@ public:
   double LimitTolerance(const double toler) const;
 
   Standard_EXPORT void SendMsg(const TopoDS_Shape&   shape,
-                               const Message_Msg&    message,
+                               const System::log::Message_Msg&    message,
                                const Message_Gravity gravity = Message_Info) const;
 
-  void SendMsg(const Message_Msg& message, const Message_Gravity gravity = Message_Info) const;
+  void SendMsg(const System::log::Message_Msg& message, const Message_Gravity gravity = Message_Info) const;
 
-  void SendWarning(const TopoDS_Shape& shape, const Message_Msg& message) const;
+  void SendWarning(const TopoDS_Shape& shape, const System::log::Message_Msg& message) const;
 
-  void SendWarning(const Message_Msg& message) const;
+  void SendWarning(const System::log::Message_Msg& message) const;
 
-  void SendFail(const TopoDS_Shape& shape, const Message_Msg& message) const;
+  void SendFail(const TopoDS_Shape& shape, const System::log::Message_Msg& message) const;
 
-  void SendFail(const Message_Msg& message) const;
+  void SendFail(const System::log::Message_Msg& message) const;
 
   DEFINE_STANDARD_RTTIEXT(ShapeFix_Root, Standard_Transient)
 
@@ -107,27 +110,27 @@ inline double ShapeFix_Root::LimitTolerance(const double toler) const
   return std::min(myMaxTol, toler);
 }
 
-inline void ShapeFix_Root::SendMsg(const Message_Msg& message, const Message_Gravity gravity) const
+inline void ShapeFix_Root::SendMsg(const System::log::Message_Msg& message, const Message_Gravity gravity) const
 {
   SendMsg(myShape, message, gravity);
 }
 
-inline void ShapeFix_Root::SendWarning(const TopoDS_Shape& shape, const Message_Msg& message) const
+inline void ShapeFix_Root::SendWarning(const TopoDS_Shape& shape, const System::log::Message_Msg& message) const
 {
   SendMsg(shape, message, Message_Warning);
 }
 
-inline void ShapeFix_Root::SendWarning(const Message_Msg& message) const
+inline void ShapeFix_Root::SendWarning(const System::log::Message_Msg& message) const
 {
   SendWarning(myShape, message);
 }
 
-inline void ShapeFix_Root::SendFail(const TopoDS_Shape& shape, const Message_Msg& message) const
+inline void ShapeFix_Root::SendFail(const TopoDS_Shape& shape, const System::log::Message_Msg& message) const
 {
   SendMsg(shape, message, Message_Fail);
 }
 
-inline void ShapeFix_Root::SendFail(const Message_Msg& message) const
+inline void ShapeFix_Root::SendFail(const System::log::Message_Msg& message) const
 {
   SendFail(myShape, message);
 }

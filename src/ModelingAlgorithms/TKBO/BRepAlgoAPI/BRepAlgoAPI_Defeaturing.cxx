@@ -1,6 +1,6 @@
 #include <BRepAlgoAPI_Defeaturing.hpp>
 
-void BRepAlgoAPI_Defeaturing::Build(const Message_ProgressRange& theRange)
+void BRepAlgoAPI_Defeaturing::Build(const System::log::Message_ProgressRange& theRange)
 {
 
   NotDone();

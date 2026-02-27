@@ -15,7 +15,7 @@ BRepSweep_Prism::BRepSweep_Prism(const TopoDS_Shape& S,
                                  const bool          Canonize)
     : myTranslation(S, NumShape(), Location(V), V, C, Canonize)
 {
-  Standard_ConstructionError_Raise_if(V.Magnitude() <= Precision::Confusion(),
+  Standard_ConstructionError_Raise_if(V.Magnitude() <= math::precision::Precision::Confusion(),
                                       "BRepSweep_Prism::Constructor");
 }
 

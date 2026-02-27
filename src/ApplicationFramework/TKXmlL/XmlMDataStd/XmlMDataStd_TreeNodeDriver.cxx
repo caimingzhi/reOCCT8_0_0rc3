@@ -13,7 +13,7 @@ IMPLEMENT_DOMSTRING(TreeIdString, "treeid")
 IMPLEMENT_DOMSTRING(ChildrenString, "children")
 
 XmlMDataStd_TreeNodeDriver::XmlMDataStd_TreeNodeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

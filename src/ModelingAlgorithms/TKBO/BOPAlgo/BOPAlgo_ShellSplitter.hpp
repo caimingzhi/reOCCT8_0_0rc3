@@ -26,14 +26,14 @@ public:
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& StartElements() const;
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Shells() const;
 
   Standard_EXPORT static void SplitBlock(BOPTools_ConnexityBlock& theCB);
 
 protected:
-  Standard_EXPORT void MakeShells(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeShells(const System::log::Message_ProgressRange& theRange);
 
   NCollection_List<TopoDS_Shape>            myStartShapes;
   NCollection_List<TopoDS_Shape>            myShells;

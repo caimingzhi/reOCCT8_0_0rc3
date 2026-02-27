@@ -9,7 +9,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BinXCAFDrivers_DocumentStorageDriver, BinDrivers_Docu
 BinXCAFDrivers_DocumentStorageDriver::BinXCAFDrivers_DocumentStorageDriver() = default;
 
 occ::handle<BinMDF_ADriverTable> BinXCAFDrivers_DocumentStorageDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
 {
   return BinXCAFDrivers::AttributeDrivers(theMsgDriver);
 }

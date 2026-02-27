@@ -35,7 +35,7 @@ public:
   Standard_EXPORT void Init(const TopoDS_Shape& S);
 
   Standard_EXPORT void Perform(const occ::handle<BRepTools_Modification>& M,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   bool IsDone() const;
 
@@ -67,7 +67,7 @@ private:
   Standard_EXPORT bool Rebuild(const TopoDS_Shape&                        S,
                                const occ::handle<BRepTools_Modification>& M,
                                bool&                                      theNewGeom,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void CreateNewVertices(
     const NCollection_IndexedDataMap<TopoDS_Shape,

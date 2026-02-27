@@ -48,7 +48,7 @@ static int GetDicWSList(Draw_Interpretor& theDI, int theNbArgs, const char** the
 {
   (void)theNbArgs;
   (void)theArgVec;
-  Message::SendInfo() << "Active sessions list:";
+  System::log::Message::SendInfo() << "Active sessions list:";
   TCollection_AsciiString aWSs;
   for (XSControl_WorkSessionMap::Iterator anIter(XSDRAW::WorkSessionList()); anIter.More();
        anIter.Next())

@@ -22,7 +22,7 @@ public:
     const TopoDS_Shape&                                 shape,
     const bool                                          enforce,
     const double                                        preci       = 0.0,
-    const Message_ProgressRange&                        theProgress = Message_ProgressRange(),
+    const System::log::Message_ProgressRange&                        theProgress = System::log::Message_ProgressRange(),
     const occ::handle<ShapeExtend_BasicMsgRegistrator>& theMsgReg   = nullptr);
 
   Standard_EXPORT static void EncodeRegularity(const TopoDS_Shape& shape,

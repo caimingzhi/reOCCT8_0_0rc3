@@ -2576,8 +2576,8 @@ void CutEdgeProf(
 
   NCollection_Sequence<double> Seq;
 
-  double U1 = -Precision::Infinite();
-  double U2 = Precision::Infinite();
+  double U1 = -math::precision::Precision::Infinite();
+  double U2 = math::precision::Precision::Infinite();
   f         = C2d->FirstParameter();
   l         = C2d->LastParameter();
 
@@ -2600,7 +2600,7 @@ void CutEdgeProf(
   }
 
   Geom2dAdaptor_Curve ALine(Line);
-  constexpr double    Tol  = Precision::Intersection();
+  constexpr double    Tol  = math::precision::Precision::Intersection();
   double              TolC = 0.;
 
   Geom2dInt_GInter Intersector(ALine, AC2d, TolC, Tol);

@@ -37,7 +37,7 @@ namespace
       int aPointsNb = aDEdge->GetCurve()->ParametersNb();
 
       aDEdge->Clear(true);
-      aDEdge->SetDeflection(std::max(aDEdge->GetDeflection() / 3., Precision::Confusion()));
+      aDEdge->SetDeflection(std::max(aDEdge->GetDeflection() / 3., math::precision::Precision::Confusion()));
 
       for (int aPCurveIt = 0; aPCurveIt < aDEdge->PCurvesNb(); ++aPCurveIt)
       {
@@ -98,7 +98,7 @@ BRepMesh_ModelHealer::~BRepMesh_ModelHealer() = default;
 
 bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                            const IMeshTools_Parameters&        theParameters,
-                                           const Message_ProgressRange&        theRange)
+                                           const System::log::Message_ProgressRange&        theRange)
 {
   (void)theRange;
   myModel      = theModel;
@@ -108,7 +108,7 @@ bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& t
     return false;
   }
 
-  myParameters.MinSize = Precision::Confusion();
+  myParameters.MinSize = math::precision::Precision::Confusion();
 
   myFaceIntersectingEdges = new IMeshData::DMapOfIFacePtrsMapOfIEdgePtrs;
   for (int aFaceIt = 0; aFaceIt < myModel->FacesNb(); ++aFaceIt)
@@ -117,7 +117,7 @@ bool BRepMesh_ModelHealer::performInternal(const occ::handle<IMeshData_Model>& t
                                   Handle(IMeshData::MapOfIEdgePtr)());
   }
 
-  OSD_Parallel::For(0, myModel->FacesNb(), *this, !isParallel());
+  System::os::OSD_Parallel::For(0, myModel->FacesNb(), *this, !isParallel());
   amplifyEdges();
 
   IMeshData::DMapOfIFacePtrsMapOfIEdgePtrs::Iterator aFaceIt(*myFaceIntersectingEdges);
@@ -149,7 +149,7 @@ void BRepMesh_ModelHealer::amplifyEdges()
   while (aAmpIt++ < aIterNb && popEdgesToUpdate(aEdgesToUpdate))
   {
 
-    OSD_Parallel::ForEach(aEdgesToUpdate.cbegin(),
+    System::os::OSD_Parallel::ForEach(aEdgesToUpdate.cbegin(),
                           aEdgesToUpdate.cend(),
                           anEdgeAmplifier,
                           !myParameters.InParallel || aEdgesToUpdate.Size() <= 1,
@@ -166,7 +166,7 @@ void BRepMesh_ModelHealer::amplifyEdges()
       }
     }
 
-    OSD_Parallel::ForEach(aFacesToCheck.cbegin(),
+    System::os::OSD_Parallel::ForEach(aFacesToCheck.cbegin(),
                           aFacesToCheck.cend(),
                           *this,
                           !myParameters.InParallel || aFacesToCheck.Size() <= 1,

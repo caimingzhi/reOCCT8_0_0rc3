@@ -35,13 +35,13 @@ Transfer_ProcessForFinder::Transfer_ProcessForFinder(const int nb)
   therootm     = false;
   thelevel     = 0;
   therootl     = 0;
-  themessenger = Message::DefaultMessenger();
+  themessenger = System::log::Message::DefaultMessenger();
   thetrace     = 0;
   theindex     = 0;
 }
 
 Transfer_ProcessForFinder::Transfer_ProcessForFinder(
-  const occ::handle<Message_Messenger>& messenger,
+  const occ::handle<System::log::Message_Messenger>& messenger,
   const int                             nb)
     : themap(nb)
 {
@@ -277,15 +277,15 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::FindElseBind(
   return binder;
 }
 
-void Transfer_ProcessForFinder::SetMessenger(const occ::handle<Message_Messenger>& messenger)
+void Transfer_ProcessForFinder::SetMessenger(const occ::handle<System::log::Message_Messenger>& messenger)
 {
   if (messenger.IsNull())
-    themessenger = Message::DefaultMessenger();
+    themessenger = System::log::Message::DefaultMessenger();
   else
     themessenger = messenger;
 }
 
-occ::handle<Message_Messenger> Transfer_ProcessForFinder::Messenger() const
+occ::handle<System::log::Message_Messenger> Transfer_ProcessForFinder::Messenger() const
 {
   return themessenger;
 }
@@ -301,19 +301,19 @@ int Transfer_ProcessForFinder::TraceLevel() const
 }
 
 void Transfer_ProcessForFinder::SendFail(const occ::handle<Transfer_Finder>& start,
-                                         const Message_Msg&                  amsg)
+                                         const System::log::Message_Msg&                  amsg)
 {
   AddFail(start, amsg);
 }
 
 void Transfer_ProcessForFinder::SendWarning(const occ::handle<Transfer_Finder>& start,
-                                            const Message_Msg&                  amsg)
+                                            const System::log::Message_Msg&                  amsg)
 {
   AddWarning(start, amsg);
 }
 
 void Transfer_ProcessForFinder::SendMsg(const occ::handle<Transfer_Finder>& start,
-                                        const Message_Msg&                  amsg)
+                                        const System::log::Message_Msg&                  amsg)
 {
   occ::handle<Transfer_Binder> binder = FindAndMask(start);
   if (binder.IsNull())
@@ -325,7 +325,7 @@ void Transfer_ProcessForFinder::SendMsg(const occ::handle<Transfer_Finder>& star
   if (thetrace > 0)
   {
     StartTrace(binder, start, thelevel, 6);
-    Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
     aSender << amsg.Value();
     if (amsg.IsEdited() && thetrace > 2)
       aSender << " [from: " << amsg.Original() << "]";
@@ -347,7 +347,7 @@ void Transfer_ProcessForFinder::AddFail(const occ::handle<Transfer_Finder>& star
   if (thetrace > 0)
   {
     StartTrace(binder, start, thelevel, 1);
-    Message_Messenger::StreamBuffer aSender = themessenger->SendFail();
+    System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendFail();
     aSender << "    --> Fail : " << mess;
     if (orig[0] != '\0' && thetrace > 2)
       aSender << " [from: " << orig << "]";
@@ -363,7 +363,7 @@ void Transfer_ProcessForFinder::AddError(const occ::handle<Transfer_Finder>& sta
 }
 
 void Transfer_ProcessForFinder::AddFail(const occ::handle<Transfer_Finder>& start,
-                                        const Message_Msg&                  amsg)
+                                        const System::log::Message_Msg&                  amsg)
 {
   if (amsg.IsEdited())
     AddFail(start,
@@ -387,7 +387,7 @@ void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& s
   if (thetrace > 1)
   {
     StartTrace(binder, start, thelevel, 2);
-    Message_Messenger::StreamBuffer aSender = themessenger->SendWarning();
+    System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendWarning();
     aSender << "    --> Warning : " << mess;
     if (orig[0] != '\0' && thetrace > 2)
       aSender << " [from: " << orig << "]";
@@ -396,7 +396,7 @@ void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& s
 }
 
 void Transfer_ProcessForFinder::AddWarning(const occ::handle<Transfer_Finder>& start,
-                                           const Message_Msg&                  amsg)
+                                           const System::log::Message_Msg&                  amsg)
 {
   if (amsg.IsEdited())
     AddWarning(start,
@@ -603,7 +603,7 @@ bool Transfer_ProcessForFinder::Recognize(const occ::handle<Transfer_Finder>& st
 
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   const occ::handle<Transfer_Finder>& start,
-  const Message_ProgressRange&        theProgress)
+  const System::log::Message_ProgressRange&        theProgress)
 {
   occ::handle<Transfer_Binder> former = FindAndMask(start);
 
@@ -616,7 +616,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
       return former;
     }
 
-    Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
     Transfer_StatusExec             statex  = former->StatusExec();
     switch (statex)
     {
@@ -660,7 +660,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
 
   if (hasDeadLoop)
   {
-    Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
     if (thetrace)
     {
       aSender << "                  *** Dead Loop : Finding head of Loop :" << std::endl;
@@ -674,7 +674,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
   }
   else if (theerrh)
   {
-    Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
 
     int oldlev = thelevel;
     try
@@ -742,13 +742,13 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::Transferring(
 
 occ::handle<Transfer_Binder> Transfer_ProcessForFinder::TransferProduct(
   const occ::handle<Transfer_Finder>& start,
-  const Message_ProgressRange&        theProgress)
+  const System::log::Message_ProgressRange&        theProgress)
 {
   thelevel++;
   occ::handle<Transfer_Binder>                  binder;
   occ::handle<Transfer_ActorOfProcessForFinder> actor = theactor;
 
-  Message_ProgressScope aScope(theProgress, nullptr, 1, true);
+  System::log::Message_ProgressScope aScope(theProgress, nullptr, 1, true);
   while (!actor.IsNull())
   {
     if (actor->Recognize(start))
@@ -778,7 +778,7 @@ occ::handle<Transfer_Binder> Transfer_ProcessForFinder::TransferProduct(
 }
 
 bool Transfer_ProcessForFinder::Transfer(const occ::handle<Transfer_Finder>& start,
-                                         const Message_ProgressRange&        theProgress)
+                                         const System::log::Message_ProgressRange&        theProgress)
 {
   occ::handle<Transfer_Binder> binder = Transferring(start, theProgress);
   return (!binder.IsNull());
@@ -799,7 +799,7 @@ void Transfer_ProcessForFinder::StartTrace(const occ::handle<Transfer_Binder>& b
                                            const int                           level,
                                            const int                           mode) const
 {
-  Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
+  System::log::Message_Messenger::StreamBuffer aSender = themessenger->SendInfo();
 
   if (thetrace > 3)
   {

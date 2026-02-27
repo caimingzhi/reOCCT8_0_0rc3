@@ -79,8 +79,8 @@ bool ShapeUpgrade_FaceDivide::SplitSurface(const double theArea)
   double Uf, Ul, Vf, Vl;
 
   ShapeAnalysis::GetFaceUVBounds(face, Uf, Ul, Vf, Vl);
-  if (Precision::IsInfinite(Uf) || Precision::IsInfinite(Ul) || Precision::IsInfinite(Vf)
-      || Precision::IsInfinite(Vl))
+  if (math::precision::Precision::IsInfinite(Uf) || math::precision::Precision::IsInfinite(Ul) || math::precision::Precision::IsInfinite(Vf)
+      || math::precision::Precision::IsInfinite(Vl))
     return false;
 
   double aSUf, aSUl, aSVf, aSVl;

@@ -9,7 +9,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_UAttributeDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(GuidString, "guid")
 
 XmlMDataStd_UAttributeDriver::XmlMDataStd_UAttributeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

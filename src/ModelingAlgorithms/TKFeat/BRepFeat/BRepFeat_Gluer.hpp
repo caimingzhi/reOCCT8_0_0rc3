@@ -35,7 +35,7 @@ public:
   const TopoDS_Shape& GluedShape() const;
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT bool IsDeleted(const TopoDS_Shape& F) override;
 

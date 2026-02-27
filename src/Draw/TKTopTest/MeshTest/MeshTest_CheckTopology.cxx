@@ -150,7 +150,7 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
                               aT->Node(n[2]).Transformed(aTrsf)};
 
       double anArea = ComputeArea(aPts[0].XYZ(), aPts[1].XYZ(), aPts[2].XYZ());
-      if (anArea < Precision::SquareConfusion())
+      if (anArea < math::precision::Precision::SquareConfusion())
       {
         mySmallTrianglesFaces.Append(iF);
         mySmallTrianglesTriangles.Append(i);
@@ -159,7 +159,7 @@ void MeshTest_CheckTopology::Perform(Draw_Interpretor& di)
       {
         const gp_XY aPUV[3] = {aT->UVNode(n[0]).XY(), aT->UVNode(n[1]).XY(), aT->UVNode(n[2]).XY()};
         anArea              = ComputeArea(aPUV[0], aPUV[1], aPUV[2]);
-        if (anArea < Precision::SquarePConfusion())
+        if (anArea < math::precision::Precision::SquarePConfusion())
         {
           mySmallTrianglesFaces.Append(iF);
           mySmallTrianglesTriangles.Append(i);

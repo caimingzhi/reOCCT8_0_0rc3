@@ -15,17 +15,17 @@
 static OSD_SignalMode OSD_WasSetSignal           = OSD_SignalMode_AsIs;
 static int            OSD_SignalStackTraceLength = 0;
 
-OSD_SignalMode OSD::SignalMode()
+OSD_SignalMode System::os::OSD::SignalMode()
 {
   return OSD_WasSetSignal;
 }
 
-int OSD::SignalStackTraceLength()
+int System::os::OSD::SignalStackTraceLength()
 {
   return OSD_SignalStackTraceLength;
 }
 
-void OSD::SetSignalStackTraceLength(int theLength)
+void System::os::OSD::SetSignalStackTraceLength(int theLength)
 {
   OSD_SignalStackTraceLength = theLength;
 }
@@ -168,7 +168,7 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
     }
     case STATUS_NO_MEMORY:
     {
-      THROW_OR_JUMP(OSD_Exception_STATUS_NO_MEMORY,
+      THROW_OR_JUMP(System::os::OSD_Exception_STATUS_NO_MEMORY,
                     "MEMORY ALLOCATION ERROR ( no room in the process heap )",
                     NULL);
       break;
@@ -262,7 +262,7 @@ static LONG CallHandler(DWORD theExceptionCode, EXCEPTION_POINTERS* theExcPtr)
 
   if (isFloatErr)
   {
-    OSD::SetFloatingSignal(true);
+    System::os::OSD::SetFloatingSignal(true);
   }
 
   const int aStackLength = OSD_SignalStackTraceLength;
@@ -375,7 +375,7 @@ static LONG WINAPI WntHandler(EXCEPTION_POINTERS* lpXP)
   return CallHandler(dwExceptionCode, lpXP);
 }
 
-void OSD::SetFloatingSignal(bool theFloatingSignal)
+void System::os::OSD::SetFloatingSignal(bool theFloatingSignal)
 {
   _fpreset();
   _clearfp();
@@ -383,14 +383,14 @@ void OSD::SetFloatingSignal(bool theFloatingSignal)
   _controlfp(theFloatingSignal ? 0 : _OSD_FPX, _OSD_FPX);
 }
 
-bool OSD::ToCatchFloatingSignals()
+bool System::os::OSD::ToCatchFloatingSignals()
 {
 
   int aControlWord = _controlfp(0, 0);
   return (_OSD_FPX & ~aControlWord) != 0;
 }
 
-void OSD::SetThreadLocalSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
+void System::os::OSD::SetThreadLocalSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 {
   #ifdef _MSC_VER
   _se_translator_function aPreviousFunc = NULL;
@@ -405,7 +405,7 @@ void OSD::SetThreadLocalSignal(OSD_SignalMode theSignalMode, bool theFloatingSig
   SetFloatingSignal(theFloatingSignal);
 }
 
-void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
+void System::os::OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 {
 
   std::lock_guard<std::mutex> aLock(THE_SIGNAL_MUTEX);
@@ -413,7 +413,7 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   OSD_WasSetSignal = theSignalMode;
 
   #if !defined(OCCT_UWP) || defined(NTDDI_WIN10_TH2)
-  OSD_Environment         env("CSF_DEBUG_MODE");
+  System::os::OSD_Environment         env("CSF_DEBUG_MODE");
   TCollection_AsciiString val = env.Value();
   if (!env.Failed())
   {
@@ -462,7 +462,7 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
     }
     Standard_ASSERT(aPreviousFunc != SIG_ERR,
                     "signal() failed",
-                    std::cout << "OSD::SetSignal(): signal() returns SIG_ERR");
+                    std::cout << "System::os::OSD::SetSignal(): signal() returns SIG_ERR");
   }
 
   fCtrlBrk = false;
@@ -480,12 +480,12 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
   SetThreadLocalSignal(theSignalMode, theFloatingSignal);
 }
 
-void OSD::ControlBreak()
+void System::os::OSD::ControlBreak()
 {
   if (fCtrlBrk)
   {
     fCtrlBrk = false;
-    throw OSD_Exception_CTRL_BREAK("*** INTERRUPT ***");
+    throw System::os::OSD_Exception_CTRL_BREAK("*** INTERRUPT ***");
   }
 }
 
@@ -516,37 +516,37 @@ static LONG __fastcall _osd_raise(DWORD theCode, const char* theMsg, const char*
   switch (theCode)
   {
     case EXCEPTION_ACCESS_VIOLATION:
-      THROW_OR_JUMP(OSD_Exception_ACCESS_VIOLATION, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_ACCESS_VIOLATION, aMsg, theStack);
       break;
     case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
-      THROW_OR_JUMP(OSD_Exception_ARRAY_BOUNDS_EXCEEDED, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_ARRAY_BOUNDS_EXCEEDED, aMsg, theStack);
       break;
     case EXCEPTION_DATATYPE_MISALIGNMENT:
       THROW_OR_JUMP(Standard_ProgramError, aMsg, theStack);
       break;
     case EXCEPTION_ILLEGAL_INSTRUCTION:
-      THROW_OR_JUMP(OSD_Exception_ILLEGAL_INSTRUCTION, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_ILLEGAL_INSTRUCTION, aMsg, theStack);
       break;
     case EXCEPTION_IN_PAGE_ERROR:
-      THROW_OR_JUMP(OSD_Exception_IN_PAGE_ERROR, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_IN_PAGE_ERROR, aMsg, theStack);
       break;
     case EXCEPTION_INT_DIVIDE_BY_ZERO:
       THROW_OR_JUMP(Standard_DivideByZero, aMsg, theStack);
       break;
     case EXCEPTION_INT_OVERFLOW:
-      THROW_OR_JUMP(OSD_Exception_INT_OVERFLOW, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_INT_OVERFLOW, aMsg, theStack);
       break;
     case EXCEPTION_INVALID_DISPOSITION:
-      THROW_OR_JUMP(OSD_Exception_INVALID_DISPOSITION, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_INVALID_DISPOSITION, aMsg, theStack);
       break;
     case EXCEPTION_NONCONTINUABLE_EXCEPTION:
-      THROW_OR_JUMP(OSD_Exception_NONCONTINUABLE_EXCEPTION, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_NONCONTINUABLE_EXCEPTION, aMsg, theStack);
       break;
     case EXCEPTION_PRIV_INSTRUCTION:
-      THROW_OR_JUMP(OSD_Exception_PRIV_INSTRUCTION, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_PRIV_INSTRUCTION, aMsg, theStack);
       break;
     case EXCEPTION_STACK_OVERFLOW:
-      THROW_OR_JUMP(OSD_Exception_STACK_OVERFLOW, aMsg, theStack);
+      THROW_OR_JUMP(System::os::OSD_Exception_STACK_OVERFLOW, aMsg, theStack);
       break;
     case EXCEPTION_FLT_DIVIDE_BY_ZERO:
       THROW_OR_JUMP(Standard_DivideByZero, aMsg, theStack);
@@ -733,7 +733,7 @@ static void Handler(const int theSignal)
   switch (theSignal)
   {
     case SIGHUP:
-      Standard_ErrorHandler::Abort(OSD_SIGHUP("SIGHUP 'hangup' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGHUP("SIGHUP 'hangup' detected."));
       exit(SIGHUP);
       break;
     case SIGINT:
@@ -742,30 +742,30 @@ static void Handler(const int theSignal)
 
       break;
     case SIGQUIT:
-      Standard_ErrorHandler::Abort(OSD_SIGQUIT("SIGQUIT 'quit' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGQUIT("SIGQUIT 'quit' detected."));
       exit(SIGQUIT);
       break;
     case SIGILL:
-      Standard_ErrorHandler::Abort(OSD_SIGILL("SIGILL 'illegal instruction' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGILL("SIGILL 'illegal instruction' detected."));
       exit(SIGILL);
       break;
     case SIGKILL:
-      Standard_ErrorHandler::Abort(OSD_SIGKILL("SIGKILL 'kill' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGKILL("SIGKILL 'kill' detected."));
       exit(SIGKILL);
       break;
     case SIGBUS:
       sigaddset(&set, SIGBUS);
       sigprocmask(SIG_UNBLOCK, &set, nullptr);
-      Standard_ErrorHandler::Abort(OSD_SIGBUS("SIGBUS 'bus error' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGBUS("SIGBUS 'bus error' detected."));
       exit(SIGBUS);
       break;
     case SIGSEGV:
-      Standard_ErrorHandler::Abort(OSD_SIGSEGV("SIGSEGV 'segmentation violation' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGSEGV("SIGSEGV 'segmentation violation' detected."));
       exit(SIGSEGV);
       break;
   #ifdef SIGSYS
     case SIGSYS:
-      Standard_ErrorHandler::Abort(OSD_SIGSYS("SIGSYS 'bad argument to system call' detected."));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGSYS("SIGSYS 'bad argument to system call' detected."));
       exit(SIGSYS);
       break;
   #endif
@@ -773,7 +773,7 @@ static void Handler(const int theSignal)
       sigaddset(&set, SIGFPE);
       sigprocmask(SIG_UNBLOCK, &set, nullptr);
   #ifdef __linux__
-      OSD::SetFloatingSignal(true);
+      System::os::OSD::SetFloatingSignal(true);
   #endif
   #if (!defined(__sun)) && (!defined(SOLARIS))
       Standard_ErrorHandler::Abort(Standard_NumericError("SIGFPE Arithmetic exception detected"));
@@ -850,7 +850,7 @@ static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const 
         Standard::StackTrace(aStackBuffer, aStackBufLen, aStackLength);
       }
 
-      Standard_ErrorHandler::Abort(OSD_SIGSEGV(aMsg, aStackBuffer));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGSEGV(aMsg, aStackBuffer));
     }
   }
     #ifdef OCCT_DEBUG
@@ -873,7 +873,7 @@ static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const 
     {
       char aMsg[100];
       Sprintf(aMsg, "SIGSEGV 'segmentation violation' detected. Address %lx", anOffset);
-      Standard_ErrorHandler::Abort(OSD_SIGSEGV(aMsg));
+      Standard_ErrorHandler::Abort(System::os::OSD_SIGSEGV(aMsg));
     }
   }
     #ifdef OCCT_DEBUG
@@ -887,7 +887,7 @@ static void SegvHandler(const int theSignal, siginfo_t* theSigInfo, void* const 
 
   #endif
 
-void OSD::SetFloatingSignal(bool theFloatingSignal)
+void System::os::OSD::SetFloatingSignal(bool theFloatingSignal)
 {
   #if defined(__linux__) && defined(__GLIBC__)
   feclearexcept(FE_ALL_EXCEPT);
@@ -916,7 +916,7 @@ void OSD::SetFloatingSignal(bool theFloatingSignal)
   #endif
 }
 
-bool OSD::ToCatchFloatingSignals()
+bool System::os::OSD::ToCatchFloatingSignals()
 {
   #if defined(__linux__) && defined(__GLIBC__)
   return (fegetexcept() & _OSD_FPX) != 0;
@@ -925,12 +925,12 @@ bool OSD::ToCatchFloatingSignals()
   #endif
 }
 
-void OSD::SetThreadLocalSignal(OSD_SignalMode, bool theFloatingSignal)
+void System::os::OSD::SetThreadLocalSignal(OSD_SignalMode, bool theFloatingSignal)
 {
   SetFloatingSignal(theFloatingSignal);
 }
 
-void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
+void System::os::OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
 {
   SetFloatingSignal(theFloatingSignal);
 
@@ -990,17 +990,17 @@ void OSD::SetSignal(OSD_SignalMode theSignalMode, bool theFloatingSignal)
     }
     Standard_ASSERT(retcode == 0,
                     "sigaction() failed",
-                    std::cout << "OSD::SetSignal(): sigaction() failed for " << aSignalTypes[i]
+                    std::cout << "System::os::OSD::SetSignal(): sigaction() failed for " << aSignalTypes[i]
                               << std::endl);
   }
 }
 
-void OSD ::ControlBreak()
+void System::os::OSD ::ControlBreak()
 {
   if (fCtrlBrk)
   {
     fCtrlBrk = false;
-    throw OSD_Exception_CTRL_BREAK("*** INTERRUPT ***");
+    throw System::os::OSD_Exception_CTRL_BREAK("*** INTERRUPT ***");
   }
 }
 

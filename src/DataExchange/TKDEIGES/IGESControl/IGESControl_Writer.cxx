@@ -70,7 +70,7 @@ IGESControl_Writer::IGESControl_Writer(const occ::handle<IGESData_IGESModel>& th
 }
 
 bool IGESControl_Writer::AddShape(const TopoDS_Shape&          theShape,
-                                  const Message_ProgressRange& theProgress)
+                                  const System::log::Message_ProgressRange& theProgress)
 {
   if (theShape.IsNull())
     return false;
@@ -79,7 +79,7 @@ bool IGESControl_Writer::AddShape(const TopoDS_Shape&          theShape,
 
   InitializeMissingParameters();
 
-  Message_ProgressScope aPS(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, 2);
 
   XSAlgo_ShapeProcessor aShapeProcessor(myShapeProcParams);
   TopoDS_Shape Shape = aShapeProcessor.ProcessShape(theShape, myShapeProcFlags.first, aPS.Next());
@@ -230,7 +230,7 @@ bool IGESControl_Writer::Write(Standard_OStream& S, const bool fnes)
 
 bool IGESControl_Writer::Write(const char* file, const bool fnes)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aStream =
     aFileSystem->OpenOStream(file, std::ios::out | std::ios::binary);
   if (aStream.get() == nullptr)

@@ -31,7 +31,7 @@ public:
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>&                 theDMVV,
-    const Message_ProgressRange&                                         theRange);
+    const System::log::Message_ProgressRange&                                         theRange);
 
   Standard_EXPORT static bool ConnexIntByInt(
     const TopoDS_Face&                                                              FI,
@@ -50,7 +50,7 @@ public:
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>& theDMVV,
-    const Message_ProgressRange&                         theRange);
+    const System::log::Message_ProgressRange&                         theRange);
 
   Standard_EXPORT static void ConnexIntByIntInVert(
     const TopoDS_Face&                                                              FI,
@@ -64,7 +64,7 @@ public:
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
                                TopTools_ShapeMapHasher>&                            theDMVV,
-    const Message_ProgressRange&                                                    theRange);
+    const System::log::Message_ProgressRange&                                                    theRange);
 
   Standard_EXPORT static bool FuseVertices(
     const NCollection_IndexedDataMap<TopoDS_Shape,

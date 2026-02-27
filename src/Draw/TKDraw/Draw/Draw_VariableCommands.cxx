@@ -65,7 +65,7 @@ static int save(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
   }
 
   const char*                        aName       = theArgVec[2];
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aStream =
     aFileSystem->OpenOStream(aName, std::ios::out | std::ios::binary);
   aStream->precision(15);
@@ -114,7 +114,7 @@ static int restore(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVe
   const char* aFileName = theArgVec[1];
   const char* aVarName  = theArgVec[2];
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream = aFileSystem->OpenIStream(aFileName, std::ios::in);
   if (aStream.get() == nullptr)
   {
@@ -288,7 +288,7 @@ static int draw(Draw_Interpretor&, int n, const char** a)
   int id = Draw::Atoi(a[1]);
   if (!dout.HasView(id))
   {
-    Message::SendFail() << "bad view number in draw";
+    System::log::Message::SendFail() << "bad view number in draw";
     return 1;
   }
   int          mo = Draw::Atoi(a[2]);
@@ -464,11 +464,11 @@ static int dsetenv(Draw_Interpretor&, int argc, const char** argv)
 {
   if (argc < 2)
   {
-    Message::SendFail() << "Use: " << argv[0] << " {varname} [value]";
+    System::log::Message::SendFail() << "Use: " << argv[0] << " {varname} [value]";
     return 1;
   }
 
-  OSD_Environment env(argv[1]);
+  System::os::OSD_Environment env(argv[1]);
   if (argc > 2 && argv[2][0] != '\0')
   {
     env.SetValue(argv[2]);
@@ -483,7 +483,7 @@ static int dgetenv(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 2)
   {
-    Message::SendFail() << "Use: " << argv[0] << " {varname}";
+    System::log::Message::SendFail() << "Use: " << argv[0] << " {varname}";
     return 1;
   }
 

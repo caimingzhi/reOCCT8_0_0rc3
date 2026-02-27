@@ -195,7 +195,7 @@ bool IVtkOCC_ShapePickerAlgo::processPicked()
   int aNbPicked = myViewerSelector->NbPicked();
 
   occ::handle<StdSelect_BRepOwner> anEntityOwner;
-  occ::handle<Message_Messenger>   anOutput = Message::DefaultMessenger();
+  occ::handle<System::log::Message_Messenger>   anOutput = System::log::Message::DefaultMessenger();
 
   bool isTop = true;
   for (int aDetectIt = 1; aDetectIt <= aNbPicked; aDetectIt++)

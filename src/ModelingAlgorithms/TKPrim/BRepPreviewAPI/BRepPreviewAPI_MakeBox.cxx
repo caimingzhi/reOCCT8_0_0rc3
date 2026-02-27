@@ -5,7 +5,7 @@
 #include <BRepBuilderAPI_MakeVertex.hpp>
 #include <BRepBuilderAPI_MakeWire.hpp>
 
-void BRepPreviewAPI_MakeBox::Build(const Message_ProgressRange&)
+void BRepPreviewAPI_MakeBox::Build(const System::log::Message_ProgressRange&)
 {
   gp_Pnt anLocation = myWedge.Axes().Location();
 
@@ -14,9 +14,9 @@ void BRepPreviewAPI_MakeBox::Build(const Message_ProgressRange&)
                       anLocation.Y() + myWedge.GetYMax(),
                       anLocation.Z() + myWedge.GetZMax());
 
-  bool aThinOnX = std::abs(aFirstPoint.X() - aSecondPoint.X()) < Precision::Confusion();
-  bool aThinOnY = std::abs(aFirstPoint.Y() - aSecondPoint.Y()) < Precision::Confusion();
-  bool aThinOnZ = std::abs(aFirstPoint.Z() - aSecondPoint.Z()) < Precision::Confusion();
+  bool aThinOnX = std::abs(aFirstPoint.X() - aSecondPoint.X()) < math::precision::Precision::Confusion();
+  bool aThinOnY = std::abs(aFirstPoint.Y() - aSecondPoint.Y()) < math::precision::Precision::Confusion();
+  bool aThinOnZ = std::abs(aFirstPoint.Z() - aSecondPoint.Z()) < math::precision::Precision::Confusion();
 
   int aPreviewType = (int)aThinOnX + (int)aThinOnY + (int)aThinOnZ;
 

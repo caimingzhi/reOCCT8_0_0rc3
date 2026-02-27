@@ -148,7 +148,7 @@ static int DrawDim_CENTER(Draw_Interpretor& di, int nb, const char** arg)
       TopoDS_Vertex vc;
 
       BRep_Builder B;
-      B.MakeVertex(vc, center, Precision::Confusion());
+      B.MakeVertex(vc, center, math::precision::Precision::Confusion());
       DBRep::Set(arg[1], vc);
       return 0;
     }

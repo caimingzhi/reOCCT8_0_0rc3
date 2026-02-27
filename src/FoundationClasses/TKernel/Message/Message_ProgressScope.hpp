@@ -7,9 +7,16 @@
 #include <Precision.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace log {
 class Message_ProgressRange;
-class Message_ProgressIndicator;
+}} // namespace System::log
 
+namespace System { namespace log {
+class Message_ProgressIndicator;
+}} // namespace System::log
+
+
+namespace System { namespace log {
 class Message_ProgressScope
 {
 public:
@@ -145,10 +152,12 @@ private:
   friend class Message_ProgressIndicator;
   friend class Message_ProgressRange;
 };
+}} // namespace System::log
+
 
 #include <Message_ProgressRange.hpp>
 
-inline Message_ProgressScope::Message_ProgressScope(Message_ProgressIndicator* theProgress)
+inline System::log::Message_ProgressScope::Message_ProgressScope(System::log::Message_ProgressIndicator* theProgress)
     : myProgress(theProgress),
       myParent(nullptr),
       myName(nullptr),
@@ -162,7 +171,7 @@ inline Message_ProgressScope::Message_ProgressScope(Message_ProgressIndicator* t
 {
 }
 
-inline Message_ProgressScope::Message_ProgressScope(const Message_ProgressRange&   theRange,
+inline System::log::Message_ProgressScope::Message_ProgressScope(const System::log::Message_ProgressRange&   theRange,
                                                     const TCollection_AsciiString& theName,
                                                     double                         theMax,
                                                     bool                           isInfinite)
@@ -179,12 +188,12 @@ inline Message_ProgressScope::Message_ProgressScope(const Message_ProgressRange&
 {
   SetName(theName);
   Standard_ASSERT_VOID(!theRange.myWasUsed,
-                       "Message_ProgressRange is used to initialize more than one scope");
+                       "System::log::Message_ProgressRange is used to initialize more than one scope");
   theRange.myWasUsed = true;
 }
 
 template <size_t N>
-Message_ProgressScope::Message_ProgressScope(const Message_ProgressRange& theRange,
+System::log::Message_ProgressScope::Message_ProgressScope(const System::log::Message_ProgressRange& theRange,
                                              const char (&theName)[N],
                                              double theMax,
                                              bool   isInfinite)
@@ -200,11 +209,11 @@ Message_ProgressScope::Message_ProgressScope(const Message_ProgressRange& theRan
       myIsInfinite(isInfinite)
 {
   Standard_ASSERT_VOID(!theRange.myWasUsed,
-                       "Message_ProgressRange is used to initialize more than one scope");
+                       "System::log::Message_ProgressRange is used to initialize more than one scope");
   theRange.myWasUsed = true;
 }
 
-inline Message_ProgressScope::Message_ProgressScope(const Message_ProgressRange& theRange,
+inline System::log::Message_ProgressScope::Message_ProgressScope(const System::log::Message_ProgressRange& theRange,
                                                     const NullString*,
                                                     double theMax,
                                                     bool   isInfinite)
@@ -220,11 +229,11 @@ inline Message_ProgressScope::Message_ProgressScope(const Message_ProgressRange&
       myIsInfinite(isInfinite)
 {
   Standard_ASSERT_VOID(!theRange.myWasUsed,
-                       "Message_ProgressRange is used to initialize more than one scope");
+                       "System::log::Message_ProgressRange is used to initialize more than one scope");
   theRange.myWasUsed = true;
 }
 
-inline void Message_ProgressScope::Close()
+inline void System::log::Message_ProgressScope::Close()
 {
   if (!myIsActive)
   {
@@ -232,7 +241,7 @@ inline void Message_ProgressScope::Close()
   }
 
   double aCurr  = localToGlobal(myValue);
-  myValue       = (myIsInfinite ? Precision::Infinite() : myMax);
+  myValue       = (myIsInfinite ? math::precision::Precision::Infinite() : myMax);
   double aDelta = myPortion - aCurr;
   if (aDelta > 0.)
   {
@@ -244,12 +253,12 @@ inline void Message_ProgressScope::Close()
   myIsActive = false;
 }
 
-inline bool Message_ProgressScope::UserBreak() const
+inline bool System::log::Message_ProgressScope::UserBreak() const
 {
   return myProgress && myProgress->UserBreak();
 }
 
-inline Message_ProgressRange Message_ProgressScope::Next(double theStep)
+inline System::log::Message_ProgressRange System::log::Message_ProgressScope::Next(double theStep)
 {
   if (myIsActive && theStep > 0.)
   {
@@ -258,13 +267,13 @@ inline Message_ProgressRange Message_ProgressScope::Next(double theStep)
     double aDelta = aNext - aCurr;
     if (aDelta > 0.)
     {
-      return Message_ProgressRange(*this, myStart + aCurr, aDelta);
+      return System::log::Message_ProgressRange(*this, myStart + aCurr, aDelta);
     }
   }
-  return Message_ProgressRange();
+  return System::log::Message_ProgressRange();
 }
 
-inline void Message_ProgressScope::Show()
+inline void System::log::Message_ProgressScope::Show()
 {
   if (myIsActive)
   {
@@ -272,7 +281,7 @@ inline void Message_ProgressScope::Show()
   }
 }
 
-inline double Message_ProgressScope::localToGlobal(const double theVal) const
+inline double System::log::Message_ProgressScope::localToGlobal(const double theVal) const
 {
   if (theVal <= 0.)
     return 0.;
@@ -289,11 +298,11 @@ inline double Message_ProgressScope::localToGlobal(const double theVal) const
   return myPortion * x / (1. + x);
 }
 
-inline double Message_ProgressScope::Value() const
+inline double System::log::Message_ProgressScope::Value() const
 {
   if (!myIsActive)
   {
-    return myIsInfinite ? Precision::Infinite() : myMax;
+    return myIsInfinite ? math::precision::Precision::Infinite() : myMax;
   }
 
   double aVal = myProgress->GetPosition() - myStart;
@@ -302,8 +311,8 @@ inline double Message_ProgressScope::Value() const
     return 0.;
 
   double aDist = myPortion - aVal;
-  if (aDist <= Precision::Confusion())
-    return myIsInfinite ? Precision::Infinite() : myMax;
+  if (aDist <= math::precision::Precision::Confusion())
+    return myIsInfinite ? math::precision::Precision::Infinite() : myMax;
 
-  return std::ceil(myMax * aVal / (myIsInfinite ? aDist : myPortion) - Precision::Confusion());
+  return std::ceil(myMax * aVal / (myIsInfinite ? aDist : myPortion) - math::precision::Precision::Confusion());
 }

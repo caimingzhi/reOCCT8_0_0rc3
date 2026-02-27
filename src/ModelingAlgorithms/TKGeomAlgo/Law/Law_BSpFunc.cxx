@@ -10,7 +10,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Law_BSpFunc, Law_Function)
 
-#define PosTol Precision::PConfusion() / 2
+#define PosTol math::precision::Precision::PConfusion() / 2
 
 Law_BSpFunc::Law_BSpFunc()
     : first(0.0),
@@ -89,9 +89,9 @@ int Law_BSpFunc::NbIntervals(const GeomAbs_Shape S) const
                                   Nb,
                                   Index2,
                                   newLast);
-        if (std::abs(newFirst - TK(Index1 + 1)) < Precision::PConfusion())
+        if (std::abs(newFirst - TK(Index1 + 1)) < math::precision::Precision::PConfusion())
           Index1++;
-        if (newLast - TK(Index2) > Precision::PConfusion())
+        if (newLast - TK(Index2) > math::precision::Precision::PConfusion())
           Index2++;
 
         myNbIntervals = 1;
@@ -165,9 +165,9 @@ void Law_BSpFunc::Intervals(NCollection_Array1<double>& T, const GeomAbs_Shape S
                                   Nb,
                                   Index2,
                                   newLast);
-        if (std::abs(newFirst - TK(Index1 + 1)) < Precision::PConfusion())
+        if (std::abs(newFirst - TK(Index1 + 1)) < math::precision::Precision::PConfusion())
           Index1++;
-        if (newLast - TK(Index2) > Precision::PConfusion())
+        if (newLast - TK(Index2) > math::precision::Precision::PConfusion())
           Index2++;
 
         Inter(1)      = Index1;

@@ -8,12 +8,12 @@
 class XmlObjMgt_SRelocationTable : public NCollection_IndexedMap<occ::handle<Standard_Transient>>
 {
 public:
-  Standard_EXPORT const occ::handle<Storage_HeaderData>& GetHeaderData() const;
+  Standard_EXPORT const occ::handle<app::storage::Storage_HeaderData>& GetHeaderData() const;
 
-  Standard_EXPORT void SetHeaderData(const occ::handle<Storage_HeaderData>& theHeaderData);
+  Standard_EXPORT void SetHeaderData(const occ::handle<app::storage::Storage_HeaderData>& theHeaderData);
 
   Standard_EXPORT void Clear(const bool doReleaseMemory = true);
 
 private:
-  occ::handle<Storage_HeaderData> myHeaderData;
+  occ::handle<app::storage::Storage_HeaderData> myHeaderData;
 };

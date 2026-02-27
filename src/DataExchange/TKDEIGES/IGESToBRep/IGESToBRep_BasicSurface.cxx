@@ -60,7 +60,7 @@ static bool checkBSplineSurface(IGESToBRep_BasicSurface*                    theS
 
         if (aMaxValue - aMinValue > 1000)
         {
-          Message_Msg msg1374("IGES_1374");
+          System::log::Message_Msg msg1374("IGES_1374");
           theSurface->SendWarning(theBSplineSurface, msg1374);
         }
       }
@@ -79,7 +79,7 @@ static bool checkBSplineSurface(IGESToBRep_BasicSurface*                    theS
 
   if (aWrongOrder)
   {
-    Message_Msg msg1373("IGES_1373");
+    System::log::Message_Msg msg1373("IGES_1373");
     theSurface->SendFail(theBSplineSurface, msg1373);
     aResult = false;
   }
@@ -120,7 +120,7 @@ occ::handle<Geom_Surface> IGESToBRep_BasicSurface::TransferBasicSurface(
   occ::handle<Geom_Surface> resurf;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return resurf;
   }
@@ -194,7 +194,7 @@ occ::handle<Geom_Plane> IGESToBRep_BasicSurface::TransferPlaneSurface(
   occ::handle<Geom_Plane> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -206,14 +206,14 @@ occ::handle<Geom_Plane> IGESToBRep_BasicSurface::TransferPlaneSurface(
 
   if (Point.IsNull())
   {
-    Message_Msg msg174("XSTEP_174");
+    System::log::Message_Msg msg174("XSTEP_174");
     SendFail(start, msg174);
 
     return res;
   }
   if (Dir.IsNull())
   {
-    Message_Msg msg1280("IGES_1280");
+    System::log::Message_Msg msg1280("IGES_1280");
     SendFail(start, msg1280);
 
     return res;
@@ -241,7 +241,7 @@ occ::handle<Geom_CylindricalSurface> IGESToBRep_BasicSurface::TransferRigthCylin
   occ::handle<Geom_CylindricalSurface> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -253,19 +253,19 @@ occ::handle<Geom_CylindricalSurface> IGESToBRep_BasicSurface::TransferRigthCylin
 
   if (Point.IsNull())
   {
-    Message_Msg msg174("XSTEP_174");
+    System::log::Message_Msg msg174("XSTEP_174");
     SendFail(start, msg174);
 
     return res;
   }
   if (Axis.IsNull())
   {
-    Message_Msg msg1280("IGES_1280");
+    System::log::Message_Msg msg1280("IGES_1280");
     SendFail(start, msg1280);
 
     return res;
   }
-  if (radius < Precision::Confusion())
+  if (radius < math::precision::Precision::Confusion())
   {
     return res;
   }
@@ -280,7 +280,7 @@ occ::handle<Geom_CylindricalSurface> IGESToBRep_BasicSurface::TransferRigthCylin
     occ::handle<IGESGeom_Direction> refdir = start->ReferenceDir();
     gp_Dir                          Dir    = gp_Dir(refdir->Value());
     gp_Dir                          vc     = Dir ^ ax;
-    if (vc.XYZ().Modulus() < Precision::Confusion())
+    if (vc.XYZ().Modulus() < math::precision::Precision::Confusion())
     {
 
       return res;
@@ -297,7 +297,7 @@ occ::handle<Geom_ConicalSurface> IGESToBRep_BasicSurface::TransferRigthConicalSu
   occ::handle<Geom_ConicalSurface> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -310,19 +310,19 @@ occ::handle<Geom_ConicalSurface> IGESToBRep_BasicSurface::TransferRigthConicalSu
 
   if (Point.IsNull())
   {
-    Message_Msg msg174("XSTEP_174");
+    System::log::Message_Msg msg174("XSTEP_174");
     SendFail(start, msg174);
 
     return res;
   }
   if (Axis.IsNull())
   {
-    Message_Msg msg1280("IGES_1280");
+    System::log::Message_Msg msg1280("IGES_1280");
     SendFail(start, msg1280);
 
     return res;
   }
-  if (angle < Precision::Confusion() || angle > M_PI / 2.)
+  if (angle < math::precision::Precision::Confusion() || angle > M_PI / 2.)
   {
     return res;
   }
@@ -330,7 +330,7 @@ occ::handle<Geom_ConicalSurface> IGESToBRep_BasicSurface::TransferRigthConicalSu
   {
     return res;
   }
-  if (radius < Precision::Confusion())
+  if (radius < math::precision::Precision::Confusion())
     radius = 0.;
 
   gp_Pnt Pt = Point->Value();
@@ -343,7 +343,7 @@ occ::handle<Geom_ConicalSurface> IGESToBRep_BasicSurface::TransferRigthConicalSu
     occ::handle<IGESGeom_Direction> refdir = start->ReferenceDir();
     gp_Dir                          Dir    = gp_Dir(refdir->Value());
     gp_Dir                          vc     = Dir ^ ax;
-    if (vc.XYZ().Modulus() < Precision::Confusion())
+    if (vc.XYZ().Modulus() < math::precision::Precision::Confusion())
     {
 
       return res;
@@ -359,7 +359,7 @@ occ::handle<Geom_SphericalSurface> IGESToBRep_BasicSurface::TransferSphericalSur
   occ::handle<Geom_SphericalSurface> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -371,19 +371,19 @@ occ::handle<Geom_SphericalSurface> IGESToBRep_BasicSurface::TransferSphericalSur
 
   if (Point.IsNull())
   {
-    Message_Msg msg174("XSTEP_174");
+    System::log::Message_Msg msg174("XSTEP_174");
     SendFail(start, msg174);
 
     return res;
   }
   if (Axis.IsNull())
   {
-    Message_Msg msg1280("IGES_1280");
+    System::log::Message_Msg msg1280("IGES_1280");
     SendFail(start, msg1280);
 
     return res;
   }
-  if (radius < Precision::Confusion())
+  if (radius < math::precision::Precision::Confusion())
   {
 
     return res;
@@ -399,7 +399,7 @@ occ::handle<Geom_SphericalSurface> IGESToBRep_BasicSurface::TransferSphericalSur
     occ::handle<IGESGeom_Direction> refdir = start->ReferenceDir();
     gp_Dir                          Dir    = gp_Dir(refdir->Value());
     gp_Dir                          vc     = Dir ^ ax;
-    if (vc.XYZ().Modulus() < Precision::Confusion())
+    if (vc.XYZ().Modulus() < math::precision::Precision::Confusion())
     {
 
       return res;
@@ -415,7 +415,7 @@ occ::handle<Geom_ToroidalSurface> IGESToBRep_BasicSurface::TransferToroidalSurfa
   occ::handle<Geom_ToroidalSurface> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -428,19 +428,19 @@ occ::handle<Geom_ToroidalSurface> IGESToBRep_BasicSurface::TransferToroidalSurfa
 
   if (Point.IsNull())
   {
-    Message_Msg msg174("XSTEP_174");
+    System::log::Message_Msg msg174("XSTEP_174");
     SendFail(start, msg174);
 
     return res;
   }
   if (Axis.IsNull())
   {
-    Message_Msg msg1280("IGES_1280");
+    System::log::Message_Msg msg1280("IGES_1280");
     SendFail(start, msg1280);
 
     return res;
   }
-  if (major < Precision::Confusion() || minor < Precision::Confusion())
+  if (major < math::precision::Precision::Confusion() || minor < math::precision::Precision::Confusion())
   {
 
     return res;
@@ -456,7 +456,7 @@ occ::handle<Geom_ToroidalSurface> IGESToBRep_BasicSurface::TransferToroidalSurfa
     occ::handle<IGESGeom_Direction> refdir = start->ReferenceDir();
     gp_Dir                          Dir    = gp_Dir(refdir->Value());
     gp_Dir                          vc     = Dir ^ ax;
-    if (vc.XYZ().Modulus() < Precision::Confusion())
+    if (vc.XYZ().Modulus() < math::precision::Precision::Confusion())
     {
 
       return res;
@@ -472,7 +472,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferSplineSurface(
   occ::handle<Geom_BSplineSurface> resconv;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return resconv;
   }
@@ -486,13 +486,13 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferSplineSurface(
   {
     case 5:
     {
-      Message_Msg msg1305("IGES_1305");
+      System::log::Message_Msg msg1305("IGES_1305");
       SendFail(start, msg1305);
       return resconv;
     }
     case 4:
     {
-      Message_Msg msg1190("IGES_1190");
+      System::log::Message_Msg msg1190("IGES_1190");
       SendFail(start, msg1190);
       return resconv;
     }
@@ -511,7 +511,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
   occ::handle<Geom_BSplineSurface> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -521,7 +521,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
   if ((DegreeU <= 0) || (DegreeU > Geom_BSplineSurface::MaxDegree()) || (DegreeV <= 0)
       || (DegreeV > Geom_BSplineSurface::MaxDegree()))
   {
-    Message_Msg msg1310("IGES_1310");
+    System::log::Message_Msg msg1310("IGES_1310");
     SendFail(start, msg1310);
 
     return res;
@@ -531,7 +531,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
   int newNbPolesU = NbPolesU;
   if (NbPolesU < 2)
   {
-    Message_Msg msg1195("IGES_1195");
+    System::log::Message_Msg msg1195("IGES_1195");
     SendFail(start, msg1195);
 
     return res;
@@ -541,7 +541,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
   int newNbPolesV = NbPolesV;
   if (NbPolesV < 2)
   {
-    Message_Msg msg1195("IGES_1195");
+    System::log::Message_Msg msg1195("IGES_1195");
     SendFail(start, msg1195);
     return res;
   }
@@ -603,7 +603,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
     int maxMult = (i == 1 || i == UIndex ? DegreeU + 1 : DegreeU);
     if (aMult > maxMult)
     {
-      Message_Msg msg1200("IGES_1200");
+      System::log::Message_Msg msg1200("IGES_1200");
       msg1200.Arg("U");
       msg1200.Arg("U");
       msg1200.Arg("U");
@@ -622,7 +622,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
 
   if (SumOfUMult != newNbPolesU + DegreeU + 1)
   {
-    Message_Msg msg1210("IGES_1210");
+    System::log::Message_Msg msg1210("IGES_1210");
     msg1210.Arg("U");
     msg1210.Arg("U");
     SendWarning(start, msg1210);
@@ -663,7 +663,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
     int maxMult = (i == 1 || i == VIndex ? DegreeV + 1 : DegreeV);
     if (aMult > maxMult)
     {
-      Message_Msg msg1200("IGES_1200");
+      System::log::Message_Msg msg1200("IGES_1200");
       msg1200.Arg("V");
       msg1200.Arg("V");
       msg1200.Arg("V");
@@ -683,7 +683,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
 
   if (SumOfVMult != newNbPolesV + DegreeV + 1)
   {
-    Message_Msg msg1210("IGES_1210");
+    System::log::Message_Msg msg1210("IGES_1210");
     msg1210.Arg("V");
     msg1210.Arg("V");
     SendWarning(start, msg1210);
@@ -735,7 +735,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
     }
     else
     {
-      Message_Msg msg1175("IGES_1175");
+      System::log::Message_Msg msg1175("IGES_1175");
       SendWarning(start, msg1175);
     }
   }
@@ -761,7 +761,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
           Poles.SetValue(i, j, Poles.Value(i, j).Transformed(BSplTrsf));
     else
     {
-      Message_Msg msg1035("IGES_1035");
+      System::log::Message_Msg msg1035("IGES_1035");
       SendWarning(start, msg1035);
     }
   }
@@ -791,9 +791,9 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
                      && polynomial;
 
         double weight = start->Weight(i, j);
-        if (weight < Precision::PConfusion())
+        if (weight < math::precision::Precision::PConfusion())
         {
-          Message_Msg msg1215("IGES_1215");
+          System::log::Message_Msg msg1215("IGES_1215");
           SendFail(start, msg1215);
           return res;
         }
@@ -804,7 +804,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
     }
     if (polynomial)
     {
-      Message_Msg msg1220("IGES_1220");
+      System::log::Message_Msg msg1220("IGES_1220");
       const char* surface("surface");
       msg1220.Arg(surface);
       SendWarning(start, msg1220);
@@ -884,7 +884,7 @@ occ::handle<Geom_BSplineSurface> IGESToBRep_BasicSurface::TransferBSplineSurface
     if (!periodicSurf.IsNull())
     {
 
-      Message_Msg msg1221("IGES_1221");
+      System::log::Message_Msg msg1221("IGES_1221");
       SendWarning(start, msg1221);
       res = periodicSurf;
     }

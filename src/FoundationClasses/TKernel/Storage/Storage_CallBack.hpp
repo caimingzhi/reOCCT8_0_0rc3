@@ -5,9 +5,16 @@
 
 #include <Standard_Transient.hpp>
 class Standard_Persistent;
+namespace app { namespace storage {
 class Storage_Schema;
-class Storage_BaseDriver;
+}} // namespace app::storage
 
+namespace app { namespace storage {
+class Storage_BaseDriver;
+}} // namespace app::storage
+
+
+namespace app { namespace storage {
 class Storage_CallBack : public Standard_Transient
 {
 public:
@@ -26,3 +33,5 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Storage_CallBack, Standard_Transient)
 };
+}} // namespace app::storage
+

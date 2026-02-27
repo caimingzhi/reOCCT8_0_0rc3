@@ -140,16 +140,16 @@ IGESSelect_EditHeader::IGESSelect_EditHeader()
     new Interface_TypedValue("Integer Binary Bits", Interface_ParamInteger);
   SetValue(8, intbits, "G7:IntBits");
   occ::handle<Interface_TypedValue> pow10s =
-    new Interface_TypedValue("Single Precision Magnitude", Interface_ParamInteger);
+    new Interface_TypedValue("Single math::precision::Precision Magnitude", Interface_ParamInteger);
   SetValue(9, pow10s, "G8:SingleMag");
   occ::handle<Interface_TypedValue> dig10s =
-    new Interface_TypedValue("Single Precision Significance", Interface_ParamInteger);
+    new Interface_TypedValue("Single math::precision::Precision Significance", Interface_ParamInteger);
   SetValue(10, dig10s, "G9:SingDigits");
   occ::handle<Interface_TypedValue> pow10d =
-    new Interface_TypedValue("Double Precision Magnitude", Interface_ParamInteger);
+    new Interface_TypedValue("Double math::precision::Precision Magnitude", Interface_ParamInteger);
   SetValue(11, pow10d, "G10:DoubleMag");
   occ::handle<Interface_TypedValue> dig10d =
-    new Interface_TypedValue("Double Precision Significance", Interface_ParamInteger);
+    new Interface_TypedValue("Double math::precision::Precision Significance", Interface_ParamInteger);
   SetValue(12, dig10d, "G11:DoubDigits");
 
   occ::handle<Interface_TypedValue> recname = new Interface_TypedValue("Receiver Product Id");

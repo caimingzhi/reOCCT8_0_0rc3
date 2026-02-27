@@ -20,11 +20,11 @@ IMPLEMENT_STANDARD_RTTIEXT(PCDM_StorageDriver, PCDM_Writer)
 
 void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&  aDocument,
                                const TCollection_ExtendedString& aFileName,
-                               const Message_ProgressRange&)
+                               const System::log::Message_ProgressRange&)
 {
-  occ::handle<Storage_Schema> theSchema = new Storage_Schema;
+  occ::handle<app::storage::Storage_Schema> theSchema = new app::storage::Storage_Schema;
 
-  occ::handle<Storage_Data> theData = new Storage_Data;
+  occ::handle<app::storage::Storage_Data> theData = new app::storage::Storage_Data;
 
   bool             Failure(false);
   Standard_SStream aMsg;
@@ -77,7 +77,7 @@ void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&  aDocument,
     theData->AddToComments(aComments(i));
   }
 
-  occ::handle<FSD_CmpFile> theFile = new FSD_CmpFile;
+  occ::handle<app::file::stream::FSD_CmpFile> theFile = new app::file::stream::FSD_CmpFile;
   PCDM_ReadWriter::Open(theFile, aFileName, Storage_VSWrite);
   theSchema->Write(theFile, theData);
   theFile->Close();
@@ -88,7 +88,7 @@ void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&  aDocument,
 
 void PCDM_StorageDriver::Write(const occ::handle<CDM_Document>&,
                                Standard_OStream&,
-                               const Message_ProgressRange&)
+                               const System::log::Message_ProgressRange&)
 {
 }
 

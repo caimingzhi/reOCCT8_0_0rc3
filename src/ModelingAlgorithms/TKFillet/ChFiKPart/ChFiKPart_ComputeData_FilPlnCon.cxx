@@ -65,7 +65,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   gp_Pnt PtSp;
   gp_Vec DSp;
   ElCLib::D1(First, Spine, PtSp, DSp);
-  IntAna_QuadQuadGeo CInt(Pln, Con, Precision::Angular(), Precision::Confusion());
+  IntAna_QuadQuadGeo CInt(Pln, Con, math::precision::Precision::Angular(), math::precision::Precision::Confusion());
   gp_Pnt             Pv;
   if (CInt.IsDone())
   {
@@ -111,7 +111,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
       Dz.Reverse();
     }
     Rad = Maxrad - Rabio;
-    if (std::abs(Rad) <= Precision::Confusion())
+    if (std::abs(Rad) <= math::precision::Precision::Confusion())
     {
       c1sphere = true;
     }
@@ -235,7 +235,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   lin2dFil.SetLocation(p2dFil);
   occ::handle<Geom2d_Line> GLin2dFil2 = new Geom2d_Line(lin2dFil);
   ElSLib::Parameters(Con, P, u, v);
-  double tol           = Precision::PConfusion();
+  double tol           = math::precision::Precision::PConfusion();
   bool   careaboutsens = false;
   if (std::abs(lu - fu - 2 * M_PI) < tol)
     careaboutsens = true;

@@ -140,7 +140,7 @@ bool IsDegenerated(const occ::handle<Adaptor3d_CurveOnSurface>& theCurve)
   if (theCurve->GetType() == GeomAbs_Circle)
   {
     gp_Circ aCirc = theCurve->Circle();
-    if (aCirc.Radius() <= Precision::Confusion())
+    if (aCirc.Radius() <= math::precision::Precision::Confusion())
       return true;
   }
   return false;
@@ -476,9 +476,9 @@ static void BoundedArc(const TheArc&                    A,
 
             SolAgain.GetInterval(i, pardeb, parfin);
 
-            if (std::abs(pardeb - Pdeb) <= Precision::PConfusion())
+            if (std::abs(pardeb - Pdeb) <= math::precision::Precision::PConfusion())
               pardeb = Pdeb;
-            if (std::abs(parfin - Pfin) <= Precision::PConfusion())
+            if (std::abs(parfin - Pfin) <= math::precision::Precision::PConfusion())
               parfin = Pfin;
 
             SolAgain.GetIntervalState(i, ideb, ifin);
@@ -610,8 +610,8 @@ static void BoundedArc(const TheArc&                    A,
           if (dist < maxdist)
           {
             if (!IsIntCSdone
-                && (std::abs(aParam - Pdeb) <= Precision::PConfusion()
-                    || std::abs(aParam - Pfin) <= Precision::PConfusion()))
+                && (std::abs(aParam - Pdeb) <= math::precision::Precision::PConfusion()
+                    || std::abs(aParam - Pfin) <= math::precision::Precision::PConfusion()))
             {
               anIndx = pSol->GetPointState(aSI(i).Index());
             }
@@ -619,14 +619,14 @@ static void BoundedArc(const TheArc&                    A,
 
           gp_Pnt aPnt(anIndx < 0 ? Func.LastComputedPoint() : Func.Valpoint(anIndx));
 
-          if (dist > 0.1 * Precision::Confusion())
+          if (dist > 0.1 * math::precision::Precision::Confusion())
           {
 
             const double aFPar = (i == 1) ? Pdeb : (para + aSI(i - 1).Value()) / 2.0;
             const double aLPar = (i == Nbp) ? Pfin : (para + aSI(i + 1).Value()) / 2.0;
 
             MinFunction       aNewFunc(Func);
-            math_BrentMinimum aMin(Precision::Confusion());
+            math_BrentMinimum aMin(math::precision::Precision::Confusion());
 
             aMin.Perform(aNewFunc, aFPar, para, aLPar);
             if (aMin.IsDone())
@@ -684,8 +684,8 @@ static void BoundedArc(const TheArc&                    A,
 
     if (Nbi == 1)
     {
-      if ((std::abs(pardeb - Pdeb) < Precision::PConfusion())
-          && (std::abs(parfin - Pfin) < Precision::PConfusion()))
+      if ((std::abs(pardeb - Pdeb) < math::precision::Precision::PConfusion())
+          && (std::abs(parfin - Pfin) < math::precision::Precision::PConfusion()))
       {
         Arcsol = true;
       }
@@ -848,7 +848,7 @@ void PointProcess(const gp_Pnt&                    Pt,
       ptsol = pnt.Value(k);
       if (ptsol.Arc() != A || !ptsol.IsNew())
         continue;
-      if (std::abs(ptsol.Parameter() - Para) <= Precision::PConfusion())
+      if (std::abs(ptsol.Parameter() - Para) <= math::precision::Precision::PConfusion())
       {
         found_internal = true;
         Range          = k;
@@ -941,7 +941,7 @@ int TreatLC(const TheArc&                    A,
   C1.Load(aCAxis);
   C2.Load(aCEdge);
 
-  Tol = Precision::PConfusion();
+  Tol = math::precision::Precision::PConfusion();
 
   Extrema_ExtCC anExtCC(C1, C2, U1f, U1l, U2f, U2l, Tol, Tol);
 
@@ -1026,7 +1026,7 @@ void IntStart_SearchOnBoundaries::Perform(TheFunction&                     Func,
       Func.Set(A);
       FindVertex(A, Domain, Func, spnt, TolBoundary);
       TheSOBTool::Bounds(A, PDeb, PFin);
-      if (Precision::IsNegativeInfinite(PDeb) || Precision::IsPositiveInfinite(PFin))
+      if (math::precision::Precision::IsNegativeInfinite(PDeb) || math::precision::Precision::IsPositiveInfinite(PFin))
       {
         int NbEchant;
         ComputeBoundsfromInfinite(Func, PDeb, PFin, NbEchant);

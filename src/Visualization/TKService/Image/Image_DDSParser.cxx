@@ -56,7 +56,7 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   const int                                  theFaceIndex,
   const int64_t                              theFileOffset)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aFile =
     aFileSystem->OpenIStream(theFile, std::ios::in | std::ios::binary);
   char aHeader[128] = {};
@@ -93,7 +93,7 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
 
   if (theFaceIndex >= aDef->NbFaces() || aDef->FaceBytes() == 0)
   {
-    Message::SendFail(TCollection_AsciiString("DDS Reader error - invalid face index #")
+    System::log::Message::SendFail(TCollection_AsciiString("DDS Reader error - invalid face index #")
                       + theFaceIndex + " within file\n" + theFile);
     return occ::handle<Image_CompressedPixMap>();
   }
@@ -109,7 +109,7 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   aNbReadBytes = (size_t)aFile->gcount();
   if (aNbReadBytes < aDef->FaceBytes())
   {
-    Message::SendFail(TCollection_AsciiString("DDS Reader error - unable to read face #")
+    System::log::Message::SendFail(TCollection_AsciiString("DDS Reader error - unable to read face #")
                       + theFaceIndex + " data from file\n" + theFile);
     return occ::handle<Image_CompressedPixMap>();
   }
@@ -146,7 +146,7 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
 
   if (theFaceIndex >= aDef->NbFaces() || aDef->FaceBytes() == 0)
   {
-    Message::SendFail(TCollection_AsciiString("DDS Reader error - invalid face index #")
+    System::log::Message::SendFail(TCollection_AsciiString("DDS Reader error - invalid face index #")
                       + theFaceIndex + " within buffer");
     return occ::handle<Image_CompressedPixMap>();
   }
@@ -154,7 +154,7 @@ occ::handle<Image_CompressedPixMap> Image_DDSParser::Load(
   const size_t anOffset = aDef->FaceBytes() * theFaceIndex + 128;
   if (theBuffer->Size() < anOffset + aDef->FaceBytes())
   {
-    Message::SendFail(TCollection_AsciiString("DDS Reader error - unable to read face #")
+    System::log::Message::SendFail(TCollection_AsciiString("DDS Reader error - unable to read face #")
                       + theFaceIndex + " data from buffer");
     return occ::handle<Image_CompressedPixMap>();
   }

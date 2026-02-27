@@ -52,12 +52,12 @@ public:
   Standard_EXPORT static bool Perform(
     const occ::handle<ShapeProcess_Context>& context,
     const char*                              seq,
-    const Message_ProgressRange&             theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&             theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT static bool Perform(
     const occ::handle<ShapeProcess_Context>& theContext,
     const OperationsFlags&                   theOperations,
-    const Message_ProgressRange&             theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&             theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT static std::pair<Operation, bool> ToOperationFlag(const char* theName);
 

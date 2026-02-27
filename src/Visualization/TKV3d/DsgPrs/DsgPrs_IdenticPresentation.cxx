@@ -64,7 +64,7 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
   gp_Vec v2(aSAttach, aPntOffset);
 
   aPrims->AddVertex(aPntOffset);
-  if (!v1.IsParallel(v2, Precision::Angular()))
+  if (!v1.IsParallel(v2, math::precision::Precision::Angular()))
   {
 
     gp_Lin ll(aFAttach, gp_Dir(v1));
@@ -105,7 +105,7 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   occ::handle<Graphic3d_ArrayOfPolylines> aPrims;
 
-  if (std::abs((aPntOffset.Distance(aCenter) - rad)) >= Precision::Confusion())
+  if (std::abs((aPntOffset.Distance(aCenter) - rad)) >= math::precision::Precision::Confusion())
   {
     aPrims = new Graphic3d_ArrayOfPolylines(nbp + 2, 2);
     aPrims->AddBound(2);
@@ -152,7 +152,7 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   occ::handle<Graphic3d_ArrayOfPolylines> aPrims;
 
-  if (aPntOffset.Distance(aPntOnCirc) >= Precision::Confusion())
+  if (aPntOffset.Distance(aPntOnCirc) >= math::precision::Precision::Confusion())
   {
     aPrims = new Graphic3d_ArrayOfPolylines(nbp + 2, 2);
     aPrims->AddBound(2);
@@ -194,7 +194,7 @@ void DsgPrs_IdenticPresentation::Add(const occ::handle<Prs3d_Presentation>& aPre
 
   occ::handle<Graphic3d_ArrayOfPolylines> aPrims;
 
-  if (!aPntOnElli.IsEqual(aPntOffset, Precision::Confusion()))
+  if (!aPntOnElli.IsEqual(aPntOffset, math::precision::Precision::Confusion()))
   {
     aPrims = new Graphic3d_ArrayOfPolylines(nbp + 2, 2);
     aPrims->AddBound(2);

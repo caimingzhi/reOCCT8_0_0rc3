@@ -64,14 +64,14 @@ public:
   {
     myRunParallel    = false;
     myNonDestructive = false;
-    myFuzzyValue     = Precision::Confusion();
+    myFuzzyValue     = math::precision::Precision::Confusion();
     myGlue           = BOPAlgo_GlueOff;
     myDrawWarnShapes = false;
     myCheckInverted  = true;
     myUseOBB         = false;
     myUnifyEdges     = false;
     myUnifyFaces     = false;
-    myAngTol         = Precision::Angular();
+    myAngTol         = math::precision::Precision::Angular();
   }
 
   void SetRunParallel(const bool bFlag) { myRunParallel = bFlag; };

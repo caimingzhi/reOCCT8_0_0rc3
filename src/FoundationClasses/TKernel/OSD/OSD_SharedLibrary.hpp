@@ -7,6 +7,7 @@
 #include <OSD_LoadMode.hpp>
 #include <OSD_Function.hpp>
 
+namespace System { namespace os {
 class OSD_SharedLibrary
 {
 public:
@@ -36,3 +37,5 @@ private:
   void*               myHandle;
   Standard_PCharacter myName;
 };
+}} // namespace System::os
+

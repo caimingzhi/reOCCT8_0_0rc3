@@ -101,7 +101,7 @@ void Graphic3d_FrameStatsData::FillMax(const Graphic3d_FrameStatsData& theOther)
 
 Graphic3d_FrameStatsDataTmp::Graphic3d_FrameStatsDataTmp()
 {
-  myOsdTimers.resize(Graphic3d_FrameStatsTimer_NB, OSD_Timer(true));
+  myOsdTimers.resize(Graphic3d_FrameStatsTimer_NB, System::os::OSD_Timer(true));
   myTimersPrev.resize(Graphic3d_FrameStatsTimer_NB, 0.0);
 }
 

@@ -23,7 +23,7 @@ public:
 
   Standard_EXPORT virtual bool IsDone() const;
 
-  const OSD_Path& Path() const { return myPath; }
+  const System::os::OSD_Path& Path() const { return myPath; }
 
   Graphic3d_TypeOfTexture Type() const { return myType; }
 
@@ -71,7 +71,7 @@ protected:
 
   TCollection_AsciiString   myTexId;
   occ::handle<Image_PixMap> myPixMap;
-  OSD_Path                  myPath;
+  System::os::OSD_Path                  myPath;
   size_t                    myRevision;
   Graphic3d_TypeOfTexture   myType;
   bool                      myIsColorMap;

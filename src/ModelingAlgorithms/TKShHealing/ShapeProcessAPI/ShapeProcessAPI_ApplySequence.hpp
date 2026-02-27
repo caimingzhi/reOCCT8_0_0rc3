@@ -28,7 +28,7 @@ public:
     PrepareShape(const TopoDS_Shape&          shape,
                  const bool                   fillmap     = false,
                  const TopAbs_ShapeEnum       until       = TopAbs_SHAPE,
-                 const Message_ProgressRange& theProgress = Message_ProgressRange());
+                 const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void ClearMap();
 

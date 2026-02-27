@@ -494,7 +494,7 @@ void TopOpeBRep_FacesFiller::VP_Position(TopOpeBRep_VPointInter&           VP,
     AssumeINON = (myLine->TypeLineCurve() != TopOpeBRep_RESTRICTION);
 
   double tol1, tol2;
-  tol1 = tol2 = Precision::Confusion();
+  tol1 = tol2 = math::precision::Precision::Confusion();
   myFacesIntersector->GetTolerances(tol1, tol2);
   double tol = (tol1 > tol2) ? tol1 : tol2;
 

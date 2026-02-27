@@ -986,13 +986,13 @@ void TPrsStd_ConstraintTools::ComputeAngle(const occ::handle<TDataXtd_Constraint
 
     if (aTypeaFace == GeomAbs_Plane)
     {
-      if (!anax1aFace1.IsParallel(anax1aFace2, Precision::Angular()))
+      if (!anax1aFace1.IsParallel(anax1aFace2, math::precision::Precision::Angular()))
       {
 
         IntAna_QuadQuadGeo IntersectPlane(aPlnaFace1,
                                           aPlnaFace2,
-                                          Precision::Angular(),
-                                          Precision::Angular());
+                                          math::precision::Precision::Angular(),
+                                          math::precision::Precision::Angular());
         if (IntersectPlane.IsDone() && (IntersectPlane.TypeInter() != IntAna_Empty))
         {
           gp_Lin                 aLine         = IntersectPlane.Line(1);
@@ -1519,7 +1519,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
     {
       gp_Dir aDir1 = aCurve1.Line().Direction();
       gp_Dir aDir2 = aCurve2.Line().Direction();
-      if (!(aDir1.IsParallel(aDir2, Precision::Confusion())))
+      if (!(aDir1.IsParallel(aDir2, math::precision::Precision::Confusion())))
       {
 #ifdef OCCT_DEBUG
         std::cout << " Lines are not parallel" << std::endl;
@@ -1531,7 +1531,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
     {
       gp_Pnt aCntr1 = aCurve1.Circle().Location();
       gp_Pnt aCntr2 = aCurve2.Circle().Location();
-      if (!aCntr1.IsEqual(aCntr2, Precision::Confusion()))
+      if (!aCntr1.IsEqual(aCntr2, math::precision::Precision::Confusion()))
       {
 #ifdef OCCT_DEBUG
         std::cout << " Circles are not concentric" << std::endl;
@@ -1564,7 +1564,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
     if (aCurve.GetType() == GeomAbs_Circle)
     {
       gp_Pnt aCntr = aCurve.Circle().Location();
-      if (!aCntr.IsEqual(aPnt, Precision::Confusion()))
+      if (!aCntr.IsEqual(aPnt, math::precision::Precision::Confusion()))
       {
 #ifdef OCCT_DEBUG
         std::cout << " The point doesn't coincide with the circle center" << std::endl;
@@ -1636,8 +1636,8 @@ void TPrsStd_ConstraintTools::ComputeEqualRadius(const occ::handle<TDataXtd_Cons
     const gp_Dir& aDir1 = anAx31.Direction();
     const gp_Dir& aDir2 = anAx32.Direction();
 
-    if (std::abs(D1 - D2) < Precision::Confusion()
-        && aDir1.IsParallel(aDir2, Precision::Confusion()))
+    if (std::abs(D1 - D2) < math::precision::Precision::Confusion()
+        && aDir1.IsParallel(aDir2, math::precision::Precision::Confusion()))
       aplane = aPlane2;
     else
     {

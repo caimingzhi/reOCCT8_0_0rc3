@@ -13,6 +13,7 @@ class TCollection_AsciiString;
 class TCollection_HAsciiString;
 class TCollection_HExtendedString;
 
+namespace System { namespace log {
 class Message_Msg
 {
 public:
@@ -85,38 +86,40 @@ private:
   TCollection_ExtendedString myMessageBody;
   NCollection_Sequence<int>  mySeqOfFormats;
 };
+}} // namespace System::log
+
 
 #include <Message_Msg.hpp>
 
 #include <TCollection_HAsciiString.hpp>
 #include <TCollection_HExtendedString.hpp>
 
-inline Message_Msg& Message_Msg::Arg(const TCollection_AsciiString& theString)
+inline System::log::Message_Msg& System::log::Message_Msg::Arg(const TCollection_AsciiString& theString)
 {
   return Arg(theString.ToCString());
 }
 
-inline Message_Msg& Message_Msg::Arg(const occ::handle<TCollection_HAsciiString>& theString)
+inline System::log::Message_Msg& System::log::Message_Msg::Arg(const occ::handle<TCollection_HAsciiString>& theString)
 {
   return Arg(theString->String().ToCString());
 }
 
-inline Message_Msg& Message_Msg::Arg(const occ::handle<TCollection_HExtendedString>& theString)
+inline System::log::Message_Msg& System::log::Message_Msg::Arg(const occ::handle<TCollection_HExtendedString>& theString)
 {
   return Arg(theString->String());
 }
 
-inline const TCollection_ExtendedString& Message_Msg::Original() const
+inline const TCollection_ExtendedString& System::log::Message_Msg::Original() const
 {
   return myOriginal;
 }
 
-inline const TCollection_ExtendedString& Message_Msg::Value() const
+inline const TCollection_ExtendedString& System::log::Message_Msg::Value() const
 {
   return myMessageBody;
 }
 
-inline bool Message_Msg::IsEdited() const
+inline bool System::log::Message_Msg::IsEdited() const
 {
   return !myOriginal.IsEqual(myMessageBody);
 }

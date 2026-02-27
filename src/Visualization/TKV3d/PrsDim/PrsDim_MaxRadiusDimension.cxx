@@ -244,7 +244,7 @@ void PrsDim_MaxRadiusDimension::ComputeSelection(const occ::handle<SelectMgr_Sel
       gp_Vec Vapex(center, ElCLib::Value(parEnd, myEllipse));
       gp_Vec Vpnt(center, ElCLib::Value(par, myEllipse));
       gp_Dir dir(Vpnt ^ Vapex);
-      if (myEllipse.Position().Direction().IsOpposite(dir, Precision::Angular()))
+      if (myEllipse.Position().Direction().IsOpposite(dir, math::precision::Precision::Angular()))
       {
         parStart = parEnd;
         parEnd   = par;

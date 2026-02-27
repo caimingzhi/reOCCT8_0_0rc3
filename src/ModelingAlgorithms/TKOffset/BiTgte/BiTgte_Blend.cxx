@@ -70,8 +70,8 @@
 
 double t_mkcurve;
 #ifdef OCCT_DEBUG
-extern void ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
 static bool IsOnRestriction(const TopoDS_Vertex& V,
@@ -175,7 +175,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
 {
 
   TopLoc_Location  Loc;
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   Geom2dAdaptor_Curve C(Curve);
   GeomAdaptor_Surface S(Surf);
@@ -188,12 +188,12 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
     if (CTy == GeomAbs_Line)
     {
       gp_Dir2d D = C.Line().Direction();
-      if (D.IsParallel(gp::DX2d(), Precision::Angular()))
+      if (D.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
       {
         if (STy == GeomAbs_Sphere)
         {
           gp_Pnt2d P = C.Line().Location();
-          if (std::abs(std::abs(P.Y()) - M_PI / 2.) < Precision::PConfusion())
+          if (std::abs(std::abs(P.Y()) - M_PI / 2.) < math::precision::Precision::PConfusion())
           {
             TheBuilder.Degenerated(Edge, true);
           }
@@ -206,7 +206,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
             gp_Ax1    AxeRev(Axis.Location(), DRev);
             Ci.Rotate(AxeRev, P.X());
             occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-            if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+            if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
               Circle->Reverse();
             TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
           }
@@ -221,7 +221,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
           gp_Ax1      AxeRev(Axis.Location(), DRev);
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
@@ -235,7 +235,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
           gp_Ax1   AxeRev(Axis.Location(), DRev);
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
@@ -249,12 +249,12 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
           gp_Ax1   AxeRev(Axis.Location(), DRev);
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
       }
-      else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
+      else if (D.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
       {
         if (STy == GeomAbs_Sphere)
         {
@@ -273,7 +273,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
 
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           TheBuilder.UpdateEdge(Edge, Circle, Loc, Tol);
         }
@@ -286,7 +286,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
           Tr.Multiply(P.Y());
           L.Translate(Tr);
           occ::handle<Geom_Line> Line = new Geom_Line(L);
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Line->Reverse();
           TheBuilder.UpdateEdge(Edge, Line, Loc, Tol);
         }
@@ -299,7 +299,7 @@ static void KPartCurve3d(const TopoDS_Edge&               Edge,
           Tr.Multiply(P.Y());
           L.Translate(Tr);
           occ::handle<Geom_Line> Line = new Geom_Line(L);
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Line->Reverse();
           TheBuilder.UpdateEdge(Edge, Line, Loc, Tol);
         }
@@ -351,7 +351,7 @@ occ::handle<Geom_Curve> MakeCurve(const BiTgte_CurveOnEdge& HC)
   occ::handle<Geom_Curve> C;
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
   ChFi3d_InitChron(ch);
 #endif
 
@@ -365,7 +365,7 @@ occ::handle<Geom_Curve> MakeCurve(const BiTgte_CurveOnEdge& HC)
     MakeCurve_Function F(HC);
     int                Deg1, Deg2;
     Deg1 = Deg2             = 8;
-    constexpr double    Tol = Precision::Approximation();
+    constexpr double    Tol = math::precision::Precision::Approximation();
     Approx_FitAndDivide Fit(F, Deg1, Deg2, Tol, Tol, true);
     int                 i;
     int                 NbCurves = Fit.NbMultiCurves();
@@ -460,7 +460,7 @@ static TopoDS_Edge MakeDegeneratedEdge(const occ::handle<Geom_Curve>& CC,
                                        const TopoDS_Vertex&           VfOnE)
 {
   BRep_Builder     B;
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   occ::handle<Geom_Curve>        C  = CC;
   occ::handle<Geom_TrimmedCurve> CT = occ::down_cast<Geom_TrimmedCurve>(C);
@@ -706,7 +706,7 @@ void BiTgte_Blend::Perform(const bool BuildShape)
   myShape = SewedShape;
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer cl_total, ch;
+  System::os::OSD_Chronometer cl_total, ch;
   double          t_total, t_center, t_surface, t_shape;
 
   t_total   = 0;
@@ -764,7 +764,7 @@ void BiTgte_Blend::Perform(const bool BuildShape)
   ChFi3d_ResultChron(ch, t_shape);
 #endif
 
-  BRepLib::BuildCurves3d(myResult, Precision::Confusion());
+  BRepLib::BuildCurves3d(myResult, math::precision::Precision::Confusion());
 
 #ifdef OCCT_DEBUG
   ChFi3d_ResultChron(cl_total, t_total);
@@ -1346,7 +1346,7 @@ void BiTgte_Blend::ComputeCenters()
                                   myTol,
                                   anEmptyMap,
                                   aDMVV,
-                                  Message_ProgressRange());
+                                  System::log::Message_ProgressRange());
     }
   }
 
@@ -1380,14 +1380,14 @@ void BiTgte_Blend::ComputeCenters()
                                 myTol,
                                 anEmptyMap,
                                 aDMVV,
-                                Message_ProgressRange());
+                                System::log::Message_ProgressRange());
   }
 
   BRepAlgo_Image anEmptyImage;
   BRepOffset_Inter2d::FuseVertices(aDMVV, myAsDes, anEmptyImage);
 
   BRepOffset_MakeLoops MakeLoops;
-  MakeLoops.Build(LOF, myAsDes, myImageOffset, anEmptyImage, Message_ProgressRange());
+  MakeLoops.Build(LOF, myAsDes, myImageOffset, anEmptyImage, System::log::Message_ProgressRange());
 
   B.MakeCompound(TopoDS::Compound(myResult));
   NCollection_List<TopoDS_Shape>::Iterator itLOF(LOF);

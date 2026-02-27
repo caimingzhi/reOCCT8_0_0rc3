@@ -10,8 +10,12 @@
 #include <Standard_Transient.hpp>
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
+namespace app { namespace storage {
 class Storage_BaseDriver;
+}} // namespace app::storage
 
+
+namespace app { namespace storage {
 class Storage_TypeData : public Standard_Transient
 {
 
@@ -53,3 +57,5 @@ private:
   Storage_Error                                            myErrorStatus;
   TCollection_AsciiString                                  myErrorStatusExt;
 };
+}} // namespace app::storage
+

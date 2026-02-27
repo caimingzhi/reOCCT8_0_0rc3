@@ -7,7 +7,7 @@
 #include <Units_UnitsSystem.hpp>
 #include <UnitsAPI.hpp>
 
-static occ::handle<Resource_Manager> CurrentUnits, SICurrentUnits, MDTVCurrentUnits;
+static occ::handle<System::resource::Resource_Manager> CurrentUnits, SICurrentUnits, MDTVCurrentUnits;
 static Units_UnitsSystem             LocalSystemUnits, SILocalSystemUnits, MDTVLocalSystemUnits;
 static TCollection_AsciiString       rstring;
 static UnitsAPI_SystemUnits          localSystem   = UnitsAPI_SI;
@@ -28,14 +28,14 @@ void UnitsAPI::CheckLoading(const UnitsAPI_SystemUnits aSystemUnits)
         if (SICurrentUnits.IsNull())
         {
 #ifdef _WIN32
-          OSD_Environment         env3("CSF_CurrentUnits");
+          System::os::OSD_Environment         env3("CSF_CurrentUnits");
           TCollection_AsciiString csfcurrent(env3.Value());
           if (csfcurrent.Length() > 0)
-            SICurrentUnits = new Resource_Manager(csfcurrent.ToCString());
+            SICurrentUnits = new System::resource::Resource_Manager(csfcurrent.ToCString());
           else
-            SICurrentUnits = new Resource_Manager("CurrentUnits");
+            SICurrentUnits = new System::resource::Resource_Manager("CurrentUnits");
 #else
-          SICurrentUnits = new Resource_Manager("CurrentUnits");
+          SICurrentUnits = new System::resource::Resource_Manager("CurrentUnits");
 #endif
         }
         CurrentUnits     = SICurrentUnits;
@@ -46,14 +46,14 @@ void UnitsAPI::CheckLoading(const UnitsAPI_SystemUnits aSystemUnits)
         if (MDTVCurrentUnits.IsNull())
         {
 #ifdef _WIN32
-          OSD_Environment         env4("CSF_MDTVCurrentUnits");
+          System::os::OSD_Environment         env4("CSF_MDTVCurrentUnits");
           TCollection_AsciiString csfmdtvcurrent(env4.Value());
           if (csfmdtvcurrent.Length() > 0)
-            MDTVCurrentUnits = new Resource_Manager(csfmdtvcurrent.ToCString());
+            MDTVCurrentUnits = new System::resource::Resource_Manager(csfmdtvcurrent.ToCString());
           else
-            MDTVCurrentUnits = new Resource_Manager("MDTVCurrentUnits");
+            MDTVCurrentUnits = new System::resource::Resource_Manager("MDTVCurrentUnits");
 #else
-          MDTVCurrentUnits = new Resource_Manager("MDTVCurrentUnits");
+          MDTVCurrentUnits = new System::resource::Resource_Manager("MDTVCurrentUnits");
 #endif
         }
         CurrentUnits = MDTVCurrentUnits;

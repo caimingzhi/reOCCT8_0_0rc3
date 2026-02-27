@@ -170,12 +170,12 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
     if (CTy == GeomAbs_Line)
     {
       gp_Dir2d D = C.Line().Direction();
-      if (D.IsParallel(gp::DX2d(), Precision::Angular()))
+      if (D.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
       {
         if (STy == GeomAbs_Sphere)
         {
           gp_Pnt2d P = C.Line().Location();
-          if (std::abs(std::abs(P.Y()) - M_PI / 2.) < Precision::PConfusion())
+          if (std::abs(std::abs(P.Y()) - M_PI / 2.) < math::precision::Precision::PConfusion())
           {
             TheBuilder.Degenerated(Edge, true);
           }
@@ -188,7 +188,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
             gp_Ax1    AxeRev(Axis.Location(), DRev);
             Ci.Rotate(AxeRev, P.X());
             occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-            if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+            if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
               Circle->Reverse();
             UpdateEdge(Edge, Circle, Loc, Tol);
           }
@@ -204,7 +204,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           gp_Ax1      AxeRev(Axis.Location(), DRev);
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
@@ -219,7 +219,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           gp_Ax1   AxeRev(Axis.Location(), DRev);
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
@@ -234,13 +234,13 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           gp_Ax1   AxeRev(Axis.Location(), DRev);
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
-          if (D.IsOpposite(gp::DX2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DX2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
         }
       }
-      else if (D.IsParallel(gp::DY2d(), Precision::Angular()))
+      else if (D.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
       {
         if (STy == GeomAbs_Sphere)
         {
@@ -259,7 +259,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           Ci.Rotate(AxeRev, P.X());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
 
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
@@ -273,7 +273,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           Tr.Multiply(P.Y());
           L.Translate(Tr);
           occ::handle<Geom_Line> Line = new Geom_Line(L);
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Line->Reverse();
           UpdateEdge(Edge, Line, Loc, Tol);
           IsComputed = true;
@@ -287,7 +287,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           Tr.Multiply(P.Y());
           L.Translate(Tr);
           occ::handle<Geom_Line> Line = new Geom_Line(L);
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Line->Reverse();
           UpdateEdge(Edge, Line, Loc, Tol);
           IsComputed = true;
@@ -301,7 +301,7 @@ static void ComputeCurve3d(const TopoDS_Edge&               Edge,
           Ci.Rotate(Ci.Axis(), P.Y());
           occ::handle<Geom_Circle> Circle = new Geom_Circle(Ci);
 
-          if (D.IsOpposite(gp::DY2d(), Precision::Angular()))
+          if (D.IsOpposite(gp::DY2d(), math::precision::Precision::Angular()))
             Circle->Reverse();
           UpdateEdge(Edge, Circle, Loc, Tol);
           IsComputed = true;
@@ -462,7 +462,7 @@ void BRepOffset_Offset::Init(
         gp_Pnt aFPnt = S->Value(aFPnt2d.X(), aFPnt2d.Y()),
                aLPnt = S->Value(aLPnt2d.X(), aLPnt2d.Y());
 
-        if (aFPnt.SquareDistance(aLPnt) < Precision::SquareConfusion())
+        if (aFPnt.SquareDistance(aLPnt) < math::precision::Precision::SquareConfusion())
         {
           DegEdges.Append(anEdge);
         }
@@ -476,7 +476,7 @@ void BRepOffset_Offset::Init(
       occ::handle<Geom2d_Curve> aCurve = BRep_Tool::CurveOnSurface(theDegEdge, Face, fpar, lpar);
       gp_Pnt2d                  fp2d   = aCurve->Value(fpar);
       gp_Pnt2d                  lp2d   = aCurve->Value(lpar);
-      if (std::abs(fp2d.X() - lp2d.X()) <= Precision::PConfusion())
+      if (std::abs(fp2d.X() - lp2d.X()) <= math::precision::Precision::PConfusion())
         UisoDegen = true;
 
       if (DegEdges.Length() == 2)
@@ -496,14 +496,14 @@ void BRepOffset_Offset::Init(
       {
         if (UisoDegen)
         {
-          if (std::abs(fp2d.X() - uf1) <= Precision::Confusion())
+          if (std::abs(fp2d.X() - uf1) <= math::precision::Precision::Confusion())
             UminDegen = true;
           else
             UmaxDegen = true;
         }
         else
         {
-          if (std::abs(fp2d.Y() - vf1) <= Precision::Confusion())
+          if (std::abs(fp2d.Y() - vf1) <= math::precision::Precision::Confusion())
             VminDegen = true;
           else
             VmaxDegen = true;
@@ -782,7 +782,7 @@ void BRepOffset_Offset::Init(
         P2d2                     = C2d->Value(BRep_Tool::Parameter(V2, Eforward, CurFace));
         if (VonDegen.Contains(V1))
         {
-          if (std::abs(P2d1.Y() - vf1) <= Precision::Confusion())
+          if (std::abs(P2d1.Y() - vf1) <= math::precision::Precision::Confusion())
           {
             P1     = MinApex;
             vstart = v1;
@@ -802,7 +802,7 @@ void BRepOffset_Offset::Init(
         }
         if (VonDegen.Contains(V2))
         {
-          if (std::abs(P2d2.Y() - vf1) <= Precision::Confusion())
+          if (std::abs(P2d2.Y() - vf1) <= math::precision::Precision::Confusion())
           {
             P2   = MinApex;
             vend = v1;
@@ -976,7 +976,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
     GeomAdaptor_Curve AC1(C1);
     if (AC1.GetType() == GeomAbs_Circle)
     {
-      C1Denerated = (AC1.Circle().Radius() < Precision::Confusion());
+      C1Denerated = (AC1.Circle().Radius() < math::precision::Precision::Confusion());
     }
   }
 
@@ -1005,7 +1005,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
     GeomAdaptor_Curve AC2(C2);
     if (AC2.GetType() == GeomAbs_Circle)
     {
-      C2Denerated = (AC2.Circle().Radius() < Precision::Confusion());
+      C2Denerated = (AC2.Circle().Radius() < math::precision::Precision::Confusion());
     }
   }
 
@@ -1166,7 +1166,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
   if (IsClosed)
     Edge4 = Edge3;
 
-  constexpr double TolApp = Precision::Approximation();
+  constexpr double TolApp = math::precision::Precision::Approximation();
 
   occ::handle<Geom2d_Line> L1, L2;
   if (IsClosed)
@@ -1469,7 +1469,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge& Edge, const double Offset)
   if (!Pipe.IsDone())
     throw Standard_ConstructionError("GeomFill_Pipe : Cannot make a surface");
 
-  BRepLib_MakeFace MF(Pipe.Surface(), Precision::Confusion());
+  BRepLib_MakeFace MF(Pipe.Surface(), math::precision::Precision::Confusion());
   myFace = MF.Face();
 
   if (Offset < 0.)

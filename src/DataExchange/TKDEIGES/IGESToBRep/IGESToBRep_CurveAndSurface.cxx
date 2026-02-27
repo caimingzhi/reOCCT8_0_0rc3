@@ -107,7 +107,7 @@ void IGESToBRep_CurveAndSurface::UpdateMinMaxTol()
 {
 
   myMaxTol = std::max(Interface_Static::RVal("read.maxprecision.val"), myEpsGeom * myUnitFactor);
-  myMinTol = Precision::Confusion();
+  myMinTol = math::precision::Precision::Confusion();
 }
 
 void IGESToBRep_CurveAndSurface::SetModel(const occ::handle<IGESData_IGESModel>& model)
@@ -125,12 +125,12 @@ void IGESToBRep_CurveAndSurface::SetModel(const occ::handle<IGESData_IGESModel>&
 
 TopoDS_Shape IGESToBRep_CurveAndSurface::TransferCurveAndSurface(
   const occ::handle<IGESData_IGESEntity>& start,
-  const Message_ProgressRange&            theProgress)
+  const System::log::Message_ProgressRange&            theProgress)
 {
   TopoDS_Shape res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -153,7 +153,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferCurveAndSurface(
   }
   else
   {
-    Message_Msg msg1015("IGES_1015");
+    System::log::Message_Msg msg1015("IGES_1015");
     SendFail(start, msg1015);
   }
 
@@ -162,14 +162,14 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferCurveAndSurface(
 
 TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
   const occ::handle<IGESData_IGESEntity>& start,
-  const Message_ProgressRange&            theProgress)
+  const System::log::Message_ProgressRange&            theProgress)
 {
 
   TopoDS_Shape res;
   gp_Trsf      T408;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -189,7 +189,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     }
     catch (Standard_Failure const&)
     {
-      Message_Msg msg1015("IGES_1015");
+      System::log::Message_Msg msg1015("IGES_1015");
       SendFail(start, msg1015);
     }
     return res;
@@ -226,7 +226,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
       catch (Standard_Failure const&)
       {
         res.Nullify();
-        Message_Msg msg1015("IGES_1015");
+        System::log::Message_Msg msg1015("IGES_1015");
         SendFail(st408, msg1015);
       }
       if (!res.IsNull())
@@ -244,18 +244,18 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     B.MakeCompound(group);
     if (st308->NbEntities() < 1)
     {
-      Message_Msg msg210("XSTEP_210");
+      System::log::Message_Msg msg210("XSTEP_210");
       SendFail(st308, msg210);
       return res;
     }
-    Message_ProgressScope PS(theProgress, "Subfigure item", st308->NbEntities());
+    System::log::Message_ProgressScope PS(theProgress, "Subfigure item", st308->NbEntities());
     for (int i = 1; i <= st308->NbEntities() && PS.More(); i++)
     {
-      Message_ProgressRange aRange = PS.Next();
+      System::log::Message_ProgressRange aRange = PS.Next();
       TopoDS_Shape          item;
       if (st308->AssociatedEntity(i).IsNull())
       {
-        Message_Msg msg1020("IGES_1020");
+        System::log::Message_Msg msg1020("IGES_1020");
         msg1020.Arg(i);
         SendWarning(st308, msg1020);
         continue;
@@ -277,13 +277,13 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
         catch (Standard_Failure const&)
         {
           item.Nullify();
-          Message_Msg msg1015("IGES_1015");
+          System::log::Message_Msg msg1015("IGES_1015");
           SendFail(st308->AssociatedEntity(i), msg1015);
         }
       }
       if (item.IsNull())
       {
-        Message_Msg msg1025("IGES_1025");
+        System::log::Message_Msg msg1025("IGES_1025");
         msg1025.Arg(i);
         SendWarning(start, msg1025);
       }
@@ -306,20 +306,20 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     B.MakeCompound(group);
     if (st402f1->NbEntities() < 1)
     {
-      Message_Msg msg202("XSTEP_202");
+      System::log::Message_Msg msg202("XSTEP_202");
       msg202.Arg(st402f1->FormNumber());
       SendFail(st402f1, msg202);
       return res;
     }
-    Message_ProgressScope PS(theProgress, "Group item", st402f1->NbEntities());
+    System::log::Message_ProgressScope PS(theProgress, "Group item", st402f1->NbEntities());
     bool                  ProblemInGroup = false;
     for (int i = 1; i <= st402f1->NbEntities() && PS.More(); i++)
     {
-      Message_ProgressRange aRange = PS.Next();
+      System::log::Message_ProgressRange aRange = PS.Next();
       TopoDS_Shape          item;
       if (st402f1->Entity(i).IsNull())
       {
-        Message_Msg msg1020("IGES_1020");
+        System::log::Message_Msg msg1020("IGES_1020");
         msg1020.Arg(i);
         SendFail(st402f1, msg1020);
         continue;
@@ -342,7 +342,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
         catch (Standard_Failure const&)
         {
           item.Nullify();
-          Message_Msg msg1015("IGES_1015");
+          System::log::Message_Msg msg1015("IGES_1015");
           SendFail(st402f1->Entity(i), msg1015);
         }
       }
@@ -360,7 +360,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     res = group;
     if (ProblemInGroup)
     {
-      Message_Msg msg1030("IGES_1030");
+      System::log::Message_Msg msg1030("IGES_1030");
       msg1030.Arg(st402f1->FormNumber());
       SendWarning(st402f1, msg1030);
     }
@@ -378,20 +378,20 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     B.MakeCompound(group);
     if (st402f7->NbEntities() < 1)
     {
-      Message_Msg msg202("XSTEP_202");
+      System::log::Message_Msg msg202("XSTEP_202");
       msg202.Arg(st402f7->FormNumber());
       SendFail(st402f7, msg202);
       return res;
     }
-    Message_ProgressScope PS(theProgress, "Group item", st402f7->NbEntities());
+    System::log::Message_ProgressScope PS(theProgress, "Group item", st402f7->NbEntities());
     bool                  ProblemInGroup = false;
     for (int i = 1; i <= st402f7->NbEntities() && PS.More(); i++)
     {
-      Message_ProgressRange aRange = PS.Next();
+      System::log::Message_ProgressRange aRange = PS.Next();
       TopoDS_Shape          item;
       if (st402f7->Entity(i).IsNull())
       {
-        Message_Msg msg1020("IGES_1020");
+        System::log::Message_Msg msg1020("IGES_1020");
         msg1020.Arg(i);
         SendFail(st402f7, msg1020);
         continue;
@@ -414,7 +414,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
         catch (Standard_Failure const&)
         {
           item.Nullify();
-          Message_Msg msg1015("IGES_1015");
+          System::log::Message_Msg msg1015("IGES_1015");
           SendFail(st402f7->Entity(i), msg1015);
         }
       }
@@ -432,14 +432,14 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     res = group;
     if (ProblemInGroup)
     {
-      Message_Msg msg1030("IGES_1030");
+      System::log::Message_Msg msg1030("IGES_1030");
       msg1030.Arg(st402f7->FormNumber());
       SendWarning(st402f7, msg1030);
     }
   }
   else
   {
-    Message_Msg msg1001("IGES_1001");
+    System::log::Message_Msg msg1001("IGES_1001");
     msg1001.Arg(start->FormNumber());
     SendFail(start, msg1001);
     return res;
@@ -470,7 +470,7 @@ TopoDS_Shape IGESToBRep_CurveAndSurface::TransferGeometry(
     }
     else
     {
-      Message_Msg msg1035("IGES_1035");
+      System::log::Message_Msg msg1035("IGES_1035");
       SendWarning(start, msg1035);
     }
   }

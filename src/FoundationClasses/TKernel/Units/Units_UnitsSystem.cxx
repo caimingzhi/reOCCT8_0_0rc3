@@ -26,7 +26,7 @@ Units_UnitsSystem::Units_UnitsSystem()
 
 Units_UnitsSystem::Units_UnitsSystem(const char* aName, const bool Verbose)
 {
-  occ::handle<Resource_Manager> themanager = new Resource_Manager(aName, Verbose);
+  occ::handle<System::resource::Resource_Manager> themanager = new System::resource::Resource_Manager(aName, Verbose);
 
   thequantitiessequence  = new NCollection_HSequence<occ::handle<Units_Quantity>>();
   theactiveunitssequence = new NCollection_HSequence<int>;

@@ -9,7 +9,7 @@
 
 namespace
 {
-  static const double PRCANG = Precision::Angular();
+  static const double PRCANG = math::precision::Precision::Angular();
 }
 
 Intf_InterferencePolygon2d::Intf_InterferencePolygon2d()

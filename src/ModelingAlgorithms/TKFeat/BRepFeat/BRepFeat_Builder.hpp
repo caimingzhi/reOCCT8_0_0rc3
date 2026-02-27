@@ -38,7 +38,7 @@ public:
   Standard_EXPORT void KeepPart(const TopoDS_Shape& theS);
 
   Standard_EXPORT void PerformResult(
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void RebuildFaces();
 
@@ -60,7 +60,7 @@ protected:
 
   Standard_EXPORT void FillIn3DParts(
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
-    const Message_ProgressRange&                                              theRange) override;
+    const System::log::Message_ProgressRange&                                              theRange) override;
 
   bool CheckArgsForOpenSolid() override { return false; }
 

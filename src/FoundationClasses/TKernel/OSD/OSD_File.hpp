@@ -28,10 +28,17 @@ enum OSD_LockType
 
 #include <OSD_OpenMode.hpp>
 
+namespace System { namespace os {
 class OSD_Path;
-class OSD_Protection;
+}} // namespace System::os
 
-class OSD_File : public OSD_FileNode
+namespace System { namespace os {
+class OSD_Protection;
+}} // namespace System::os
+
+
+namespace System { namespace os {
+class OSD_File : public System::os::OSD_FileNode
 {
 public:
   Standard_EXPORT OSD_File();
@@ -123,3 +130,5 @@ private:
   OSD_OpenMode myMode;
   bool         ImperativeFlag;
 };
+}} // namespace System::os
+

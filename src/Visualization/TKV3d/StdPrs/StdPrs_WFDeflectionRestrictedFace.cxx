@@ -18,7 +18,7 @@
 
 #ifdef OCCT_DEBUG_MESH
   #include <OSD_Chronometer.hpp>
-extern OSD_Chronometer FFaceTimer1, FFaceTimer2, FFaceTimer3, FFaceTimer4;
+extern System::os::OSD_Chronometer FFaceTimer1, FFaceTimer2, FFaceTimer3, FFaceTimer4;
 #endif
 
 static void FindLimits(const Adaptor3d_Curve& aCurve,
@@ -28,8 +28,8 @@ static void FindLimits(const Adaptor3d_Curve& aCurve,
 {
   First         = std::max(aCurve.FirstParameter(), First);
   Last          = std::min(aCurve.LastParameter(), Last);
-  bool firstInf = Precision::IsNegativeInfinite(First);
-  bool lastInf  = Precision::IsPositiveInfinite(Last);
+  bool firstInf = math::precision::Precision::IsNegativeInfinite(First);
+  bool lastInf  = math::precision::Precision::IsPositiveInfinite(Last);
 
   if (firstInf || lastInf)
   {
@@ -165,13 +165,13 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
       U2 = TheRCurve->LastParameter();
 
       double aOrigin = 0.;
-      if (!Precision::IsNegativeInfinite(U1) || !Precision::IsPositiveInfinite(U2))
+      if (!math::precision::Precision::IsNegativeInfinite(U1) || !math::precision::Precision::IsPositiveInfinite(U2))
       {
-        if (Precision::IsNegativeInfinite(U1))
+        if (math::precision::Precision::IsNegativeInfinite(U1))
         {
           aOrigin = U2 - aLimit;
         }
-        else if (Precision::IsPositiveInfinite(U2))
+        else if (math::precision::Precision::IsPositiveInfinite(U2))
         {
           aOrigin = U1 + aLimit;
         }
@@ -215,7 +215,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
 #endif
 
   aHatchingTol *= 0.1;
-  aHatchingTol = std::max(Precision::Confusion(), aHatchingTol);
+  aHatchingTol = std::max(math::precision::Precision::Confusion(), aHatchingTol);
   aHatchingTol = std::min(1.e-5, aHatchingTol);
 
   Hatch_Hatcher isobuild(aHatchingTol, ToolRst.IsOriented());
@@ -311,7 +311,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
 
         GeomAdaptor_Curve GC(BC);
         FindLimits(GC, aLimit, b1, b2);
-        if (b2 - b1 > Precision::Confusion())
+        if (b2 - b1 > math::precision::Precision::Confusion())
         {
           occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
           StdPrs_DeflectionCurve::Add(aPresentation,
@@ -337,7 +337,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
         }
 
         FindLimits(anIso, aLimit, b1, b2);
-        if (b2 - b1 > Precision::Confusion())
+        if (b2 - b1 > math::precision::Precision::Confusion())
         {
           occ::handle<NCollection_HSequence<gp_Pnt>> aPoints = new NCollection_HSequence<gp_Pnt>();
           StdPrs_DeflectionCurve::Add(aPresentation,

@@ -161,12 +161,12 @@ namespace
 #endif
 } // namespace
 
-bool OSD_Parallel::ToUseOcctThreads()
+bool System::os::OSD_Parallel::ToUseOcctThreads()
 {
   return OSD_Parallel_ToUseOcctThreads;
 }
 
-void OSD_Parallel::SetUseOcctThreads(bool theToUseOcct)
+void System::os::OSD_Parallel::SetUseOcctThreads(bool theToUseOcct)
 {
 #ifdef HAVE_TBB
   OSD_Parallel_ToUseOcctThreads = theToUseOcct;
@@ -175,7 +175,7 @@ void OSD_Parallel::SetUseOcctThreads(bool theToUseOcct)
 #endif
 }
 
-int OSD_Parallel::NbLogicalProcessors()
+int System::os::OSD_Parallel::NbLogicalProcessors()
 {
   static int aNumLogicalProcessors = 0;
   if (aNumLogicalProcessors != 0)

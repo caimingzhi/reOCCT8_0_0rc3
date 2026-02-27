@@ -22,8 +22,8 @@ void IGESGeom_ToolLine::ReadOwnParams(const occ::handle<IGESGeom_Line>& ent,
                                       IGESData_ParamReader& PR) const
 {
 
-  Message_Msg Msg89("XSTEP_89");
-  Message_Msg Msg90("XSTEP_90");
+  System::log::Message_Msg Msg89("XSTEP_89");
+  System::log::Message_Msg Msg90("XSTEP_90");
 
   gp_XYZ aStart, anEnd;
 

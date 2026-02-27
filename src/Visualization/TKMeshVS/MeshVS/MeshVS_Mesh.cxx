@@ -139,7 +139,7 @@ void MeshVS_Mesh::Compute(const occ::handle<PrsMgr_PresentationManager>& thePrsM
 {
   bool toShowComputeTime = true;
   myCurrentDrawer->GetBoolean(MeshVS_DA_ComputeTime, toShowComputeTime);
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   if (toShowComputeTime)
   {
     aTimer.Reset();
@@ -227,7 +227,7 @@ void MeshVS_Mesh::scanFacesForSharedNodes(const TColStd_PackedMapOfInteger& theA
 void MeshVS_Mesh::ComputeSelection(const occ::handle<SelectMgr_Selection>& theSelection,
                                    const int                               theMode)
 {
-  OSD_Timer gTimer;
+  System::os::OSD_Timer gTimer;
   bool      toShowComputeSelectionTime = true;
   myCurrentDrawer->GetBoolean(MeshVS_DA_ComputeSelectionTime, toShowComputeSelectionTime);
   if (toShowComputeSelectionTime)
@@ -855,7 +855,7 @@ void MeshVS_Mesh::HilightSelected(
     aSelectionPrs->SetTransformPersistence(Presentation()->TransformPersistence());
 
 #ifdef OCCT_DEBUG
-  OSD_Timer gTimer;
+  System::os::OSD_Timer gTimer;
   gTimer.Reset();
   gTimer.Start();
 #endif

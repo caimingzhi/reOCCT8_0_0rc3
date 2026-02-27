@@ -85,7 +85,7 @@ VrmlConverter_Projector::VrmlConverter_Projector(const NCollection_Array1<TopoDS
 
   gp_Dir Ypers(XUp, YUp, ZUp);
 
-  if (Ypers.IsParallel(Zpers, Precision::Angular()))
+  if (Ypers.IsParallel(Zpers, math::precision::Precision::Angular()))
   {
     throw Standard_Failure("Projection Vector is Parallel to High Point Direction");
   }

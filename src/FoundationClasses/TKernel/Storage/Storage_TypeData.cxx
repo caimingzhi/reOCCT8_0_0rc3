@@ -6,14 +6,14 @@
 #include <Storage_StreamTypeMismatchError.hpp>
 #include <TCollection_AsciiString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Storage_TypeData, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(app::storage::Storage_TypeData, Standard_Transient)
 
-Storage_TypeData::Storage_TypeData()
+app::storage::Storage_TypeData::Storage_TypeData()
     : myErrorStatus(Storage_VSOk)
 {
 }
 
-bool Storage_TypeData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
+bool app::storage::Storage_TypeData::Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSRead && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -41,7 +41,7 @@ bool Storage_TypeData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
       OCC_CATCH_SIGNALS
       theDriver->ReadTypeInformations(aTypeNum, aTypeName);
     }
-    catch (const Storage_StreamTypeMismatchError&)
+    catch (const app::storage::Storage_StreamTypeMismatchError&)
     {
       myErrorStatus    = Storage_VSTypeMismatch;
       myErrorStatusExt = "ReadTypeInformations";
@@ -61,17 +61,17 @@ bool Storage_TypeData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
   return true;
 }
 
-int Storage_TypeData::NumberOfTypes() const
+int app::storage::Storage_TypeData::NumberOfTypes() const
 {
   return myPt.Extent();
 }
 
-bool Storage_TypeData::IsType(const TCollection_AsciiString& aName) const
+bool app::storage::Storage_TypeData::IsType(const TCollection_AsciiString& aName) const
 {
   return myPt.Contains(aName);
 }
 
-occ::handle<NCollection_HSequence<TCollection_AsciiString>> Storage_TypeData::Types() const
+occ::handle<NCollection_HSequence<TCollection_AsciiString>> app::storage::Storage_TypeData::Types() const
 {
   occ::handle<NCollection_HSequence<TCollection_AsciiString>> r =
     new NCollection_HSequence<TCollection_AsciiString>;
@@ -85,12 +85,12 @@ occ::handle<NCollection_HSequence<TCollection_AsciiString>> Storage_TypeData::Ty
   return r;
 }
 
-void Storage_TypeData::AddType(const TCollection_AsciiString& aName, const int aTypeNum)
+void app::storage::Storage_TypeData::AddType(const TCollection_AsciiString& aName, const int aTypeNum)
 {
   myPt.Add(aName, aTypeNum);
 }
 
-TCollection_AsciiString Storage_TypeData::Type(const int aTypeNum) const
+TCollection_AsciiString app::storage::Storage_TypeData::Type(const int aTypeNum) const
 {
   TCollection_AsciiString r;
 
@@ -100,13 +100,13 @@ TCollection_AsciiString Storage_TypeData::Type(const int aTypeNum) const
   }
   else
   {
-    throw Standard_NoSuchObject("Storage_TypeData::Type - aTypeNum not in range");
+    throw Standard_NoSuchObject("app::storage::Storage_TypeData::Type - aTypeNum not in range");
   }
 
   return r;
 }
 
-int Storage_TypeData::Type(const TCollection_AsciiString& aTypeName) const
+int app::storage::Storage_TypeData::Type(const TCollection_AsciiString& aTypeName) const
 {
   int r = 0;
 
@@ -116,39 +116,39 @@ int Storage_TypeData::Type(const TCollection_AsciiString& aTypeName) const
   }
   else
   {
-    throw Standard_NoSuchObject("Storage_TypeData::Type - aTypeName not found");
+    throw Standard_NoSuchObject("app::storage::Storage_TypeData::Type - aTypeName not found");
   }
 
   return r;
 }
 
-void Storage_TypeData::Clear()
+void app::storage::Storage_TypeData::Clear()
 {
   myPt.Clear();
 }
 
-Storage_Error Storage_TypeData::ErrorStatus() const
+Storage_Error app::storage::Storage_TypeData::ErrorStatus() const
 {
   return myErrorStatus;
 }
 
-void Storage_TypeData::SetErrorStatus(const Storage_Error anError)
+void app::storage::Storage_TypeData::SetErrorStatus(const Storage_Error anError)
 {
   myErrorStatus = anError;
 }
 
-void Storage_TypeData::ClearErrorStatus()
+void app::storage::Storage_TypeData::ClearErrorStatus()
 {
   myErrorStatus = Storage_VSOk;
   myErrorStatusExt.Clear();
 }
 
-TCollection_AsciiString Storage_TypeData::ErrorStatusExtension() const
+TCollection_AsciiString app::storage::Storage_TypeData::ErrorStatusExtension() const
 {
   return myErrorStatusExt;
 }
 
-void Storage_TypeData::SetErrorStatusExtension(const TCollection_AsciiString& anErrorExt)
+void app::storage::Storage_TypeData::SetErrorStatusExtension(const TCollection_AsciiString& anErrorExt)
 {
   myErrorStatusExt = anErrorExt;
 }

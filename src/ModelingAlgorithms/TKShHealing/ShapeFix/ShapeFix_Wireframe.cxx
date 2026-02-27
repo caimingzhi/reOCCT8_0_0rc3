@@ -77,7 +77,7 @@ bool ShapeFix_Wireframe::FixWireGaps()
     myShape = Context()->Apply(shape);
   }
 
-  double prec = (Precision() > 0.) ? Precision() : Precision::Confusion();
+  double prec = (Precision() > 0.) ? Precision() : math::precision::Precision::Confusion();
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> cont;
   if (myShape.ShapeType() == TopAbs_COMPOUND)
   {
@@ -147,7 +147,7 @@ bool ShapeFix_Wireframe::FixWireGaps()
       if (sfw->StatusGaps2d(ShapeExtend_FAIL))
         myStatusWireGaps |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);
       if (sfw->StatusGaps3d(ShapeExtend_DONE) || sfw->StatusGaps2d(ShapeExtend_DONE))
-        SendWarning(itw.Value(), Message_Msg("FixWireframe.FixFixWireGaps.MSG0"));
+        SendWarning(itw.Value(), System::log::Message_Msg("FixWireframe.FixFixWireGaps.MSG0"));
     }
   }
 
@@ -163,7 +163,7 @@ bool ShapeFix_Wireframe::FixWireGaps()
     if (sfw->StatusGaps3d(ShapeExtend_FAIL))
       myStatusWireGaps |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL1);
     if (sfw->StatusGaps3d(ShapeExtend_DONE))
-      SendWarning(expw.Current(), Message_Msg("FixWireframe.FixFixWireGaps.MSG0"));
+      SendWarning(expw.Current(), System::log::Message_Msg("FixWireframe.FixFixWireGaps.MSG0"));
   }
 
   if (StatusWireGaps(ShapeExtend_DONE))
@@ -678,7 +678,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     Vec1.Reverse();
                   if (edge2.Orientation() == TopAbs_REVERSED)
                     Vec2.Reverse();
-                  constexpr double tol2 = Precision::SquareConfusion();
+                  constexpr double tol2 = math::precision::Precision::SquareConfusion();
                   if (Vec1.SquareMagnitude() < tol2 || Vec2.SquareMagnitude() < tol2)
                     Ang1 = M_PI / 2.;
                   else
@@ -738,7 +738,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                 if (same_set1 && same_set2)
                 {
                   same_set = true;
-                  if (fabs(Ang2 - Ang1) > Precision::Angular())
+                  if (fabs(Ang2 - Ang1) > math::precision::Precision::Angular())
                     take_next = (Ang2 < Ang1);
                   if (take_next)
                   {
@@ -866,13 +866,13 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     {
                       Context()->Replace(edge1, edge3);
                       Context()->Remove(edge2);
-                      SendWarning(edge2, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                      SendWarning(edge2, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                     }
                     else
                     {
                       Context()->Replace(edge2, edge3);
                       Context()->Remove(edge1);
-                      SendWarning(edge1, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                      SendWarning(edge1, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                     }
                     if (take_next)
                     {
@@ -956,7 +956,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     aTmpShape              = Context()->Apply(tmpedge2);
                     TopoDS_Edge anewedge2  = TopoDS::Edge(aTmpShape);
                     Context()->Remove(remedge);
-                    SendWarning(remedge, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                    SendWarning(remedge, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                     if (theSmallEdges.Contains(remedge))
                       theSmallEdges.Remove(remedge);
                     theEdgeToFaces.UnBind(remedge);
@@ -1042,7 +1042,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     {
                       SFW->WireData()->Remove(index);
                       Context()->Remove(edge1);
-                      SendWarning(edge1, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                      SendWarning(edge1, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                       if (theSmallEdges.Contains(edge1))
                         theSmallEdges.Remove(edge1);
                       theEdgeToFaces.UnBind(edge1);
@@ -1058,7 +1058,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
                     {
                       SFW->WireData()->Remove(index);
                       Context()->Remove(edge2);
-                      SendWarning(edge2, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                      SendWarning(edge2, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                       if (theSmallEdges.Contains(edge2))
                         theSmallEdges.Remove(edge2);
                       theEdgeToFaces.UnBind(edge2);
@@ -1081,11 +1081,11 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               {
                 SFW->WireData()->Remove(1);
                 Context()->Remove(edge1);
-                SendWarning(edge1, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                SendWarning(edge1, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                 theSmallEdges.Remove(edge1);
                 theEdgeToFaces.UnBind(edge1);
                 Context()->Remove(aWire);
-                SendWarning(aWire, Message_Msg("FixWireframe.FixSmallEdges.MSG1"));
+                SendWarning(aWire, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG1"));
                 myStatusSmallEdges |= ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
               }
             }
@@ -1101,7 +1101,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
           if (!aIter.More())
           {
             Context()->Remove(anewShape);
-            SendWarning(face, Message_Msg("FixWireframe.FixSmallEdges.MSG2"));
+            SendWarning(face, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG2"));
           }
         }
       }
@@ -1152,7 +1152,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               Vec1.Reverse();
             if (edge2.Orientation() == TopAbs_REVERSED)
               Vec2.Reverse();
-            constexpr double tol2 = Precision::SquareConfusion();
+            constexpr double tol2 = math::precision::Precision::SquareConfusion();
             if (Vec1.SquareMagnitude() < tol2 || Vec2.SquareMagnitude() < tol2)
               Ang1 = M_PI / 2.;
             else
@@ -1211,7 +1211,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
           if (same_set1 && same_set2)
           {
             same_set = true;
-            if (fabs(Ang2 - Ang1) > Precision::Angular())
+            if (fabs(Ang2 - Ang1) > math::precision::Precision::Angular())
               take_next = (Ang2 < Ang1);
             if (take_next)
             {
@@ -1338,13 +1338,13 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               {
                 Context()->Replace(edge1, edge3);
                 Context()->Remove(edge2);
-                SendWarning(edge2, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                SendWarning(edge2, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
               }
               else
               {
                 Context()->Replace(edge2, edge3);
                 Context()->Remove(edge1);
-                SendWarning(edge1, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                SendWarning(edge1, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
               }
               if (take_next)
               {
@@ -1427,7 +1427,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               aTmpShape              = Context()->Apply(tmpedge2);
               TopoDS_Edge anewedge2  = TopoDS::Edge(aTmpShape);
               Context()->Remove(remedge);
-              SendWarning(remedge, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+              SendWarning(remedge, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
               if (theSmallEdges.Contains(remedge))
                 theSmallEdges.Remove(remedge);
               theEdgeToFaces.UnBind(remedge);
@@ -1511,7 +1511,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               {
                 SFW->WireData()->Remove(index);
                 Context()->Remove(edge1);
-                SendWarning(edge1, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                SendWarning(edge1, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                 if (theSmallEdges.Contains(edge1))
                   theSmallEdges.Remove(edge1);
                 theEdgeToFaces.UnBind(edge1);
@@ -1527,7 +1527,7 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
               {
                 SFW->WireData()->Remove(index);
                 Context()->Remove(edge2);
-                SendWarning(edge2, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+                SendWarning(edge2, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
                 if (theSmallEdges.Contains(edge2))
                   theSmallEdges.Remove(edge2);
                 theEdgeToFaces.UnBind(edge2);
@@ -1550,11 +1550,11 @@ bool ShapeFix_Wireframe::MergeSmallEdges(
         {
           SFW->WireData()->Remove(1);
           Context()->Remove(edge1);
-          SendWarning(edge1, Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
+          SendWarning(edge1, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG0"));
           theSmallEdges.Remove(edge1);
           theEdgeToFaces.UnBind(edge1);
           Context()->Remove(aWire);
-          SendWarning(aWire, Message_Msg("FixWireframe.FixSmallEdges.MSG1"));
+          SendWarning(aWire, System::log::Message_Msg("FixWireframe.FixSmallEdges.MSG1"));
           myStatusSmallEdges |= ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
         }
       }

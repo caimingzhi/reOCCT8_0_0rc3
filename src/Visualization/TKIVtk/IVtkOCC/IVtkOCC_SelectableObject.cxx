@@ -74,7 +74,7 @@ void IVtkOCC_SelectableObject::ComputeSelection(
   }
   catch (const Standard_Failure& anException)
   {
-    Message::SendFail(TCollection_AsciiString("Error: IVtkOCC_SelectableObject::ComputeSelection(")
+    System::log::Message::SendFail(TCollection_AsciiString("Error: IVtkOCC_SelectableObject::ComputeSelection(")
                       + theMode + ") has failed (" + anException.what() + ")");
     if (theMode == 0)
     {

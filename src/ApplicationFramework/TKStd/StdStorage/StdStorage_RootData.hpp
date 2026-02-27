@@ -11,7 +11,10 @@
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
+namespace app { namespace storage {
 class Storage_BaseDriver;
+}} // namespace app::storage
+
 class StdStorage_Root;
 
 class StdStorage_RootData : public Standard_Transient
@@ -21,9 +24,9 @@ class StdStorage_RootData : public Standard_Transient
 public:
   DEFINE_STANDARD_RTTIEXT(StdStorage_RootData, Standard_Transient)
 
-  Standard_EXPORT bool Read(const occ::handle<Storage_BaseDriver>& theDriver);
+  Standard_EXPORT bool Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver);
 
-  Standard_EXPORT bool Write(const occ::handle<Storage_BaseDriver>& theDriver);
+  Standard_EXPORT bool Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver);
 
   Standard_EXPORT int NumberOfRoots() const;
 

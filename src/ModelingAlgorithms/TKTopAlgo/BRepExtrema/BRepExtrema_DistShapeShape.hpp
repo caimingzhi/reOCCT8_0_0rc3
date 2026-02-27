@@ -26,7 +26,7 @@ public:
     const TopoDS_Shape&          Shape2,
     const Extrema_ExtFlag        F        = Extrema_ExtFlag_MINMAX,
     const Extrema_ExtAlgo        A        = Extrema_ExtAlgo_Grad,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT BRepExtrema_DistShapeShape(
     const TopoDS_Shape&          Shape1,
@@ -34,7 +34,7 @@ public:
     const double                 theDeflection,
     const Extrema_ExtFlag        F        = Extrema_ExtFlag_MINMAX,
     const Extrema_ExtAlgo        A        = Extrema_ExtAlgo_Grad,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   void SetDeflection(const double theDeflection) { myEps = theDeflection; }
 
@@ -42,7 +42,7 @@ public:
 
   Standard_EXPORT void LoadS2(const TopoDS_Shape& Shape1);
 
-  Standard_EXPORT bool Perform(const Message_ProgressRange& theRange = Message_ProgressRange());
+  Standard_EXPORT bool Perform(const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   bool IsDone() const { return myIsDone; }
 
@@ -93,16 +93,16 @@ private:
                       const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& Map2,
                       const NCollection_Array1<Bnd_Box>&                                   LBox1,
                       const NCollection_Array1<Bnd_Box>&                                   LBox2,
-                      const Message_ProgressRange& theRange);
+                      const System::log::Message_ProgressRange& theRange);
 
   bool DistanceVertVert(
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap1,
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap2,
-    const Message_ProgressRange&                                         theRange);
+    const System::log::Message_ProgressRange&                                         theRange);
 
   bool SolidTreatment(const TopoDS_Shape&                                                  theShape,
                       const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap,
-                      const Message_ProgressRange& theRange);
+                      const System::log::Message_ProgressRange& theRange);
 
 private:
   double                                                        myDistRef;

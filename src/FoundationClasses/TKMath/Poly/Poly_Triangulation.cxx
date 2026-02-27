@@ -385,7 +385,7 @@ void Poly_Triangulation::ComputeNormals()
   }
 }
 
-bool Poly_Triangulation::LoadDeferredData(const occ::handle<OSD_FileSystem>& theFileSystem)
+bool Poly_Triangulation::LoadDeferredData(const occ::handle<System::os::OSD_FileSystem>& theFileSystem)
 {
   if (!HasDeferredData())
   {
@@ -400,7 +400,7 @@ bool Poly_Triangulation::LoadDeferredData(const occ::handle<OSD_FileSystem>& the
 }
 
 occ::handle<Poly_Triangulation> Poly_Triangulation::DetachedLoadDeferredData(
-  const occ::handle<OSD_FileSystem>& theFileSystem) const
+  const occ::handle<System::os::OSD_FileSystem>& theFileSystem) const
 {
   if (!HasDeferredData())
   {

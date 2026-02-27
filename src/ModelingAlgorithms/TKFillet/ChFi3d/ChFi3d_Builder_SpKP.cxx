@@ -73,7 +73,7 @@ static void CompCommonPoint(ChFiDS_CommonPoint&            FilPoint,
     V = TopExp::LastVertex(arc);
   }
   FilPoint.SetVertex(V);
-  FilPoint.SetArc(Precision::PIntersection(),
+  FilPoint.SetArc(math::precision::Precision::PIntersection(),
                   arc,
                   PE.Parameter(),
                   TopAbs::Compose(arc.Orientation(), Or));
@@ -638,7 +638,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
                                 bool&                                               intl)
 {
 
-  double pitol = Precision::PIntersection();
+  double pitol = math::precision::Precision::PIntersection();
 
   NCollection_DataMap<int, occ::handle<Adaptor2d_Curve2d>> M1, M2;
   int                                                      iH1 = 0, iH2 = 0;

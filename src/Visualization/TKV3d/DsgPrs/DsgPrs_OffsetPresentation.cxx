@@ -35,7 +35,7 @@ void DsgPrs_OffsetPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   gp_Pnt Proj2 = ElCLib::Value(ElCLib::Parameter(L2, OffsetPoint), L2);
   gp_Lin L3, L4;
   bool   DimNulle = false;
-  if (!Proj1.IsEqual(Proj2, Precision::Confusion() * 100.))
+  if (!Proj1.IsEqual(Proj2, math::precision::Precision::Confusion() * 100.))
   {
     L3 = gce_MakeLin(Proj1, Proj2);
   }

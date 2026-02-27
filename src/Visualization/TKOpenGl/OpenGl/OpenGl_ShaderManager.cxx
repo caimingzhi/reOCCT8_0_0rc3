@@ -707,7 +707,7 @@ void OpenGl_ShaderManager::pushClippingState(
       }
       else if (aPlaneId >= aNbMaxPlanes)
       {
-        Message::SendWarning() << "OpenGl_ShaderManager, warning: clipping planes limit ("
+        System::log::Message::SendWarning() << "OpenGl_ShaderManager, warning: clipping planes limit ("
                                << aNbMaxPlanes << ") has been exceeded";
         break;
       }

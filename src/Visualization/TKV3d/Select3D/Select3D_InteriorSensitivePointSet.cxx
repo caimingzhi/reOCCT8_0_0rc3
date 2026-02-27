@@ -24,7 +24,7 @@ namespace
       double aRes = myPlane.x() * thePnt.X() + myPlane.y() * thePnt.Y() + myPlane.z() * thePnt.Z()
                     + myPlane.w();
 
-      return aRes < Precision::Confusion();
+      return aRes < math::precision::Precision::Confusion();
     }
 
     void MakePlane(const gp_Pnt& thePnt1, const gp_Pnt& thePnt2, const gp_Pnt& thePnt3)
@@ -95,7 +95,7 @@ Select3D_InteriorSensitivePointSet::Select3D_InteriorSensitivePointSet(
       const gp_XYZ& aVec1   = aPnt1.XYZ() - aPnt2.XYZ();
       const gp_XYZ& aVec2   = aPnt3.XYZ() - aPnt2.XYZ();
       double        anAngle = aVec1.Dot(aVec2);
-      if (!aPlane.Contains(thePoints.Value(aPntIter)) || anAngle > Precision::Confusion())
+      if (!aPlane.Contains(thePoints.Value(aPntIter)) || anAngle > math::precision::Precision::Confusion())
       {
 
         int                                      anUpperBound = aPntIter - aStartIdx - 1;

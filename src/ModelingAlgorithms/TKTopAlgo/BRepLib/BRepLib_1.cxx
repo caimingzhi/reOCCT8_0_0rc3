@@ -126,10 +126,10 @@ bool BRepLib::FindValidRange(const Adaptor3d_Curve& theCurve,
                              double&                theFirst,
                              double&                theLast)
 {
-  if (theParV2 - theParV1 < Precision::PConfusion())
+  if (theParV2 - theParV1 < math::precision::Precision::PConfusion())
     return false;
 
-  bool isInfParV1 = Precision::IsInfinite(theParV1), isInfParV2 = Precision::IsInfinite(theParV2);
+  bool isInfParV1 = math::precision::Precision::IsInfinite(theParV1), isInfParV2 = math::precision::Precision::IsInfinite(theParV2);
 
   double aMaxPar = 0.0;
   if (!isInfParV1)
@@ -138,7 +138,7 @@ bool BRepLib::FindValidRange(const Adaptor3d_Curve& theCurve,
     aMaxPar = std::max(aMaxPar, std::abs(theParV2));
 
   double anEps = std::max(std::max(theCurve.Resolution(theTolE) * 0.1, Epsilon(aMaxPar)),
-                          Precision::PConfusion());
+                          math::precision::Precision::PConfusion());
 
   if (isInfParV1)
     theFirst = theParV1;
@@ -191,7 +191,7 @@ bool BRepLib::FindValidRange(const TopoDS_Edge& theEdge, double& theFirst, doubl
     return false;
   BRepAdaptor_Curve anAC(theEdge);
   double            aParV[2] = {anAC.FirstParameter(), anAC.LastParameter()};
-  if (aParV[1] - aParV[0] < Precision::PConfusion())
+  if (aParV[1] - aParV[0] < math::precision::Precision::PConfusion())
     return false;
 
   TopoDS_Vertex aV[2];
@@ -199,7 +199,7 @@ bool BRepLib::FindValidRange(const TopoDS_Edge& theEdge, double& theFirst, doubl
 
   double aTolE = BRep_Tool::Tolerance(theEdge);
 
-  double aTolV[2] = {Precision::Confusion(), Precision::Confusion()};
+  double aTolV[2] = {math::precision::Precision::Confusion(), math::precision::Precision::Confusion()};
   gp_Pnt aPntV[2];
   for (int i = 0; i < 2; i++)
   {
@@ -208,7 +208,7 @@ bool BRepLib::FindValidRange(const TopoDS_Edge& theEdge, double& theFirst, doubl
       aTolV[i] += BRep_Tool::Tolerance(aV[i]);
       aPntV[i] = BRep_Tool::Pnt(aV[i]);
     }
-    else if (!Precision::IsInfinite(aParV[i]))
+    else if (!math::precision::Precision::IsInfinite(aParV[i]))
     {
       aTolV[i] += aTolE;
       aPntV[i] = anAC.Value(aParV[i]);

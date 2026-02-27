@@ -43,7 +43,7 @@ void ProjLib_Cone::Project(const gp_Lin& L)
   double aDeltaV = 0.0;
 
   double U, V;
-  if (aPnt.IsEqual(anApex, Precision::Confusion()))
+  if (aPnt.IsEqual(anApex, math::precision::Precision::Confusion()))
   {
 
     aPnt.Translate(L.Direction().XYZ());
@@ -58,7 +58,7 @@ void ProjLib_Cone::Project(const gp_Lin& L)
   ElSLib::ConeD1(U, V, myCone.Position(), myCone.RefRadius(), myCone.SemiAngle(), P, Vu, Vv);
 
   gp_Dir Dv(Vv);
-  if (Dv.IsParallel(L.Direction(), Precision::Angular()))
+  if (Dv.IsParallel(L.Direction(), math::precision::Precision::Angular()))
   {
 
     myType = GeomAbs_Line;
@@ -80,7 +80,7 @@ void ProjLib_Cone::Project(const gp_Circ& C)
   gp_Ax3 ConePos = myCone.Position();
   gp_Ax3 CircPos = C.Position();
 
-  if (!ConePos.Direction().IsParallel(CircPos.Direction(), Precision::Angular()))
+  if (!ConePos.Direction().IsParallel(CircPos.Direction(), math::precision::Precision::Angular()))
   {
     isDone = false;
     return;

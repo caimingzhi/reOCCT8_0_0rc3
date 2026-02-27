@@ -237,7 +237,7 @@ static void BuildDomains(TopoDS_Face&                           myFace,
     BRepAdaptor_Surface S(F, false);
     double              Tol = BRep_Tool::Tolerance(F);
 
-    BRepTopAdaptor_FClass2d CL(F, Precision::Confusion());
+    BRepTopAdaptor_FClass2d CL(F, math::precision::Precision::Confusion());
 
     NCollection_List<TopoDS_Shape>::Iterator itW(LOW);
     while (itW.More())
@@ -249,7 +249,7 @@ static void BuildDomains(TopoDS_Face&                           myFace,
       gp_Pnt2d        PV;
       gp_Pnt          P3d = BRep_Tool::Pnt(V);
       Extrema_ExtPS   ExtPS(P3d, S, Tol, Tol, Extrema_ExtFlag_MIN);
-      double          Dist2Min = Precision::Infinite();
+      double          Dist2Min = math::precision::Precision::Infinite();
       double          Found    = false;
       for (int ie = 1; ie <= ExtPS.NbExt(); ie++)
       {
@@ -403,7 +403,7 @@ void BRepOffsetAPI_MakeOffset::Perform(const double Offset, const double Alt)
   }
 }
 
-void BRepOffsetAPI_MakeOffset::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_MakeOffset::Build(const System::log::Message_ProgressRange&)
 {
   Done();
 }

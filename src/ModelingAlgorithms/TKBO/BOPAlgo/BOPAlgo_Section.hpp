@@ -21,10 +21,10 @@ public:
 protected:
   Standard_EXPORT void CheckData() override;
 
-  Standard_EXPORT virtual void BuildSection(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void BuildSection(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void PerformInternal1(const BOPAlgo_PaveFiller&    thePF,
-                                        const Message_ProgressRange& theRange) override;
+                                        const System::log::Message_ProgressRange& theRange) override;
 
 protected:
   enum BOPAlgo_PIOperation

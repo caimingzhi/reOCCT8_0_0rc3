@@ -69,7 +69,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -100,14 +100,14 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_VertexFace> BOPAlgo_VectorOfVertexFace;
 
-void BOPAlgo_PaveFiller::PerformVF(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformVF(const System::log::Message_ProgressRange& theRange)
 {
   myIterator->Initialize(TopAbs_VERTEX, TopAbs_FACE);
   int iSize = myIterator->ExpectedLength();
 
   int nV, nF;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
   if (myGlue == BOPAlgo_GlueFull)
   {
 
@@ -192,7 +192,7 @@ void BOPAlgo_PaveFiller::PerformVF(const Message_ProgressRange& theRange)
   }
 
   aNbVF = aVVF.Length();
-  Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Vertex-Face intersection", aNbVF);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Vertex-Face intersection", aNbVF);
   for (k = 0; k < aNbVF; k++)
   {
     BOPAlgo_VertexFace& aVertexFace = aVVF.ChangeValue(k);

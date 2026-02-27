@@ -38,7 +38,7 @@ public:
   Standard_EXPORT void Compute3d(const bool With3d = true);
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT bool IsDone() const override;
 

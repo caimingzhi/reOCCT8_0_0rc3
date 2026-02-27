@@ -429,7 +429,7 @@ void BRepFill_OffsetWire::Perform(const double Offset, const double Alt)
         occ::handle<Geom_Curve> G3d = BRep_Tool::Curve(TopoDS::Edge(anE), f, l);
         GeomAdaptor_Curve       AC(G3d, f, l);
 
-        PerformCurve(Parameters, Points, AC, aDefl, f, l, Precision::Confusion(), 2);
+        PerformCurve(Parameters, Points, AC, aDefl, f, l, math::precision::Precision::Confusion(), 2);
 
         int NPnts = Points.Length();
         if (NPnts > 2)
@@ -620,7 +620,7 @@ void BRepFill_OffsetWire::PerformWithBiLo(const TopoDS_Face&              Spine,
   }
   myMap.Clear();
 
-  if (std::abs(myOffset) < Precision::Confusion())
+  if (std::abs(myOffset) < math::precision::Precision::Confusion())
   {
     Compute(mySpine, myShape, myMap, Alt);
     myIsDone = true;
@@ -790,7 +790,7 @@ void BRepFill_OffsetWire::PerformWithBiLo(const TopoDS_Face&              Spine,
       gp_Pnt2d P2 = Bisec.Value()->Value(Params.Value(s).X());
       gp_Pnt   PVC(P2.X(), P2.Y(), 0.);
 
-      myBuilder.UpdateVertex(VC, PVC, Precision::Confusion());
+      myBuilder.UpdateVertex(VC, PVC, math::precision::Precision::Confusion());
       Vertices.Append(VC);
     }
     if (StartOnEdge)
@@ -946,7 +946,7 @@ void BRepFill_OffsetWire::PerformWithBiLo(const TopoDS_Face&              Spine,
     {
       gp_Pnt P = BRep_Tool::Pnt(V);
       P        = RefPlane->Value(P.X(), P.Y());
-      myBuilder.UpdateVertex(V, P, Precision::Confusion());
+      myBuilder.UpdateVertex(V, P, math::precision::Precision::Confusion());
     }
   }
 
@@ -1120,7 +1120,7 @@ void BRepFill_OffsetWire::UpdateDetromp(
     {
       gp_Pnt2d Pf = Bis->Value(Bis->FirstParameter());
       gp_Pnt2d Pl = Bis->Value(Bis->LastParameter());
-      ForceAdd    = Pf.Distance(Pl) <= Precision::Confusion();
+      ForceAdd    = Pf.Distance(Pl) <= math::precision::Precision::Confusion();
     }
 
     U1 = Bis->FirstParameter();
@@ -1156,7 +1156,7 @@ void BRepFill_OffsetWire::UpdateDetromp(
     U2 = Bis->LastParameter();
     if (!EOnE)
     {
-      if (!Precision::IsInfinite(U2))
+      if (!math::precision::Precision::IsInfinite(U2))
       {
         gp_Pnt2d P = Bis->Value((U2 + U1) * 0.5);
         if (!Trim.IsInside(P) || ForceAdd)
@@ -1744,8 +1744,8 @@ void CutCurve(const occ::handle<Geom2d_TrimmedCurve>&          C,
   double                           UF, UL, UC;
   double                           Step;
   gp_Pnt2d                         PF, PL, PC;
-  constexpr double                 PTol  = Precision::PConfusion() * 10;
-  constexpr double                 Tol   = Precision::Confusion() * 10;
+  constexpr double                 PTol  = math::precision::Precision::PConfusion() * 10;
+  constexpr double                 Tol   = math::precision::Precision::Confusion() * 10;
   bool                             YaCut = false;
 
   UF = C->FirstParameter();
@@ -1857,7 +1857,7 @@ void MakeOffset(const TopoDS_Edge&                                              
     double    Crossed = Xd.X() * Yd.Y() - Xd.Y() * Yd.X();
     double    Signe   = (Crossed > 0.) ? -1. : 1.;
 
-    if (anOffset * Signe < AC.Circle().Radius() - Precision::Confusion())
+    if (anOffset * Signe < AC.Circle().Radius() - math::precision::Precision::Confusion())
     {
 
       occ::handle<Geom2dAdaptor_Curve> AHC = new Geom2dAdaptor_Curve(G2d);
@@ -1904,14 +1904,14 @@ void MakeOffset(const TopoDS_Edge&                                              
       if (theJoinType == GeomAbs_Arc)
         f -= Delta;
       else
-        f = -Precision::Infinite();
+        f = -math::precision::Precision::Infinite();
     }
     if (ToExtendLastPar)
     {
       if (theJoinType == GeomAbs_Arc)
         l += Delta;
       else
-        l = Precision::Infinite();
+        l = math::precision::Precision::Infinite();
     }
     G2dOC = new Geom2d_TrimmedCurve(CC, f, l);
   }
@@ -1942,7 +1942,7 @@ bool VertexFromNode(const occ::handle<MAT_Node>&                              aN
                     TopoDS_Vertex&                                            VN)
 {
   bool             Status;
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
   BRep_Builder     B;
 
   if (!aNode->Infinite() && std::abs(aNode->Distance() - Offset) < Tol)
@@ -1956,7 +1956,7 @@ bool VertexFromNode(const occ::handle<MAT_Node>&                              aN
     {
       gp_Pnt P(PN.X(), PN.Y(), 0.);
       B.MakeVertex(VN);
-      B.UpdateVertex(VN, P, Precision::Confusion());
+      B.UpdateVertex(VN, P, math::precision::Precision::Confusion());
       MapNodeVertex.Bind(aNode, VN);
     }
     Status = true;
@@ -2032,7 +2032,7 @@ void TrimEdge(
 
   if (!BRep_Tool::Degenerated(E))
   {
-    constexpr double aParTol = 2.0 * Precision::PConfusion();
+    constexpr double aParTol = 2.0 * math::precision::Precision::PConfusion();
     for (int k = 1; k < TheVer.Length(); k++)
     {
       if (TheVer.Value(k).IsSame(TheVer.Value(k + 1))
@@ -2236,7 +2236,7 @@ static void CheckBadEdges(const TopoDS_Face&              Spine,
 {
 
   TopoDS_Face      F       = TopoDS::Face(Spine.Oriented(TopAbs_FORWARD));
-  constexpr double eps     = Precision::Confusion();
+  constexpr double eps     = math::precision::Precision::Confusion();
   double           LimCurv = 1. / Offset;
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMap;
@@ -2494,7 +2494,7 @@ bool CheckSmallParamOnEdge(const TopoDS_Edge& anEdge)
       ((occ::down_cast<BRep_TEdge>(anEdge.TShape()))->Curves()).First();
     double f = (occ::down_cast<BRep_GCurve>(CRep))->First();
     double l = (occ::down_cast<BRep_GCurve>(CRep))->Last();
-    if (std::abs(l - f) < Precision::PConfusion())
+    if (std::abs(l - f) < math::precision::Precision::PConfusion())
       return false;
   }
   return true;

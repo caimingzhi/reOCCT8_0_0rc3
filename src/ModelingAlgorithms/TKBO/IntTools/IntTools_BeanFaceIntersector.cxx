@@ -95,8 +95,8 @@ IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector()
       myIsDone(false),
       myMinSqDistance(RealLast())
 {
-  myCriteria        = Precision::Confusion();
-  myCurveResolution = Precision::PConfusion();
+  myCriteria        = math::precision::Precision::Confusion();
+  myCurveResolution = math::precision::Precision::PConfusion();
 }
 
 IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const TopoDS_Edge& theEdge,
@@ -176,7 +176,7 @@ void IntTools_BeanFaceIntersector::Init(const TopoDS_Edge& theEdge, const TopoDS
   myBeanTolerance = BRep_Tool::Tolerance(theEdge);
   myFaceTolerance = BRep_Tool::Tolerance(theFace);
 
-  myCriteria        = myBeanTolerance + myFaceTolerance + Precision::Confusion();
+  myCriteria        = myBeanTolerance + myFaceTolerance + math::precision::Precision::Confusion();
   myCurveResolution = myCurve.Resolution(myCriteria);
 
   SetSurfaceParameters(mySurface.FirstUParameter(),
@@ -286,8 +286,8 @@ void IntTools_BeanFaceIntersector::Perform()
   }
 
   bool bLocalize =
-    (!Precision::IsInfinite(myUMinParameter) && !Precision::IsInfinite(myUMaxParameter)
-     && !Precision::IsInfinite(myVMinParameter) && !Precision::IsInfinite(myVMaxParameter));
+    (!math::precision::Precision::IsInfinite(myUMinParameter) && !math::precision::Precision::IsInfinite(myUMaxParameter)
+     && !math::precision::Precision::IsInfinite(myVMinParameter) && !math::precision::Precision::IsInfinite(myVMaxParameter));
   bLocalize =
     bLocalize
     && (mySurface.GetType() == GeomAbs_BezierSurface || mySurface.GetType() == GeomAbs_OtherSurface
@@ -318,7 +318,7 @@ void IntTools_BeanFaceIntersector::Perform()
     if (iLastRange > 0)
     {
       IntTools_Range& aLastRange = myResults.ChangeValue(iLastRange);
-      if (std::abs(aRange.First() - aLastRange.Last()) > Precision::PConfusion())
+      if (std::abs(aRange.First() - aLastRange.Last()) > math::precision::Precision::PConfusion())
       {
         myResults.Append(aRange);
       }
@@ -519,7 +519,7 @@ void IntTools_BeanFaceIntersector::ComputeAroundExactIntersection()
     if (anExactIntersector.NbPoints() > 1)
     {
 
-      myCriteria        = 3 * Precision::Confusion();
+      myCriteria        = 3 * math::precision::Precision::Confusion();
       myCurveResolution = myCurve.Resolution(myCriteria);
     }
 
@@ -677,7 +677,7 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
     }
 
     double anAngle = aDir.Angle(surfPlane.Axis().Direction());
-    if (anAngle > Precision::Angular())
+    if (anAngle > math::precision::Precision::Angular())
       return false;
 
     hasIntersection = false;
@@ -696,7 +696,7 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
     if (aCT == GeomAbs_Line)
     {
       gp_Lin aLin = myCurve.Line();
-      if (!aLin.Direction().IsParallel(aCylDir, Precision::Angular()))
+      if (!aLin.Direction().IsParallel(aCylDir, math::precision::Precision::Angular()))
         return false;
 
       hasIntersection = false;
@@ -710,7 +710,7 @@ bool IntTools_BeanFaceIntersector::FastComputeAnalytic()
       gp_Circ aCircle = myCurve.Circle();
 
       double anAngle = aCylDir.Angle(aCircle.Axis().Direction());
-      if (anAngle > Precision::Angular())
+      if (anAngle > math::precision::Precision::Angular())
         return false;
 
       double aDistLoc = gp_Lin(aCylAxis).Distance(aCircle.Location());
@@ -831,7 +831,7 @@ void IntTools_BeanFaceIntersector::ComputeLinePlane()
 void IntTools_BeanFaceIntersector::ComputeUsingExtremum()
 {
   double Tol, af, al;
-  Tol                            = Precision::PConfusion();
+  Tol                            = math::precision::Precision::PConfusion();
   occ::handle<Geom_Curve> aCurve = BRep_Tool::Curve(myCurve.Edge(), af, al);
 
   for (int i = 1; i <= myRangeManager.Length(); i++)
@@ -844,7 +844,7 @@ void IntTools_BeanFaceIntersector::ComputeUsingExtremum()
     double         anarg1      = aParamRange.First();
     double         anarg2      = aParamRange.Last();
 
-    if (anarg2 - anarg1 < Precision::PConfusion())
+    if (anarg2 - anarg1 < math::precision::Precision::PConfusion())
     {
 
       if (((i > 1) && (myRangeManager.Flag(i - 1) == 2))
@@ -866,7 +866,7 @@ void IntTools_BeanFaceIntersector::ComputeUsingExtremum()
                        Tol);
     double first = aCurve->FirstParameter(), last = aCurve->LastParameter();
     if (aCurve->IsPeriodic()
-        || (anarg1 >= first - Precision::PConfusion() && anarg2 <= last + Precision::PConfusion()))
+        || (anarg1 >= first - math::precision::Precision::PConfusion() && anarg2 <= last + math::precision::Precision::PConfusion()))
     {
 
       anExtCS.Perform(aGACurve, anarg1, anarg2);
@@ -1657,10 +1657,10 @@ bool IntTools_BeanFaceIntersector::LocalizeSolutions(
 
 bool IntTools_BeanFaceIntersector::ComputeLocalized()
 {
-  double Tol = Precision::PConfusion();
+  double Tol = math::precision::Precision::PConfusion();
 
   IntTools_SurfaceRangeSample        aSurfaceRange(0, 0, 0, 0);
-  double                             dMinU = 10. * Precision::PConfusion();
+  double                             dMinU = 10. * math::precision::Precision::PConfusion();
   double                             dMinV = dMinU;
   IntTools_SurfaceRangeLocalizeData  aSurfaceDataInit(3, 3, dMinU, dMinV);
   IntTools_SurfaceRangeLocalizeData& aSurfaceData = myContext->SurfaceData(mySurface.Face());
@@ -1710,7 +1710,7 @@ bool IntTools_BeanFaceIntersector::ComputeLocalized()
 
   Bnd_Box EBox;
 
-  BndLib_Add3dCurve::Add(*myCurve.Trim(myFirstParameter, myLastParameter, Precision::PConfusion()),
+  BndLib_Add3dCurve::Add(*myCurve.Trim(myFirstParameter, myLastParameter, math::precision::Precision::PConfusion()),
                          myBeanTolerance,
                          EBox);
 

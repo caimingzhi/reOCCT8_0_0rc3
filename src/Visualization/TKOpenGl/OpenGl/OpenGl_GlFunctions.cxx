@@ -1555,7 +1555,7 @@ bool OpenGl_GlFunctions::debugPrintError(const char* theName)
   const int anErr = ::glGetError();
   if (anErr != GL_NO_ERROR)
   {
-    Message::SendFail() << theName
+    System::log::Message::SendFail() << theName
                         << "(), unhandled GL error: " << OpenGl_Context::FormatGlError(anErr);
 
     switch (anErr)
@@ -1668,7 +1668,7 @@ void OpenGl_GlFunctions::readGlVersion(int& theGlVerMajor, int& theGlVerMinor)
   {
     if (!toCheckVer3 || ::strstr(aVerStr, "WebGL 1.0") != NULL)
     {
-      Message::SendWarning()
+      System::log::Message::SendWarning()
         << "Warning! OpenGL context reports version " << theGlVerMajor << "." << theGlVerMinor
         << " but WebGL 2.0 was unavailable\n"
         << "Fallback to OpenGL ES 2.0 will be used instead of reported version";
@@ -2862,7 +2862,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     has45 = hasGetnTexImage;
     if (hasGetnTexImage)
     {
-      Message::SendTrace()
+      System::log::Message::SendTrace()
         << "Warning! glGetnCompressedTexImage function required by OpenGL 4.5 specs is not found.\n"
            "A non-standard glGetnCompressedTexImageARB fallback will be used instead.\n"
            "Please report this issue to OpenGL driver vendor '"
@@ -2895,7 +2895,7 @@ void OpenGl_GlFunctions::load(OpenGl_Context& theCtx, bool theIsCoreProfile)
     has46 = hasIndParams;
     if (hasIndParams)
     {
-      Message::SendTrace()
+      System::log::Message::SendTrace()
         << "Warning! glMultiDrawArraysIndirectCount function required by OpenGL 4.6 specs is not "
            "found.\n"
            "A non-standard glMultiDrawArraysIndirectCountARB fallback will be used instead.\n"

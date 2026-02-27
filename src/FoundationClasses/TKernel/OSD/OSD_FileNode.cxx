@@ -22,25 +22,25 @@
 
 const OSD_WhoAmI Iam = OSD_WFileNode;
 
-OSD_FileNode::OSD_FileNode() = default;
+System::os::OSD_FileNode::OSD_FileNode() = default;
 
-OSD_FileNode::OSD_FileNode(const OSD_Path& Name)
+System::os::OSD_FileNode::OSD_FileNode(const System::os::OSD_Path& Name)
 {
   SetPath(Name);
 }
 
-void OSD_FileNode::Path(OSD_Path& Name) const
+void System::os::OSD_FileNode::Path(System::os::OSD_Path& Name) const
 {
   Name = myPath;
 }
 
-void OSD_FileNode::SetPath(const OSD_Path& Name)
+void System::os::OSD_FileNode::SetPath(const System::os::OSD_Path& Name)
 {
   myError.Reset();
   myPath = Name;
 }
 
-bool OSD_FileNode::Exists()
+bool System::os::OSD_FileNode::Exists()
 {
   int status;
 
@@ -54,7 +54,7 @@ bool OSD_FileNode::Exists()
     return (false);
 }
 
-void OSD_FileNode::Remove()
+void System::os::OSD_FileNode::Remove()
 {
 
   TCollection_AsciiString aBuffer;
@@ -95,7 +95,7 @@ void OSD_FileNode::Remove()
   return;
 }
 
-void OSD_FileNode::Move(const OSD_Path& NewPath)
+void System::os::OSD_FileNode::Move(const System::os::OSD_Path& NewPath)
 {
   int                     status;
   TCollection_AsciiString thisPath;
@@ -151,7 +151,7 @@ int static copy_file(const char* src, const char* trg)
   return err;
 }
 
-void OSD_FileNode::Copy(const OSD_Path& ToPath)
+void System::os::OSD_FileNode::Copy(const System::os::OSD_Path& ToPath)
 {
   int                     status;
   TCollection_AsciiString second_name;
@@ -168,9 +168,9 @@ void OSD_FileNode::Copy(const OSD_Path& ToPath)
   #endif
 }
 
-OSD_Protection OSD_FileNode::Protection()
+System::os::OSD_Protection System::os::OSD_FileNode::Protection()
 {
-  OSD_Protection thisProt;
+  System::os::OSD_Protection thisProt;
   struct stat    myStat;
   int            status;
   int            s, u, g, w;
@@ -213,7 +213,7 @@ OSD_Protection OSD_FileNode::Protection()
   return (thisProt);
 }
 
-void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
+void System::os::OSD_FileNode::SetProtection(const System::os::OSD_Protection& Prot)
 {
   int status;
 
@@ -224,7 +224,7 @@ void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
     myError.SetValue(errno, Iam, "SetProtection");
 }
 
-Quantity_Date OSD_FileNode::CreationMoment()
+Quantity_Date System::os::OSD_FileNode::CreationMoment()
 {
 
   Quantity_Date result;
@@ -251,7 +251,7 @@ Quantity_Date OSD_FileNode::CreationMoment()
   return (result);
 }
 
-Quantity_Date OSD_FileNode::AccessMoment()
+Quantity_Date System::os::OSD_FileNode::AccessMoment()
 {
 
   Quantity_Date result;
@@ -278,22 +278,22 @@ Quantity_Date OSD_FileNode::AccessMoment()
   return (result);
 }
 
-void OSD_FileNode::Reset()
+void System::os::OSD_FileNode::Reset()
 {
   myError.Reset();
 }
 
-bool OSD_FileNode::Failed() const
+bool System::os::OSD_FileNode::Failed() const
 {
   return (myError.Failed());
 }
 
-void OSD_FileNode::Perror()
+void System::os::OSD_FileNode::Perror()
 {
   myError.Perror();
 }
 
-int OSD_FileNode::Error() const
+int System::os::OSD_FileNode::Error() const
 {
   return (myError.Error());
 }
@@ -320,38 +320,38 @@ int OSD_FileNode::Error() const
 
   #ifndef OCCT_UWP
 
-PSECURITY_DESCRIPTOR __fastcall _osd_wnt_protection_to_sd(const OSD_Protection&,
+PSECURITY_DESCRIPTOR __fastcall _osd_wnt_protection_to_sd(const System::os::OSD_Protection&,
                                                           BOOL,
                                                           const wchar_t*);
-BOOL __fastcall _osd_wnt_sd_to_protection(PSECURITY_DESCRIPTOR pSD, OSD_Protection& prot, BOOL);
+BOOL __fastcall _osd_wnt_sd_to_protection(PSECURITY_DESCRIPTOR pSD, System::os::OSD_Protection& prot, BOOL);
   #endif
 int __fastcall _get_file_type(const char*, HANDLE);
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 
 static BOOL __fastcall _get_file_time(const wchar_t*, LPSYSTEMTIME, BOOL);
 static void __fastcall _test_raise(TCollection_AsciiString, const char*);
 
-OSD_FileNode::OSD_FileNode() {}
+System::os::OSD_FileNode::OSD_FileNode() {}
 
-OSD_FileNode::OSD_FileNode(const OSD_Path& Name)
+System::os::OSD_FileNode::OSD_FileNode(const System::os::OSD_Path& Name)
 {
   myPath = Name;
 }
 
-void OSD_FileNode::Path(OSD_Path& Name) const
+void System::os::OSD_FileNode::Path(System::os::OSD_Path& Name) const
 {
 
   Name = myPath;
 }
 
-void OSD_FileNode::SetPath(const OSD_Path& Name)
+void System::os::OSD_FileNode::SetPath(const System::os::OSD_Path& Name)
 {
 
   myPath = Name;
 }
 
-bool OSD_FileNode::Exists()
+bool System::os::OSD_FileNode::Exists()
 {
   myError.Reset();
 
@@ -383,7 +383,7 @@ bool OSD_FileNode::Exists()
   return retVal;
 }
 
-void OSD_FileNode::Remove()
+void System::os::OSD_FileNode::Remove()
 {
 
   TCollection_AsciiString fName;
@@ -409,11 +409,11 @@ void OSD_FileNode::Remove()
       break;
 
     default:
-      RAISE("OSD_FileNode :: Remove (): invalid file type - neither file nor directory");
+      RAISE("System::os::OSD_FileNode :: Remove (): invalid file type - neither file nor directory");
   }
 }
 
-void OSD_FileNode::Move(const OSD_Path& NewPath)
+void System::os::OSD_FileNode::Move(const System::os::OSD_Path& NewPath)
 {
 
   TCollection_AsciiString fName;
@@ -445,11 +445,11 @@ void OSD_FileNode::Move(const OSD_Path& NewPath)
       break;
 
     default:
-      RAISE("OSD_FileNode :: Move (): invalid file type - neither file nor directory");
+      RAISE("System::os::OSD_FileNode :: Move (): invalid file type - neither file nor directory");
   }
 }
 
-void OSD_FileNode::Copy(const OSD_Path& ToPath)
+void System::os::OSD_FileNode::Copy(const System::os::OSD_Path& ToPath)
 {
 
   TCollection_AsciiString fName;
@@ -483,16 +483,16 @@ void OSD_FileNode::Copy(const OSD_Path& ToPath)
       break;
 
     default:
-      RAISE("OSD_FileNode :: Copy (): invalid file type - neither file nor directory");
+      RAISE("System::os::OSD_FileNode :: Copy (): invalid file type - neither file nor directory");
   }
 }
 
   #ifndef OCCT_UWP
 
-OSD_Protection OSD_FileNode::Protection()
+System::os::OSD_Protection System::os::OSD_FileNode::Protection()
 {
 
-  OSD_Protection          retVal;
+  System::os::OSD_Protection          retVal;
   TCollection_AsciiString fName;
   PSECURITY_DESCRIPTOR    pSD;
 
@@ -518,7 +518,7 @@ OSD_Protection OSD_FileNode::Protection()
   return retVal;
 }
 
-void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
+void System::os::OSD_FileNode::SetProtection(const System::os::OSD_Protection& Prot)
 {
 
   TCollection_AsciiString fName;
@@ -546,7 +546,7 @@ void OSD_FileNode::SetProtection(const OSD_Protection& Prot)
 
     #include <io.h>
 
-OSD_Protection OSD_FileNode::Protection()
+System::os::OSD_Protection System::os::OSD_FileNode::Protection()
 {
   TCollection_AsciiString fName;
 
@@ -561,15 +561,15 @@ OSD_Protection OSD_FileNode::Protection()
   else if (_waccess_s(fNameW.ToWideString(), 4))
     aProt = OSD_R;
 
-  OSD_Protection retVal(OSD_RWXD, aProt, aProt, OSD_None);
+  System::os::OSD_Protection retVal(OSD_RWXD, aProt, aProt, OSD_None);
   return retVal;
 }
 
-void OSD_FileNode::SetProtection(const OSD_Protection&) {}
+void System::os::OSD_FileNode::SetProtection(const System::os::OSD_Protection&) {}
 
   #endif
 
-Quantity_Date OSD_FileNode::AccessMoment()
+Quantity_Date System::os::OSD_FileNode::AccessMoment()
 {
 
   Quantity_Date           retVal;
@@ -604,7 +604,7 @@ Quantity_Date OSD_FileNode::AccessMoment()
   return retVal;
 }
 
-Quantity_Date OSD_FileNode::CreationMoment()
+Quantity_Date System::os::OSD_FileNode::CreationMoment()
 {
 
   Quantity_Date           retVal;
@@ -639,31 +639,31 @@ Quantity_Date OSD_FileNode::CreationMoment()
   return retVal;
 }
 
-bool OSD_FileNode::Failed() const
+bool System::os::OSD_FileNode::Failed() const
 {
 
   return myError.Failed();
 }
 
-void OSD_FileNode::Reset()
+void System::os::OSD_FileNode::Reset()
 {
 
   myError.Reset();
 }
 
-void OSD_FileNode::Perror()
+void System::os::OSD_FileNode::Perror()
 {
 
   myError.Perror();
 }
 
-int OSD_FileNode::Error() const
+int System::os::OSD_FileNode::Error() const
 {
 
   return myError.Error();
 }
 
-void _osd_wnt_set_error(OSD_Error& err, int who, ...)
+void _osd_wnt_set_error(System::os::OSD_Error& err, int who, ...)
 {
 
   DWORD errCode;
@@ -761,7 +761,7 @@ static void __fastcall _test_raise(TCollection_AsciiString fName, const char* st
 {
   if (fName.IsEmpty())
   {
-    TCollection_AsciiString buff = "OSD_FileNode :: ";
+    TCollection_AsciiString buff = "System::os::OSD_FileNode :: ";
     buff += str;
     buff += " (): wrong access";
 

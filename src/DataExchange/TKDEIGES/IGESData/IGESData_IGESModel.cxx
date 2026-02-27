@@ -260,7 +260,7 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
   if (del[0] == del[1])
   {
-    Message_Msg Msg40("XSTEP_40");
+    System::log::Message_Msg Msg40("XSTEP_40");
     ach->SendFail(Msg40);
   }
   for (int i = 0; i <= 1; i++)
@@ -272,13 +272,13 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
       if (i == 0)
       {
-        Message_Msg Msg41("XSTEP_41");
+        System::log::Message_Msg Msg41("XSTEP_41");
         ach->SendFail(Msg41);
       }
 
       else
       {
-        Message_Msg Msg42("XSTEP_42");
+        System::log::Message_Msg Msg42("XSTEP_42");
         ach->SendFail(Msg42);
       }
     }
@@ -286,31 +286,31 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
   if (theheader.MaxPower10Single() <= 0)
   {
-    Message_Msg Msg43("XSTEP_43");
+    System::log::Message_Msg Msg43("XSTEP_43");
     ach->SendFail(Msg43);
   }
 
   if (theheader.MaxDigitsSingle() <= 0)
   {
-    Message_Msg Msg44("XSTEP_44");
+    System::log::Message_Msg Msg44("XSTEP_44");
     ach->SendFail(Msg44);
   }
 
   if (theheader.MaxPower10Double() <= 0)
   {
-    Message_Msg Msg45("XSTEP_45");
+    System::log::Message_Msg Msg45("XSTEP_45");
     ach->SendFail(Msg45);
   }
 
   if (theheader.MaxDigitsDouble() <= 0)
   {
-    Message_Msg Msg46("XSTEP_46");
+    System::log::Message_Msg Msg46("XSTEP_46");
     ach->SendFail(Msg46);
   }
 
   if (theheader.Scale() <= 0.)
   {
-    Message_Msg Msg47("XSTEP_47");
+    System::log::Message_Msg Msg47("XSTEP_47");
     ach->SendFail(Msg47);
   }
 
@@ -318,7 +318,7 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
   if (unf < 1 || unf > 11)
   {
-    Message_Msg Msg48("XSTEP_48");
+    System::log::Message_Msg Msg48("XSTEP_48");
     ach->SendFail(Msg48);
   }
 
@@ -327,7 +327,7 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
     if (unf == 3)
     {
-      Message_Msg Msg50("XSTEP_50");
+      System::log::Message_Msg Msg50("XSTEP_50");
       ach->SendFail(Msg50);
     }
   }
@@ -371,14 +371,14 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
         unok = !strcmp(unm, "UIN");
         break;
       default:
-        Message_Msg Msg48("XSTEP_48");
+        System::log::Message_Msg Msg48("XSTEP_48");
         ach->SendFail(Msg48);
         break;
     }
 
     if (!unok)
     {
-      Message_Msg Msg51("XSTEP_51");
+      System::log::Message_Msg Msg51("XSTEP_51");
       ach->SendFail(Msg51);
     }
   }
@@ -387,21 +387,21 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
   if (theheader.Resolution() <= 0.)
   {
-    Message_Msg Msg52("XSTEP_52");
+    System::log::Message_Msg Msg52("XSTEP_52");
     ach->SendFail(Msg52);
   }
 
   if (theheader.IGESVersion() < 1
       || theheader.IGESVersion() > IGESData_BasicEditor::IGESVersionMax())
   {
-    Message_Msg Msg53("XSTEP_53");
+    System::log::Message_Msg Msg53("XSTEP_53");
     ach->SendWarning(Msg53);
   }
 
   if (theheader.DraftingStandard() < 0
       || theheader.DraftingStandard() > IGESData_BasicEditor::DraftingMax())
   {
-    Message_Msg Msg54("XSTEP_54");
+    System::log::Message_Msg Msg54("XSTEP_54");
     ach->SendWarning(Msg54);
   }
 
@@ -410,7 +410,7 @@ void IGESData_IGESModel::VerifyCheck(occ::handle<Interface_Check>& ach) const
 
     if (!theheader.HasLastChangeDate())
     {
-      Message_Msg Msg55("XSTEP_55");
+      System::log::Message_Msg Msg55("XSTEP_55");
       ach->SendWarning(Msg55);
     }
     else
@@ -423,7 +423,7 @@ void IGESData_VerifyDate(const occ::handle<TCollection_HAsciiString>& str,
                          const char*                                  mess)
 {
 
-  Message_Msg Msg57("XSTEP_57");
+  System::log::Message_Msg Msg57("XSTEP_57");
 
   if (str.IsNull())
   {

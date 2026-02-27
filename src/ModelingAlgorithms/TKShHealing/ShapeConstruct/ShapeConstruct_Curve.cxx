@@ -169,12 +169,12 @@ occ::handle<Geom_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
 
     double fbsp = bspl->FirstParameter(), lbsp = bspl->LastParameter();
     bool   segment = false;
-    if (first > fbsp + Precision::PConfusion())
+    if (first > fbsp + math::precision::Precision::PConfusion())
     {
       fbsp    = first;
       segment = true;
     }
-    if (last < lbsp - Precision::PConfusion())
+    if (last < lbsp - math::precision::Precision::PConfusion())
     {
       lbsp    = last;
       segment = true;
@@ -261,12 +261,12 @@ occ::handle<Geom2d_BSplineCurve> ShapeConstruct_Curve::ConvertToBSpline(
 
     double fbsp = bspl->FirstParameter(), lbsp = bspl->LastParameter();
     bool   segment = false;
-    if (first > fbsp + Precision::PConfusion())
+    if (first > fbsp + math::precision::Precision::PConfusion())
     {
       fbsp    = first;
       segment = true;
     }
-    if (last < lbsp - Precision::PConfusion())
+    if (last < lbsp - math::precision::Precision::PConfusion())
     {
       lbsp    = last;
       segment = true;

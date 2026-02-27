@@ -45,7 +45,7 @@ public:
   Standard_EXPORT void RemoveVertex(const BRepMesh_Vertex& theVertex);
 
   Standard_EXPORT void AddVertices(IMeshData::VectorOfInteger&  theVerticesIndices,
-                                   const Message_ProgressRange& theRange = Message_ProgressRange());
+                                   const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool UseEdge(const int theEdge);
 
@@ -178,7 +178,7 @@ private:
                                   IMeshData::SequenceOfBndB2d&  thePolyBoxes);
 
   void createTrianglesOnNewVertices(IMeshData::VectorOfInteger&  theVertexIndices,
-                                    const Message_ProgressRange& theRange);
+                                    const System::log::Message_ProgressRange& theRange);
 
   void cleanupMesh();
 

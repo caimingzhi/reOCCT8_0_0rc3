@@ -37,7 +37,7 @@ public:
   Standard_EXPORT IFSelect_ReturnStatus
     TransferShape(const TopoDS_Shape&          sh,
                   const int                    mode        = 0,
-                  const Message_ProgressRange& theProgress = Message_ProgressRange());
+                  const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT IFSelect_ReturnStatus WriteFile(const char* filename);
 

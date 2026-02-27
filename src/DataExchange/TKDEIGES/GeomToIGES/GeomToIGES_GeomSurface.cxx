@@ -184,9 +184,9 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   }
   else
   {
-    if (std::abs(Umin - U0) < Precision::PConfusion())
+    if (std::abs(Umin - U0) < math::precision::Precision::PConfusion())
       Umin = U0;
-    if (std::abs(Umax - U1) < Precision::PConfusion())
+    if (std::abs(Umax - U1) < math::precision::Precision::PConfusion())
       Umax = U1;
     uShift = ShapeAnalysis::AdjustToPeriod(Umin, U0, U1);
     Umin += uShift;
@@ -203,9 +203,9 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   }
   else
   {
-    if (std::abs(Vmin - V0) < Precision::PConfusion())
+    if (std::abs(Vmin - V0) < math::precision::Precision::PConfusion())
       Vmin = V0;
-    if (std::abs(Vmax - V1) < Precision::PConfusion())
+    if (std::abs(Vmax - V1) < math::precision::Precision::PConfusion())
       Vmax = V1;
     vShift = ShapeAnalysis::AdjustToPeriod(Vmin, V0, V1);
     Vmin += vShift;
@@ -221,12 +221,12 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
     {
       double uMaxShift = 0;
       uMaxShift        = ShapeAnalysis::AdjustToPeriod(Ufin, U0, U1);
-      if (std::abs(uShift - uMaxShift) > Precision::PConfusion())
+      if (std::abs(uShift - uMaxShift) > math::precision::Precision::PConfusion())
       {
         occ::handle<Geom_BSplineSurface> aBspl =
           occ::down_cast<Geom_BSplineSurface>(mysurface->Copy());
         int aLeft, aRight;
-        aBspl->LocateU(Umin, Precision::PConfusion(), aLeft, aRight);
+        aBspl->LocateU(Umin, math::precision::Precision::PConfusion(), aLeft, aRight);
         aBspl->SetUOrigin(aLeft);
         mysurface = aBspl;
       }
@@ -240,12 +240,12 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
     {
       double vMaxShift = 0;
       vMaxShift        = ShapeAnalysis::AdjustToPeriod(Vfin, V0, V1);
-      if (std::abs(vShift - vMaxShift) > Precision::PConfusion())
+      if (std::abs(vShift - vMaxShift) > math::precision::Precision::PConfusion())
       {
         occ::handle<Geom_BSplineSurface> aBspl =
           occ::down_cast<Geom_BSplineSurface>(mysurface->Copy());
         int aLeft, aRight;
-        aBspl->LocateV(Vmin, Precision::PConfusion(), aLeft, aRight);
+        aBspl->LocateV(Vmin, math::precision::Precision::PConfusion(), aLeft, aRight);
         aBspl->SetVOrigin(aLeft);
         mysurface = aBspl;
       }
@@ -562,10 +562,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   double                                    U2   = Ufin;
   double                                    V1   = Vdeb;
   double                                    V2   = Vfin;
-  if (Precision::IsNegativeInfinite(Vdeb))
-    V1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Vfin))
-    V2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Vdeb))
+    V1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Vfin))
+    V2 = math::precision::Precision::Infinite();
 
   occ::handle<Geom_Line> Ligne =
     new Geom_Line(gp_Pnt(start->Cylinder().Radius(), 0.0, 0.0), gp_Dir(gp_Dir::D::Z));
@@ -617,10 +617,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   double                                    U2   = Ufin;
   double                                    V1   = Vdeb;
   double                                    V2   = Vfin;
-  if (Precision::IsNegativeInfinite(Vdeb))
-    V1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Vfin))
-    V2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Vdeb))
+    V1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Vfin))
+    V2 = math::precision::Precision::Infinite();
 
   occ::handle<Geom_Line> Ligne =
     new Geom_Line(gp_Pnt(start->Cone().RefRadius(), 0.0, 0.0),
@@ -802,10 +802,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   double                                  U2   = Ufin;
   double                                  V1   = Vdeb;
   double                                  V2   = Vfin;
-  if (Precision::IsNegativeInfinite(Vdeb))
-    V1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Vfin))
-    V2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Vdeb))
+    V1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Vfin))
+    V2 = math::precision::Precision::Infinite();
 
   double UF, UL, VF, VL;
   start->Bounds(UF, UL, VF, VL);
@@ -822,7 +822,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   GeomToIGES_GeomCurve GC(*this);
 
   occ::handle<Geom_Curve> CopyCurve;
-  if (std::abs(V1) > Precision::Confusion())
+  if (std::abs(V1) > math::precision::Precision::Confusion())
   {
     CopyCurve =
       occ::down_cast<Geom_Curve>(TheCurve->Translated(start->Value(U1, 0.), start->Value(U1, V1)));
@@ -859,10 +859,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   double                                    U2   = Ufin;
   double                                    V1   = Vdeb;
   double                                    V2   = Vfin;
-  if (Precision::IsNegativeInfinite(Vdeb))
-    V1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Vfin))
-    V2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Vdeb))
+    V1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Vfin))
+    V2 = math::precision::Precision::Infinite();
 
   occ::handle<Geom_Curve>          Curve = start->BasisCurve();
   GeomToIGES_GeomCurve             GC(*this);
@@ -918,7 +918,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomSurface::TransferSurface(
   Vm                                        = (V1 + V2) / 2.;
   occ::handle<IGESData_IGESEntity> Surface  = TransferSurface(TheSurf, Udeb, Ufin, Vdeb, Vfin);
   double                           Distance = start->Offset() / GetUnit();
-  GeomLProp_SLProps Prop = GeomLProp_SLProps(TheSurf, Um, Vm, 1, Precision::Confusion());
+  GeomLProp_SLProps Prop = GeomLProp_SLProps(TheSurf, Um, Vm, 1, math::precision::Precision::Confusion());
   gp_Dir            Dir  = Prop.Normal();
   double            Xd, Yd, Zd;
   Dir.Coord(Xd, Yd, Zd);

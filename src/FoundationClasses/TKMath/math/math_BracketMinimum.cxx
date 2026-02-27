@@ -26,7 +26,7 @@ bool math_BracketMinimum::LimitAndMayBeSwap(math_Function& F,
                                             double&        theFC) const
 {
   theC = Limited(theC);
-  if (std::abs(theB - theC) < Precision::PConfusion())
+  if (std::abs(theB - theC) < math::precision::Precision::PConfusion())
     return false;
   bool OK = F.Value(theC, theFC);
   if (!OK)
@@ -175,8 +175,8 @@ math_BracketMinimum::math_BracketMinimum(math_Function& F, const double A, const
       FAx(0.),
       FBx(0.),
       FCx(0.),
-      myLeft(-Precision::Infinite()),
-      myRight(Precision::Infinite()),
+      myLeft(-math::precision::Precision::Infinite()),
+      myRight(math::precision::Precision::Infinite()),
       myIsLimited(false),
       myFA(false),
       myFB(false)
@@ -195,8 +195,8 @@ math_BracketMinimum::math_BracketMinimum(math_Function& F,
       FAx(FA),
       FBx(0.),
       FCx(0.),
-      myLeft(-Precision::Infinite()),
-      myRight(Precision::Infinite()),
+      myLeft(-math::precision::Precision::Infinite()),
+      myRight(math::precision::Precision::Infinite()),
       myIsLimited(false),
       myFA(true),
       myFB(false)
@@ -216,8 +216,8 @@ math_BracketMinimum::math_BracketMinimum(math_Function& F,
       FAx(FA),
       FBx(FB),
       FCx(0.),
-      myLeft(-Precision::Infinite()),
-      myRight(Precision::Infinite()),
+      myLeft(-math::precision::Precision::Infinite()),
+      myRight(math::precision::Precision::Infinite()),
       myIsLimited(false),
       myFA(true),
       myFB(true)

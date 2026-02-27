@@ -67,7 +67,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
 {
 
   constexpr double mult = 5.;
-  constexpr double eps  = mult * Precision::Confusion();
+  constexpr double eps  = mult * math::precision::Precision::Confusion();
 
   myNbPnt2d = 2;
   myNbPnt   = 1;
@@ -180,7 +180,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
   {
     ElCLib::AdjustPeriodic(UU1->FirstParameter(),
                            UU1->LastParameter(),
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            Umin,
                            Umax);
   }
@@ -188,7 +188,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
   {
     ElCLib::AdjustPeriodic(VV1->FirstParameter(),
                            VV1->LastParameter(),
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            Vmin,
                            Vmax);
   }
@@ -294,7 +294,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
   {
     ElCLib::AdjustPeriodic(UU2->FirstParameter(),
                            UU2->LastParameter(),
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            Umin,
                            Umax);
   }
@@ -302,7 +302,7 @@ BRepFill_MultiLine::BRepFill_MultiLine(const TopoDS_Face&               Face1,
   {
     ElCLib::AdjustPeriodic(VV2->FirstParameter(),
                            VV2->LastParameter(),
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            Vmin,
                            Vmax);
   }
@@ -491,9 +491,9 @@ static gp_Pnt2d ValueOnFace(const double               U,
   Geom2dAPI_ProjectPointOnCurve Ext(P, TheU.Curve(), TheU.FirstParameter(), TheU.LastParameter());
 
   constexpr double mult = 5.;
-  constexpr double eps  = mult * Precision::Confusion();
+  constexpr double eps  = mult * math::precision::Precision::Confusion();
 
-  double UU = 0., Dist = Precision::Infinite(), D1, D2;
+  double UU = 0., Dist = math::precision::Precision::Infinite(), D1, D2;
 
   if (Ext.NbPoints() != 0)
   {
@@ -539,7 +539,7 @@ static gp_Pnt2d ValueOnFace(const double               U,
     }
   }
 
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
   double           VV;
 
   gp_Pnt2d PF = TheV.Value(TheV.FirstParameter());

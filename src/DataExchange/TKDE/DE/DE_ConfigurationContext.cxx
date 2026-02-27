@@ -24,7 +24,7 @@ enum DE_ConfigurationContext_KindOfLine
 namespace
 {
 
-  static bool GetLine(OSD_File& theFile, TCollection_AsciiString& theLine)
+  static bool GetLine(System::os::OSD_File& theFile, TCollection_AsciiString& theLine)
   {
     TCollection_AsciiString aBuffer;
     int                     aBufSize = 10;
@@ -133,8 +133,8 @@ DE_ConfigurationContext::DE_ConfigurationContext() = default;
 
 bool DE_ConfigurationContext::Load(const TCollection_AsciiString& theConfiguration)
 {
-  OSD_Path aPath = theConfiguration;
-  OSD_File aFile(aPath);
+  System::os::OSD_Path aPath = theConfiguration;
+  System::os::OSD_File aFile(aPath);
   if (!aFile.Exists())
   {
     if (!LoadStr(theConfiguration))
@@ -155,13 +155,13 @@ bool DE_ConfigurationContext::Load(const TCollection_AsciiString& theConfigurati
 bool DE_ConfigurationContext::LoadFile(const TCollection_AsciiString& theFile)
 {
   myResource.Clear();
-  OSD_Path                aPath(theFile);
-  OSD_File                aFile    = aPath;
+  System::os::OSD_Path                aPath(theFile);
+  System::os::OSD_File                aFile    = aPath;
   TCollection_AsciiString FileName = aPath.Name();
-  aFile.Open(OSD_ReadOnly, OSD_Protection());
+  aFile.Open(OSD_ReadOnly, System::os::OSD_Protection());
   if (aFile.Failed())
   {
-    Message::SendFail("Error: DE Context loading is stopped. Can't open the file");
+    System::log::Message::SendFail("Error: DE Context loading is stopped. Can't open the file");
     return true;
   }
   TCollection_AsciiString aLine;
@@ -169,7 +169,7 @@ bool DE_ConfigurationContext::LoadFile(const TCollection_AsciiString& theFile)
   {
     if (!load(aLine))
     {
-      Message::SendFail() << "Error: DE Context loading is stopped. Syntax error: " << aLine;
+      System::log::Message::SendFail() << "Error: DE Context loading is stopped. Syntax error: " << aLine;
       return false;
     }
   }
@@ -190,7 +190,7 @@ bool DE_ConfigurationContext::LoadStr(const TCollection_AsciiString& theResource
     {
       if (!load(aLine))
       {
-        Message::SendFail() << "Error: DE Context loading is stopped. Syntax error: " << aLine;
+        System::log::Message::SendFail() << "Error: DE Context loading is stopped. Syntax error: " << aLine;
         return false;
       }
       aLine.Clear();

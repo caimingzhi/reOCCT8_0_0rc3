@@ -11,7 +11,10 @@
 #include <NCollection_DataMap.hpp>
 #include <BRepMesh_DataStructureOfDelaun.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class BRepMesh_Triangulator
 {
@@ -29,7 +32,7 @@ public:
 
   Standard_EXPORT bool Perform(NCollection_List<Poly_Triangle>& thePolyTriangles);
 
-  void SetMessenger(const occ::handle<Message_Messenger>& theMess) { myMess = theMess; }
+  void SetMessenger(const occ::handle<System::log::Message_Messenger>& theMess) { myMess = theMess; }
 
   BRepMesh_Triangulator& operator=(const BRepMesh_Triangulator& theOther);
 
@@ -47,7 +50,7 @@ private:
   const NCollection_Vector<gp_XYZ>&                  myXYZs;
   const NCollection_List<NCollection_Sequence<int>>& myWires;
   gp_Pln                                             myPlane;
-  occ::handle<Message_Messenger>                     myMess;
+  occ::handle<System::log::Message_Messenger>                     myMess;
 
   occ::handle<BRepMesh_DataStructureOfDelaun> myMeshStructure;
   NCollection_DataMap<int, int>               myTmpMap;

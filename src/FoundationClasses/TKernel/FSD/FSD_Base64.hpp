@@ -3,6 +3,7 @@
 #include <NCollection_Buffer.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace app { namespace file { namespace stream {
 class FSD_Base64
 {
 public:
@@ -22,3 +23,5 @@ public:
   Standard_EXPORT static occ::handle<NCollection_Buffer> Decode(const char*  theStr,
                                                                 const size_t theLen);
 };
+}}} // namespace app::file::stream
+

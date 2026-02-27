@@ -134,7 +134,7 @@ static bool Project(const occ::handle<Geom2d_Curve>& C,
     if (index != 0)
     {
       Extrema_POnCurv POC = extrema.Point(index);
-      if (P.SquareDistance(POC.Value()) <= Precision::SquareConfusion())
+      if (P.SquareDistance(POC.Value()) <= math::precision::Precision::SquareConfusion())
       {
         p = POC.Parameter();
         return true;
@@ -491,7 +491,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
   double            p2       = pp2;
   double            cf       = C->FirstParameter();
   double            cl       = C->LastParameter();
-  constexpr double  epsilon  = Precision::PConfusion();
+  constexpr double  epsilon  = math::precision::Precision::PConfusion();
   bool              periodic = C->IsPeriodic();
   GeomAdaptor_Curve aCA(C);
 
@@ -533,8 +533,8 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom_Curve>& CC,
     }
   }
 
-  bool   p1inf = Precision::IsNegativeInfinite(p1);
-  bool   p2inf = Precision::IsPositiveInfinite(p2);
+  bool   p1inf = math::precision::Precision::IsNegativeInfinite(p1);
+  bool   p2inf = math::precision::Precision::IsPositiveInfinite(p2);
   gp_Pnt P1, P2;
   if (!p1inf)
     P1 = aCA.Value(p1);
@@ -749,7 +749,7 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
   double           p2       = pp2;
   double           cf       = C->FirstParameter();
   double           cl       = C->LastParameter();
-  constexpr double epsilon  = Precision::PConfusion();
+  constexpr double epsilon  = math::precision::Precision::PConfusion();
   bool             periodic = C->IsPeriodic();
 
   TopoDS_Vertex V1, V2;
@@ -787,8 +787,8 @@ void BRepLib_MakeEdge::Init(const occ::handle<Geom2d_Curve>& CC,
     }
   }
 
-  bool     p1inf = Precision::IsNegativeInfinite(p1);
-  bool     p2inf = Precision::IsPositiveInfinite(p2);
+  bool     p1inf = math::precision::Precision::IsNegativeInfinite(p1);
+  bool     p2inf = math::precision::Precision::IsPositiveInfinite(p2);
   gp_Pnt   P1, P2;
   gp_Pnt2d P2d1, P2d2;
   if (!p1inf)

@@ -66,7 +66,7 @@ namespace
                                    double theMax,
                                    int    theNbIntervals)
   {
-    if (std::abs(theMax - theMin) <= Precision::Approximation())
+    if (std::abs(theMax - theMin) <= math::precision::Precision::Approximation())
     {
       return 1;
     }
@@ -228,7 +228,7 @@ NCollection_Sequence<Quantity_Color> AIS_ColorScale::MakeUniformColors(int    th
   NCollection_Sequence<Quantity_Color> aResult;
 
   double           aHueRange = std::fmod(theHueTo - theHueFrom, 360.);
-  constexpr double aHueEps   = Precision::Angular() * 180. / M_PI;
+  constexpr double aHueEps   = math::precision::Precision::Angular() * 180. / M_PI;
   if (std::abs(aHueRange) <= aHueEps)
   {
     aHueRange = (aHueRange < 0 ? -360. : 360.);

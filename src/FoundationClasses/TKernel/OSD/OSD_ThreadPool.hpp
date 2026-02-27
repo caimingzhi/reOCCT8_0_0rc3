@@ -9,6 +9,7 @@
 #include <atomic>
 #include <optional>
 
+namespace System { namespace os {
 class OSD_ThreadPool : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(OSD_ThreadPool, Standard_Transient)
@@ -234,3 +235,5 @@ private:
   int  myNbDefThreads;
   bool myShutDown;
 };
+}} // namespace System::os
+

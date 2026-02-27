@@ -402,7 +402,7 @@ bool SelectMgr_TriangularFrustumSet::OverlapsSphere(const gp_Pnt& theCenter,
            anIdx < myBoundaryPoints.Size() / 2 + myBoundaryPoints.Lower();
            anIdx++)
       {
-        if (myBoundaryPoints[anIdx1].Distance(myBoundaryPoints[anIdx]) < Precision::Confusion())
+        if (myBoundaryPoints[anIdx1].Distance(myBoundaryPoints[anIdx]) < math::precision::Precision::Confusion())
         {
           continue;
         }
@@ -450,7 +450,7 @@ bool SelectMgr_TriangularFrustumSet::OverlapsSphere(const gp_Pnt& theCenter,
         gp_Vec aVecAngle2(aCenterProj, aPntProj2);
         anAngleSum += aVecAngle1.Angle(aVecAngle2);
       }
-      bool isCenterInside   = std::abs(anAngleSum - 2 * M_PI) < Precision::Confusion();
+      bool isCenterInside   = std::abs(anAngleSum - 2 * M_PI) < math::precision::Precision::Confusion();
       bool isBoundaryInside = false;
       bool isIntersectSphereBoundaries =
         IsBoundaryIntersectSphere(aCenterProj, theRadius, aNorm, aBoundaries, isBoundaryInside);
@@ -560,7 +560,7 @@ bool SelectMgr_TriangularFrustumSet::OverlapsCylinder(const double   theBottomRa
   gp_Pnt aPoints[6];
   aPoints[0] = aBottomCenterProject.XYZ() - aCylNormProject * theBottomRad * std::abs(aCosAngle);
   aPoints[1] = aTopCenterProject.XYZ() + aCylNormProject * theTopRad * std::abs(aCosAngle);
-  const gp_Dir aDirEndFaces = (aCylNorm.IsParallel(aDirNorm, Precision::Angular()))
+  const gp_Dir aDirEndFaces = (aCylNorm.IsParallel(aDirNorm, math::precision::Precision::Angular()))
                                 ? gp::DY().Transformed(theTrsf)
                                 : aCylNorm.Crossed(aDirNorm);
 
@@ -760,8 +760,8 @@ bool SelectMgr_TriangularFrustumSet::segmentSegmentIntersection(const gp_Pnt& th
   gp_XYZ aVec2  = theEndPnt2.XYZ() - theStartPnt2.XYZ();
   gp_XYZ aVec21 = theStartPnt2.XYZ() - theStartPnt1.XYZ();
   gp_XYZ aVec12 = theStartPnt1.XYZ() - theStartPnt2.XYZ();
-  if (std::abs(aVec21.DotCross(aVec1, aVec2)) > Precision::Confusion()
-      || std::abs(aVec12.DotCross(aVec2, aVec1)) > Precision::Confusion())
+  if (std::abs(aVec21.DotCross(aVec1, aVec2)) > math::precision::Precision::Confusion()
+      || std::abs(aVec12.DotCross(aVec2, aVec1)) > math::precision::Precision::Confusion())
   {
 
     return false;
@@ -798,7 +798,7 @@ bool SelectMgr_TriangularFrustumSet::isIntersectBoundary(const double   theRadiu
     gp_Dir aBndPlaneNorm = gp_Vec(aFace[0], aFace[1]).Crossed(gp_Vec(aFace[0], aFace[2]));
     occ::handle<Geom_Surface> aBndPlane = new Geom_Plane(aFace[0], aBndPlaneNorm);
 
-    GeomInt_IntSS anInterSS(aCircPlane, aBndPlane, Precision::Confusion());
+    GeomInt_IntSS anInterSS(aCircPlane, aBndPlane, math::precision::Precision::Confusion());
     if (!anInterSS.IsDone() || anInterSS.NbLines() == 0)
     {
       continue;

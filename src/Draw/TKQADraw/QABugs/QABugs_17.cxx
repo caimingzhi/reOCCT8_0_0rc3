@@ -117,7 +117,7 @@ static int BUC60843(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   double par1 = 0.0, par2 = 0.0;
-  double tol = Precision::Angular();
+  double tol = math::precision::Precision::Angular();
   if (argc >= 5)
     par1 = Draw::Atof(argv[4]);
   if (argc == 6)
@@ -654,7 +654,7 @@ static int OCC606(Draw_Interpretor& di, int n, const char** a)
       occ::handle<Geom_BSplineSurface> result_surf1 = b_surface1.BSplineSurface();
       if (!result_surf1.IsNull())
       {
-        BRepBuilderAPI_MakeFace b_face1(result_surf1, Precision::Confusion());
+        BRepBuilderAPI_MakeFace b_face1(result_surf1, math::precision::Precision::Confusion());
         const TopoDS_Face&      bsp_face1 = b_face1.Face();
         DBRep::Set(a[1], bsp_face1);
       }
@@ -891,7 +891,7 @@ static int OCC884(Draw_Interpretor& di, int argc, const char** argv)
     sfw->SetPrecision(Draw::Atof(argv[3]));
   if (argc > 4)
     sfw->SetMaxTolerance(Draw::Atof(argv[4]));
-  di << "Info: Precision is set to " << sfw->Precision() << "\n";
+  di << "Info: math::precision::Precision is set to " << sfw->Precision() << "\n";
   di << "Info: MaxTolerance is set to " << sfw->MaxTolerance() << "\n";
 
   sfw->ModifyTopologyMode()          = true;
@@ -1155,7 +1155,7 @@ static int OCC1642(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<ShapeFix_Wire> sfw = new ShapeFix_Wire;
   sfw->Load(TopoDS::Wire(wire));
   sfw->SetFace(face);
-  sfw->SetPrecision(Precision::Confusion());
+  sfw->SetPrecision(math::precision::Precision::Confusion());
 
   sfw->FixReorderMode()                      = 1;
   sfw->ClosedWireMode()                      = true;

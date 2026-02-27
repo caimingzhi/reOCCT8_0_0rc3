@@ -88,7 +88,7 @@ bool ChFiKPart_MakeChamfer(TopOpeBRepDS_DataStructure&         DStr,
 
   if (!ouvert)
   {
-    if (std::abs(Dis1 - Dis2 * sincon) > Precision::Confusion())
+    if (std::abs(Dis1 - Dis2 * sincon) > math::precision::Precision::Confusion())
     {
       double abscos = std::abs(Dis2 - Dis1 * sincon);
       angle         = std::atan((Dis1 * std::cos(angcon)) / abscos);

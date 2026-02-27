@@ -20,7 +20,7 @@ GeomFill_GuideTrihedronAC::GeomFill_GuideTrihedronAC(const occ::handle<Adaptor3d
   myTrimG   = guide;
   myGuideAC = new (Approx_CurvlinFunc)(myGuide, 1.e-7);
   Lguide    = myGuideAC->GetLength();
-  UTol = STol = Precision::PConfusion();
+  UTol = STol = math::precision::Precision::PConfusion();
   Orig1       = 0;
   Orig2       = 1;
 }

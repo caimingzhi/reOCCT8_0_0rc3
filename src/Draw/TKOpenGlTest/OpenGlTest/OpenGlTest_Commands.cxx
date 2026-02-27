@@ -184,7 +184,7 @@ static int VUserDraw(Draw_Interpretor&, int argc, const char** argv)
   occ::handle<AIS_InteractiveContext> aContext = ViewerTest::GetAISContext();
   if (aContext.IsNull())
   {
-    Message::SendFail("Error: no active viewer");
+    System::log::Message::SendFail("Error: no active viewer");
     return 1;
   }
 
@@ -192,13 +192,13 @@ static int VUserDraw(Draw_Interpretor&, int argc, const char** argv)
     occ::down_cast<OpenGl_GraphicDriver>(aContext->CurrentViewer()->Driver());
   if (aDriver.IsNull())
   {
-    Message::SendFail("Error: Graphic driver not available.");
+    System::log::Message::SendFail("Error: Graphic driver not available.");
     return 1;
   }
 
   if (argc > 2)
   {
-    Message::SendFail("Syntax error: wrong number of arguments");
+    System::log::Message::SendFail("Syntax error: wrong number of arguments");
     return 1;
   }
 
@@ -216,7 +216,7 @@ static int VGlShaders(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   occ::handle<AIS_InteractiveContext> aCtx = ViewerTest::GetAISContext();
   if (aCtx.IsNull())
   {
-    Message::SendFail("Error: no active viewer");
+    System::log::Message::SendFail("Error: no active viewer");
     return 1;
   }
 
@@ -228,7 +228,7 @@ static int VGlShaders(Draw_Interpretor& theDI, int theArgNb, const char** theArg
   }
   if (aGlCtx.IsNull())
   {
-    Message::SendFail("Error: no OpenGl_Context");
+    System::log::Message::SendFail("Error: no OpenGl_Context");
     return 1;
   }
 
@@ -249,7 +249,7 @@ static int VGlShaders(Draw_Interpretor& theDI, int theArgNb, const char** theArg
       occ::handle<OpenGl_ShaderProgram> aResProg;
       if (!aGlCtx->GetResource(aShaderName, aResProg))
       {
-        Message::SendFail() << "Syntax error: shader resource '" << aShaderName << "' is not found";
+        System::log::Message::SendFail() << "Syntax error: shader resource '" << aShaderName << "' is not found";
         return 1;
       }
       if (aResProg->UpdateDebugDump(aGlCtx, "", false, anArg == "-dump"))
@@ -260,7 +260,7 @@ static int VGlShaders(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << anArg << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << anArg << "'";
       return 1;
     }
   }
@@ -461,7 +461,7 @@ static int VGlDebug(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << anArg << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << anArg << "'";
       return 1;
     }
   }
@@ -483,7 +483,7 @@ static int VVbo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
   {
     if (!toSet)
     {
-      Message::SendFail("Error: no active viewer");
+      System::log::Message::SendFail("Error: no active viewer");
     }
     return 1;
   }
@@ -651,7 +651,7 @@ static int VCaps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       }
       if (aVer[0] < -1 || aVer[1] < -1)
       {
-        Message::SendFail() << "Syntax error at '" << anArgCase << "'";
+        System::log::Message::SendFail() << "Syntax error at '" << anArgCase << "'";
         return 1;
       }
       aCaps->contextMajorVersionUpper = aVer[0];
@@ -659,7 +659,7 @@ static int VCaps(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
     }
     else
     {
-      Message::SendFail() << "Error: unknown argument '" << anArg << "'";
+      System::log::Message::SendFail() << "Error: unknown argument '" << anArg << "'";
       return 1;
     }
   }

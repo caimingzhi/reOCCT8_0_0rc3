@@ -6,6 +6,7 @@
 #include <Standard_Real.hpp>
 #include <Standard_OStream.hpp>
 
+namespace System { namespace os {
 class OSD_Chronometer
 {
 public:
@@ -64,3 +65,5 @@ protected:
   bool   myIsStopped;
   bool   myIsThreadOnly;
 };
+}} // namespace System::os
+

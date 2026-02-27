@@ -3,7 +3,7 @@
 #include <TObj_Model.hpp>
 #include <Message_Algorithm.hpp>
 
-class TObj_CheckModel : public Message_Algorithm
+class TObj_CheckModel : public System::log::Message_Algorithm
 {
 public:
   TObj_CheckModel(const occ::handle<TObj_Model>& theModel)
@@ -30,7 +30,7 @@ private:
   bool                    myToFix;
 
 public:
-  DEFINE_STANDARD_RTTIEXT(TObj_CheckModel, Message_Algorithm)
+  DEFINE_STANDARD_RTTIEXT(TObj_CheckModel, System::log::Message_Algorithm)
 };
 
 #ifdef _MSC_VER

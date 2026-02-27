@@ -14,8 +14,8 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT Extrema_GenLocateExtPS(const Adaptor3d_Surface& theS,
-                                         const double             theTolU = Precision::PConfusion(),
-                                         const double theTolV = Precision::PConfusion());
+                                         const double             theTolU = math::precision::Precision::PConfusion(),
+                                         const double theTolV = math::precision::Precision::PConfusion());
 
   Standard_EXPORT void Perform(const gp_Pnt& theP,
                                const double  theU0,

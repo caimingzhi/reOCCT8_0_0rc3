@@ -20,7 +20,7 @@ namespace
 
   void checkVectorsEqual(const math_Vector& theV1,
                          const math_Vector& theV2,
-                         const double       theTolerance = Precision::Confusion())
+                         const double       theTolerance = math::precision::Precision::Confusion())
   {
     ASSERT_EQ(theV1.Length(), theV2.Length());
     ASSERT_EQ(theV1.Lower(), theV2.Lower());
@@ -114,9 +114,9 @@ TEST(MathVectorTest, VectorProperties)
   aVec(4) = -2.0;
 
   double anExpectedNorm = std::sqrt(29.0);
-  EXPECT_NEAR(aVec.Norm(), anExpectedNorm, Precision::Confusion());
+  EXPECT_NEAR(aVec.Norm(), anExpectedNorm, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aVec.Norm2(), 29.0, Precision::Confusion());
+  EXPECT_NEAR(aVec.Norm2(), 29.0, math::precision::Precision::Confusion());
 
   EXPECT_EQ(aVec.Max(), 2);
 
@@ -131,18 +131,18 @@ TEST(MathVectorTest, Normalization)
   aVec(3) = 0.0;
 
   double anOriginalNorm = aVec.Norm();
-  EXPECT_NEAR(anOriginalNorm, 5.0, Precision::Confusion());
+  EXPECT_NEAR(anOriginalNorm, 5.0, math::precision::Precision::Confusion());
 
   math_Vector aNormalizedVec = aVec.Normalized();
-  EXPECT_NEAR(aNormalizedVec.Norm(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aNormalizedVec(1), 3.0 / 5.0, Precision::Confusion());
-  EXPECT_NEAR(aNormalizedVec(2), 4.0 / 5.0, Precision::Confusion());
-  EXPECT_NEAR(aNormalizedVec(3), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aNormalizedVec.Norm(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aNormalizedVec(1), 3.0 / 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aNormalizedVec(2), 4.0 / 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aNormalizedVec(3), 0.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aVec.Norm(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aVec.Norm(), 5.0, math::precision::Precision::Confusion());
 
   aVec.Normalize();
-  EXPECT_NEAR(aVec.Norm(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aVec.Norm(), 1.0, math::precision::Precision::Confusion());
   checkVectorsEqual(aVec, aNormalizedVec);
 }
 

@@ -76,7 +76,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -128,12 +128,12 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_EdgeFace> BOPAlgo_VectorOfEdgeFace;
 
-void BOPAlgo_PaveFiller::PerformEF(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformEF(const System::log::Message_ProgressRange& theRange)
 {
   FillShrunkData(TopAbs_EDGE, TopAbs_FACE);
 
   myIterator->Initialize(TopAbs_EDGE, TopAbs_FACE);
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
   int                   iSize = myIterator->ExpectedLength();
   if (!iSize)
   {
@@ -268,7 +268,7 @@ void BOPAlgo_PaveFiller::PerformEF(const Message_ProgressRange& theRange)
   }
 
   aNbEdgeFace = aVEdgeFace.Length();
-  Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Edge-Face intersection", aNbEdgeFace);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Edge-Face intersection", aNbEdgeFace);
   for (int index = 0; index < aNbEdgeFace; index++)
   {
     BOPAlgo_EdgeFace& aEdgeFace = aVEdgeFace.ChangeValue(index);
@@ -418,8 +418,8 @@ void BOPAlgo_PaveFiller::PerformEF(const Message_ProgressRange& theRange)
             const gp_Pnt                aPnew   = BRep_Tool::Pnt(aVnew);
             aProjPS.Perform(aPnew);
             double aMinDistEF = (aProjPS.IsDone() && aProjPS.NbPoints()) ? aProjPS.LowerDistance()
-                                                                         : Precision::Infinite();
-            bool   hasRealIntersection = aMinDistEF < Precision::Intersection();
+                                                                         : math::precision::Precision::Infinite();
+            bool   hasRealIntersection = aMinDistEF < math::precision::Precision::Intersection();
 
             if (!hasRealIntersection)
 
@@ -691,9 +691,9 @@ void BOPAlgo_PaveFiller::ReduceIntersectionRange(const int theV1,
   }
 }
 
-void BOPAlgo_PaveFiller::ForceInterfEF(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::ForceInterfEF(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 1);
   if (!myIsPrimary)
     return;
 
@@ -733,11 +733,11 @@ void BOPAlgo_PaveFiller::ForceInterfEF(const Message_ProgressRange& theRange)
 
 void BOPAlgo_PaveFiller::ForceInterfEF(
   const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& theMPB,
-  const Message_ProgressRange&                                theRange,
+  const System::log::Message_ProgressRange&                                theRange,
   const bool                                                  theAddInterf)
 {
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
   if (theMPB.IsEmpty())
     return;
 
@@ -959,7 +959,7 @@ void BOPAlgo_PaveFiller::ForceInterfEF(
   aPBMap.Clear();
   anAlloc->Reset(false);
 
-  Message_ProgressScope aPS(aPSOuter.Next(9), "Checking for edges coinciding with faces", aNbEFs);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(9), "Checking for edges coinciding with faces", aNbEFs);
   for (int i = 0; i < aNbEFs; i++)
   {
     BOPAlgo_EdgeFace& aEdgeFace = aVEdgeFace.ChangeValue(i);

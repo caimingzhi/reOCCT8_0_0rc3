@@ -37,17 +37,17 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
 
   if (!PR.ReadInteger(PR.Current(), aType))
   {
-    Message_Msg Msg91("XSTEP_91");
+    System::log::Message_Msg Msg91("XSTEP_91");
     PR.SendFail(Msg91);
   }
   if (!PR.ReadInteger(PR.Current(), aDegree))
   {
-    Message_Msg Msg92("XSTEP_92");
+    System::log::Message_Msg Msg92("XSTEP_92");
     PR.SendFail(Msg92);
   }
   if (!PR.ReadInteger(PR.Current(), nbDimensions))
   {
-    Message_Msg Msg93("XSTEP_93");
+    System::log::Message_Msg Msg93("XSTEP_93");
     PR.SendFail(Msg93);
   }
 
@@ -55,7 +55,7 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
   {
     if (nbSegments <= 0)
     {
-      Message_Msg Msg94("XSTEP_94");
+      System::log::Message_Msg Msg94("XSTEP_94");
       PR.SendFail(Msg94);
     }
     else
@@ -65,13 +65,13 @@ void IGESGeom_ToolSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_SplineCu
       allZPolynomials = new NCollection_HArray2<double>(1, nbSegments, 1, 4);
       allBreakPoints  = new NCollection_HArray1<double>(1, (nbSegments + 1));
     }
-    Message_Msg Msg95("XSTEP_95");
+    System::log::Message_Msg Msg95("XSTEP_95");
 
     PR.ReadReals(PR.CurrentList(nbSegments + 1), Msg95, allBreakPoints);
   }
   else
   {
-    Message_Msg Msg94("XSTEP_94");
+    System::log::Message_Msg Msg94("XSTEP_94");
     PR.SendFail(Msg94);
   }
 
@@ -299,14 +299,14 @@ void IGESGeom_ToolSplineCurve::OwnCheck(const occ::handle<IGESGeom_SplineCurve>&
 
   if (ent->SplineType() < 1 || ent->SplineType() > 6)
   {
-    Message_Msg Msg91("XSTEP_91");
+    System::log::Message_Msg Msg91("XSTEP_91");
     ach->SendFail(Msg91);
   }
   if (ent->NbDimensions() == 2)
   {
     int         nbSegments = ent->NbSegments();
     double      AZ, BZ, CZ, DZ;
-    Message_Msg Msg96("XSTEP_96");
+    System::log::Message_Msg Msg96("XSTEP_96");
     for (int I = 1; I <= nbSegments; I++)
     {
       ent->ZCoordPolynomial(I, AZ, BZ, CZ, DZ);
@@ -318,7 +318,7 @@ void IGESGeom_ToolSplineCurve::OwnCheck(const occ::handle<IGESGeom_SplineCurve>&
   }
   else if (ent->NbDimensions() != 3)
   {
-    Message_Msg Msg93("XSTEP_93");
+    System::log::Message_Msg Msg93("XSTEP_93");
     ach->SendFail(Msg93);
   }
 }

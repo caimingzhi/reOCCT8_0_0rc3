@@ -154,7 +154,7 @@ void gp_GTrsf2d::PreMultiply(const gp_GTrsf2d& T)
 gp_Trsf2d gp_GTrsf2d::Trsf2d() const
 {
 
-  const double aTolerance  = Precision::Angular();
+  const double aTolerance  = math::precision::Precision::Angular();
   const double aTolerance2 = 2.0 * aTolerance;
 
   if (Form() == gp_Other)

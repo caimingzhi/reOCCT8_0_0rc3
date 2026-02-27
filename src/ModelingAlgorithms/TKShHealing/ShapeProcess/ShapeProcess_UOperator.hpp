@@ -4,10 +4,13 @@
 
 #include <ShapeProcess_Context.hpp>
 
+namespace System { namespace log {
 class Message_ProgressRange;
+}} // namespace System::log
+
 
 typedef bool (*ShapeProcess_OperFunc)(const occ::handle<ShapeProcess_Context>& context,
-                                      const Message_ProgressRange&             theProgress);
+                                      const System::log::Message_ProgressRange&             theProgress);
 
 #include <ShapeProcess_Operator.hpp>
 class ShapeProcess_Context;
@@ -20,7 +23,7 @@ public:
 
   Standard_EXPORT bool Perform(
     const occ::handle<ShapeProcess_Context>& context,
-    const Message_ProgressRange&             theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&             theProgress = System::log::Message_ProgressRange()) override;
 
   DEFINE_STANDARD_RTTIEXT(ShapeProcess_UOperator, ShapeProcess_Operator)
 

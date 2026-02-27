@@ -214,7 +214,7 @@ static bool PlaneOfWire(const TopoDS_Wire& W, gp_Pln& P)
 
     GProp_PrincipalProps Pp = GP.PrincipalProperties();
     gp_Vec               Vec;
-    double               R1, R2, R3, Tol = Precision::Confusion();
+    double               R1, R2, R3, Tol = math::precision::Precision::Confusion();
     Pp.RadiusOfGyration(R1, R2, R3);
     double RMax = std::max(std::max(R1, R2), R3);
     if ((std::abs(RMax - R1) < Tol && std::abs(RMax - R2) < Tol)
@@ -311,7 +311,7 @@ static void WireContinuity(const TopoDS_Wire& W, GeomAbs_Shape& contW)
 
       if (testconti)
       {
-        cont = BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, Precision::Angular());
+        cont = BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, math::precision::Precision::Angular());
         if (cont <= contW)
           contW = cont;
       }
@@ -346,7 +346,7 @@ static void TrimEdge(const TopoDS_Edge&                  CurrentEdge,
     {
 
       m1 = (CutValues.Value(j) - t0) * (last - first) / (t1 - t0) + first;
-      if (std::abs(m0 - m1) < Precision::Confusion())
+      if (std::abs(m0 - m1) < math::precision::Precision::Confusion())
       {
         return;
       }
@@ -358,7 +358,7 @@ static void TrimEdge(const TopoDS_Edge&                  CurrentEdge,
       if (j == ndec)
       {
 
-        if (std::abs(m0 - last) < Precision::Confusion())
+        if (std::abs(m0 - last) < math::precision::Precision::Confusion())
         {
           return;
         }
@@ -377,7 +377,7 @@ static void TrimEdge(const TopoDS_Edge&                  CurrentEdge,
     {
 
       m0 = (CutValues.Value(j) - t0) * (last - first) / (t1 - t0) + first;
-      if (std::abs(m0 - m1) < Precision::Confusion())
+      if (std::abs(m0 - m1) < math::precision::Precision::Confusion())
       {
         return;
       }
@@ -389,7 +389,7 @@ static void TrimEdge(const TopoDS_Edge&                  CurrentEdge,
       if (j == 1)
       {
 
-        if (std::abs(first - m1) < Precision::Confusion())
+        if (std::abs(first - m1) < math::precision::Precision::Confusion())
         {
           return;
         }
@@ -524,7 +524,7 @@ static bool EdgeIntersectOnWire(
     if (NewVertex)
     {
       TopoDS_Edge E   = TopoDS::Edge(DSS.SupportOnShape2(isol));
-      double      tol = Precision::PConfusion();
+      double      tol = math::precision::Precision::PConfusion();
       double      first, last, param;
       BRep_Tool::Range(E, first, last);
       tol = std::max(tol, percent * std::abs(last - first));
@@ -1000,7 +1000,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
       bool          NewVertex;
       TopoDS_Vertex Vsol;
       TopoDS_Wire   newwire;
-      if (Pnew.Distance(Pos->Value(i - 1)) > Precision::Confusion())
+      if (Pnew.Distance(Pos->Value(i - 1)) > math::precision::Precision::Confusion())
       {
         double percent = myPercent;
         NewVertex      = EdgeIntersectOnWire(Pos->Value(i - 1),
@@ -1097,7 +1097,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
         bool          NewVertex;
         TopoDS_Vertex Vsol;
         TopoDS_Wire   newwire;
-        if (Pnew.Distance(Pos->Value(i + 1)) > Precision::Confusion())
+        if (Pnew.Distance(Pos->Value(i + 1)) > math::precision::Precision::Confusion())
         {
           double percent = myPercent;
           NewVertex      = EdgeIntersectOnWire(Pos->Value(i + 1),
@@ -1417,7 +1417,7 @@ void BRepFill_CompatibleWires::SameNumberByACR(const bool report)
         for (i = 1; i <= nbSects; i++)
         {
           double EdgeLen = (Knot2 - Knot1) * WireLen(i);
-          if (EdgeLen > Precision::Confusion())
+          if (EdgeLen > math::precision::Precision::Confusion())
           {
             AllLengthsNull = false;
             break;
@@ -1436,7 +1436,7 @@ void BRepFill_CompatibleWires::SameNumberByACR(const bool report)
       for (i = 1; i <= nbSects; i++)
       {
         const TopoDS_Wire& oldwire = TopoDS::Wire(myWork(i));
-        double             tol     = Precision::Confusion();
+        double             tol     = math::precision::Precision::Confusion();
         if (WireLen(i) > gp::Resolution())
           tol /= WireLen(i);
         TopoDS_Wire            newwire = BRepFill::InsertACR(oldwire, dec3, tol);
@@ -1621,7 +1621,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
       SeqEdges.Append(anExp.Current());
     }
 
-    double MinSumDist = Precision::Infinite();
+    double MinSumDist = math::precision::Precision::Infinite();
     int    jmin       = 1, j, k, n;
     bool   forward    = false;
     if (i == myWork.Length() && myDegen2)
@@ -1913,7 +1913,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
       if (!polar)
       {
 
-        distmini = Precision::Infinite();
+        distmini = math::precision::Precision::Infinite();
         for (int ii = 1; ii <= SeqV.Length(); ii++)
         {
           P1   = BRep_Tool::Pnt(TopoDS::Vertex(SeqV.Value(ii)));
@@ -1930,16 +1930,16 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
       else
       {
 
-        double        angmin, angV, eta = Precision::Angular();
+        double        angmin, angV, eta = math::precision::Precision::Angular();
         TopoDS_Vertex Vopti;
         angmin   = M_PI / 2;
-        distmini = Precision::Infinite();
+        distmini = math::precision::Precision::Infinite();
         gp_Dir dir0(gp_Vec(Pnew, P.Location()));
         for (int ii = 1; ii <= SeqV.Length(); ii++)
         {
           P1   = BRep_Tool::Pnt(TopoDS::Vertex(SeqV.Value(ii)));
           dist = Pnew.Distance(P1);
-          if (dist < Precision::Confusion())
+          if (dist < math::precision::Precision::Confusion())
           {
             angV = 0.0;
           }
@@ -1972,7 +1972,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
         Vmini = Vopti;
       }
 
-      distmini = Precision::Infinite();
+      distmini = math::precision::Precision::Infinite();
       for (anExp.Init(wire); anExp.More(); anExp.Next())
       {
         TopoDS_Edge   Ecur = anExp.Current();
@@ -2044,7 +2044,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
           U2 = 0.25 * (3 * BRep_Tool::Parameter(V1, E2) + BRep_Tool::Parameter(V2, E2));
         }
 
-        if (std::abs(Pbout.Distance(P1) - Pbout.Distance(P2)) < Precision::Confusion())
+        if (std::abs(Pbout.Distance(P1) - Pbout.Distance(P2)) < math::precision::Precision::Confusion())
         {
 
           Pbout = PPn;
@@ -2215,11 +2215,11 @@ void BRepFill_CompatibleWires::SearchOrigin()
 
       gp_Pnt P1 = BRep_Tool::Pnt(Vdeb), P1o = Pdeb, P2 = BRep_Tool::Pnt(Vfin), P2o = Pfin;
 
-      if (P1.IsEqual(P2, Precision::Confusion()) || P1o.IsEqual(P2o, Precision::Confusion()))
+      if (P1.IsEqual(P2, math::precision::Precision::Confusion()) || P1o.IsEqual(P2o, math::precision::Precision::Confusion()))
       {
         BRepAdaptor_Curve Curve0(E0), Curve(E);
-        Curve0.D0(Curve0.FirstParameter() + Precision::Confusion(), P2o);
-        Curve.D0(Curve.FirstParameter() + Precision::Confusion(), P2);
+        Curve0.D0(Curve0.FirstParameter() + math::precision::Precision::Confusion(), P2o);
+        Curve.D0(Curve.FirstParameter() + math::precision::Precision::Confusion(), P2);
       };
       gp_Vec VDebFin0(P1o, P2o), VDebFin(P1, P2);
       double AStraight = VDebFin0.Angle(VDebFin);

@@ -10,7 +10,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_GenericExtStringDriver, BinMDF_ADriver)
 
 BinMDataStd_GenericExtStringDriver::BinMDataStd_GenericExtStringDriver(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
     : BinMDF_ADriver(theMessageDriver, STANDARD_TYPE(TDataStd_GenericExtString)->Name())
 {
 }

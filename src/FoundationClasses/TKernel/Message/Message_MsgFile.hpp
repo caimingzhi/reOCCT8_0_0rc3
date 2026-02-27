@@ -8,6 +8,7 @@
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
 
+namespace System { namespace log {
 class Message_MsgFile
 {
 public:
@@ -32,3 +33,5 @@ public:
 
   Standard_EXPORT static const TCollection_ExtendedString& Msg(const TCollection_AsciiString& key);
 };
+}} // namespace System::log
+

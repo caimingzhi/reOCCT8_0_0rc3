@@ -11,14 +11,30 @@
 #include <Storage_Root.hpp>
 #include <NCollection_HSequence.hpp>
 #include <TCollection_AsciiString.hpp>
+namespace app { namespace storage {
 class Storage_HeaderData;
+}} // namespace app::storage
+
+namespace app { namespace storage {
 class Storage_RootData;
+}} // namespace app::storage
+
+namespace app { namespace storage {
 class Storage_TypeData;
+}} // namespace app::storage
+
+namespace app { namespace storage {
 class Storage_InternalData;
+}} // namespace app::storage
+
 class TCollection_ExtendedString;
 class Standard_Persistent;
+namespace app { namespace storage {
 class Storage_Root;
+}} // namespace app::storage
 
+
+namespace app { namespace storage {
 class Storage_Data : public Standard_Transient
 {
 
@@ -108,3 +124,5 @@ private:
   Storage_Error                     myErrorStatus;
   TCollection_AsciiString           myErrorStatusExt;
 };
+}} // namespace app::storage
+

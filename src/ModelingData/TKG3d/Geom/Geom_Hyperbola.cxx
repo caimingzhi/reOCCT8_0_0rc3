@@ -63,12 +63,12 @@ bool Geom_Hyperbola::IsPeriodic() const
 
 double Geom_Hyperbola::FirstParameter() const
 {
-  return -Precision::Infinite();
+  return -math::precision::Precision::Infinite();
 }
 
 double Geom_Hyperbola::LastParameter() const
 {
-  return Precision::Infinite();
+  return math::precision::Precision::Infinite();
 }
 
 double Geom_Hyperbola::MajorRadius() const

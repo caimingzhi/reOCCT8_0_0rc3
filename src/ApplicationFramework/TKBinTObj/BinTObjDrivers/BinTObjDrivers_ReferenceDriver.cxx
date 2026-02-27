@@ -9,7 +9,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinTObjDrivers_ReferenceDriver, BinMDF_ADriver)
 
 BinTObjDrivers_ReferenceDriver::BinTObjDrivers_ReferenceDriver(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
     : BinMDF_ADriver(theMessageDriver, nullptr)
 {
 }

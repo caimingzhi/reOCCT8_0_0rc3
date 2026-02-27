@@ -136,7 +136,7 @@ static int STATIC_ishell = 0;
 TopAbs_State TopOpeBRepBuild_ShellFaceClassifier::State()
 {
   TopAbs_State state;
-  double       tol3d = Precision::Confusion();
+  double       tol3d = math::precision::Precision::Confusion();
 
 #ifdef OCCT_DEBUG
   if (TopOpeBRepBuild_GettraceCHK())

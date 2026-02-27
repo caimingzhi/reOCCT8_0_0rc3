@@ -52,14 +52,14 @@ TEST_F(GeomAdaptor_Curve_Test, Load_EqualParameters_Success)
 
   gp_Pnt aP1 = anAdaptor.Value(5.0);
   gp_Pnt aP2 = myLine->Value(5.0);
-  EXPECT_TRUE(aP1.IsEqual(aP2, Precision::Confusion()));
+  EXPECT_TRUE(aP1.IsEqual(aP2, math::precision::Precision::Confusion()));
 }
 
 TEST_F(GeomAdaptor_Curve_Test, Load_ParametersWithinConfusion_Success)
 {
 
   const double aParam1 = 5.0;
-  const double aParam2 = 5.0 + Precision::Confusion() * 0.5;
+  const double aParam2 = 5.0 + math::precision::Precision::Confusion() * 0.5;
 
   GeomAdaptor_Curve anAdaptor;
   EXPECT_NO_THROW(anAdaptor.Load(myLine, aParam1, aParam2));
@@ -72,7 +72,7 @@ TEST_F(GeomAdaptor_Curve_Test, Load_ParametersAtConfusionBoundary_Success)
 {
 
   const double aParam1 = 5.0;
-  const double aParam2 = 5.0 + Precision::Confusion();
+  const double aParam2 = 5.0 + math::precision::Precision::Confusion();
 
   GeomAdaptor_Curve anAdaptor;
   EXPECT_NO_THROW(anAdaptor.Load(myLine, aParam1, aParam2));
@@ -84,7 +84,7 @@ TEST_F(GeomAdaptor_Curve_Test, Load_ParametersAtConfusionBoundary_Success)
 TEST_F(GeomAdaptor_Curve_Test, Load_FirstGreaterThanLastWithinConfusion_Success)
 {
 
-  const double aParam1 = 5.0 + Precision::Confusion() * 0.5;
+  const double aParam1 = 5.0 + math::precision::Precision::Confusion() * 0.5;
   const double aParam2 = 5.0;
 
   GeomAdaptor_Curve anAdaptor;
@@ -108,7 +108,7 @@ TEST_F(GeomAdaptor_Curve_Test, Load_FirstSlightlyGreaterThanLast_ThrowsException
 {
 
   const double aParam1 = 5.0;
-  const double aParam2 = 5.0 - Precision::Confusion() * 2.0;
+  const double aParam2 = 5.0 - math::precision::Precision::Confusion() * 2.0;
 
   GeomAdaptor_Curve anAdaptor;
   EXPECT_THROW(anAdaptor.Load(myLine, aParam1, aParam2), Standard_ConstructionError);
@@ -150,7 +150,7 @@ TEST_F(GeomAdaptor_Curve_Test, DegeneratedCurve_CircleAtZeroLength_Success)
   gp_Pnt aPoint         = anAdaptor.Value(aParam);
   gp_Pnt aExpectedPoint = myCircle->Value(aParam);
 
-  EXPECT_TRUE(aPoint.IsEqual(aExpectedPoint, Precision::Confusion()));
+  EXPECT_TRUE(aPoint.IsEqual(aExpectedPoint, math::precision::Precision::Confusion()));
   EXPECT_TRUE(anAdaptor.IsClosed() || anAdaptor.FirstParameter() == anAdaptor.LastParameter());
 }
 
@@ -171,7 +171,7 @@ TEST_F(GeomAdaptor_Curve_Test, ToleranceBoundary_NegativeCase_ThrowsException)
 {
 
   const double aParam1 = 5.0;
-  const double aParam2 = 5.0 - Precision::Confusion() - 1e-10;
+  const double aParam2 = 5.0 - math::precision::Precision::Confusion() - 1e-10;
 
   GeomAdaptor_Curve anAdaptor;
   EXPECT_THROW(anAdaptor.Load(myLine, aParam1, aParam2), Standard_ConstructionError);
@@ -183,8 +183,8 @@ TEST_F(GeomAdaptor_Curve_Test, LoadWithoutParameters_Success)
   GeomAdaptor_Curve anAdaptor;
   EXPECT_NO_THROW(anAdaptor.Load(myCircle));
 
-  EXPECT_NEAR(anAdaptor.FirstParameter(), myCircle->FirstParameter(), Precision::Confusion());
-  EXPECT_NEAR(anAdaptor.LastParameter(), myCircle->LastParameter(), Precision::Confusion());
+  EXPECT_NEAR(anAdaptor.FirstParameter(), myCircle->FirstParameter(), math::precision::Precision::Confusion());
+  EXPECT_NEAR(anAdaptor.LastParameter(), myCircle->LastParameter(), math::precision::Precision::Confusion());
   EXPECT_TRUE(anAdaptor.IsPeriodic());
 }
 
@@ -200,7 +200,7 @@ TEST_F(GeomAdaptor_Curve_Test, DegeneratedCurve_MultipleLocations_Success)
 
     gp_Pnt aPoint1 = anAdaptor.Value(aParam);
     gp_Pnt aPoint2 = myLine->Value(aParam);
-    EXPECT_TRUE(aPoint1.IsEqual(aPoint2, Precision::Confusion()));
+    EXPECT_TRUE(aPoint1.IsEqual(aPoint2, math::precision::Precision::Confusion()));
   }
 }
 
@@ -208,7 +208,7 @@ TEST_F(GeomAdaptor_Curve_Test, BoundaryConditions_VerySmallInterval_Success)
 {
 
   const double aParam1 = 5.0;
-  const double aParam2 = 5.0 + Precision::Confusion() + 1e-12;
+  const double aParam2 = 5.0 + math::precision::Precision::Confusion() + 1e-12;
 
   GeomAdaptor_Curve anAdaptor;
   EXPECT_NO_THROW(anAdaptor.Load(myLine, aParam1, aParam2));

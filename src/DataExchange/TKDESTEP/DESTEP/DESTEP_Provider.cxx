@@ -87,7 +87,7 @@ namespace
     else
     {
       aModel->SetLocalLengthUnit(theLengthUnit);
-      Message::SendWarning()
+      System::log::Message::SendWarning()
         << "Warning in the DESTEP_Provider during writing"
         << "\t: The document has no information on Units. Using global parameter as initial Unit.";
     }
@@ -98,7 +98,7 @@ namespace
     if (!theStream.good())
     {
       TCollection_AsciiString aKeyInfo = theKey.IsEmpty() ? "<empty key>" : theKey;
-      Message::SendFail() << "Error: Output stream '" << aKeyInfo
+      System::log::Message::SendFail() << "Error: Output stream '" << aKeyInfo
                           << "' is not in good state for writing";
       return false;
     }
@@ -118,7 +118,7 @@ DESTEP_Provider::DESTEP_Provider(const occ::handle<DE_ConfigurationNode>& theNod
 bool DESTEP_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("reading the file ") + thePath;
   if (!DE_ValidationUtils::ValidateDocument(theDocument, aContext)
@@ -144,14 +144,14 @@ bool DESTEP_Provider::Read(const TCollection_AsciiString&       thePath,
 
   if (aReadStat != IFSelect_RetDone)
   {
-    Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
                         << "\t: abandon";
     return false;
   }
 
   if (!aReader.Transfer(theDocument, theProgress))
   {
-    Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
                         << "\t: Cannot read any relevant data from the STEP file";
     return false;
   }
@@ -161,7 +161,7 @@ bool DESTEP_Provider::Read(const TCollection_AsciiString&       thePath,
 bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("writing the file ") + thePath;
   if (!DE_ValidationUtils::ValidateDocument(theDocument, aContext)
@@ -193,7 +193,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
   TDF_Label aLabel;
   if (!aWriter.Transfer(theDocument, aParams, aMode, nullptr, theProgress))
   {
-    Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
+    System::log::Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
                         << "\t: The document cannot be translated or gives no result";
     return false;
   }
@@ -202,7 +202,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
   {
     case IFSelect_RetVoid:
     {
-      Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
                           << "\t: No file written";
       return false;
       ;
@@ -213,7 +213,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
     }
     default:
     {
-      Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DESTEP_Provider during writing the file " << thePath
                           << "\t: Error on writing file";
       return false;
     }
@@ -223,7 +223,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DESTEP_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Read(thePath, theDocument, aWS, theProgress);
@@ -231,7 +231,7 @@ bool DESTEP_Provider::Read(const TCollection_AsciiString&       thePath,
 
 bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Write(thePath, theDocument, aWS, theProgress);
@@ -240,7 +240,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DESTEP_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("reading the file ") + thePath;
   if (!validateNode(GetNode(), aContext))
@@ -258,14 +258,14 @@ bool DESTEP_Provider::Read(const TCollection_AsciiString&      thePath,
   occ::handle<StepData_StepModel> aModel = aReader.StepModel();
   if (aReadstat != IFSelect_RetDone)
   {
-    Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
                         << "\t: abandon, no model loaded";
     return false;
   }
   aModel->SetLocalLengthUnit(aNode->GlobalParameters.LengthUnit);
   if (aReader.TransferRoots(theProgress) <= 0)
   {
-    Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
                         << "\t:Cannot read any relevant data from the STEP file";
     return false;
   }
@@ -276,7 +276,7 @@ bool DESTEP_Provider::Read(const TCollection_AsciiString&      thePath,
 bool DESTEP_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("writing the file ") + thePath;
   if (!validateNode(GetNode(), aContext))
@@ -300,7 +300,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&      thePath,
   if (aTargetUnit == UnitsMethods_LengthUnit_Undefined)
   {
     aModel->SetWriteLengthUnit(1.0);
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Custom units are not supported by STEP format, but LengthUnit global parameter doesn't "
          "fit any predefined unit. Units will be scaled to Millimeters";
   }
@@ -316,7 +316,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&      thePath,
                                 theProgress);
   if (aWritestat != IFSelect_RetDone)
   {
-    Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DESTEP_Provider during reading the file " << thePath
                         << "\t: abandon, no model loaded";
     return false;
   }
@@ -327,7 +327,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&      thePath,
 
   if (aWriter.Write(thePath.ToCString()) != IFSelect_RetDone)
   {
-    Message::SendFail() << "DESTEP_Provider: Error on writing file";
+    System::log::Message::SendFail() << "DESTEP_Provider: Error on writing file";
     return false;
   }
   return true;
@@ -335,7 +335,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DESTEP_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Read(thePath, theShape, aWS, theProgress);
@@ -343,7 +343,7 @@ bool DESTEP_Provider::Read(const TCollection_AsciiString& thePath,
 
 bool DESTEP_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
-                            const Message_ProgressRange&   theProgress)
+                            const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Write(thePath, theShape, aWS, theProgress);
@@ -352,7 +352,7 @@ bool DESTEP_Provider::Write(const TCollection_AsciiString& thePath,
 bool DESTEP_Provider::Read(ReadStreamList&                      theStreams,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = "reading stream";
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, aContext))
@@ -385,7 +385,7 @@ bool DESTEP_Provider::Read(ReadStreamList&                      theStreams,
   bool isOk = aReader.ReadStream(aFirstKey.ToCString(), aStream);
   if (!isOk)
   {
-    Message::SendFail() << "Error: DESTEP_Provider failed to read stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DESTEP_Provider failed to read stream " << aFirstKey;
     return false;
   }
 
@@ -395,7 +395,7 @@ bool DESTEP_Provider::Read(ReadStreamList&                      theStreams,
 bool DESTEP_Provider::Write(WriteStreamList&                     theStreams,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = "writing stream";
   if (!DE_ValidationUtils::ValidateWriteStreamList(theStreams, aContext))
@@ -442,7 +442,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                     theStreams,
   bool isOk = aWriter.Transfer(theDocument, aParams, aMode, nullptr, theProgress);
   if (!isOk)
   {
-    Message::SendFail() << "Error: DESTEP_Provider failed to transfer document for stream "
+    System::log::Message::SendFail() << "Error: DESTEP_Provider failed to transfer document for stream "
                         << aFirstKey;
     return false;
   }
@@ -451,7 +451,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                     theStreams,
 
 bool DESTEP_Provider::Read(ReadStreamList&                      theStreams,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Read(theStreams, theDocument, aWS, theProgress);
@@ -459,7 +459,7 @@ bool DESTEP_Provider::Read(ReadStreamList&                      theStreams,
 
 bool DESTEP_Provider::Write(WriteStreamList&                     theStreams,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Write(theStreams, theDocument, aWS, theProgress);
@@ -468,7 +468,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                     theStreams,
 bool DESTEP_Provider::Read(ReadStreamList&                     theStreams,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   TCollection_AsciiString aContext = "reading stream";
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, aContext))
@@ -495,7 +495,7 @@ bool DESTEP_Provider::Read(ReadStreamList&                     theStreams,
   IFSelect_ReturnStatus aReadStat = aReader.ReadStream(aFirstKey.ToCString(), aStream);
   if (aReadStat != IFSelect_RetDone)
   {
-    Message::SendFail() << "Error: DESTEP_Provider failed to read from stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DESTEP_Provider failed to read from stream " << aFirstKey;
     return false;
   }
   occ::handle<StepData_StepModel> aModel = aReader.StepModel();
@@ -503,7 +503,7 @@ bool DESTEP_Provider::Read(ReadStreamList&                     theStreams,
 
   if (aReader.TransferRoots(theProgress) <= 0)
   {
-    Message::SendFail() << "Error: DESTEP_Provider found no transferable roots in stream "
+    System::log::Message::SendFail() << "Error: DESTEP_Provider found no transferable roots in stream "
                         << aFirstKey;
     return false;
   }
@@ -515,7 +515,7 @@ bool DESTEP_Provider::Read(ReadStreamList&                     theStreams,
 bool DESTEP_Provider::Write(WriteStreamList&                    theStreams,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   TCollection_AsciiString aContext = "writing stream";
   if (!DE_ValidationUtils::ValidateWriteStreamList(theStreams, aContext))
@@ -550,7 +550,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                    theStreams,
   if (aTargetUnit == UnitsMethods_LengthUnit_Undefined)
   {
     aModel->SetWriteLengthUnit(1.0);
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Custom units are not supported by STEP format, but LengthUnit global parameter doesn't "
          "fit any predefined unit. Units will be scaled to Millimeters";
   }
@@ -568,7 +568,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                    theStreams,
                                                       theProgress);
   if (aWriteStat != IFSelect_RetDone)
   {
-    Message::SendFail() << "Error: DESTEP_Provider failed to transfer shape for stream "
+    System::log::Message::SendFail() << "Error: DESTEP_Provider failed to transfer shape for stream "
                         << aFirstKey;
     return false;
   }
@@ -580,7 +580,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                    theStreams,
 
   if (!aWriter.WriteStream(aStream))
   {
-    Message::SendFail() << "Error: DESTEP_Provider failed to write to stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DESTEP_Provider failed to write to stream " << aFirstKey;
     return false;
   }
 
@@ -589,7 +589,7 @@ bool DESTEP_Provider::Write(WriteStreamList&                    theStreams,
 
 bool DESTEP_Provider::Read(ReadStreamList&              theStreams,
                            TopoDS_Shape&                theShape,
-                           const Message_ProgressRange& theProgress)
+                           const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Read(theStreams, theShape, aWS, theProgress);
@@ -597,7 +597,7 @@ bool DESTEP_Provider::Read(ReadStreamList&              theStreams,
 
 bool DESTEP_Provider::Write(WriteStreamList&             theStreams,
                             const TopoDS_Shape&          theShape,
-                            const Message_ProgressRange& theProgress)
+                            const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Write(theStreams, theShape, aWS, theProgress);
@@ -617,7 +617,7 @@ void DESTEP_Provider::personizeWS(occ::handle<XSControl_WorkSession>& theWS)
 {
   if (theWS.IsNull())
   {
-    Message::SendWarning() << "Warning: DESTEP_Provider :"
+    System::log::Message::SendWarning() << "Warning: DESTEP_Provider :"
                            << " Null work session, use internal temporary session";
     theWS = new XSControl_WorkSession();
   }

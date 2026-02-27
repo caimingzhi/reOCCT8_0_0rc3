@@ -105,7 +105,7 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
   if (dedans)
   {
     Rad = Cyl.Radius() - dis1;
-    if (std::abs(Rad) <= Precision::Confusion())
+    if (std::abs(Rad) <= math::precision::Precision::Confusion())
       pointu = true;
     if (Rad < 0)
     {
@@ -226,7 +226,7 @@ bool ChFiKPart_MakeChAsym(TopOpeBRepDS_DataStructure&         DStr,
 
   Pt.SetCoord(Or.X() + ConRad * Dx.X(), Or.Y() + ConRad * Dx.Y(), Or.Z() + ConRad * Dx.Z());
   ElSLib::Parameters(Cyl, Pt, u, v);
-  double tol           = Precision::PConfusion();
+  double tol           = math::precision::Precision::PConfusion();
   bool   careaboutsens = false;
   if (std::abs(lu - fu - 2 * M_PI) < tol)
     careaboutsens = true;

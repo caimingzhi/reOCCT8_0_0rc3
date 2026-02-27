@@ -16,7 +16,7 @@ public:
 protected:
   Standard_EXPORT bool performMesh(std::istream&                  theStream,
                                    const TCollection_AsciiString& theFile,
-                                   const Message_ProgressRange&   theProgress,
+                                   const System::log::Message_ProgressRange&   theProgress,
                                    const bool                     theToProbe) override;
 
 protected:

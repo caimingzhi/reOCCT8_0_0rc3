@@ -24,7 +24,7 @@ DEBREP_Provider::DEBREP_Provider(const occ::handle<DE_ConfigurationNode>& theNod
 bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Read(thePath, theDocument, theProgress);
@@ -33,7 +33,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
 bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
@@ -41,11 +41,11 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   if (theDocument.IsNull())
   {
-    Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
                         << "\t: theDocument shouldn't be null";
     return false;
   }
@@ -61,7 +61,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString&       thePath,
 
 bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   TopoDS_Shape                    aShape;
   NCollection_Sequence<TDF_Label> aLabels;
@@ -69,7 +69,7 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
   aSTool->GetFreeShapes(aLabels);
   if (aLabels.Length() <= 0)
   {
-    Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                         << "\t: Document contain no shapes";
     return false;
   }
@@ -77,7 +77,7 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
   occ::handle<DEBREP_ConfigurationNode> aNode = occ::down_cast<DEBREP_ConfigurationNode>(GetNode());
   if (aNode->GlobalParameters.LengthUnit != 1.0)
   {
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning in the DEBREP_Provider during writing the file " << thePath
       << "\t: Target Units for writing were changed, but current format doesn't support scaling";
   }
@@ -104,7 +104,7 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DEBREP_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Read(thePath, theShape, theProgress);
@@ -113,7 +113,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString&      thePath,
 bool DEBREP_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Write(thePath, theShape, theProgress);
@@ -121,17 +121,17 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   bool isBinaryFormat = true;
   {
 
-    const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
     std::shared_ptr<std::istream>      aFile =
       aFileSystem->OpenIStream(thePath, std::ios::in | std::ios::binary);
     if (aFile.get() == nullptr)
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
                           << "\t: Cannot read the file";
       return false;
     }
@@ -140,7 +140,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
     aFile->read(aStringBuf, 255);
     if (aFile->fail())
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
                           << "\t: Cannot read the file";
       return false;
     }
@@ -151,7 +151,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
   {
     if (!BinTools::Read(theShape, thePath.ToCString(), theProgress))
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
                           << "\t: Cannot read from the file";
       return false;
     }
@@ -160,7 +160,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
   {
     if (!BRepTools::Read(theShape, thePath.ToCString(), BRep_Builder(), theProgress))
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
                           << "\t: Cannot read from the file";
       return false;
     }
@@ -171,18 +171,18 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
 
 bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
-                            const Message_ProgressRange&   theProgress)
+                            const System::log::Message_ProgressRange&   theProgress)
 {
   if (GetNode().IsNull() || !GetNode()->IsKind(STANDARD_TYPE(DEBREP_ConfigurationNode)))
   {
-    Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                         << "\t: Incorrect or empty Configuration Node";
     return false;
   }
   occ::handle<DEBREP_ConfigurationNode> aNode = occ::down_cast<DEBREP_ConfigurationNode>(GetNode());
   if (aNode->GlobalParameters.LengthUnit != 1.0)
   {
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning in the DEBREP_Provider during writing the file " << thePath
       << "\t: Target Units for writing were changed, but current format doesn't support scaling";
   }
@@ -193,14 +193,14 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
         || aNode->InternalParameters.WriteVersionBin
              < static_cast<BinTools_FormatVersion>(BinTools_FormatVersion_LOWER))
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                           << "\t: Unknown format version";
       return false;
     }
     if (aNode->InternalParameters.WriteNormals
         && aNode->InternalParameters.WriteVersionBin < BinTools_FormatVersion_VERSION_4)
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                           << "\t: Vertex normals require binary format version 4 or later";
       return false;
     }
@@ -212,7 +212,7 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
                          aNode->InternalParameters.WriteVersionBin,
                          theProgress))
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                           << "\t: Cannot write the file";
       return false;
     }
@@ -224,14 +224,14 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
         || aNode->InternalParameters.WriteVersionAscii
              < static_cast<TopTools_FormatVersion>(TopTools_FormatVersion_LOWER))
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                           << "\t: Unknown format version";
       return false;
     }
     if (aNode->InternalParameters.WriteNormals
         && aNode->InternalParameters.WriteVersionAscii < TopTools_FormatVersion_VERSION_3)
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                           << "\t: Error: vertex normals require ascii format version 3 or later";
       return false;
     }
@@ -242,7 +242,7 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
                           aNode->InternalParameters.WriteVersionAscii,
                           theProgress))
     {
-      Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEBREP_Provider during writing the file " << thePath
                           << "\t: Cannot write the file";
       return false;
     }

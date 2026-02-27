@@ -14,7 +14,7 @@ IMPLEMENT_DOMSTRING(ChildrenString, "children")
 IMPLEMENT_DOMSTRING(FathersString, "fathers")
 
 XmlMXCAFDoc_GraphNodeDriver::XmlMXCAFDoc_GraphNodeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "GraphNode")
 {
 }

@@ -33,7 +33,7 @@ void XmlMDF::FromTo(const occ::handle<TDF_Data>&            theData,
                     XmlObjMgt_Element&                      theElement,
                     XmlObjMgt_SRelocationTable&             theRelocTable,
                     const occ::handle<XmlMDF_ADriverTable>& theDrivers,
-                    const Message_ProgressRange&            theRange)
+                    const System::log::Message_ProgressRange&            theRange)
 {
   UnsuppTypesMap().Clear();
 
@@ -45,7 +45,7 @@ int XmlMDF::WriteSubTree(const TDF_Label&                        theLabel,
                          XmlObjMgt_Element&                      theElement,
                          XmlObjMgt_SRelocationTable&             theRelocTable,
                          const occ::handle<XmlMDF_ADriverTable>& theDrivers,
-                         const Message_ProgressRange&            theRange)
+                         const System::log::Message_ProgressRange&            theRange)
 {
   XmlObjMgt_Document aDoc = theElement.getOwnerDocument();
 
@@ -92,7 +92,7 @@ int XmlMDF::WriteSubTree(const TDF_Label&                        theLabel,
   {
   }
   itr2.Initialize(theLabel);
-  Message_ProgressScope aPS(theRange, "Writing sub-tree", child_count, true);
+  System::log::Message_ProgressScope aPS(theRange, "Writing sub-tree", child_count, true);
   for (; itr2.More() && aPS.More(); itr2.Next())
   {
     const TDF_Label& aChildLab = itr2.Value();
@@ -112,7 +112,7 @@ bool XmlMDF::FromTo(const XmlObjMgt_Element&                theElement,
                     occ::handle<TDF_Data>&                  theData,
                     XmlObjMgt_RRelocationTable&             theRelocTable,
                     const occ::handle<XmlMDF_ADriverTable>& theDrivers,
-                    const Message_ProgressRange&            theRange)
+                    const System::log::Message_ProgressRange&            theRange)
 {
   TDF_Label aRootLab = theData->Root();
   NCollection_DataMap<TCollection_AsciiString, occ::handle<XmlMDF_ADriver>> aDriverMap;
@@ -147,14 +147,14 @@ int XmlMDF::ReadSubTree(
   const TDF_Label&                                                                 theLabel,
   XmlObjMgt_RRelocationTable&                                                      theRelocTable,
   const NCollection_DataMap<TCollection_AsciiString, occ::handle<XmlMDF_ADriver>>& theDriverMap,
-  const Message_ProgressRange&                                                     theRange)
+  const System::log::Message_ProgressRange&                                                     theRange)
 {
 
   int count = 0;
 
   LDOM_Node             theNode = theElement.getFirstChild();
   XmlObjMgt_Element     anElem  = (const XmlObjMgt_Element&)theNode;
-  Message_ProgressScope aPS(theRange, "Reading sub-tree", 2, true);
+  System::log::Message_ProgressScope aPS(theRange, "Reading sub-tree", 2, true);
   while (!anElem.isNull())
   {
     if (anElem.getNodeType() == LDOM_Node::ELEMENT_NODE)
@@ -187,7 +187,7 @@ int XmlMDF::ReadSubTree(
 
 #ifdef DATATYPE_MIGRATION
         TCollection_AsciiString newName;
-        if (Storage_Schema::CheckTypeMigration(aName, newName))
+        if (app::storage::Storage_Schema::CheckTypeMigration(aName, newName))
         {
   #ifdef OCCT_DEBUG
           std::cout << "CheckTypeMigration:OldType = " << aName.GetString()
@@ -275,7 +275,7 @@ int XmlMDF::ReadSubTree(
 }
 
 void XmlMDF::AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
-                        const occ::handle<Message_Messenger>&   aMessageDriver)
+                        const occ::handle<System::log::Message_Messenger>&   aMessageDriver)
 {
   aDriverTable->AddDriver(new XmlMDF_TagSourceDriver(aMessageDriver));
   aDriverTable->AddDriver(new XmlMDF_ReferenceDriver(aMessageDriver));

@@ -117,7 +117,7 @@ int FUN_AnalyzemapVon1E(
   else
   {
 
-    double tol = Precision::Confusion();
+    double tol = math::precision::Precision::Confusion();
     for (int i = 1; i <= nV; i++)
     {
       const TopoDS_Vertex& vi = TopoDS::Vertex(mapVon1E.FindKey(i));

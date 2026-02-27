@@ -53,7 +53,7 @@ namespace
                                 const double                     Vmin,
                                 const double                     Vsup)
   {
-    constexpr double Tolerance = Precision::PConfusion();
+    constexpr double Tolerance = math::precision::Precision::PConfusion();
 
     myGeomAdaptor.Load(Surface, Umin, Usup, Vmin, Vsup);
     myExtPS.Initialize(myGeomAdaptor, Umin, Usup, Vmin, Vsup, Tolerance, Tolerance);
@@ -183,7 +183,7 @@ static bool FindPoint(const gp_Pnt2d& theFirstPoint,
     anormvec.Normalize();
     double adot1 = anormvec.Dot(anOtherVecNormal);
 
-    if (fabs(adot1) < Precision::Angular())
+    if (fabs(adot1) < math::precision::Precision::Angular())
       continue;
     double adist = 0.;
 
@@ -207,7 +207,7 @@ static bool FindPoint(const gp_Pnt2d& theFirstPoint,
 
       aDotX    = aVec.Dot(acurvec);
       anAngleX = aVec.Angle(acurvec);
-      aPC      = Precision::PConfusion();
+      aPC      = math::precision::Precision::PConfusion();
 
       if (aDotX > 0. && fabs(anAngleX) < aPC)
       {
@@ -288,7 +288,7 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
       occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
 
       return (rlin->HasFirstPoint() ? rlin->FirstPoint().ParameterOnLine()
-                                    : -Precision::Infinite());
+                                    : -math::precision::Precision::Infinite());
     }
 
     case IntPatch_Walking:
@@ -307,7 +307,7 @@ double GeomInt_LineTool::FirstParameter(const occ::handle<IntPatch_Line>& L)
         case IntPatch_Lin:
         case IntPatch_Parabola:
         case IntPatch_Hyperbola:
-          return -Precision::Infinite();
+          return -math::precision::Precision::Infinite();
         default:
           break;
       }
@@ -337,7 +337,7 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
     {
       occ::handle<IntPatch_RLine> rlin = occ::down_cast<IntPatch_RLine>(L);
 
-      return (rlin->HasLastPoint() ? rlin->LastPoint().ParameterOnLine() : Precision::Infinite());
+      return (rlin->HasLastPoint() ? rlin->LastPoint().ParameterOnLine() : math::precision::Precision::Infinite());
     }
 
     case IntPatch_Walking:
@@ -356,7 +356,7 @@ double GeomInt_LineTool::LastParameter(const occ::handle<IntPatch_Line>& L)
         case IntPatch_Lin:
         case IntPatch_Parabola:
         case IntPatch_Hyperbola:
-          return Precision::Infinite();
+          return math::precision::Precision::Infinite();
         case IntPatch_Circle:
         case IntPatch_Ellipse:
           return 2. * M_PI;
@@ -407,7 +407,7 @@ bool GeomInt_LineTool::DecompositionOfWLine(
   int*                        anArrayOfLineType = anArrayOfLineTypeArr;
 
   nblines = 0;
-  aTol    = Precision::Confusion();
+  aTol    = math::precision::Precision::Confusion();
 
   aSurf1 = theSurface1->Surface();
   aSurf1->Bounds(umin, umax, vmin, vmax);
@@ -667,7 +667,7 @@ bool GeomInt_LineTool::DecompositionOfWLine(
             double   anewU = (bIsUBoundary) ? anotherPar : U;
             double   anewV = (bIsUBoundary) ? V : anotherPar;
 
-            if (((adist1 - adist2) > Precision::PConfusion()) && (adist2 < (aPeriod / 4.)))
+            if (((adist1 - adist2) > math::precision::Precision::PConfusion()) && (adist2 < (aPeriod / 4.)))
             {
               bCheckAngle1 = true;
               aNewVec      = gp_Vec2d(gp_Pnt2d(nU1, nV1), gp_Pnt2d(anewU, anewV));

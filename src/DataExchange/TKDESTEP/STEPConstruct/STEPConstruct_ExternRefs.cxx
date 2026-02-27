@@ -362,17 +362,17 @@ const char* STEPConstruct_ExternRefs::FileName(const int num) const
   }
   const char* oldFileName = nullptr;
 
-  OSD_Path mainfile(WS()->LoadedFile());
+  System::os::OSD_Path mainfile(WS()->LoadedFile());
   mainfile.SetName("");
   mainfile.SetExtension("");
   TCollection_AsciiString dpath;
   mainfile.SystemName(dpath);
   if (aCStringFileName && aCStringFileName[0])
   {
-    TCollection_AsciiString fullname = OSD_Path::AbsolutePath(dpath, aCStringFileName);
+    TCollection_AsciiString fullname = System::os::OSD_Path::AbsolutePath(dpath, aCStringFileName);
     if (fullname.Length() <= 0)
       fullname = aCStringFileName;
-    if (!OSD_File(fullname).Exists())
+    if (!System::os::OSD_File(fullname).Exists())
     {
       oldFileName      = aCStringFileName;
       aCStringFileName = nullptr;
@@ -405,10 +405,10 @@ const char* STEPConstruct_ExternRefs::FileName(const int num) const
       }
     }
   }
-  TCollection_AsciiString fullname = OSD_Path::AbsolutePath(dpath, aCStringFileName);
+  TCollection_AsciiString fullname = System::os::OSD_Path::AbsolutePath(dpath, aCStringFileName);
   if (fullname.Length() <= 0)
     fullname = aCStringFileName;
-  if (!OSD_File(fullname).Exists())
+  if (!System::os::OSD_File(fullname).Exists())
   {
     if (oldFileName)
     {

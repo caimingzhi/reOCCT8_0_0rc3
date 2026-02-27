@@ -6,9 +6,16 @@
 
 #include <mutex>
 
+namespace System { namespace log {
 class Message_ProgressRange;
-class Message_ProgressScope;
+}} // namespace System::log
 
+namespace System { namespace log {
+class Message_ProgressScope;
+}} // namespace System::log
+
+
+namespace System { namespace log {
 class Message_ProgressIndicator : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Message_ProgressIndicator, Standard_Transient)
@@ -45,11 +52,13 @@ private:
   friend class Message_ProgressScope;
   friend class Message_ProgressRange;
 };
+}} // namespace System::log
+
 
 #include <Message_ProgressScope.hpp>
 
-inline void Message_ProgressIndicator::Increment(const double                 theStep,
-                                                 const Message_ProgressScope& theScope)
+inline void System::log::Message_ProgressIndicator::Increment(const double                 theStep,
+                                                 const System::log::Message_ProgressScope& theScope)
 {
 
   std::lock_guard<std::mutex> aLock(myMutex);

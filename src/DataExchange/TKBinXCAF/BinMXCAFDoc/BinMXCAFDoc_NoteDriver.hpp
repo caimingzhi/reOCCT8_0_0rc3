@@ -8,7 +8,10 @@
 #include <Standard_Transient.hpp>
 #include <NCollection_IndexedMap.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
@@ -27,5 +30,5 @@ public:
   DEFINE_STANDARD_RTTIEXT(BinMXCAFDoc_NoteDriver, BinMDF_ADriver)
 
 protected:
-  BinMXCAFDoc_NoteDriver(const occ::handle<Message_Messenger>& theMsgDriver, const char* theName);
+  BinMXCAFDoc_NoteDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver, const char* theName);
 };

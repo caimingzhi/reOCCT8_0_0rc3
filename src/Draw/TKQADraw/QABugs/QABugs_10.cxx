@@ -231,7 +231,7 @@ static int OCC486(Draw_Interpretor& di, int argc, const char** argv)
     }
     gp_Pnt P3D(Draw::Atof(argv[2]), Draw::Atof(argv[3]), Draw::Atof(argv[4]));
 
-    constexpr double Tol = Precision::PConfusion();
+    constexpr double Tol = math::precision::Precision::PConfusion();
     Extrema_ExtPS    myExtPS;
     if (argc > 5)
       du = Draw::Atof(argv[5]);
@@ -272,7 +272,7 @@ static int OCC486(Draw_Interpretor& di, int argc, const char** argv)
       di << "ExtremaDistance = " << distMin << "\n";
       di << "CheckDistance = " << aCheckDist << "\n";
 
-      if (fabs(distMin - aCheckDist) < Precision::Confusion())
+      if (fabs(distMin - aCheckDist) < math::precision::Precision::Confusion())
         return 0;
       else
         return 1;
@@ -698,7 +698,7 @@ static int OCC825(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Geom_BezierSurface>  BezSurf = new Geom_BezierSurface(poles);
   occ::handle<Geom_BSplineSurface> BSpSurf = GeomConvert::SurfaceToBSplineSurface(BezSurf);
-  BRepBuilderAPI_MakeFace          faceMaker(BSpSurf, Precision::Confusion());
+  BRepBuilderAPI_MakeFace          faceMaker(BSpSurf, math::precision::Precision::Confusion());
   const TopoDS_Face&               face = faceMaker.Face();
 
   gp_Pnt                     pnt(0, size, 0);

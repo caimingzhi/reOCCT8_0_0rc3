@@ -560,13 +560,13 @@ void GeomTools_SurfaceSet::Dump(Standard_OStream& OS) const
 }
 
 void GeomTools_SurfaceSet::Write(Standard_OStream&            OS,
-                                 const Message_ProgressRange& theProgress) const
+                                 const System::log::Message_ProgressRange& theProgress) const
 {
   std::streamsize prec = OS.precision(17);
 
   int i, nbsurf = myMap.Extent();
   OS << "Surfaces " << nbsurf << "\n";
-  Message_ProgressScope aPS(theProgress, "Surfaces", nbsurf);
+  System::log::Message_ProgressScope aPS(theProgress, "Surfaces", nbsurf);
   for (i = 1; i <= nbsurf && aPS.More(); i++, aPS.Next())
   {
     PrintSurface(occ::down_cast<Geom_Surface>(myMap(i)), OS, true);
@@ -909,7 +909,7 @@ occ::handle<Geom_Surface> GeomTools_SurfaceSet::ReadSurface(Standard_IStream& IS
   return S;
 }
 
-void GeomTools_SurfaceSet::Read(Standard_IStream& IS, const Message_ProgressRange& theProgress)
+void GeomTools_SurfaceSet::Read(Standard_IStream& IS, const System::log::Message_ProgressRange& theProgress)
 {
   char buffer[255];
   IS >> buffer;
@@ -921,7 +921,7 @@ void GeomTools_SurfaceSet::Read(Standard_IStream& IS, const Message_ProgressRang
 
   int i, nbsurf;
   IS >> nbsurf;
-  Message_ProgressScope aPS(theProgress, "Surfaces", nbsurf);
+  System::log::Message_ProgressScope aPS(theProgress, "Surfaces", nbsurf);
   for (i = 1; i <= nbsurf && aPS.More(); i++, aPS.Next())
   {
     occ::handle<Geom_Surface> S = GeomTools_SurfaceSet::ReadSurface(IS);

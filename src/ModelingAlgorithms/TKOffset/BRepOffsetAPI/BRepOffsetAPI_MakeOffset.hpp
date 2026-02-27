@@ -40,7 +40,7 @@ public:
   Standard_EXPORT void Perform(const double Offset, const double Alt = 0.0);
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Generated(const TopoDS_Shape& S) override;
 

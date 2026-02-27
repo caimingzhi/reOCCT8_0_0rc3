@@ -45,7 +45,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Pln& S)
   myIsPar = false;
   myNbExt = 0;
 
-  if (C.Direction().IsNormal(S.Axis().Direction(), Precision::Angular()))
+  if (C.Direction().IsNormal(S.Axis().Direction(), math::precision::Precision::Angular()))
   {
     mySqDist = new NCollection_HArray1<double>(1, 1);
     mySqDist->SetValue(1, S.SquareDistance(C));
@@ -70,7 +70,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
   bool isParallel = false;
 
   double         radius = S.Radius();
-  Extrema_ExtElC Extrem(gp_Lin(Pos.Axis()), C, Precision::Angular());
+  Extrema_ExtElC Extrem(gp_Lin(Pos.Axis()), C, math::precision::Precision::Angular());
   if (Extrem.IsParallel())
   {
     isParallel = true;
@@ -84,7 +84,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
     gp_Pnt PonAxis = myPOnC1.Value();
     gp_Pnt PC      = myPOnC2.Value();
 
-    if (radius - PonAxis.Distance(PC) > Precision::PConfusion())
+    if (radius - PonAxis.Distance(PC) > math::precision::Precision::PConfusion())
     {
       IntAna_Quadric      theQuadric(S);
       IntAna_IntConicQuad Inters(C, theQuadric);
@@ -119,7 +119,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Cylinder& S)
     else
     {
 
-      Extrema_ExtPElS ExPS(PC, S, Precision::Confusion());
+      Extrema_ExtPElS ExPS(PC, S, math::precision::Precision::Confusion());
       if (ExPS.IsDone())
       {
         myNbExt  = ExPS.NbExt();
@@ -187,7 +187,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Sphere& S)
 
   gp_Pnt aCenter = S.Location();
 
-  Extrema_ExtPElC Extrem(aCenter, C, Precision::Angular(), RealFirst(), RealLast());
+  Extrema_ExtPElC Extrem(aCenter, C, math::precision::Precision::Angular(), RealFirst(), RealLast());
 
   int i;
   if (Extrem.IsDone() && Extrem.NbExt() > 0)
@@ -220,7 +220,7 @@ void Extrema_ExtElCS::Perform(const gp_Lin& C, const gp_Sphere& S)
       }
     }
 
-    Extrema_ExtPElS ExPS(myPOnC1.Value(), S, Precision::Confusion());
+    Extrema_ExtPElS ExPS(myPOnC1.Value(), S, math::precision::Precision::Confusion());
     if (ExPS.IsDone())
     {
       if (aStartIdx == 0)
@@ -271,7 +271,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Pln& S)
 
   bool isParallel = false;
 
-  if (NCirc.IsParallel(NPln, Precision::Angular()))
+  if (NCirc.IsParallel(NPln, math::precision::Precision::Angular()))
   {
     isParallel = true;
   }
@@ -293,7 +293,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Pln& S)
 
     myNbExt = 2;
 
-    IntAna_IntConicQuad anInter(C, S, Precision::Angular(), Precision::Confusion());
+    IntAna_IntConicQuad anInter(C, S, math::precision::Precision::Angular(), math::precision::Precision::Confusion());
 
     if (anInter.IsDone() && anInter.IsInQuadric())
     {
@@ -387,7 +387,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Cylinder& S)
     int              aNbExt = anExtC.NbExt();
     int              i;
     int              aCurI    = 1;
-    constexpr double aTolConf = Precision::Confusion();
+    constexpr double aTolConf = math::precision::Precision::Confusion();
     double           aCylRad  = S.Radius();
 
     IntAna_Quadric      aCylQuad(S);
@@ -515,7 +515,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
   myIsPar = false;
   myNbExt = 0;
 
-  if (gp_Lin(C.Axis()).SquareDistance(S.Location()) < Precision::SquareConfusion())
+  if (gp_Lin(C.Axis()).SquareDistance(S.Location()) < math::precision::Precision::SquareConfusion())
   {
 
     myIsPar = true;
@@ -588,7 +588,7 @@ void Extrema_ExtElCS::Perform(const gp_Circ& C, const gp_Sphere& S)
   for (int i = 1; i <= aNbExt; ++i)
   {
     double aDiff = anExtC.SquareDistance(i) - aMinSqDist;
-    if (aDiff < Precision::SquareConfusion())
+    if (aDiff < math::precision::Precision::SquareConfusion())
       aSols.Append(i);
   }
 
@@ -640,7 +640,7 @@ void Extrema_ExtElCS::Perform(const gp_Hypr& C, const gp_Pln& S)
   gp_Dir NHypr = Pos.Direction();
   gp_Dir NPln  = S.Axis().Direction();
 
-  if (NHypr.IsParallel(NPln, Precision::Angular()))
+  if (NHypr.IsParallel(NPln, math::precision::Precision::Angular()))
   {
 
     mySqDist = new NCollection_HArray1<double>(1, 1);

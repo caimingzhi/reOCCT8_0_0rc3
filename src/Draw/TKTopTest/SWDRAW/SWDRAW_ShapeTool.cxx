@@ -217,7 +217,7 @@ static int samerange(Draw_Interpretor& di, int argc, const char** argv)
     for (TopExp_Explorer exp(Shape, TopAbs_EDGE); exp.More(); exp.Next())
     {
       TopoDS_Edge edge = TopoDS::Edge(exp.Current());
-      BRepLib::SameRange(edge, Precision::PConfusion());
+      BRepLib::SameRange(edge, math::precision::Precision::PConfusion());
     }
   }
   else if (argc == 7)
@@ -233,7 +233,7 @@ static int samerange(Draw_Interpretor& di, int argc, const char** argv)
     double                    oldLast       = Draw::Atof(argv[4]);
     double                    current_first = Draw::Atof(argv[5]);
     double                    current_last  = Draw::Atof(argv[6]);
-    constexpr double          Tol           = Precision::PConfusion();
+    constexpr double          Tol           = math::precision::Precision::PConfusion();
     occ::handle<Geom2d_Curve> NewC2d;
     GeomLib::SameRange(Tol, C, oldFirst, oldLast, current_first, current_last, NewC2d);
     DrawTrSurf::Set(argv[1], NewC2d);

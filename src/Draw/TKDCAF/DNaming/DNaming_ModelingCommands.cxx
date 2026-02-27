@@ -302,7 +302,7 @@ static int DNaming_AddBox(Draw_Interpretor& theDI, int theNb, const char** theAr
     DDF::ReturnLabel(theDI, anObj->Label());
     return 0;
   }
-  Message::SendFail() << "DNaming_AddBox : Error";
+  System::log::Message::SendFail() << "DNaming_AddBox : Error";
   return 1;
 }
 
@@ -361,7 +361,7 @@ static int DNaming_BoxDX(Draw_Interpretor& theDI, int theNb, const char** theArg
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_BoxDX : Error";
+  System::log::Message::SendFail() << "DNaming_BoxDX : Error";
   return 1;
 }
 
@@ -393,7 +393,7 @@ static int DNaming_BoxDY(Draw_Interpretor& theDI, int theNb, const char** theArg
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_BoxDY : Error";
+  System::log::Message::SendFail() << "DNaming_BoxDY : Error";
   return 1;
 }
 
@@ -425,7 +425,7 @@ static int DNaming_BoxDZ(Draw_Interpretor& theDI, int theNb, const char** theArg
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_BoxDZ : Error";
+  System::log::Message::SendFail() << "DNaming_BoxDZ : Error";
   return 1;
 }
 
@@ -497,7 +497,7 @@ static int DNaming_SolveFlatFrom(Draw_Interpretor&, int theNb, const char** theA
           int aRes = ComputeFunction(aFun, logbook);
           if (aRes != 0)
           {
-            Message::SendFail() << "DNaming_SolveFlatFrom: Driver failed at label = " << entry;
+            System::log::Message::SendFail() << "DNaming_SolveFlatFrom: Driver failed at label = " << entry;
             return 1;
           }
 #ifdef OCCT_DEBUG
@@ -515,7 +515,7 @@ static int DNaming_SolveFlatFrom(Draw_Interpretor&, int theNb, const char** theA
     return 0;
   }
 ERR:
-  Message::SendFail() << "DNaming_SolveFlatFrom : Error";
+  System::log::Message::SendFail() << "DNaming_SolveFlatFrom : Error";
   return 1;
 }
 
@@ -543,7 +543,7 @@ static int DNaming_InitLogBook(Draw_Interpretor&, int theNb, const char** theArg
     }
     return 0;
   }
-  Message::SendFail() << "DNaming_InitLogBook : Error - No document ==> " << theNb;
+  System::log::Message::SendFail() << "DNaming_InitLogBook : Error - No document ==> " << theNb;
   return 1;
 }
 
@@ -572,7 +572,7 @@ static int DNaming_CheckLogBook(Draw_Interpretor&, int theNb, const char** theAr
     }
     return 0;
   }
-  Message::SendFail() << "DNaming_CheckLogBook : Error - No document ==> " << theNb;
+  System::log::Message::SendFail() << "DNaming_CheckLogBook : Error - No document ==> " << theNb;
   return 1;
 }
 
@@ -598,7 +598,7 @@ static int DNaming_ComputeFun(Draw_Interpretor&, int theNb, const char** theArg)
       int                            aRes    = ComputeFunction(aFun, logbook);
       if (aRes != 0)
       {
-        Message::SendFail() << "DNaming_ComputeFun : No Driver or Driver failed";
+        System::log::Message::SendFail() << "DNaming_ComputeFun : No Driver or Driver failed";
         return 1;
       }
 #ifdef OCCT_DEBUG
@@ -608,7 +608,7 @@ static int DNaming_ComputeFun(Draw_Interpretor&, int theNb, const char** theArg)
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_ComputeFun : Error";
+  System::log::Message::SendFail() << "DNaming_ComputeFun : Error";
   return 1;
 }
 
@@ -701,7 +701,7 @@ static int DNaming_AttachShape(Draw_Interpretor& di, int nb, const char** a)
       }
     }
   }
-  Message::SendFail() << "DNaming_AttachShape : Error";
+  System::log::Message::SendFail() << "DNaming_AttachShape : Error";
   return 1;
 }
 
@@ -771,7 +771,7 @@ static int DNaming_XAttachShape(Draw_Interpretor& di, int nb, const char** a)
       }
     }
   }
-  Message::SendFail() << "DNaming_XAttachShape : Error";
+  System::log::Message::SendFail() << "DNaming_XAttachShape : Error";
   return 1;
 }
 
@@ -812,7 +812,7 @@ static int DNaming_AddCylinder(Draw_Interpretor& theDI, int theNb, const char** 
     DDF::ReturnLabel(theDI, anObj->Label());
     return 0;
   }
-  Message::SendFail() << "DNaming_AddCylinder : Error";
+  System::log::Message::SendFail() << "DNaming_AddCylinder : Error";
   return 1;
 }
 
@@ -844,7 +844,7 @@ static int DNaming_CylRad(Draw_Interpretor& theDI, int theNb, const char** theAr
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_CylRadius : Error";
+  System::log::Message::SendFail() << "DNaming_CylRadius : Error";
   return 1;
 }
 
@@ -877,7 +877,7 @@ static int DNaming_AddFuse(Draw_Interpretor& theDI, int theNb, const char** theA
     DDF::ReturnLabel(theDI, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DModel_AddFuse : Error";
+  System::log::Message::SendFail() << "DModel_AddFuse : Error";
   return 1;
 }
 
@@ -910,7 +910,7 @@ static int DNaming_AddCut(Draw_Interpretor& theDI, int theNb, const char** theAr
     DDF::ReturnLabel(theDI, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DModel_AddCut : Error";
+  System::log::Message::SendFail() << "DModel_AddCut : Error";
   return 1;
 }
 
@@ -943,7 +943,7 @@ static int DNaming_AddCommon(Draw_Interpretor& theDI, int theNb, const char** th
     DDF::ReturnLabel(theDI, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DModel_AddComm : Error";
+  System::log::Message::SendFail() << "DModel_AddComm : Error";
   return 1;
 }
 
@@ -976,7 +976,7 @@ static int DNaming_AddSection(Draw_Interpretor& theDI, int theNb, const char** t
     DDF::ReturnLabel(theDI, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DModel_AddSection : Error";
+  System::log::Message::SendFail() << "DModel_AddSection : Error";
   return 1;
 }
 
@@ -984,7 +984,7 @@ static int DNaming_AddFillet(Draw_Interpretor& theDI, int theNb, const char** th
 {
   if (theNb < 5)
   {
-    Message::SendFail() << "DNaming_AddFillet(): Wrong number of arguments";
+    System::log::Message::SendFail() << "DNaming_AddFillet(): Wrong number of arguments";
     return 1;
   }
 
@@ -1061,7 +1061,7 @@ static int DNaming_PTranslateDXYZ(Draw_Interpretor& di, int nb, const char** a)
     DDF::ReturnLabel(di, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DNaming_Translate : Error";
+  System::log::Message::SendFail() << "DNaming_Translate : Error";
   return 1;
 }
 
@@ -1101,7 +1101,7 @@ static int DNaming_PTranslateLine(Draw_Interpretor& di, int nb, const char** a)
     DDF::ReturnLabel(di, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DNaming_PTranslateAlongLine : Error";
+  System::log::Message::SendFail() << "DNaming_PTranslateAlongLine : Error";
   return 1;
 }
 
@@ -1140,7 +1140,7 @@ static int DNaming_PRotateLine(Draw_Interpretor& di, int nb, const char** a)
     DDF::ReturnLabel(di, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DNaming_PRotateRoundLine : Error";
+  System::log::Message::SendFail() << "DNaming_PRotateRoundLine : Error";
   return 1;
 }
 
@@ -1173,7 +1173,7 @@ static int DNaming_PMirrorObject(Draw_Interpretor& di, int nb, const char** a)
     DDF::ReturnLabel(di, aFun->Label());
     return 0;
   }
-  Message::SendFail() << "DNaming_PMirrorObject : Error";
+  System::log::Message::SendFail() << "DNaming_PMirrorObject : Error";
   return 1;
 }
 
@@ -1181,7 +1181,7 @@ static int DNaming_AddPrism(Draw_Interpretor& theDI, int theNb, const char** the
 {
   if (theNb < 5)
   {
-    Message::SendFail() << "DNaming_AddPrism(): Wrong number of arguments";
+    System::log::Message::SendFail() << "DNaming_AddPrism(): Wrong number of arguments";
     return 1;
   }
 
@@ -1243,7 +1243,7 @@ static int DNaming_PrismHeight(Draw_Interpretor& theDI, int theNb, const char** 
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_PrismHeight : Error";
+  System::log::Message::SendFail() << "DNaming_PrismHeight : Error";
   return 1;
 }
 
@@ -1251,7 +1251,7 @@ static int DNaming_AddRevol(Draw_Interpretor& theDI, int theNb, const char** the
 {
   if (theNb < 4)
   {
-    Message::SendFail() << "DNaming_AddRevol(): Wrong number of arguments";
+    System::log::Message::SendFail() << "DNaming_AddRevol(): Wrong number of arguments";
     return 1;
   }
 
@@ -1339,7 +1339,7 @@ static int DNaming_RevolutionAngle(Draw_Interpretor& theDI, int theNb, const cha
       return 0;
     }
   }
-  Message::SendFail() << "DNaming_RevolutionAngle : Error";
+  System::log::Message::SendFail() << "DNaming_RevolutionAngle : Error";
   return 1;
 }
 
@@ -1347,7 +1347,7 @@ static int DNaming_AddSphere(Draw_Interpretor& theDI, int theNb, const char** th
 {
   if (theNb != 4)
   {
-    Message::SendFail() << "DNaming_AddSphere(): Wrong number of arguments";
+    System::log::Message::SendFail() << "DNaming_AddSphere(): Wrong number of arguments";
     return 1;
   }
   occ::handle<TDocStd_Document> aDocument;
@@ -1409,7 +1409,7 @@ static int DNaming_SphereRadius(Draw_Interpretor& theDI, int theNb, const char**
     }
   }
 
-  Message::SendFail() << "DNaming_SphRadius : Error";
+  System::log::Message::SendFail() << "DNaming_SphRadius : Error";
   return 1;
 }
 
@@ -1449,7 +1449,7 @@ static int DNaming_AddPoint(Draw_Interpretor& theDI, int theNb, const char** the
     return 0;
   }
 
-  Message::SendFail() << "DNaming_AddPoint : Error";
+  System::log::Message::SendFail() << "DNaming_AddPoint : Error";
   return 1;
 }
 
@@ -1495,7 +1495,7 @@ static int DNaming_AddPointRlt(Draw_Interpretor& theDI, int theNb, const char** 
     return 0;
   }
 
-  Message::SendFail() << "DNaming_AddPoint : Error";
+  System::log::Message::SendFail() << "DNaming_AddPoint : Error";
   return 1;
 }
 
@@ -1552,7 +1552,7 @@ static int DNaming_PntOffset(Draw_Interpretor& theDI, int theNb, const char** th
     }
   }
 
-  Message::SendFail() << "DNaming_PntOffset : Error";
+  System::log::Message::SendFail() << "DNaming_PntOffset : Error";
   return 1;
 }
 
@@ -1560,7 +1560,7 @@ static int DNaming_Line3D(Draw_Interpretor& theDI, int theNb, const char** theAr
 {
   if (theNb < 5)
   {
-    Message::SendFail() << "DNaming_AddLine3D: Wrong number of arguments";
+    System::log::Message::SendFail() << "DNaming_AddLine3D: Wrong number of arguments";
     return 1;
   }
   occ::handle<TDocStd_Document> aDocument;
@@ -2027,7 +2027,7 @@ static int DNaming_TestSingle(Draw_Interpretor& theDI, int theNb, const char** t
     }
   }
 
-  Message::SendFail() << "DNaming_TestSingle : Error";
+  System::log::Message::SendFail() << "DNaming_TestSingle : Error";
   return 1;
 }
 
@@ -2167,7 +2167,7 @@ static int DNaming_Multiple(Draw_Interpretor& theDI, int theNb, const char** the
     }
   }
 
-  Message::SendFail() << "DNaming_TestMultiple : Error";
+  System::log::Message::SendFail() << "DNaming_TestMultiple : Error";
   return 1;
 }
 

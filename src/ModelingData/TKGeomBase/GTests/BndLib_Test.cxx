@@ -71,12 +71,12 @@ TEST(BndLibTest, Line_FiniteSegment)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 10., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Line_PositiveDirection_NegativeInfinite)
@@ -148,20 +148,20 @@ TEST(BndLibTest, Circle_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBoxFull.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 
   BndLib::Add(aCirc, 0., 2. * M_PI, aTol, aBoxArc);
   aBoxArc.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Circle_Arc_FirstQuadrant)
@@ -176,10 +176,10 @@ TEST(BndLibTest, Circle_Arc_FirstQuadrant)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Circle_RotatedAxis)
@@ -194,12 +194,12 @@ TEST(BndLibTest, Circle_RotatedAxis)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -3., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 3., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -3., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 3., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 3., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Ellipse_Full)
@@ -214,12 +214,12 @@ TEST(BndLibTest, Ellipse_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -10., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 10., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Ellipse_Arc)
@@ -234,10 +234,10 @@ TEST(BndLibTest, Ellipse_Arc)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 10., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Hyperbola_SimpleArc)
@@ -257,10 +257,10 @@ TEST(BndLibTest, Hyperbola_SimpleArc)
   double aExpectedYmin = 2. * std::sinh(-1.);
   double aExpectedYmax = 2. * std::sinh(1.);
 
-  EXPECT_NEAR(aXmin, aExpectedXmin, Precision::Confusion());
-  EXPECT_NEAR(aXmax, aExpectedXmax, Precision::Confusion());
-  EXPECT_NEAR(aYmin, aExpectedYmin, Precision::Confusion());
-  EXPECT_NEAR(aYmax, aExpectedYmax, Precision::Confusion());
+  EXPECT_NEAR(aXmin, aExpectedXmin, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, aExpectedXmax, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, aExpectedYmin, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, aExpectedYmax, math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Hyperbola_Rotated_MultipleExtrema)
@@ -307,10 +307,10 @@ TEST(BndLibTest, Parabola_FiniteArc)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 2., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Parabola_InfiniteParameter)
@@ -338,12 +338,12 @@ TEST(BndLibTest, Sphere_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -7., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 7., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -7., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 7., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -7., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 7., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 7., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Sphere_Patch)
@@ -358,12 +358,12 @@ TEST(BndLibTest, Sphere_Patch)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Sphere_Translated)
@@ -378,12 +378,12 @@ TEST(BndLibTest, Sphere_Translated)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 7., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 13., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 17., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 23., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 27., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 33., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 13., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 17., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 23., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 27., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 33., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Cylinder_FinitePatch)
@@ -398,12 +398,12 @@ TEST(BndLibTest, Cylinder_FinitePatch)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 10., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 10., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Cylinder_InfiniteV)
@@ -431,12 +431,12 @@ TEST(BndLibTest, Cylinder_PartialU)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 10., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 10., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Cone_FinitePatch)
@@ -453,10 +453,10 @@ TEST(BndLibTest, Cone_FinitePatch)
 
   double aMaxRadius = 2. + 5. * std::sin(M_PI / 4.);
   double aMaxZ      = 5. * std::cos(M_PI / 4.);
-  EXPECT_NEAR(aXmax, aMaxRadius, Precision::Confusion());
-  EXPECT_NEAR(aYmax, aMaxRadius, Precision::Confusion());
-  EXPECT_NEAR(aZmax, aMaxZ, Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmax, aMaxRadius, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, aMaxRadius, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, aMaxZ, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Cone_NegativeV)
@@ -472,8 +472,8 @@ TEST(BndLibTest, Cone_NegativeV)
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
   double aExpectedZmin = -5. * std::cos(M_PI / 6.);
-  EXPECT_NEAR(aZmin, aExpectedZmin, Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aZmin, aExpectedZmin, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Cone_InfiniteV)
@@ -500,12 +500,12 @@ TEST(BndLibTest, Torus_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -13., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 13., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -13., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 13., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -3., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 3., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -13., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 13., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -13., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 13., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 3., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Torus_Patch)
@@ -522,10 +522,10 @@ TEST(BndLibTest, Torus_Patch)
 
   EXPECT_FALSE(aBox.IsVoid()) << "Box should not be void for torus patch";
 
-  EXPECT_GE(aXmin, -Precision::Confusion()) << "Xmin should be >= 0 for first quadrant";
-  EXPECT_GE(aYmin, -Precision::Confusion()) << "Ymin should be >= 0 for first quadrant";
+  EXPECT_GE(aXmin, -math::precision::Precision::Confusion()) << "Xmin should be >= 0 for first quadrant";
+  EXPECT_GE(aYmin, -math::precision::Precision::Confusion()) << "Ymin should be >= 0 for first quadrant";
 
-  EXPECT_LE(aZmax, 3. + Precision::Confusion()) << "Zmax should not exceed r";
+  EXPECT_LE(aZmax, 3. + math::precision::Precision::Confusion()) << "Zmax should not exceed r";
 }
 
 TEST(BndLibTest, Torus_NegativeVParameter)
@@ -543,7 +543,7 @@ TEST(BndLibTest, Torus_NegativeVParameter)
   EXPECT_FALSE(aBox.IsVoid()) << "Box should not be void for negative V parameters";
 
   EXPECT_LE(aZmin, 0.) << "Zmin should be <= 0 for V in [-PI, 0]";
-  EXPECT_GE(aZmin, -3. - Precision::Confusion()) << "Zmin should be >= -r";
+  EXPECT_GE(aZmin, -3. - math::precision::Precision::Confusion()) << "Zmin should be >= -r";
 }
 
 TEST(BndLibTest, Torus_LargeNegativeVParameter)
@@ -560,10 +560,10 @@ TEST(BndLibTest, Torus_LargeNegativeVParameter)
 
   EXPECT_FALSE(aBox.IsVoid()) << "Box should not be void for large negative V parameters";
 
-  EXPECT_LE(aXmin, -13. + Precision::Confusion()) << "Xmin should be at least -(R+r)";
-  EXPECT_GE(aXmax, 13. - Precision::Confusion()) << "Xmax should be at least R+r";
-  EXPECT_LE(aYmin, -13. + Precision::Confusion()) << "Ymin should be at least -(R+r)";
-  EXPECT_GE(aYmax, 13. - Precision::Confusion()) << "Ymax should be at least R+r";
+  EXPECT_LE(aXmin, -13. + math::precision::Precision::Confusion()) << "Xmin should be at least -(R+r)";
+  EXPECT_GE(aXmax, 13. - math::precision::Precision::Confusion()) << "Xmax should be at least R+r";
+  EXPECT_LE(aYmin, -13. + math::precision::Precision::Confusion()) << "Ymin should be at least -(R+r)";
+  EXPECT_GE(aYmax, 13. - math::precision::Precision::Confusion()) << "Ymax should be at least R+r";
 }
 
 TEST(BndLibTest, Torus_Translated)
@@ -578,12 +578,12 @@ TEST(BndLibTest, Torus_Translated)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 5. - 10., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5. + 10., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 5. - 10., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5. + 10., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 5. - 2., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 5. + 2., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 5. - 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5. + 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 5. - 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5. + 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 5. - 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 5. + 2., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Line2d_FiniteSegment)
@@ -598,10 +598,10 @@ TEST(BndLibTest, Line2d_FiniteSegment)
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
   double aExpected = 10. / std::sqrt(2.);
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, aExpected, Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, aExpected, Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, aExpected, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, aExpected, math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Circle2d_Full)
@@ -615,10 +615,10 @@ TEST(BndLibTest, Circle2d_Full)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Ellipse2d_Full)
@@ -632,10 +632,10 @@ TEST(BndLibTest, Ellipse2d_Full)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, -8., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 8., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Hyperbola2d_SimpleArc)
@@ -649,10 +649,10 @@ TEST(BndLibTest, Hyperbola2d_SimpleArc)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, 3., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 3. * std::cosh(1.), Precision::Confusion());
-  EXPECT_NEAR(aYmin, 2. * std::sinh(-1.), Precision::Confusion());
-  EXPECT_NEAR(aYmax, 2. * std::sinh(1.), Precision::Confusion());
+  EXPECT_NEAR(aXmin, 3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 3. * std::cosh(1.), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 2. * std::sinh(-1.), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 2. * std::sinh(1.), math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Parabola2d_FiniteArc)
@@ -666,10 +666,10 @@ TEST(BndLibTest, Parabola2d_FiniteArc)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 2., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Circle_WithTolerance)
@@ -683,12 +683,12 @@ TEST(BndLibTest, Circle_WithTolerance)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5.5, Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5.5, Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5.5, Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5.5, Precision::Confusion());
-  EXPECT_NEAR(aZmin, -0.5, Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0.5, Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0.5, math::precision::Precision::Confusion());
 }
 
 TEST(BndLibTest, Sphere_WithTolerance)
@@ -702,12 +702,12 @@ TEST(BndLibTest, Sphere_WithTolerance)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add3dCurveTest, Circle_Full)
@@ -724,12 +724,12 @@ TEST(BndLib_Add3dCurveTest, Circle_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add3dCurveTest, Circle_Arc)
@@ -746,10 +746,10 @@ TEST(BndLib_Add3dCurveTest, Circle_Arc)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add3dCurveTest, Ellipse_Full)
@@ -766,10 +766,10 @@ TEST(BndLib_Add3dCurveTest, Ellipse_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -10., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 10., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add3dCurveTest, Line_Segment)
@@ -786,12 +786,12 @@ TEST(BndLib_Add3dCurveTest, Line_Segment)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 10., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 10., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add3dCurveTest, BezierCurve)
@@ -867,10 +867,10 @@ TEST(BndLib_Add3dCurveTest, AddOptimal_Circle)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add3dCurveTest, Circle_Rotated)
@@ -887,12 +887,12 @@ TEST(BndLib_Add3dCurveTest, Circle_Rotated)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add2dCurveTest, Circle_Full)
@@ -908,10 +908,10 @@ TEST(BndLib_Add2dCurveTest, Circle_Full)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add2dCurveTest, Circle_Arc)
@@ -927,10 +927,10 @@ TEST(BndLib_Add2dCurveTest, Circle_Arc)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add2dCurveTest, Ellipse_Full)
@@ -946,10 +946,10 @@ TEST(BndLib_Add2dCurveTest, Ellipse_Full)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, -8., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 8., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add2dCurveTest, Line_Segment)
@@ -966,9 +966,9 @@ TEST(BndLib_Add2dCurveTest, Line_Segment)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 0., math::precision::Precision::Confusion());
   EXPECT_NEAR(aXmax, 10., 0.01);
-  EXPECT_NEAR(aYmin, 0., Precision::Confusion());
+  EXPECT_NEAR(aYmin, 0., math::precision::Precision::Confusion());
   EXPECT_NEAR(aYmax, 5., 0.01);
 }
 
@@ -1010,10 +1010,10 @@ TEST(BndLib_Add2dCurveTest, AddOptimal_Ellipse)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, -6., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 6., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -3., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 3., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -6., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 6., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 3., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_Add2dCurveTest, Adaptor_Circle)
@@ -1030,10 +1030,10 @@ TEST(BndLib_Add2dCurveTest, Adaptor_Circle)
   double aXmin, aYmin, aXmax, aYmax;
   aBox.Get(aXmin, aYmin, aXmax, aYmax);
 
-  EXPECT_NEAR(aXmin, 2., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 8., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 2., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 8., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 8., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Plane)
@@ -1049,12 +1049,12 @@ TEST(BndLib_AddSurfaceTest, Plane)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 0., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 0., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Cylinder_Full)
@@ -1071,12 +1071,12 @@ TEST(BndLib_AddSurfaceTest, Cylinder_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 10., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 10., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Sphere_Full)
@@ -1093,12 +1093,12 @@ TEST(BndLib_AddSurfaceTest, Sphere_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -7., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 7., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -7., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 7., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -7., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 7., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -7., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 7., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Sphere_Patch)
@@ -1115,12 +1115,12 @@ TEST(BndLib_AddSurfaceTest, Sphere_Patch)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -5., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 5., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 5., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 5., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 5., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Cone_Full)
@@ -1140,9 +1140,9 @@ TEST(BndLib_AddSurfaceTest, Cone_Full)
   double aMaxRadius = 2. + 5. * std::sin(M_PI / 4.);
   double aMaxZ      = 5. * std::cos(M_PI / 4.);
 
-  EXPECT_NEAR(aXmax, aMaxRadius, Precision::Confusion());
-  EXPECT_NEAR(aYmax, aMaxRadius, Precision::Confusion());
-  EXPECT_NEAR(aZmax, aMaxZ, Precision::Confusion());
+  EXPECT_NEAR(aXmax, aMaxRadius, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, aMaxRadius, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, aMaxZ, math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Torus_Full)
@@ -1159,12 +1159,12 @@ TEST(BndLib_AddSurfaceTest, Torus_Full)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_LE(aXmin, -13. + Precision::Confusion());
-  EXPECT_GE(aXmax, 13. - Precision::Confusion());
-  EXPECT_LE(aYmin, -13. + Precision::Confusion());
-  EXPECT_GE(aYmax, 13. - Precision::Confusion());
-  EXPECT_NEAR(aZmin, -3., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 3., Precision::Confusion());
+  EXPECT_LE(aXmin, -13. + math::precision::Precision::Confusion());
+  EXPECT_GE(aXmax, 13. - math::precision::Precision::Confusion());
+  EXPECT_LE(aYmin, -13. + math::precision::Precision::Confusion());
+  EXPECT_GE(aYmax, 13. - math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -3., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 3., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, BezierSurface)
@@ -1208,12 +1208,12 @@ TEST(BndLib_AddSurfaceTest, AddOptimal_Sphere)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aYmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 4., Precision::Confusion());
-  EXPECT_NEAR(aZmin, -4., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 4., Precision::Confusion());
+  EXPECT_NEAR(aXmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, -4., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 4., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Cylinder_Translated)
@@ -1230,12 +1230,12 @@ TEST(BndLib_AddSurfaceTest, Cylinder_Translated)
   double aXmin, aYmin, aZmin, aXmax, aYmax, aZmax;
   aBox.Get(aXmin, aYmin, aZmin, aXmax, aYmax, aZmax);
 
-  EXPECT_NEAR(aXmin, 2., Precision::Confusion());
-  EXPECT_NEAR(aXmax, 8., Precision::Confusion());
-  EXPECT_NEAR(aYmin, 2., Precision::Confusion());
-  EXPECT_NEAR(aYmax, 8., Precision::Confusion());
-  EXPECT_NEAR(aZmin, 0., Precision::Confusion());
-  EXPECT_NEAR(aZmax, 10., Precision::Confusion());
+  EXPECT_NEAR(aXmin, 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aXmax, 8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmin, 2., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aYmax, 8., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmin, 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aZmax, 10., math::precision::Precision::Confusion());
 }
 
 TEST(BndLib_AddSurfaceTest, Plane_Tilted)

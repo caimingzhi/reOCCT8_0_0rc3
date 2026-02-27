@@ -208,7 +208,7 @@ occ::handle<XCAFDoc_Note> XCAFDoc_NotesTool::CreateBinData(
   const TCollection_ExtendedString& theTimeStamp,
   const TCollection_ExtendedString& theTitle,
   const TCollection_AsciiString&    theMIMEtype,
-  OSD_File&                         theFile)
+  System::os::OSD_File&                         theFile)
 {
   TDF_Label     aNoteLabel;
   TDF_TagSource aTag;

@@ -97,13 +97,13 @@ void BlendFunc_EvolRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBoun
     InfBound(4) = surf2->FirstVParameter();
     SupBound(3) = surf2->LastUParameter();
     SupBound(4) = surf2->LastVParameter();
-    if (!Precision::IsInfinite(InfBound(3)) && !Precision::IsInfinite(SupBound(3)))
+    if (!math::precision::Precision::IsInfinite(InfBound(3)) && !math::precision::Precision::IsInfinite(SupBound(3)))
     {
       const double range = (SupBound(3) - InfBound(3));
       InfBound(3) -= range;
       SupBound(3) += range;
     }
-    if (!Precision::IsInfinite(InfBound(4)) && !Precision::IsInfinite(SupBound(4)))
+    if (!math::precision::Precision::IsInfinite(InfBound(4)) && !math::precision::Precision::IsInfinite(SupBound(4)))
     {
       const double range = (SupBound(4) - InfBound(4));
       InfBound(4) -= range;
@@ -116,13 +116,13 @@ void BlendFunc_EvolRadInv::GetBounds(math_Vector& InfBound, math_Vector& SupBoun
     InfBound(4) = surf1->FirstVParameter();
     SupBound(3) = surf1->LastUParameter();
     SupBound(4) = surf1->LastVParameter();
-    if (!Precision::IsInfinite(InfBound(3)) && !Precision::IsInfinite(SupBound(3)))
+    if (!math::precision::Precision::IsInfinite(InfBound(3)) && !math::precision::Precision::IsInfinite(SupBound(3)))
     {
       const double range = (SupBound(3) - InfBound(3));
       InfBound(3) -= range;
       SupBound(3) += range;
     }
-    if (!Precision::IsInfinite(InfBound(4)) && !Precision::IsInfinite(SupBound(4)))
+    if (!math::precision::Precision::IsInfinite(InfBound(4)) && !math::precision::Precision::IsInfinite(SupBound(4)))
     {
       const double range = (SupBound(4) - InfBound(4));
       InfBound(4) -= range;

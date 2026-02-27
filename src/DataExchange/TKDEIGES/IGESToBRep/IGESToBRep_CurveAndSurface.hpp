@@ -12,7 +12,10 @@ class IGESData_IGESModel;
 class Transfer_TransientProcess;
 class TopoDS_Shape;
 class IGESData_IGESEntity;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 
 class IGESToBRep_CurveAndSurface
 {
@@ -84,17 +87,17 @@ public:
 
   Standard_EXPORT TopoDS_Shape
     TransferCurveAndSurface(const occ::handle<IGESData_IGESEntity>& start,
-                            const Message_ProgressRange& theProgress = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT TopoDS_Shape
     TransferGeometry(const occ::handle<IGESData_IGESEntity>& start,
-                     const Message_ProgressRange&            theProgress = Message_ProgressRange());
+                     const System::log::Message_ProgressRange&            theProgress = System::log::Message_ProgressRange());
 
-  void SendFail(const occ::handle<IGESData_IGESEntity>& start, const Message_Msg& amsg);
+  void SendFail(const occ::handle<IGESData_IGESEntity>& start, const System::log::Message_Msg& amsg);
 
-  void SendWarning(const occ::handle<IGESData_IGESEntity>& start, const Message_Msg& amsg);
+  void SendWarning(const occ::handle<IGESData_IGESEntity>& start, const System::log::Message_Msg& amsg);
 
-  void SendMsg(const occ::handle<IGESData_IGESEntity>& start, const Message_Msg& amsg);
+  void SendMsg(const occ::handle<IGESData_IGESEntity>& start, const System::log::Message_Msg& amsg);
 
   Standard_EXPORT bool HasShapeResult(const occ::handle<IGESData_IGESEntity>& start) const;
 
@@ -256,19 +259,19 @@ inline occ::handle<Transfer_TransientProcess> IGESToBRep_CurveAndSurface::GetTra
 }
 
 inline void IGESToBRep_CurveAndSurface::SendFail(const occ::handle<IGESData_IGESEntity>& start,
-                                                 const Message_Msg&                      amsg)
+                                                 const System::log::Message_Msg&                      amsg)
 {
   GetTransferProcess()->SendFail(start, amsg);
 }
 
 inline void IGESToBRep_CurveAndSurface::SendWarning(const occ::handle<IGESData_IGESEntity>& start,
-                                                    const Message_Msg&                      amsg)
+                                                    const System::log::Message_Msg&                      amsg)
 {
   GetTransferProcess()->SendWarning(start, amsg);
 }
 
 inline void IGESToBRep_CurveAndSurface::SendMsg(const occ::handle<IGESData_IGESEntity>& start,
-                                                const Message_Msg&                      amsg)
+                                                const System::log::Message_Msg&                      amsg)
 {
   GetTransferProcess()->SendMsg(start, amsg);
 }

@@ -14,7 +14,7 @@ BRepSweep_Revol::BRepSweep_Revol(const TopoDS_Shape& S,
                                  const bool          C)
     : myRotation(S.Oriented(TopAbs_FORWARD), NumShape(D), Location(Ax, D), Axe(Ax, D), Angle(D), C)
 {
-  Standard_ConstructionError_Raise_if(Angle(D) <= Precision::Angular(),
+  Standard_ConstructionError_Raise_if(Angle(D) <= math::precision::Precision::Angular(),
                                       "BRepSweep_Revol::Constructor");
 }
 
@@ -62,7 +62,7 @@ TopoDS_Shape BRepSweep_Revol::LastShape(const TopoDS_Shape& aGenS)
 Sweep_NumShape BRepSweep_Revol::NumShape(const double D) const
 {
   Sweep_NumShape N;
-  if (std::abs(Angle(D) - 2 * M_PI) <= Precision::Angular())
+  if (std::abs(Angle(D) - 2 * M_PI) <= math::precision::Precision::Angular())
   {
     N.Init(2, TopAbs_EDGE, true, false, false);
   }
@@ -92,7 +92,7 @@ gp_Ax1 BRepSweep_Revol::Axe(const gp_Ax1& Ax, const double D) const
 double BRepSweep_Revol::Angle(const double D) const
 {
   double d = std::abs(D);
-  while (d > (2 * M_PI + Precision::Angular()))
+  while (d > (2 * M_PI + math::precision::Precision::Angular()))
   {
     d = d - 2 * M_PI;
   }

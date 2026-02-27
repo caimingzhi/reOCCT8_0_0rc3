@@ -51,10 +51,10 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
   Geom2dHatch_Hatcher     Hatcher(Intersector, HatcherConfusion2d, HatcherConfusion3d, true);
 
   BRepTools::UVBounds(TF, UMin, UMax, VMin, VMax);
-  bool InfiniteUMin = Precision::IsNegativeInfinite(UMin);
-  bool InfiniteUMax = Precision::IsPositiveInfinite(UMax);
-  bool InfiniteVMin = Precision::IsNegativeInfinite(VMin);
-  bool InfiniteVMax = Precision::IsPositiveInfinite(VMax);
+  bool InfiniteUMin = math::precision::Precision::IsNegativeInfinite(UMin);
+  bool InfiniteUMax = math::precision::Precision::IsPositiveInfinite(UMax);
+  bool InfiniteVMin = math::precision::Precision::IsNegativeInfinite(VMin);
+  bool InfiniteVMax = math::precision::Precision::IsPositiveInfinite(VMax);
 
   if (InfiniteUMin && InfiniteUMax)
   {
@@ -95,8 +95,8 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
     int                             IndE;
     const TopoDS_Edge&              newE = TopoDS::Edge(ExpEdges.Current());
     const occ::handle<Geom2d_Curve> PC   = BRep_Tool::CurveOnSurface(newE, TF, U1, U2);
-    if (std::abs(PC->FirstParameter() - U1) <= Precision::PConfusion()
-        && std::abs(PC->LastParameter() - U2) <= Precision::PConfusion())
+    if (std::abs(PC->FirstParameter() - U1) <= math::precision::Precision::PConfusion()
+        && std::abs(PC->LastParameter() - U2) <= math::precision::Precision::PConfusion())
     {
       IndE = Hatcher.AddElement(PC, newE.Orientation());
     }
@@ -121,8 +121,8 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
       int                             IndE;
       const TopoDS_Edge&              newE = TopoDS::Edge(itE.Value());
       const occ::handle<Geom2d_Curve> PC   = BRep_Tool::CurveOnSurface(newE, TF, U1, U2);
-      if (std::abs(PC->FirstParameter() - U1) <= Precision::PConfusion()
-          && std::abs(PC->LastParameter() - U2) <= Precision::PConfusion())
+      if (std::abs(PC->FirstParameter() - U1) <= math::precision::Precision::PConfusion()
+          && std::abs(PC->LastParameter() - U2) <= math::precision::Precision::PConfusion())
       {
         IndE = Hatcher.AddElement(PC, TopAbs_INTERNAL);
       }

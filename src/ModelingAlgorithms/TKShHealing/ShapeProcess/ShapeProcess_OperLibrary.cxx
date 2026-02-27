@@ -83,7 +83,7 @@ TopoDS_Shape ShapeProcess_OperLibrary::ApplyModifier(
 }
 
 static bool directfaces(const occ::handle<ShapeProcess_Context>& context,
-                        const Message_ProgressRange&)
+                        const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -104,7 +104,7 @@ static bool directfaces(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool sameparam(const occ::handle<ShapeProcess_Context>& context,
-                      const Message_ProgressRange&)
+                      const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -116,8 +116,8 @@ static bool sameparam(const occ::handle<ShapeProcess_Context>& context,
 
   ShapeFix::SameParameter(ctx->Result(),
                           ctx->BooleanVal("Force", false),
-                          ctx->RealVal("Tolerance3d", Precision::Confusion()),
-                          Message_ProgressRange(),
+                          ctx->RealVal("Tolerance3d", math::precision::Precision::Confusion()),
+                          System::log::Message_ProgressRange(),
                           msg);
 
   if (!msg.IsNull())
@@ -129,7 +129,7 @@ static bool sameparam(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-static bool settol(const occ::handle<ShapeProcess_Context>& context, const Message_ProgressRange&)
+static bool settol(const occ::handle<ShapeProcess_Context>& context, const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -156,7 +156,7 @@ static bool settol(const occ::handle<ShapeProcess_Context>& context, const Messa
 }
 
 static bool splitangle(const occ::handle<ShapeProcess_Context>& context,
-                       const Message_ProgressRange&)
+                       const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -184,7 +184,7 @@ static bool splitangle(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool bsplinerestriction(const occ::handle<ShapeProcess_Context>& context,
-                               const Message_ProgressRange&)
+                               const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -252,7 +252,7 @@ static bool bsplinerestriction(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-static bool torevol(const occ::handle<ShapeProcess_Context>& context, const Message_ProgressRange&)
+static bool torevol(const occ::handle<ShapeProcess_Context>& context, const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -273,7 +273,7 @@ static bool torevol(const occ::handle<ShapeProcess_Context>& context, const Mess
 }
 
 static bool swepttoelem(const occ::handle<ShapeProcess_Context>& context,
-                        const Message_ProgressRange&)
+                        const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -294,7 +294,7 @@ static bool swepttoelem(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool shapetobezier(const occ::handle<ShapeProcess_Context>& context,
-                          const Message_ProgressRange&)
+                          const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -360,7 +360,7 @@ static bool shapetobezier(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool converttobspline(const occ::handle<ShapeProcess_Context>& context,
-                             const Message_ProgressRange&)
+                             const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -389,7 +389,7 @@ static bool converttobspline(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool splitcontinuity(const occ::handle<ShapeProcess_Context>& context,
-                            const Message_ProgressRange&)
+                            const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -431,7 +431,7 @@ static bool splitcontinuity(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool splitclosedfaces(const occ::handle<ShapeProcess_Context>& context,
-                             const Message_ProgressRange&)
+                             const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -472,7 +472,7 @@ static bool splitclosedfaces(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool fixfacesize(const occ::handle<ShapeProcess_Context>& context,
-                        const Message_ProgressRange&)
+                        const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -504,7 +504,7 @@ static bool fixfacesize(const occ::handle<ShapeProcess_Context>& context,
   return true;
 }
 
-static bool fixwgaps(const occ::handle<ShapeProcess_Context>& context, const Message_ProgressRange&)
+static bool fixwgaps(const occ::handle<ShapeProcess_Context>& context, const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -514,7 +514,7 @@ static bool fixwgaps(const occ::handle<ShapeProcess_Context>& context, const Mes
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
 
-  double aTol3d = ctx->RealVal("Tolerance3d", Precision::Confusion());
+  double aTol3d = ctx->RealVal("Tolerance3d", math::precision::Precision::Confusion());
 
   occ::handle<ShapeBuild_ReShape> reshape = new ShapeBuild_ReShape;
   occ::handle<ShapeFix_Wireframe> sfwf    = new ShapeFix_Wireframe(ctx->Result());
@@ -533,7 +533,7 @@ static bool fixwgaps(const occ::handle<ShapeProcess_Context>& context, const Mes
 }
 
 static bool dropsmallsolids(const occ::handle<ShapeProcess_Context>& context,
-                            const Message_ProgressRange&)
+                            const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -576,7 +576,7 @@ static bool dropsmallsolids(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool mergesmalledges(const occ::handle<ShapeProcess_Context>& context,
-                            const Message_ProgressRange&)
+                            const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -586,7 +586,7 @@ static bool mergesmalledges(const occ::handle<ShapeProcess_Context>& context,
   if (!ctx->Messages().IsNull())
     msg = new ShapeExtend_MsgRegistrator;
 
-  double aTol3d = ctx->RealVal("Tolerance3d", Precision::Confusion());
+  double aTol3d = ctx->RealVal("Tolerance3d", math::precision::Precision::Confusion());
 
   occ::handle<ShapeBuild_ReShape> reshape = new ShapeBuild_ReShape;
   ShapeFix_Wireframe              ShapeFixWireframe(ctx->Result());
@@ -602,7 +602,7 @@ static bool mergesmalledges(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
-                     const Message_ProgressRange&             theProgress)
+                     const System::log::Message_ProgressRange&             theProgress)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -617,9 +617,9 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
   occ::handle<ShapeFix_Wire>  sfw = sfs->FixWireTool();
   sfs->SetMsgRegistrator(msg);
 
-  sfs->SetPrecision(ctx->RealVal("Tolerance3d", Precision::Confusion()));
-  sfs->SetMinTolerance(ctx->RealVal("MinTolerance3d", Precision::Confusion()));
-  sfs->SetMaxTolerance(ctx->RealVal("MaxTolerance3d", Precision::Confusion()));
+  sfs->SetPrecision(ctx->RealVal("Tolerance3d", math::precision::Precision::Confusion()));
+  sfs->SetMinTolerance(ctx->RealVal("MinTolerance3d", math::precision::Precision::Confusion()));
+  sfs->SetMaxTolerance(ctx->RealVal("MaxTolerance3d", math::precision::Precision::Confusion()));
 
   sfs->FixFreeShellMode()      = ctx->IntegerVal("FixFreeShellMode", -1);
   sfs->FixFreeFaceMode()       = ctx->IntegerVal("FixFreeFaceMode", -1);
@@ -675,7 +675,7 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
   sfw->FixIntersectingEdgesMode()    = ctx->IntegerVal("FixIntersectingEdgesMode", -1);
   sfw->FixNonAdjacentIntersectingEdgesMode() =
     ctx->IntegerVal("FixNonAdjacentIntersectingEdgesMode", -1);
-  Message_ProgressScope aPS(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, 2);
   if (sfw->FixTailMode() == 1)
   {
     sfw->FixTailMode() = 0;
@@ -712,7 +712,7 @@ static bool fixshape(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool spltclosededges(const occ::handle<ShapeProcess_Context>& context,
-                            const Message_ProgressRange&)
+                            const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())
@@ -742,7 +742,7 @@ static bool spltclosededges(const occ::handle<ShapeProcess_Context>& context,
 }
 
 static bool splitcommonvertex(const occ::handle<ShapeProcess_Context>& context,
-                              const Message_ProgressRange&)
+                              const System::log::Message_ProgressRange&)
 {
   occ::handle<ShapeProcess_ShapeContext> ctx = occ::down_cast<ShapeProcess_ShapeContext>(context);
   if (ctx.IsNull())

@@ -594,21 +594,21 @@ bool HLRBRep_PolyAlgo::Normal(const int                                        t
                               NCollection_Array1<occ::handle<HLRAlgo_PolyInternalNode>>& thePINod,
                               const bool theToOrient) const
 {
-  if (theNod1RValues.Normal.SquareModulus() < Precision::Confusion())
+  if (theNod1RValues.Normal.SquareModulus() < math::precision::Precision::Confusion())
   {
     gp_Vec                 aD1U, aD1V;
     gp_Pnt                 aPnt;
     CSLib_DerivativeStatus aStatus = CSLib_D1IsNull;
     myBSurf.D1(theNod1RValues.UV.X(), theNod1RValues.UV.Y(), aPnt, aD1U, aD1V);
     gp_Dir aNorm;
-    CSLib::Normal(aD1U, aD1V, Precision::Angular(), aStatus, aNorm);
+    CSLib::Normal(aD1U, aD1V, math::precision::Precision::Angular(), aStatus, aNorm);
     if (aStatus != CSLib_Done)
     {
       gp_Vec             aD2U, aD2V, aD2UV;
       bool               isOK = false;
       CSLib_NormalStatus aNromStatus;
       myBSurf.D2(theNod1RValues.UV.X(), theNod1RValues.UV.Y(), aPnt, aD1U, aD1V, aD2U, aD2V, aD2UV);
-      CSLib::Normal(aD1U, aD1V, aD2U, aD2V, aD2UV, Precision::Angular(), isOK, aNromStatus, aNorm);
+      CSLib::Normal(aD1U, aD1V, aD2U, aD2V, aD2UV, math::precision::Precision::Angular(), isOK, aNromStatus, aNorm);
       if (!isOK)
       {
         return false;

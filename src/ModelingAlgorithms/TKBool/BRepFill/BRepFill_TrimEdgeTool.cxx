@@ -100,7 +100,7 @@ static void EvalParameters(const Geom2dAdaptor_Curve&    Bis,
                            NCollection_Sequence<gp_Pnt>& Params)
 {
   Geom2dInt_GInter Intersector;
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   const Geom2dAdaptor_Curve& CBis(Bis);
   const Geom2dAdaptor_Curve& CAC(AC);
@@ -417,7 +417,7 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
   }
 
   gp_Pnt           P1, P2;
-  constexpr double Tol      = 4 * 100 * Precision::PConfusion();
+  constexpr double Tol      = 4 * 100 * math::precision::Precision::PConfusion();
   int              i        = 1;
   int              NbPoints = Params.Length();
 
@@ -542,7 +542,7 @@ void BRepFill_TrimEdgeTool::AddOrConfuse(const bool                    Start,
 {
   bool             ToProj = true;
   gp_Pnt2d         PBis;
-  constexpr double Tol = 10 * Precision::Confusion();
+  constexpr double Tol = 10 * math::precision::Precision::Confusion();
 
   TopLoc_Location           L;
   double                    f, l;
@@ -647,5 +647,5 @@ bool BRepFill_TrimEdgeTool::IsInside(const gp_Pnt2d& P) const
       Dist = aDistMin;
   }
 
-  return (Dist < std::abs(myOffset) - Precision::Confusion());
+  return (Dist < std::abs(myOffset) - math::precision::Precision::Confusion());
 }

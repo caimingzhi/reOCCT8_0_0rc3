@@ -9,7 +9,7 @@ class Draw_Chronometer : public Draw_Drawable3D
 public:
   Standard_EXPORT Draw_Chronometer();
 
-  OSD_Timer& Timer() { return myTimer; }
+  System::os::OSD_Timer& Timer() { return myTimer; }
 
   Standard_EXPORT void DrawOn(Draw_Display& dis) const override;
 
@@ -20,5 +20,5 @@ public:
   Standard_EXPORT void Whatis(Draw_Interpretor& I) const override;
 
 private:
-  OSD_Timer myTimer;
+  System::os::OSD_Timer myTimer;
 };

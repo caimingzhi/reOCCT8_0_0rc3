@@ -297,11 +297,11 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
 {
   BRep_Builder  B;
   TopoDS_Vertex V1, V2;
-  B.MakeVertex(V1, Point(P1), Precision::Confusion());
-  if (P1.Distance(P2) < Precision::Confusion())
+  B.MakeVertex(V1, Point(P1), math::precision::Precision::Confusion());
+  if (P1.Distance(P2) < math::precision::Precision::Confusion())
     V2 = V1;
   else
-    B.MakeVertex(V2, Point(P2), Precision::Confusion());
+    B.MakeVertex(V2, Point(P2), math::precision::Precision::Confusion());
   Init(C, V1, V2);
 }
 
@@ -339,11 +339,11 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& C,
   BRep_Builder B;
 
   TopoDS_Vertex V1, V2;
-  B.MakeVertex(V1, Point(P1), Precision::Confusion());
-  if (P1.Distance(P2) < Precision::Confusion())
+  B.MakeVertex(V1, Point(P1), math::precision::Precision::Confusion());
+  if (P1.Distance(P2) < math::precision::Precision::Confusion())
     V2 = V1;
   else
-    B.MakeVertex(V2, Point(P2), Precision::Confusion());
+    B.MakeVertex(V2, Point(P2), math::precision::Precision::Confusion());
 
   Init(C, V1, V2, p1, p2);
 }
@@ -367,7 +367,7 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
   double           p2       = pp2;
   double           cf       = C->FirstParameter();
   double           cl       = C->LastParameter();
-  constexpr double epsilon  = Precision::Confusion();
+  constexpr double epsilon  = math::precision::Precision::Confusion();
   bool             periodic = C->IsPeriodic();
 
   TopoDS_Vertex V1, V2;
@@ -402,15 +402,15 @@ void BRepLib_MakeEdge2d::Init(const occ::handle<Geom2d_Curve>& CC,
     }
   }
 
-  bool     p1inf = Precision::IsNegativeInfinite(p1);
-  bool     p2inf = Precision::IsPositiveInfinite(p2);
+  bool     p1inf = math::precision::Precision::IsNegativeInfinite(p1);
+  bool     p2inf = math::precision::Precision::IsPositiveInfinite(p2);
   gp_Pnt2d P1, P2;
   if (!p1inf)
     P1 = C->Value(p1);
   if (!p2inf)
     P2 = C->Value(p2);
 
-  constexpr double preci = Precision::Confusion();
+  constexpr double preci = math::precision::Precision::Confusion();
   BRep_Builder     B;
 
   bool closed = false;

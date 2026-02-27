@@ -94,7 +94,7 @@ void BRepProj_Projection::BuildSection(const TopoDS_Shape& theShape, const TopoD
   if (anEdges->Length() <= 0)
     return;
 
-  ShapeAnalysis_FreeBounds::ConnectEdgesToWires(anEdges, Precision::Confusion(), true, mySection);
+  ShapeAnalysis_FreeBounds::ConnectEdgesToWires(anEdges, math::precision::Precision::Confusion(), true, mySection);
   myIsDone = (!mySection.IsNull() && mySection->Length() > 0);
 
   if (myIsDone)
@@ -164,7 +164,7 @@ BRepProj_Projection::BRepProj_Projection(const TopoDS_Shape& Wire,
   gp_Pnt PC = BRep_Tool::Pnt(TopoDS::Vertex(ExpWire.Current()));
 
   double Scale = PC.Distance(P);
-  if (std::abs(Scale) < Precision::Confusion())
+  if (std::abs(Scale) < math::precision::Precision::Confusion())
     throw Standard_ConstructionError("Projection");
   Scale = 1. + mdis / Scale;
 

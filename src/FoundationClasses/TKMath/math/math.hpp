@@ -6,24 +6,21 @@
 
 #include <math_Vector.hpp>
 
-class math
+namespace math
 {
-public:
-  DEFINE_STANDARD_ALLOC
+  Standard_EXPORT int GaussPointsMax();
 
-  Standard_EXPORT static int GaussPointsMax();
+  Standard_EXPORT void GaussPoints(const int Index, math_Vector& Points);
 
-  Standard_EXPORT static void GaussPoints(const int Index, math_Vector& Points);
+  Standard_EXPORT void GaussWeights(const int Index, math_Vector& Weights);
 
-  Standard_EXPORT static void GaussWeights(const int Index, math_Vector& Weights);
+  Standard_EXPORT int KronrodPointsMax();
 
-  Standard_EXPORT static int KronrodPointsMax();
+  Standard_EXPORT bool OrderedGaussPointsAndWeights(const int    Index,
+                                    math_Vector& Points,
+                                    math_Vector& Weights);
 
-  Standard_EXPORT static bool OrderedGaussPointsAndWeights(const int    Index,
-                                                           math_Vector& Points,
-                                                           math_Vector& Weights);
-
-  Standard_EXPORT static bool KronrodPointsAndWeights(const int    Index,
-                                                      math_Vector& Points,
-                                                      math_Vector& Weights);
+  Standard_EXPORT bool KronrodPointsAndWeights(const int    Index,
+                               math_Vector& Points,
+                               math_Vector& Weights);
 };

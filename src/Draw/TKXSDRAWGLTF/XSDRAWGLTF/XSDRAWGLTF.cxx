@@ -169,7 +169,7 @@ static int ReadGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << theArgVec[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << theArgVec[anArgIter] << "'";
       return 1;
     }
   }
@@ -182,7 +182,7 @@ static int ReadGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   }
   if (aFilePath.IsEmpty())
   {
-    Message::SendFail() << "Syntax error: wrong number of arguments";
+    System::log::Message::SendFail() << "Syntax error: wrong number of arguments";
     return 1;
   }
 
@@ -197,14 +197,14 @@ static int ReadGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     {
       if (toUseExistingDoc)
       {
-        Message::SendFail() << "Error: document with name " << aDestName << " does not exist";
+        System::log::Message::SendFail() << "Error: document with name " << aDestName << " does not exist";
         return 1;
       }
       anApp->NewDocument(TCollection_ExtendedString("BinXCAF"), aDoc);
     }
     else if (!toUseExistingDoc)
     {
-      Message::SendFail() << "Error: document with name " << aDestName << " already exists";
+      System::log::Message::SendFail() << "Error: document with name " << aDestName << " already exists";
       return 1;
     }
   }
@@ -332,7 +332,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
     {
       if (!parseCoordinateSystem(theArgVec[++anArgIter], aSystemCoordSys))
       {
-        Message::SendFail() << "Syntax error: unknown coordinate system '" << theArgVec[anArgIter]
+        System::log::Message::SendFail() << "Syntax error: unknown coordinate system '" << theArgVec[anArgIter]
                             << "'";
         return 1;
       }
@@ -355,7 +355,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
       }
       else
       {
-        Message::SendFail() << "Syntax error at '" << anArgCase << "'";
+        System::log::Message::SendFail() << "Syntax error at '" << anArgCase << "'";
         return 1;
       }
     }
@@ -364,7 +364,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
       ++anArgIter;
       if (anArgIter >= theNbArgs || !parseNameFormat(theArgVec[anArgIter], aNodeNameFormat))
       {
-        Message::SendFail() << "Syntax error at '" << anArgCase << "'";
+        System::log::Message::SendFail() << "Syntax error at '" << anArgCase << "'";
         return 1;
       }
     }
@@ -373,7 +373,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
       ++anArgIter;
       if (anArgIter >= theNbArgs || !parseNameFormat(theArgVec[anArgIter], aMeshNameFormat))
       {
-        Message::SendFail() << "Syntax error at '" << anArgCase << "'";
+        System::log::Message::SendFail() << "Syntax error at '" << anArgCase << "'";
         return 1;
       }
     }
@@ -386,7 +386,7 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
         TopoDS_Shape aShape = DBRep::Get(aNameVar);
         if (aShape.IsNull())
         {
-          Message::SendFail() << "Syntax error: '" << aNameVar << "' is not a shape nor document";
+          System::log::Message::SendFail() << "Syntax error: '" << aNameVar << "' is not a shape nor document";
           return 1;
         }
 
@@ -450,13 +450,13 @@ static int WriteGltf(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << theArgVec[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << theArgVec[anArgIter] << "'";
       return 1;
     }
   }
   if (aGltfFilePath.IsEmpty())
   {
-    Message::SendFail() << "Syntax error: wrong number of arguments";
+    System::log::Message::SendFail() << "Syntax error: wrong number of arguments";
     return 1;
   }
 

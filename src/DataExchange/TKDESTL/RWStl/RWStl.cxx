@@ -123,7 +123,7 @@ namespace
 
 occ::handle<Poly_Triangulation> RWStl::ReadFile(const char*                  theFile,
                                                 const double                 theMergeAngle,
-                                                const Message_ProgressRange& theProgress)
+                                                const System::log::Message_ProgressRange& theProgress)
 {
   Reader aReader;
   aReader.SetMergeAngle(theMergeAngle);
@@ -135,7 +135,7 @@ occ::handle<Poly_Triangulation> RWStl::ReadFile(const char*                  the
 void RWStl::ReadFile(const char*                                            theFile,
                      const double                                           theMergeAngle,
                      NCollection_Sequence<occ::handle<Poly_Triangulation>>& theTriangList,
-                     const Message_ProgressRange&                           theProgress)
+                     const System::log::Message_ProgressRange&                           theProgress)
 {
   MultiDomainReader aReader;
   aReader.SetMergeAngle(theMergeAngle);
@@ -144,10 +144,10 @@ void RWStl::ReadFile(const char*                                            theF
   theTriangList.Append(aReader.ChangeTriangulationList());
 }
 
-occ::handle<Poly_Triangulation> RWStl::ReadFile(const OSD_Path&              theFile,
-                                                const Message_ProgressRange& theProgress)
+occ::handle<Poly_Triangulation> RWStl::ReadFile(const System::os::OSD_Path&              theFile,
+                                                const System::log::Message_ProgressRange& theProgress)
 {
-  OSD_File aFile(theFile);
+  System::os::OSD_File aFile(theFile);
   if (!aFile.Exists())
   {
     return occ::handle<Poly_Triangulation>();
@@ -158,13 +158,13 @@ occ::handle<Poly_Triangulation> RWStl::ReadFile(const OSD_Path&              the
   return ReadFile(aPath.ToCString(), theProgress);
 }
 
-occ::handle<Poly_Triangulation> RWStl::ReadBinary(const OSD_Path&              theFile,
-                                                  const Message_ProgressRange& theProgress)
+occ::handle<Poly_Triangulation> RWStl::ReadBinary(const System::os::OSD_Path&              theFile,
+                                                  const System::log::Message_ProgressRange& theProgress)
 {
   TCollection_AsciiString aPath;
   theFile.SystemName(aPath);
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream =
     aFileSystem->OpenIStream(aPath, std::ios::in | std::ios::binary);
   if (aStream.get() == nullptr)
@@ -181,13 +181,13 @@ occ::handle<Poly_Triangulation> RWStl::ReadBinary(const OSD_Path&              t
   return aReader.GetTriangulation();
 }
 
-occ::handle<Poly_Triangulation> RWStl::ReadAscii(const OSD_Path&              theFile,
-                                                 const Message_ProgressRange& theProgress)
+occ::handle<Poly_Triangulation> RWStl::ReadAscii(const System::os::OSD_Path&              theFile,
+                                                 const System::log::Message_ProgressRange& theProgress)
 {
   TCollection_AsciiString aPath;
   theFile.SystemName(aPath);
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream =
     aFileSystem->OpenIStream(aPath, std::ios::in | std::ios::binary);
   if (aStream.get() == nullptr)
@@ -210,8 +210,8 @@ occ::handle<Poly_Triangulation> RWStl::ReadAscii(const OSD_Path&              th
 }
 
 bool RWStl::WriteBinary(const occ::handle<Poly_Triangulation>& theMesh,
-                        const OSD_Path&                        thePath,
-                        const Message_ProgressRange&           theProgress)
+                        const System::os::OSD_Path&                        thePath,
+                        const System::log::Message_ProgressRange&           theProgress)
 {
   if (theMesh.IsNull() || theMesh->NbTriangles() <= 0)
   {
@@ -231,8 +231,8 @@ bool RWStl::WriteBinary(const occ::handle<Poly_Triangulation>& theMesh,
 }
 
 bool RWStl::WriteAscii(const occ::handle<Poly_Triangulation>& theMesh,
-                       const OSD_Path&                        thePath,
-                       const Message_ProgressRange&           theProgress)
+                       const System::os::OSD_Path&                        thePath,
+                       const System::log::Message_ProgressRange&           theProgress)
 {
   if (theMesh.IsNull() || theMesh->NbTriangles() <= 0)
   {
@@ -253,7 +253,7 @@ bool RWStl::WriteAscii(const occ::handle<Poly_Triangulation>& theMesh,
 
 bool RWStl::WriteAscii(const occ::handle<Poly_Triangulation>& theMesh,
                        Standard_OStream&                      theStream,
-                       const Message_ProgressRange&           theProgress)
+                       const System::log::Message_ProgressRange&           theProgress)
 {
   if (theMesh.IsNull() || theMesh->NbTriangles() <= 0)
   {
@@ -267,7 +267,7 @@ bool RWStl::WriteAscii(const occ::handle<Poly_Triangulation>& theMesh,
   }
 
   const int             NBTriangles = theMesh->NbTriangles();
-  Message_ProgressScope aPS(theProgress, "Triangles", NBTriangles);
+  System::log::Message_ProgressScope aPS(theProgress, "Triangles", NBTriangles);
   int                   anElem[3] = {0, 0, 0};
 
   for (int aTriIter = 1; aTriIter <= NBTriangles; ++aTriIter)
@@ -317,7 +317,7 @@ bool RWStl::WriteAscii(const occ::handle<Poly_Triangulation>& theMesh,
 
 bool RWStl::WriteBinary(const occ::handle<Poly_Triangulation>& theMesh,
                         Standard_OStream&                      theStream,
-                        const Message_ProgressRange&           theProgress)
+                        const System::log::Message_ProgressRange&           theProgress)
 {
   if (theMesh.IsNull() || theMesh->NbTriangles() <= 0)
   {
@@ -332,7 +332,7 @@ bool RWStl::WriteBinary(const occ::handle<Poly_Triangulation>& theMesh,
   }
 
   const int                aNBTriangles = theMesh->NbTriangles();
-  Message_ProgressScope    aPS(theProgress, "Triangles", aNBTriangles);
+  System::log::Message_ProgressScope    aPS(theProgress, "Triangles", aNBTriangles);
   const size_t             aNbChunkTriangles = 4096;
   const size_t             aChunkSize        = aNbChunkTriangles * THE_STL_SIZEOF_FACET;
   NCollection_Array1<char> aData(1, aChunkSize);
@@ -425,7 +425,7 @@ bool RWStl::WriteBinary(const occ::handle<Poly_Triangulation>& theMesh,
 
 occ::handle<Poly_Triangulation> RWStl::ReadBinaryStream(Standard_IStream&            theStream,
                                                         const double                 theMergeAngle,
-                                                        const Message_ProgressRange& theProgress)
+                                                        const System::log::Message_ProgressRange& theProgress)
 {
   Reader aReader;
   aReader.SetMergeAngle(theMergeAngle);
@@ -438,7 +438,7 @@ occ::handle<Poly_Triangulation> RWStl::ReadBinaryStream(Standard_IStream&       
 
 occ::handle<Poly_Triangulation> RWStl::ReadAsciiStream(Standard_IStream&            theStream,
                                                        const double                 theMergeAngle,
-                                                       const Message_ProgressRange& theProgress)
+                                                       const System::log::Message_ProgressRange& theProgress)
 {
   Reader aReader;
   aReader.SetMergeAngle(theMergeAngle);
@@ -457,7 +457,7 @@ occ::handle<Poly_Triangulation> RWStl::ReadAsciiStream(Standard_IStream&        
 
 occ::handle<Poly_Triangulation> RWStl::ReadStream(Standard_IStream&            theStream,
                                                   const double                 theMergeAngle,
-                                                  const Message_ProgressRange& theProgress)
+                                                  const System::log::Message_ProgressRange& theProgress)
 {
 
   std::streampos            anOriginalPos = theStream.tellg();

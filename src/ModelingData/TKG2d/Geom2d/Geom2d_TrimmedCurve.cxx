@@ -84,7 +84,7 @@ void Geom2d_TrimmedCurve::SetTrim(const double U1,
     if (theAdjustPeriodic)
       ElCLib::AdjustPeriodic(Udeb,
                              Ufin,
-                             std::min(std::abs(uTrim2 - uTrim1) / 2, Precision::PConfusion()),
+                             std::min(std::abs(uTrim2 - uTrim1) / 2, math::precision::Precision::PConfusion()),
                              uTrim1,
                              uTrim2);
   }
@@ -103,7 +103,7 @@ void Geom2d_TrimmedCurve::SetTrim(const double U1,
       uTrim2    = U1;
     }
 
-    if ((Udeb - uTrim1 > Precision::PConfusion()) || (uTrim2 - Ufin > Precision::PConfusion()))
+    if ((Udeb - uTrim1 > math::precision::Precision::PConfusion()) || (uTrim2 - Ufin > math::precision::Precision::PConfusion()))
     {
       throw Standard_ConstructionError("Geom_TrimmedCurve::parameters out of range");
     }

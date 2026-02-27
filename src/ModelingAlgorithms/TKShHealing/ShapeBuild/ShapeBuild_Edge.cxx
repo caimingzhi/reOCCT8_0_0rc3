@@ -223,7 +223,7 @@ void ShapeBuild_Edge::CopyRanges(const TopoDS_Edge& toedge,
         }
       }
       if (doCheck
-          && ((fabs(newF - aCrvF) > Precision::PConfusion() && newF < aCrvF) || newF >= aCrvL))
+          && ((fabs(newF - aCrvF) > math::precision::Precision::PConfusion() && newF < aCrvF) || newF >= aCrvL))
       {
         double aShift = AdjustByPeriod(newF, 0.5 * (aCrvF + aCrvL), aPeriod);
         newF += aShift;
@@ -506,7 +506,7 @@ occ::handle<Geom2d_Curve> ShapeBuild_Edge::TransformPCurve(const occ::handle<Geo
 
       occ::handle<Geom2d_Curve> tcurve = new Geom2d_TrimmedCurve(result, aFirst, aLast);
 
-      Geom2dConvert_ApproxCurve approx(tcurve, Precision::Approximation(), GeomAbs_C1, 100, 6);
+      Geom2dConvert_ApproxCurve approx(tcurve, math::precision::Precision::Approximation(), GeomAbs_C1, 100, 6);
       if (approx.HasResult())
         aBSpline2d = approx.Curve();
       else

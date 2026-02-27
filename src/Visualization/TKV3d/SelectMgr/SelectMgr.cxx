@@ -161,7 +161,7 @@ namespace
         aVertLine2->Append(gp_Pnt(gp_XYZ(-aRadius, 0, 0) + aVec).Transformed(aTrsf));
       }
 
-      if (aRadius > Precision::Confusion())
+      if (aRadius > math::precision::Precision::Confusion())
       {
         addCircle(theSeqLines, aRadius, aTrsf, aVec.Z());
       }

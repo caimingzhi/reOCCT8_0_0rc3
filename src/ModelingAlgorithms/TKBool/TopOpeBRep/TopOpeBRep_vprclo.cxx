@@ -108,7 +108,7 @@ TopOpeBRepDS_Transition TopOpeBRep_FacesFiller::GetEdgeTrans(const TopOpeBRep_VP
 
   TopOpeBRepDS_Transition T;
 
-  double tola   = Precision::Angular() * 1.e+2;
+  double tola   = math::precision::Precision::Angular() * 1.e+2;
   bool   EtgF   = FUN_tool_EtgF(paredge, edge, OOuv, F, tola);
   bool   rest   = FUN_INlos(edge, myERL);
   bool   isse   = myHDS->DS().IsSectionEdge(edge);

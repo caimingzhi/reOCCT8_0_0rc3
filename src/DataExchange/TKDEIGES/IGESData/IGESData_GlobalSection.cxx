@@ -277,7 +277,7 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
     if ((nbp < 24) || (nbp > 25))
     {
 
-      Message_Msg Msg39("XSTEP_39");
+      System::log::Message_Msg Msg39("XSTEP_39");
       Msg39.Arg(24);
       Msg39.Arg(25);
       if (nbp < 24)
@@ -290,7 +290,7 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
   else if ((nbp < 25) || (nbp > 26))
   {
 
-    Message_Msg Msg39("XSTEP_39");
+    System::log::Message_Msg Msg39("XSTEP_39");
     Msg39.Arg(25);
     Msg39.Arg(26);
     if (nbp < 25)
@@ -311,12 +311,12 @@ void IGESData_GlobalSection::Init(const occ::handle<Interface_ParamSet>& params,
       theUnitFlag = corrected;
     else if (theUnitFlag == 3)
     {
-      Message_Msg Msg49("XSTEP_49");
+      System::log::Message_Msg Msg49("XSTEP_49");
       ach->SendWarning(Msg49);
     }
     else
     {
-      Message_Msg Msg48("XSTEP_48");
+      System::log::Message_Msg Msg48("XSTEP_48");
       ach->SendFail(Msg48);
     }
   }
@@ -596,7 +596,7 @@ void IGESData_GlobalSection::SetLastChangeDate()
   if (HasLastChangeDate())
     return;
   int           mois, jour, annee, heure, minute, seconde, millisec, microsec;
-  OSD_Process   system;
+  System::os::OSD_Process   system;
   Quantity_Date ladate = system.SystemDate();
   ladate.Values(mois, jour, annee, heure, minute, seconde, millisec, microsec);
   if (annee < 2000)
@@ -632,7 +632,7 @@ occ::handle<TCollection_HAsciiString> IGESData_GlobalSection::NewDateString(cons
   if (annee == 0)
   {
     int           millisec, microsec;
-    OSD_Process   system;
+    System::os::OSD_Process   system;
     Quantity_Date ladate = system.SystemDate();
     ladate.Values(moi, jou, anne, heur, minut, second, millisec, microsec);
   }

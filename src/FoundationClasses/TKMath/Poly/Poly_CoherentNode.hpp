@@ -14,8 +14,8 @@ public:
         myTriangles(nullptr),
         myIndex(-1)
   {
-    myUV[0] = Precision::Infinite();
-    myUV[1] = Precision::Infinite();
+    myUV[0] = math::precision::Precision::Infinite();
+    myUV[1] = math::precision::Precision::Infinite();
   }
 
   inline Poly_CoherentNode(const gp_XYZ& thePnt)
@@ -23,8 +23,8 @@ public:
         myTriangles(nullptr),
         myIndex(-1)
   {
-    myUV[0]     = Precision::Infinite();
-    myUV[1]     = Precision::Infinite();
+    myUV[0]     = math::precision::Precision::Infinite();
+    myUV[1]     = math::precision::Precision::Infinite();
     myNormal[0] = 0.f;
     myNormal[1] = 0.f;
     myNormal[2] = 0.f;
@@ -45,7 +45,7 @@ public:
   inline bool HasNormal() const
   {
     return ((myNormal[0] * myNormal[0] + myNormal[1] * myNormal[1] + myNormal[2] * myNormal[2])
-            > Precision::Confusion());
+            > math::precision::Precision::Confusion());
   }
 
   inline gp_XYZ GetNormal() const { return gp_XYZ(myNormal[0], myNormal[1], myNormal[2]); }

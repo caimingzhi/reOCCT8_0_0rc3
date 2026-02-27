@@ -7,7 +7,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_Tool, Standard_Transient)
 
 ShapeUpgrade_Tool::ShapeUpgrade_Tool()
 {
-  myPrecision = myMinTol = Precision::Confusion();
+  myPrecision = myMinTol = math::precision::Precision::Confusion();
   myMaxTol               = 1;
 }
 

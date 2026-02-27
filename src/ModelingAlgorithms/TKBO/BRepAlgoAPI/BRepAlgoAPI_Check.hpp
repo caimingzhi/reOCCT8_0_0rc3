@@ -23,7 +23,7 @@ public:
     const TopoDS_Shape&          theS,
     const bool                   bTestSE  = true,
     const bool                   bTestSI  = true,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT BRepAlgoAPI_Check(
     const TopoDS_Shape&          theS1,
@@ -31,7 +31,7 @@ public:
     const BOPAlgo_Operation      theOp    = BOPAlgo_UNKNOWN,
     const bool                   bTestSE  = true,
     const bool                   bTestSI  = true,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
 public:
   void SetData(const TopoDS_Shape& theS, const bool bTestSE = true, const bool bTestSI = true)
@@ -58,7 +58,7 @@ public:
   }
 
 public:
-  Standard_EXPORT void Perform(const Message_ProgressRange& theRange = Message_ProgressRange());
+  Standard_EXPORT void Perform(const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
 public:
   bool IsValid() { return myFaultyShapes.IsEmpty(); }

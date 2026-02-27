@@ -783,7 +783,7 @@ bool GeomFill_Sweep::BuildKPart()
               isUReversed = true;
             }
 
-            if (std::abs(l - f) <= Precision::PConfusion()
+            if (std::abs(l - f) <= math::precision::Precision::PConfusion()
                 || std::abs(UlastOnSec - UfirstOnSec) > M_PI_2)
             {
 
@@ -832,7 +832,7 @@ bool GeomFill_Sweep::BuildKPart()
 
             myExchUV = true;
 
-            if (isUPeriodic && std::abs(UFirst) > Precision::PConfusion())
+            if (isUPeriodic && std::abs(UFirst) > math::precision::Precision::PConfusion())
               isUPeriodic = false;
             Ok = true;
           }

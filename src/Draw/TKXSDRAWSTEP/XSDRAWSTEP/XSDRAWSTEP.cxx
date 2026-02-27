@@ -56,7 +56,7 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   }
 
   occ::handle<Draw_ProgressIndicator> progress = new Draw_ProgressIndicator(theDI, 1);
-  Message_ProgressScope               aPSRoot(progress->Start(), "Reading", 100);
+  System::log::Message_ProgressScope               aPSRoot(progress->Start(), "Reading", 100);
 
   STEPControl_Reader      sr(XSDRAW::Session(), false);
   TCollection_AsciiString fnom, rnom;
@@ -241,7 +241,7 @@ static int stepread(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
       aPSRoot.SetName("Translation");
       progress->Show(aPSRoot);
 
-      Message_ProgressScope aPS(aPSRoot.Next(80), "Root", nbl);
+      System::log::Message_ProgressScope aPS(aPSRoot.Next(80), "Root", nbl);
       for (ill = 1; ill <= nbl && aPS.More(); ill++)
       {
         num = sr.Model()->Number(list->Value(ill));
@@ -295,7 +295,7 @@ static int testreadstep(Draw_Interpretor& theDI, int theNbArgs, const char** the
   DESTEP_Parameters     aParameters;
   aParameters.InitFromStatic();
   int aNbSubShape = 0;
-  OSD_Parallel::For(
+  System::os::OSD_Parallel::For(
     0,
     aSize,
     [&](const int theIndex)
@@ -311,7 +311,7 @@ static int testreadstep(Draw_Interpretor& theDI, int theNbArgs, const char** the
         std::ifstream aStream;
         OSD_OpenStream(aStream, aFileNames[theIndex].ToCString(), std::ios::in | std::ios::binary);
         TCollection_AsciiString aFolder, aFileNameShort;
-        OSD_Path::FolderAndFileFromPath(aFileNames[theIndex].ToCString(), aFolder, aFileNameShort);
+        System::os::OSD_Path::FolderAndFileFromPath(aFileNames[theIndex].ToCString(), aFolder, aFileNameShort);
         aReadStat = aReader.ReadStream(aFileNameShort.ToCString(), aParameters, aStream);
       }
       else
@@ -436,7 +436,7 @@ static int stepwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   int nbavant = (stepmodel.IsNull() ? 0 : stepmodel->NbEntities());
 
   occ::handle<Draw_ProgressIndicator> progress = new Draw_ProgressIndicator(theDI, 1);
-  Message_ProgressScope               aPSRoot(progress->Start(), "Translating", 100);
+  System::log::Message_ProgressScope               aPSRoot(progress->Start(), "Translating", 100);
   progress->Show(aPSRoot);
 
   XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
@@ -524,7 +524,7 @@ static int testwrite(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
   DESTEP_Parameters aParameters;
   aParameters.InitFromStatic();
 
-  OSD_Parallel::For(
+  System::os::OSD_Parallel::For(
     0,
     aSize,
     [&](const int theIndex)
@@ -682,7 +682,7 @@ static int ReadStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << theArgVec[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << theArgVec[anArgIter] << "'";
       return 1;
     }
   }
@@ -731,20 +731,20 @@ static int ReadStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
           aReader.SetMetaMode(aMode);
           break;
         default:
-          Message::SendFail() << "Syntax error at '" << aModeStr << "'\n";
+          System::log::Message::SendFail() << "Syntax error at '" << aModeStr << "'\n";
           return 1;
       }
     }
   }
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI);
-  Message_ProgressScope aRootScope(aProgress->Start(), "STEP import", isFileMode ? 2 : 1);
+  System::log::Message_ProgressScope aRootScope(aProgress->Start(), "STEP import", isFileMode ? 2 : 1);
 
   IFSelect_ReturnStatus aReadStat = IFSelect_RetVoid;
 
   if (isFileMode)
   {
-    Message_ProgressScope aReadScope(aRootScope.Next(), "File reading", 1);
+    System::log::Message_ProgressScope aReadScope(aRootScope.Next(), "File reading", 1);
     aReadScope.Show();
 
     if (toTestStream)
@@ -752,7 +752,7 @@ static int ReadStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
       std::ifstream aStream;
       OSD_OpenStream(aStream, aFileName.ToCString(), std::ios::in | std::ios::binary);
       TCollection_AsciiString aFolder, aFileNameShort;
-      OSD_Path::FolderAndFileFromPath(aFileName, aFolder, aFileNameShort);
+      System::os::OSD_Path::FolderAndFileFromPath(aFileName, aFolder, aFileNameShort);
       aReadStat = aReader.ReadStream(aFileNameShort.ToCString(), aStream);
     }
     else
@@ -955,7 +955,7 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
                                              anOldVarName);
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI);
-  Message_ProgressScope aRootScope(aProgress->Start(), "STEP export", isFileMode ? 2 : 1);
+  System::log::Message_ProgressScope aRootScope(aProgress->Start(), "STEP export", isFileMode ? 2 : 1);
 
   XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
     XSAlgo_ShapeProcessor::ReadProcessingData("write.step.resource.name", "write.step.sequence");
@@ -994,7 +994,7 @@ static int WriteStep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
     return 0;
   }
 
-  Message_ProgressScope aWriteScope(aRootScope.Next(), "File writing", 1);
+  System::log::Message_ProgressScope aWriteScope(aRootScope.Next(), "File writing", 1);
   aWriteScope.Show();
   theDI << "Writing STEP file " << aFilePath << "\n";
 

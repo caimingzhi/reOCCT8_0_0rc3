@@ -15,7 +15,10 @@
 class TDF_Data;
 class XmlMDF_ADriverTable;
 class TDF_Label;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class XmlMDF
 {
@@ -27,17 +30,17 @@ public:
     XmlObjMgt_Element&                      aTarget,
     XmlObjMgt_SRelocationTable&             aReloc,
     const occ::handle<XmlMDF_ADriverTable>& aDrivers,
-    const Message_ProgressRange&            theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&            theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static bool FromTo(
     const XmlObjMgt_Element&                aSource,
     occ::handle<TDF_Data>&                  aTarget,
     XmlObjMgt_RRelocationTable&             aReloc,
     const occ::handle<XmlMDF_ADriverTable>& aDrivers,
-    const Message_ProgressRange&            theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&            theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void AddDrivers(const occ::handle<XmlMDF_ADriverTable>& aDriverTable,
-                                         const occ::handle<Message_Messenger>&   theMessageDriver);
+                                         const occ::handle<System::log::Message_Messenger>&   theMessageDriver);
 
 private:
   Standard_EXPORT static int WriteSubTree(
@@ -45,14 +48,14 @@ private:
     XmlObjMgt_Element&                      theElement,
     XmlObjMgt_SRelocationTable&             aReloc,
     const occ::handle<XmlMDF_ADriverTable>& aDrivers,
-    const Message_ProgressRange&            theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&            theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static int ReadSubTree(
     const XmlObjMgt_Element&                                                         theElement,
     const TDF_Label&                                                                 theLabel,
     XmlObjMgt_RRelocationTable&                                                      aReloc,
     const NCollection_DataMap<TCollection_AsciiString, occ::handle<XmlMDF_ADriver>>& aDrivers,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void CreateDrvMap(
     const occ::handle<XmlMDF_ADriverTable>&                                    aDriverTable,

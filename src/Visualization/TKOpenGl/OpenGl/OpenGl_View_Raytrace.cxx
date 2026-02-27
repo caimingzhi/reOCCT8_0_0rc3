@@ -992,10 +992,10 @@ bool OpenGl_View::ShaderSource::LoadFromFiles(const TCollection_AsciiString* the
   TCollection_AsciiString aMissingFiles;
   for (int anIndex = 0; !theFileNames[anIndex].IsEmpty(); ++anIndex)
   {
-    OSD_File aFile(theFileNames[anIndex]);
+    System::os::OSD_File aFile(theFileNames[anIndex]);
     if (aFile.Exists())
     {
-      aFile.Open(OSD_ReadOnly, OSD_Protection());
+      aFile.Open(OSD_ReadOnly, System::os::OSD_Protection());
     }
     if (!aFile.IsOpen())
     {
@@ -1383,7 +1383,7 @@ bool OpenGl_View::initRaytraceResources(const int                          theSi
 
       const TCollection_AsciiString aPrefixString = generateShaderPrefix(theGlContext);
 #ifdef RAY_TRACE_PRINT_INFO
-      Message::SendTrace() << "GLSL prefix string:" << std::endl << aPrefixString;
+      System::log::Message::SendTrace() << "GLSL prefix string:" << std::endl << aPrefixString;
 #endif
       myRaytraceShaderSource.SetPrefix(aPrefixString);
       myPostFSAAShaderSource.SetPrefix(aPrefixString);
@@ -1458,7 +1458,7 @@ bool OpenGl_View::initRaytraceResources(const int                          theSi
     const TCollection_AsciiString aPrefixString = generateShaderPrefix(theGlContext);
 
 #ifdef RAY_TRACE_PRINT_INFO
-    Message::SendTrace() << "GLSL prefix string:" << std::endl << aPrefixString;
+    System::log::Message::SendTrace() << "GLSL prefix string:" << std::endl << aPrefixString;
 #endif
 
     ShaderSource aBasicVertShaderSrc;
@@ -2060,7 +2060,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
   {
     if (!theGlContext->IsGlGreaterEqual(3, 2))
     {
-      Message::SendFail() << "Error: OpenGL ES version is less than 3.2";
+      System::log::Message::SendFail() << "Error: OpenGL ES version is less than 3.2";
       return false;
     }
   }
@@ -2068,7 +2068,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
   {
     if (!theGlContext->IsGlGreaterEqual(3, 1))
     {
-      Message::SendFail() << "Error: OpenGL version is less than 3.1";
+      System::log::Message::SendFail() << "Error: OpenGL version is less than 3.1";
       return false;
     }
   }
@@ -2080,7 +2080,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
 
     if (!myRaytraceGeometry.UpdateTextureHandles(theGlContext))
     {
-      Message::SendTrace() << "Error: Failed to get OpenGL texture handles";
+      System::log::Message::SendTrace() << "Error: Failed to get OpenGL texture handles";
       return false;
     }
   }
@@ -2097,7 +2097,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
         || !mySceneMaxPointTexture->Create(theGlContext)
         || !mySceneTransformTexture->Create(theGlContext))
     {
-      Message::SendTrace() << "Error: Failed to create scene BVH buffers";
+      System::log::Message::SendTrace() << "Error: Failed to create scene BVH buffers";
       return false;
     }
   }
@@ -2114,7 +2114,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
         || !myGeometryTexCrdTexture->Create(theGlContext)
         || !myGeometryTriangTexture->Create(theGlContext))
     {
-      Message::SendTrace() << "\nError: Failed to create buffers for triangulation data";
+      System::log::Message::SendTrace() << "\nError: Failed to create buffers for triangulation data";
       return false;
     }
   }
@@ -2124,7 +2124,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
     myRaytraceMaterialTexture = new OpenGl_TextureBuffer();
     if (!myRaytraceMaterialTexture->Create(theGlContext))
     {
-      Message::SendTrace() << "Error: Failed to create buffers for material data";
+      System::log::Message::SendTrace() << "Error: Failed to create buffers for material data";
       return false;
     }
   }
@@ -2197,7 +2197,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
 
   if (!aResult)
   {
-    Message::SendTrace() << "Error: Failed to upload buffers for bottom-level scene BVH";
+    System::log::Message::SendTrace() << "Error: Failed to upload buffers for bottom-level scene BVH";
     return false;
   }
 
@@ -2227,7 +2227,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
 
   if (!aResult)
   {
-    Message::SendTrace() << "Error: Failed to upload buffers for scene geometry";
+    System::log::Message::SendTrace() << "Error: Failed to upload buffers for scene geometry";
     return false;
   }
 
@@ -2291,7 +2291,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
 
       if (!aResult)
       {
-        Message::SendTrace() << "Error: Failed to upload buffers for bottom-level scene BVHs";
+        System::log::Message::SendTrace() << "Error: Failed to upload buffers for bottom-level scene BVHs";
         return false;
       }
     }
@@ -2340,7 +2340,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
 
     if (!aResult)
     {
-      Message::SendTrace() << "Error: Failed to upload triangulation buffers for OpenGL element";
+      System::log::Message::SendTrace() << "Error: Failed to upload triangulation buffers for OpenGL element";
       return false;
     }
   }
@@ -2354,7 +2354,7 @@ bool OpenGl_View::uploadRaytraceData(const occ::handle<OpenGl_Context>& theGlCon
 
     if (!aResult)
     {
-      Message::SendTrace() << "Error: Failed to upload material buffer";
+      System::log::Message::SendTrace() << "Error: Failed to upload material buffer";
       return false;
     }
   }
@@ -2511,7 +2511,7 @@ bool OpenGl_View::updateRaytraceLightSources(const NCollection_Mat4<float>&     
                                          GLsizei(myRaytraceGeometry.Sources.size() * 2),
                                          aDataPtr))
     {
-      Message::SendTrace() << "Error: Failed to upload light source buffer";
+      System::log::Message::SendTrace() << "Error: Failed to upload light source buffer";
       return false;
     }
 

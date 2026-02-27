@@ -5,7 +5,8 @@
 
 #include <Standard_SStream.hpp>
 
-class Message_AttributeStream : public Message_Attribute
+namespace System { namespace log {
+class Message_AttributeStream : public System::log::Message_Attribute
 {
   DEFINE_STANDARD_RTTIEXT(Message_AttributeStream, Message_Attribute)
 public:
@@ -22,3 +23,5 @@ public:
 private:
   Standard_SStream myStream;
 };
+}} // namespace System::log
+

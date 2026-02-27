@@ -276,7 +276,7 @@ void Bisector_Inter::NeighbourPerform(const occ::handle<Bisector_BisecCC>& Bis1,
 {
   double           USol, U1, U2, Dist;
   double           UMin = 0., UMax = 0.;
-  constexpr double Eps = Precision::PConfusion();
+  constexpr double Eps = math::precision::Precision::PConfusion();
   gp_Pnt2d         PSol;
 
   occ::handle<Geom2d_Curve>     Guide;

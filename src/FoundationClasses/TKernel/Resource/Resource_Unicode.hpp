@@ -11,6 +11,7 @@
 #include <Resource_FormatType.hpp>
 class TCollection_ExtendedString;
 
+namespace System { namespace resource {
 class Resource_Unicode
 {
 public:
@@ -74,3 +75,5 @@ public:
     return ConvertUnicodeToFormat(Resource_Unicode::GetFormat(), theFromStr, theToStr, theMaxSize);
   }
 };
+}} // namespace System::resource
+

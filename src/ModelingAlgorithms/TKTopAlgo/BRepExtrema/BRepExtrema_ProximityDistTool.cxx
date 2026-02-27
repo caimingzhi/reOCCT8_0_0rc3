@@ -163,7 +163,7 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
   BVH_Vec3d aDirect     = myObject - aNearestPnt;
   double    aSqDistance = aDirect.Dot(aDirect);
 
-  if (aSqDistance > Precision::SquareConfusion())
+  if (aSqDistance > math::precision::Precision::SquareConfusion())
   {
     const BVH_Vec3d aAB = aTrgVert2 - aTrgVert1;
 
@@ -183,10 +183,10 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
 
     const BVH_Vec3d aCrossCross      = BVH_Vec3d::Cross(aDirect, aNorm);
     double          aCrossCrossSqLen = aCrossCross.Dot(aCrossCross);
-    if (aCrossCrossSqLen > Precision::SquareConfusion() * aSqDistance * aNormSqLen)
+    if (aCrossCrossSqLen > math::precision::Precision::SquareConfusion() * aSqDistance * aNormSqLen)
     {
 
-      if (myMinDistance - sqrt(aSqDistance) > Precision::Confusion())
+      if (myMinDistance - sqrt(aSqDistance) > math::precision::Precision::Confusion())
       {
         myMinDistance  = sqrt(aSqDistance);
         myMinDistPoint = aNearestPnt;
@@ -197,7 +197,7 @@ bool BRepExtrema_ProximityDistTool::Accept(const int theTrgIdx, const double&)
     }
   }
 
-  if (myDistance - sqrt(aSqDistance) > Precision::Confusion())
+  if (myDistance - sqrt(aSqDistance) > math::precision::Precision::Confusion())
   {
     myDistance     = sqrt(aSqDistance);
     myExtremaPoint = aNearestPnt;
@@ -305,7 +305,7 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt1()
     int                aVtxSize   = (int)aVertices1.size();
     int                aLastIdx   = aVtxSize - 1;
 
-    if ((aVertices1[0] - aVertices1[aLastIdx]).Modulus() < Precision::Confusion())
+    if ((aVertices1[0] - aVertices1[aLastIdx]).Modulus() < math::precision::Precision::Confusion())
     {
       myPntStatus1 = ProxPnt_Status_MIDDLE;
       return;
@@ -356,7 +356,7 @@ void BRepExtrema_ProximityDistTool::defineStatusProxPnt2()
       int                aVtxSize   = (int)aVertices2.size();
       int                aLastIdx   = aVtxSize - 1;
 
-      if ((aVertices2[0] - aVertices2[aLastIdx]).Modulus() < Precision::Confusion())
+      if ((aVertices2[0] - aVertices2[aLastIdx]).Modulus() < math::precision::Precision::Confusion())
       {
         myPntStatus2 = ProxPnt_Status_MIDDLE;
         return;

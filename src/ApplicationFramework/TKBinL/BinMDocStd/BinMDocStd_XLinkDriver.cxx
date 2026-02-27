@@ -11,7 +11,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDocStd_XLinkDriver, BinMDF_ADriver)
 
-BinMDocStd_XLinkDriver::BinMDocStd_XLinkDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+BinMDocStd_XLinkDriver::BinMDocStd_XLinkDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDocStd_XLink)->Name())
 {
 }

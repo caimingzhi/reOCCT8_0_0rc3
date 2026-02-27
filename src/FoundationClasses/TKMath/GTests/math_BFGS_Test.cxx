@@ -245,9 +245,9 @@ TEST(MathBFGSTest, LocationCopyMethod)
   anOptimizer.Location(aLocationCopy);
 
   const math_Vector& aLocationRef = anOptimizer.Location();
-  EXPECT_NEAR(aLocationCopy(1), aLocationRef(1), Precision::Confusion())
+  EXPECT_NEAR(aLocationCopy(1), aLocationRef(1), math::precision::Precision::Confusion())
     << "Copied location should match reference";
-  EXPECT_NEAR(aLocationCopy(2), aLocationRef(2), Precision::Confusion())
+  EXPECT_NEAR(aLocationCopy(2), aLocationRef(2), math::precision::Precision::Confusion())
     << "Copied location should match reference";
 }
 
@@ -268,9 +268,9 @@ TEST(MathBFGSTest, GradientCopyMethod)
   anOptimizer.Gradient(aGradientCopy);
 
   const math_Vector& aGradientRef = anOptimizer.Gradient();
-  EXPECT_NEAR(aGradientCopy(1), aGradientRef(1), Precision::Confusion())
+  EXPECT_NEAR(aGradientCopy(1), aGradientRef(1), math::precision::Precision::Confusion())
     << "Copied gradient should match reference";
-  EXPECT_NEAR(aGradientCopy(2), aGradientRef(2), Precision::Confusion())
+  EXPECT_NEAR(aGradientCopy(2), aGradientRef(2), math::precision::Precision::Confusion())
     << "Copied gradient should match reference";
 }
 
@@ -475,27 +475,27 @@ TEST(MathBFGSTest, OCC30492_StartingPointAtMinimum)
   math_Vector      aStartPnt(1, 1);
   aStartPnt(1) = 0.0;
 
-  math_FRPR aFRPR(aFunc, Precision::Confusion());
+  math_FRPR aFRPR(aFunc, math::precision::Precision::Confusion());
   aFRPR.Perform(aFunc, aStartPnt);
   EXPECT_TRUE(aFRPR.IsDone()) << "FRPR optimization should succeed when starting at minimum";
 
-  math_BFGS aBFGS(1, Precision::Confusion());
+  math_BFGS aBFGS(1, math::precision::Precision::Confusion());
   aBFGS.Perform(aFunc, aStartPnt);
   EXPECT_TRUE(aBFGS.IsDone()) << "BFGS optimization should succeed when starting at minimum";
 
   if (aFRPR.IsDone())
   {
-    EXPECT_NEAR(aFRPR.Location()(1), 0.0, Precision::Confusion())
+    EXPECT_NEAR(aFRPR.Location()(1), 0.0, math::precision::Precision::Confusion())
       << "FRPR should stay at/find the minimum";
-    EXPECT_NEAR(aFRPR.Minimum(), 0.0, Precision::Confusion())
+    EXPECT_NEAR(aFRPR.Minimum(), 0.0, math::precision::Precision::Confusion())
       << "FRPR should report minimum value of 0";
   }
 
   if (aBFGS.IsDone())
   {
-    EXPECT_NEAR(aBFGS.Location()(1), 0.0, Precision::Confusion())
+    EXPECT_NEAR(aBFGS.Location()(1), 0.0, math::precision::Precision::Confusion())
       << "BFGS should stay at/find the minimum";
-    EXPECT_NEAR(aBFGS.Minimum(), 0.0, Precision::Confusion())
+    EXPECT_NEAR(aBFGS.Minimum(), 0.0, math::precision::Precision::Confusion())
       << "BFGS should report minimum value of 0";
   }
 }

@@ -19,12 +19,12 @@ TEST(BVH_BoxTest, ConstructorWithCorners)
   BVH_Box<double, 3> aBox(aMin, aMax);
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Add)
@@ -36,12 +36,12 @@ TEST(BVH_BoxTest, Add)
 
   aBox.Add(BVH_Vec3d(-1.0, -2.0, -3.0));
 
-  EXPECT_NEAR(aBox.CornerMin().x(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), -2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), -3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), -2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), -3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Combine)
@@ -51,12 +51,12 @@ TEST(BVH_BoxTest, Combine)
 
   aBox1.Combine(aBox2);
 
-  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMin().y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMin().z(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().x(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().y(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().z(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().z(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().x(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().y(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().z(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Size)
@@ -64,9 +64,9 @@ TEST(BVH_BoxTest, Size)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(2.0, 3.0, 4.0));
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 4.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Center)
@@ -74,9 +74,9 @@ TEST(BVH_BoxTest, Center)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(2.0, 4.0, 6.0));
 
   BVH_Vec3d aCenter = aBox.Center();
-  EXPECT_NEAR(aCenter.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.z(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aCenter.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.z(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Area)
@@ -84,7 +84,7 @@ TEST(BVH_BoxTest, Area)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 2.0, 3.0));
 
   double anArea = aBox.Area();
-  EXPECT_NEAR(anArea, 22.0, Precision::Confusion());
+  EXPECT_NEAR(anArea, 22.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOut)
@@ -114,13 +114,13 @@ TEST(BVH_BoxTest, Box2D)
   aBox.Add(BVH_Vec2d(1.0, 1.0));
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 1.0, math::precision::Precision::Confusion());
 
   double anArea = aBox.Area();
-  EXPECT_NEAR(anArea, 1.0, Precision::Confusion());
+  EXPECT_NEAR(anArea, 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Box4D)
@@ -131,14 +131,14 @@ TEST(BVH_BoxTest, Box4D)
   aBox.Add(BVH_Vec4d(1.0, 2.0, 3.0, 4.0));
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().w(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().w(), 4.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().w(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().w(), 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, FloatPrecision)
@@ -162,15 +162,15 @@ TEST(BVH_BoxTest, SinglePointBox)
   aBox.Add(BVH_Vec3d(5.0, 5.0, 5.0));
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 5.0, math::precision::Precision::Confusion());
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 0.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aBox.Area(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Area(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, NegativeCoordinates)
@@ -180,14 +180,14 @@ TEST(BVH_BoxTest, NegativeCoordinates)
   EXPECT_TRUE(aBox.IsValid());
 
   BVH_Vec3d aCenter = aBox.Center();
-  EXPECT_NEAR(aCenter.x(), -7.5, Precision::Confusion());
-  EXPECT_NEAR(aCenter.y(), -15.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.z(), -22.5, Precision::Confusion());
+  EXPECT_NEAR(aCenter.x(), -7.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.y(), -15.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.z(), -22.5, math::precision::Precision::Confusion());
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 15.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 15.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, LargeValues)
@@ -211,8 +211,8 @@ TEST(BVH_BoxTest, CombineWithInvalid)
   aBox1.Combine(aBox2);
 
   EXPECT_TRUE(aBox1.IsValid());
-  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, AddToInvalid)
@@ -223,8 +223,8 @@ TEST(BVH_BoxTest, AddToInvalid)
   aBox1.Combine(aBox2);
 
   EXPECT_TRUE(aBox1.IsValid());
-  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOutTouchingBoxes)
@@ -258,7 +258,7 @@ TEST(BVH_BoxTest, AreaUnitCube)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
-  EXPECT_NEAR(aBox.Area(), 6.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Area(), 6.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterAtOrigin)
@@ -266,9 +266,9 @@ TEST(BVH_BoxTest, CenterAtOrigin)
   BVH_Box<double, 3> aBox(BVH_Vec3d(-1.0, -1.0, -1.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   BVH_Vec3d aCenter = aBox.Center();
-  EXPECT_NEAR(aCenter.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aCenter.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, MultipleAdds)
@@ -280,12 +280,12 @@ TEST(BVH_BoxTest, MultipleAdds)
   aBox.Add(BVH_Vec3d(1.0, -1.0, 8.0));
   aBox.Add(BVH_Vec3d(0.0, 2.0, -3.0));
 
-  EXPECT_NEAR(aBox.CornerMin().x(), -2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), -3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 8.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), -2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), -3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 8.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, FlatBox2D)
@@ -296,11 +296,11 @@ TEST(BVH_BoxTest, FlatBox2D)
   EXPECT_TRUE(aBox.IsValid());
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 0.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aBox.Area(), 24.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Area(), 24.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, FlatBox1D)
@@ -311,9 +311,9 @@ TEST(BVH_BoxTest, FlatBox1D)
   EXPECT_TRUE(aBox.IsValid());
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 0.0, math::precision::Precision::Confusion());
 
   double anArea = aBox.Area();
   EXPECT_GE(anArea, 0.0);
@@ -328,12 +328,12 @@ TEST(BVH_BoxTest, CombineMultiple)
   aBox1.Combine(aBox2);
   aBox1.Combine(aBox3);
 
-  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMin().y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMin().z(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().x(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().y(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().z(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().z(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().x(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().y(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().z(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOutPartialOverlap)
@@ -381,8 +381,8 @@ TEST(BVH_BoxTest, Box2DCenter)
   BVH_Box<double, 2> aBox(BVH_Vec2d(0.0, 0.0), BVH_Vec2d(4.0, 6.0));
 
   BVH_Vec2d aCenter = aBox.Center();
-  EXPECT_NEAR(aCenter.x(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.y(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aCenter.x(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.y(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Box2DSize)
@@ -390,8 +390,8 @@ TEST(BVH_BoxTest, Box2DSize)
   BVH_Box<double, 2> aBox(BVH_Vec2d(1.0, 2.0), BVH_Vec2d(4.0, 7.0));
 
   BVH_Vec2d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 5.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, VerySmallBox)
@@ -413,14 +413,14 @@ TEST(BVH_BoxTest, SymmetricBox)
   BVH_Box<double, 3> aBox(BVH_Vec3d(-5.0, -5.0, -5.0), BVH_Vec3d(5.0, 5.0, 5.0));
 
   BVH_Vec3d aCenter = aBox.Center();
-  EXPECT_NEAR(aCenter.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aCenter.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aCenter.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aCenter.z(), 0.0, math::precision::Precision::Confusion());
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 10.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 10.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, NonCubicBox)
@@ -429,11 +429,11 @@ TEST(BVH_BoxTest, NonCubicBox)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 10.0, 100.0));
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 100.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 100.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aBox.Area(), 2220.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Area(), 2220.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, ClearAndReuse)
@@ -449,8 +449,8 @@ TEST(BVH_BoxTest, ClearAndReuse)
   aBox.Add(BVH_Vec3d(10.0, 10.0, 10.0));
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 10.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 10.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOutSameBox)
@@ -467,8 +467,8 @@ TEST(BVH_BoxTest, CombineSameBox)
 
   aBox1.Combine(aBox2);
 
-  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox1.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOutNearMiss)
@@ -488,9 +488,9 @@ TEST(BVH_BoxTest, AddDuplicatePoint)
   aBox.Add(BVH_Vec3d(1.0, 2.0, 3.0));
   aBox.Add(BVH_Vec3d(1.0, 2.0, 3.0));
 
-  EXPECT_NEAR(aBox.CornerMin().x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Size().x(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Size().x(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, SinglePointConstructor)
@@ -499,17 +499,17 @@ TEST(BVH_BoxTest, SinglePointConstructor)
   BVH_Box<double, 3> aBox(aPoint);
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), 15.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 15.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), 15.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 15.0, math::precision::Precision::Confusion());
 
   BVH_Vec3d aSize = aBox.Size();
-  EXPECT_NEAR(aSize.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aSize.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aSize.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aSize.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, SinglePointConstructor2D)
@@ -518,10 +518,10 @@ TEST(BVH_BoxTest, SinglePointConstructor2D)
   BVH_Box<double, 2> aBox(aPoint);
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.CornerMin().x(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 7.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 7.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, SinglePointConstructorOrigin)
@@ -530,44 +530,44 @@ TEST(BVH_BoxTest, SinglePointConstructorOrigin)
   BVH_Box<double, 3> aBox(aOrigin);
 
   EXPECT_TRUE(aBox.IsValid());
-  EXPECT_NEAR(aBox.Center().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center().y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center().z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center().y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center().z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterByAxis)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(10.0, 20.0, 30.0));
 
-  EXPECT_NEAR(aBox.Center(0), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(1), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(2), 15.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(0), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(1), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(2), 15.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterByAxis2D)
 {
   BVH_Box<double, 2> aBox(BVH_Vec2d(2.0, 4.0), BVH_Vec2d(8.0, 12.0));
 
-  EXPECT_NEAR(aBox.Center(0), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(1), 8.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(0), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(1), 8.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterByAxisNegative)
 {
   BVH_Box<double, 3> aBox(BVH_Vec3d(-10.0, -20.0, -30.0), BVH_Vec3d(10.0, 20.0, 30.0));
 
-  EXPECT_NEAR(aBox.Center(0), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(1), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(2), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(0), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(1), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(2), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, CenterByAxis4D)
 {
   BVH_Box<double, 4> aBox(BVH_Vec4d(0.0, 0.0, 0.0, 0.0), BVH_Vec4d(4.0, 6.0, 8.0, 10.0));
 
-  EXPECT_NEAR(aBox.Center(0), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(1), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.Center(2), 4.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(0), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(1), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.Center(2), 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOutPoint_Inside)
@@ -769,8 +769,8 @@ TEST(BVH_BoxTest, Transform_Identity)
 
   aBox.Transform(aIdentity);
 
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Transform_Translation)
@@ -783,12 +783,12 @@ TEST(BVH_BoxTest, Transform_Translation)
 
   aBox.Transform(aTransform);
 
-  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), 15.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 6.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 11.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 16.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), 15.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 6.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 11.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 16.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Transform_Scale)
@@ -803,10 +803,10 @@ TEST(BVH_BoxTest, Transform_Scale)
 
   aBox.Transform(aTransform);
 
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 4.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Transformed_Identity)
@@ -818,11 +818,11 @@ TEST(BVH_BoxTest, Transformed_Identity)
 
   BVH_Box<double, 3> aTransformed = aBox.Transformed(aIdentity);
 
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aTransformed.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aTransformed.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Transformed_Translation)
@@ -835,15 +835,15 @@ TEST(BVH_BoxTest, Transformed_Translation)
 
   BVH_Box<double, 3> aTransformed = aBox.Transformed(aTransform);
 
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 1.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(aTransformed.CornerMin().x(), 10.0, Precision::Confusion());
-  EXPECT_NEAR(aTransformed.CornerMin().y(), 20.0, Precision::Confusion());
-  EXPECT_NEAR(aTransformed.CornerMin().z(), 30.0, Precision::Confusion());
-  EXPECT_NEAR(aTransformed.CornerMax().x(), 11.0, Precision::Confusion());
-  EXPECT_NEAR(aTransformed.CornerMax().y(), 21.0, Precision::Confusion());
-  EXPECT_NEAR(aTransformed.CornerMax().z(), 31.0, Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMin().x(), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMin().y(), 20.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMin().z(), 30.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMax().x(), 11.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMax().y(), 21.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTransformed.CornerMax().z(), 31.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Transform_InvalidBox)
@@ -878,10 +878,10 @@ TEST(BVH_BoxTest, ModifyCornerMin)
 
   aBox.CornerMin() = BVH_Vec3d(-5.0, -5.0, -5.0);
 
-  EXPECT_NEAR(aBox.CornerMin().x(), -5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), -5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), -5.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().x(), 10.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), -5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), -5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), -5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 10.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, ModifyCornerMax)
@@ -890,10 +890,10 @@ TEST(BVH_BoxTest, ModifyCornerMax)
 
   aBox.CornerMax() = BVH_Vec3d(20.0, 30.0, 40.0);
 
-  EXPECT_NEAR(aBox.CornerMax().x(), 20.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().y(), 30.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 40.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().x(), 20.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().y(), 30.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 40.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, ModifyCornerComponents)
@@ -904,10 +904,10 @@ TEST(BVH_BoxTest, ModifyCornerComponents)
   aBox.CornerMin().y() = -2.0;
   aBox.CornerMax().z() = 15.0;
 
-  EXPECT_NEAR(aBox.CornerMin().x(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().y(), -2.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMin().z(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aBox.CornerMax().z(), 15.0, Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().x(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().y(), -2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMin().z(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aBox.CornerMax().z(), 15.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, Area_DegenerateBox2D)
@@ -918,7 +918,7 @@ TEST(BVH_BoxTest, Area_DegenerateBox2D)
   double anArea = aBox.Area();
 
   EXPECT_GE(anArea, 0.0);
-  EXPECT_NEAR(anArea, 5.0, Precision::Confusion());
+  EXPECT_NEAR(anArea, 5.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_BoxTest, IsOut_TwoCorners_Overlapping)

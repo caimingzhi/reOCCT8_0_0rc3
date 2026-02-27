@@ -24,18 +24,18 @@ public:
   Standard_EXPORT const TopoDS_Face& Face() const;
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT TopAbs_Orientation Orientation() const;
 
 protected:
-  Standard_EXPORT void PerformShapesToAvoid(const Message_ProgressRange& theRange) override;
+  Standard_EXPORT void PerformShapesToAvoid(const System::log::Message_ProgressRange& theRange) override;
 
-  Standard_EXPORT void PerformLoops(const Message_ProgressRange& theRange) override;
+  Standard_EXPORT void PerformLoops(const System::log::Message_ProgressRange& theRange) override;
 
-  Standard_EXPORT void PerformAreas(const Message_ProgressRange& theRange) override;
+  Standard_EXPORT void PerformAreas(const System::log::Message_ProgressRange& theRange) override;
 
-  Standard_EXPORT void PerformInternalShapes(const Message_ProgressRange& theRange) override;
+  Standard_EXPORT void PerformInternalShapes(const System::log::Message_ProgressRange& theRange) override;
 
   Standard_EXPORT void CheckData() override;
 

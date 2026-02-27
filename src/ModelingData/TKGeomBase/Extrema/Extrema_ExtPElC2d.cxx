@@ -79,7 +79,7 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&  P,
   gp_Pnt2d OC(C.Location());
   myNbExt = 0;
 
-  if (OC.IsEqual(P, Precision::Confusion()))
+  if (OC.IsEqual(P, math::precision::Precision::Confusion()))
   {
     myDone = false;
   }
@@ -96,8 +96,8 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&  P,
     U2            = U1 + M_PI;
     P2            = OC.Translated(-radius * V);
     double myuinf = Uinf;
-    ElCLib::AdjustPeriodic(Uinf, Uinf + 2 * M_PI, Precision::PConfusion(), myuinf, U1);
-    ElCLib::AdjustPeriodic(Uinf, Uinf + 2 * M_PI, Precision::PConfusion(), myuinf, U2);
+    ElCLib::AdjustPeriodic(Uinf, Uinf + 2 * M_PI, math::precision::Precision::PConfusion(), myuinf, U1);
+    ElCLib::AdjustPeriodic(Uinf, Uinf + 2 * M_PI, math::precision::Precision::PConfusion(), myuinf, U2);
     if (((U1 - 2 * M_PI - Uinf) < Tol) && ((U1 - 2 * M_PI - Uinf) > -Tol))
     {
       U1 = Uinf;
@@ -158,7 +158,7 @@ void Extrema_ExtPElC2d::Perform(const gp_Pnt2d&   P,
   double   B = E.MinorRadius();
   gp_Vec2d V(OR, P);
 
-  if (OR.IsEqual(P, Precision::Confusion()) && (std::abs(A - B) <= Tol))
+  if (OR.IsEqual(P, math::precision::Precision::Confusion()) && (std::abs(A - B) <= Tol))
   {
     return;
   }

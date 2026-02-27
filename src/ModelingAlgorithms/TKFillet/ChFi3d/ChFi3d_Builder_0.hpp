@@ -35,7 +35,7 @@
 #include <NCollection_Array1.hpp>
 #ifdef OCCT_DEBUG
   #include <OSD_Chronometer.hpp>
-extern OSD_Chronometer simul, elspine, chemine;
+extern System::os::OSD_Chronometer simul, elspine, chemine;
 #endif
 
 double ChFi3d_InPeriod(const double U, const double UFirst, const double ULast, const double Eps);

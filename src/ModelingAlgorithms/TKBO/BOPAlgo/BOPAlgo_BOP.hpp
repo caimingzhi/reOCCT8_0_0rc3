@@ -28,21 +28,21 @@ public:
   Standard_EXPORT BOPAlgo_Operation Operation() const;
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 protected:
   Standard_EXPORT void CheckData() override;
 
   Standard_EXPORT void PerformInternal1(const BOPAlgo_PaveFiller&    thePF,
-                                        const Message_ProgressRange& theRange) override;
+                                        const System::log::Message_ProgressRange& theRange) override;
 
   Standard_EXPORT void BuildResult(const TopAbs_ShapeEnum theType) override;
 
-  Standard_EXPORT void BuildShape(const Message_ProgressRange& theRange);
+  Standard_EXPORT void BuildShape(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void BuildRC(const Message_ProgressRange& theRange);
+  Standard_EXPORT void BuildRC(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void BuildSolid(const Message_ProgressRange& theRange);
+  Standard_EXPORT void BuildSolid(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT bool TreatEmptyShape();
 

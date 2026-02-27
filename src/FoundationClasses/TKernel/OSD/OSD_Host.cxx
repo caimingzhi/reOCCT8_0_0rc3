@@ -35,9 +35,9 @@ extern "C"
   int sysinfo(int, char*, long);
 }
 
-OSD_Host::OSD_Host() = default;
+System::os::OSD_Host::OSD_Host() = default;
 
-TCollection_AsciiString OSD_Host::SystemVersion()
+TCollection_AsciiString System::os::OSD_Host::SystemVersion()
 {
   struct utsname          info;
   TCollection_AsciiString result;
@@ -49,7 +49,7 @@ TCollection_AsciiString OSD_Host::SystemVersion()
   return (result);
 }
 
-OSD_SysType OSD_Host::SystemId() const
+OSD_SysType System::os::OSD_Host::SystemId() const
 {
   struct utsname info;
 
@@ -78,7 +78,7 @@ OSD_SysType OSD_Host::SystemId() const
   return (OSD_Unknown);
 }
 
-TCollection_AsciiString OSD_Host::HostName()
+TCollection_AsciiString System::os::OSD_Host::HostName()
 {
   TCollection_AsciiString result;
   char                    value[65];
@@ -92,7 +92,7 @@ TCollection_AsciiString OSD_Host::HostName()
   return (result);
 }
 
-int OSD_Host::AvailableMemory()
+int System::os::OSD_Host::AvailableMemory()
 {
   int result;
 
@@ -108,7 +108,7 @@ int OSD_Host::AvailableMemory()
   return (result);
 }
 
-TCollection_AsciiString OSD_Host::InternetAddress()
+TCollection_AsciiString System::os::OSD_Host::InternetAddress()
 {
   struct hostent          internet_address;
   int                     a, b, c, d;
@@ -132,7 +132,7 @@ TCollection_AsciiString OSD_Host::InternetAddress()
   return (result);
 }
 
-OSD_OEMType OSD_Host::MachineType()
+OSD_OEMType System::os::OSD_Host::MachineType()
 {
   struct utsname info;
 
@@ -163,22 +163,22 @@ OSD_OEMType OSD_Host::MachineType()
   return (OSD_Unavailable);
 }
 
-void OSD_Host::Reset()
+void System::os::OSD_Host::Reset()
 {
   myError.Reset();
 }
 
-bool OSD_Host::Failed() const
+bool System::os::OSD_Host::Failed() const
 {
   return (myError.Failed());
 }
 
-void OSD_Host::Perror()
+void System::os::OSD_Host::Perror()
 {
   myError.Perror();
 }
 
-int OSD_Host::Error() const
+int System::os::OSD_Host::Error() const
 {
   return (myError.Error());
 }
@@ -189,7 +189,7 @@ int OSD_Host::Error() const
 
   #include <OSD_Host.hpp>
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 
 static BOOL                    fInit = FALSE;
 static TCollection_AsciiString hostName;
@@ -197,7 +197,7 @@ static TCollection_AsciiString version;
 static TCollection_AsciiString interAddr;
 static int                     memSize;
 
-OSD_Host ::OSD_Host()
+System::os::OSD_Host ::OSD_Host()
 {
   #ifndef OCCT_UWP
   DWORD          nSize;
@@ -281,61 +281,61 @@ OSD_Host ::OSD_Host()
   #endif
 }
 
-TCollection_AsciiString OSD_Host ::SystemVersion()
+TCollection_AsciiString System::os::OSD_Host ::SystemVersion()
 {
 
   return version;
 }
 
-OSD_SysType OSD_Host ::SystemId() const
+OSD_SysType System::os::OSD_Host ::SystemId() const
 {
 
   return OSD_WindowsNT;
 }
 
-TCollection_AsciiString OSD_Host ::HostName()
+TCollection_AsciiString System::os::OSD_Host ::HostName()
 {
 
   return hostName;
 }
 
-int OSD_Host ::AvailableMemory()
+int System::os::OSD_Host ::AvailableMemory()
 {
 
   return memSize;
 }
 
-TCollection_AsciiString OSD_Host ::InternetAddress()
+TCollection_AsciiString System::os::OSD_Host ::InternetAddress()
 {
 
   return interAddr;
 }
 
-OSD_OEMType OSD_Host ::MachineType()
+OSD_OEMType System::os::OSD_Host ::MachineType()
 {
 
   return OSD_PC;
 }
 
-bool OSD_Host ::Failed() const
+bool System::os::OSD_Host ::Failed() const
 {
 
   return myError.Failed();
 }
 
-void OSD_Host ::Reset()
+void System::os::OSD_Host ::Reset()
 {
 
   myError.Reset();
 }
 
-void OSD_Host ::Perror()
+void System::os::OSD_Host ::Perror()
 {
 
   myError.Perror();
 }
 
-int OSD_Host ::Error() const
+int System::os::OSD_Host ::Error() const
 {
 
   return myError.Error();

@@ -31,10 +31,10 @@ public:
   Standard_EXPORT int Index(const occ::handle<Geom_Curve>& C) const;
 
   Standard_EXPORT void Write(Standard_OStream&            OS,
-                             const Message_ProgressRange& theRange = Message_ProgressRange()) const;
+                             const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT void Read(Standard_IStream&            IS,
-                            const Message_ProgressRange& theRange = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void WriteCurve(const occ::handle<Geom_Curve>& C, BinTools_OStream& OS);
 

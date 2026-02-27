@@ -18,8 +18,14 @@ class Transfer_TransientProcess;
 class Standard_Transient;
 class Transfer_FinderProcess;
 class TransferBRep_ShapeMapper;
+namespace System { namespace log {
 class Message_Printer;
+}} // namespace System::log
+
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 class TransferBRep_TransferResultInfo;
 class Interface_CheckIterator;
 class Interface_InterfaceModel;
@@ -77,8 +83,8 @@ public:
     occ::handle<NCollection_HSequence<occ::handle<TransferBRep_TransferResultInfo>>>& InfoSeq);
 
   Standard_EXPORT static void PrintResultInfo(
-    const occ::handle<Message_Printer>&                 Printer,
-    const Message_Msg&                                  Header,
+    const occ::handle<System::log::Message_Printer>&                 Printer,
+    const System::log::Message_Msg&                                  Header,
     const occ::handle<TransferBRep_TransferResultInfo>& ResultInfo,
     const bool                                          printEmpty = true);
 

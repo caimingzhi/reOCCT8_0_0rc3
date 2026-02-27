@@ -52,7 +52,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
   #if FFMPEG_HAVE_AVCODEC_PARAMETERS
   if (avcodec_parameters_to_context(myCodecCtx, theStream.codecpar) < 0)
   {
-    Message::SendFail("Internal error: unable to copy codec parameters");
+    System::log::Message::SendFail("Internal error: unable to copy codec parameters");
     Close();
     return false;
   }
@@ -67,7 +67,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
       #pragma warning(pop)
     #endif
   {
-    Message::SendFail("Internal error: unable to copy codec context");
+    System::log::Message::SendFail("Internal error: unable to copy codec context");
     Close();
     return false;
   }
@@ -94,7 +94,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
   myCodec = ffmpeg_find_decoder(aCodecId);
   if (myCodec == nullptr)
   {
-    Message::Send("FFmpeg: unable to find decoder", Message_Fail);
+    System::log::Message::Send("FFmpeg: unable to find decoder", Message_Fail);
     Close();
     return false;
   }
@@ -117,12 +117,12 @@ bool Media_CodecContext::Init(const AVStream& theStream,
   #endif
   {
     myCodecCtx->thread_count =
-      theNbThreads <= -1 ? OSD_Parallel::NbLogicalProcessors() : theNbThreads;
+      theNbThreads <= -1 ? System::os::OSD_Parallel::NbLogicalProcessors() : theNbThreads;
   }
 
   if (avcodec_open2(myCodecCtx, myCodec, &anOpts) < 0)
   {
-    Message::SendFail("FFmpeg: unable to open decoder");
+    System::log::Message::SendFail("FFmpeg: unable to open decoder");
     Close();
     return false;
   }
@@ -162,7 +162,7 @@ bool Media_CodecContext::Init(const AVStream& theStream,
     #endif
   #endif
   {
-    Message::SendFail("FFmpeg: video stream has invalid dimensions");
+    System::log::Message::SendFail("FFmpeg: video stream has invalid dimensions");
     Close();
     return false;
   }

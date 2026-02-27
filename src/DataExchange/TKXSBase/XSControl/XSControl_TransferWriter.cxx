@@ -28,7 +28,7 @@ void XSControl_TransferWriter::Clear(const int mode)
 
 void XSControl_TransferWriter::PrintStats(const int, const int) const
 {
-  Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
 
   sout << "\n*******************************************************************\n";
   sout << "******        Statistics on Transfer (Write)                 ******" << std::endl;
@@ -54,7 +54,7 @@ bool XSControl_TransferWriter::RecognizeTransient(const occ::handle<Standard_Tra
 IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteTransient(
   const occ::handle<Interface_InterfaceModel>& model,
   const occ::handle<Standard_Transient>&       obj,
-  const Message_ProgressRange&                 theProgress)
+  const System::log::Message_ProgressRange&                 theProgress)
 {
   IFSelect_ReturnStatus status = IFSelect_RetVoid;
   if (myController.IsNull())
@@ -67,7 +67,7 @@ IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteTransient(
   occ::handle<Transfer_ActorOfFinderProcess> nulact;
   myTransferWriter->SetActor(nulact);
   occ::handle<Standard_Transient> resultat;
-  Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
   try
   {
     OCC_CATCH_SIGNALS
@@ -102,7 +102,7 @@ bool XSControl_TransferWriter::RecognizeShape(const TopoDS_Shape& shape)
 IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteShape(
   const occ::handle<Interface_InterfaceModel>& theModel,
   const TopoDS_Shape&                          theShape,
-  const Message_ProgressRange&                 theProgress)
+  const System::log::Message_ProgressRange&                 theProgress)
 {
   IFSelect_ReturnStatus status = IFSelect_RetVoid;
   if (myController.IsNull())
@@ -118,7 +118,7 @@ IFSelect_ReturnStatus XSControl_TransferWriter::TransferWriteShape(
   occ::handle<Transfer_ActorOfFinderProcess> nulact;
   myTransferWriter->SetActor(nulact);
   occ::handle<Standard_Transient> resultat;
-  Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = myTransferWriter->Messenger()->SendInfo();
   try
   {
     OCC_CATCH_SIGNALS

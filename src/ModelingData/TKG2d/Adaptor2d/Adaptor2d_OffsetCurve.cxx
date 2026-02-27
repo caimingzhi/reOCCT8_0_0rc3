@@ -207,8 +207,8 @@ bool Adaptor2d_OffsetCurve::IsClosed() const
         gp_Pnt2d P;
         myCurve->D1(myCurve->FirstParameter(), P, Dummy[0]);
         myCurve->D1(myCurve->LastParameter(), P, Dummy[1]);
-        return Dummy[0].IsParallel(Dummy[1], Precision::Angular())
-               && !(Dummy[0].IsOpposite(Dummy[1], Precision::Angular()));
+        return Dummy[0].IsParallel(Dummy[1], math::precision::Precision::Angular())
+               && !(Dummy[0].IsOpposite(Dummy[1], math::precision::Precision::Angular()));
       }
       else
         return false;
@@ -300,7 +300,7 @@ gp_Vec2d Adaptor2d_OffsetCurve::DN(const double, const int) const
 
 double Adaptor2d_OffsetCurve::Resolution(const double R3d) const
 {
-  return Precision::PConfusion(R3d);
+  return math::precision::Precision::PConfusion(R3d);
 }
 
 GeomAbs_CurveType Adaptor2d_OffsetCurve::GetType() const

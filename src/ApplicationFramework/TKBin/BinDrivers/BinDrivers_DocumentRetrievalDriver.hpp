@@ -7,7 +7,10 @@
 #include <Storage_Position.hpp>
 #include <Standard_Integer.hpp>
 class BinMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class BinLDrivers_DocumentSection;
 
 class BinDrivers_DocumentRetrievalDriver : public BinLDrivers_DocumentRetrievalDriver
@@ -17,13 +20,13 @@ public:
   Standard_EXPORT BinDrivers_DocumentRetrievalDriver();
 
   Standard_EXPORT occ::handle<BinMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver) override;
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver) override;
 
   Standard_EXPORT void ReadShapeSection(
     BinLDrivers_DocumentSection& theSection,
     Standard_IStream&            theIS,
     const bool                   isMess   = false,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void CheckShapeSection(const Storage_Position& thePos,
                                          Standard_IStream&       theIS) override;
@@ -31,7 +34,7 @@ public:
   Standard_EXPORT void Clear() override;
 
   Standard_EXPORT void EnableQuickPartReading(
-    const occ::handle<Message_Messenger>& theMessageDriver,
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver,
     bool                                  theValue) override;
 
   DEFINE_STANDARD_RTTIEXT(BinDrivers_DocumentRetrievalDriver, BinLDrivers_DocumentRetrievalDriver)

@@ -324,8 +324,8 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
                   BRepAdaptor_Surface aBAS(f, false);
                   Extrema_ExtPS       aProj(P,
                                       aBAS,
-                                      Precision::PConfusion(),
-                                      Precision::PConfusion(),
+                                      math::precision::Precision::PConfusion(),
+                                      math::precision::Precision::PConfusion(),
                                       Extrema_ExtFlag_MIN);
                   if (aProj.IsDone() && aProj.NbExt() > 0)
                   {
@@ -363,7 +363,7 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
               for (int i = 1; i <= Intersector3d.NbPnt(); i++)
               {
                 if (std::abs(Intersector3d.WParameter(i))
-                    < std::abs(parmin) - Precision::PConfusion())
+                    < std::abs(parmin) - math::precision::Precision::PConfusion())
                 {
                   parmin              = Intersector3d.WParameter(i);
                   TopAbs_State aState = Intersector3d.State(i);
@@ -419,7 +419,7 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
     }
 
     if (NearFaultPar != RealLast()
-        && std::abs(parmin) >= std::abs(NearFaultPar) - Precision::PConfusion())
+        && std::abs(parmin) >= std::abs(NearFaultPar) - math::precision::Precision::PConfusion())
     {
       isFaultyLine = true;
     }
@@ -554,17 +554,17 @@ static int GetTransi(const TopoDS_Face&                 f1,
 
   const gp_Dir& LDir = L.Direction();
 
-  if (std::abs(LDir.Dot(nf1)) < Precision::Angular()
-      || std::abs(LDir.Dot(nf2)) < Precision::Angular())
+  if (std::abs(LDir.Dot(nf1)) < math::precision::Precision::Angular()
+      || std::abs(LDir.Dot(nf2)) < math::precision::Precision::Angular())
   {
 
     return -1;
   }
 
-  if (nf1.IsParallel(nf2, Precision::Angular()))
+  if (nf1.IsParallel(nf2, math::precision::Precision::Angular()))
   {
     double angD = nf1.Dot(LDir);
-    if (std::abs(angD) < Precision::Angular())
+    if (std::abs(angD) < math::precision::Precision::Angular())
       return -1;
     else if (angD > 0)
       trans = IntCurveSurface_Out;
@@ -580,9 +580,9 @@ static int GetTransi(const TopoDS_Face&                 f1,
   double fAD = nf1.Dot(ProjL);
   double sAD = nf2.Dot(ProjL);
 
-  if (fAD < -Precision::Angular() && sAD < -Precision::Angular())
+  if (fAD < -math::precision::Precision::Angular() && sAD < -math::precision::Precision::Angular())
     trans = IntCurveSurface_In;
-  else if (fAD > Precision::Angular() && sAD > Precision::Angular())
+  else if (fAD > math::precision::Precision::Angular() && sAD > math::precision::Precision::Angular())
     trans = IntCurveSurface_Out;
   else
     return 0;

@@ -82,7 +82,7 @@ private:
 
 private:
   Media_IFrameQueue* myFrameQueue;
-  OSD_Thread         myThread;
+  System::os::OSD_Thread         myThread;
   std::mutex         myMutex;
 
   Standard_Condition myWakeEvent;

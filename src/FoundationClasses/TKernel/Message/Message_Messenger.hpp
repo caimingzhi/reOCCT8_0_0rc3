@@ -6,12 +6,16 @@
 #include <TCollection_HAsciiString.hpp>
 #include <TCollection_HExtendedString.hpp>
 
+namespace System { namespace log {
 class Message_Printer;
+}} // namespace System::log
+
 
 #ifdef AddPrinter
   #undef AddPrinter
 #endif
 
+namespace System { namespace log {
 class Message_Messenger : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Message_Messenger, Standard_Transient)
@@ -132,3 +136,5 @@ public:
 private:
   NCollection_Sequence<occ::handle<Message_Printer>> myPrinters;
 };
+}} // namespace System::log
+

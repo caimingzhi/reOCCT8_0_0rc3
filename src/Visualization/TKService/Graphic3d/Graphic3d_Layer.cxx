@@ -380,7 +380,7 @@ double Graphic3d_Layer::considerZoomPersistenceObjects(
       gp_Pnt       aConvertedTPPoint = theCamera->Project(aTPPoint);
       aConvertedTPPoint.SetZ(0.0);
 
-      if (aConvertedTPPoint.Coord().Modulus() < Precision::Confusion())
+      if (aConvertedTPPoint.Coord().Modulus() < math::precision::Precision::Confusion())
       {
         continue;
       }
@@ -415,11 +415,11 @@ double Graphic3d_Layer::considerZoomPersistenceObjects(
 
       const double aDifX = std::abs(aConvertedTPPoint.X()) - aShiftX;
       const double aDifY = std::abs(aConvertedTPPoint.Y()) - aShiftY;
-      if (aDifX > Precision::Confusion())
+      if (aDifX > math::precision::Precision::Confusion())
       {
         aMaxCoef = std::max(aMaxCoef, std::abs(aConvertedTPPoint.X()) / aDifX);
       }
-      if (aDifY > Precision::Confusion())
+      if (aDifY > math::precision::Precision::Confusion())
       {
         aMaxCoef = std::max(aMaxCoef, std::abs(aConvertedTPPoint.Y()) / aDifY);
       }

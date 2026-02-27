@@ -50,8 +50,8 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
   if (sb && (nbedges > 0))
   {
 
-    Message_Msg Msg180("XSTEP_180");
-    Message_Msg Msg190("XSTEP_190");
+    System::log::Message_Msg Msg180("XSTEP_180");
+    System::log::Message_Msg Msg190("XSTEP_190");
 
     tempTypes          = new NCollection_HArray1<int>(1, nbedges);
     tempEdges          = new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, nbedges);
@@ -71,19 +71,19 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
 
       if (!PR.ReadEntity(IR, PR.Current(), aStatus, anent))
       {
-        Message_Msg Msg193("XSTEP_193");
+        System::log::Message_Msg Msg193("XSTEP_193");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg193.Arg(Msg216.Value());
             PR.SendFail(Msg193);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg193.Arg(Msg217.Value());
             PR.SendFail(Msg193);
             break;
@@ -104,7 +104,7 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
         tempIndex->SetValue(i, anint);
       else
       {
-        Message_Msg Msg191("XSTEP_191");
+        System::log::Message_Msg Msg191("XSTEP_191");
         PR.SendFail(Msg191);
       }
 
@@ -114,13 +114,13 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
       bool st = PR.ReadInteger(PR.Current(), anint);
       if (!st)
       {
-        Message_Msg Msg192("XSTEP_192");
+        System::log::Message_Msg Msg192("XSTEP_192");
         PR.SendFail(Msg192);
       }
 
       if (st && anint > 0)
       {
-        Message_Msg Msg195("XSTEP_195");
+        System::log::Message_Msg Msg195("XSTEP_195");
         nbParameterCurves->SetValue(i, anint);
         occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tmpents =
           new NCollection_HArray1<occ::handle<IGESData_IGESEntity>>(1, anint);
@@ -135,19 +135,19 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
             tmpents->SetValue(j, anent);
           else
           {
-            Message_Msg Msg194("XSTEP_194");
+            System::log::Message_Msg Msg194("XSTEP_194");
             switch (aStatus)
             {
               case IGESData_ReferenceError:
               {
-                Message_Msg Msg216("IGES_216");
+                System::log::Message_Msg Msg216("IGES_216");
                 Msg194.Arg(Msg216.Value());
                 PR.SendFail(Msg194);
                 break;
               }
               case IGESData_EntityError:
               {
-                Message_Msg Msg217("IGES_217");
+                System::log::Message_Msg Msg217("IGES_217");
                 Msg194.Arg(Msg217.Value());
                 PR.SendFail(Msg194);
                 break;
@@ -168,7 +168,7 @@ void IGESSolid_ToolLoop::ReadOwnParams(const occ::handle<IGESSolid_Loop>&       
   else
   {
 
-    Message_Msg Msg184("XSTEP_184");
+    System::log::Message_Msg Msg184("XSTEP_184");
     PR.SendFail(Msg184);
     return;
   }
@@ -300,7 +300,7 @@ void IGESSolid_ToolLoop::OwnCheck(const occ::handle<IGESSolid_Loop>& ent,
   for (int i = 1; i <= upper; i++)
     if (ent->EdgeType(i) != 0 && ent->EdgeType(i) != 1)
     {
-      Message_Msg Msg190("XSTEP_190");
+      System::log::Message_Msg Msg190("XSTEP_190");
       ach->SendFail(Msg190);
     }
 }

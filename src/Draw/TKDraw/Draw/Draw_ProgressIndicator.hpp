@@ -6,7 +6,7 @@
 #include <Standard_ThreadId.hpp>
 #include <Draw_Interpretor.hpp>
 
-class Draw_ProgressIndicator : public Message_ProgressIndicator
+class Draw_ProgressIndicator : public System::log::Message_ProgressIndicator
 {
 
 public:
@@ -29,7 +29,7 @@ public:
 
   Standard_EXPORT void Reset() override;
 
-  Standard_EXPORT void Show(const Message_ProgressScope& theScope,
+  Standard_EXPORT void Show(const System::log::Message_ProgressScope& theScope,
                             const bool                   force = true) override;
 
   Standard_EXPORT bool UserBreak() override;
@@ -42,7 +42,7 @@ public:
 
   Standard_EXPORT static void*& StopIndicator();
 
-  DEFINE_STANDARD_RTTIEXT(Draw_ProgressIndicator, Message_ProgressIndicator)
+  DEFINE_STANDARD_RTTIEXT(Draw_ProgressIndicator, System::log::Message_ProgressIndicator)
 
 private:
   bool              myTclMode;

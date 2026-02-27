@@ -6,7 +6,7 @@
 #include <TopExp.hpp>
 
 BRepClass_Edge::BRepClass_Edge()
-    : myMaxTolerance(Precision::Infinite()),
+    : myMaxTolerance(math::precision::Precision::Infinite()),
       myUseBndBox(false)
 {
 }
@@ -43,7 +43,7 @@ void BRepClass_Edge::SetNextEdge(
 BRepClass_Edge::BRepClass_Edge(const TopoDS_Edge& E, const TopoDS_Face& F)
     : myEdge(E),
       myFace(F),
-      myMaxTolerance(Precision::Infinite()),
+      myMaxTolerance(math::precision::Precision::Infinite()),
       myUseBndBox(false)
 {
 }

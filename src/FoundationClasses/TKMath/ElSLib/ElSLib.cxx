@@ -16,7 +16,7 @@ namespace
 {
   static constexpr double PIPI = M_PI + M_PI;
 
-  static constexpr double NEGATIVE_RESOLUTION = -Precision::Computational();
+  static constexpr double NEGATIVE_RESOLUTION = -math::precision::Precision::Computational();
 
   static inline void normalizeAngle(double& theAngle)
   {

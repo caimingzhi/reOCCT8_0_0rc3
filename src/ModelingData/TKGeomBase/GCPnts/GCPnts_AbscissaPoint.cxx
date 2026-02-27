@@ -60,7 +60,7 @@ static void Compute(CPnts_AbscissaPoint& theComputer,
                     const double         theEPSILON)
 {
 
-  if (std::abs(theAbscis) <= Precision::Confusion())
+  if (std::abs(theAbscis) <= math::precision::Precision::Confusion())
   {
     theComputer.SetParameter(theU0);
     return;
@@ -100,7 +100,7 @@ static void Compute(CPnts_AbscissaPoint& theComputer,
       while (anIndex >= 1 && anIndex <= aNbIntervals)
       {
         aL = CPnts_AbscissaPoint::Length(theC, theU0, aTI(anIndex + aDirection));
-        if (std::abs(aL - theAbscis) <= Precision::Confusion())
+        if (std::abs(aL - theAbscis) <= math::precision::Precision::Confusion())
         {
           theComputer.SetParameter(aTI(anIndex + aDirection));
           return;
@@ -220,7 +220,7 @@ static void AdvCompute(CPnts_AbscissaPoint& theComputer,
       while (anIndex >= 1 && anIndex <= aNbIntervals)
       {
         aL = CPnts_AbscissaPoint::Length(theC, theU0, aTI(anIndex + aDirection), theEPSILON);
-        if (std::abs(aL - theAbscis) <= Precision::PConfusion())
+        if (std::abs(aL - theAbscis) <= math::precision::Precision::PConfusion())
         {
           theComputer.SetParameter(aTI(anIndex + aDirection));
           return;
@@ -399,7 +399,7 @@ void GCPnts_AbscissaPoint::compute(const TheCurve& theC,
                                    const double    theU0)
 {
   const double aL = GCPnts_AbscissaPoint::Length(theC);
-  if (aL < Precision::Confusion())
+  if (aL < math::precision::Precision::Confusion())
   {
     throw Standard_ConstructionError();
   }
@@ -407,7 +407,7 @@ void GCPnts_AbscissaPoint::compute(const TheCurve& theC,
   double anAbscis = theAbscissa;
   double aUU0     = theU0;
   double aUUi     = theU0 + (anAbscis / aL) * (theC.LastParameter() - theC.FirstParameter());
-  Compute(myComputer, theC, anAbscis, aUU0, aUUi, theC.Resolution(Precision::Confusion()));
+  Compute(myComputer, theC, anAbscis, aUU0, aUUi, theC.Resolution(math::precision::Precision::Confusion()));
 }
 
 GCPnts_AbscissaPoint::GCPnts_AbscissaPoint(const Adaptor3d_Curve& theC,
@@ -435,7 +435,7 @@ void GCPnts_AbscissaPoint::advCompute(const double    theTol,
   double anAbscis = theAbscissa;
   double aUU0     = theU0;
   double aUUi     = 0.0;
-  if (aL >= Precision::Confusion())
+  if (aL >= math::precision::Precision::Confusion())
   {
     aUUi = theU0 + (anAbscis / aL) * (theC.LastParameter() - theC.FirstParameter());
   }
@@ -468,7 +468,7 @@ GCPnts_AbscissaPoint::GCPnts_AbscissaPoint(const Adaptor3d_Curve& theC,
                                            const double           theUi)
 {
   double anAbscis = theAbscissa, aUU0 = theU0, aUUi = theUi;
-  Compute(myComputer, theC, anAbscis, aUU0, aUUi, theC.Resolution(Precision::Confusion()));
+  Compute(myComputer, theC, anAbscis, aUU0, aUUi, theC.Resolution(math::precision::Precision::Confusion()));
 }
 
 GCPnts_AbscissaPoint::GCPnts_AbscissaPoint(const Adaptor2d_Curve2d& theC,
@@ -477,7 +477,7 @@ GCPnts_AbscissaPoint::GCPnts_AbscissaPoint(const Adaptor2d_Curve2d& theC,
                                            const double             theUi)
 {
   double anAbscis = theAbscissa, aUU0 = theU0, aUUi = theUi;
-  Compute(myComputer, theC, anAbscis, aUU0, aUUi, theC.Resolution(Precision::Confusion()));
+  Compute(myComputer, theC, anAbscis, aUU0, aUUi, theC.Resolution(math::precision::Precision::Confusion()));
 }
 
 GCPnts_AbscissaPoint::GCPnts_AbscissaPoint(const Adaptor3d_Curve& theC,

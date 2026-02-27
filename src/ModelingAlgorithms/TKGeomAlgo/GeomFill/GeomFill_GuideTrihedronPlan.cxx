@@ -367,7 +367,7 @@ void GeomFill_GuideTrihedronPlan::Intervals(NCollection_Array1<double>& TT,
 
 void GeomFill_GuideTrihedronPlan::SetInterval(const double First, const double Last)
 {
-  myTrimmed = myCurve->Trim(First, Last, Precision::Confusion());
+  myTrimmed = myCurve->Trim(First, Last, math::precision::Precision::Confusion());
 }
 
 void GeomFill_GuideTrihedronPlan::GetAverageLaw(gp_Vec& ATangent,

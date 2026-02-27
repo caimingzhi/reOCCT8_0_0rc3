@@ -25,9 +25,9 @@ void BOPAlgo_MakerVolume::CheckData()
   CheckFiller();
 }
 
-void BOPAlgo_MakerVolume::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_MakerVolume::Perform(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Performing MakeVolume operation", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Performing MakeVolume operation", 10);
   double                anInterPart = myIntersect ? 9 : 0.5;
   double                aBuildPart  = 10. - anInterPart;
 
@@ -82,9 +82,9 @@ void BOPAlgo_MakerVolume::Perform(const Message_ProgressRange& theRange)
 }
 
 void BOPAlgo_MakerVolume::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
-                                           const Message_ProgressRange& theRange)
+                                           const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Building volumes", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Building volumes", 100);
   myPaveFiller = (BOPAlgo_PaveFiller*)&theFiller;
   myDS         = myPaveFiller->PDS();
   myContext    = myPaveFiller->Context();
@@ -241,7 +241,7 @@ void BOPAlgo_MakerVolume::MakeBox(
 }
 
 void BOPAlgo_MakerVolume::BuildSolids(NCollection_List<TopoDS_Shape>& theLSR,
-                                      const Message_ProgressRange&    theRange)
+                                      const System::log::Message_ProgressRange&    theRange)
 {
   BOPAlgo_BuilderSolid aBS;
 

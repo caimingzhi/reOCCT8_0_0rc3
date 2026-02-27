@@ -19,7 +19,7 @@ public:
   Standard_EXPORT occ::handle<Transfer_Binder> Transfer(
     const occ::handle<Transfer_Finder>&        start,
     const occ::handle<Transfer_FinderProcess>& FP,
-    const Message_ProgressRange&               theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&               theProgress = System::log::Message_ProgressRange()) override;
 
   DEFINE_STANDARD_RTTIEXT(IGESControl_ActorWrite, Transfer_ActorOfFinderProcess)
 };

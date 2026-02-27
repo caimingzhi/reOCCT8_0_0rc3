@@ -76,9 +76,9 @@ namespace
       EdgeNormals[1] = BVH_Vec3d::Cross(Edges[1], Normal);
       EdgeNormals[2] = BVH_Vec3d::Cross(Edges[2], Normal);
 
-      EdgeNormals[0] *= 1.0 / std::max(EdgeNormals[0].Modulus(), Precision::Confusion());
-      EdgeNormals[1] *= 1.0 / std::max(EdgeNormals[1].Modulus(), Precision::Confusion());
-      EdgeNormals[2] *= 1.0 / std::max(EdgeNormals[2].Modulus(), Precision::Confusion());
+      EdgeNormals[0] *= 1.0 / std::max(EdgeNormals[0].Modulus(), math::precision::Precision::Confusion());
+      EdgeNormals[1] *= 1.0 / std::max(EdgeNormals[1].Modulus(), math::precision::Precision::Confusion());
+      EdgeNormals[2] *= 1.0 / std::max(EdgeNormals[2].Modulus(), math::precision::Precision::Confusion());
 
       const BVH_Vec3d aDirect01 = EdgeNormals[0] - EdgeNormals[1];
       const BVH_Vec3d aDirect02 = EdgeNormals[0] + EdgeNormals[2];
@@ -92,7 +92,7 @@ namespace
         theVertex2 + aDirect12 * (theDeflect / aDirect12.Dot(EdgeNormals[2]));
 
       const BVH_Vec3d aNormOffset =
-        Normal * (theDeflect / std::max(Normal.Modulus(), Precision::Confusion()));
+        Normal * (theDeflect / std::max(Normal.Modulus(), math::precision::Precision::Confusion()));
 
       for (int aVertIdx = 0; aVertIdx < 3; ++aVertIdx)
       {
@@ -220,9 +220,9 @@ namespace
       return false;
     }
 
-    if (fabs(aDistTrng0Vert0) > Precision::Confusion()
-        || fabs(aDistTrng0Vert1) > Precision::Confusion()
-        || fabs(aDistTrng0Vert2) > Precision::Confusion())
+    if (fabs(aDistTrng0Vert0) > math::precision::Precision::Confusion()
+        || fabs(aDistTrng0Vert1) > math::precision::Precision::Confusion()
+        || fabs(aDistTrng0Vert2) > math::precision::Precision::Confusion())
     {
       const BVH_Vec3d aTrng0Normal =
         BVH_Vec3d::Cross(theTrng0Vert1 - theTrng0Vert0, theTrng0Vert2 - theTrng0Vert0).Normalized();

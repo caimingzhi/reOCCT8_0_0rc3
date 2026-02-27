@@ -242,7 +242,7 @@ void Plate_Plate::Load(const Plate_GlobalTranslationConstraint& GTConst)
 
 void Plate_Plate::SolveTI(const int                    ord,
                           const double                 anisotropie,
-                          const Message_ProgressRange& theProgress)
+                          const System::log::Message_ProgressRange& theProgress)
 {
   int IterationNumber = 0;
   OK                  = false;
@@ -291,7 +291,7 @@ void Plate_Plate::SolveTI(const int                    ord,
     SolveTI3(IterationNumber, theProgress);
 }
 
-void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRange& theProgress)
+void Plate_Plate::SolveTI1(const int IterationNumber, const System::log::Message_ProgressRange& theProgress)
 {
 
   n_dim = n_el + order * (order + 1) / 2;
@@ -352,7 +352,7 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
   double pivot_max = 1.e-12;
   OK               = true;
 
-  Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI1()", 10);
+  System::log::Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI1()", 10);
   math_Gauss            algo_gauss(mat, pivot_max, aScope.Next(7));
 
   if (aScope.UserBreak())
@@ -417,7 +417,7 @@ void Plate_Plate::SolveTI1(const int IterationNumber, const Message_ProgressRang
   }
 }
 
-void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRange& theProgress)
+void Plate_Plate::SolveTI2(const int IterationNumber, const System::log::Message_ProgressRange& theProgress)
 {
 
   int nCC1 = myConstraints.Length();
@@ -459,7 +459,7 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
   double pivot_max = 1.e-12;
   OK               = true;
 
-  Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI2()", 10);
+  System::log::Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI2()", 10);
   math_Gauss            algo_gauss(mat, pivot_max, aScope.Next(7));
 
   if (aScope.UserBreak())
@@ -556,7 +556,7 @@ void Plate_Plate::SolveTI2(const int IterationNumber, const Message_ProgressRang
   }
 }
 
-void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRange& theProgress)
+void Plate_Plate::SolveTI3(const int IterationNumber, const System::log::Message_ProgressRange& theProgress)
 {
 
   int nCC1 = myConstraints.Length();
@@ -760,7 +760,7 @@ void Plate_Plate::SolveTI3(const int IterationNumber, const Message_ProgressRang
   double pivot_max = 1.e-12;
   OK               = true;
 
-  Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI3()", 10);
+  System::log::Message_ProgressScope aScope(theProgress, "Plate_Plate::SolveTI3()", 10);
   math_Gauss            algo_gauss(mat, pivot_max, aScope.Next(7));
 
   if (aScope.UserBreak())

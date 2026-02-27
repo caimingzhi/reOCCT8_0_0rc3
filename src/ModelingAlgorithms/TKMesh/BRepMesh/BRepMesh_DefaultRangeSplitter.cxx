@@ -10,7 +10,7 @@ void BRepMesh_DefaultRangeSplitter::Reset(const IMeshData::IFaceHandle& theDFace
   myRangeU.first = myRangeV.first = 1.e100;
   myRangeU.second = myRangeV.second = -1.e100;
   myDelta.first = myDelta.second = 1.;
-  myTolerance.first = myTolerance.second = Precision::Confusion();
+  myTolerance.first = myTolerance.second = math::precision::Precision::Confusion();
 }
 
 void BRepMesh_DefaultRangeSplitter::AddPoint(const gp_Pnt2d& thePoint)
@@ -50,7 +50,7 @@ void BRepMesh_DefaultRangeSplitter::AdjustRange()
 
   const double aLengthU = computeLengthU();
   const double aLengthV = computeLengthV();
-  myIsValid             = aLengthU > Precision::PConfusion() && aLengthV > Precision::PConfusion();
+  myIsValid             = aLengthU > math::precision::Precision::PConfusion() && aLengthV > math::precision::Precision::PConfusion();
 
   if (myIsValid)
   {

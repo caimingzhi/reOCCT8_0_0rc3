@@ -14,10 +14,10 @@ public:
   Standard_EXPORT GeomLib_CheckCurveOnSurface();
 
   Standard_EXPORT GeomLib_CheckCurveOnSurface(const occ::handle<Adaptor3d_Curve>& theCurve,
-                                              const double theTolRange = Precision::PConfusion());
+                                              const double theTolRange = math::precision::Precision::PConfusion());
 
   Standard_EXPORT void Init(const occ::handle<Adaptor3d_Curve>& theCurve,
-                            const double theTolRange = Precision::PConfusion());
+                            const double theTolRange = math::precision::Precision::PConfusion());
 
   Standard_EXPORT void Init();
 

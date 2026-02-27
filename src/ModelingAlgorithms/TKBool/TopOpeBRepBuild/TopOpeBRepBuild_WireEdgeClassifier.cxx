@@ -239,7 +239,7 @@ TopAbs_State TopOpeBRepBuild_WireEdgeClassifier::CompareShapes(const TopoDS_Shap
         gp_Vec tg1       = FUN_tgINE(vshared, vl1, e1);
         gp_Vec tg        = FUN_tgINE(vshared, vl, E);
         double dot       = tg1.Dot(tg);
-        double tol       = Precision::Angular() * 1.e4;
+        double tol       = math::precision::Precision::Angular() * 1.e4;
         bool   undecided = (std::abs(1 + dot) < tol);
         if (undecided)
         {
@@ -416,7 +416,7 @@ bool TopOpeBRepBuild_WireEdgeClassifier::CompareElement(const TopoDS_Shape& EE)
     gp_Vec2d v2d(myPoint2d, p2d);
     gp_Lin2d l2d(myPoint2d, v2d);
     double   dist  = myPoint2d.Distance(p2d);
-    double   tol2d = Precision::PConfusion();
+    double   tol2d = math::precision::Precision::PConfusion();
     myFPC.Reset(l2d, dist, tol2d);
     myFirstCompare = false;
   }

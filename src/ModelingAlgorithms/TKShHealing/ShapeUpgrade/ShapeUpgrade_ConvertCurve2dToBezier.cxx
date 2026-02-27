@@ -39,7 +39,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
 {
   mySegments->Clear();
   mySplitParams->Clear();
-  constexpr double precision = Precision::PConfusion();
+  constexpr double precision = math::precision::Precision::PConfusion();
   double           First     = mySplitValues->Value(1);
   double           Last      = mySplitValues->Value(mySplitValues->Length());
 
@@ -52,11 +52,11 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
       ShapeCustom_Curve2d::ConvertToLine2d(myCurve,
                                            First,
                                            Last,
-                                           Precision::Approximation(),
+                                           math::precision::Precision::Approximation(),
                                            tmpF,
                                            tmpL,
                                            aDeviation);
-    if (!aTmpLine2d.IsNull() && (aDeviation <= Precision::Approximation()))
+    if (!aTmpLine2d.IsNull() && (aDeviation <= math::precision::Precision::Approximation()))
     {
       occ::handle<Geom2d_BezierCurve> bezier = MakeBezier2d(aTmpLine2d, tmpF, tmpL);
       mySegments->Append(bezier);
@@ -125,7 +125,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
 
       occ::handle<Geom2d_Curve> tcurve = new Geom2d_TrimmedCurve(myCurve, First, Last);
 
-      Geom2dConvert_ApproxCurve approx(tcurve, Precision::Approximation(), GeomAbs_C1, 100, 6);
+      Geom2dConvert_ApproxCurve approx(tcurve, math::precision::Precision::Approximation(), GeomAbs_C1, 100, 6);
       if (approx.HasResult())
         aBSpline2d = approx.Curve();
       else
@@ -165,7 +165,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
       mySplitValues->SetValue(mySplitValues->Length(), Last);
     }
 
-    ShapeCustom_Curve2d::SimplifyBSpline2d(aBSpline2d, Precision::Approximation());
+    ShapeCustom_Curve2d::SimplifyBSpline2d(aBSpline2d, math::precision::Precision::Approximation());
 
     Geom2dConvert_BSplineCurveToBezierCurve tool(aBSpline2d, First, Last, precision);
     int                                     nbArcs = tool.NbArcs();
@@ -192,11 +192,11 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
             ShapeCustom_Curve2d::ConvertToLine2d(aCrv2d,
                                                  newFirst,
                                                  newLast,
-                                                 Precision::Approximation(),
+                                                 math::precision::Precision::Approximation(),
                                                  tmpF,
                                                  tmpL,
                                                  aDeviation);
-          if (!aTmpLine2d.IsNull() && (aDeviation <= Precision::Approximation()))
+          if (!aTmpLine2d.IsNull() && (aDeviation <= math::precision::Precision::Approximation()))
           {
             occ::handle<Geom2d_BezierCurve> bezier = MakeBezier2d(aBSpline2d, newFirst, newLast);
             mySegments->Append(bezier);
@@ -231,7 +231,7 @@ void ShapeUpgrade_ConvertCurve2dToBezier::Compute()
 
 void ShapeUpgrade_ConvertCurve2dToBezier::Build(const bool)
 {
-  constexpr double prec = Precision::PConfusion();
+  constexpr double prec = math::precision::Precision::PConfusion();
   int              nb   = mySplitValues->Length();
   myResultingCurves     = new NCollection_HArray1<occ::handle<Geom2d_Curve>>(1, nb - 1);
   double prevPar        = 0.;

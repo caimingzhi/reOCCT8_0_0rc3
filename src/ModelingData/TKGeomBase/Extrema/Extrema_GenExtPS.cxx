@@ -256,9 +256,9 @@ inline static void fillParams(const NCollection_Array1<double>&         theKnots
   double                     aPrevPar = theParMin;
   aParams.Append(aPrevPar);
 
-  for (; i < theKnots.Length() && theKnots(i) < (theParMax - Precision::PConfusion()); i++)
+  for (; i < theKnots.Length() && theKnots(i) < (theParMax - math::precision::Precision::PConfusion()); i++)
   {
-    if (theKnots(i + 1) < theParMin + Precision::PConfusion())
+    if (theKnots(i + 1) < theParMin + math::precision::Precision::PConfusion())
       continue;
 
     double aStep = (theKnots(i + 1) - theKnots(i)) / std::max(theDegree, 2);
@@ -266,9 +266,9 @@ inline static void fillParams(const NCollection_Array1<double>&         theKnots
     for (; k <= theDegree; k++)
     {
       double aPar = theKnots(i) + k * aStep;
-      if (aPar > theParMax - Precision::PConfusion())
+      if (aPar > theParMax - math::precision::Precision::PConfusion())
         break;
-      if (aPar > aPrevPar + Precision::PConfusion())
+      if (aPar > aPrevPar + math::precision::Precision::PConfusion())
       {
         aParams.Append(aPar);
         aPrevPar = aPar;

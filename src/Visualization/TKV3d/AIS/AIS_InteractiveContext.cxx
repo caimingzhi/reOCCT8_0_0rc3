@@ -1820,7 +1820,7 @@ bool AIS_InteractiveContext::PlaneSize(double& theX, double& theY) const
 {
   theX = myDefaultDrawer->PlaneAspect()->PlaneXLength();
   theY = myDefaultDrawer->PlaneAspect()->PlaneYLength();
-  return (std::abs(theX - theY) <= Precision::Confusion());
+  return (std::abs(theX - theY) <= math::precision::Precision::Confusion());
 }
 
 void AIS_InteractiveContext::SetZLayer(const occ::handle<AIS_InteractiveObject>& theIObj,
@@ -2520,7 +2520,7 @@ AIS_StatusOfPick AIS_InteractiveContext::SelectDetected(const AIS_SelectionSchem
   {
     NCollection_Vec2<int> aMousePos(-1, -1);
     gp_Pnt2d              aMouseRealPos = MainSelector()->GetManager().GetMousePosition();
-    if (!Precision::IsInfinite(aMouseRealPos.X()) && !Precision::IsInfinite(aMouseRealPos.Y()))
+    if (!math::precision::Precision::IsInfinite(aMouseRealPos.X()) && !math::precision::Precision::IsInfinite(aMouseRealPos.Y()))
     {
       aMousePos.SetValues((int)aMouseRealPos.X(), (int)aMouseRealPos.Y());
     }

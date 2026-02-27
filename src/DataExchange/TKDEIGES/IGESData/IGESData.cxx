@@ -32,7 +32,7 @@ void IGESData::Init()
   if (Interface_InterfaceModel::HasTemplate("iges"))
     return;
 
-  OSD_Process process;
+  System::os::OSD_Process process;
 
   Interface_Static::Standards();
 
@@ -171,7 +171,7 @@ void IGESData::Init()
   Interface_Static::Init("XSTEP", "write.iges.header.product", 't', procver);
 
   int           year;
-  OSD_Process   system;
+  System::os::OSD_Process   system;
   Quantity_Date ladate = system.SystemDate();
   year                 = ladate.Year();
   occ::handle<TCollection_HAsciiString> datestr;

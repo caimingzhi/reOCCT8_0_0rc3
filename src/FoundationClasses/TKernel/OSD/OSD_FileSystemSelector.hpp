@@ -4,7 +4,8 @@
 
 #include <NCollection_List.hpp>
 
-class OSD_FileSystemSelector : public OSD_FileSystem
+namespace System { namespace os {
+class OSD_FileSystemSelector : public System::os::OSD_FileSystem
 {
   DEFINE_STANDARD_RTTIEXT(OSD_FileSystemSelector, OSD_FileSystem)
 public:
@@ -41,3 +42,5 @@ public:
 protected:
   NCollection_List<occ::handle<OSD_FileSystem>> myProtocols;
 };
+}} // namespace System::os
+

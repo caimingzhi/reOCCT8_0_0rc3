@@ -89,24 +89,24 @@ namespace
 
 bool VrmlAPI_CafReader::performMesh(std::istream&                  theStream,
                                     const TCollection_AsciiString& theFile,
-                                    const Message_ProgressRange&   theProgress,
+                                    const System::log::Message_ProgressRange&   theProgress,
                                     const bool                     theToProbe)
 {
   (void)theProgress;
   if (!theStream.good())
   {
-    Message::SendFail() << "Error in VrmlAPI_CafReader: file '" << theFile << "' is not found";
+    System::log::Message::SendFail() << "Error in VrmlAPI_CafReader: file '" << theFile << "' is not found";
     return false;
   }
   if (theToProbe)
   {
-    Message::SendFail() << "Error in VrmlAPI_CafReader: theToProbe parameter isn't supported";
+    System::log::Message::SendFail() << "Error in VrmlAPI_CafReader: theToProbe parameter isn't supported";
     return false;
   }
 
   TCollection_AsciiString aFolder;
   TCollection_AsciiString aFileName;
-  OSD_Path::FolderAndFileFromPath(theFile, aFolder, aFileName);
+  System::os::OSD_Path::FolderAndFileFromPath(theFile, aFolder, aFileName);
 
   VrmlData_Scene aScene;
   aScene.SetLinearScale(FileLengthUnit());
@@ -122,7 +122,7 @@ bool VrmlAPI_CafReader::performMesh(std::istream&                  theStream,
   }
   if (aScene.Status() != VrmlData_StatusOK || aShape.IsNull())
   {
-    Message::SendFail() << "Error in VrmlAPI_CafReader: " << getVrmlErrorName(aScene.Status())
+    System::log::Message::SendFail() << "Error in VrmlAPI_CafReader: " << getVrmlErrorName(aScene.Status())
                         << "occurred at line " << aScene.GetLineError()
                         << "\nwhile reading VRML file '" << theFile << "'";
     return false;

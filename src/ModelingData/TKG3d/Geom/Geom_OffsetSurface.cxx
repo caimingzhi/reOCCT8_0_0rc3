@@ -46,7 +46,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(Geom_OffsetSurface, Geom_Surface)
 
-static const double MyAngularToleranceForG1 = Precision::Angular();
+static const double MyAngularToleranceForG1 = math::precision::Precision::Angular();
 
 occ::handle<Geom_Geometry> Geom_OffsetSurface::Copy() const
 {
@@ -188,7 +188,7 @@ void Geom_OffsetSurface::SetBasisSurface(const occ::handle<Geom_Surface>& S,
       || aCheckingSurf->IsKind(STANDARD_TYPE(Geom_BezierSurface)))
   {
 
-    constexpr double Tol = Precision::Confusion();
+    constexpr double Tol = math::precision::Precision::Confusion();
     myOscSurf            = std::make_unique<Geom_OsculatingSurface>(aCheckingSurf, Tol);
   }
 }
@@ -510,7 +510,7 @@ occ::handle<Geom_Curve> Geom_OffsetSurface::UIso(const double UU) const
     if (aGAsurf.GetType() == GeomAbs_SurfaceOfExtrusion)
     {
       occ::handle<Geom_Curve> aL = basisSurf->UIso(UU);
-      GeomLProp_SLProps       aSurfProps(basisSurf, UU, 0., 2, Precision::Confusion());
+      GeomLProp_SLProps       aSurfProps(basisSurf, UU, 0., 2, math::precision::Precision::Confusion());
 
       gp_Vec aDir;
       aDir = aSurfProps.Normal();
@@ -521,7 +521,7 @@ occ::handle<Geom_Curve> Geom_OffsetSurface::UIso(const double UU) const
     }
     const int                                Num1 = 0, Num2 = 0, Num3 = 1;
     occ::handle<NCollection_HArray1<double>> T1, T2, T3 = new NCollection_HArray1<double>(1, Num3);
-    T3->Init(Precision::Approximation());
+    T3->Init(math::precision::Precision::Approximation());
     double U1, U2, V1, V2;
     Bounds(U1, U2, V1, V2);
     const GeomAbs_Shape Cont   = GeomAbs_C1;
@@ -557,7 +557,7 @@ occ::handle<Geom_Curve> Geom_OffsetSurface::VIso(const double VV) const
   {
     const int                                Num1 = 0, Num2 = 0, Num3 = 1;
     occ::handle<NCollection_HArray1<double>> T1, T2, T3 = new NCollection_HArray1<double>(1, Num3);
-    T3->Init(Precision::Approximation());
+    T3->Init(math::precision::Precision::Approximation());
     double U1, U2, V1, V2;
     Bounds(U1, U2, V1, V2);
     const GeomAbs_Shape Cont   = GeomAbs_C1;
@@ -741,7 +741,7 @@ occ::handle<Geom_Surface> Geom_OffsetSurface::Surface() const
   if (offsetValue == 0.0)
     return basisSurf;
 
-  constexpr double          Tol = Precision::Confusion();
+  constexpr double          Tol = math::precision::Precision::Confusion();
   occ::handle<Geom_Surface> Result, Base;
   Result.Nullify();
   occ::handle<Standard_Type> TheType = basisSurf->DynamicType();

@@ -9,8 +9,8 @@ IMPLEMENT_STANDARD_RTTIEXT(MAT_Bisector, Standard_Transient)
 MAT_Bisector::MAT_Bisector()
 {
   thebisectornumber  = -1;
-  thefirstparameter  = Precision::Infinite();
-  thesecondparameter = Precision::Infinite();
+  thefirstparameter  = math::precision::Precision::Infinite();
+  thesecondparameter = math::precision::Precision::Infinite();
   thelistofbisectors = new MAT_ListOfBisector();
 }
 

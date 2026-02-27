@@ -38,7 +38,7 @@ bool RWPly_CafWriter::toSkipFaceMesh(const RWMesh_FaceIterator& theFaceIter)
 bool RWPly_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&                                                theDocument,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
   NCollection_Sequence<TDF_Label> aRoots;
   occ::handle<XCAFDoc_ShapeTool>  aShapeTool = XCAFDoc_DocumentTool::ShapeTool(theDocument->Main());
@@ -51,11 +51,11 @@ bool RWPly_CafWriter::Perform(
   const NCollection_Sequence<TDF_Label>&          theRootLabels,
   const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
   TCollection_AsciiString aFolder, aFileName, aFullFileNameBase, aShortFileNameBase, aFileExt;
-  OSD_Path::FolderAndFileFromPath(myFile, aFolder, aFileName);
-  OSD_Path::FileNameAndExtension(aFileName, aShortFileNameBase, aFileExt);
+  System::os::OSD_Path::FolderAndFileFromPath(myFile, aFolder, aFileName);
+  System::os::OSD_Path::FileNameAndExtension(aFileName, aShortFileNameBase, aFileExt);
 
   double aLengthUnit = 1.;
   if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument, aLengthUnit))
@@ -65,7 +65,7 @@ bool RWPly_CafWriter::Perform(
 
   if (theRootLabels.IsEmpty() || (theLabelFilter != nullptr && theLabelFilter->IsEmpty()))
   {
-    Message::SendFail("Nothing to export into PLY file");
+    System::log::Message::SendFail("Nothing to export into PLY file");
     return false;
   }
 
@@ -98,7 +98,7 @@ bool RWPly_CafWriter::Perform(
   }
   if (aNbNodesAll == 0)
   {
-    Message::SendFail("No mesh data to save");
+    System::log::Message::SendFail("No mesh data to save");
     return false;
   }
 
@@ -115,7 +115,7 @@ bool RWPly_CafWriter::Perform(
   }
 
   const double              aPatchStep = 2048.0;
-  Message_LazyProgressScope aPSentry(theProgress, "PLY export", aNbPEntities, aPatchStep);
+  System::log::Message_LazyProgressScope aPSentry(theProgress, "PLY export", aNbPEntities, aPatchStep);
 
   bool isDone = true;
   for (int aStepIter = 0; aStepIter < 2; ++aStepIter)
@@ -153,7 +153,7 @@ bool RWPly_CafWriter::Perform(
   const bool isClosed = aPlyCtx.Close();
   if (isDone && !isClosed)
   {
-    Message::SendFail(TCollection_AsciiString("Failed to write PLY file\n") + myFile);
+    System::log::Message::SendFail(TCollection_AsciiString("Failed to write PLY file\n") + myFile);
     return false;
   }
   return isDone && !aPSentry.IsAborted();
@@ -168,7 +168,7 @@ void RWPly_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
 }
 
 bool RWPly_CafWriter::writeShape(RWPly_PlyWriterContext&    theWriter,
-                                 Message_LazyProgressScope& thePSentry,
+                                 System::log::Message_LazyProgressScope& thePSentry,
                                  const int                  theWriteStep,
                                  const TDF_Label&           theLabel,
                                  const TopLoc_Location&     theParentTrsf,
@@ -196,7 +196,7 @@ bool RWPly_CafWriter::writeShape(RWPly_PlyWriterContext&    theWriter,
 }
 
 bool RWPly_CafWriter::writeNodes(RWPly_PlyWriterContext&    theWriter,
-                                 Message_LazyProgressScope& thePSentry,
+                                 System::log::Message_LazyProgressScope& thePSentry,
                                  const RWMesh_FaceIterator& theFace)
 {
   const int                 aNodeUpper = theFace.NodeUpper();
@@ -238,7 +238,7 @@ bool RWPly_CafWriter::writeNodes(RWPly_PlyWriterContext&    theWriter,
 }
 
 bool RWPly_CafWriter::writeIndices(RWPly_PlyWriterContext&    theWriter,
-                                   Message_LazyProgressScope& thePSentry,
+                                   System::log::Message_LazyProgressScope& thePSentry,
                                    const RWMesh_FaceIterator& theFace)
 {
   if (myHasFaceId)

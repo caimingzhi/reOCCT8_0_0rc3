@@ -102,7 +102,7 @@ occ::handle<Image_CompressedPixMap> Graphic3d_CubeMapSeparate::CompressedValue(
     return anImage;
   }
 
-  Message::SendWarning(TCollection_AsciiString() + "'" + aFilePath
+  System::log::Message::SendWarning(TCollection_AsciiString() + "'" + aFilePath
                        + "' inconsistent image format or dimension in Graphic3d_CubeMapSeparate");
   return occ::handle<Image_CompressedPixMap>();
 }
@@ -148,7 +148,7 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
             }
             else
             {
-              Message::SendWarning(
+              System::log::Message::SendWarning(
                 TCollection_AsciiString() + "'" + aFilePath
                 + "' inconsistent image format or dimension in Graphic3d_CubeMapSeparate");
             }
@@ -157,13 +157,13 @@ occ::handle<Image_PixMap> Graphic3d_CubeMapSeparate::Value(
       }
       else
       {
-        Message::SendWarning(TCollection_AsciiString() + "Unable to load '" + aFilePath
+        System::log::Message::SendWarning(TCollection_AsciiString() + "Unable to load '" + aFilePath
                              + "' image of Graphic3d_CubeMapSeparate");
       }
     }
     else
     {
-      Message::SendWarning(TCollection_AsciiString() + "[" + myCurrentSide
+      System::log::Message::SendWarning(TCollection_AsciiString() + "[" + myCurrentSide
                            + "] path of Graphic3d_CubeMapSeparate is invalid");
     }
   }
@@ -180,7 +180,7 @@ bool Graphic3d_CubeMapSeparate::IsDone() const
 
   for (unsigned int i = 0; i < 6; ++i)
   {
-    OSD_File aCubeMapFile(myPaths[i]);
+    System::os::OSD_File aCubeMapFile(myPaths[i]);
     if (!aCubeMapFile.Exists())
     {
       return false;

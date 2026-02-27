@@ -114,7 +114,7 @@ bool LDOMParser::parse(std::istream& anInput, const bool theTagPerStep, const bo
 
 bool LDOMParser::parse(const char* const aFileName)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream> aFileStream = aFileSystem->OpenIStream(aFileName, std::ios::in);
 
   if (aFileStream.get() != nullptr && aFileStream->good())

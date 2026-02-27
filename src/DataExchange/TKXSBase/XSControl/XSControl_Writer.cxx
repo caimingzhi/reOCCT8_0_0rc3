@@ -53,7 +53,7 @@ occ::handle<Interface_InterfaceModel> XSControl_Writer::Model(const bool newone)
 
 IFSelect_ReturnStatus XSControl_Writer::TransferShape(const TopoDS_Shape&          sh,
                                                       const int                    mode,
-                                                      const Message_ProgressRange& theProgress)
+                                                      const System::log::Message_ProgressRange& theProgress)
 {
   thesession->TransferWriter()->SetTransferMode(mode);
   return thesession->TransferWriteShape(sh, true, theProgress);

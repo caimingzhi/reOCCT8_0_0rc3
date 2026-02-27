@@ -47,7 +47,7 @@ public:
   BRepCheck_ToolSolid()
   {
     myIsHole = false;
-    myPntTol = Precision::Confusion();
+    myPntTol = math::precision::Precision::Confusion();
     myPnt.SetCoord(-1., -1., -1.);
   };
 

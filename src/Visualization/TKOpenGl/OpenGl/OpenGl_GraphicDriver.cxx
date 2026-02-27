@@ -267,7 +267,7 @@ void OpenGl_GraphicDriver::ReleaseContext()
       if (eglMakeCurrent((EGLDisplay)myEglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT)
           != EGL_TRUE)
       {
-        ::Message::SendWarning("OpenGl_GraphicDriver, FAILED to release OpenGL context");
+        System::log::Message::SendWarning("OpenGl_GraphicDriver, FAILED to release OpenGL context");
       }
       eglDestroyContext((EGLDisplay)myEglDisplay, (EGLContext)myEglContext);
     }
@@ -276,7 +276,7 @@ void OpenGl_GraphicDriver::ReleaseContext()
     {
       if (eglTerminate((EGLDisplay)myEglDisplay) != EGL_TRUE)
       {
-        ::Message::SendWarning("OpenGl_GraphicDriver, EGL, eglTerminate FAILED");
+        System::log::Message::SendWarning("OpenGl_GraphicDriver, EGL, eglTerminate FAILED");
       }
     }
   }
@@ -305,7 +305,7 @@ bool OpenGl_GraphicDriver::InitContext()
   #endif
   if ((EGLDisplay)myEglDisplay == EGL_NO_DISPLAY)
   {
-    ::Message::SendFail("Error: no EGL display");
+    System::log::Message::SendFail("Error: no EGL display");
     return false;
   }
 
@@ -313,14 +313,14 @@ bool OpenGl_GraphicDriver::InitContext()
   EGLint aVerMinor = 0;
   if (eglInitialize((EGLDisplay)myEglDisplay, &aVerMajor, &aVerMinor) != EGL_TRUE)
   {
-    ::Message::SendFail("Error: EGL display is unavailable");
+    System::log::Message::SendFail("Error: EGL display is unavailable");
     return false;
   }
 
   myEglConfig = chooseEglSurfConfig((EGLDisplay)myEglDisplay, myCaps);
   if (myEglConfig == NULL)
   {
-    ::Message::SendFail("Error: EGL does not provide compatible configurations");
+    System::log::Message::SendFail("Error: EGL does not provide compatible configurations");
     return false;
   }
 
@@ -329,7 +329,7 @@ bool OpenGl_GraphicDriver::InitContext()
   EGLint anEglCtxAttribs2[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE};
   if (eglBindAPI(EGL_OPENGL_ES_API) != EGL_TRUE)
   {
-    ::Message::SendFail("Error: EGL does not provide OpenGL ES client");
+    System::log::Message::SendFail("Error: EGL does not provide OpenGL ES client");
     return false;
   }
   if (myCaps->contextMajorVersionUpper != 2)
@@ -346,7 +346,7 @@ bool OpenGl_GraphicDriver::InitContext()
   EGLint* anEglCtxAttribs = NULL;
   if (eglBindAPI(EGL_OPENGL_API) != EGL_TRUE)
   {
-    ::Message::SendFail("Error: EGL does not provide OpenGL client");
+    System::log::Message::SendFail("Error: EGL does not provide OpenGL client");
     return false;
   }
   myEglContext = (Aspect_RenderingContext)
@@ -355,7 +355,7 @@ bool OpenGl_GraphicDriver::InitContext()
 
   if ((EGLContext)myEglContext == EGL_NO_CONTEXT)
   {
-    ::Message::SendFail("Error: EGL is unable to create OpenGL context");
+    System::log::Message::SendFail("Error: EGL is unable to create OpenGL context");
     return false;
   }
 
@@ -390,7 +390,7 @@ bool OpenGl_GraphicDriver::InitEglContext(Aspect_Display          theEglDisplay,
     myEglConfig = chooseEglSurfConfig((EGLDisplay)myEglDisplay, myCaps);
     if (myEglConfig == NULL)
     {
-      ::Message::SendFail("Error: EGL does not provide compatible configurations");
+      System::log::Message::SendFail("Error: EGL does not provide compatible configurations");
       return false;
     }
   }
@@ -436,7 +436,7 @@ void OpenGl_GraphicDriver::chooseVisualInfo()
   if (!XQueryExtension(aDisp, "GLX", &aDummy, &aDummy, &aDummy)
       || !glXQueryExtension(aDisp, &aDummy, &aDummy))
   {
-    Message::SendFail("Error: OpenGl_GraphicDriver, GLX extension is unavailable");
+    System::log::Message::SendFail("Error: OpenGl_GraphicDriver, GLX extension is unavailable");
   }
 
   int        aGlxMajor = 0, aGlxMinor = 0;
@@ -469,7 +469,7 @@ void OpenGl_GraphicDriver::chooseVisualInfo()
   }
   else
   {
-    Message::SendWarning(
+    System::log::Message::SendWarning(
       "OpenGl_GraphicDriver, couldn't find compatible Visual (RGBA, double-buffered)");
   }
 #endif

@@ -5,7 +5,7 @@
 class BinMXCAFDoc_NoteCommentDriver : public BinMXCAFDoc_NoteDriver
 {
 public:
-  Standard_EXPORT BinMXCAFDoc_NoteCommentDriver(const occ::handle<Message_Messenger>& theMsgDriver);
+  Standard_EXPORT BinMXCAFDoc_NoteCommentDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 
@@ -21,6 +21,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(BinMXCAFDoc_NoteCommentDriver, BinMXCAFDoc_NoteDriver)
 
 protected:
-  BinMXCAFDoc_NoteCommentDriver(const occ::handle<Message_Messenger>& theMsgDriver,
+  BinMXCAFDoc_NoteCommentDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver,
                                 const char*                           theName);
 };

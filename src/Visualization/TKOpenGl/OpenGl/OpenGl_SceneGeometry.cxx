@@ -136,7 +136,7 @@ struct OpenGL_BVHParallelBuilder
 bool OpenGl_RaytraceGeometry::ProcessAcceleration()
 {
 #ifdef RAY_TRACE_PRINT_INFO
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
 #endif
 
   MarkDirty();
@@ -146,7 +146,7 @@ bool OpenGl_RaytraceGeometry::ProcessAcceleration()
   aTimer.Start();
 #endif
 
-  OSD_Parallel::For(0, Size(), OpenGL_BVHParallelBuilder(this));
+  System::os::OSD_Parallel::For(0, Size(), OpenGL_BVHParallelBuilder(this));
 
   myBotLevelTreeDepth = 1;
 

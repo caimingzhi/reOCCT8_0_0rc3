@@ -19,7 +19,7 @@ public:
         myVertices(new IMeshData::VectorOfVertex),
         myDelNodes(theAllocator)
   {
-    SetTolerance(Precision::Confusion());
+    SetTolerance(math::precision::Precision::Confusion());
   }
 
   int Add(const BRepMesh_Vertex& theVertex)

@@ -138,10 +138,10 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
           double ufirst = myS->FirstUParameter(), ulast = myS->LastUParameter(),
                  vfirst = myS->FirstVParameter(), vlast = myS->LastVParameter();
 
-          if (!(Precision::IsInfinite(ufirst) || Precision::IsInfinite(ulast)
-                || Precision::IsInfinite(vfirst) || Precision::IsInfinite(vlast)))
+          if (!(math::precision::Precision::IsInfinite(ufirst) || math::precision::Precision::IsInfinite(ulast)
+                || math::precision::Precision::IsInfinite(vfirst) || math::precision::Precision::IsInfinite(vlast)))
           {
-            double  tmin = Precision::Infinite(), tmax = -tmin;
+            double  tmin = math::precision::Precision::Infinite(), tmax = -tmin;
             double  xmin, ymin, zmin, xmax, ymax, zmax;
             Bnd_Box aSurfBox;
             BndLib_AddSurface::Add(*myS,
@@ -149,7 +149,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
                                    ulast,
                                    vfirst,
                                    vlast,
-                                   Precision::Confusion(),
+                                   math::precision::Precision::Confusion(),
                                    aSurfBox);
             aSurfBox.Get(xmin, ymin, zmin, xmax, ymax, zmax);
             gp_Lin aLin = C.Line();
@@ -180,7 +180,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
           if (myS->IsVPeriodic())
             NbV = 13;
 
-          if (clast - cfirst <= Precision::Confusion())
+          if (clast - cfirst <= math::precision::Precision::Confusion())
           {
             double aCPar = (cfirst + clast) / 2.;
             gp_Pnt aPm   = C.Value(aCPar);
@@ -307,7 +307,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
           double aDist[2] = {-1, -1};
           for (i = 0; i < 2; ++i)
           {
-            if (Precision::IsInfinite(aT[i]))
+            if (math::precision::Precision::IsInfinite(aT[i]))
               continue;
 
             aPOnC[i] = C.Value(aT[i]);
@@ -356,7 +356,7 @@ void Extrema_ExtCS::Perform(const Adaptor3d_Curve& C, const double Uinf, const d
           {
             double aDiff = aDist[0] - aDist[1];
 
-            if (std::abs(aDiff) < Precision::Confusion())
+            if (std::abs(aDiff) < math::precision::Precision::Confusion())
 
               bAdd[0] = bAdd[1] = true;
             else if (aDiff < 0)

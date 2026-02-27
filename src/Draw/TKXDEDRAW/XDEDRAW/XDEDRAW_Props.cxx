@@ -831,7 +831,7 @@ static int ShapeMassProps(Draw_Interpretor& di, int argc, const char** argv)
   }
   occ::handle<TDocStd_Document> Doc;
   DDocStd::GetDocument(argv[1], Doc);
-  double atol = Precision::Confusion();
+  double atol = math::precision::Precision::Confusion();
   if (argc > 2)
     atol = Draw::Atof(argv[2]);
   if (Doc.IsNull())
@@ -976,7 +976,7 @@ static int GetValidationProps(Draw_Interpretor& di, int argc, const char** argv)
     aProp[0] = 0.;
     aProp[1] = 0.;
 
-    gp_Pnt aP(Precision::Infinite(), Precision::Infinite(), Precision::Infinite());
+    gp_Pnt aP(math::precision::Precision::Infinite(), math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
     XCAFDoc_Volume::Get(aLabel, aProp[Vol]);
     XCAFDoc_Area::Get(aLabel, aProp[Area]);
 
@@ -984,7 +984,7 @@ static int GetValidationProps(Draw_Interpretor& di, int argc, const char** argv)
     if (aLabel.FindAttribute(XCAFDoc_Centroid::GetID(), aCentroid))
       XCAFDoc_Centroid::Get(aLabel, aP);
 
-    if (aProp[Vol] > 0 || aProp[Area] > 0 || !Precision::IsInfinite(aP.X()))
+    if (aProp[Vol] > 0 || aProp[Area] > 0 || !math::precision::Precision::IsInfinite(aP.X()))
     {
       TCollection_AsciiString str;
       TDF_Tool::Entry(aLabel, str);
@@ -999,7 +999,7 @@ static int GetValidationProps(Draw_Interpretor& di, int argc, const char** argv)
         }
       }
 
-      if (!Precision::IsInfinite(aP.X()))
+      if (!math::precision::Precision::IsInfinite(aP.X()))
       {
         di << "; Centroid -  " << aP.X() << " " << aP.Y() << " " << aP.Z();
         nbProps[Centroid]++;

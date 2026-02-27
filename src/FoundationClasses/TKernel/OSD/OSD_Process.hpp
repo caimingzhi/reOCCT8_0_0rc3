@@ -8,12 +8,16 @@
 #include <TCollection_AsciiString.hpp>
 
 class Quantity_Date;
+namespace System { namespace os {
 class OSD_Path;
+}} // namespace System::os
+
 
 #ifdef SetCurrentDirectory
   #undef SetCurrentDirectory
 #endif
 
+namespace System { namespace os {
 class OSD_Process
 {
 public:
@@ -51,3 +55,5 @@ public:
 private:
   OSD_Error myError;
 };
+}} // namespace System::os
+

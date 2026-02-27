@@ -13,7 +13,7 @@
 static char                tc[1000];
 static Standard_PCharacter thePluginId = tc;
 
-occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const bool theVerbose)
+occ::handle<Standard_Transient> System::plugin::Plugin::Load(const Standard_GUID& aGUID, const bool theVerbose)
 {
 
   aGUID.ToCString(thePluginId);
@@ -24,7 +24,7 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
   if (!theMapOfFunctions.IsBound(pid))
   {
 
-    occ::handle<Resource_Manager> PluginResource = new Resource_Manager("Plugin");
+    occ::handle<System::resource::Resource_Manager> PluginResource = new System::resource::Resource_Manager("System::plugin::Plugin");
     TCollection_AsciiString       theResource(thePluginId);
     theResource += ".Location";
 
@@ -35,7 +35,7 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
       aMsg << theResource.ToCString() << std::endl;
       if (theVerbose)
         std::cout << "could not find the resource:" << theResource.ToCString() << std::endl;
-      throw Plugin_Failure(aMsg.str().c_str());
+      throw System::plugin::Plugin_Failure(aMsg.str().c_str());
     }
 
     TCollection_AsciiString thePluginLibrary("");
@@ -52,7 +52,7 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
 #else
     thePluginLibrary += ".so";
 #endif
-    OSD_SharedLibrary theSharedLibrary(thePluginLibrary.ToCString());
+    System::os::OSD_SharedLibrary theSharedLibrary(thePluginLibrary.ToCString());
     if (!theSharedLibrary.DlOpen(OSD_RTLD_LAZY))
     {
       TCollection_AsciiString error(theSharedLibrary.DlError());
@@ -64,7 +64,7 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
       if (theVerbose)
         std::cout << "could not open: " << PluginResource->Value(theResource.ToCString())
                   << " ; reason: " << error.ToCString() << std::endl;
-      throw Plugin_Failure(aMsg.str().c_str());
+      throw System::plugin::Plugin_Failure(aMsg.str().c_str());
     }
     f = theSharedLibrary.DlSymb("PLUGINFACTORY");
     if (f == nullptr)
@@ -74,7 +74,7 @@ occ::handle<Standard_Transient> Plugin::Load(const Standard_GUID& aGUID, const b
       aMsg << "could not find the factory in:";
       aMsg << PluginResource->Value(theResource.ToCString());
       aMsg << error.ToCString();
-      throw Plugin_Failure(aMsg.str().c_str());
+      throw System::plugin::Plugin_Failure(aMsg.str().c_str());
     }
     theMapOfFunctions.Bind(pid, f);
   }

@@ -726,7 +726,7 @@ double Angle2D(const TopoDS_Vertex&                 aV,
   occ::handle<Geom2d_Curve> aC2D;
 
   aTV = BRep_Tool::Parameter(aV, anEdge, myFace);
-  if (Precision::IsInfinite(aTV))
+  if (math::precision::Precision::IsInfinite(aTV))
   {
     return 0.;
   }
@@ -737,16 +737,16 @@ double Angle2D(const TopoDS_Vertex&                 aV,
   GeomAbs_CurveType   aType;
   Geom2dAdaptor_Curve aGAC2D(aC2D);
 
-  dt = std::max(aGAC2D.Resolution(tol2d), Precision::PConfusion());
+  dt = std::max(aGAC2D.Resolution(tol2d), math::precision::Precision::PConfusion());
 
   aType = aGAC2D.GetType();
   if (aType != GeomAbs_Line)
   {
-    Geom2dLProp_CLProps2d LProp(aC2D, aTV, 2, Precision::PConfusion());
+    Geom2dLProp_CLProps2d LProp(aC2D, aTV, 2, math::precision::Precision::PConfusion());
     if (LProp.IsTangentDefined())
     {
       double R = LProp.Curvature();
-      if (R > Precision::PConfusion())
+      if (R > math::precision::Precision::PConfusion())
       {
         R             = 1. / R;
         double cosphi = R / (R + tol2d);
@@ -925,7 +925,7 @@ void RefineAngles(const TopoDS_Vertex&                 aV,
     }
     else if (iCntInt == 2)
     {
-      aA = (aA <= aA1) ? (aA1 + Precision::Angular()) : (aA2 - Precision::Angular());
+      aA = (aA <= aA1) ? (aA1 + math::precision::Precision::Angular()) : (aA2 - math::precision::Precision::Angular());
       aDMSR.Bind(aE, aA);
     }
   }

@@ -153,7 +153,7 @@ namespace
     {
       myDirRef  = thePl - thePf;
       mySqMod   = myDirRef.SquareModulus();
-      myIsValid = (mySqMod > Precision::SquarePConfusion());
+      myIsValid = (mySqMod > math::precision::Precision::SquarePConfusion());
     }
 
     void UpdateFields(const double theParam)
@@ -249,7 +249,7 @@ double GeomLib_Tool::ComputeDeviation(const Geom2dAdaptor_Curve& theCurve,
 
   aFunc.GetLine(theLine);
 
-  constexpr double aTolDefl = Precision::PConfusion();
+  constexpr double aTolDefl = math::precision::Precision::PConfusion();
 
   double aD1   = 0.0;
   double aD2   = 0.0;
@@ -259,7 +259,7 @@ double GeomLib_Tool::ComputeDeviation(const Geom2dAdaptor_Curve& theCurve,
   aFunc.ValueAndDerives(aU0, aSqDefl, aD1, aD2);
   for (int anItr = 1; anItr <= theNbIters; anItr++)
   {
-    if (std::abs(aD2) < Precision::PConfusion())
+    if (std::abs(aD2) < math::precision::Precision::PConfusion())
     {
       break;
     }
@@ -284,7 +284,7 @@ double GeomLib_Tool::ComputeDeviation(const Geom2dAdaptor_Curve& theCurve,
       }
     }
 
-    if (std::abs(aU0 - aU1) < Precision::PConfusion())
+    if (std::abs(aU0 - aU1) < math::precision::Precision::PConfusion())
     {
       break;
     }

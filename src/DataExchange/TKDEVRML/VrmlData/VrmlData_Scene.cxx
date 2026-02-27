@@ -636,7 +636,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadReal(VrmlData_InBuffer& theBuffer,
     aResult = Strtod(theBuffer.LinePtr, &endptr);
     if (endptr == theBuffer.LinePtr)
       aStatus = VrmlData_NumericInputError;
-    else if (isOnlyPositive && aResult < 0.001 * Precision::Confusion())
+    else if (isOnlyPositive && aResult < 0.001 * math::precision::Precision::Confusion())
       aStatus = VrmlData_IrrelevantNumber;
     else
     {
@@ -667,7 +667,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXYZ(VrmlData_InBuffer& theBuffer,
     }
     else
     {
-      if (isOnlyPos && aVal[i] < 0.001 * Precision::Confusion())
+      if (isOnlyPos && aVal[i] < 0.001 * math::precision::Precision::Confusion())
       {
         aStatus = VrmlData_IrrelevantNumber;
         break;
@@ -709,7 +709,7 @@ VrmlData_ErrorStatus VrmlData_Scene::ReadXY(VrmlData_InBuffer& theBuffer,
     }
     else
     {
-      if (isOnlyPos && aVal[i] < 0.001 * Precision::Confusion())
+      if (isOnlyPos && aVal[i] < 0.001 * math::precision::Precision::Confusion())
       {
         aStatus = VrmlData_IrrelevantNumber;
         break;
@@ -879,7 +879,7 @@ VrmlData_ErrorStatus VrmlData_Scene::WriteXYZ(const gp_XYZ& theXYZ,
   char buf[240];
   if (!IsDummyWrite())
   {
-    if (isApplyScale && myLinearScale > Precision::Confusion())
+    if (isApplyScale && myLinearScale > math::precision::Precision::Confusion())
       Sprintf(buf,
               "%.12g %.12g %.12g%s",
               theXYZ.X() / myLinearScale,

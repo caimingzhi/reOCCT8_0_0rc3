@@ -121,14 +121,14 @@ struct ThreadSolution
 
 struct VertexFunctor
 {
-  VertexFunctor(NCollection_Array1<IndexBand>* theBandArray, const Message_ProgressRange& theRange)
+  VertexFunctor(NCollection_Array1<IndexBand>* theBandArray, const System::log::Message_ProgressRange& theRange)
       : BandArray(theBandArray),
         Solution(theBandArray->Size()),
         Map1(nullptr),
         Map2(nullptr),
         Scope(theRange, "Vertices distances calculating", theBandArray->Size()),
         Ranges(0, theBandArray->Size() - 1),
-        Eps(Precision::Confusion()),
+        Eps(math::precision::Precision::Confusion()),
         StartDist(0.0)
   {
     for (int i = 0; i < theBandArray->Size(); ++i)
@@ -144,7 +144,7 @@ struct VertexFunctor
     const int aLast         = BandArray->Value(theIndex).Last;
     Solution.Dist[theIndex] = StartDist;
 
-    Message_ProgressScope aScope(Ranges[theIndex], nullptr, (double)aLast - aFirst);
+    System::log::Message_ProgressScope aScope(Ranges[theIndex], nullptr, (double)aLast - aFirst);
 
     for (int anIdx1 = aFirst; anIdx1 <= aLast; ++anIdx1)
     {
@@ -195,8 +195,8 @@ struct VertexFunctor
   mutable ThreadSolution                                               Solution;
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* Map1;
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* Map2;
-  Message_ProgressScope                                                Scope;
-  NCollection_Array1<Message_ProgressRange>                            Ranges;
+  System::log::Message_ProgressScope                                                Scope;
+  NCollection_Array1<System::log::Message_ProgressRange>                            Ranges;
   double                                                               Eps;
   double                                                               StartDist;
 };
@@ -204,11 +204,11 @@ struct VertexFunctor
 bool BRepExtrema_DistShapeShape::DistanceVertVert(
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap1,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap2,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
   const int                          aCount1      = theMap1.Extent();
   const int                          aMinTaskSize = aCount1 < 10 ? aCount1 : 10;
-  const occ::handle<OSD_ThreadPool>& aThreadPool  = OSD_ThreadPool::DefaultPool();
+  const occ::handle<System::os::OSD_ThreadPool>& aThreadPool  = System::os::OSD_ThreadPool::DefaultPool();
   const int                          aNbThreads   = aThreadPool->NbThreads();
   int                                aNbTasks     = aNbThreads;
   int                                aTaskSize    = (int)std::ceil((double)aCount1 / aNbTasks);
@@ -220,7 +220,7 @@ bool BRepExtrema_DistShapeShape::DistanceVertVert(
 
   int                           aFirstIndex(1);
   NCollection_Array1<IndexBand> aBandArray(0, aNbTasks - 1);
-  Message_ProgressScope         aDistScope(theRange, nullptr, 1);
+  System::log::Message_ProgressScope         aDistScope(theRange, nullptr, 1);
 
   for (int anI = 0; anI < aBandArray.Size(); ++anI)
   {
@@ -238,7 +238,7 @@ bool BRepExtrema_DistShapeShape::DistanceVertVert(
   aFunctor.StartDist = myDistRef;
   aFunctor.Eps       = myEps;
 
-  OSD_Parallel::For(0, aNbTasks, aFunctor, !myIsMultiThread);
+  System::os::OSD_Parallel::For(0, aNbTasks, aFunctor, !myIsMultiThread);
   if (!aDistScope.More())
   {
     return false;
@@ -267,7 +267,7 @@ bool BRepExtrema_DistShapeShape::DistanceVertVert(
 struct DistanceFunctor
 {
   DistanceFunctor(NCollection_Array1<NCollection_Array1<BRepExtrema_CheckPair>>* theArrayOfArrays,
-                  const Message_ProgressRange&                                   theRange)
+                  const System::log::Message_ProgressRange&                                   theRange)
       : ArrayOfArrays(theArrayOfArrays),
         Solution(ArrayOfArrays->Size()),
         Map1(nullptr),
@@ -276,7 +276,7 @@ struct DistanceFunctor
         LBox2(nullptr),
         Scope(theRange, "Shapes distances calculating", theArrayOfArrays->Size()),
         Ranges(0, theArrayOfArrays->Size() - 1),
-        Eps(Precision::Confusion()),
+        Eps(math::precision::Precision::Confusion()),
         StartDist(0.0)
   {
     for (int i = 0; i < theArrayOfArrays->Size(); ++i)
@@ -287,7 +287,7 @@ struct DistanceFunctor
 
   void operator()(const int theIndex) const
   {
-    Message_ProgressScope aScope(Ranges[theIndex], nullptr, ArrayOfArrays->Value(theIndex).Size());
+    System::log::Message_ProgressScope aScope(Ranges[theIndex], nullptr, ArrayOfArrays->Value(theIndex).Size());
     Solution.Dist[theIndex] = StartDist;
     for (int i = 0; i < ArrayOfArrays->Value(theIndex).Size(); i++)
     {
@@ -349,8 +349,8 @@ struct DistanceFunctor
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>* Map2;
   const NCollection_Array1<Bnd_Box>*                                   LBox1;
   const NCollection_Array1<Bnd_Box>*                                   LBox2;
-  Message_ProgressScope                                                Scope;
-  NCollection_Array1<Message_ProgressRange>                            Ranges;
+  System::log::Message_ProgressScope                                                Scope;
+  NCollection_Array1<System::log::Message_ProgressRange>                            Ranges;
   double                                                               Eps;
   double                                                               StartDist;
 };
@@ -358,7 +358,7 @@ struct DistanceFunctor
 struct DistancePairFunctor
 {
   DistancePairFunctor(NCollection_Array1<IndexBand>* theBandArray,
-                      const Message_ProgressRange&   theRange)
+                      const System::log::Message_ProgressRange&   theRange)
       : BandArray(theBandArray),
         PairList(0, theBandArray->Size() - 1),
         LBox1(nullptr),
@@ -366,7 +366,7 @@ struct DistancePairFunctor
         Scope(theRange, "Boxes distances calculating", theBandArray->Size()),
         Ranges(0, theBandArray->Size() - 1),
         DistRef(0),
-        Eps(Precision::Confusion())
+        Eps(math::precision::Precision::Confusion())
   {
     for (int i = 0; i < theBandArray->Size(); ++i)
     {
@@ -379,7 +379,7 @@ struct DistancePairFunctor
     const int aFirst = BandArray->Value(theIndex).First;
     const int aLast  = BandArray->Value(theIndex).Last;
 
-    Message_ProgressScope aScope(Ranges[theIndex], nullptr, (double)aLast - aFirst);
+    System::log::Message_ProgressScope aScope(Ranges[theIndex], nullptr, (double)aLast - aFirst);
 
     for (int anIdx1 = aFirst; anIdx1 <= aLast; ++anIdx1)
     {
@@ -421,8 +421,8 @@ struct DistancePairFunctor
   mutable NCollection_Array1<NCollection_Vector<BRepExtrema_CheckPair>> PairList;
   const NCollection_Array1<Bnd_Box>*                                    LBox1;
   const NCollection_Array1<Bnd_Box>*                                    LBox2;
-  Message_ProgressScope                                                 Scope;
-  NCollection_Array1<Message_ProgressRange>                             Ranges;
+  System::log::Message_ProgressScope                                                 Scope;
+  NCollection_Array1<System::log::Message_ProgressRange>                             Ranges;
   double                                                                DistRef;
   double                                                                Eps;
 };
@@ -432,7 +432,7 @@ bool BRepExtrema_DistShapeShape::DistanceMapMap(
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMap2,
   const NCollection_Array1<Bnd_Box>&                                   theLBox1,
   const NCollection_Array1<Bnd_Box>&                                   theLBox2,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
   const int aCount1 = theMap1.Extent();
   const int aCount2 = theMap2.Extent();
@@ -442,9 +442,9 @@ bool BRepExtrema_DistShapeShape::DistanceMapMap(
     return true;
   }
 
-  Message_ProgressScope aTwinScope(theRange, nullptr, 1.0);
+  System::log::Message_ProgressScope aTwinScope(theRange, nullptr, 1.0);
 
-  const occ::handle<OSD_ThreadPool>& aThreadPool      = OSD_ThreadPool::DefaultPool();
+  const occ::handle<System::os::OSD_ThreadPool>& aThreadPool      = System::os::OSD_ThreadPool::DefaultPool();
   const int                          aNbThreads       = aThreadPool->NbThreads();
   const int                          aMinPairTaskSize = aCount1 < 10 ? aCount1 : 10;
   int                                aNbPairTasks     = aNbThreads;
@@ -475,7 +475,7 @@ bool BRepExtrema_DistShapeShape::DistanceMapMap(
   aPairFunctor.DistRef = myDistRef;
   aPairFunctor.Eps     = myEps;
 
-  OSD_Parallel::For(0, aNbPairTasks, aPairFunctor, !myIsMultiThread);
+  System::os::OSD_Parallel::For(0, aNbPairTasks, aPairFunctor, !myIsMultiThread);
   if (!aTwinScope.More())
   {
     return false;
@@ -536,7 +536,7 @@ bool BRepExtrema_DistShapeShape::DistanceMapMap(
   aFunctor.Eps       = myEps;
   aFunctor.StartDist = myDistRef;
 
-  OSD_Parallel::For(0, aNbTasks, aFunctor, !myIsMultiThread);
+  System::os::OSD_Parallel::For(0, aNbTasks, aFunctor, !myIsMultiThread);
   if (!aTwinScope.More())
   {
     return false;
@@ -570,7 +570,7 @@ BRepExtrema_DistShapeShape::BRepExtrema_DistShapeShape()
     : myDistRef(0.0),
       myIsDone(false),
       myInnerSol(false),
-      myEps(Precision::Confusion()),
+      myEps(math::precision::Precision::Confusion()),
       myIsInitS1(false),
       myIsInitS2(false),
       myFlag(Extrema_ExtFlag_MINMAX),
@@ -583,11 +583,11 @@ BRepExtrema_DistShapeShape::BRepExtrema_DistShapeShape(const TopoDS_Shape&      
                                                        const TopoDS_Shape&          Shape2,
                                                        const Extrema_ExtFlag        F,
                                                        const Extrema_ExtAlgo        A,
-                                                       const Message_ProgressRange& theRange)
+                                                       const System::log::Message_ProgressRange& theRange)
     : myDistRef(0.0),
       myIsDone(false),
       myInnerSol(false),
-      myEps(Precision::Confusion()),
+      myEps(math::precision::Precision::Confusion()),
       myIsInitS1(false),
       myIsInitS2(false),
       myFlag(F),
@@ -604,7 +604,7 @@ BRepExtrema_DistShapeShape::BRepExtrema_DistShapeShape(const TopoDS_Shape&      
                                                        const double                 theDeflection,
                                                        const Extrema_ExtFlag        F,
                                                        const Extrema_ExtAlgo        A,
-                                                       const Message_ProgressRange& theRange)
+                                                       const System::log::Message_ProgressRange& theRange)
     : myDistRef(0.0),
       myIsDone(false),
       myInnerSol(false),
@@ -637,7 +637,7 @@ void BRepExtrema_DistShapeShape::LoadS2(const TopoDS_Shape& Shape2)
 struct TreatmentFunctor
 {
   TreatmentFunctor(NCollection_Array1<NCollection_Array1<TopoDS_Shape>>* theArrayOfArrays,
-                   const Message_ProgressRange&                          theRange)
+                   const System::log::Message_ProgressRange&                          theRange)
       : ArrayOfArrays(theArrayOfArrays),
         SolutionsShape1(nullptr),
         SolutionsShape2(nullptr),
@@ -657,7 +657,7 @@ struct TreatmentFunctor
   void operator()(const int theIndex) const
   {
     const double          aTolerance = 0.001;
-    Message_ProgressScope aScope(Ranges[theIndex], nullptr, ArrayOfArrays->Value(theIndex).Size());
+    System::log::Message_ProgressScope aScope(Ranges[theIndex], nullptr, ArrayOfArrays->Value(theIndex).Size());
     BRepClass3d_SolidClassifier aClassifier(Shape);
 
     for (int i = 0; i < ArrayOfArrays->Value(theIndex).Size(); i++)
@@ -694,8 +694,8 @@ struct TreatmentFunctor
   NCollection_Sequence<BRepExtrema_SolutionElem>*       SolutionsShape1;
   NCollection_Sequence<BRepExtrema_SolutionElem>*       SolutionsShape2;
   TopoDS_Shape                                          Shape;
-  Message_ProgressScope                                 Scope;
-  NCollection_Array1<Message_ProgressRange>             Ranges;
+  System::log::Message_ProgressScope                                 Scope;
+  NCollection_Array1<System::log::Message_ProgressRange>             Ranges;
   double*                                               DistRef;
   std::atomic<bool>*                                    InnerSol;
   std::atomic<bool>*                                    IsDone;
@@ -705,11 +705,11 @@ struct TreatmentFunctor
 bool BRepExtrema_DistShapeShape::SolidTreatment(
   const TopoDS_Shape&                                                  theShape,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theVertexMap,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
   const int                          aMapSize     = theVertexMap.Extent();
   const int                          aMinTaskSize = 3;
-  const occ::handle<OSD_ThreadPool>& aThreadPool  = OSD_ThreadPool::DefaultPool();
+  const occ::handle<System::os::OSD_ThreadPool>& aThreadPool  = System::os::OSD_ThreadPool::DefaultPool();
   const int                          aNbThreads   = aThreadPool->NbThreads();
   int                                aNbTasks     = aNbThreads * 10;
   int                                aTaskSize    = (int)std::ceil((double)aMapSize / aNbTasks);
@@ -740,7 +740,7 @@ bool BRepExtrema_DistShapeShape::SolidTreatment(
   std::atomic<bool> anAtomicInnerSol(myInnerSol);
   std::atomic<bool> anAtomicIsDone(myIsDone);
 
-  Message_ProgressScope aScope(theRange, "Solid treatment", aNbTasks);
+  System::log::Message_ProgressScope aScope(theRange, "Solid treatment", aNbTasks);
   TreatmentFunctor      aFunctor(&anArrayOfArray, aScope.Next());
   aFunctor.SolutionsShape1 = &mySolutionsShape1;
   aFunctor.SolutionsShape2 = &mySolutionsShape2;
@@ -753,7 +753,7 @@ bool BRepExtrema_DistShapeShape::SolidTreatment(
     aFunctor.Mutex = std::make_unique<std::mutex>();
   }
 
-  OSD_Parallel::For(0, aNbTasks, aFunctor, !myIsMultiThread);
+  System::os::OSD_Parallel::For(0, aNbTasks, aFunctor, !myIsMultiThread);
 
   myInnerSol = anAtomicInnerSol.load(std::memory_order_acquire);
   myIsDone   = anAtomicIsDone.load(std::memory_order_acquire);
@@ -761,7 +761,7 @@ bool BRepExtrema_DistShapeShape::SolidTreatment(
   return aScope.More();
 }
 
-bool BRepExtrema_DistShapeShape::Perform(const Message_ProgressRange& theRange)
+bool BRepExtrema_DistShapeShape::Perform(const System::log::Message_ProgressRange& theRange)
 {
   myIsDone   = false;
   myInnerSol = false;
@@ -778,7 +778,7 @@ bool BRepExtrema_DistShapeShape::Perform(const Message_ProgressRange& theRange)
   int aRootStepsNum = 9;
   aRootStepsNum     = anIsSolid1 ? aRootStepsNum + 1 : aRootStepsNum;
   aRootStepsNum     = anIsSolid2 ? aRootStepsNum + 1 : aRootStepsNum;
-  Message_ProgressScope aRootScope(theRange, "calculating distance", aRootStepsNum);
+  System::log::Message_ProgressScope aRootScope(theRange, "calculating distance", aRootStepsNum);
 
   if (anIsSolid1)
   {

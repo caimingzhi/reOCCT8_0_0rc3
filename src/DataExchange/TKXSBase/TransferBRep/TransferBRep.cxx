@@ -446,8 +446,8 @@ Interface_CheckIterator TransferBRep::CheckObject(const Interface_CheckIterator&
   return nchl;
 }
 
-void TransferBRep::PrintResultInfo(const occ::handle<Message_Printer>&                 Printer,
-                                   const Message_Msg&                                  Header,
+void TransferBRep::PrintResultInfo(const occ::handle<System::log::Message_Printer>&                 Printer,
+                                   const System::log::Message_Msg&                                  Header,
                                    const occ::handle<TransferBRep_TransferResultInfo>& ResultInfo,
                                    const bool                                          printEmpty)
 {
@@ -461,59 +461,59 @@ void TransferBRep::PrintResultInfo(const occ::handle<Message_Printer>&          
   NRF  = ResultInfo->NoResultFail();
   NRWF = ResultInfo->NoResultWarningFail();
 
-  Message_Msg aLocalHeader = Header;
+  System::log::Message_Msg aLocalHeader = Header;
   Printer->Send(aLocalHeader, Message_Info);
 
-  Message_Msg EPMSG30("Result.Print.MSG30");
+  System::log::Message_Msg EPMSG30("Result.Print.MSG30");
   EPMSG30.Arg(R);
   Printer->Send(EPMSG30, Message_Info);
   if (printEmpty || (RW > 0))
   {
-    Message_Msg EPMSG32("Result.Print.MSG32");
+    System::log::Message_Msg EPMSG32("Result.Print.MSG32");
     EPMSG32.Arg(RW);
     Printer->Send(EPMSG32, Message_Info);
   }
   if (printEmpty || (RF > 0))
   {
-    Message_Msg EPMSG34("Result.Print.MSG34");
+    System::log::Message_Msg EPMSG34("Result.Print.MSG34");
     EPMSG34.Arg(RF);
     Printer->Send(EPMSG34, Message_Info);
   }
   if (printEmpty || (RWF > 0))
   {
-    Message_Msg EPMSG36("Result.Print.MSG36");
+    System::log::Message_Msg EPMSG36("Result.Print.MSG36");
     EPMSG36.Arg(RWF);
     Printer->Send(EPMSG36, Message_Info);
   }
-  Message_Msg EPMSG38("Result.Print.MSG38");
+  System::log::Message_Msg EPMSG38("Result.Print.MSG38");
   EPMSG38.Arg(R + RW + RF + RWF);
   Printer->Send(EPMSG38, Message_Info);
   if (printEmpty || (NR > 0))
   {
-    Message_Msg EPMSG40("Result.Print.MSG40");
+    System::log::Message_Msg EPMSG40("Result.Print.MSG40");
     EPMSG40.Arg(NR);
     Printer->Send(EPMSG40, Message_Info);
   }
   if (printEmpty || (NRW > 0))
   {
-    Message_Msg EPMSG42("Result.Print.MSG42");
+    System::log::Message_Msg EPMSG42("Result.Print.MSG42");
     EPMSG42.Arg(NRW);
     Printer->Send(EPMSG42, Message_Info);
   }
   if (printEmpty || (NRF > 0))
   {
-    Message_Msg EPMSG44("Result.Print.MSG44");
+    System::log::Message_Msg EPMSG44("Result.Print.MSG44");
     EPMSG44.Arg(NRF);
     Printer->Send(EPMSG44, Message_Info);
   }
   if (printEmpty || (NRWF > 0))
   {
-    Message_Msg EPMSG46("Result.Print.MSG46");
+    System::log::Message_Msg EPMSG46("Result.Print.MSG46");
     EPMSG46.Arg(NRWF);
     Printer->Send(EPMSG46, Message_Info);
   }
 
-  Message_Msg EPMSG48("Result.Print.MSG48");
+  System::log::Message_Msg EPMSG48("Result.Print.MSG48");
   EPMSG48.Arg(NR + NRW + NRF + NRWF);
   Printer->Send(EPMSG48, Message_Info);
 }

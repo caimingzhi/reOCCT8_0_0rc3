@@ -431,13 +431,13 @@ void GeomTools_CurveSet::Dump(Standard_OStream& OS) const
   }
 }
 
-void GeomTools_CurveSet::Write(Standard_OStream& OS, const Message_ProgressRange& theProgress) const
+void GeomTools_CurveSet::Write(Standard_OStream& OS, const System::log::Message_ProgressRange& theProgress) const
 {
   std::streamsize prec = OS.precision(17);
 
   int i, nbcurve = myMap.Extent();
   OS << "Curves " << nbcurve << "\n";
-  Message_ProgressScope aPS(theProgress, "3D Curves", nbcurve);
+  System::log::Message_ProgressScope aPS(theProgress, "3D Curves", nbcurve);
   for (i = 1; i <= nbcurve && aPS.More(); i++, aPS.Next())
   {
     PrintCurve(occ::down_cast<Geom_Curve>(myMap(i)), OS, true);
@@ -706,7 +706,7 @@ occ::handle<Geom_Curve> GeomTools_CurveSet::ReadCurve(Standard_IStream& IS)
   return C;
 }
 
-void GeomTools_CurveSet::Read(Standard_IStream& IS, const Message_ProgressRange& theProgress)
+void GeomTools_CurveSet::Read(Standard_IStream& IS, const System::log::Message_ProgressRange& theProgress)
 {
   char buffer[255];
   IS >> buffer;
@@ -718,7 +718,7 @@ void GeomTools_CurveSet::Read(Standard_IStream& IS, const Message_ProgressRange&
 
   int i, nbcurve;
   IS >> nbcurve;
-  Message_ProgressScope aPS(theProgress, "3D Curves", nbcurve);
+  System::log::Message_ProgressScope aPS(theProgress, "3D Curves", nbcurve);
   for (i = 1; i <= nbcurve && aPS.More(); i++, aPS.Next())
   {
     occ::handle<Geom_Curve> C = GeomTools_CurveSet::ReadCurve(IS);

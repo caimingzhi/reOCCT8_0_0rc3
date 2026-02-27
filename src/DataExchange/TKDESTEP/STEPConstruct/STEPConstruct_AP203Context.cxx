@@ -77,7 +77,7 @@ occ::handle<StepBasic_DateAndTime> STEPConstruct_AP203Context::DefaultDateAndTim
 {
   if (defDateAndTime.IsNull())
   {
-    OSD_Process   sys;
+    System::os::OSD_Process   sys;
     Quantity_Date date = sys.SystemDate();
 
     occ::handle<StepBasic_CalendarDate> aDate = new StepBasic_CalendarDate;
@@ -119,7 +119,7 @@ occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
   {
 
     occ::handle<TCollection_HAsciiString> orgId = new TCollection_HAsciiString("IP");
-    OSD_Host                              aHost;
+    System::os::OSD_Host                              aHost;
     TCollection_AsciiString               anIP = aHost.InternetAddress();
 
     int aLastDotIndex = anIP.SearchFromEnd(".");
@@ -134,7 +134,7 @@ occ::handle<StepBasic_PersonAndOrganization> STEPConstruct_AP203Context::
     occ::handle<TCollection_HAsciiString> oDescr = new TCollection_HAsciiString("");
     aOrg->Init(true, orgId, oName, oDescr);
 
-    OSD_Process             sys;
+    System::os::OSD_Process             sys;
     TCollection_AsciiString user(sys.UserName());
 #if !defined(_WIN32) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
     if (!user.IsEmpty())

@@ -24,7 +24,7 @@ TEST(GeomAPI_Interpolate_Test, BUC60902_TangentPreservation)
     aPnts->SetValue(i, aP);
   }
 
-  GeomAPI_Interpolate anInterpolater(aPnts, false, Precision::Confusion());
+  GeomAPI_Interpolate anInterpolater(aPnts, false, math::precision::Precision::Confusion());
   anInterpolater.Perform();
   ASSERT_TRUE(anInterpolater.IsDone()) << "First interpolation should succeed";
 
@@ -35,7 +35,7 @@ TEST(GeomAPI_Interpolate_Test, BUC60902_TangentPreservation)
   aCur->D1(aCur->FirstParameter(), aP, aFirstTang);
   aCur->D1(aCur->LastParameter(), aP, aLastTang);
 
-  GeomAPI_Interpolate anInterpolater1(aPnts, false, Precision::Confusion());
+  GeomAPI_Interpolate anInterpolater1(aPnts, false, math::precision::Precision::Confusion());
   anInterpolater1.Load(aFirstTang, aLastTang, false);
   anInterpolater1.Perform();
   ASSERT_TRUE(anInterpolater1.IsDone()) << "Second interpolation should succeed";
@@ -47,9 +47,9 @@ TEST(GeomAPI_Interpolate_Test, BUC60902_TangentPreservation)
   aCur->D1(aCur->FirstParameter(), aP, aFirstTang1);
   aCur->D1(aCur->LastParameter(), aP, aLastTang1);
 
-  EXPECT_TRUE(aFirstTang.IsEqual(aFirstTang1, Precision::Confusion(), Precision::Angular()))
+  EXPECT_TRUE(aFirstTang.IsEqual(aFirstTang1, math::precision::Precision::Confusion(), math::precision::Precision::Angular()))
     << "First tangent should be preserved after recomputation";
 
-  EXPECT_TRUE(aLastTang.IsEqual(aLastTang1, Precision::Confusion(), Precision::Angular()))
+  EXPECT_TRUE(aLastTang.IsEqual(aLastTang1, math::precision::Precision::Confusion(), math::precision::Precision::Angular()))
     << "Last tangent should be preserved after recomputation";
 }

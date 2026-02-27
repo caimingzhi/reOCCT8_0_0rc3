@@ -2,7 +2,8 @@
 
 #include <OSD_FileNode.hpp>
 
-class OSD_Directory : public OSD_FileNode
+namespace System { namespace os {
+class OSD_Directory : public System::os::OSD_FileNode
 {
 public:
   Standard_EXPORT static OSD_Directory BuildTemporary();
@@ -14,3 +15,5 @@ public:
 
   Standard_EXPORT void Build(const OSD_Protection& Protect);
 };
+}} // namespace System::os
+

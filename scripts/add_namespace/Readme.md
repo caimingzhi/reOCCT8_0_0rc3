@@ -40,4 +40,4 @@ cout << a.GetHello();
 
 python add_namespace.py "source path" "csv file path"
 例如：
-python ./scripts/add_namespace/add_namespace.py ./src renaming.csv
+python .\scripts\add_namespace\add_namespace.py src new.csv --start_row=4801 --end_row=5016 --run

@@ -3,7 +3,7 @@
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Draw_Printer, Message_Printer)
+IMPLEMENT_STANDARD_RTTIEXT(Draw_Printer, System::log::Message_Printer)
 
 Draw_Printer::Draw_Printer(Draw_Interpretor& theTcl)
     : myTcl(&theTcl)

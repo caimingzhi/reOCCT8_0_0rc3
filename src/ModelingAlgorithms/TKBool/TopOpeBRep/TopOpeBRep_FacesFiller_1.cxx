@@ -512,7 +512,7 @@ static bool FUN_brep_ONfirstP(const TopOpeBRep_VPointInter& vpf, const TopOpeBRe
   double parfirst = vpf.ParameterOnLine();
   double parcur   = VP.ParameterOnLine();
   double d        = parcur - parfirst;
-  double tol      = Precision::Confusion();
+  double tol      = math::precision::Precision::Confusion();
   bool   ONfirstP = (std::abs(d) < tol);
   return ONfirstP;
 }
@@ -613,7 +613,7 @@ void TopOpeBRep_FacesFiller::ProcessRLine()
 
   TopOpeBRep_VPointInterIterator VPI;
   VPI.Init((*myLine));
-  double                        tola = Precision::Angular() * 1.e5;
+  double                        tola = math::precision::Precision::Angular() * 1.e5;
   const TopOpeBRep_VPointInter& vpf  = VPI.CurrentVP();
   for (; VPI.More(); VPI.Next())
   {
@@ -1003,7 +1003,7 @@ void TopOpeBRep_FacesFiller::AddShapesLine()
   myHDS->MinMaxOnParameter(myDSCIL, pmin, pmax);
 
   double d     = std::abs(pmin - pmax);
-  bool   id    = (d <= Precision::PConfusion());
+  bool   id    = (d <= math::precision::Precision::PConfusion());
   bool   isper = myLine->IsPeriodic();
   id           = (id && !isper);
 

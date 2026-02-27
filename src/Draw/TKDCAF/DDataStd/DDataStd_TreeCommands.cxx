@@ -309,7 +309,7 @@ static int DDataStd_OpenNode(Draw_Interpretor& di, int n, const char** a)
     occ::down_cast<DDataStd_TreeBrowser>(Draw::GetExisting(a[1]));
   if (browser.IsNull())
   {
-    Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
+    System::log::Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
     return 1;
   }
 

@@ -127,16 +127,16 @@ public:
   Standard_EXPORT int TransferOne(
     const occ::handle<Standard_Transient>& theEnt,
     const bool                             theRec      = true,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT int TransferList(
     const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& theList,
     const bool                                                                 theRec = true,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT int TransferRoots(
     const Interface_Graph&       theGraph,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void TransferClear(const occ::handle<Standard_Transient>& theEnt,
                                      const int                              theLevel = 0);

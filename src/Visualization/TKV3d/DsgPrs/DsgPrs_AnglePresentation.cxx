@@ -278,7 +278,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   Prs3d_Text::Draw(aGroup, LA->TextAspect(), aText, OffsetPoint);
 
   double length = LA->ArrowAspect()->Length();
-  if (length < Precision::Confusion())
+  if (length < math::precision::Precision::Confusion())
     length = 1.e-04;
 
   gp_Vec vecarr;
@@ -364,7 +364,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
                                         LastParAttachCirc);
 
   occ::handle<Graphic3d_ArrayOfPrimitives> aPrims;
-  if (theval > Precision::Angular() && std::abs(M_PI - theval) > Precision::Angular())
+  if (theval > math::precision::Precision::Angular() && std::abs(M_PI - theval) > math::precision::Precision::Angular())
   {
     const double Alpha      = std::abs(LastParAngleCirc - FirstParAngleCirc);
     const int    NodeNumber = std::max(4, int(50. * Alpha / M_PI));
@@ -403,7 +403,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
 
   aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
 
-  if (AttachmentPoint2.Distance(ProjAttachPoint2) > Precision::Confusion())
+  if (AttachmentPoint2.Distance(ProjAttachPoint2) > math::precision::Precision::Confusion())
   {
     if (isPlane)
     {
@@ -445,7 +445,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
   gp_Dir Norm;
-  if (!dir1.IsParallel(dir2, Precision::Angular()))
+  if (!dir1.IsParallel(dir2, math::precision::Precision::Angular()))
   {
     Norm = dir1.Crossed(dir2);
   }
@@ -512,7 +512,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, OffsetPoint);
 
   double length = LA->ArrowAspect()->Length();
-  if (length < Precision::Confusion())
+  if (length < math::precision::Precision::Confusion())
     length = 1.e-04;
 
   gp_Vec vecarr;
@@ -633,7 +633,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, OffsetPoint);
 
   double length = LA->ArrowAspect()->Length();
-  if (length < Precision::Confusion())
+  if (length < math::precision::Precision::Confusion())
     length = 1.e-04;
 
   gp_Vec vecarr;
@@ -748,7 +748,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, OffsetPoint);
 
   double length = LA->ArrowAspect()->Length();
-  if (length < Precision::Confusion())
+  if (length < math::precision::Precision::Confusion())
     length = 1.e-04;
 
   gp_Vec vecarr;
@@ -821,7 +821,7 @@ void DsgPrs_AnglePresentation::Add(const occ::handle<Prs3d_Presentation>& aPrese
   double uc2 = ElCLib::Parameter(cer, AttachmentPoint1.Rotated(theAxe, theval));
 
   double length = LA->ArrowAspect()->Length();
-  if (length < Precision::Confusion())
+  if (length < math::precision::Precision::Confusion())
     length = 1.e-04;
 
   gp_Vec vecarr;

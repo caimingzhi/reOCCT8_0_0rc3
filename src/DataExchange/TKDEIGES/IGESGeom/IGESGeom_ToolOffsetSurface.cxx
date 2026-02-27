@@ -24,7 +24,7 @@ void IGESGeom_ToolOffsetSurface::ReadOwnParams(const occ::handle<IGESGeom_Offset
                                                IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg162("XSTEP_162");
+  System::log::Message_Msg Msg162("XSTEP_162");
 
   gp_XYZ                           anIndicator;
   double                           aDistance;
@@ -35,25 +35,25 @@ void IGESGeom_ToolOffsetSurface::ReadOwnParams(const occ::handle<IGESGeom_Offset
 
   if (!PR.ReadReal(PR.Current(), aDistance))
   {
-    Message_Msg Msg163("XSTEP_163");
+    System::log::Message_Msg Msg163("XSTEP_163");
     PR.SendFail(Msg163);
   }
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aSurface))
   {
-    Message_Msg Msg164("XSTEP_164");
+    System::log::Message_Msg Msg164("XSTEP_164");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg164.Arg(Msg216.Value());
         PR.SendFail(Msg164);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg164.Arg(Msg217.Value());
         PR.SendFail(Msg164);
         break;

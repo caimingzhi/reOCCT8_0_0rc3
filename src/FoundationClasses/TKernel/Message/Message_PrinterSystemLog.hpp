@@ -3,7 +3,8 @@
 #include <Message_Printer.hpp>
 #include <TCollection_AsciiString.hpp>
 
-class Message_PrinterSystemLog : public Message_Printer
+namespace System { namespace log {
+class Message_PrinterSystemLog : public System::log::Message_Printer
 {
   DEFINE_STANDARD_RTTIEXT(Message_PrinterSystemLog, Message_Printer)
 public:
@@ -22,3 +23,5 @@ private:
   void* myEventSource;
 #endif
 };
+}} // namespace System::log
+

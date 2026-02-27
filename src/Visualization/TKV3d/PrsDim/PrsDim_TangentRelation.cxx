@@ -102,13 +102,13 @@ static bool ComputeTangencyPoint(const occ::handle<Geom_Curve>& GC1,
     }
     else
     {
-      if ((dist < mindist) || (dist < Precision::Confusion()))
+      if ((dist < mindist) || (dist < math::precision::Precision::Confusion()))
       {
         mindist = dist;
         PC1     = P1;
       }
     }
-    if (dist < Precision::Confusion())
+    if (dist < math::precision::Precision::Confusion())
     {
       if (GC1->IsInstance(STANDARD_TYPE(Geom_Line)))
       {
@@ -337,7 +337,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
       myLength                    = std::max(R1, R2) / 5.0;
       if (!found)
       {
-        if ((circle1->Location()).IsEqual(circle2->Location(), Precision::Confusion()))
+        if ((circle1->Location()).IsEqual(circle2->Location(), math::precision::Precision::Confusion()))
         {
           if (R1 >= R2)
           {

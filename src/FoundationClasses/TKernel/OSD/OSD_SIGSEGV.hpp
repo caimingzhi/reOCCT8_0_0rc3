@@ -7,9 +7,12 @@
 #if !defined No_Exception && !defined No_OSD_SIGSEGV
   #define OSD_SIGSEGV_Raise_if(CONDITION, MESSAGE)                                                 \
     if (CONDITION)                                                                                 \
-      throw OSD_SIGSEGV(MESSAGE);
+      throw System::os::OSD_SIGSEGV(MESSAGE);
 #else
   #define OSD_SIGSEGV_Raise_if(CONDITION, MESSAGE)
 #endif
 
-DEFINE_STANDARD_EXCEPTION(OSD_SIGSEGV, OSD_Signal)
+namespace System { namespace os {
+DEFINE_STANDARD_EXCEPTION(OSD_SIGSEGV, System::os::OSD_Signal)
+}} // namespace System::os
+

@@ -86,7 +86,7 @@ static void PlotCurve(Draw_Display&          aDisplay,
   C.D0(theFirstParam + theHalfStep, Pm);
 
   double dfLength = theFirstPnt.Distance(theLastPnt);
-  if (dfLength < Precision::Confusion()
+  if (dfLength < math::precision::Precision::Confusion()
       || Pm.Distance(theFirstPnt) + Pm.Distance(theLastPnt) <= IsoRatio * dfLength)
   {
     aDisplay.DrawTo(theLastPnt);

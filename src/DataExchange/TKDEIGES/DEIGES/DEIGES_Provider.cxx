@@ -66,7 +66,7 @@ namespace
       else
       {
         theGS.SetCascadeUnit(theNode->GlobalParameters.SystemUnit);
-        Message::SendWarning() << "Warning in the DEIGES_Provider during writing the file "
+        System::log::Message::SendWarning() << "Warning in the DEIGES_Provider during writing the file "
                                << thePath
                                << "\t: The document has no information on Units. Using global "
                                   "parameter as initial Unit.";
@@ -120,7 +120,7 @@ namespace
     IFSelect_ReturnStatus aReadStat = theReader.ReadFile(thePath.ToCString());
     if (aReadStat != IFSelect_RetDone)
     {
-      Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
+      System::log::Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
                           << "\t: abandon, no model loaded";
       return false;
     }
@@ -140,7 +140,7 @@ void DEIGES_Provider::personizeWS(occ::handle<XSControl_WorkSession>& theWS)
 {
   if (theWS.IsNull())
   {
-    Message::SendWarning() << "Warning: DEIGES_Provider :"
+    System::log::Message::SendWarning() << "Warning: DEIGES_Provider :"
                            << " Null work session, use internal temporary session";
     theWS = new XSControl_WorkSession();
   }
@@ -244,7 +244,7 @@ void DEIGES_Provider::resetStatic()
 bool DEIGES_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("reading the file ") + thePath;
   if (!DE_ValidationUtils::ValidateDocument(theDocument, aContext)
@@ -268,7 +268,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString&       thePath,
   IFSelect_ReturnStatus aReadStat = aReader.ReadFile(thePath.ToCString());
   if (aReadStat != IFSelect_RetDone)
   {
-    Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
                         << "\t: abandon, no model loaded";
     resetStatic();
     return false;
@@ -276,7 +276,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString&       thePath,
 
   if (!aReader.Transfer(theDocument, theProgress))
   {
-    Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
                         << "\t: Cannot read any relevant data from the IGES file";
     resetStatic();
     return false;
@@ -288,7 +288,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString&       thePath,
 bool DEIGES_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("writing the file ") + thePath;
   if (!DE_ValidationUtils::ValidateDocument(theDocument, aContext)
@@ -306,14 +306,14 @@ bool DEIGES_Provider::Write(const TCollection_AsciiString&       thePath,
 
   if (!aWriter.Transfer(theDocument, theProgress))
   {
-    Message::SendFail() << "Error in the DEIGES_Provider during writing the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEIGES_Provider during writing the file " << thePath
                         << "\t: The document cannot be translated or gives no result";
     resetStatic();
     return false;
   }
   if (!aWriter.Write(thePath.ToCString()))
   {
-    Message::SendFail() << "Error in the DEIGES_Provider during writing the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEIGES_Provider during writing the file " << thePath
                         << "\t: Write failed";
     resetStatic();
     return false;
@@ -324,7 +324,7 @@ bool DEIGES_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DEIGES_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Read(thePath, theDocument, aWS, theProgress);
@@ -332,7 +332,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString&       thePath,
 
 bool DEIGES_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Write(thePath, theDocument, aWS, theProgress);
@@ -341,7 +341,7 @@ bool DEIGES_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DEIGES_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   if (!validateConfigurationNode(GetNode(), TCollection_AsciiString("reading the file ") + thePath))
   {
@@ -364,7 +364,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString&      thePath,
 
   if (aReader.TransferRoots(theProgress) <= 0)
   {
-    Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEIGES_Provider during reading the file " << thePath
                         << "\t: Cannot read any relevant data from the IGES file";
     resetStatic();
     return false;
@@ -377,7 +377,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString&      thePath,
 bool DEIGES_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("writing the file ") + thePath;
   if (!validateConfigurationNode(GetNode(), aContext))
@@ -396,14 +396,14 @@ bool DEIGES_Provider::Write(const TCollection_AsciiString&      thePath,
   bool aIsOk = aWriter.AddShape(theShape, theProgress);
   if (!aIsOk)
   {
-    Message::SendFail() << "DEIGES_Provider: Shape not written";
+    System::log::Message::SendFail() << "DEIGES_Provider: Shape not written";
     resetStatic();
     return false;
   }
 
   if (!aWriter.Write(thePath.ToCString()))
   {
-    Message::SendFail() << "DEIGES_Provider: Error on writing file " << thePath;
+    System::log::Message::SendFail() << "DEIGES_Provider: Error on writing file " << thePath;
     resetStatic();
     return false;
   }
@@ -413,7 +413,7 @@ bool DEIGES_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DEIGES_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Read(thePath, theShape, aWS, theProgress);
@@ -421,7 +421,7 @@ bool DEIGES_Provider::Read(const TCollection_AsciiString& thePath,
 
 bool DEIGES_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
-                            const Message_ProgressRange&   theProgress)
+                            const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<XSControl_WorkSession> aWS = new XSControl_WorkSession();
   return Write(thePath, theShape, aWS, theProgress);

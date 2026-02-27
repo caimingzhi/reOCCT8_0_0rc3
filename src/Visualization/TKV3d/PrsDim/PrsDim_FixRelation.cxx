@@ -200,10 +200,10 @@ gp_Pnt PrsDim_FixRelation::ComputePosition(const occ::handle<Geom_Curve>& curv1,
     gp_Vec vec1(firstp1, lastp1);
     gp_Vec vec2(firstp2, lastp2);
 
-    if (!vec1.IsParallel(vec2, Precision::Angular()))
+    if (!vec1.IsParallel(vec2, math::precision::Precision::Angular()))
     {
       gp_Dir           dir;
-      constexpr double conf = Precision::Confusion();
+      constexpr double conf = math::precision::Precision::Confusion();
       if (lastp1.IsEqual(firstp2, conf) || firstp1.IsEqual(lastp2, conf))
         dir.SetXYZ(vec1.XYZ() - vec2.XYZ());
       else

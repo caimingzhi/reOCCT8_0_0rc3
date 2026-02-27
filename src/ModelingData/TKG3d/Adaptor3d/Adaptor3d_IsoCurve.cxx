@@ -139,7 +139,7 @@ void Adaptor3d_IsoCurve::Load(const GeomAbs_IsoType Iso,
     {
       ElCLib::AdjustPeriodic(mySurface->FirstUParameter(),
                              mySurface->FirstUParameter() + mySurface->UPeriod(),
-                             mySurface->UResolution(Precision::Confusion()),
+                             mySurface->UResolution(math::precision::Precision::Confusion()),
                              myParameter,
                              dummy);
     }
@@ -147,7 +147,7 @@ void Adaptor3d_IsoCurve::Load(const GeomAbs_IsoType Iso,
     {
       ElCLib::AdjustPeriodic(mySurface->FirstUParameter(),
                              mySurface->FirstUParameter() + mySurface->UPeriod(),
-                             mySurface->UResolution(Precision::Confusion()),
+                             mySurface->UResolution(math::precision::Precision::Confusion()),
                              myFirst,
                              myLast);
     }
@@ -160,7 +160,7 @@ void Adaptor3d_IsoCurve::Load(const GeomAbs_IsoType Iso,
     {
       ElCLib::AdjustPeriodic(mySurface->FirstVParameter(),
                              mySurface->FirstVParameter() + mySurface->VPeriod(),
-                             mySurface->VResolution(Precision::Confusion()),
+                             mySurface->VResolution(math::precision::Precision::Confusion()),
                              myParameter,
                              dummy);
     }
@@ -168,7 +168,7 @@ void Adaptor3d_IsoCurve::Load(const GeomAbs_IsoType Iso,
     {
       ElCLib::AdjustPeriodic(mySurface->FirstVParameter(),
                              mySurface->FirstVParameter() + mySurface->VPeriod(),
-                             mySurface->VResolution(Precision::Confusion()),
+                             mySurface->VResolution(math::precision::Precision::Confusion()),
                              myFirst,
                              myLast);
     }
@@ -456,7 +456,7 @@ gp_Vec Adaptor3d_IsoCurve::DN(const double T, const int N) const
 double Adaptor3d_IsoCurve::Resolution(const double R3D) const
 {
 
-  return Precision::Parametric(R3D);
+  return math::precision::Precision::Parametric(R3D);
 }
 
 GeomAbs_CurveType Adaptor3d_IsoCurve::GetType() const
@@ -668,7 +668,7 @@ gp_Circ Adaptor3d_IsoCurve::Circle() const
       {
         const gp_Pnt aVal0 = Value(0.0);
         gp_Ax1       Ax1   = mySurface->AxeOfRevolution();
-        if (gp_Lin(Ax1).Contains(aVal0, Precision::Confusion()))
+        if (gp_Lin(Ax1).Contains(aVal0, math::precision::Precision::Confusion()))
         {
           return gp_Circ(gp_Ax2(aVal0, Ax1.Direction()), 0);
         }

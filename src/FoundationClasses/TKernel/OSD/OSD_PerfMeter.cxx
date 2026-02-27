@@ -74,7 +74,7 @@ double Stopwatch::getTime()
 {
   double aUserSeconds   = 0.0;
   double aSystemSeconds = 0.0;
-  OSD_Chronometer::GetThreadCPU(aUserSeconds, aSystemSeconds);
+  System::os::OSD_Chronometer::GetThreadCPU(aUserSeconds, aSystemSeconds);
   (void)(aSystemSeconds);
   return aUserSeconds;
 }
@@ -191,7 +191,7 @@ void StopwatchStorage::print(const TCollection_AsciiString& theName,
                + TCollection_AsciiString(aStopwatch->Elapsed()) + " sec\n";
 }
 
-OSD_PerfMeter::OSD_PerfMeter(const TCollection_AsciiString& theMeterName, const bool theToAutoStart)
+System::os::OSD_PerfMeter::OSD_PerfMeter(const TCollection_AsciiString& theMeterName, const bool theToAutoStart)
 {
   Init(theMeterName);
 
@@ -201,9 +201,9 @@ OSD_PerfMeter::OSD_PerfMeter(const TCollection_AsciiString& theMeterName, const 
   }
 }
 
-OSD_PerfMeter::~OSD_PerfMeter() = default;
+System::os::OSD_PerfMeter::~OSD_PerfMeter() = default;
 
-void OSD_PerfMeter::Init(const TCollection_AsciiString& theMeterName)
+void System::os::OSD_PerfMeter::Init(const TCollection_AsciiString& theMeterName)
 {
   myMeterName = theMeterName;
   if (!StopwatchStorage::Instance().HasStopwatch(myMeterName))
@@ -212,7 +212,7 @@ void OSD_PerfMeter::Init(const TCollection_AsciiString& theMeterName)
   }
 }
 
-void OSD_PerfMeter::Start() const
+void System::os::OSD_PerfMeter::Start() const
 {
   Stopwatch* aStopwatch = StopwatchStorage::Instance().GetStopwatch(myMeterName);
   if (aStopwatch != nullptr)
@@ -221,7 +221,7 @@ void OSD_PerfMeter::Start() const
   }
 }
 
-void OSD_PerfMeter::Stop() const
+void System::os::OSD_PerfMeter::Stop() const
 {
   Stopwatch* aStopwatch = StopwatchStorage::Instance().GetStopwatch(myMeterName);
   if (aStopwatch != nullptr)
@@ -230,18 +230,18 @@ void OSD_PerfMeter::Stop() const
   }
 }
 
-double OSD_PerfMeter::Elapsed() const
+double System::os::OSD_PerfMeter::Elapsed() const
 {
   Stopwatch* aStopwatch = StopwatchStorage::Instance().GetStopwatch(myMeterName);
   return aStopwatch ? aStopwatch->Elapsed() : 0.0;
 }
 
-void OSD_PerfMeter::Kill() const
+void System::os::OSD_PerfMeter::Kill() const
 {
   StopwatchStorage::Instance().KillStopwatch(myMeterName);
 }
 
-TCollection_AsciiString OSD_PerfMeter::Print() const
+TCollection_AsciiString System::os::OSD_PerfMeter::Print() const
 {
   Stopwatch* aStopwatch = StopwatchStorage::Instance().GetStopwatch(myMeterName);
   if (aStopwatch != nullptr)
@@ -251,12 +251,12 @@ TCollection_AsciiString OSD_PerfMeter::Print() const
   return "";
 }
 
-TCollection_AsciiString OSD_PerfMeter::PrintALL()
+TCollection_AsciiString System::os::OSD_PerfMeter::PrintALL()
 {
   return StopwatchStorage::Instance().PrintAll();
 }
 
-void OSD_PerfMeter::ResetALL()
+void System::os::OSD_PerfMeter::ResetALL()
 {
   StopwatchStorage::Instance().Clear();
 }

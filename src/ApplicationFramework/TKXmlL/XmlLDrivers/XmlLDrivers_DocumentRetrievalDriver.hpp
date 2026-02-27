@@ -12,7 +12,10 @@
 class XmlMDF_ADriverTable;
 class CDM_Document;
 class CDM_Application;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class XmlMDF_ADriver;
 
 class XmlLDrivers_DocumentRetrievalDriver : public PCDM_RetrievalDriver
@@ -26,18 +29,18 @@ public:
     const occ::handle<CDM_Document>&      theNewDocument,
     const occ::handle<CDM_Application>&   theApplication,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Read(
     Standard_IStream&                     theIStream,
-    const occ::handle<Storage_Data>&      theStorageData,
+    const occ::handle<app::storage::Storage_Data>&      theStorageData,
     const occ::handle<CDM_Document>&      theDoc,
     const occ::handle<CDM_Application>&   theApplication,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT virtual occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   DEFINE_STANDARD_RTTIEXT(XmlLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 
@@ -46,17 +49,17 @@ protected:
     const XmlObjMgt_Element&            theDomElement,
     const occ::handle<CDM_Document>&    theNewDocument,
     const occ::handle<CDM_Application>& theApplication,
-    const Message_ProgressRange&        theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&        theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual bool MakeDocument(
     const XmlObjMgt_Element&         thePDoc,
     const occ::handle<CDM_Document>& theTDoc,
-    const Message_ProgressRange&     theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&     theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual occ::handle<XmlMDF_ADriver> ReadShapeSection(
     const XmlObjMgt_Element&              thePDoc,
-    const occ::handle<Message_Messenger>& theMsgDriver,
-    const Message_ProgressRange&          theRange = Message_ProgressRange());
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver,
+    const System::log::Message_ProgressRange&          theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void ShapeSetCleaning(const occ::handle<XmlMDF_ADriver>& theDriver);
 

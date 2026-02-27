@@ -426,7 +426,7 @@ void Geom_BSplineCurve::Segment(const double U1, const double U2, const double t
   {
     double Period = LastParameter() - FirstParameter();
     DU            = U2 - U1;
-    if (DU - Period > Precision::PConfusion())
+    if (DU - Period > math::precision::Precision::PConfusion())
       throw Standard_DomainError("Geom_BSplineCurve::Segment");
     if (DU > Period)
       DU = Period;

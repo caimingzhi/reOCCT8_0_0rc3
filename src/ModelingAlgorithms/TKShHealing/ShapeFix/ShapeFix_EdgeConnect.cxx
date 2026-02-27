@@ -221,8 +221,8 @@ void ShapeFix_EdgeConnect::Build()
         theMaxDev = theDeviation;
     }
     theMaxDev *= 1.0001;
-    if (theMaxDev < Precision::Confusion())
-      theMaxDev = Precision::Confusion();
+    if (theMaxDev < math::precision::Precision::Confusion())
+      theMaxDev = math::precision::Precision::Confusion();
 
     theBuilder.UpdateVertex(theSharedVertex, gp_Pnt(thePosition), theMaxDev);
 

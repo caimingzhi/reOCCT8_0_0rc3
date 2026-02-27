@@ -249,7 +249,7 @@ static void BuildAncestors(
 
 void BRepOffset_Analyse::Perform(const TopoDS_Shape&          S,
                                  const double                 Angle,
-                                 const Message_ProgressRange& theRange)
+                                 const System::log::Message_ProgressRange& theRange)
 {
   myShape = S;
   myNewFaces.Clear();
@@ -264,8 +264,8 @@ void BRepOffset_Analyse::Perform(const TopoDS_Shape&          S,
 
   NCollection_List<TopoDS_Shape> aLETang;
   TopExp_Explorer                Exp(S.Oriented(TopAbs_FORWARD), TopAbs_EDGE);
-  Message_ProgressScope          aPSOuter(theRange, nullptr, 2);
-  Message_ProgressScope          aPS(aPSOuter.Next(), "Performing edges analysis", 1, true);
+  System::log::Message_ProgressScope          aPSOuter(theRange, nullptr, 2);
+  System::log::Message_ProgressScope          aPS(aPSOuter.Next(), "Performing edges analysis", 1, true);
   for (; Exp.More(); Exp.Next(), aPS.Next())
   {
     if (!aPS.More())
@@ -322,7 +322,7 @@ void BRepOffset_Analyse::Perform(const TopoDS_Shape&          S,
 }
 
 void BRepOffset_Analyse::TreatTangentFaces(const NCollection_List<TopoDS_Shape>& theLE,
-                                           const Message_ProgressRange&          theRange)
+                                           const System::log::Message_ProgressRange&          theRange)
 {
   if (theLE.IsEmpty() || myFaceOffsetMap.IsEmpty())
   {
@@ -336,8 +336,8 @@ void BRepOffset_Analyse::TreatTangentFaces(const NCollection_List<TopoDS_Shape>&
   NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher> anEdgeOffsetMap;
 
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aDMVEMin;
-  Message_ProgressScope aPSOuter(theRange, nullptr, 3);
-  Message_ProgressScope aPS1(aPSOuter.Next(),
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 3);
+  System::log::Message_ProgressScope aPS1(aPSOuter.Next(),
                              "Binding vertices with connected edges",
                              theLE.Size());
   for (NCollection_List<TopoDS_Shape>::Iterator it(theLE); it.More(); it.Next(), aPS1.Next())
@@ -389,7 +389,7 @@ void BRepOffset_Analyse::TreatTangentFaces(const NCollection_List<TopoDS_Shape>&
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aDMVFAnc;
 
-  Message_ProgressScope aPS2(aPSOuter.Next(), "Creating map of Face ancestors", theLE.Size());
+  System::log::Message_ProgressScope aPS2(aPSOuter.Next(), "Creating map of Face ancestors", theLE.Size());
   for (NCollection_List<TopoDS_Shape>::Iterator itE(theLE); itE.More(); itE.Next(), aPS2.Next())
   {
     if (!aPS2.More())
@@ -442,7 +442,7 @@ void BRepOffset_Analyse::TreatTangentFaces(const NCollection_List<TopoDS_Shape>&
 
   BOPTools_AlgoTools::MakeConnexityBlocks(aCETangent, TopAbs_VERTEX, TopAbs_EDGE, aLCB, aMVEMap);
 
-  Message_ProgressScope aPS3(aPSOuter.Next(),
+  System::log::Message_ProgressScope aPS3(aPSOuter.Next(),
                              "Analyzing blocks to find co-planar edges",
                              aLCB.Size());
   for (NCollection_List<NCollection_List<TopoDS_Shape>>::Iterator itLCB(aLCB); itLCB.More();

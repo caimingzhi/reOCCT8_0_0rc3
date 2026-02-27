@@ -19,10 +19,10 @@ public:
 
   Standard_EXPORT BRepAlgoAPI_Fuse(const TopoDS_Shape&          S1,
                                    const TopoDS_Shape&          S2,
-                                   const Message_ProgressRange& theRange = Message_ProgressRange());
+                                   const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT BRepAlgoAPI_Fuse(const TopoDS_Shape&          S1,
                                    const TopoDS_Shape&          S2,
                                    const BOPAlgo_PaveFiller&    aDSF,
-                                   const Message_ProgressRange& theRange = Message_ProgressRange());
+                                   const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 };

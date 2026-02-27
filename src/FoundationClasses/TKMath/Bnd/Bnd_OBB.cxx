@@ -338,7 +338,7 @@ OBBTool::OBBTool(const NCollection_Array1<gp_Pnt>& theL,
     for (int iP = theL.Lower(); iP <= theL.Upper(); ++iP)
     {
       const gp_Pnt&      aP   = theL(iP);
-      double             aTol = theLT ? theLT->Value(iP) : Precision::Confusion();
+      double             aTol = theLT ? theLT->Value(iP) : math::precision::Precision::Confusion();
       BVH_Box<double, 3> aBox(BVH_Vec3d(aP.X() - aTol, aP.Y() - aTol, aP.Z() - aTol),
                               BVH_Vec3d(aP.X() + aTol, aP.Y() + aTol, aP.Z() + aTol));
       myPointBoxSet->Add(aP.XYZ(), aBox);
@@ -444,10 +444,10 @@ void OBBTool::FillToTriangle5(const gp_XYZ& theNormal, const gp_XYZ& theBarryCen
     }
   }
 
-  if (id3 >= 0 && aParams[0] < -Precision::Confusion())
+  if (id3 >= 0 && aParams[0] < -math::precision::Precision::Confusion())
     myTriIdx[3] = id3;
 
-  if (id4 >= 0 && aParams[1] > Precision::Confusion())
+  if (id4 >= 0 && aParams[1] > math::precision::Precision::Confusion())
     myTriIdx[4] = id4;
 }
 
@@ -467,7 +467,7 @@ void OBBTool::ProcessTriangle(const int  theIdx1,
 
   double aSqMod = aZAxis.SquareModulus();
 
-  if (aSqMod < Precision::SquareConfusion())
+  if (aSqMod < math::precision::Precision::SquareConfusion())
     return;
 
   aZAxis /= std::sqrt(aSqMod);
@@ -640,10 +640,10 @@ void Bnd_OBB::ReBuild(const NCollection_Array1<gp_Pnt>& theListOfPoints,
       myIsAABox          = false;
       myHDims[1] = myHDims[2] = std::max(aTol1, aTol2);
 
-      if (aDPm < Precision::Confusion())
+      if (aDPm < math::precision::Precision::Confusion())
       {
         ProcessOnePoint(aP1);
-        Enlarge(myHDims[1] + Precision::Confusion());
+        Enlarge(myHDims[1] + math::precision::Precision::Confusion());
         return;
       }
 

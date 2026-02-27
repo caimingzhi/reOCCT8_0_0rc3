@@ -29,11 +29,11 @@ IntImp_Int2S::IntImp_Int2S(const ThePSurface& surf1,
   ub1 = ThePSurfaceTool::LastUParameter(surf2);
   vb1 = ThePSurfaceTool::LastVParameter(surf2);
 
-  ures1 = ThePSurfaceTool::UResolution(surf1, Precision::Confusion());
-  vres1 = ThePSurfaceTool::VResolution(surf1, Precision::Confusion());
+  ures1 = ThePSurfaceTool::UResolution(surf1, math::precision::Precision::Confusion());
+  vres1 = ThePSurfaceTool::VResolution(surf1, math::precision::Precision::Confusion());
 
-  ures2 = ThePSurfaceTool::UResolution(surf2, Precision::Confusion());
-  vres2 = ThePSurfaceTool::VResolution(surf2, Precision::Confusion());
+  ures2 = ThePSurfaceTool::UResolution(surf2, math::precision::Precision::Confusion());
+  vres2 = ThePSurfaceTool::VResolution(surf2, math::precision::Precision::Confusion());
 }
 
 IntImp_Int2S::IntImp_Int2S(const NCollection_Array1<double>& Param,
@@ -56,11 +56,11 @@ IntImp_Int2S::IntImp_Int2S(const NCollection_Array1<double>& Param,
   ub1 = ThePSurfaceTool::LastUParameter(surf2);
   vb1 = ThePSurfaceTool::LastVParameter(surf2);
 
-  ures1 = ThePSurfaceTool::UResolution(surf1, Precision::Confusion());
-  vres1 = ThePSurfaceTool::VResolution(surf1, Precision::Confusion());
+  ures1 = ThePSurfaceTool::UResolution(surf1, math::precision::Precision::Confusion());
+  vres1 = ThePSurfaceTool::VResolution(surf1, math::precision::Precision::Confusion());
 
-  ures2 = ThePSurfaceTool::UResolution(surf2, Precision::Confusion());
-  vres2 = ThePSurfaceTool::VResolution(surf2, Precision::Confusion());
+  ures2 = ThePSurfaceTool::UResolution(surf2, math::precision::Precision::Confusion());
+  vres2 = ThePSurfaceTool::VResolution(surf2, math::precision::Precision::Confusion());
   Perform(Param, Rsnld);
 }
 
@@ -125,11 +125,11 @@ IntImp_ConstIsoparametric IntImp_Int2S::Perform(const NCollection_Array1<double>
   ThePSurfaceTool::D1(Caro1, Param(1), Param(2), P1, DPUV[0], DPUV[1]);
   ThePSurfaceTool::D1(Caro2, Param(3), Param(4), P2, DPUV[2], DPUV[3]);
 
-  Epsuv[0] = ThePSurfaceTool::UResolution(Caro1, Precision::Confusion());
-  Epsuv[1] = ThePSurfaceTool::VResolution(Caro1, Precision::Confusion());
+  Epsuv[0] = ThePSurfaceTool::UResolution(Caro1, math::precision::Precision::Confusion());
+  Epsuv[1] = ThePSurfaceTool::VResolution(Caro1, math::precision::Precision::Confusion());
 
-  Epsuv[2] = ThePSurfaceTool::UResolution(Caro2, Precision::Confusion());
-  Epsuv[3] = ThePSurfaceTool::VResolution(Caro2, Precision::Confusion());
+  Epsuv[2] = ThePSurfaceTool::UResolution(Caro2, math::precision::Precision::Confusion());
+  Epsuv[3] = ThePSurfaceTool::VResolution(Caro2, math::precision::Precision::Confusion());
 
   for (int j = 0; j <= 3; j++)
     UVd[j] = Param(j + 1);

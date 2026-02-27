@@ -42,21 +42,21 @@ public:
   bool IsAvoidInternalShapes() const { return myAvoidInternalShapes; }
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 protected:
   Standard_EXPORT void CheckData() override;
 
   Standard_EXPORT void PerformInternal1(
     const BOPAlgo_PaveFiller&    thePF,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void CollectFaces();
 
   Standard_EXPORT void MakeBox(NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theBoxFaces);
 
   Standard_EXPORT void BuildSolids(NCollection_List<TopoDS_Shape>& theLSR,
-                                   const Message_ProgressRange&    theRange);
+                                   const System::log::Message_ProgressRange&    theRange);
 
   Standard_EXPORT void RemoveBox(
     NCollection_List<TopoDS_Shape>&                               theLSR,

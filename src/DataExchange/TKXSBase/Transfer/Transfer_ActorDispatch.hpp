@@ -31,7 +31,7 @@ public:
   Standard_EXPORT occ::handle<Transfer_Binder> Transfer(
     const occ::handle<Standard_Transient>&        start,
     const occ::handle<Transfer_TransientProcess>& TP,
-    const Message_ProgressRange&                  theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&                  theProgress = System::log::Message_ProgressRange()) override;
 
   DEFINE_STANDARD_RTTIEXT(Transfer_ActorDispatch, Transfer_ActorOfTransientProcess)
 

@@ -49,8 +49,8 @@ occ::handle<Adaptor2d_Curve2d> Adaptor2d_Line2d::ShallowCopy() const
 void Adaptor2d_Line2d::Load(const gp_Lin2d& L)
 {
   myAx2d   = L.Position();
-  myUfirst = -Precision::Infinite();
-  myUlast  = Precision::Infinite();
+  myUfirst = -math::precision::Precision::Infinite();
+  myUlast  = math::precision::Precision::Infinite();
 }
 
 void Adaptor2d_Line2d::Load(const gp_Lin2d& L, const double Fi, const double La)

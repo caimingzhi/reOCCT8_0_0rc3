@@ -12,15 +12,15 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlDrivers_DocumentRetrievalDriver, XmlLDrivers_Docum
 XmlDrivers_DocumentRetrievalDriver::XmlDrivers_DocumentRetrievalDriver() = default;
 
 occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentRetrievalDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return XmlDrivers::AttributeDrivers(theMessageDriver);
 }
 
 occ::handle<XmlMDF_ADriver> XmlDrivers_DocumentRetrievalDriver::ReadShapeSection(
   const XmlObjMgt_Element&              theElement,
-  const occ::handle<Message_Messenger>& theMsgDriver,
-  const Message_ProgressRange&          theRange)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver,
+  const System::log::Message_ProgressRange&          theRange)
 {
   if (myDrivers.IsNull())
     myDrivers = AttributeDrivers(theMsgDriver);

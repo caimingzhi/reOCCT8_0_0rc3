@@ -29,11 +29,11 @@ occ::handle<ShapeProcess_ShapeContext>& ShapeProcessAPI_ApplySequence::Context()
 TopoDS_Shape ShapeProcessAPI_ApplySequence::PrepareShape(const TopoDS_Shape& shape,
                                                          const bool,
                                                          const TopAbs_ShapeEnum,
-                                                         const Message_ProgressRange& theProgress)
+                                                         const System::log::Message_ProgressRange& theProgress)
 {
   if (shape.IsNull())
     return shape;
-  occ::handle<Resource_Manager> rsc = myContext->ResourceManager();
+  occ::handle<System::resource::Resource_Manager> rsc = myContext->ResourceManager();
   myContext->Init(shape);
 
   TCollection_AsciiString str(mySeq);
@@ -81,16 +81,16 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
     }
   }
 
-  occ::handle<Message_Messenger> aMessenger = myContext->Messenger();
+  occ::handle<System::log::Message_Messenger> aMessenger = myContext->Messenger();
 
-  Message_Msg EPMSG100("PrResult.Print.MSG100");
+  System::log::Message_Msg EPMSG100("PrResult.Print.MSG100");
   aMessenger->Send(EPMSG100, Message_Info);
-  Message_Msg TPMSG50("PrResult.Print.MSG50");
+  System::log::Message_Msg TPMSG50("PrResult.Print.MSG50");
   aMessenger->Send(TPMSG50, Message_Info);
-  Message_Msg EPMSG110("PrResult.Print.MSG110");
+  System::log::Message_Msg EPMSG110("PrResult.Print.MSG110");
   EPMSG110.Arg(SS);
   aMessenger->Send(EPMSG110, Message_Info);
-  Message_Msg EPMSG150("PrResult.Print.MSG150");
+  System::log::Message_Msg EPMSG150("PrResult.Print.MSG150");
   EPMSG150.Arg(SN);
   aMessenger->Send(EPMSG150, Message_Info);
 
@@ -98,9 +98,9 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
   EPMSG110.Set(tmp110.ToCString());
   EPMSG150.Set(tmp150.ToCString());
 
-  Message_Msg TPMSG55("PrResult.Print.MSG55");
+  System::log::Message_Msg TPMSG55("PrResult.Print.MSG55");
   aMessenger->Send(TPMSG55, Message_Info);
-  Message_Msg EPMSG115("PrResult.Print.MSG115");
+  System::log::Message_Msg EPMSG115("PrResult.Print.MSG115");
   EPMSG115.Arg(FF);
   aMessenger->Send(EPMSG115, Message_Info);
   EPMSG110.Arg(FS);
@@ -115,12 +115,12 @@ void ShapeProcessAPI_ApplySequence::PrintPreparationResult() const
     SPR = 1. * (NbS - SN) / NbS;
   if (NbF > 0)
     FPR = 1. * (NbF - FN) / NbF;
-  Message_Msg PMSG200("PrResult.Print.MSG200");
+  System::log::Message_Msg PMSG200("PrResult.Print.MSG200");
   aMessenger->Send(PMSG200, Message_Info);
-  Message_Msg PMSG205("PrResult.Print.MSG205");
+  System::log::Message_Msg PMSG205("PrResult.Print.MSG205");
   PMSG205.Arg((int)(100 * SPR));
   aMessenger->Send(PMSG205, Message_Info);
-  Message_Msg PMSG210("PrResult.Print.MSG210");
+  System::log::Message_Msg PMSG210("PrResult.Print.MSG210");
   PMSG210.Arg((int)(100 * FPR));
   aMessenger->Send(PMSG210, Message_Info);
 }

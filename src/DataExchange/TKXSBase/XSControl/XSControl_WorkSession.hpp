@@ -61,10 +61,10 @@ public:
 
   Standard_EXPORT int TransferReadOne(
     const occ::handle<Standard_Transient>& theEnts,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT int TransferReadRoots(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<Interface_InterfaceModel> NewModel();
 
@@ -81,7 +81,7 @@ public:
   Standard_EXPORT IFSelect_ReturnStatus
     TransferWriteShape(const TopoDS_Shape&          theShape,
                        const bool                   theCompGraph = true,
-                       const Message_ProgressRange& theProgress  = Message_ProgressRange());
+                       const System::log::Message_ProgressRange& theProgress  = System::log::Message_ProgressRange());
 
   Standard_EXPORT Interface_CheckIterator TransferWriteCheckList() const;
 

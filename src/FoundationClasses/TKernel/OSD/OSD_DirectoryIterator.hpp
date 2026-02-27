@@ -8,8 +8,12 @@
 #include <TCollection_AsciiString.hpp>
 #include <OSD_Error.hpp>
 #include <Standard_Boolean.hpp>
+namespace System { namespace os {
 class OSD_Path;
+}} // namespace System::os
 
+
+namespace System { namespace os {
 class OSD_DirectoryIterator
 {
 public:
@@ -56,3 +60,5 @@ private:
   int   myInit;
 #endif
 };
+}} // namespace System::os
+

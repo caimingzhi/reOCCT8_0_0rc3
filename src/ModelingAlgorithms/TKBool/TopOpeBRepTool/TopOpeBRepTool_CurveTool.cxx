@@ -135,8 +135,8 @@ static bool CheckPCurve(const occ::handle<Geom2d_Curve>& aPC, const TopoDS_Face&
   double    umin, umax, vmin, vmax;
 
   BRepTools::UVBounds(aFace, umin, umax, vmin, vmax);
-  double tolU = std::max((umax - umin) * 0.01, Precision::Confusion());
-  double tolV = std::max((vmax - vmin) * 0.01, Precision::Confusion());
+  double tolU = std::max((umax - umin) * 0.01, math::precision::Precision::Confusion());
+  double tolV = std::max((vmax - vmin) * 0.01, math::precision::Precision::Confusion());
   double fp   = aPC->FirstParameter();
   double lp   = aPC->LastParameter();
   double step = (lp - fp) / (NPoints + 1);
@@ -495,7 +495,7 @@ bool TopOpeBRepTool_CurveTool::MakeCurves(const double                     parmi
   {
     dist = P.Distance(Polc3d(ip));
 
-    if (dist < Precision::Confusion())
+    if (dist < math::precision::Precision::Confusion())
     {
       IsBad = true;
       break;
@@ -593,7 +593,7 @@ bool TopOpeBRepTool_CurveTool::MakeCurves(const double                     parmi
 
   if (IsBad)
   {
-    double tt       = std::min(10. * tol3d, Precision::Approximation());
+    double tt       = std::min(10. * tol3d, math::precision::Precision::Approximation());
     tol2d           = tt * tol2d / tol3d;
     tol3d           = tt;
     NbPntMax        = 40;

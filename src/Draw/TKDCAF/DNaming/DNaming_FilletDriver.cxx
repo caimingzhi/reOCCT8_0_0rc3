@@ -59,11 +59,11 @@ int DNaming_FilletDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   const ChFi3d_FilletShape aSurfaceType =
     (ChFi3d_FilletShape)DNaming::GetInteger(aFunction, FILLET_SURFTYPE)->Get();
 
-  if (aRadius < Precision::Confusion())
+  if (aRadius < math::precision::Precision::Confusion())
   {
     aFunction->SetFailure(WRONG_ARGUMENT);
 #ifdef OCCT_DEBUG
-    std::cout << "FilletDriver:: Radius < Precision::Confusion" << std::endl;
+    std::cout << "FilletDriver:: Radius < math::precision::Precision::Confusion" << std::endl;
 #endif
     return -1;
   }

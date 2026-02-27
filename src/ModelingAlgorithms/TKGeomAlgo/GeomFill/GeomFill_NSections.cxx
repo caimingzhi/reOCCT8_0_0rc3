@@ -312,7 +312,7 @@ bool GeomFill_NSections::D1(const double                V,
   }
 
   double           ww;
-  constexpr double EpsW       = 10 * Precision::PConfusion();
+  constexpr double EpsW       = 10 * math::precision::Precision::PConfusion();
   bool             NullWeight = false;
   if (!rational)
     DWeights.Init(0.);
@@ -384,7 +384,7 @@ bool GeomFill_NSections::D2(const double                V,
   }
 
   double           ww;
-  constexpr double EpsW       = 10 * Precision::PConfusion();
+  constexpr double EpsW       = 10 * math::precision::Precision::PConfusion();
   bool             NullWeight = false;
   if (!rational)
     D2Weights.Init(0.);
@@ -474,7 +474,7 @@ void GeomFill_NSections::ComputeSurface()
       }
       section.SetParam(HPar);
     }
-    section.Perform(Precision::PConfusion());
+    section.Perform(math::precision::Precision::PConfusion());
 
     occ::handle<GeomFill_Line> line = new GeomFill_Line(Nbcurves);
     int                        nbIt = 0, degmin = 2, degmax = 6;
@@ -503,15 +503,15 @@ void GeomFill_NSections::ComputeSurface()
     Ui1 = UFirst;
     Ui2 = ULast;
     int i1, i2;
-    myRefSurf->LocateU(Ui1, Precision::PConfusion(), i1, i2);
-    if (std::abs(Ui1 - myRefSurf->UKnot(i1)) <= Precision::PConfusion())
+    myRefSurf->LocateU(Ui1, math::precision::Precision::PConfusion(), i1, i2);
+    if (std::abs(Ui1 - myRefSurf->UKnot(i1)) <= math::precision::Precision::PConfusion())
       Ui1 = myRefSurf->UKnot(i1);
-    if (std::abs(Ui1 - myRefSurf->UKnot(i2)) <= Precision::PConfusion())
+    if (std::abs(Ui1 - myRefSurf->UKnot(i2)) <= math::precision::Precision::PConfusion())
       Ui1 = myRefSurf->UKnot(i2);
-    myRefSurf->LocateU(Ui2, Precision::PConfusion(), i1, i2);
-    if (std::abs(Ui2 - myRefSurf->UKnot(i1)) <= Precision::PConfusion())
+    myRefSurf->LocateU(Ui2, math::precision::Precision::PConfusion(), i1, i2);
+    if (std::abs(Ui2 - myRefSurf->UKnot(i1)) <= math::precision::Precision::PConfusion())
       Ui2 = myRefSurf->UKnot(i1);
-    if (std::abs(Ui2 - myRefSurf->UKnot(i2)) <= Precision::PConfusion())
+    if (std::abs(Ui2 - myRefSurf->UKnot(i2)) <= math::precision::Precision::PConfusion())
       Ui2 = myRefSurf->UKnot(i2);
     V0 = myRefSurf->VKnot(myRefSurf->FirstVKnotIndex());
     V1 = myRefSurf->VKnot(myRefSurf->LastVKnotIndex());
@@ -793,8 +793,8 @@ bool GeomFill_NSections::IsConicalLaw(double& Error) const
 
           double first1 = AC1.FirstParameter(), last1 = AC1.LastParameter();
           double first2 = AC2.FirstParameter(), last2 = AC2.LastParameter();
-          isconic = (std::abs(first1 - first2) <= Precision::PConfusion()
-                     && std::abs(last1 - last2) <= Precision::PConfusion());
+          isconic = (std::abs(first1 - first2) <= math::precision::Precision::PConfusion()
+                     && std::abs(last1 - last2) <= math::precision::Precision::PConfusion());
         }
       }
     }
@@ -825,7 +825,7 @@ occ::handle<Geom_Curve> GeomFill_NSections::CirclSection(const double V) const
   const double aParL   = AC1.LastParameter();
   const double aPeriod = AC1.IsPeriodic() ? AC1.Period() : 0.0;
 
-  if ((aPeriod == 0.0) || (std::abs(aParL - aParF - aPeriod) > Precision::PConfusion()))
+  if ((aPeriod == 0.0) || (std::abs(aParL - aParF - aPeriod) > math::precision::Precision::PConfusion()))
   {
     occ::handle<Geom_Curve> Cbis = new Geom_TrimmedCurve(C, aParF, aParL);
     C                            = Cbis;

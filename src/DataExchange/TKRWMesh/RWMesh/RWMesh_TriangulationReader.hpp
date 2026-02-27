@@ -5,7 +5,10 @@
 
 #include <mutex>
 
+namespace System { namespace os {
 class OSD_FileSystem;
+}} // namespace System::os
+
 class RWMesh_TriangulationSource;
 
 class RWMesh_TriangulationReader : public Standard_Transient
@@ -103,12 +106,12 @@ public:
 
   Standard_EXPORT bool Load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                             const occ::handle<Poly_Triangulation>&         theDestMesh,
-                            const occ::handle<OSD_FileSystem>&             theFileSystem) const;
+                            const occ::handle<System::os::OSD_FileSystem>&             theFileSystem) const;
 
 protected:
   Standard_EXPORT virtual bool load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                                     const occ::handle<Poly_Triangulation>&         theDestMesh,
-                                    const occ::handle<OSD_FileSystem>& theFileSystem) const = 0;
+                                    const occ::handle<System::os::OSD_FileSystem>& theFileSystem) const = 0;
 
   Standard_EXPORT virtual bool finalizeLoading(
     const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,

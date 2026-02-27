@@ -67,8 +67,8 @@ void BRep_CurveOnSurface::Update()
 {
   double f     = First();
   double l     = Last();
-  bool   isneg = Precision::IsNegativeInfinite(f);
-  bool   ispos = Precision::IsPositiveInfinite(l);
+  bool   isneg = math::precision::Precision::IsNegativeInfinite(f);
+  bool   ispos = math::precision::Precision::IsPositiveInfinite(l);
   if (!isneg)
   {
     myPCurve->D0(f, myUV1);

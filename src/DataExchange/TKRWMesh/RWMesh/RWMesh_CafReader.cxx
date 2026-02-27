@@ -65,7 +65,7 @@ TopoDS_Shape RWMesh_CafReader::SingleShape() const
 }
 
 bool RWMesh_CafReader::perform(const TCollection_AsciiString& theFile,
-                               const Message_ProgressRange&   theProgress,
+                               const System::log::Message_ProgressRange&   theProgress,
                                const bool                     theToProbe)
 {
   std::ifstream aStream;
@@ -75,7 +75,7 @@ bool RWMesh_CafReader::perform(const TCollection_AsciiString& theFile,
 
 bool RWMesh_CafReader::perform(std::istream&                  theStream,
                                const TCollection_AsciiString& theFile,
-                               const Message_ProgressRange&   theProgress,
+                               const System::log::Message_ProgressRange&   theProgress,
                                const bool                     theToProbe)
 {
   int aNewRootsLower = 1;
@@ -86,7 +86,7 @@ bool RWMesh_CafReader::perform(std::istream&                  theStream,
     aNewRootsLower = aRootLabels.Upper() + 1;
   }
 
-  OSD_Timer aLoadingTimer;
+  System::os::OSD_Timer aLoadingTimer;
   aLoadingTimer.Start();
   const bool isDone = performMesh(theStream, theFile, theProgress, theToProbe);
   if (theToProbe || theProgress.UserBreak())
@@ -130,7 +130,7 @@ bool RWMesh_CafReader::perform(std::istream&                  theStream,
 
   aLoadingTimer.Stop();
 
-  Message::SendInfo(TCollection_AsciiString("Mesh ") + theFile + "\n[" + aNbNodes + " nodes] ["
+  System::log::Message::SendInfo(TCollection_AsciiString("Mesh ") + theFile + "\n[" + aNbNodes + " nodes] ["
                     + aNbElems + " 2d elements]" + "\n[" + (!isDone ? "PARTIALLY " : "")
                     + "read in " + aLoadingTimer.ElapsedTime() + " s]");
   return true;
@@ -150,7 +150,7 @@ void RWMesh_CafReader::fillDocument()
   }
   else if (aLengthUnit != SystemLengthUnit())
   {
-    Message::SendWarning("Warning: Length unit of document not equal to the system length unit");
+    System::log::Message::SendWarning("Warning: Length unit of document not equal to the system length unit");
   }
 
   const bool wasAutoNaming = XCAFDoc_ShapeTool::AutoNaming();
@@ -229,7 +229,7 @@ void RWMesh_CafReader::setShapeNamedData(const CafDocumentTools&,
   {
     if (anOtherNamedData->Label() != aNameDataLabel)
     {
-      Message::SendAlarm("Error! Different NamedData is already set to shape");
+      System::log::Message::SendAlarm("Error! Different NamedData is already set to shape");
     }
   }
   else
@@ -240,7 +240,7 @@ void RWMesh_CafReader::setShapeNamedData(const CafDocumentTools&,
     }
     else
     {
-      Message::SendAlarm("Error! Skipped NamedData instance shared across shapes");
+      System::log::Message::SendAlarm("Error! Skipped NamedData instance shared across shapes");
     }
   }
 }
@@ -477,7 +477,7 @@ void RWMesh_CafReader::generateNames(const TCollection_AsciiString& theFile,
   }
 
   TCollection_AsciiString aDummyFolder, aFileName;
-  OSD_Path::FolderAndFileFromPath(theFile, aDummyFolder, aFileName);
+  System::os::OSD_Path::FolderAndFileFromPath(theFile, aDummyFolder, aFileName);
   const TCollection_AsciiString aRootName = myRootPrefix + aFileName;
 
   occ::handle<XCAFDoc_ShapeTool>  aShapeTool = XCAFDoc_DocumentTool::ShapeTool(myXdeDoc->Main());

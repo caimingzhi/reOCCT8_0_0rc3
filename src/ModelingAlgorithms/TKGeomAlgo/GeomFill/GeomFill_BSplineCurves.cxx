@@ -135,7 +135,7 @@ static int SetSameDistribution(occ::handle<Geom_BSplineCurve>& C1,
     BSplCLib::Reparametrize(K21, K22, K1);
     C1->SetKnots(K1);
   }
-  else if (std::abs(K12 - K11) > Precision::PConfusion())
+  else if (std::abs(K12 - K11) > math::precision::Precision::PConfusion())
   {
     BSplCLib::Reparametrize(K11, K12, K2);
     C2->SetKnots(K2);
@@ -150,7 +150,7 @@ static int SetSameDistribution(occ::handle<Geom_BSplineCurve>& C1,
                                    &M2,
                                    NP,
                                    NK,
-                                   Precision::PConfusion(),
+                                   math::precision::Precision::PConfusion(),
                                    false))
   {
     NCollection_Array1<gp_Pnt> NewP(1, NP);
@@ -169,7 +169,7 @@ static int SetSameDistribution(occ::handle<Geom_BSplineCurve>& C1,
                           &NewW,
                           NewK,
                           NewM,
-                          Precision::PConfusion(),
+                          math::precision::Precision::PConfusion(),
                           false);
     if (C1->IsRational())
     {
@@ -191,7 +191,7 @@ static int SetSameDistribution(occ::handle<Geom_BSplineCurve>& C1,
                           &NewW,
                           NewK,
                           NewM,
-                          Precision::PConfusion(),
+                          math::precision::Precision::PConfusion(),
                           false);
     if (C2->IsRational())
     {
@@ -245,7 +245,7 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
 
   occ::handle<Geom_BSplineCurve> CC1, CC2, CC3, CC4;
 
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 #ifndef No_Exception
   bool IsOK =
 #endif
@@ -395,7 +395,7 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   NCollection_Array1<gp_Pnt>     Poles(1, 2);
   NCollection_Array1<double>     Knots(1, 2);
   NCollection_Array1<int>        Mults(1, 2);
-  double                         Tol = Precision::Confusion();
+  double                         Tol = math::precision::Precision::Confusion();
   Tol                                = Tol * Tol;
   if (C1->StartPoint().SquareDistance(C2->StartPoint()) > Tol
       && C1->StartPoint().SquareDistance(C2->EndPoint()) > Tol)
@@ -504,7 +504,7 @@ void GeomFill_BSplineCurves::Init(const occ::handle<Geom_BSplineCurve>& C1,
   }
   else
   {
-    constexpr double Eps  = Precision::Confusion();
+    constexpr double Eps  = math::precision::Precision::Confusion();
     bool             IsOK = false;
     if (CC1->StartPoint().IsEqual(CC2->StartPoint(), Eps))
     {

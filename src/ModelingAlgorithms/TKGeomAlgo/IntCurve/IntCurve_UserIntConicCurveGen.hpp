@@ -76,8 +76,8 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Lin2d&        Lin1,
     double D2FirstParam = D2.FirstParameter();
     double D2LastParam  = D2.LastParameter();
     bool   Ok           = true;
-    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -Precision::Infinite();
-    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : Precision::Infinite();
+    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -math::precision::Precision::Infinite();
+    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : math::precision::Precision::Infinite();
     param2inf           = ThePCurveTool::FirstParameter(C2);
     param2sup           = ThePCurveTool::LastParameter(C2);
     IntRes2d_Domain DomainC2NumInter;
@@ -131,8 +131,8 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Circ2d&       Circ1,
     double D2LastParam  = D2.LastParameter();
     bool   Ok           = true;
 
-    param1inf = (D1.HasFirstPoint()) ? D1.FirstParameter() : -Precision::Infinite();
-    param1sup = (D1.HasLastPoint()) ? D1.LastParameter() : Precision::Infinite();
+    param1inf = (D1.HasFirstPoint()) ? D1.FirstParameter() : -math::precision::Precision::Infinite();
+    param1sup = (D1.HasLastPoint()) ? D1.LastParameter() : math::precision::Precision::Infinite();
     param2inf = ThePCurveTool::FirstParameter(C2);
     param2sup = ThePCurveTool::LastParameter(C2);
     IntRes2d_Domain DomainC2NumInter;
@@ -185,8 +185,8 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Parab2d&      Parab1,
     double D2FirstParam = D2.FirstParameter();
     double D2LastParam  = D2.LastParameter();
     bool   Ok           = true;
-    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -Precision::Infinite();
-    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : Precision::Infinite();
+    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -math::precision::Precision::Infinite();
+    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : math::precision::Precision::Infinite();
     param2inf           = ThePCurveTool::FirstParameter(C2);
     param2sup           = ThePCurveTool::LastParameter(C2);
     IntRes2d_Domain DomainC2NumInter;
@@ -239,8 +239,8 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Elips2d&      Elips1,
     double D2FirstParam = D2.FirstParameter();
     double D2LastParam  = D2.LastParameter();
     bool   Ok           = true;
-    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -Precision::Infinite();
-    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : Precision::Infinite();
+    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -math::precision::Precision::Infinite();
+    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : math::precision::Precision::Infinite();
     param2inf           = ThePCurveTool::FirstParameter(C2);
     param2sup           = ThePCurveTool::LastParameter(C2);
     IntRes2d_Domain DomainC2NumInter;
@@ -293,8 +293,8 @@ void IntCurve_UserIntConicCurveGen::Perform(const gp_Hypr2d&       Hyper1,
     double D2FirstParam = D2.FirstParameter();
     double D2LastParam  = D2.LastParameter();
     bool   Ok           = true;
-    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -Precision::Infinite();
-    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : Precision::Infinite();
+    param1inf           = (D1.HasFirstPoint()) ? D1.FirstParameter() : -math::precision::Precision::Infinite();
+    param1sup           = (D1.HasLastPoint()) ? D1.LastParameter() : math::precision::Precision::Infinite();
     param2inf           = ThePCurveTool::FirstParameter(C2);
     param2sup           = ThePCurveTool::LastParameter(C2);
     IntRes2d_Domain DomainC2NumInter;

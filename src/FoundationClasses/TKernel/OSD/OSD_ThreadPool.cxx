@@ -5,19 +5,19 @@
 #include <Standard_ErrorHandler.hpp>
 #include <TCollection_AsciiString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(OSD_ThreadPool, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(System::os::OSD_ThreadPool, Standard_Transient)
 
-bool OSD_ThreadPool::EnumeratedThread::Lock()
+bool System::os::OSD_ThreadPool::EnumeratedThread::Lock()
 {
   return myUsageCounter.exchange(1) == 0;
 }
 
-void OSD_ThreadPool::EnumeratedThread::Free()
+void System::os::OSD_ThreadPool::EnumeratedThread::Free()
 {
   myUsageCounter.store(0);
 }
 
-void OSD_ThreadPool::EnumeratedThread::WakeUp(JobInterface* theJob, bool theToCatchFpe)
+void System::os::OSD_ThreadPool::EnumeratedThread::WakeUp(JobInterface* theJob, bool theToCatchFpe)
 {
   myJob        = theJob;
   myToCatchFpe = theToCatchFpe;
@@ -25,7 +25,7 @@ void OSD_ThreadPool::EnumeratedThread::WakeUp(JobInterface* theJob, bool theToCa
   {
     if (theJob != nullptr)
     {
-      OSD_ThreadPool::performJob(myFailure, myJob, myThreadIndex);
+      System::os::OSD_ThreadPool::performJob(myFailure, myJob, myThreadIndex);
     }
     return;
   }
@@ -38,7 +38,7 @@ void OSD_ThreadPool::EnumeratedThread::WakeUp(JobInterface* theJob, bool theToCa
   }
 }
 
-void OSD_ThreadPool::EnumeratedThread::WaitIdle()
+void System::os::OSD_ThreadPool::EnumeratedThread::WaitIdle()
 {
   if (!myIsSelfThread)
   {
@@ -47,13 +47,13 @@ void OSD_ThreadPool::EnumeratedThread::WaitIdle()
   }
 }
 
-const occ::handle<OSD_ThreadPool>& OSD_ThreadPool::DefaultPool(int theNbThreads)
+const occ::handle<System::os::OSD_ThreadPool>& System::os::OSD_ThreadPool::DefaultPool(int theNbThreads)
 {
-  static const occ::handle<OSD_ThreadPool> THE_GLOBAL_POOL = new OSD_ThreadPool(theNbThreads);
+  static const occ::handle<System::os::OSD_ThreadPool> THE_GLOBAL_POOL = new System::os::OSD_ThreadPool(theNbThreads);
   return THE_GLOBAL_POOL;
 }
 
-OSD_ThreadPool::OSD_ThreadPool(int theNbThreads)
+System::os::OSD_ThreadPool::OSD_ThreadPool(int theNbThreads)
     : myNbDefThreads(0),
       myShutDown(false)
 {
@@ -61,7 +61,7 @@ OSD_ThreadPool::OSD_ThreadPool(int theNbThreads)
   myNbDefThreads = NbThreads();
 }
 
-bool OSD_ThreadPool::IsInUse()
+bool System::os::OSD_ThreadPool::IsInUse()
 {
   for (NCollection_Array1<EnumeratedThread>::Iterator aThreadIter(myThreads); aThreadIter.More();
        aThreadIter.Next())
@@ -76,10 +76,10 @@ bool OSD_ThreadPool::IsInUse()
   return false;
 }
 
-void OSD_ThreadPool::Init(int theNbThreads)
+void System::os::OSD_ThreadPool::Init(int theNbThreads)
 {
   const int aNbThreads =
-    std::max(0, (theNbThreads > 0 ? theNbThreads : OSD_Parallel::NbLogicalProcessors()) - 1);
+    std::max(0, (theNbThreads > 0 ? theNbThreads : System::os::OSD_Parallel::NbLogicalProcessors()) - 1);
   if (myThreads.Size() == aNbThreads)
   {
     return;
@@ -120,7 +120,7 @@ void OSD_ThreadPool::Init(int theNbThreads)
       EnumeratedThread& aThread = aThreadIter.ChangeValue();
       aThread.myPool            = this;
       aThread.myThreadIndex     = aLastThreadIndex++;
-      aThread.SetFunction(&OSD_ThreadPool::EnumeratedThread::runThread);
+      aThread.SetFunction(&System::os::OSD_ThreadPool::EnumeratedThread::runThread);
     }
   }
   else
@@ -130,12 +130,12 @@ void OSD_ThreadPool::Init(int theNbThreads)
   }
 }
 
-OSD_ThreadPool::~OSD_ThreadPool()
+System::os::OSD_ThreadPool::~OSD_ThreadPool()
 {
   release();
 }
 
-void OSD_ThreadPool::release()
+void System::os::OSD_ThreadPool::release()
 {
   if (myThreads.IsEmpty())
   {
@@ -151,15 +151,15 @@ void OSD_ThreadPool::release()
   }
 }
 
-void OSD_ThreadPool::Launcher::perform(JobInterface& theJob)
+void System::os::OSD_ThreadPool::Launcher::perform(JobInterface& theJob)
 {
   run(theJob);
   wait();
 }
 
-void OSD_ThreadPool::Launcher::run(JobInterface& theJob)
+void System::os::OSD_ThreadPool::Launcher::run(JobInterface& theJob)
 {
-  bool toCatchFpe = OSD::ToCatchFloatingSignals();
+  bool toCatchFpe = System::os::OSD::ToCatchFloatingSignals();
   for (NCollection_Array1<EnumeratedThread*>::Iterator aThreadIter(myThreads);
        aThreadIter.More() && aThreadIter.Value() != nullptr;
        aThreadIter.Next())
@@ -168,7 +168,7 @@ void OSD_ThreadPool::Launcher::run(JobInterface& theJob)
   }
 }
 
-void OSD_ThreadPool::Launcher::wait()
+void System::os::OSD_ThreadPool::Launcher::wait()
 {
   int aNbFailures = 0;
   for (NCollection_Array1<EnumeratedThread*>::Iterator aThreadIter(myThreads);
@@ -211,8 +211,8 @@ void OSD_ThreadPool::Launcher::wait()
   throw Standard_ProgramError(aFailures.ToCString(), nullptr);
 }
 
-void OSD_ThreadPool::performJob(std::optional<Standard_ProgramError>& theFailure,
-                                OSD_ThreadPool::JobInterface*         theJob,
+void System::os::OSD_ThreadPool::performJob(std::optional<Standard_ProgramError>& theFailure,
+                                System::os::OSD_ThreadPool::JobInterface*         theJob,
                                 int                                   theThreadIndex)
 {
   try
@@ -238,9 +238,9 @@ void OSD_ThreadPool::performJob(std::optional<Standard_ProgramError>& theFailure
   }
 }
 
-void OSD_ThreadPool::EnumeratedThread::performThread()
+void System::os::OSD_ThreadPool::EnumeratedThread::performThread()
 {
-  OSD::SetThreadLocalSignal(OSD::SignalMode(), false);
+  System::os::OSD::SetThreadLocalSignal(System::os::OSD::SignalMode(), false);
   for (;;)
   {
     myWakeEvent.Wait();
@@ -253,22 +253,22 @@ void OSD_ThreadPool::EnumeratedThread::performThread()
     myFailure.reset();
     if (myJob != nullptr)
     {
-      OSD::SetThreadLocalSignal(OSD::SignalMode(), myToCatchFpe);
-      OSD_ThreadPool::performJob(myFailure, myJob, myThreadIndex);
+      System::os::OSD::SetThreadLocalSignal(System::os::OSD::SignalMode(), myToCatchFpe);
+      System::os::OSD_ThreadPool::performJob(myFailure, myJob, myThreadIndex);
       myJob = nullptr;
     }
     myIdleEvent.Set();
   }
 }
 
-void* OSD_ThreadPool::EnumeratedThread::runThread(void* theTask)
+void* System::os::OSD_ThreadPool::EnumeratedThread::runThread(void* theTask)
 {
   EnumeratedThread* aThread = static_cast<EnumeratedThread*>(theTask);
   aThread->performThread();
   return nullptr;
 }
 
-OSD_ThreadPool::Launcher::Launcher(OSD_ThreadPool& thePool, int theMaxThreads)
+System::os::OSD_ThreadPool::Launcher::Launcher(System::os::OSD_ThreadPool& thePool, int theMaxThreads)
     : mySelfThread(true),
       myNbThreads(0)
 {
@@ -301,7 +301,7 @@ OSD_ThreadPool::Launcher::Launcher(OSD_ThreadPool& thePool, int theMaxThreads)
   ++myNbThreads;
 }
 
-void OSD_ThreadPool::Launcher::Release()
+void System::os::OSD_ThreadPool::Launcher::Release()
 {
   for (NCollection_Array1<EnumeratedThread*>::Iterator aThreadIter(myThreads);
        aThreadIter.More() && aThreadIter.Value() != nullptr;

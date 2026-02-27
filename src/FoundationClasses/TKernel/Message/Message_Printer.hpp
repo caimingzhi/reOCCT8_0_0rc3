@@ -10,6 +10,7 @@
 class TCollection_ExtendedString;
 class TCollection_AsciiString;
 
+namespace System { namespace log {
 class Message_Printer : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Message_Printer, Standard_Transient)
@@ -41,3 +42,5 @@ protected:
 protected:
   Message_Gravity myTraceLevel;
 };
+}} // namespace System::log
+

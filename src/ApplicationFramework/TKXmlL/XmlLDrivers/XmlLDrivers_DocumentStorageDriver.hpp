@@ -15,7 +15,10 @@
 class XmlMDF_ADriverTable;
 class CDM_Document;
 class TCollection_AsciiString;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class XmlLDrivers_DocumentStorageDriver : public PCDM_StorageDriver
 {
@@ -26,15 +29,15 @@ public:
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>&  theDocument,
     const TCollection_ExtendedString& theFileName,
-    const Message_ProgressRange&      theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&      theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>& theDocument,
     Standard_OStream&                theOStream,
-    const Message_ProgressRange&     theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&     theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT virtual occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   DEFINE_STANDARD_RTTIEXT(XmlLDrivers_DocumentStorageDriver, PCDM_StorageDriver)
 
@@ -42,12 +45,12 @@ protected:
   Standard_EXPORT virtual bool WriteToDomDocument(
     const occ::handle<CDM_Document>& theDocument,
     XmlObjMgt_Element&               thePDoc,
-    const Message_ProgressRange&     theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&     theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual int MakeDocument(
     const occ::handle<CDM_Document>& theDocument,
     XmlObjMgt_Element&               thePDoc,
-    const Message_ProgressRange&     theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange&     theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void AddNamespace(const TCollection_AsciiString& thePrefix,
                                     const TCollection_AsciiString& theURI);
@@ -55,7 +58,7 @@ protected:
   Standard_EXPORT virtual bool WriteShapeSection(
     XmlObjMgt_Element&           thePDoc,
     const TDocStd_FormatVersion  theStorageFormatVersion,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   occ::handle<XmlMDF_ADriverTable> myDrivers;
   XmlObjMgt_SRelocationTable       myRelocTable;

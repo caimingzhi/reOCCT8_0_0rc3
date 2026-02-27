@@ -37,7 +37,7 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   const TopoDS_Face&                         aFace,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   done = false;
   NCollection_DataMap<TopoDS_Shape, occ::handle<Standard_Transient>, TopTools_ShapeMapHasher> aMap;
@@ -93,7 +93,7 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   const TopoDS_Shell&                        aShell,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   done = false;
   StepShape_Shell                                   aShellSelect;
@@ -155,7 +155,7 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   const TopoDS_Solid&                        aSolid,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   done = false;
   StepShape_Shell                                   aShellSelect;
@@ -182,7 +182,7 @@ TopoDSToStep_MakeShellBasedSurfaceModel::TopoDSToStep_MakeShellBasedSurfaceModel
   for (It.Initialize(aSolid); It.More(); It.Next())
     if (It.Value().ShapeType() == TopAbs_SHELL)
       nbshapes++;
-  Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
   for (It.Initialize(aSolid); It.More() && aPS.More(); It.Next())
   {
     if (It.Value().ShapeType() == TopAbs_SHELL)

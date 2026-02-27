@@ -109,7 +109,7 @@ public:
   }
 
 public:
-  bool Perform(const TCollection_AsciiString& theFile, const Message_ProgressRange& theProgress)
+  bool Perform(const TCollection_AsciiString& theFile, const System::log::Message_ProgressRange& theProgress)
   {
     std::ifstream aStream;
     OSD_OpenStream(aStream, theFile, std::ios_base::in | std::ios_base::binary);
@@ -117,7 +117,7 @@ public:
   }
 
   bool Perform(std::istream&                  theStream,
-               const Message_ProgressRange&   theProgress,
+               const System::log::Message_ProgressRange&   theProgress,
                const TCollection_AsciiString& theFile = "")
   {
     return perform(theStream, theFile, theProgress, false);
@@ -140,7 +140,7 @@ public:
   }
 
   bool ProbeHeader(const TCollection_AsciiString& theFile,
-                   const Message_ProgressRange&   theProgress = Message_ProgressRange())
+                   const System::log::Message_ProgressRange&   theProgress = System::log::Message_ProgressRange())
   {
     std::ifstream aStream;
     OSD_OpenStream(aStream, theFile, std::ios_base::in | std::ios_base::binary);
@@ -149,23 +149,23 @@ public:
 
   bool ProbeHeader(std::istream&                  theStream,
                    const TCollection_AsciiString& theFile     = "",
-                   const Message_ProgressRange&   theProgress = Message_ProgressRange())
+                   const System::log::Message_ProgressRange&   theProgress = System::log::Message_ProgressRange())
   {
     return perform(theStream, theFile, theProgress, true);
   }
 
 protected:
   Standard_EXPORT virtual bool perform(const TCollection_AsciiString& theFile,
-                                       const Message_ProgressRange&   theProgress,
+                                       const System::log::Message_ProgressRange&   theProgress,
                                        const bool                     theToProbe);
 
   Standard_EXPORT virtual bool perform(std::istream&                  theStream,
                                        const TCollection_AsciiString& theFile,
-                                       const Message_ProgressRange&   theProgress,
+                                       const System::log::Message_ProgressRange&   theProgress,
                                        const bool                     theToProbe);
 
   Standard_EXPORT virtual bool performMesh(const TCollection_AsciiString& theFile,
-                                           const Message_ProgressRange&   theProgress,
+                                           const System::log::Message_ProgressRange&   theProgress,
                                            const bool                     theToProbe)
   {
     std::ifstream aStream;
@@ -175,7 +175,7 @@ protected:
 
   Standard_EXPORT virtual bool performMesh(std::istream&                  theStream,
                                            const TCollection_AsciiString& theFile,
-                                           const Message_ProgressRange&   theProgress,
+                                           const System::log::Message_ProgressRange&   theProgress,
                                            const bool                     theToProbe) = 0;
 
 protected:

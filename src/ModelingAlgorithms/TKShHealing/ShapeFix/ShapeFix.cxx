@@ -46,7 +46,7 @@
 bool ShapeFix::SameParameter(const TopoDS_Shape&                                 shape,
                              const bool                                          enforce,
                              const double                                        preci,
-                             const Message_ProgressRange&                        theProgress,
+                             const System::log::Message_ProgressRange&                        theProgress,
                              const occ::handle<ShapeExtend_BasicMsgRegistrator>& theMsgReg)
 {
 
@@ -71,13 +71,13 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
   bool                       iatol  = (tol > 0);
   occ::handle<ShapeFix_Edge> sfe    = new ShapeFix_Edge;
   TopExp_Explorer            ex(shape, TopAbs_EDGE);
-  Message_Msg                doneMsg("FixEdge.SameParameter.MSG0");
+  System::log::Message_Msg                doneMsg("FixEdge.SameParameter.MSG0");
 
-  Message_ProgressScope aPSForSameParam(theProgress, "Fixing same parameter problem", 2);
+  System::log::Message_ProgressScope aPSForSameParam(theProgress, "Fixing same parameter problem", 2);
 
   {
 
-    Message_ProgressScope aPS(aPSForSameParam.Next(), "Fixing edge", aNbEdges);
+    System::log::Message_ProgressScope aPS(aPSForSameParam.Next(), "Fixing edge", aNbEdges);
 
     while (ex.More())
     {
@@ -145,7 +145,7 @@ bool ShapeFix::SameParameter(const TopoDS_Shape&                                
 
   {
 
-    Message_ProgressScope aPS(aPSForSameParam.Next(), "Update tolerances", aNbFaces);
+    System::log::Message_ProgressScope aPS(aPSForSameParam.Next(), "Update tolerances", aNbFaces);
 
     for (TopExp_Explorer exp(shape, TopAbs_FACE); exp.More() && aPS.More(); exp.Next(), aPS.Next())
     {
@@ -260,7 +260,7 @@ static TopoDS_Edge ReplaceVertex(const TopoDS_Edge& theEdge, const gp_Pnt& theP,
 {
   TopoDS_Vertex aNewVertex;
   BRep_Builder  aB;
-  aB.MakeVertex(aNewVertex, theP, Precision::Confusion());
+  aB.MakeVertex(aNewVertex, theP, math::precision::Precision::Confusion());
   TopoDS_Vertex aV1, aV2;
   if (theFwd)
   {
@@ -296,7 +296,7 @@ static double getNearPoint(const NCollection_Sequence<gp_Pnt>& aSeq1,
     {
       gp_Pnt p2 = aSeq2.Value(j);
       double d  = p1.Distance(p2);
-      if (fabs(d - mindist) <= Precision::Confusion())
+      if (fabs(d - mindist) <= math::precision::Precision::Confusion())
         continue;
       if (d < mindist)
       {
@@ -596,7 +596,7 @@ bool ShapeFix::FixVertexPosition(TopoDS_Shape&                          theshape
 
       isDone = true;
       TopoDS_Vertex aNewVertex;
-      aB.MakeVertex(aNewVertex, acenter, Precision::Confusion());
+      aB.MakeVertex(aNewVertex, acenter, math::precision::Precision::Confusion());
       aNewVertex.Orientation(aVert.Orientation());
       thecontext->Replace(aVert, aNewVertex);
     }

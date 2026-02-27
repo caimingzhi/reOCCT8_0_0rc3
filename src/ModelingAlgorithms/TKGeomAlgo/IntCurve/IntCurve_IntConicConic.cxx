@@ -86,8 +86,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
   PCurve.SetAccuracy(20);
   Inter.SetReversedParameters(ReversedParameters());
 
-  double binf   = Precision::Infinite();
-  double bsup   = -Precision::Infinite();
+  double binf   = math::precision::Precision::Infinite();
+  double bsup   = -math::precision::Precision::Infinite();
   double maxtol = (Tol > TolConf) ? Tol : TolConf;
   if (maxtol < 1.e-7)
     maxtol = 1.e-7;
@@ -199,7 +199,7 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L,
 
   Inter.SetReversedParameters(ReversedParameters());
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   if (Tol > TolConf)
     maxtol = Tol;
@@ -303,7 +303,7 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
     D.SetEquivalentParameters(DC.FirstParameter(), DC.FirstParameter() + M_PI + M_PI);
   }
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   maxtol = C.Radius() / 10.0;
   gp_Circ2d Cp(C);
@@ -447,7 +447,7 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       C,
   {
     D.SetEquivalentParameters(DC.FirstParameter(), DC.FirstParameter() + M_PI + M_PI);
   }
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   maxtol = C.Radius() / 10.0;
   gp_Vec2d  Offset(maxtol * H.XAxis().Direction().X(), maxtol * H.XAxis().Direction().Y());
@@ -539,7 +539,7 @@ void IntCurve_IntConicConic::Perform(const gp_Parab2d&      P1,
   PCurve.SetAccuracy(20);
   Inter.SetReversedParameters(ReversedParameters());
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   if (Tol > TolConf)
     maxtol = Tol;
@@ -644,7 +644,7 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
     D.SetEquivalentParameters(DE.FirstParameter(), DE.FirstParameter() + M_PI + M_PI);
   }
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   if (Tol > TolConf)
     maxtol = Tol;
@@ -746,7 +746,7 @@ void IntCurve_IntConicConic::Perform(const gp_Parab2d&      P,
   IntCurve_PConic     PCurve(H);
   Inter.SetReversedParameters(ReversedParameters());
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   if (Tol > TolConf)
     maxtol = Tol;
@@ -895,7 +895,7 @@ void IntCurve_IntConicConic::Perform(const gp_Elips2d&      E,
     DEModif.SetEquivalentParameters(DE.FirstParameter(), DE.FirstParameter() + M_PI + M_PI);
   }
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   maxtol = E.MinorRadius() / 10.0;
   gp_Vec2d  Offset(maxtol * H.XAxis().Direction().X(), maxtol * H.XAxis().Direction().Y());
@@ -993,7 +993,7 @@ void IntCurve_IntConicConic::Perform(const gp_Hypr2d&       H1,
 
   Inter.SetReversedParameters(ReversedParameters());
 
-  double   binf = Precision::Infinite(), bsup = -Precision::Infinite(), maxtol;
+  double   binf = math::precision::Precision::Infinite(), bsup = -math::precision::Precision::Infinite(), maxtol;
   gp_Pnt2d Pntinf, Pntsup;
   if (Tol > TolConf)
     maxtol = Tol;

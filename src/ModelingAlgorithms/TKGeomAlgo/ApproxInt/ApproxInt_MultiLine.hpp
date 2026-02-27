@@ -545,7 +545,7 @@ bool ApproxInt_MultiLine::MakeMLOneMorePoint(const int            theLow,
     ((TheSvSurfaces*)PtrOnmySvSurfaces)->SetUseSolver(true);
   }
 
-  constexpr double SqTol3d = Precision::SquareConfusion();
+  constexpr double SqTol3d = math::precision::Precision::SquareConfusion();
   math_Vector      tolerance(1, 2);
   tolerance(1) = tolerance(2) = 1.e-8;
 

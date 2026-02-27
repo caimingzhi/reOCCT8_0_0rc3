@@ -71,7 +71,7 @@ occ::handle<Transfer_FinderProcess> BRepToIGES_BREntity::GetTransferProcess() co
 
 occ::handle<IGESData_IGESEntity> BRepToIGES_BREntity::TransferShape(
   const TopoDS_Shape&          start,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<IGESData_IGESEntity> res;
 

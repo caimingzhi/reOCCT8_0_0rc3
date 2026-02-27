@@ -71,7 +71,7 @@ public:
   Standard_EXPORT bool NonDestructive() const;
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void SetGlue(const BOPAlgo_GlueEnum theGlue);
 
@@ -97,34 +97,34 @@ protected:
 
   Standard_EXPORT bool IsPrimary() const;
 
-  Standard_EXPORT virtual void PerformInternal(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformInternal(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void Clear() override;
 
-  Standard_EXPORT virtual void Init(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void Init(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void Prepare(const Message_ProgressRange& theRange);
+  Standard_EXPORT void Prepare(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformVV(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformVV(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformVE(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformVE(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void IntersectVE(
     const NCollection_IndexedDataMap<occ::handle<BOPDS_PaveBlock>, NCollection_List<int>>&
                                  theVEPairs,
-    const Message_ProgressRange& theRange,
+    const System::log::Message_ProgressRange& theRange,
     const bool                   bAddInterfs = true);
 
   Standard_EXPORT void SplitPaveBlocks(const NCollection_Map<int>& theMEdges,
                                        const bool                  theAddInterfs);
 
-  Standard_EXPORT virtual void PerformVF(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformVF(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformEE(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformEE(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformEF(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformEF(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformFF(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformFF(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void TreatVerticesEE();
 
@@ -132,16 +132,16 @@ protected:
     const NCollection_DataMap<int, NCollection_List<int>>& aDMVLV,
     NCollection_DataMap<int, int>&                         theDMNewSD);
 
-  Standard_EXPORT void MakeSplitEdges(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeSplitEdges(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void MakeBlocks(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakeBlocks(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void MakePCurves(const Message_ProgressRange& theRange);
+  Standard_EXPORT void MakePCurves(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT int MakeSDVertices(const NCollection_List<int>& theVertIndices,
                                      const bool                   theAddInterfs = true);
 
-  Standard_EXPORT void ProcessDE(const Message_ProgressRange& theRange);
+  Standard_EXPORT void ProcessDE(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void FillShrunkData(occ::handle<BOPDS_PaveBlock>& thePB);
 
@@ -155,7 +155,7 @@ protected:
     NCollection_IndexedDataMap<TopoDS_Shape, BOPDS_CoupleOfPaveBlocks, TopTools_ShapeMapHasher>&
                                                   theMVCPB,
     const occ::handle<NCollection_BaseAllocator>& theAllocator,
-    const Message_ProgressRange&                  theRange,
+    const System::log::Message_ProgressRange&                  theRange,
     const bool                                    theIsEEIntersection = true);
 
   Standard_EXPORT bool CheckFacePaves(const TopoDS_Vertex&        theVnew,
@@ -215,7 +215,7 @@ protected:
     const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>&          theMicroPB,
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theVertsOnRejectedPB,
     const occ::handle<NCollection_BaseAllocator>&                        theAllocator,
-    const Message_ProgressRange&                                         theRange);
+    const System::log::Message_ProgressRange&                                         theRange);
 
   Standard_EXPORT void FindPaveBlocks(const int                                       theV,
                                       const int                                       theF,
@@ -379,24 +379,24 @@ protected:
                                 double&                             theSLast,
                                 Bnd_Box&                            theBox);
 
-  Standard_EXPORT void PutSEInOtherFaces(const Message_ProgressRange& theRange);
+  Standard_EXPORT void PutSEInOtherFaces(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void CheckSelfInterference();
 
   Standard_EXPORT void AddIntersectionFailedWarning(const TopoDS_Shape& theS1,
                                                     const TopoDS_Shape& theS2);
 
-  Standard_EXPORT void RepeatIntersection(const Message_ProgressRange& theRange);
+  Standard_EXPORT void RepeatIntersection(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void UpdateVerticesOfCB();
 
-  Standard_EXPORT void ForceInterfEE(const Message_ProgressRange& theRange);
+  Standard_EXPORT void ForceInterfEE(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void ForceInterfEF(const Message_ProgressRange& theRange);
+  Standard_EXPORT void ForceInterfEF(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void ForceInterfEF(
     const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>& theMPB,
-    const Message_ProgressRange&                                theRange,
+    const System::log::Message_ProgressRange&                                theRange,
     const bool                                                  theAddInterf);
 
   Standard_EXPORT void RemoveMicroSectionEdges(

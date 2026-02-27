@@ -21,7 +21,7 @@ class BinMXCAFDoc_VisMaterialDriver : public BinMDF_ADriver
   };
 
 public:
-  Standard_EXPORT BinMXCAFDoc_VisMaterialDriver(const occ::handle<Message_Messenger>& theMsgDriver);
+  Standard_EXPORT BinMXCAFDoc_VisMaterialDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

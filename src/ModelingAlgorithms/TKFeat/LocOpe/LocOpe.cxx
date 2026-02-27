@@ -85,7 +85,7 @@ bool LocOpe::Closed(const TopoDS_Wire& W, const TopoDS_Face& F)
     pl = C2d->Value(f);
   }
 
-  if (pf.Distance(pl) <= Precision::PConfusion(Precision::Confusion()))
+  if (pf.Distance(pl) <= math::precision::Precision::PConfusion(math::precision::Precision::Confusion()))
   {
     return true;
   }

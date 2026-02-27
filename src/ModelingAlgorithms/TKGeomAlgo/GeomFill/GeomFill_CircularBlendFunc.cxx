@@ -34,7 +34,7 @@ static void GeomFillFusInt(const NCollection_Array1<double>& I1,
                            NCollection_Sequence<double>&     Seq)
 {
   int              ind1 = 1, ind2 = 1;
-  constexpr double Epspar = Precision::PConfusion() * 0.99;
+  constexpr double Epspar = math::precision::Precision::PConfusion() * 0.99;
 
   double v1, v2;
 
@@ -558,7 +558,7 @@ void GeomFill_CircularBlendFunc::Intervals(NCollection_Array1<double>& T,
 
 void GeomFill_CircularBlendFunc::SetInterval(const double First, const double Last)
 {
-  constexpr double Eps = Precision::PConfusion();
+  constexpr double Eps = math::precision::Precision::PConfusion();
   myTPath              = myPath->Trim(First, Last, Eps);
   myTCurve1            = myCurve1->Trim(First, Last, Eps);
   myTCurve2            = myCurve2->Trim(First, Last, Eps);

@@ -20,7 +20,7 @@ public:
   Standard_EXPORT void Perform(
     const IMeshData::IFaceHandle& theDFace,
     const IMeshTools_Parameters&  theParameters,
-    const Message_ProgressRange&  theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&  theRange = System::log::Message_ProgressRange()) override;
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_BaseMeshAlgo, IMeshTools_MeshAlgo)
 
@@ -50,7 +50,7 @@ protected:
 
   Standard_EXPORT virtual bool initDataStructure();
 
-  Standard_EXPORT virtual void generateMesh(const Message_ProgressRange& theRange) = 0;
+  Standard_EXPORT virtual void generateMesh(const System::log::Message_ProgressRange& theRange) = 0;
 
 private:
   TopAbs_Orientation fixSeamEdgeOrientation(const IMeshData::IEdgeHandle&   theDEdge,

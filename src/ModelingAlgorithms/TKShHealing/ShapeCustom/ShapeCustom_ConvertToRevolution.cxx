@@ -131,7 +131,7 @@ bool ShapeCustom_ConvertToRevolution::NewSurface(const TopoDS_Face&         F,
     else
       S = Rev;
   }
-  SendMsg(F, Message_Msg("ConvertToRevolution.NewSurface.MSG0"));
+  SendMsg(F, System::log::Message_Msg("ConvertToRevolution.NewSurface.MSG0"));
 
   Tol      = BRep_Tool::Tolerance(F);
   RevWires = false;

@@ -75,7 +75,7 @@ double Geom_Parabola::Eccentricity() const
 
 double Geom_Parabola::FirstParameter() const
 {
-  return -Precision::Infinite();
+  return -math::precision::Precision::Infinite();
 }
 
 double Geom_Parabola::Focal() const
@@ -85,7 +85,7 @@ double Geom_Parabola::Focal() const
 
 double Geom_Parabola::LastParameter() const
 {
-  return Precision::Infinite();
+  return math::precision::Precision::Infinite();
 }
 
 double Geom_Parabola::Parameter() const
@@ -171,7 +171,7 @@ void Geom_Parabola::Transform(const Trsf& T)
 
 double Geom_Parabola::TransformedParameter(const double U, const gp_Trsf& T) const
 {
-  if (Precision::IsInfinite(U))
+  if (math::precision::Precision::IsInfinite(U))
     return U;
   return U * std::abs(T.ScaleFactor());
 }

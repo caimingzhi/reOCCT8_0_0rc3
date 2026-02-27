@@ -59,7 +59,7 @@ public:
       return false;
     }
 
-    return (myUV.IsEqual(theOther.myUV, Precision::PConfusion()));
+    return (myUV.IsEqual(theOther.myUV, math::precision::Precision::PConfusion()));
   }
 
   bool operator==(const BRepMesh_Vertex& Other) const { return IsEqual(Other); }

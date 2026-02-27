@@ -45,7 +45,7 @@ void StepFile_Interrupt(const char* theErrorMessage, const bool theIsFail)
   if (theErrorMessage == nullptr)
     return;
 
-  Message_Messenger::StreamBuffer sout = theIsFail ? Message::SendFail() : Message::SendTrace();
+  System::log::Message_Messenger::StreamBuffer sout = theIsFail ? System::log::Message::SendFail() : System::log::Message::SendTrace();
   sout << "**** ERR StepFile : " << theErrorMessage << "    ****" << std::endl;
 }
 
@@ -61,7 +61,7 @@ static int StepFile_Read(const char*                                 theName,
   std::shared_ptr<std::istream> aFileStream;
   if (aStreamPtr == nullptr)
   {
-    const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
     aFileStream = aFileSystem->OpenIStream(theName, std::ios::in | std::ios::binary);
     aStreamPtr  = aFileStream.get();
   }
@@ -71,12 +71,12 @@ static int StepFile_Read(const char*                                 theName,
   }
 
 #ifdef CHRONOMESURE
-  OSD_Timer c;
+  System::os::OSD_Timer c;
   c.Reset();
   c.Start();
 #endif
 
-  Message_Messenger::StreamBuffer sout = Message::SendTrace();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendTrace();
   sout << "      ...    Step File Reading : '" << theName << "'";
 
   StepFile_ReadData aFileDataModel;
@@ -96,7 +96,7 @@ static int StepFile_Read(const char*                                 theName,
   }
   catch (Standard_Failure const& anException)
   {
-    Message::SendFail() << " ...  Exception Raised while reading Step File : '" << theName << "':\n"
+    System::log::Message::SendFail() << " ...  Exception Raised while reading Step File : '" << theName << "':\n"
                         << anException << "    ...";
     return 1;
   }
@@ -140,7 +140,7 @@ static int StepFile_Read(const char*                                 theName,
   int anFailsCount = undirec->GlobalCheck()->NbFails();
   if (anFailsCount > 0)
   {
-    Message::SendInfo() << "**** ERR StepFile : Incorrect Syntax : Fails Count : " << anFailsCount
+    System::log::Message::SendInfo() << "**** ERR StepFile : Incorrect Syntax : Fails Count : " << anFailsCount
                         << " ****";
   }
 
@@ -173,7 +173,7 @@ static int StepFile_Read(const char*                                 theName,
   anFailsCount = undirec->GlobalCheck()->NbFails() - anFailsCount;
   if (anFailsCount > 0)
   {
-    Message::SendInfo() << "*** ERR StepReaderData : Unresolved Reference : Fails Count : "
+    System::log::Message::SendInfo() << "*** ERR StepReaderData : Unresolved Reference : Fails Count : "
                         << anFailsCount << " ***";
   }
 

@@ -89,7 +89,7 @@ ShapeAnalysis_FreeBounds::ShapeAnalysis_FreeBounds(const TopoDS_Shape& shape,
       see.SeqFromCompound(sas.FreeEdges(), false);
 
     occ::handle<NCollection_HSequence<TopoDS_Shape>> wires;
-    ConnectEdgesToWires(edges, Precision::Confusion(), true, wires);
+    ConnectEdgesToWires(edges, math::precision::Precision::Confusion(), true, wires);
     DispatchWires(wires, myWires, myEdges);
     SplitWires();
   }
@@ -146,7 +146,7 @@ void ShapeAnalysis_FreeBounds::ConnectWiresToWires(
   for (i = 1; i <= arrwires->Length(); i++)
     arrwires->SetValue(i, iwires->Value(i));
   owires           = new NCollection_HSequence<TopoDS_Shape>;
-  double tolerance = std::max(toler, Precision::Confusion());
+  double tolerance = std::max(toler, math::precision::Precision::Confusion());
 
   occ::handle<ShapeExtend_WireData> sewd =
     new ShapeExtend_WireData(TopoDS::Wire(arrwires->Value(1)));
@@ -348,7 +348,7 @@ static void SplitWire(const TopoDS_Wire&                                wire,
 {
   closed           = new NCollection_HSequence<TopoDS_Shape>;
   open             = new NCollection_HSequence<TopoDS_Shape>;
-  double tolerance = std::max(toler, Precision::Confusion());
+  double tolerance = std::max(toler, math::precision::Precision::Confusion());
 
   BRep_Builder       B;
   ShapeAnalysis_Edge sae;

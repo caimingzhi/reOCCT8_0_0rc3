@@ -148,7 +148,7 @@ bool IFSelect_TransformStandard::ApplyModifiers(const Interface_Graph&          
                                                 Interface_CheckIterator&               checks,
                                                 occ::handle<Interface_InterfaceModel>& newmod) const
 {
-  Message_Messenger::StreamBuffer              sout     = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer              sout     = System::log::Message::SendInfo();
   bool                                         res      = true;
   bool                                         chg      = false;
   int                                          nb       = NbModifiers();

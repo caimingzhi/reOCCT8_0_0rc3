@@ -486,13 +486,13 @@ bool BRepTopAdaptor_TopolTool::DomainIsInfinite()
   usup = myS->LastUParameter();
   vinf = myS->FirstVParameter();
   vsup = myS->LastVParameter();
-  if (Precision::IsNegativeInfinite(uinf))
+  if (math::precision::Precision::IsNegativeInfinite(uinf))
     return (true);
-  if (Precision::IsPositiveInfinite(usup))
+  if (math::precision::Precision::IsPositiveInfinite(usup))
     return (true);
-  if (Precision::IsNegativeInfinite(vinf))
+  if (math::precision::Precision::IsNegativeInfinite(vinf))
     return (true);
-  if (Precision::IsPositiveInfinite(vsup))
+  if (math::precision::Precision::IsPositiveInfinite(vsup))
     return (true);
   return (false);
 }

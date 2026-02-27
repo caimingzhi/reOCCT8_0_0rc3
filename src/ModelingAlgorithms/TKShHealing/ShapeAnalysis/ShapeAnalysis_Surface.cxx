@@ -36,8 +36,8 @@ namespace
 {
   inline void RestrictBounds(double& theFirst, double& theLast)
   {
-    bool isFInf = Precision::IsNegativeInfinite(theFirst);
-    bool isLInf = Precision::IsPositiveInfinite(theLast);
+    bool isFInf = math::precision::Precision::IsNegativeInfinite(theFirst);
+    bool isLInf = math::precision::Precision::IsPositiveInfinite(theLast);
     if (isFInf || isLInf)
     {
       if (isFInf && isLInf)
@@ -78,7 +78,7 @@ ShapeAnalysis_Surface::ShapeAnalysis_Surface(const occ::handle<Geom_Surface>& S)
 
   if (mySurf.IsNull())
   {
-    Message::SendWarning("ShapeAnalysis_Surface: Cannot create with null surface");
+    System::log::Message::SendWarning("ShapeAnalysis_Surface: Cannot create with null surface");
     assert(!mySurf.IsNull());
     return;
   }
@@ -93,7 +93,7 @@ void ShapeAnalysis_Surface::Init(const occ::handle<Geom_Surface>& theSurface)
 
   if (theSurface.IsNull())
   {
-    Message::SendWarning("ShapeAnalysis_Surface: Cannot initialize with null surface");
+    System::log::Message::SendWarning("ShapeAnalysis_Surface: Cannot initialize with null surface");
     assert(!theSurface.IsNull());
     return;
   }
@@ -448,7 +448,7 @@ bool ShapeAnalysis_Surface::IsDegenerated(const gp_Pnt2d& p2d1,
   double               RU = SA.UResolution(1.);
   double               RV = SA.VResolution(1.);
 
-  if (RU < Precision::PConfusion() || RV < Precision::PConfusion())
+  if (RU < math::precision::Precision::PConfusion() || RV < math::precision::Precision::PConfusion())
     return false;
   double du = std::abs(p2d1.X() - p2d2.X()) / RU;
   double dv = std::abs(p2d1.Y() - p2d2.Y()) / RV;
@@ -526,7 +526,7 @@ occ::handle<Geom_Curve> ShapeAnalysis_Surface::VIso(const double V)
 
 bool ShapeAnalysis_Surface::IsUClosed(const double preci)
 {
-  double prec      = std::max(preci, Precision::Confusion());
+  double prec      = std::max(preci, math::precision::Precision::Confusion());
   double anUmidVal = -1.;
   if (myUCloseVal < 0)
   {
@@ -568,7 +568,7 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
         double                  f   = crv->FirstParameter();
         double                  l   = crv->LastParameter();
 
-        if (!Precision::IsInfinite(f) && !Precision::IsInfinite(l))
+        if (!math::precision::Precision::IsInfinite(f) && !math::precision::Precision::IsInfinite(l))
         {
           gp_Pnt p1   = crv->Value(f);
           gp_Pnt p2   = crv->Value(l);
@@ -733,7 +733,7 @@ bool ShapeAnalysis_Surface::IsUClosed(const double preci)
 
 bool ShapeAnalysis_Surface::IsVClosed(const double preci)
 {
-  double prec     = std::max(preci, Precision::Confusion());
+  double prec     = std::max(preci, math::precision::Precision::Confusion());
   double aVmidVal = -1.;
   if (myVCloseVal < 0)
   {
@@ -940,7 +940,7 @@ int ShapeAnalysis_Surface::SurfaceNewton(const gp_Pnt2d& p2dPrev,
   double UF = uf - du, UL = ul + du;
   double VF = vf - dv, VL = vl + dv;
 
-  constexpr double Tol  = Precision::Confusion();
+  constexpr double Tol  = math::precision::Precision::Confusion();
   constexpr double Tol2 = Tol * Tol;
   double           U = p2dPrev.X(), V = p2dPrev.Y();
   gp_Vec           rsfirst = P3D.XYZ() - Value(U, V).XYZ();
@@ -953,7 +953,7 @@ int ShapeAnalysis_Surface::SurfaceNewton(const gp_Pnt2d& p2dPrev,
     double ru2 = ru * ru, rv2 = rv * rv;
     gp_Vec n    = ru ^ rv;
     double nrm2 = n.SquareMagnitude();
-    if (nrm2 < 1e-10 || Precision::IsPositiveInfinite(nrm2))
+    if (nrm2 < 1e-10 || math::precision::Precision::IsPositiveInfinite(nrm2))
       break;
 
     gp_Vec rs   = P3D.XYZ() - Value(U, V).XYZ();
@@ -1020,7 +1020,7 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
           for (int anIdx = aMinIndex; anIdx <= aMaxIndex; ++anIdx)
           {
             double aKnot = aBSpline->UKnot(anIdx);
-            if (std::abs(aKnot - p2dPrev.X()) < Precision::Confusion())
+            if (std::abs(aKnot - p2dPrev.X()) < math::precision::Precision::Confusion())
               return ValueOfUV(P3D, preci);
           }
         }
@@ -1032,7 +1032,7 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
           for (int anIdx = aMinIndex; anIdx <= aMaxIndex; ++anIdx)
           {
             double aKnot = aBSpline->VKnot(anIdx);
-            if (std::abs(aKnot - p2dPrev.Y()) < Precision::Confusion())
+            if (std::abs(aKnot - p2dPrev.Y()) < math::precision::Precision::Confusion())
               return ValueOfUV(P3D, preci);
           }
         }
@@ -1043,7 +1043,7 @@ gp_Pnt2d ShapeAnalysis_Surface::NextValueOfUV(const gp_Pnt2d& p2dPrev,
       if (res != 0)
       {
         double gap = P3D.Distance(Value(sol));
-        if (res == 2 || (maxpreci > 0. && gap - maxpreci > Precision::Confusion()))
+        if (res == 2 || (maxpreci > 0. && gap - maxpreci > math::precision::Precision::Confusion()))
         {
           double U = sol.X(), V = sol.Y();
           myGap = UVFromIso(P3D, preci, U, V);
@@ -1125,8 +1125,8 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
           S = (uf + ul) / 2;
           T = (vf + vl) / 2;
 
-          if ((surftype == GeomAbs_SurfaceOfExtrusion) && Precision::IsInfinite(uf)
-              && Precision::IsInfinite(ul))
+          if ((surftype == GeomAbs_SurfaceOfExtrusion) && math::precision::Precision::IsInfinite(uf)
+              && math::precision::Precision::IsInfinite(ul))
           {
 
             gp_Pnt2d prev(S, T);
@@ -1162,7 +1162,7 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
               du = std::min(myUDelt, SurfAdapt.UResolution(preci));
               dv = std::min(myVDelt, SurfAdapt.VResolution(preci));
             }
-            constexpr double Tol = Precision::PConfusion();
+            constexpr double Tol = math::precision::Precision::PConfusion();
             myExtPS.SetFlag(Extrema_ExtFlag_MIN);
             myExtPS.Initialize(SurfAdapt, uf - du, ul + du, vf - dv, vl + dv, Tol, Tol);
             myExtOK = true;
@@ -1209,7 +1209,7 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
               if (disSurf < 10 * preci)
                 if (mySurf->Continuity() != GeomAbs_C0)
                 {
-                  constexpr double Tol = Precision::Confusion();
+                  constexpr double Tol = math::precision::Precision::Confusion();
                   gp_Vec           D1U, D1V;
                   gp_Pnt           pnt;
                   SurfAdapt.D1(UU, VV, pnt, D1U, D1V);
@@ -1273,8 +1273,8 @@ gp_Pnt2d ShapeAnalysis_Surface::ValueOfUV(const gp_Pnt& P3D, const double preci)
       std::cout << std::endl;
 #endif
       (void)anException;
-      S = (Precision::IsInfinite(uf)) ? 0 : (uf + ul) / 2.;
-      T = (Precision::IsInfinite(vf)) ? 0 : (vf + vl) / 2.;
+      S = (math::precision::Precision::IsInfinite(uf)) ? 0 : (uf + ul) / 2.;
+      T = (math::precision::Precision::IsInfinite(vf)) ? 0 : (vf + vl) / 2.;
     }
   }
 
@@ -1365,7 +1365,7 @@ double ShapeAnalysis_Surface::UVFromIso(const gp_Pnt& P3d, const double preci, d
             break;
         }
 
-        if (!Precision::IsInfinite(par) && !iso.IsNull())
+        if (!math::precision::Precision::IsInfinite(par) && !iso.IsNull())
         {
           if (anIsoBox && anIsoBox->Distance(aPBox) > theMin)
             continue;
@@ -1635,13 +1635,13 @@ void ShapeAnalysis_Surface::ComputeBoxes()
   myIsoBoxes = true;
   ComputeBoundIsos();
   if (!myIsoUF.IsNull())
-    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoUF), Precision::Confusion(), myBndUF);
+    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoUF), math::precision::Precision::Confusion(), myBndUF);
   if (!myIsoUL.IsNull())
-    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoUL), Precision::Confusion(), myBndUL);
+    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoUL), math::precision::Precision::Confusion(), myBndUL);
   if (!myIsoVF.IsNull())
-    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoVF), Precision::Confusion(), myBndVF);
+    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoVF), math::precision::Precision::Confusion(), myBndVF);
   if (!myIsoVL.IsNull())
-    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoVL), Precision::Confusion(), myBndVL);
+    BndLib_Add3dCurve::Add(GeomAdaptor_Curve(myIsoVL), math::precision::Precision::Confusion(), myBndVL);
 }
 
 const Bnd_Box& ShapeAnalysis_Surface::GetBoxUF()

@@ -111,7 +111,7 @@ static void AddCompositeShape(const occ::handle<XCAFDoc_ShapeTool>& theSTool,
 }
 
 bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
-                                     const Message_ProgressRange&         theProgress)
+                                     const System::log::Message_ProgressRange&         theProgress)
 {
 
   int num;
@@ -330,7 +330,7 @@ bool IGESCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
 
 bool IGESCAFControl_Reader::Perform(const char*                          filename,
                                     const occ::handle<TDocStd_Document>& doc,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (ReadFile(filename) != IFSelect_RetDone)
     return false;

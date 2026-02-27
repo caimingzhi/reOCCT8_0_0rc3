@@ -12,7 +12,10 @@
 #include <PCDM_StoreStatus.hpp>
 #include <TDocStd_Document.hpp>
 
+namespace System { namespace resource {
 class Resource_Manager;
+}} // namespace System::resource
+
 class CDM_Document;
 class TCollection_ExtendedString;
 
@@ -24,7 +27,7 @@ public:
 
   Standard_EXPORT bool IsDriverLoaded() const;
 
-  Standard_EXPORT occ::handle<Resource_Manager> Resources() override;
+  Standard_EXPORT occ::handle<System::resource::Resource_Manager> Resources() override;
 
   Standard_EXPORT virtual const char* ResourcesName();
 
@@ -58,11 +61,11 @@ public:
     Open(const TCollection_ExtendedString&     thePath,
          occ::handle<TDocStd_Document>&        theDoc,
          const occ::handle<PCDM_ReaderFilter>& theFilter,
-         const Message_ProgressRange&          theRange = Message_ProgressRange());
+         const System::log::Message_ProgressRange&          theRange = System::log::Message_ProgressRange());
 
   PCDM_ReaderStatus Open(const TCollection_ExtendedString& thePath,
                          occ::handle<TDocStd_Document>&    theDoc,
-                         const Message_ProgressRange&      theRange = Message_ProgressRange())
+                         const System::log::Message_ProgressRange&      theRange = System::log::Message_ProgressRange())
   {
     return Open(thePath, theDoc, occ::handle<PCDM_ReaderFilter>(), theRange);
   }
@@ -71,11 +74,11 @@ public:
     Open(Standard_IStream&                     theIStream,
          occ::handle<TDocStd_Document>&        theDoc,
          const occ::handle<PCDM_ReaderFilter>& theFilter,
-         const Message_ProgressRange&          theRange = Message_ProgressRange());
+         const System::log::Message_ProgressRange&          theRange = System::log::Message_ProgressRange());
 
   PCDM_ReaderStatus Open(Standard_IStream&              theIStream,
                          occ::handle<TDocStd_Document>& theDoc,
-                         const Message_ProgressRange&   theRange = Message_ProgressRange())
+                         const System::log::Message_ProgressRange&   theRange = System::log::Message_ProgressRange())
   {
     return Open(theIStream, theDoc, occ::handle<PCDM_ReaderFilter>(), theRange);
   }
@@ -83,33 +86,33 @@ public:
   Standard_EXPORT PCDM_StoreStatus
     SaveAs(const occ::handle<TDocStd_Document>& theDoc,
            const TCollection_ExtendedString&    path,
-           const Message_ProgressRange&         theRange = Message_ProgressRange());
+           const System::log::Message_ProgressRange&         theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT PCDM_StoreStatus
     SaveAs(const occ::handle<TDocStd_Document>& theDoc,
            Standard_OStream&                    theOStream,
-           const Message_ProgressRange&         theRange = Message_ProgressRange());
+           const System::log::Message_ProgressRange&         theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT PCDM_StoreStatus
     Save(const occ::handle<TDocStd_Document>& theDoc,
-         const Message_ProgressRange&         theRange = Message_ProgressRange());
+         const System::log::Message_ProgressRange&         theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT PCDM_StoreStatus
     SaveAs(const occ::handle<TDocStd_Document>& theDoc,
            const TCollection_ExtendedString&    path,
            TCollection_ExtendedString&          theStatusMessage,
-           const Message_ProgressRange&         theRange = Message_ProgressRange());
+           const System::log::Message_ProgressRange&         theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT PCDM_StoreStatus
     SaveAs(const occ::handle<TDocStd_Document>& theDoc,
            Standard_OStream&                    theOStream,
            TCollection_ExtendedString&          theStatusMessage,
-           const Message_ProgressRange&         theRange = Message_ProgressRange());
+           const System::log::Message_ProgressRange&         theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT PCDM_StoreStatus
     Save(const occ::handle<TDocStd_Document>& theDoc,
          TCollection_ExtendedString&          theStatusMessage,
-         const Message_ProgressRange&         theRange = Message_ProgressRange());
+         const System::log::Message_ProgressRange&         theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void OnOpenTransaction(const occ::handle<TDocStd_Document>& theDoc);
 
@@ -122,6 +125,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(TDocStd_Application, CDF_Application)
 
 protected:
-  occ::handle<Resource_Manager> myResources;
+  occ::handle<System::resource::Resource_Manager> myResources;
   bool                          myIsDriverLoaded;
 };

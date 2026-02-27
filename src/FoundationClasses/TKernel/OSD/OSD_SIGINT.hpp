@@ -6,9 +6,12 @@
 #if !defined No_Exception && !defined No_OSD_SIGINT
   #define OSD_SIGINT_Raise_if(CONDITION, MESSAGE)                                                  \
     if (CONDITION)                                                                                 \
-      throw OSD_SIGINT(MESSAGE);
+      throw System::os::OSD_SIGINT(MESSAGE);
 #else
   #define OSD_SIGINT_Raise_if(CONDITION, MESSAGE)
 #endif
 
-DEFINE_STANDARD_EXCEPTION(OSD_SIGINT, OSD_Signal)
+namespace System { namespace os {
+DEFINE_STANDARD_EXCEPTION(OSD_SIGINT, System::os::OSD_Signal)
+}} // namespace System::os
+

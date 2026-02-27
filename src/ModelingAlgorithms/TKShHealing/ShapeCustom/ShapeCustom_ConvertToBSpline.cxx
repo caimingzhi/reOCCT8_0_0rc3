@@ -74,12 +74,12 @@ bool ShapeCustom_ConvertToBSpline::NewSurface(const TopoDS_Face&         F,
   S->Bounds(U1, U2, V1, V2);
   double Umin, Umax, Vmin, Vmax;
   BRepTools::UVBounds(F, Umin, Umax, Vmin, Vmax);
-  if (Precision::IsInfinite(U1) || Precision::IsInfinite(U2))
+  if (math::precision::Precision::IsInfinite(U1) || math::precision::Precision::IsInfinite(U2))
   {
     U1 = Umin;
     U2 = Umax;
   }
-  if (Precision::IsInfinite(V1) || Precision::IsInfinite(V2))
+  if (math::precision::Precision::IsInfinite(V1) || math::precision::Precision::IsInfinite(V2))
   {
     V1 = Vmin;
     V2 = Vmax;
@@ -101,7 +101,7 @@ bool ShapeCustom_ConvertToBSpline::NewSurface(const TopoDS_Face&         F,
                                               U2,
                                               V1,
                                               V2,
-                                              Precision::Approximation(),
+                                              math::precision::Precision::Approximation(),
                                               surf->Continuity(),
                                               10000,
                                               15);
@@ -118,7 +118,7 @@ bool ShapeCustom_ConvertToBSpline::NewSurface(const TopoDS_Face&         F,
                                                   U2,
                                                   V1,
                                                   V2,
-                                                  Precision::Approximation(),
+                                                  math::precision::Precision::Approximation(),
                                                   cnt,
                                                   10000,
                                                   15);
@@ -134,7 +134,7 @@ bool ShapeCustom_ConvertToBSpline::NewSurface(const TopoDS_Face&         F,
   else
     S = res;
 
-  SendMsg(F, Message_Msg("ConvertToBSpline.NewSurface.MSG0"));
+  SendMsg(F, System::log::Message_Msg("ConvertToBSpline.NewSurface.MSG0"));
 
   Tol      = BRep_Tool::Tolerance(F);
   RevWires = false;
@@ -165,7 +165,7 @@ bool ShapeCustom_ConvertToBSpline::NewCurve(const TopoDS_Edge&       E,
     if (!C.IsNull())
       C = occ::down_cast<Geom_Curve>(C->Copy());
     Tol = BRep_Tool::Tolerance(E);
-    SendMsg(E, Message_Msg("ConvertToBSpline.NewCurve.MSG0"));
+    SendMsg(E, System::log::Message_Msg("ConvertToBSpline.NewCurve.MSG0"));
     return true;
   }
   return false;

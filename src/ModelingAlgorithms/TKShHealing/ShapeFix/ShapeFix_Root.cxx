@@ -10,7 +10,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_Root, Standard_Transient)
 
 ShapeFix_Root::ShapeFix_Root()
 {
-  myPrecision = myMinTol = myMaxTol = Precision::Confusion();
+  myPrecision = myMinTol = myMaxTol = math::precision::Precision::Confusion();
   myMsgReg                          = new ShapeExtend_BasicMsgRegistrator;
 }
 
@@ -54,7 +54,7 @@ void ShapeFix_Root::SetMaxTolerance(const double maxtol)
 }
 
 void ShapeFix_Root::SendMsg(const TopoDS_Shape&   shape,
-                            const Message_Msg&    message,
+                            const System::log::Message_Msg&    message,
                             const Message_Gravity gravity) const
 {
   if (!myMsgReg.IsNull())

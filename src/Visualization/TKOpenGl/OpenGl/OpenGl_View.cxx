@@ -124,7 +124,7 @@ OpenGl_View::OpenGl_View(const occ::handle<Graphic3d_StructureManager>& theMgr,
         BVH_Constants_LeafNodeSizeAverage,
         BVH_Constants_MaxTreeDepth,
         false,
-        OSD_Parallel::NbLogicalProcessors() + 1)),
+        System::os::OSD_Parallel::NbLogicalProcessors() + 1)),
       myRaytraceSceneRadius(0.0f),
       myRaytraceSceneEpsilon(1.0e-6f),
       myToUpdateEnvironmentMap(false),
@@ -609,7 +609,7 @@ void OpenGl_View::SetBackgroundImage(const occ::handle<Graphic3d_TextureMap>& th
   {
     if (!theTextureMap.IsNull())
     {
-      Message::SendFail("Error: unable to set image background");
+      System::log::Message::SendFail("Error: unable to set image background");
     }
     aNewMap.Nullify();
   }

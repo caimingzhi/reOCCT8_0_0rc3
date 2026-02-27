@@ -20,7 +20,7 @@
 #include <TCollection_AsciiString.hpp>
 
 #include <cstdio>
-IMPLEMENT_STANDARD_RTTIEXT(Storage_Schema, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(app::storage::Storage_Schema, Standard_Transient)
 
 #define DATATYPE_MIGRATION
 
@@ -207,46 +207,46 @@ void Storage_BucketIterator::Next()
   }
 }
 
-Storage_Schema::Storage_Schema()
+app::storage::Storage_Schema::Storage_Schema()
 {
   Clear();
   ResetDefaultCallBack();
   myCallBackState = false;
 }
 
-void Storage_Schema::SetVersion(const TCollection_AsciiString& aVersion)
+void app::storage::Storage_Schema::SetVersion(const TCollection_AsciiString& aVersion)
 {
   myVersion = aVersion;
 }
 
-TCollection_AsciiString Storage_Schema::Version() const
+TCollection_AsciiString app::storage::Storage_Schema::Version() const
 {
   return myVersion;
 }
 
-void Storage_Schema::SetName(const TCollection_AsciiString& aSchemaName)
+void app::storage::Storage_Schema::SetName(const TCollection_AsciiString& aSchemaName)
 {
   myName = aSchemaName;
 }
 
-TCollection_AsciiString Storage_Schema::Name() const
+TCollection_AsciiString app::storage::Storage_Schema::Name() const
 {
   return myName;
 }
 
-void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
-                           const occ::handle<Storage_Data>&       aData) const
+void app::storage::Storage_Schema::Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver,
+                           const occ::handle<app::storage::Storage_Data>&       aData) const
 {
   if (aData.IsNull())
     return;
 
   int                                                           posfrom, posto;
   occ::handle<Standard_Persistent>                              p;
-  occ::handle<NCollection_HSequence<occ::handle<Storage_Root>>> plist;
+  occ::handle<NCollection_HSequence<occ::handle<app::storage::Storage_Root>>> plist;
   TCollection_AsciiString                                       errorContext("AddPersistent");
-  Storage_Schema::ISetCurrentData(aData);
+  app::storage::Storage_Schema::ISetCurrentData(aData);
 
-  occ::handle<Storage_InternalData> iData = aData->InternalData();
+  occ::handle<app::storage::Storage_InternalData> iData = aData->InternalData();
 
   aData->Clear();
   aData->ClearErrorStatus();
@@ -269,7 +269,7 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
   int i, len;
 
   aData->HeaderData()->SetCreationDate(ICreationDate());
-  aData->HeaderData()->SetStorageVersion(Storage::Version());
+  aData->HeaderData()->SetStorageVersion(app::storage::Storage::Version());
   aData->HeaderData()->SetNumberOfObjects(iData->myPtoA.Length());
   aData->HeaderData()->SetSchemaName(myName);
   aData->HeaderData()->SetSchemaVersion(myVersion);
@@ -309,14 +309,14 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
       theDriver->BeginWriteTypeSection();
       len = aData->NumberOfTypes();
 
-      occ::handle<NCollection_HArray1<occ::handle<Storage_CallBack>>> WFunc =
-        new NCollection_HArray1<occ::handle<Storage_CallBack>>(1, len);
+      occ::handle<NCollection_HArray1<occ::handle<app::storage::Storage_CallBack>>> WFunc =
+        new NCollection_HArray1<occ::handle<app::storage::Storage_CallBack>>(1, len);
 
       theDriver->SetTypeSectionSize(len);
 
-      NCollection_DataMap<TCollection_AsciiString, occ::handle<Storage_TypedCallBack>>::Iterator
+      NCollection_DataMap<TCollection_AsciiString, occ::handle<app::storage::Storage_TypedCallBack>>::Iterator
                                          cbit(iData->myTypeBinding);
-      occ::handle<Storage_TypedCallBack> atcallBack;
+      occ::handle<app::storage::Storage_TypedCallBack> atcallBack;
 
       for (; cbit.More(); cbit.Next())
       {
@@ -367,7 +367,7 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
       errorContext = "BeginWriteDataSection";
       theDriver->BeginWriteDataSection();
 
-      occ::handle<Storage_Schema> me = this;
+      occ::handle<app::storage::Storage_Schema> me = this;
 
       errorContext = "Write";
 
@@ -387,7 +387,7 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
       errorContext = "EndWriteDataSection";
       theDriver->EndWriteDataSection();
     }
-    catch (Storage_StreamWriteError const&)
+    catch (app::storage::Storage_StreamWriteError const&)
     {
       aData->SetErrorStatus(Storage_VSWriteError);
       aData->SetErrorStatusExtension(errorContext);
@@ -403,18 +403,18 @@ void Storage_Schema::Write(const occ::handle<Storage_BaseDriver>& theDriver,
   Clear();
 }
 
-void Storage_Schema::AddReadUnknownTypeCallBack(const TCollection_AsciiString&       aTypeName,
-                                                const occ::handle<Storage_CallBack>& aCallBack)
+void app::storage::Storage_Schema::AddReadUnknownTypeCallBack(const TCollection_AsciiString&       aTypeName,
+                                                const occ::handle<app::storage::Storage_CallBack>& aCallBack)
 {
   if (!aCallBack.IsNull())
   {
-    occ::handle<Storage_TypedCallBack> aTCallBack = new Storage_TypedCallBack(aTypeName, aCallBack);
+    occ::handle<app::storage::Storage_TypedCallBack> aTCallBack = new app::storage::Storage_TypedCallBack(aTypeName, aCallBack);
 
     myCallBack.Bind(aTypeName, aTCallBack);
   }
 }
 
-void Storage_Schema::RemoveReadUnknownTypeCallBack(const TCollection_AsciiString& aTypeName)
+void app::storage::Storage_Schema::RemoveReadUnknownTypeCallBack(const TCollection_AsciiString& aTypeName)
 {
   if (myCallBack.IsBound(aTypeName))
   {
@@ -422,10 +422,10 @@ void Storage_Schema::RemoveReadUnknownTypeCallBack(const TCollection_AsciiString
   }
 }
 
-occ::handle<NCollection_HSequence<TCollection_AsciiString>> Storage_Schema::InstalledCallBackList()
+occ::handle<NCollection_HSequence<TCollection_AsciiString>> app::storage::Storage_Schema::InstalledCallBackList()
   const
 {
-  NCollection_DataMap<TCollection_AsciiString, occ::handle<Storage_TypedCallBack>>::Iterator it(
+  NCollection_DataMap<TCollection_AsciiString, occ::handle<app::storage::Storage_TypedCallBack>>::Iterator it(
     myCallBack);
   occ::handle<NCollection_HSequence<TCollection_AsciiString>> result =
     new NCollection_HSequence<TCollection_AsciiString>;
@@ -438,49 +438,49 @@ occ::handle<NCollection_HSequence<TCollection_AsciiString>> Storage_Schema::Inst
   return result;
 }
 
-void Storage_Schema::ClearCallBackList()
+void app::storage::Storage_Schema::ClearCallBackList()
 {
   myCallBack.Clear();
 }
 
-void Storage_Schema::UseDefaultCallBack()
+void app::storage::Storage_Schema::UseDefaultCallBack()
 {
   myCallBackState = true;
 }
 
-void Storage_Schema::DontUseDefaultCallBack()
+void app::storage::Storage_Schema::DontUseDefaultCallBack()
 {
   myCallBackState = false;
 }
 
-bool Storage_Schema::IsUsingDefaultCallBack() const
+bool app::storage::Storage_Schema::IsUsingDefaultCallBack() const
 {
   return myCallBackState;
 }
 
-void Storage_Schema::SetDefaultCallBack(const occ::handle<Storage_CallBack>& f)
+void app::storage::Storage_Schema::SetDefaultCallBack(const occ::handle<app::storage::Storage_CallBack>& f)
 {
   myDefaultCallBack = f;
 }
 
-void Storage_Schema::ResetDefaultCallBack()
+void app::storage::Storage_Schema::ResetDefaultCallBack()
 {
-  myDefaultCallBack = new Storage_DefaultCallBack;
+  myDefaultCallBack = new app::storage::Storage_DefaultCallBack;
 }
 
-occ::handle<Storage_CallBack> Storage_Schema::DefaultCallBack() const
+occ::handle<app::storage::Storage_CallBack> app::storage::Storage_Schema::DefaultCallBack() const
 {
   return myDefaultCallBack;
 }
 
-void Storage_Schema::BindType(const TCollection_AsciiString&       aTypeName,
-                              const occ::handle<Storage_CallBack>& aCallBack) const
+void app::storage::Storage_Schema::BindType(const TCollection_AsciiString&       aTypeName,
+                              const occ::handle<app::storage::Storage_CallBack>& aCallBack) const
 {
   if (!HasTypeBinding(aTypeName))
   {
-    occ::handle<Storage_InternalData>  iData = Storage_Schema::ICurrentData()->InternalData();
-    occ::handle<Storage_TypeData>      tData = Storage_Schema::ICurrentData()->TypeData();
-    occ::handle<Storage_TypedCallBack> c     = new Storage_TypedCallBack(aTypeName, aCallBack);
+    occ::handle<app::storage::Storage_InternalData>  iData = app::storage::Storage_Schema::ICurrentData()->InternalData();
+    occ::handle<app::storage::Storage_TypeData>      tData = app::storage::Storage_Schema::ICurrentData()->TypeData();
+    occ::handle<app::storage::Storage_TypedCallBack> c     = new app::storage::Storage_TypedCallBack(aTypeName, aCallBack);
 
     tData->AddType(aTypeName, iData->myTypeId);
     c->SetIndex(iData->myTypeId++);
@@ -488,14 +488,14 @@ void Storage_Schema::BindType(const TCollection_AsciiString&       aTypeName,
   }
 }
 
-occ::handle<Storage_CallBack> Storage_Schema::TypeBinding(
+occ::handle<app::storage::Storage_CallBack> app::storage::Storage_Schema::TypeBinding(
   const TCollection_AsciiString& aTypeName) const
 {
-  occ::handle<Storage_CallBack> result;
+  occ::handle<app::storage::Storage_CallBack> result;
 
   if (HasTypeBinding(aTypeName))
   {
-    occ::handle<Storage_InternalData> iData = Storage_Schema::ICurrentData()->InternalData();
+    occ::handle<app::storage::Storage_InternalData> iData = app::storage::Storage_Schema::ICurrentData()->InternalData();
 
     result = iData->myTypeBinding.Find(aTypeName)->CallBack();
   }
@@ -503,21 +503,21 @@ occ::handle<Storage_CallBack> Storage_Schema::TypeBinding(
   return result;
 }
 
-bool Storage_Schema::AddPersistent(const occ::handle<Standard_Persistent>& sp,
+bool app::storage::Storage_Schema::AddPersistent(const occ::handle<Standard_Persistent>& sp,
                                    const char*                             tName) const
 {
   bool result = false;
 
   if (!sp.IsNull())
   {
-    occ::handle<Storage_InternalData> iData = Storage_Schema::ICurrentData()->InternalData();
+    occ::handle<app::storage::Storage_InternalData> iData = app::storage::Storage_Schema::ICurrentData()->InternalData();
 
     if (sp->_typenum == 0)
     {
       int                            aTypenum;
       static TCollection_AsciiString aTypeName;
       aTypeName                           = tName;
-      occ::handle<Storage_TypeData> tData = Storage_Schema::ICurrentData()->TypeData();
+      occ::handle<app::storage::Storage_TypeData> tData = app::storage::Storage_Schema::ICurrentData()->TypeData();
 
       aTypenum = iData->myTypeBinding.Find(aTypeName)->Index();
 
@@ -531,13 +531,13 @@ bool Storage_Schema::AddPersistent(const occ::handle<Standard_Persistent>& sp,
   return result;
 }
 
-bool Storage_Schema::PersistentToAdd(const occ::handle<Standard_Persistent>& sp) const
+bool app::storage::Storage_Schema::PersistentToAdd(const occ::handle<Standard_Persistent>& sp) const
 {
   bool result = false;
 
   if (!sp.IsNull())
   {
-    occ::handle<Storage_InternalData> di = Storage_Schema::ICurrentData()->InternalData();
+    occ::handle<app::storage::Storage_InternalData> di = app::storage::Storage_Schema::ICurrentData()->InternalData();
 
     if (sp->_typenum == 0 && sp->_refnum != -1)
     {
@@ -550,14 +550,14 @@ bool Storage_Schema::PersistentToAdd(const occ::handle<Standard_Persistent>& sp)
   return result;
 }
 
-void Storage_Schema::Clear() const
+void app::storage::Storage_Schema::Clear() const
 {
-  Storage_Schema::ICurrentData().Nullify();
+  app::storage::Storage_Schema::ICurrentData().Nullify();
 }
 
 #ifdef DATATYPE_MIGRATION
 
-bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
+bool app::storage::Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
                                         TCollection_AsciiString&       newName)
 {
   static bool                    isChecked(false);
@@ -568,14 +568,14 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
   {
     isChecked = true;
 
-    OSD_Environment         csf(TCollection_AsciiString("CSF_MIGRATION_TYPES"));
+    System::os::OSD_Environment         csf(TCollection_AsciiString("CSF_MIGRATION_TYPES"));
     TCollection_AsciiString aFileName = csf.Value();
-    OSD_File                aFile;
-    OSD_Path                aPath(aFileName, OSD_Default);
+    System::os::OSD_File                aFile;
+    System::os::OSD_Path                aPath(aFileName, OSD_Default);
     aFile.SetPath(aPath);
     if (aFile.Exists())
     {
-      OSD_Protection aProt(OSD_R, OSD_R, OSD_R, OSD_R);
+      System::os::OSD_Protection aProt(OSD_R, OSD_R, OSD_R, OSD_R);
       aFile.Open(OSD_ReadOnly, aProt);
       if (aFile.IsOpen() && aFile.IsReadable())
       {
@@ -643,20 +643,20 @@ bool Storage_Schema::CheckTypeMigration(const TCollection_AsciiString& oldName,
 }
 #endif
 
-void Storage_Schema::ISetCurrentData(const occ::handle<Storage_Data>& dData)
+void app::storage::Storage_Schema::ISetCurrentData(const occ::handle<app::storage::Storage_Data>& dData)
 {
-  Storage_Schema::ICurrentData() = dData;
+  app::storage::Storage_Schema::ICurrentData() = dData;
 }
 
-occ::handle<Storage_Data>& Storage_Schema::ICurrentData()
+occ::handle<app::storage::Storage_Data>& app::storage::Storage_Schema::ICurrentData()
 {
-  static occ::handle<Storage_Data> _Storage_CData;
+  static occ::handle<app::storage::Storage_Data> _Storage_CData;
   return _Storage_CData;
 }
 
 #define SLENGTH 80
 
-TCollection_AsciiString Storage_Schema::ICreationDate()
+TCollection_AsciiString app::storage::Storage_Schema::ICreationDate()
 {
   char       nowstr[SLENGTH];
   time_t     nowbin;
@@ -664,7 +664,7 @@ TCollection_AsciiString Storage_Schema::ICreationDate()
   if (time(&nowbin) == (time_t)-1)
   {
 #ifdef OCCT_DEBUG
-    std::cerr << "Storage ERROR : Could not get time of day from time()" << std::endl;
+    std::cerr << "app::storage::Storage ERROR : Could not get time of day from time()" << std::endl;
 #endif
   }
 
@@ -673,7 +673,7 @@ TCollection_AsciiString Storage_Schema::ICreationDate()
   if (strftime(nowstr, SLENGTH, "%m/%d/%Y", nowstruct) == (size_t)0)
   {
 #ifdef OCCT_DEBUG
-    std::cerr << "Storage ERROR : Could not get string from strftime()" << std::endl;
+    std::cerr << "app::storage::Storage ERROR : Could not get string from strftime()" << std::endl;
 #endif
   }
 

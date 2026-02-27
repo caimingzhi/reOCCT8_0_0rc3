@@ -171,8 +171,8 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
       {
         dU += (ceil(fabs(dU) / C->Period()) * C->Period());
       }
-      if ((dU > Precision::PConfusion() && dU <= 0.1 * C->Period() && dpar > 0.5 * C->Period())
-          || (dpar > Precision::PConfusion() && dpar <= 0.1 * C->Period()
+      if ((dU > math::precision::Precision::PConfusion() && dU <= 0.1 * C->Period() && dpar > 0.5 * C->Period())
+          || (dpar > math::precision::Precision::PConfusion() && dpar <= 0.1 * C->Period()
               && dU > 0.5 * C->Period()))
       {
         std::swap(V1, V2);
@@ -190,7 +190,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
         double aDist2m      = aP12.Distance(aPm);
         double aDistMax     = std::max(std::max(aDist1m, aDist2m), aDist11);
         bool   isSmallCurve = (aDistMax <= aTolV1 || aDistMax <= aTolV2);
-        if (BRepTools::Compare(Vfirst, Vlast) && isSmallCurve && dpar > Precision::PConfusion()
+        if (BRepTools::Compare(Vfirst, Vlast) && isSmallCurve && dpar > math::precision::Precision::PConfusion()
             && dpar <= 0.1 * C->Period())
         {
           occ::handle<Geom_BSplineCurve> aBspl1 = occ::down_cast<Geom_BSplineCurve>(C->Copy());

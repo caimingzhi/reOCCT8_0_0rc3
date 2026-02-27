@@ -17,7 +17,7 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(IsDeltaOn, "delta")
 
 XmlMDataStd_ByteArrayDriver::XmlMDataStd_ByteArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

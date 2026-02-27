@@ -87,7 +87,7 @@ bool SelectMgr_AxisIntersector::hasIntersection(const gp_Pnt& thePnt, double& th
   const gp_Dir& anAxisDir = myAxis.Direction();
 
   gp_Dir aDirToPnt(thePnt.XYZ() - anAxisLoc.XYZ());
-  if (!anAxisDir.IsEqual(aDirToPnt, Precision::Angular()))
+  if (!anAxisDir.IsEqual(aDirToPnt, math::precision::Precision::Angular()))
   {
     return false;
   }
@@ -105,7 +105,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
 
   const gp_XYZ anUVNormVec    = aV.Crossed(anU);
   const double anUVNormVecMod = anUVNormVec.Modulus();
-  if (anUVNormVecMod <= Precision::Confusion())
+  if (anUVNormVecMod <= math::precision::Precision::Confusion())
   {
 
     thePickResult.Invalidate();
@@ -114,7 +114,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
 
   const gp_XYZ anUWNormVec    = aW.Crossed(anU);
   const double anUWNormVecMod = anUWNormVec.Modulus();
-  if (anUWNormVecMod <= Precision::Confusion())
+  if (anUWNormVecMod <= math::precision::Precision::Confusion())
   {
 
     thePickResult.Invalidate();
@@ -131,7 +131,7 @@ bool SelectMgr_AxisIntersector::raySegmentDistance(const gp_Pnt&            theS
 
   const gp_XYZ anIntersectPnt = myAxis.Location().XYZ() + aV * aParam;
   if ((anIntersectPnt - theSegPnt1.XYZ()).Modulus() + (anIntersectPnt - theSegPnt2.XYZ()).Modulus()
-      > anU.Modulus() + Precision::Confusion())
+      > anU.Modulus() + math::precision::Precision::Confusion())
   {
 
     thePickResult.Invalidate();
@@ -152,7 +152,7 @@ bool SelectMgr_AxisIntersector::rayPlaneIntersection(const gp_Vec&            th
   double aD  = thePlane.Dot(anU);
   double aN  = -thePlane.Dot(aW);
 
-  if (std::abs(aD) < Precision::Confusion())
+  if (std::abs(aD) < math::precision::Precision::Confusion())
   {
     thePickResult.Invalidate();
     return false;
@@ -309,7 +309,7 @@ bool SelectMgr_AxisIntersector::OverlapsPolygon(const NCollection_Array1<gp_Pnt>
     const gp_XYZ  aVec1     = aPnt1 - aPnt2;
     const gp_XYZ  aVec2     = aPnt3 - aPnt2;
     gp_Vec        aPolyNorm = aVec2.Crossed(aVec1);
-    if (aPolyNorm.Magnitude() <= Precision::Confusion())
+    if (aPolyNorm.Magnitude() <= math::precision::Precision::Confusion())
     {
 
       return OverlapsPoint(theArrayOfPnts.First(), theClipRange, thePickResult);
@@ -410,7 +410,7 @@ bool SelectMgr_AxisIntersector::OverlapsTriangle(const gp_Pnt&                  
     int          aNearestEdgeIdx2 = (aNearestEdgeIdx1 + 1) % 3;
     const gp_Vec aVec12(aPnts[aNearestEdgeIdx1], aPnts[aNearestEdgeIdx2]);
     if (aVec12.SquareMagnitude() > gp::Resolution()
-        && myAxis.Direction().IsParallel(aVec12, Precision::Angular()))
+        && myAxis.Direction().IsParallel(aVec12, math::precision::Precision::Angular()))
     {
       aNearestEdgeIdx2 = aNearestEdgeIdx1 == 0 ? 2 : aNearestEdgeIdx1 - 1;
     }
@@ -521,11 +521,11 @@ bool SelectMgr_AxisIntersector::OverlapsCylinder(const double                   
   const gp_Pnt aPntOnCylinder = aLoc.XYZ() + aRayDir.XYZ() * aDepth;
   thePickResult.SetDepth(aDepth);
   thePickResult.SetPickedPoint(aPntOnCylinder.Transformed(theTrsf));
-  if (std::abs(aPntOnCylinder.Z()) < Precision::Confusion())
+  if (std::abs(aPntOnCylinder.Z()) < math::precision::Precision::Confusion())
   {
     thePickResult.SetSurfaceNormal(-gp::DZ().Transformed(theTrsf));
   }
-  else if (std::abs(aPntOnCylinder.Z() - theHeight) < Precision::Confusion())
+  else if (std::abs(aPntOnCylinder.Z() - theHeight) < math::precision::Precision::Confusion())
   {
     thePickResult.SetSurfaceNormal(gp::DZ().Transformed(theTrsf));
   }
@@ -596,7 +596,7 @@ bool SelectMgr_AxisIntersector::OverlapsCircle(const double                   th
   const gp_Pnt aPntOnCylinder = aLoc.XYZ() + aRayDir.XYZ() * aDepth;
   thePickResult.SetDepth(aDepth);
   thePickResult.SetPickedPoint(aPntOnCylinder.Transformed(theTrsf));
-  if (std::abs(aPntOnCylinder.Z()) < Precision::Confusion())
+  if (std::abs(aPntOnCylinder.Z()) < math::precision::Precision::Confusion())
   {
     thePickResult.SetSurfaceNormal(-gp::DZ().Transformed(theTrsf));
   }

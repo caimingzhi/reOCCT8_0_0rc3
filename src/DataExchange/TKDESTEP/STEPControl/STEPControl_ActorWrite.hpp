@@ -29,7 +29,7 @@ public:
   Standard_EXPORT occ::handle<Transfer_Binder> Transfer(
     const occ::handle<Transfer_Finder>&        start,
     const occ::handle<Transfer_FinderProcess>& FP,
-    const Message_ProgressRange&               theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&               theProgress = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT occ::handle<Transfer_Binder> TransferSubShape(
     const occ::handle<Transfer_Finder>&                         start,
@@ -39,7 +39,7 @@ public:
     const StepData_Factors&                                 theLocalFactors = StepData_Factors(),
     const occ::handle<NCollection_HSequence<TopoDS_Shape>>& shapeGroup      = nullptr,
     const bool                                              isManifold      = true,
-    const Message_ProgressRange&                            theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                            theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<Transfer_Binder> TransferShape(
     const occ::handle<Transfer_Finder>&                         start,
@@ -48,14 +48,14 @@ public:
     const StepData_Factors&                                 theLocalFactors = StepData_Factors(),
     const occ::handle<NCollection_HSequence<TopoDS_Shape>>& shapeGroup      = nullptr,
     const bool                                              isManifold      = true,
-    const Message_ProgressRange&                            theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                            theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<Transfer_Binder> TransferCompound(
     const occ::handle<Transfer_Finder>&                         start,
     const occ::handle<StepShape_ShapeDefinitionRepresentation>& SDR,
     const occ::handle<Transfer_FinderProcess>&                  FP,
     const StepData_Factors&      theLocalFactors = StepData_Factors(),
-    const Message_ProgressRange& theProgress     = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void SetMode(const STEPControl_StepModelType M);
 

@@ -304,11 +304,11 @@ void VrmlConverter_ShadedShape::ComputeNormal(const TopoDS_Face&          aFace,
       U = T->UVNode(i).X();
       V = T->UVNode(i).Y();
       S.D1(U, V, P, D1U, D1V);
-      CSLib::Normal(D1U, D1V, Precision::Angular(), aStatus, Nor(i));
+      CSLib::Normal(D1U, D1V, math::precision::Precision::Angular(), aStatus, Nor(i));
       if (aStatus != CSLib_Done)
       {
         S.D2(U, V, P, D1U, D1V, D2U, D2V, D2UV);
-        CSLib::Normal(D1U, D1V, D2U, D2V, D2UV, Precision::Angular(), OK, NStat, Nor(i));
+        CSLib::Normal(D1U, D1V, D2U, D2V, D2UV, math::precision::Precision::Angular(), OK, NStat, Nor(i));
       }
       if (aFace.Orientation() == TopAbs_REVERSED)
         (Nor(i)).Reverse();

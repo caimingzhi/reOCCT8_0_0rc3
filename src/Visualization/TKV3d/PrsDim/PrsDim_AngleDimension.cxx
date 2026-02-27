@@ -49,7 +49,7 @@ namespace
     gp_Vec aVec1(theFirstPoint, theCenterPoint);
     gp_Vec aVec2(theCenterPoint, theSecondPoint);
 
-    return aVec1.IsParallel(aVec2, Precision::Angular());
+    return aVec1.IsParallel(aVec2, math::precision::Precision::Angular());
   }
 } // namespace
 
@@ -259,7 +259,7 @@ gp_Pnt PrsDim_AngleDimension::GetCenterOnArc(const gp_Pnt& theFirstAttach,
 
   double aParamBeg = ElCLib::Parameter(aCircle, theFirstAttach);
   double aParamEnd = ElCLib::Parameter(aCircle, theSecondAttach);
-  ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
+  ElCLib::AdjustPeriodic(0.0, M_PI * 2, math::precision::Precision::PConfusion(), aParamBeg, aParamEnd);
 
   return ElCLib::Value((aParamBeg + aParamEnd) * 0.5, aCircle);
 }
@@ -374,7 +374,7 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
 
   double aParamBeg = ElCLib::Parameter(aCircle, theFirstAttach);
   double aParamEnd = ElCLib::Parameter(aCircle, theSecondAttach);
-  ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
+  ElCLib::AdjustPeriodic(0.0, M_PI * 2, math::precision::Precision::PConfusion(), aParamBeg, aParamEnd);
 
   double aParamMid = (aParamBeg + aParamEnd) * 0.5;
 
@@ -422,9 +422,9 @@ void PrsDim_AngleDimension::DrawArcWithText(const occ::handle<Prs3d_Presentation
 
 bool PrsDim_AngleDimension::CheckPlane(const gp_Pln& thePlane) const
 {
-  return thePlane.Contains(myFirstPoint, Precision::Confusion())
-         || thePlane.Contains(mySecondPoint, Precision::Confusion())
-         || thePlane.Contains(myCenterPoint, Precision::Confusion());
+  return thePlane.Contains(myFirstPoint, math::precision::Precision::Confusion())
+         || thePlane.Contains(mySecondPoint, math::precision::Precision::Confusion())
+         || thePlane.Contains(myCenterPoint, math::precision::Precision::Confusion());
 }
 
 void PrsDim_AngleDimension::ComputePlane()
@@ -746,7 +746,7 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   gp_Lin aSecondLin = aSecondLine->Lin();
 
   bool isParallelLines =
-    aFirstLin.Direction().IsParallel(aSecondLin.Direction(), Precision::Angular());
+    aFirstLin.Direction().IsParallel(aSecondLin.Direction(), math::precision::Precision::Angular());
 
   theComputedPlane = isParallelLines
                        ? gp_Pln(gp::XOY())
@@ -770,13 +770,13 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
     return false;
   }
 
-  bool isSameLines = aFirstLin.Direction().IsEqual(aSecondLin.Direction(), Precision::Angular())
-                     && aFirstLin.Location().IsEqual(aSecondLin.Location(), Precision::Confusion());
+  bool isSameLines = aFirstLin.Direction().IsEqual(aSecondLin.Direction(), math::precision::Precision::Angular())
+                     && aFirstLin.Location().IsEqual(aSecondLin.Location(), math::precision::Precision::Confusion());
 
-  bool isSameEdges = (aFirstPoint1.IsEqual(aFirstPoint2, Precision::Confusion())
-                      && aLastPoint1.IsEqual(aLastPoint2, Precision::Confusion()))
-                     || (aFirstPoint1.IsEqual(aLastPoint2, Precision::Confusion())
-                         && aLastPoint1.IsEqual(aFirstPoint2, Precision::Confusion()));
+  bool isSameEdges = (aFirstPoint1.IsEqual(aFirstPoint2, math::precision::Precision::Confusion())
+                      && aLastPoint1.IsEqual(aLastPoint2, math::precision::Precision::Confusion()))
+                     || (aFirstPoint1.IsEqual(aLastPoint2, math::precision::Precision::Confusion())
+                         && aLastPoint1.IsEqual(aFirstPoint2, math::precision::Precision::Confusion()));
 
   if (isParallelLines)
   {
@@ -794,7 +794,7 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
       ElCLib::Value((std::min(aParam11, aParam12) + std::max(aParam21, aParam22)) * 0.5, aFirstLin);
     myFirstPoint  = myCenterPoint.Translated(gp_Vec(aFirstLin.Direction()) * std::abs(GetFlyout()));
     mySecondPoint = myCenterPoint.XYZ()
-                    + (aFirstLin.Direction().IsEqual(aSecondLin.Direction(), Precision::Angular())
+                    + (aFirstLin.Direction().IsEqual(aSecondLin.Direction(), math::precision::Precision::Angular())
                          ? aFirstLin.Direction().Reversed().XYZ() * std::abs(GetFlyout())
                          : aSecondLin.Direction().XYZ() * std::abs(GetFlyout()));
   }
@@ -973,8 +973,8 @@ bool PrsDim_AngleDimension::InitConeAngle()
 
     gp_Vec aVec2(aFirst2, aLast2);
 
-    if (aVec1.IsParallel(aVec2, Precision::Angular())
-        || aVec1.IsNormal(aVec2, Precision::Angular()))
+    if (aVec1.IsParallel(aVec2, math::precision::Precision::Angular())
+        || aVec1.IsNormal(aVec2, math::precision::Precision::Angular()))
       return false;
 
     gce_MakeCone aMkCone(aRevSurf->Axis(), aFirst1, aLast1);
@@ -989,7 +989,7 @@ bool PrsDim_AngleDimension::InitConeAngle()
 
       aOffsetSurf = new Geom_OffsetSurface(aSurf, anOffset);
       aSurf       = aOffsetSurf->Surface();
-      BRepBuilderAPI_MakeFace aMkFace(aSurf, Precision::Confusion());
+      BRepBuilderAPI_MakeFace aMkFace(aSurf, math::precision::Precision::Confusion());
       aMkFace.Build();
       if (!aMkFace.IsDone())
         return false;
@@ -1026,10 +1026,10 @@ bool PrsDim_AngleDimension::IsValidPoints(const gp_Pnt& theFirstPoint,
                                           const gp_Pnt& theCenterPoint,
                                           const gp_Pnt& theSecondPoint) const
 {
-  return theFirstPoint.Distance(theCenterPoint) > Precision::Confusion()
-         && theSecondPoint.Distance(theCenterPoint) > Precision::Confusion()
+  return theFirstPoint.Distance(theCenterPoint) > math::precision::Precision::Confusion()
+         && theSecondPoint.Distance(theCenterPoint) > math::precision::Precision::Confusion()
          && gp_Vec(theCenterPoint, theFirstPoint).Angle(gp_Vec(theCenterPoint, theSecondPoint))
-              > Precision::Angular();
+              > math::precision::Precision::Angular();
 }
 
 bool PrsDim_AngleDimension::isArrowVisible(
@@ -1124,7 +1124,7 @@ void PrsDim_AngleDimension::SetTextPosition(const gp_Pnt& theTextPos)
     return;
   }
 
-  if (!GetPlane().Contains(theTextPos, Precision::Confusion()))
+  if (!GetPlane().Contains(theTextPos, math::precision::Precision::Confusion()))
   {
     throw Standard_ProgramError(
       "The text position point for angle dimension doesn't belong to the working plane.");
@@ -1168,7 +1168,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
     aParamBeg     = aParam;
   }
 
-  ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
+  ElCLib::AdjustPeriodic(0.0, M_PI * 2, math::precision::Precision::PConfusion(), aParamBeg, aParamEnd);
   double aTextPar = ElCLib::Parameter(aCircle, theTextPos);
 
   if (aTextPar > aParamBeg && aTextPar < aParamEnd)
@@ -1179,7 +1179,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
 
   aParamBeg += M_PI;
   aParamEnd += M_PI;
-  ElCLib::AdjustPeriodic(0.0, M_PI * 2, Precision::PConfusion(), aParamBeg, aParamEnd);
+  ElCLib::AdjustPeriodic(0.0, M_PI * 2, math::precision::Precision::PConfusion(), aParamBeg, aParamEnd);
 
   if (aTextPar > aParamBeg && aTextPar < aParamEnd)
   {
@@ -1205,7 +1205,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
     gp_Vec aPosFlyoutDir = gp_Vec(myCenterPoint, myFirstPoint).Normalized().Scaled(aRadius);
 
     theFlyout =
-      aFirstTextProj.Distance(myCenterPoint.Translated(aPosFlyoutDir)) > Precision::Confusion()
+      aFirstTextProj.Distance(myCenterPoint.Translated(aPosFlyoutDir)) > math::precision::Precision::Confusion()
         ? -aRadius
         : aRadius;
   }
@@ -1222,7 +1222,7 @@ void PrsDim_AngleDimension::AdjustParameters(const gp_Pnt& theTextPos,
     gp_Vec aPosFlyoutDir = gp_Vec(myCenterPoint, mySecondPoint).Normalized().Scaled(aRadius);
 
     theFlyout =
-      aSecondTextProj.Distance(myCenterPoint.Translated(aPosFlyoutDir)) > Precision::Confusion()
+      aSecondTextProj.Distance(myCenterPoint.Translated(aPosFlyoutDir)) > math::precision::Precision::Confusion()
         ? -aRadius
         : aRadius;
   }

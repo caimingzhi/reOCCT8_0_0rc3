@@ -72,7 +72,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   }
 
   gp_Cylinder        CylOffset(Cyl.Position(), ROff);
-  IntAna_QuadQuadGeo LInt(PlanOffset, CylOffset, Precision::Angular(), Precision::Confusion());
+  IntAna_QuadQuadGeo LInt(PlanOffset, CylOffset, math::precision::Precision::Angular(), math::precision::Precision::Confusion());
   gp_Pnt             OrSpine = ElCLib::Value(First, Spine);
   gp_Pnt             OrFillet;
   gp_Dir             DirFillet;
@@ -109,7 +109,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
 
   double UOnCyl, VOnCyl, UOnPln, VOnPln;
   ElSLib::Parameters(Cyl, OrFillet, UOnCyl, VOnCyl);
-  constexpr double tesp = Precision::Confusion();
+  constexpr double tesp = math::precision::Precision::Confusion();
   if (UOnCyl < fu - tesp || UOnCyl > lu + tesp)
     UOnCyl = ElCLib::InPeriod(UOnCyl, fu, fu + 2 * M_PI);
   ElSLib::Parameters(Pln, OrFillet, UOnPln, VOnPln);
@@ -308,7 +308,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
       Dz.Reverse();
     }
     Rad = cylrad - Radius;
-    if (std::abs(Rad) <= Precision::Confusion())
+    if (std::abs(Rad) <= math::precision::Precision::Confusion())
     {
       c1sphere = true;
     }
@@ -473,7 +473,7 @@ bool ChFiKPart_MakeFillet(TopOpeBRepDS_DataStructure&         DStr,
   lin2dFil.SetLocation(p2dFil);
   occ::handle<Geom2d_Line> GLin2dFil2 = new Geom2d_Line(lin2dFil);
   ElSLib::Parameters(Cyl, P, u, v);
-  double tol           = Precision::PConfusion();
+  double tol           = math::precision::Precision::PConfusion();
   bool   careaboutsens = false;
   if (std::abs(lu - fu - 2 * M_PI) < tol)
     careaboutsens = true;

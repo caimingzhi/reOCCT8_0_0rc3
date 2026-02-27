@@ -10,7 +10,7 @@ IMPLEMENT_DOMSTRING(AttrGUID, "guid")
 IMPLEMENT_DOMSTRING(SubshapeIndex, "subshape_index")
 
 XmlMXCAFDoc_AssemblyItemRefDriver::XmlMXCAFDoc_AssemblyItemRefDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_AssemblyItemRef)->Name())
 {
 }

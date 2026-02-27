@@ -27,8 +27,8 @@ Extrema_ExtCC::Extrema_ExtCC(const double TolC1, const double TolC2)
 {
   myC[0]   = nullptr;
   myC[1]   = nullptr;
-  myInf[0] = myInf[1] = -Precision::Infinite();
-  mySup[0] = mySup[1] = Precision::Infinite();
+  myInf[0] = myInf[1] = -math::precision::Precision::Infinite();
+  mySup[0] = mySup[1] = math::precision::Precision::Infinite();
   myTol[0]            = TolC1;
   myTol[1]            = TolC2;
   mydist11 = mydist12 = mydist21 = mydist22 = RealFirst();
@@ -153,28 +153,28 @@ void Extrema_ExtCC::Perform()
   U21 = myInf[1];
   U22 = mySup[1];
 
-  if (!Precision::IsInfinite(U11))
+  if (!math::precision::Precision::IsInfinite(U11))
     myP1f = Extrema_CurveTool::Value(*myC[0], U11);
-  if (!Precision::IsInfinite(U12))
+  if (!math::precision::Precision::IsInfinite(U12))
     myP1l = Extrema_CurveTool::Value(*myC[0], U12);
-  if (!Precision::IsInfinite(U21))
+  if (!math::precision::Precision::IsInfinite(U21))
     myP2f = Extrema_CurveTool::Value(*myC[1], U21);
-  if (!Precision::IsInfinite(U22))
+  if (!math::precision::Precision::IsInfinite(U22))
     myP2l = Extrema_CurveTool::Value(*myC[1], U22);
 
-  if (Precision::IsInfinite(U11) || Precision::IsInfinite(U21))
+  if (math::precision::Precision::IsInfinite(U11) || math::precision::Precision::IsInfinite(U21))
     mydist11 = RealLast();
   else
     mydist11 = myP1f.SquareDistance(myP2f);
-  if (Precision::IsInfinite(U11) || Precision::IsInfinite(U22))
+  if (math::precision::Precision::IsInfinite(U11) || math::precision::Precision::IsInfinite(U22))
     mydist12 = RealLast();
   else
     mydist12 = myP1f.SquareDistance(myP2l);
-  if (Precision::IsInfinite(U12) || Precision::IsInfinite(U21))
+  if (math::precision::Precision::IsInfinite(U12) || math::precision::Precision::IsInfinite(U21))
     mydist21 = RealLast();
   else
     mydist21 = myP1l.SquareDistance(myP2f);
-  if (Precision::IsInfinite(U12) || Precision::IsInfinite(U22))
+  if (math::precision::Precision::IsInfinite(U12) || math::precision::Precision::IsInfinite(U22))
     mydist22 = RealLast();
   else
     mydist22 = myP1l.SquareDistance(myP2l);
@@ -342,7 +342,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     const gp_Lin          aL = myC[!isReversed ? 1 : 0]->Line();
     const Extrema_ExtPElC ExtPLin(aPonC,
                                   aL,
-                                  Precision::Confusion(),
+                                  math::precision::Precision::Confusion(),
                                   !isReversed ? theUt21 : theUt11,
                                   !isReversed ? theUt22 : theUt12);
 
@@ -362,9 +362,9 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
   {
 
     const double isFirstInfinite =
-      (Precision::IsInfinite(theUt11) && Precision::IsInfinite(theUt12));
+      (math::precision::Precision::IsInfinite(theUt11) && math::precision::Precision::IsInfinite(theUt12));
     const double isLastInfinite =
-      (Precision::IsInfinite(theUt21) && Precision::IsInfinite(theUt22));
+      (math::precision::Precision::IsInfinite(theUt21) && math::precision::Precision::IsInfinite(theUt22));
 
     if (isFirstInfinite || isLastInfinite)
     {
@@ -383,12 +383,12 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
       Bnd_Range aRange2(theUt21, theUt22);
       Bnd_Range aProjRng12;
 
-      if (Precision::IsInfinite(theUt11))
+      if (math::precision::Precision::IsInfinite(theUt11))
       {
         if (isOpposite)
-          aProjRng12.Add(Precision::Infinite());
+          aProjRng12.Add(math::precision::Precision::Infinite());
         else
-          aProjRng12.Add(-Precision::Infinite());
+          aProjRng12.Add(-math::precision::Precision::Infinite());
       }
       else
       {
@@ -397,12 +397,12 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
         aProjRng12.Add(aPar);
       }
 
-      if (Precision::IsInfinite(theUt12))
+      if (math::precision::Precision::IsInfinite(theUt12))
       {
         if (isOpposite)
-          aProjRng12.Add(-Precision::Infinite());
+          aProjRng12.Add(-math::precision::Precision::Infinite());
         else
-          aProjRng12.Add(Precision::Infinite());
+          aProjRng12.Add(math::precision::Precision::Infinite());
       }
       else
       {
@@ -412,7 +412,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
       }
 
       aRange2.Common(aProjRng12);
-      if (aRange2.Delta() > Precision::Confusion())
+      if (aRange2.Delta() > math::precision::Precision::Confusion())
       {
         ClearSolutions();
         mySqDist.Append(theSqDist);
@@ -504,7 +504,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     if (isOpposite)
     {
 
-      if ((aRange.Delta() > Precision::Angular()) && ((aPar1 - aPar2) < Precision::Angular()))
+      if ((aRange.Delta() > math::precision::Precision::Angular()) && ((aPar1 - aPar2) < math::precision::Precision::Angular()))
       {
         aPar2 -= aPeriod;
       }
@@ -512,7 +512,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
     else
     {
 
-      if ((aRange.Delta() > Precision::Angular()) && ((aPar2 - aPar1) < Precision::Angular()))
+      if ((aRange.Delta() > math::precision::Precision::Angular()) && ((aPar2 - aPar1) < math::precision::Precision::Angular()))
       {
         aPar2 += aPeriod;
       }
@@ -528,14 +528,14 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
       Bnd_Range aRng = aProjRng1;
       aRng.Common(aRange);
 
-      if (aRng.Delta() > Precision::Confusion())
+      if (aRng.Delta() > math::precision::Precision::Confusion())
       {
         double aPar = 0.0;
         aRng.GetIntermediatePoint(0.5, aPar);
         const gp_Pnt    aPCirc2 = ElCLib::Value(aPar, aWorkCirc);
         Extrema_ExtPElC ExtPCir(aPCirc2,
                                 Extrema_CurveTool::Circle(*myC[0]),
-                                Precision::Confusion(),
+                                math::precision::Precision::Confusion(),
                                 theUt11,
                                 theUt12);
         if (ExtPCir.NbExt() < 1)
@@ -557,7 +557,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
           const double aDeltaSqDist = aMinSqD - theSqDist;
           const double aSqD         = std::max(aMinSqD, theSqDist);
 
-          if (aDeltaSqDist * aDeltaSqDist < 4.0 * aSqD * Precision::SquareConfusion())
+          if (aDeltaSqDist * aDeltaSqDist < 4.0 * aSqD * math::precision::Precision::SquareConfusion())
           {
 
             break;
@@ -574,7 +574,7 @@ void Extrema_ExtCC::PrepareParallelResult(const double theUt11,
 
         Extrema_ExtPElC ExtPCir(aPCirc2,
                                 Extrema_CurveTool::Circle(*myC[0]),
-                                Precision::Confusion(),
+                                math::precision::Precision::Confusion(),
                                 theUt11,
                                 theUt12);
 

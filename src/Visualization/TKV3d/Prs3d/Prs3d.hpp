@@ -29,7 +29,7 @@ public:
                               const double                    theDeviationCoefficient)
   {
     const NCollection_Vec3<double> aDiag = theBndMax - theBndMin;
-    return (std::max)(aDiag.maxComp() * theDeviationCoefficient * 4.0, Precision::Confusion());
+    return (std::max)(aDiag.maxComp() * theDeviationCoefficient * 4.0, math::precision::Precision::Confusion());
   }
 
   static double GetDeflection(const Bnd_Box& theBndBox,

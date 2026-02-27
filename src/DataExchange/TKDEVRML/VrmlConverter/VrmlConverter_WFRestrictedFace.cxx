@@ -34,7 +34,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
   for (ToolRst.Init(); ToolRst.More(); ToolRst.Next())
   {
     const Adaptor2d_Curve2d& TheRCurve = ToolRst.Value();
-    BndLib_Add2dCurve::Add(TheRCurve, Precision::PConfusion(), B);
+    BndLib_Add2dCurve::Add(TheRCurve, math::precision::Precision::PConfusion(), B);
   }
 
   B.Get(UMin, VMin, UMax, VMax);

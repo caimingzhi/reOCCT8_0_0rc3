@@ -16,7 +16,7 @@
 TCollection_ExtendedString UTL::xgetenv(const char* aCString)
 {
   TCollection_ExtendedString x;
-  OSD_Environment            theEnv(aCString);
+  System::os::OSD_Environment            theEnv(aCString);
   TCollection_AsciiString    theValue = theEnv.Value();
   if (!theValue.IsEmpty())
     x = TCollection_ExtendedString(theValue);
@@ -26,61 +26,61 @@ TCollection_ExtendedString UTL::xgetenv(const char* aCString)
 TCollection_ExtendedString UTL::Extension(const TCollection_ExtendedString& aFileName)
 {
   TCollection_AsciiString aFileNameU(aFileName);
-  OSD_Path                p            = OSD_Path(aFileNameU);
+  System::os::OSD_Path                p            = System::os::OSD_Path(aFileNameU);
   TCollection_AsciiString theExtension = p.Extension();
   if (theExtension.Value(1) == '.')
     theExtension.Remove(1, 1);
   return TCollection_ExtendedString(theExtension);
 }
 
-Storage_Error UTL::OpenFile(const occ::handle<Storage_BaseDriver>& aDriver,
+Storage_Error UTL::OpenFile(const occ::handle<app::storage::Storage_BaseDriver>& aDriver,
                             const TCollection_ExtendedString&      aFileName,
                             const Storage_OpenMode                 aMode)
 {
   return aDriver->Open(TCollection_AsciiString(aFileName), aMode);
 }
 
-void UTL::AddToUserInfo(const occ::handle<Storage_Data>&  aData,
+void UTL::AddToUserInfo(const occ::handle<app::storage::Storage_Data>&  aData,
                         const TCollection_ExtendedString& anInfo)
 {
   aData->AddToUserInfo(TCollection_AsciiString(anInfo));
 }
 
-OSD_Path UTL::Path(const TCollection_ExtendedString& aFileName)
+System::os::OSD_Path UTL::Path(const TCollection_ExtendedString& aFileName)
 {
-  OSD_Path p = OSD_Path(TCollection_AsciiString(aFileName));
+  System::os::OSD_Path p = System::os::OSD_Path(TCollection_AsciiString(aFileName));
   return p;
 }
 
-TCollection_ExtendedString UTL::Disk(const OSD_Path& aPath)
+TCollection_ExtendedString UTL::Disk(const System::os::OSD_Path& aPath)
 {
   return TCollection_ExtendedString(aPath.Disk());
 }
 
-TCollection_ExtendedString UTL::Trek(const OSD_Path& aPath)
+TCollection_ExtendedString UTL::Trek(const System::os::OSD_Path& aPath)
 {
   return TCollection_ExtendedString(aPath.Trek());
 }
 
-TCollection_ExtendedString UTL::Name(const OSD_Path& aPath)
+TCollection_ExtendedString UTL::Name(const System::os::OSD_Path& aPath)
 {
   return TCollection_ExtendedString(aPath.Name());
 }
 
-TCollection_ExtendedString UTL::Extension(const OSD_Path& aPath)
+TCollection_ExtendedString UTL::Extension(const System::os::OSD_Path& aPath)
 {
   return TCollection_ExtendedString(aPath.Extension());
 }
 
-OSD_FileIterator UTL::FileIterator(const OSD_Path& aPath, const TCollection_ExtendedString& aMask)
+System::os::OSD_FileIterator UTL::FileIterator(const System::os::OSD_Path& aPath, const TCollection_ExtendedString& aMask)
 {
-  OSD_FileIterator it = OSD_FileIterator(aPath, TCollection_AsciiString(aMask));
+  System::os::OSD_FileIterator it = System::os::OSD_FileIterator(aPath, TCollection_AsciiString(aMask));
   return it;
 }
 
 TCollection_ExtendedString UTL::LocalHost()
 {
-  OSD_Host h;
+  System::os::OSD_Host h;
   return TCollection_ExtendedString(h.HostName());
 }
 
@@ -94,13 +94,13 @@ Standard_GUID UTL::GUID(const TCollection_ExtendedString& anXString)
   return Standard_GUID(TCollection_AsciiString(anXString, '?').ToCString());
 }
 
-bool UTL::Find(const occ::handle<Resource_Manager>& aResourceManager,
+bool UTL::Find(const occ::handle<System::resource::Resource_Manager>& aResourceManager,
                const TCollection_ExtendedString&    aResourceName)
 {
   return aResourceManager->Find(TCollection_AsciiString(aResourceName).ToCString());
 }
 
-TCollection_ExtendedString UTL::Value(const occ::handle<Resource_Manager>& aResourceManager,
+TCollection_ExtendedString UTL::Value(const occ::handle<System::resource::Resource_Manager>& aResourceManager,
                                       const TCollection_ExtendedString&    aResourceName)
 {
   TCollection_AsciiString aResourceNameU(aResourceName);
@@ -122,7 +122,7 @@ const char* UTL::CString(const TCollection_ExtendedString& anExtendedString)
 
 bool UTL::IsReadOnly(const TCollection_ExtendedString& aFileName)
 {
-  switch (OSD_File(UTL::Path(aFileName)).Protection().User())
+  switch (System::os::OSD_File(UTL::Path(aFileName)).Protection().User())
   {
     case OSD_W:
     case OSD_RW:

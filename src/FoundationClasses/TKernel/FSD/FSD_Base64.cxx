@@ -2,7 +2,7 @@
 
 #include <FSD_Base64.hpp>
 
-size_t FSD_Base64::Encode(char*          theEncodedStr,
+size_t app::file::stream::FSD_Base64::Encode(char*          theEncodedStr,
                           const size_t   theStrLen,
                           const uint8_t* theData,
                           const size_t   theDataLen)
@@ -59,7 +59,7 @@ size_t FSD_Base64::Encode(char*          theEncodedStr,
   return aSize64;
 }
 
-TCollection_AsciiString FSD_Base64::Encode(const uint8_t* theData, const size_t theDataLen)
+TCollection_AsciiString app::file::stream::FSD_Base64::Encode(const uint8_t* theData, const size_t theDataLen)
 {
   size_t                  aStrLen = Encode(nullptr, 0, theData, theDataLen);
   TCollection_AsciiString aStr((int)aStrLen, 0);
@@ -67,7 +67,7 @@ TCollection_AsciiString FSD_Base64::Encode(const uint8_t* theData, const size_t 
   return aStr;
 }
 
-size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
+size_t app::file::stream::FSD_Base64::Decode(uint8_t*     theDecodedData,
                           const size_t theDataLen,
                           const char*  theEncodedStr,
                           const size_t theStrLen)
@@ -127,7 +127,7 @@ size_t FSD_Base64::Decode(uint8_t*     theDecodedData,
   return aDecodedSize;
 }
 
-occ::handle<NCollection_Buffer> FSD_Base64::Decode(const char*  theEncodedStr,
+occ::handle<NCollection_Buffer> app::file::stream::FSD_Base64::Decode(const char*  theEncodedStr,
                                                    const size_t theStrLen)
 {
   const size_t                    aDataSize = Decode(nullptr, 0, theEncodedStr, theStrLen);

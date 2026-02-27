@@ -81,8 +81,8 @@
 #ifdef OCCT_DEBUG
   #include <OSD_Chronometer.hpp>
 extern double t_plate, t_approxplate, t_batten;
-extern void   ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void   ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void   ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void   ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
 static void Indices(const int n, const int ic, int& icplus, int& icmoins)
@@ -303,7 +303,7 @@ static void CurveHermite(const TopOpeBRepDS_DataStructure&                DStr,
       {
         if (MapE1.Extent() != 1)
         {
-          BRepLib_MakeFace Bface(BRep_Tool::Surface(F), Precision::Confusion());
+          BRepLib_MakeFace Bface(BRep_Tool::Surface(F), math::precision::Precision::Confusion());
           F = Bface.Face();
           OrtProj.Init(F);
           OrtProj.Build();
@@ -361,7 +361,7 @@ static void CurveHermite(const TopOpeBRepDS_DataStructure&                DStr,
       {
         Extrema_POnCurv POnC, POnL;
         ext.Points(1, POnC, POnL);
-        if (POnC.Value().Distance(POnL.Value()) < Precision::Confusion())
+        if (POnC.Value().Distance(POnL.Value()) < math::precision::Precision::Confusion())
           param.ChangeValue(nb) = POnC.Parameter();
         else
         {
@@ -862,7 +862,7 @@ static void SummarizeNormal(const TopoDS_Vertex& V1,
   if (Fcur.Orientation() == TopAbs_REVERSED)
     N.Reverse();
 
-  if (N.SquareMagnitude() <= Precision::PConfusion())
+  if (N.SquareMagnitude() <= math::precision::Precision::PConfusion())
     return;
 
   SumFaceNormalAtV1 += N.Normalized();
@@ -948,7 +948,7 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
 {
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
 #endif
   TopOpeBRepDS_DataStructure& DStr = myDS->ChangeDS();
   const TopoDS_Vertex&        V1   = myVDataMap.FindKey(Jndex);

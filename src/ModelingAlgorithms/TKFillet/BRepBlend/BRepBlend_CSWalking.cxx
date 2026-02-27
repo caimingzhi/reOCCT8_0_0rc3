@@ -280,7 +280,7 @@ Blend_Status BRepBlend_CSWalking::TestArret(Blend_CSFunction&  Function,
 
       Function.Tangent(pt2d.X(), pt2d.Y(), Tgp1, Nor1);
       double testra = Tgp1.Dot(Nor1.Crossed(V1));
-      if (std::abs(testra) > Precision::Confusion())
+      if (std::abs(testra) > math::precision::Precision::Confusion())
       {
         if (testra < 0.)
         {

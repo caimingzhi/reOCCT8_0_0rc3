@@ -33,10 +33,10 @@ static void raisecheck(Standard_Failure& theException, occ::handle<Interface_Che
   Sprintf(mess, "** Exception Raised during Check : %s **", theException.ExceptionType());
   ach->AddFail(mess);
 #ifdef _WIN32
-  if (dynamic_cast<OSD_Exception*>(&theException) != nullptr)
+  if (dynamic_cast<System::os::OSD_Exception*>(&theException) != nullptr)
   {
 #else
-  if (dynamic_cast<OSD_Signal*>(&theException) != nullptr)
+  if (dynamic_cast<System::os::OSD_Signal*>(&theException) != nullptr)
   {
 #endif
 

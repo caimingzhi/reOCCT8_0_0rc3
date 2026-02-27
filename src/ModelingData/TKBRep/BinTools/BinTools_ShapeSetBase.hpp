@@ -38,12 +38,12 @@ public:
   Standard_EXPORT virtual void Clear() {}
 
   Standard_EXPORT virtual void Write(Standard_OStream&,
-                                     const Message_ProgressRange& = Message_ProgressRange())
+                                     const System::log::Message_ProgressRange& = System::log::Message_ProgressRange())
   {
   }
 
   Standard_EXPORT virtual void Read(Standard_IStream&,
-                                    const Message_ProgressRange& = Message_ProgressRange())
+                                    const System::log::Message_ProgressRange& = System::log::Message_ProgressRange())
   {
   }
 

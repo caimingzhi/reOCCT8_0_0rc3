@@ -71,7 +71,7 @@ int BOPTools_AlgoTools2D::AttachExistingPCurve(const TopoDS_Edge&               
 
   aC2DT = new Geom2d_TrimmedCurve(aC2DoldC, aT21, aT22);
 
-  aTolPPC = Precision::PConfusion();
+  aTolPPC = math::precision::Precision::PConfusion();
 
   occ::handle<Geom_Curve> aCE1 = BRep_Tool::Curve(aE1, aT11, aT12);
 

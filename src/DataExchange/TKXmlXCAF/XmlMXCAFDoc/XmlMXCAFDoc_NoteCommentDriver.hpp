@@ -6,7 +6,7 @@ class XmlMXCAFDoc_NoteCommentDriver : public XmlMXCAFDoc_NoteDriver
 {
 public:
   Standard_EXPORT XmlMXCAFDoc_NoteCommentDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 
@@ -21,6 +21,6 @@ public:
   DEFINE_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteCommentDriver, XmlMXCAFDoc_NoteDriver)
 
 protected:
-  XmlMXCAFDoc_NoteCommentDriver(const occ::handle<Message_Messenger>& theMsgDriver,
+  XmlMXCAFDoc_NoteCommentDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver,
                                 const char*                           theName);
 };

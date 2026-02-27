@@ -16,7 +16,7 @@ StdStorage_TypeData::StdStorage_TypeData()
   StdDrivers::BindTypes(myMapOfPInst);
 }
 
-bool StdStorage_TypeData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
+bool StdStorage_TypeData::Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSRead && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -44,7 +44,7 @@ bool StdStorage_TypeData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
       OCC_CATCH_SIGNALS
       theDriver->ReadTypeInformations(aTypeNum, aTypeName);
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       myErrorStatus    = Storage_VSTypeMismatch;
       myErrorStatusExt = "ReadTypeInformations";
@@ -64,7 +64,7 @@ bool StdStorage_TypeData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
   return true;
 }
 
-bool StdStorage_TypeData::Write(const occ::handle<Storage_BaseDriver>& theDriver)
+bool StdStorage_TypeData::Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSWrite && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -90,7 +90,7 @@ bool StdStorage_TypeData::Write(const occ::handle<Storage_BaseDriver>& theDriver
       OCC_CATCH_SIGNALS
       theDriver->WriteTypeInformations(i, Type(i));
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       myErrorStatus    = Storage_VSTypeMismatch;
       myErrorStatusExt = "WriteTypeInformations";

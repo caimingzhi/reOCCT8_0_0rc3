@@ -49,7 +49,7 @@ public:
 
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Arguments() const;
 
-  Standard_EXPORT void Init(const double theFuzz = Precision::Confusion());
+  Standard_EXPORT void Init(const double theFuzz = math::precision::Precision::Confusion());
 
   Standard_EXPORT int NbShapes() const;
 

@@ -396,7 +396,7 @@ void BRepCheck_Analyzer::Perform()
 {
   const int                          aMapSize     = myMap.Size();
   const int                          aMinTaskSize = 10;
-  const occ::handle<OSD_ThreadPool>& aThreadPool  = OSD_ThreadPool::DefaultPool();
+  const occ::handle<System::os::OSD_ThreadPool>& aThreadPool  = System::os::OSD_ThreadPool::DefaultPool();
   const int                          aNbThreads   = aThreadPool->NbThreads();
   int                                aNbTasks     = aNbThreads * 10;
   int                                aTaskSize    = (int)std::ceil((double)aMapSize / aNbTasks);
@@ -425,7 +425,7 @@ void BRepCheck_Analyzer::Perform()
   }
 
   BRepCheck_ParallelAnalyzer aParallelAnalyzer(aArrayOfArray, myMap);
-  OSD_Parallel::For(0, aArrayOfArray.Size(), aParallelAnalyzer, !myIsParallel);
+  System::os::OSD_Parallel::For(0, aArrayOfArray.Size(), aParallelAnalyzer, !myIsParallel);
 }
 
 bool BRepCheck_Analyzer::IsValid(const TopoDS_Shape& S) const

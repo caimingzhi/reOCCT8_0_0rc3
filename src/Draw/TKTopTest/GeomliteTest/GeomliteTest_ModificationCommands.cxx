@@ -101,7 +101,7 @@ static int samerange(Draw_Interpretor&, int n, const char** a)
   rf = Draw::Atof(a[5]);
   rl = Draw::Atof(a[6]);
 
-  GeomLib::SameRange(Precision::PConfusion(), C, f, l, rf, rl, Res);
+  GeomLib::SameRange(math::precision::Precision::PConfusion(), C, f, l, rf, rl, Res);
 
   DrawTrSurf::Set(a[1], Res);
 
@@ -112,7 +112,7 @@ static int setweight(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4 || n > 5)
   {
-    Message::SendFail() << "Syntax error: Wrong parameters";
+    System::log::Message::SendFail() << "Syntax error: Wrong parameters";
     return 1;
   }
 
@@ -152,7 +152,7 @@ static int setweight(Draw_Interpretor&, int n, const char** a)
   occ::handle<Geom_BezierSurface>  aBezSurf  = DrawTrSurf::GetBezierSurface(a[1]);
   if (n != 5 && (!aBSplSurf.IsNull() || !aBezSurf.IsNull()))
   {
-    Message::SendFail() << "Syntax error: Incorrect parameters";
+    System::log::Message::SendFail() << "Syntax error: Incorrect parameters";
     return 1;
   }
 
@@ -168,7 +168,7 @@ static int setweight(Draw_Interpretor&, int n, const char** a)
     return 0;
   }
 
-  Message::SendFail() << a[1] << " is not a B-spline nor a Bezier curve/surface";
+  System::log::Message::SendFail() << a[1] << " is not a B-spline nor a Bezier curve/surface";
   return 1;
 }
 

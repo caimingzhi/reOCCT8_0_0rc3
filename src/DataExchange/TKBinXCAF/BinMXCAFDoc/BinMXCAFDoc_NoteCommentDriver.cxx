@@ -7,7 +7,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_NoteCommentDriver, BinMXCAFDoc_NoteDriver)
 
 BinMXCAFDoc_NoteCommentDriver::BinMXCAFDoc_NoteCommentDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMXCAFDoc_NoteDriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_NoteComment)->Name())
 {
 }
@@ -50,7 +50,7 @@ void BinMXCAFDoc_NoteCommentDriver::Paste(
 }
 
 BinMXCAFDoc_NoteCommentDriver::BinMXCAFDoc_NoteCommentDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver,
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver,
   const char*                           theName)
     : BinMXCAFDoc_NoteDriver(theMsgDriver, theName)
 {

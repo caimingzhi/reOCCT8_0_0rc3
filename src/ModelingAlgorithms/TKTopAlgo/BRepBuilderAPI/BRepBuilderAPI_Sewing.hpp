@@ -46,7 +46,7 @@ public:
 
   Standard_EXPORT void Add(const TopoDS_Shape& shape);
 
-  Standard_EXPORT void Perform(const Message_ProgressRange& theProgress = Message_ProgressRange());
+  Standard_EXPORT void Perform(const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT const TopoDS_Shape& SewedShape() const;
 
@@ -129,10 +129,10 @@ public:
   DEFINE_STANDARD_RTTIEXT(BRepBuilderAPI_Sewing, Standard_Transient)
 
 protected:
-  Standard_EXPORT void Cutting(const Message_ProgressRange& theProgress = Message_ProgressRange());
+  Standard_EXPORT void Cutting(const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Merging(const bool                   passage,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool IsMergedClosed(const TopoDS_Edge& Edge1,
                                       const TopoDS_Edge& Edge2,
@@ -153,10 +153,10 @@ protected:
                                           NCollection_Sequence<bool>&         SeqMergedOri);
 
   Standard_EXPORT void EdgeProcessing(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void EdgeRegularity(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void CreateOutputInformations();
 
@@ -169,12 +169,12 @@ protected:
                                                 const TopLoc_Location&           theloc) const;
 
   Standard_EXPORT virtual void FaceAnalysis(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void FindFreeBoundaries();
 
   Standard_EXPORT virtual void VerticesAssembling(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void CreateSewedShape();
 

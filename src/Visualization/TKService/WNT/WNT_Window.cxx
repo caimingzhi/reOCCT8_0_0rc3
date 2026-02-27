@@ -692,7 +692,7 @@ int WNT_Window::RegisterRawInputDevices(unsigned int theRawDeviceMask)
       return aTryIter;
     }
 
-    Message::SendTrace(
+    System::log::Message::SendTrace(
       aRawInDevList[aTryIter - 1].usUsage == THE_HID_USAGE_GENERIC_MULTI_AXIS_CONTROLLER
         ? "Warning: RegisterRawInputDevices() failed to register RAW multi-axis controller input"
         : "Warning: RegisterRawInputDevices() failed to register RAW mouse input");

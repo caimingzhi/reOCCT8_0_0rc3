@@ -91,29 +91,29 @@ void ShapeFix_ComposeShell::Init(const occ::handle<ShapeExtend_CompositeSurface>
   {
     double U0, U1, V0, V1, GU0 = 0., GU1 = 0., GV0 = 0., GV1 = 0.;
     theSurface->Bounds(U0, U1, V0, V1);
-    if (::Precision::IsInfinite(U0) || ::Precision::IsInfinite(U1) || ::Precision::IsInfinite(V0)
-        || ::Precision::IsInfinite(V1))
+    if (math::precision::Precision::IsInfinite(U0) || math::precision::Precision::IsInfinite(U1) || math::precision::Precision::IsInfinite(V0)
+        || math::precision::Precision::IsInfinite(V1))
       BRepTools::UVBounds(Face, GU0, GU1, GV0, GV1);
     if (myUClosed)
     {
-      if (::Precision::IsInfinite(V0))
+      if (math::precision::Precision::IsInfinite(V0))
         V0 = GV0;
-      if (::Precision::IsInfinite(V1))
+      if (math::precision::Precision::IsInfinite(V1))
         V1 = GV1;
       gp_Pnt P0 = theSurface->Value(U0, (V0 + V1) / 2.);
       gp_Pnt P1 = theSurface->Value(U1, (V0 + V1) / 2.);
-      if (P0.Distance(P1) > Precision::Confusion() * 10)
+      if (P0.Distance(P1) > math::precision::Precision::Confusion() * 10)
         myUClosed = false;
     }
     if (myVClosed)
     {
-      if (::Precision::IsInfinite(U0))
+      if (math::precision::Precision::IsInfinite(U0))
         U0 = GU0;
-      if (::Precision::IsInfinite(U1))
+      if (math::precision::Precision::IsInfinite(U1))
         U1 = GU1;
       gp_Pnt P0 = theSurface->Value((U0 + U1) / 2., V0);
       gp_Pnt P1 = theSurface->Value((U0 + U1) / 2., V1);
-      if (P0.Distance(P1) > Precision::Confusion() * 10)
+      if (P0.Distance(P1) > math::precision::Precision::Confusion() * 10)
         myVClosed = false;
     }
   }
@@ -145,9 +145,9 @@ void ShapeFix_ComposeShell::Init(const occ::handle<ShapeExtend_CompositeSurface>
     }
   }
   if (myUResolution == RealLast())
-    myUResolution = ::Precision::Parametric(1.);
+    myUResolution = math::precision::Precision::Parametric(1.);
   if (myVResolution == RealLast())
-    myVResolution = ::Precision::Parametric(1.);
+    myVResolution = math::precision::Precision::Parametric(1.);
 }
 
 bool ShapeFix_ComposeShell::Perform()
@@ -254,13 +254,13 @@ static double ParamPointsOnLine(const gp_Pnt2d& p1, const gp_Pnt2d& p2, const gp
   double dist1 = PointLineDeviation(p1, line);
   double dist2 = PointLineDeviation(p2, line);
 
-  if (std::abs(dist1) < ::Precision::PConfusion())
+  if (std::abs(dist1) < math::precision::Precision::PConfusion())
   {
-    if (std::abs(dist2) < ::Precision::PConfusion())
+    if (std::abs(dist2) < math::precision::Precision::PConfusion())
       return 0.5 * (ParamPointOnLine(p1, line) + ParamPointOnLine(p2, line));
     return ParamPointOnLine(p1, line);
   }
-  if (std::abs(dist2) < ::Precision::PConfusion())
+  if (std::abs(dist2) < math::precision::Precision::PConfusion())
     return ParamPointOnLine(p2, line);
 
   if (dist2 * dist1 > 0)
@@ -538,7 +538,7 @@ int ShapeFix_ComposeShell::ComputeCode(const occ::handle<ShapeExtend_WireData>& 
     double par1 = (i == begInd && special >= 0 ? begPar : (isreversed ? l : f));
     double par2 = (i == endInd && special <= 0 ? endPar : (isreversed ? f : l));
     double dpar = (par2 - par1) / (NPOINTS - 1);
-    int    np   = (std::abs(dpar) < ::Precision::PConfusion() ? 1 : NPOINTS);
+    int    np   = (std::abs(dpar) < math::precision::Precision::PConfusion() ? 1 : NPOINTS);
     int    j;
     for (j = 0; j < np; j++)
     {
@@ -546,7 +546,7 @@ int ShapeFix_ComposeShell::ComputeCode(const occ::handle<ShapeExtend_WireData>& 
       gp_Pnt2d p2d = c2d->Value(par);
       if (myClosedMode)
       {
-        if (myUClosed && std::abs(line.Direction().X()) < ::Precision::PConfusion())
+        if (myUClosed && std::abs(line.Direction().X()) < math::precision::Precision::PConfusion())
         {
           if (begin)
             shift = ShapeAnalysis::AdjustByPeriod(p2d.X(), line.Location().X(), myUPeriod);
@@ -554,7 +554,7 @@ int ShapeFix_ComposeShell::ComputeCode(const occ::handle<ShapeExtend_WireData>& 
             shift = ShapeAnalysis::AdjustByPeriod(p2d.X() - p2d0.X(), 0., myUPeriod);
           p2d.SetX(p2d.X() + shift);
         }
-        if (myVClosed && std::abs(line.Direction().Y()) < ::Precision::PConfusion())
+        if (myVClosed && std::abs(line.Direction().Y()) < math::precision::Precision::PConfusion())
         {
           if (begin)
             shift = ShapeAnalysis::AdjustByPeriod(p2d.Y(), line.Location().Y(), myVPeriod);
@@ -602,7 +602,7 @@ int ShapeFix_ComposeShell::ComputeCode(const occ::handle<ShapeExtend_WireData>& 
     {
 
       double dev = PointLineDeviation(p2d0, line);
-      if (myUClosed && std::abs(line.Direction().X()) < ::Precision::PConfusion())
+      if (myUClosed && std::abs(line.Direction().X()) < math::precision::Precision::PConfusion())
       {
         if (std::abs(std::abs(dev) - myUPeriod) < 0.1 * myUPeriod)
         {
@@ -613,7 +613,7 @@ int ShapeFix_ComposeShell::ComputeCode(const occ::handle<ShapeExtend_WireData>& 
         else if (code == IOR_BOTH)
           code = IOR_UNDEF;
       }
-      if (myVClosed && std::abs(line.Direction().Y()) < ::Precision::PConfusion())
+      if (myVClosed && std::abs(line.Direction().Y()) < math::precision::Precision::PConfusion())
       {
         if (std::abs(std::abs(dev) - myVPeriod) < 0.1 * myVPeriod)
         {
@@ -825,12 +825,12 @@ ShapeFix_WireSegment ShapeFix_ComposeShell::SplitWire(ShapeFix_WireSegment&     
         if (!c3d.IsNull())
         {
           ShapeAnalysis_Curve asae;
-          adist2 = asae.Project(c3d, apV, Precision::Confusion(), aPproj, apar);
+          adist2 = asae.Project(c3d, apV, math::precision::Precision::Confusion(), aPproj, apar);
           adist2 *= adist2;
         }
         else
         {
-          gp_Pnt2d        aP2d = aSurfTool->ValueOfUV(apV, Precision::Confusion());
+          gp_Pnt2d        aP2d = aSurfTool->ValueOfUV(apV, math::precision::Precision::Confusion());
           Extrema_ExtPC2d aExtr(aP2d, adc);
           if (aExtr.IsDone() && aExtr.NbExt())
           {
@@ -878,8 +878,8 @@ ShapeFix_WireSegment ShapeFix_ComposeShell::SplitWire(ShapeFix_WireSegment&     
 
       if (isPeriodic)
       {
-        if (currPar > (std::max(lastPar, firstPar) + Precision::PConfusion())
-            || currPar < (std::min(firstPar, lastPar) - Precision::PConfusion()))
+        if (currPar > (std::max(lastPar, firstPar) + math::precision::Precision::PConfusion())
+            || currPar < (std::min(firstPar, lastPar) - math::precision::Precision::PConfusion()))
         {
           double aShift =
             ShapeAnalysis::AdjustByPeriod(currPar, (firstPar + lastPar) * 0.5, aPeriod);
@@ -892,12 +892,12 @@ ShapeFix_WireSegment ShapeFix_ComposeShell::SplitWire(ShapeFix_WireSegment&     
 
       bool          doCut = true;
       TopoDS_Vertex V;
-      if (std::abs(currPar - lastPar) < ::Precision::PConfusion())
+      if (std::abs(currPar - lastPar) < math::precision::Precision::PConfusion())
       {
         V     = lastV;
         doCut = false;
       }
-      else if (std::abs(currPar - prevPar) < ::Precision::PConfusion())
+      else if (std::abs(currPar - prevPar) < math::precision::Precision::PConfusion())
       {
         vertices.Append(prevV);
         code = SegmentCodes(j);
@@ -913,7 +913,7 @@ ShapeFix_WireSegment ShapeFix_ComposeShell::SplitWire(ShapeFix_WireSegment&     
                            c3d,
                            f3d + (currPar - firstPar) * (l3d - f3d) / span2d,
                            T,
-                           lastVTol + 2 * Precision::Confusion())
+                           lastVTol + 2 * math::precision::Precision::Confusion())
             && lastPnt.Distance(myGrid->Value(C2d->Value(0.5 * (currPar + lastPar)))) <= lastVTol)
         {
           V           = lastV;
@@ -943,7 +943,7 @@ ShapeFix_WireSegment ShapeFix_ComposeShell::SplitWire(ShapeFix_WireSegment&     
                                 c3d,
                                 f3d + (currPar - firstPar) * (l3d - f3d) / span2d,
                                 T,
-                                prevVTol + 2 * Precision::Confusion())
+                                prevVTol + 2 * math::precision::Precision::Confusion())
                  && prevPnt.Distance(myGrid->Value(C2d->Value(0.5 * (currPar + prevPar))))
                       <= prevVTol)
         {
@@ -1045,14 +1045,14 @@ ShapeFix_WireSegment ShapeFix_ComposeShell::SplitWire(ShapeFix_WireSegment&     
         double        apar    = aNMVertParams.Value(n);
         TopoDS_Vertex aNMVert = TopoDS::Vertex(aNMVertices.Value(n));
         TopoDS_Vertex atmpV   = TopoDS::Vertex(Context()->Apply(aNMVert));
-        if (fabs(apar - prevPar) <= Precision::PConfusion())
+        if (fabs(apar - prevPar) <= math::precision::Precision::PConfusion())
         {
           Context()->Replace(atmpV, prevV);
           aNMVertParams.Remove(n);
           aNMVertices.Remove(n);
           n--;
         }
-        else if (fabs(apar - currPar) <= Precision::PConfusion())
+        else if (fabs(apar - currPar) <= math::precision::Precision::PConfusion())
         {
           Context()->Replace(atmpV, V);
           aNMVertParams.Remove(n);
@@ -1169,7 +1169,7 @@ bool ShapeFix_ComposeShell::SplitByLine(ShapeFix_WireSegment&               wire
       new ShapeAnalysis_Surface(BRep_Tool::Surface(myFace));
     TopoDS_Vertex aVert = wire.GetVertex();
     gp_Pnt        aP3d  = BRep_Tool::Pnt(aVert);
-    gp_Pnt2d      aP2d  = aSurfTool->ValueOfUV(aP3d, Precision::Confusion());
+    gp_Pnt2d      aP2d  = aSurfTool->ValueOfUV(aP3d, math::precision::Precision::Confusion());
     double        dev   = 0.;
     int           code  = PointLinePosition(aP2d, line, dev);
     if (code != IOR_UNDEF)
@@ -1194,9 +1194,9 @@ bool ShapeFix_ComposeShell::SplitByLine(ShapeFix_WireSegment&               wire
   int closedDir = 0;
   if (myClosedMode)
   {
-    if (myUClosed && std::abs(line.Direction().X()) < ::Precision::PConfusion())
+    if (myUClosed && std::abs(line.Direction().X()) < math::precision::Precision::PConfusion())
       closedDir = -1;
-    else if (myVClosed && std::abs(line.Direction().Y()) < ::Precision::PConfusion())
+    else if (myVClosed && std::abs(line.Direction().Y()) < math::precision::Precision::PConfusion())
       closedDir = 1;
   }
   double halfPeriod = 0.5 * (closedDir ? closedDir < 0 ? myUPeriod : myVPeriod : 0.);
@@ -1399,7 +1399,7 @@ bool ShapeFix_ComposeShell::SplitByLine(ShapeFix_WireSegment&               wire
       if (i == j)
         break;
       if (IntEdgeInd(i) == IntEdgeInd(j)
-          && std::abs(IntEdgePar(i) - IntEdgePar(j)) < ::Precision::PConfusion())
+          && std::abs(IntEdgePar(i) - IntEdgePar(j)) < math::precision::Precision::PConfusion())
       {
         IntLinePar.Remove(i);
         IntEdgePar.Remove(i);
@@ -1416,9 +1416,9 @@ bool ShapeFix_ComposeShell::SplitByLine(ShapeFix_WireSegment&               wire
         BRep_Tool::Range(E1, myFace, a1, b1);
         BRep_Tool::Range(E2, myFace, a2, b2);
         if (std::abs(IntEdgePar(j) - (E1.Orientation() == TopAbs_FORWARD ? b1 : a1))
-              < ::Precision::PConfusion()
+              < math::precision::Precision::PConfusion()
             && std::abs(IntEdgePar(i) - (E2.Orientation() == TopAbs_FORWARD ? a2 : b2))
-                 < ::Precision::PConfusion())
+                 < math::precision::Precision::PConfusion())
         {
           IntLinePar.Remove(i);
           IntEdgePar.Remove(i);
@@ -1573,7 +1573,7 @@ void ShapeFix_ComposeShell::SplitByLine(NCollection_Sequence<ShapeFix_WireSegmen
 
   for (i = 1; i < SplitLinePar.Length(); i++)
   {
-    if (std::abs(SplitLinePar(i + 1) - SplitLinePar(i)) > ::Precision::PConfusion()
+    if (std::abs(SplitLinePar(i + 1) - SplitLinePar(i)) > math::precision::Precision::PConfusion()
         && !SplitLineVertex(i).IsSame(SplitLineVertex(i + 1)))
       continue;
     if ((SplitLineCode(i) & ITP_ENDSEG && SplitLineCode(i + 1) & ITP_BEGSEG)
@@ -1633,14 +1633,14 @@ void ShapeFix_ComposeShell::SplitByLine(NCollection_Sequence<ShapeFix_WireSegmen
     bool   canbeMerged = ((i - 1 > 1 || i < SplitLinePar.Length()));
     double aMaxTol     = MaxTolerance();
 
-    if (aMaxTol <= 2. * Precision::Confusion())
-      aMaxTol = Precision::Infinite();
+    if (aMaxTol <= 2. * math::precision::Precision::Confusion())
+      aMaxTol = math::precision::Precision::Infinite();
     double aTol1 = std::min(BRep_Tool::Tolerance(V1), aMaxTol);
     double aTol2 = std::min(BRep_Tool::Tolerance(V2), aMaxTol);
     gp_Pnt aP1   = BRep_Tool::Pnt(V1);
     gp_Pnt aP2   = BRep_Tool::Pnt(V2);
     double aD    = aP1.SquareDistance(aP2);
-    if (SplitLinePar(i) - SplitLinePar(i - 1) < ::Precision::PConfusion()
+    if (SplitLinePar(i) - SplitLinePar(i - 1) < math::precision::Precision::PConfusion()
         || (canbeMerged && (aD <= (aTol1 * aTol1) || aD <= (aTol2 * aTol2))))
     {
 
@@ -1670,7 +1670,7 @@ void ShapeFix_ComposeShell::SplitByLine(NCollection_Sequence<ShapeFix_WireSegmen
     B.Add(edge, V2);
     occ::handle<Geom2d_Line> Lin1 = new Geom2d_Line(line);
     occ::handle<Geom2d_Line> Lin2 = new Geom2d_Line(line);
-    B.UpdateEdge(edge, Lin1, Lin2, myFace, ::Precision::Confusion());
+    B.UpdateEdge(edge, Lin1, Lin2, myFace, math::precision::Precision::Confusion());
     B.Range(edge, myFace, SplitLinePar(i - 1), SplitLinePar(i));
 
     occ::handle<ShapeExtend_WireData> sbwd = new ShapeExtend_WireData;
@@ -1689,10 +1689,10 @@ void ShapeFix_ComposeShell::SplitByLine(NCollection_Sequence<ShapeFix_WireSegmen
 
       seg.DefineIUMin(
         1,
-        GetPatchIndex(aPar + ::Precision::PConfusion(), myGrid->UJointValues(), myUClosed));
+        GetPatchIndex(aPar + math::precision::Precision::PConfusion(), myGrid->UJointValues(), myUClosed));
       seg.DefineIUMax(
         1,
-        GetPatchIndex(aPar - ::Precision::PConfusion(), myGrid->UJointValues(), myUClosed) + 1);
+        GetPatchIndex(aPar - math::precision::Precision::PConfusion(), myGrid->UJointValues(), myUClosed) + 1);
     }
     else
     {
@@ -1704,10 +1704,10 @@ void ShapeFix_ComposeShell::SplitByLine(NCollection_Sequence<ShapeFix_WireSegmen
       double aPar = SplitLinePar(i - 1) + shiftV;
       seg.DefineIVMin(
         1,
-        GetPatchIndex(aPar + ::Precision::PConfusion(), myGrid->VJointValues(), myVClosed));
+        GetPatchIndex(aPar + math::precision::Precision::PConfusion(), myGrid->VJointValues(), myVClosed));
       seg.DefineIVMax(
         1,
-        GetPatchIndex(aPar - ::Precision::PConfusion(), myGrid->VJointValues(), myVClosed) + 1);
+        GetPatchIndex(aPar - math::precision::Precision::PConfusion(), myGrid->VJointValues(), myVClosed) + 1);
     }
     wires.Append(seg);
   }
@@ -2176,7 +2176,7 @@ void ShapeFix_ComposeShell::CollectWires(NCollection_Sequence<ShapeFix_WireSegme
         }
 
         double ang = (shorts(i) > 0 ? M_PI : endTan.Angle(lVec));
-        if (myClosedMode && shorts(i) <= 0 && M_PI - ang < ::Precision::Angular())
+        if (myClosedMode && shorts(i) <= 0 && M_PI - ang < math::precision::Precision::Angular())
           ang = 0.;
 
         double ctol = std::max(edgeTol, BRep_Tool::Tolerance(endV));
@@ -2374,7 +2374,7 @@ static gp_Pnt2d GetMiddlePoint(const ShapeFix_WireSegment& wire, const TopoDS_Fa
     gp_Pnt                             aP3D      = BRep_Tool::Pnt(aV);
     occ::handle<Geom_Surface>          surf      = BRep_Tool::Surface(face);
     occ::handle<ShapeAnalysis_Surface> aSurfTool = new ShapeAnalysis_Surface(surf);
-    return aSurfTool->ValueOfUV(aP3D, Precision::Confusion());
+    return aSurfTool->ValueOfUV(aP3D, math::precision::Precision::Confusion());
   }
   Bnd_Box2d                                box;
   ShapeAnalysis_Edge                       sae;
@@ -2406,7 +2406,7 @@ void ShapeFix_ComposeShell::MakeFacesOnPatch(NCollection_Sequence<TopoDS_Shape>&
   if (loops.Length() == 1)
   {
     TopoDS_Face newFace;
-    B.MakeFace(newFace, surf, myLoc, ::Precision::Confusion());
+    B.MakeFace(newFace, surf, myLoc, math::precision::Precision::Confusion());
     const TopoDS_Shape& aSH = loops.Value(1);
     if (aSH.ShapeType() != TopAbs_WIRE)
       return;
@@ -2429,7 +2429,7 @@ void ShapeFix_ComposeShell::MakeFacesOnPatch(NCollection_Sequence<TopoDS_Shape>&
   }
 
   TopoDS_Face pf;
-  B.MakeFace(pf, surf, myLoc, ::Precision::Confusion());
+  B.MakeFace(pf, surf, myLoc, math::precision::Precision::Confusion());
   occ::handle<Geom_Surface> atSurf = BRep_Tool::Surface(pf);
 
   occ::handle<ShapeAnalysis_Surface> aSurfTool = new ShapeAnalysis_Surface(atSurf);
@@ -2493,9 +2493,9 @@ void ShapeFix_ComposeShell::MakeFacesOnPatch(NCollection_Sequence<TopoDS_Shape>&
       if (!nbe)
         continue;
       TopoDS_Face fc;
-      B.MakeFace(fc, surf, myLoc, ::Precision::Confusion());
+      B.MakeFace(fc, surf, myLoc, math::precision::Precision::Confusion());
       B.Add(fc, awtmp);
-      BRepTopAdaptor_FClass2d clas(fc, ::Precision::PConfusion());
+      BRepTopAdaptor_FClass2d clas(fc, math::precision::Precision::PConfusion());
       TopAbs_State            stPoint = clas.Perform(unp, false);
       if (stPoint == TopAbs_ON || stPoint == TopAbs_UNKNOWN)
       {
@@ -2556,9 +2556,9 @@ void ShapeFix_ComposeShell::MakeFacesOnPatch(NCollection_Sequence<TopoDS_Shape>&
     bool        reverse = false;
     TopoDS_Wire wire    = TopoDS::Wire(roots(i));
     TopoDS_Face fc;
-    B.MakeFace(fc, surf, myLoc, ::Precision::Confusion());
+    B.MakeFace(fc, surf, myLoc, math::precision::Precision::Confusion());
     B.Add(fc, wire);
-    BRepTopAdaptor_FClass2d clas(fc, ::Precision::PConfusion());
+    BRepTopAdaptor_FClass2d clas(fc, math::precision::Precision::PConfusion());
     if (clas.PerformInfinitePoint() == TopAbs_IN)
     {
       reverse = true;
@@ -2590,7 +2590,7 @@ void ShapeFix_ComposeShell::MakeFacesOnPatch(NCollection_Sequence<TopoDS_Shape>&
       {
         TopoDS_Vertex aV = TopoDS::Vertex(loops(j));
         gp_Pnt        aP = BRep_Tool::Pnt(aV);
-        unp              = aSurfTool->ValueOfUV(aP, Precision::Confusion());
+        unp              = aSurfTool->ValueOfUV(aP, math::precision::Precision::Confusion());
       }
       else
         continue;
@@ -2603,7 +2603,7 @@ void ShapeFix_ComposeShell::MakeFacesOnPatch(NCollection_Sequence<TopoDS_Shape>&
     }
 
     TopoDS_Face newFace;
-    B.MakeFace(newFace, surf, myLoc, ::Precision::Confusion());
+    B.MakeFace(newFace, surf, myLoc, math::precision::Precision::Confusion());
     B.Add(newFace, wire);
     for (j = 1; j <= holes.Length(); j++)
     {
@@ -2666,7 +2666,7 @@ void ShapeFix_ComposeShell::DispatchWires(NCollection_Sequence<TopoDS_Shape>&   
           TopoDS_Shape              dummy = E.Reversed();
           occ::handle<Geom2d_Curve> c22 =
             BRep_Tool::CurveOnSurface(TopoDS::Edge(dummy), myFace, f2, l2);
-          constexpr double dPreci = ::Precision::PConfusion() * Precision::PConfusion();
+          constexpr double dPreci = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
           gp_Pnt2d         pf1    = c21->Value(f1);
           gp_Pnt2d         pl1    = c21->Value(l1);
           gp_Pnt2d         pf2    = c22->Value(f2);
@@ -2674,9 +2674,9 @@ void ShapeFix_ComposeShell::DispatchWires(NCollection_Sequence<TopoDS_Shape>&   
           if (c21 == c22 || pf1.SquareDistance(pf2) < dPreci || pl1.SquareDistance(pl2) < dPreci)
           {
             gp_Vec2d shift(0., 0.);
-            if (myUClosed && std::abs(pf2.X() - pl2.X()) < ::Precision::PConfusion())
+            if (myUClosed && std::abs(pf2.X() - pl2.X()) < math::precision::Precision::PConfusion())
               shift.SetX(myUPeriod);
-            if (myVClosed && std::abs(pf2.Y() - pl2.Y()) < ::Precision::PConfusion())
+            if (myVClosed && std::abs(pf2.Y() - pl2.Y()) < math::precision::Precision::PConfusion())
               shift.SetY(myVPeriod);
             c22->Translate(shift);
           }
@@ -2758,7 +2758,7 @@ void ShapeFix_ComposeShell::DispatchWires(NCollection_Sequence<TopoDS_Shape>&   
       continue;
     occ::handle<Geom_Surface> surf = myGrid->Patch(indU, indV);
     TopoDS_Face               face;
-    B.MakeFace(face, surf, myLoc, ::Precision::Confusion());
+    B.MakeFace(face, surf, myLoc, math::precision::Precision::Confusion());
     occ::handle<ShapeExtend_WireData> sewd = wires(i).WireData();
     for (int j = 1; j <= sewd->NbEdges(); j++)
     {

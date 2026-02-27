@@ -13,7 +13,7 @@ IMPLEMENT_DOMSTRING(DensNameIndexString, "dens_name")
 IMPLEMENT_DOMSTRING(DensTypeIndexString, "dens_type")
 
 XmlMXCAFDoc_MaterialDriver::XmlMXCAFDoc_MaterialDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Material")
 {
 }

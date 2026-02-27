@@ -189,9 +189,9 @@ namespace
     math_Vector aSol(1, 3);
     aHouseholder.Value(aSol, 1);
 
-    EXPECT_NEAR(aSol(1), 5.0, Precision::Confusion()) << "Identity matrix solution X(1)";
-    EXPECT_NEAR(aSol(2), 7.0, Precision::Confusion()) << "Identity matrix solution X(2)";
-    EXPECT_NEAR(aSol(3), 9.0, Precision::Confusion()) << "Identity matrix solution X(3)";
+    EXPECT_NEAR(aSol(1), 5.0, math::precision::Precision::Confusion()) << "Identity matrix solution X(1)";
+    EXPECT_NEAR(aSol(2), 7.0, math::precision::Precision::Confusion()) << "Identity matrix solution X(2)";
+    EXPECT_NEAR(aSol(3), 9.0, math::precision::Precision::Confusion()) << "Identity matrix solution X(3)";
   }
 
   TEST(MathHouseholderTest, DimensionCompatibility)

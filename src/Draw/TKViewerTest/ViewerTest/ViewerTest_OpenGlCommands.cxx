@@ -24,20 +24,20 @@ static int VImmediateFront(Draw_Interpretor&, int theArgNb, const char** theArgV
   occ::handle<AIS_InteractiveContext> aContextAIS = ViewerTest::GetAISContext();
   if (aContextAIS.IsNull())
   {
-    Message::SendFail("Error: no active viewer");
+    System::log::Message::SendFail("Error: no active viewer");
     return 1;
   }
 
   occ::handle<Graphic3d_GraphicDriver> aDriver = aContextAIS->CurrentViewer()->Driver();
   if (aDriver.IsNull())
   {
-    Message::SendFail("Error: graphic driver not available.");
+    System::log::Message::SendFail("Error: graphic driver not available.");
     return 1;
   }
 
   if (theArgNb < 2)
   {
-    Message::SendFail("Syntax error: wrong number of arguments.");
+    System::log::Message::SendFail("Syntax error: wrong number of arguments.");
     return 1;
   }
 
@@ -69,7 +69,7 @@ static int VGlInfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
   occ::handle<V3d_View> aView = ViewerTest::CurrentView();
   if (aView.IsNull())
   {
-    Message::SendFail("No active viewer");
+    System::log::Message::SendFail("No active viewer");
     return 1;
   }
 
@@ -129,7 +129,7 @@ static int VGlInfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown key '" << aName << "'";
+      System::log::Message::SendFail() << "Syntax error: unknown key '" << aName << "'";
       return 1;
     }
   }
@@ -246,12 +246,12 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   occ::handle<AIS_InteractiveContext> aCtx = ViewerTest::GetAISContext();
   if (aCtx.IsNull())
   {
-    Message::SendFail("Error: no active viewer");
+    System::log::Message::SendFail("Error: no active viewer");
     return 1;
   }
   else if (theArgNb < 2)
   {
-    Message::SendFail("Syntax error: lack of arguments");
+    System::log::Message::SendFail("Syntax error: lack of arguments");
     return 1;
   }
 
@@ -281,7 +281,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       const TCollection_AsciiString& aShadersRoot = Graphic3d_ShaderProgram::ShadersFolder();
       if (aShadersRoot.IsEmpty())
       {
-        Message::SendFail(
+        System::log::Message::SendFail(
           "Error: both environment variables CSF_ShadersDirectory and CASROOT are undefined!\n"
           "At least one should be defined to load Phong program.");
         return 1;
@@ -289,14 +289,14 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 
       const TCollection_AsciiString aSrcVert = aShadersRoot + "/PhongShading.vs";
       const TCollection_AsciiString aSrcFrag = aShadersRoot + "/PhongShading.fs";
-      if (!aSrcVert.IsEmpty() && !OSD_File(aSrcVert).Exists())
+      if (!aSrcVert.IsEmpty() && !System::os::OSD_File(aSrcVert).Exists())
       {
-        Message::SendFail("Error: PhongShading.vs is not found");
+        System::log::Message::SendFail("Error: PhongShading.vs is not found");
         return 1;
       }
-      if (!aSrcFrag.IsEmpty() && !OSD_File(aSrcFrag).Exists())
+      if (!aSrcFrag.IsEmpty() && !System::os::OSD_File(aSrcFrag).Exists())
       {
-        Message::SendFail("Error: PhongShading.fs is not found");
+        System::log::Message::SendFail("Error: PhongShading.fs is not found");
         return 1;
       }
 
@@ -335,7 +335,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       }
       else
       {
-        Message::SendFail() << "Syntax error at '" << aPrimTypeStr << "'";
+        System::log::Message::SendFail() << "Syntax error at '" << aPrimTypeStr << "'";
         return 1;
       }
     }
@@ -362,7 +362,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       occ::handle<AIS_InteractiveObject> anIO = GetMapOfAIS().Find2(theArgVec[anArgIter]);
       if (anIO.IsNull())
       {
-        Message::SendFail() << "Syntax error: " << theArgVec[anArgIter] << " is not an AIS object";
+        System::log::Message::SendFail() << "Syntax error: " << theArgVec[anArgIter] << " is not an AIS object";
         return 1;
       }
       aPrsList.Append(anIO);
@@ -378,7 +378,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
         isExplicitShaderType = true;
       }
 
-      const bool                          isSrcFile = OSD_File(aShaderPath).Exists();
+      const bool                          isSrcFile = System::os::OSD_File(aShaderPath).Exists();
       occ::handle<Graphic3d_ShaderObject> aShader =
         isSrcFile ? Graphic3d_ShaderObject::CreateFromFile(Graphic3d_TOS_VERTEX, aShaderPath)
                   : Graphic3d_ShaderObject::CreateFromSource(Graphic3d_TOS_VERTEX, aShaderPath);
@@ -402,7 +402,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       }
       if (aShaderType == Graphic3d_TypeOfShaderObject(-1))
       {
-        Message::SendFail() << "Error: non-existing or invalid shader source";
+        System::log::Message::SendFail() << "Error: non-existing or invalid shader source";
         return 1;
       }
 
@@ -410,7 +410,7 @@ static int VShaderProg(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << anArg << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << anArg << "'";
       return 1;
     }
   }
@@ -532,7 +532,7 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown argument '" << theArgVec[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error: unknown argument '" << theArgVec[anArgIter] << "'";
       return 1;
     }
   }
@@ -569,7 +569,7 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
                                               NCollection_Vec4<int>(3, 7, 8, 4),
                                               NCollection_Vec4<int>(5, 1, 4, 8)};
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aMatFile, anObjFile, aHtmlFile;
   if (aDumpFile.EndsWith(".obj") || aDumpFile.EndsWith(".mtl"))
   {
@@ -581,7 +581,7 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
     aMatFile = aFileSystem->OpenOStream(aMatFilePath, std::ios::out | std::ios::binary);
     if (aMatFile.get() == nullptr)
     {
-      Message::SendFail("Error: unable creating material file");
+      System::log::Message::SendFail("Error: unable creating material file");
       return 0;
     }
     if (!aDumpFile.EndsWith(".mtl"))
@@ -589,12 +589,12 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
       anObjFile = aFileSystem->OpenOStream(anObjFilePath, std::ios::out | std::ios::binary);
       if (anObjFile.get() == nullptr)
       {
-        Message::SendFail("Error: unable creating OBJ file");
+        System::log::Message::SendFail("Error: unable creating OBJ file");
         return 0;
       }
 
       TCollection_AsciiString anMtlName, aFolder;
-      OSD_Path::FolderAndFileFromPath(aMatFilePath, aFolder, anMtlName);
+      System::os::OSD_Path::FolderAndFileFromPath(aMatFilePath, aFolder, anMtlName);
       *anObjFile << "mtllib " << anMtlName << "\n";
     }
   }
@@ -603,7 +603,7 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
     aHtmlFile = aFileSystem->OpenOStream(aDumpFile, std::ios::out | std::ios::binary);
     if (aHtmlFile.get() == nullptr)
     {
-      Message::SendFail("Error: unable creating HTML file");
+      System::log::Message::SendFail("Error: unable creating HTML file");
       return 0;
     }
     *aHtmlFile
@@ -664,7 +664,7 @@ static int VListMaterials(Draw_Interpretor& theDI, int theArgNb, const char** th
   }
   else if (!aDumpFile.IsEmpty())
   {
-    Message::SendFail("Syntax error: unknown output file format");
+    System::log::Message::SendFail("Syntax error: unknown output file format");
     return 1;
   }
 
@@ -815,7 +815,7 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown argument '" << theArgVec[anArgIter] << "'";
+      System::log::Message::SendFail() << "Syntax error: unknown argument '" << theArgVec[anArgIter] << "'";
       return 1;
     }
   }
@@ -836,18 +836,18 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     }
   }
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aHtmlFile;
   TCollection_AsciiString            aFileNameBase, aFolder;
   if (aDumpFile.EndsWith(".htm") || aDumpFile.EndsWith(".html"))
   {
-    OSD_Path::FolderAndFileFromPath(aDumpFile, aFolder, aFileNameBase);
+    System::os::OSD_Path::FolderAndFileFromPath(aDumpFile, aFolder, aFileNameBase);
     aFileNameBase =
       aFileNameBase.SubString(1, aFileNameBase.Length() - (aDumpFile.EndsWith(".htm") ? 4 : 5));
   }
   else if (!aDumpFile.IsEmpty())
   {
-    Message::SendFail("Syntax error: unknown output file format");
+    System::log::Message::SendFail("Syntax error: unknown output file format");
     return 1;
   }
 
@@ -883,7 +883,7 @@ static int VListColors(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     aHtmlFile = aFileSystem->OpenOStream(aDumpFile, std::ios::out | std::ios::binary);
     if (aHtmlFile.get() == nullptr)
     {
-      Message::SendFail("Error: unable creating HTML file");
+      System::log::Message::SendFail("Error: unable creating HTML file");
       return 0;
     }
     *aHtmlFile << "<html>\n"
@@ -983,7 +983,7 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     {
       if (anArgIter + 1 >= theArgNb)
       {
-        Message::SendFail("Syntax error: size of PBR environment look up table is undefined");
+        System::log::Message::SendFail("Syntax error: size of PBR environment look up table is undefined");
         return 1;
       }
 
@@ -991,7 +991,7 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 
       if (aTableSize < 16)
       {
-        Message::SendFail(
+        System::log::Message::SendFail(
           "Error: size of PBR environment look up table must be greater or equal 16");
         return 1;
       }
@@ -1000,7 +1000,7 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     {
       if (anArgIter + 1 >= theArgNb)
       {
-        Message::SendFail(
+        System::log::Message::SendFail(
           "Syntax error: number of samples to generate PBR environment look up table is undefined");
         return 1;
       }
@@ -1009,14 +1009,14 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 
       if (aNbSamples < 1)
       {
-        Message::SendFail("Syntax error: number of samples to generate PBR environment look up "
+        System::log::Message::SendFail("Syntax error: number of samples to generate PBR environment look up "
                           "table must be greater than 1");
         return 1;
       }
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown argument " << anArg;
+      System::log::Message::SendFail() << "Syntax error: unknown argument " << anArg;
       return 1;
     }
   }
@@ -1031,13 +1031,13 @@ static int VGenEnvLUT(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     aNbSamples = 1024;
   }
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aFile =
     aFileSystem->OpenOStream(aFilePath, std::ios::out | std::ios::trunc);
 
   if (aFile.get() == nullptr || !aFile->good())
   {
-    Message::SendFail() << "Error: unable to write to " << aFilePath;
+    System::log::Message::SendFail() << "Error: unable to write to " << aFilePath;
     return 1;
   }
 

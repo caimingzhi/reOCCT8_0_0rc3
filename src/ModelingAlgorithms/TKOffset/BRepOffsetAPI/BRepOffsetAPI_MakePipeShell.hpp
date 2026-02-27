@@ -90,7 +90,7 @@ public:
   Standard_EXPORT void Simulate(const int NumberOfSection, NCollection_List<TopoDS_Shape>& Result);
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT bool MakeSolid();
 

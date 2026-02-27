@@ -125,7 +125,7 @@ TCollection_AsciiString PCDM_ReadWriter_1::Version() const
   return "PCDM_ReadWriter_1";
 }
 
-void PCDM_ReadWriter_1::WriteReferenceCounter(const occ::handle<Storage_Data>& aData,
+void PCDM_ReadWriter_1::WriteReferenceCounter(const occ::handle<app::storage::Storage_Data>& aData,
                                               const occ::handle<CDM_Document>& aDocument) const
 {
   TCollection_AsciiString ligne(REFERENCE_COUNTER);
@@ -134,7 +134,7 @@ void PCDM_ReadWriter_1::WriteReferenceCounter(const occ::handle<Storage_Data>& a
 }
 
 void PCDM_ReadWriter_1::WriteReferences(
-  const occ::handle<Storage_Data>&  aData,
+  const occ::handle<app::storage::Storage_Data>&  aData,
   const occ::handle<CDM_Document>&  aDocument,
   const TCollection_ExtendedString& theReferencerFileName) const
 {
@@ -162,7 +162,7 @@ void PCDM_ReadWriter_1::WriteReferences(
       TCollection_AsciiString theRelativePath;
       if (!theAbsoluteDirectory.IsEmpty())
       {
-        theRelativePath = OSD_Path::RelativePath(theAbsoluteDirectory, thePath);
+        theRelativePath = System::os::OSD_Path::RelativePath(theAbsoluteDirectory, thePath);
         if (!theRelativePath.IsEmpty())
           thePath = theRelativePath;
       }
@@ -173,7 +173,7 @@ void PCDM_ReadWriter_1::WriteReferences(
   }
 }
 
-void PCDM_ReadWriter_1::WriteExtensions(const occ::handle<Storage_Data>& aData,
+void PCDM_ReadWriter_1::WriteExtensions(const occ::handle<app::storage::Storage_Data>& aData,
                                         const occ::handle<CDM_Document>& aDocument) const
 {
 
@@ -192,7 +192,7 @@ void PCDM_ReadWriter_1::WriteExtensions(const occ::handle<Storage_Data>& aData,
   }
 }
 
-void PCDM_ReadWriter_1::WriteVersion(const occ::handle<Storage_Data>& aData,
+void PCDM_ReadWriter_1::WriteVersion(const occ::handle<app::storage::Storage_Data>& aData,
                                      const occ::handle<CDM_Document>& aDocument) const
 {
   TCollection_AsciiString ligne(MODIFICATION_COUNTER);
@@ -202,12 +202,12 @@ void PCDM_ReadWriter_1::WriteVersion(const occ::handle<Storage_Data>& aData,
 
 int PCDM_ReadWriter_1::ReadReferenceCounter(
   const TCollection_ExtendedString&     aFileName,
-  const occ::handle<Message_Messenger>& theMsgDriver) const
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver) const
 {
 
   int                             theReferencesCounter(0);
   int                             i;
-  occ::handle<Storage_BaseDriver> theFileDriver;
+  occ::handle<app::storage::Storage_BaseDriver> theFileDriver;
   TCollection_AsciiString         aFileNameU(aFileName);
   if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TOFD_Unknown)
     return theReferencesCounter;
@@ -219,8 +219,8 @@ int PCDM_ReadWriter_1::ReadReferenceCounter(
     PCDM_ReadWriter::Open(theFileDriver, aFileName, Storage_VSRead);
     theFileIsOpen = true;
 
-    occ::handle<Storage_Schema> s = new Storage_Schema;
-    Storage_HeaderData          hd;
+    occ::handle<app::storage::Storage_Schema> s = new app::storage::Storage_Schema;
+    app::storage::Storage_HeaderData          hd;
     hd.Read(theFileDriver);
     const NCollection_Sequence<TCollection_AsciiString>& refUserInfo = hd.UserInfo();
 
@@ -257,7 +257,7 @@ int PCDM_ReadWriter_1::ReadReferenceCounter(
 
 void PCDM_ReadWriter_1::ReadReferences(const TCollection_ExtendedString&     aFileName,
                                        NCollection_Sequence<PCDM_Reference>& theReferences,
-                                       const occ::handle<Message_Messenger>& theMsgDriver) const
+                                       const occ::handle<System::log::Message_Messenger>& theMsgDriver) const
 {
 
   NCollection_Sequence<TCollection_ExtendedString> ReadReferences;
@@ -313,7 +313,7 @@ void PCDM_ReadWriter_1::ReadReferences(const TCollection_ExtendedString&     aFi
 void PCDM_ReadWriter_1::ReadExtensions(
   const TCollection_ExtendedString&                 aFileName,
   NCollection_Sequence<TCollection_ExtendedString>& theExtensions,
-  const occ::handle<Message_Messenger>&             theMsgDriver) const
+  const occ::handle<System::log::Message_Messenger>&             theMsgDriver) const
 {
 
   ReadUserInfo(aFileName, START_EXT, END_EXT, theExtensions, theMsgDriver);
@@ -323,17 +323,17 @@ void PCDM_ReadWriter_1::ReadUserInfo(const TCollection_ExtendedString&          
                                      const TCollection_AsciiString&                    Start,
                                      const TCollection_AsciiString&                    End,
                                      NCollection_Sequence<TCollection_ExtendedString>& theUserInfo,
-                                     const occ::handle<Message_Messenger>&)
+                                     const occ::handle<System::log::Message_Messenger>&)
 {
   int                             i;
-  occ::handle<Storage_BaseDriver> theFileDriver;
+  occ::handle<app::storage::Storage_BaseDriver> theFileDriver;
   TCollection_AsciiString         aFileNameU(aFileName);
   if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TOFD_Unknown)
     return;
 
   PCDM_ReadWriter::Open(theFileDriver, aFileName, Storage_VSRead);
-  occ::handle<Storage_Schema> s = new Storage_Schema;
-  Storage_HeaderData          hd;
+  occ::handle<app::storage::Storage_Schema> s = new app::storage::Storage_Schema;
+  app::storage::Storage_HeaderData          hd;
   hd.Read(theFileDriver);
   const NCollection_Sequence<TCollection_AsciiString>& refUserInfo = hd.UserInfo();
 
@@ -359,11 +359,11 @@ void PCDM_ReadWriter_1::ReadUserInfo(const TCollection_ExtendedString&          
 }
 
 int PCDM_ReadWriter_1::ReadDocumentVersion(const TCollection_ExtendedString&     aFileName,
-                                           const occ::handle<Message_Messenger>& theMsgDriver) const
+                                           const occ::handle<System::log::Message_Messenger>& theMsgDriver) const
 {
 
   int                             theVersion(-1);
-  occ::handle<Storage_BaseDriver> theFileDriver;
+  occ::handle<app::storage::Storage_BaseDriver> theFileDriver;
   TCollection_AsciiString         aFileNameU(aFileName);
   if (PCDM::FileDriverType(aFileNameU, theFileDriver) == PCDM_TOFD_Unknown)
     return theVersion;
@@ -375,8 +375,8 @@ int PCDM_ReadWriter_1::ReadDocumentVersion(const TCollection_ExtendedString&    
     OCC_CATCH_SIGNALS
     PCDM_ReadWriter::Open(theFileDriver, aFileName, Storage_VSRead);
     theFileIsOpen                 = true;
-    occ::handle<Storage_Schema> s = new Storage_Schema;
-    Storage_HeaderData          hd;
+    occ::handle<app::storage::Storage_Schema> s = new app::storage::Storage_Schema;
+    app::storage::Storage_HeaderData          hd;
     hd.Read(theFileDriver);
     const NCollection_Sequence<TCollection_AsciiString>& refUserInfo = hd.UserInfo();
 

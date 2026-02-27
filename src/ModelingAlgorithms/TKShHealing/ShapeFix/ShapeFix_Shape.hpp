@@ -32,7 +32,7 @@ public:
 
   Standard_EXPORT void Init(const TopoDS_Shape& shape);
 
-  Standard_EXPORT bool Perform(const Message_ProgressRange& theProgress = Message_ProgressRange());
+  Standard_EXPORT bool Perform(const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT TopoDS_Shape Shape() const;
 
@@ -77,7 +77,7 @@ protected:
   Standard_EXPORT void SameParameter(
     const TopoDS_Shape&          shape,
     const bool                   enforce,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   TopoDS_Shape                                           myResult;
   occ::handle<ShapeFix_Solid>                            myFixSolid;

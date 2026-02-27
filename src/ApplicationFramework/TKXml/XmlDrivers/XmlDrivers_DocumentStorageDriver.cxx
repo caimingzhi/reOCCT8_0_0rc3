@@ -17,7 +17,7 @@ XmlDrivers_DocumentStorageDriver::XmlDrivers_DocumentStorageDriver(
 }
 
 occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentStorageDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return XmlDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -25,7 +25,7 @@ occ::handle<XmlMDF_ADriverTable> XmlDrivers_DocumentStorageDriver::AttributeDriv
 bool XmlDrivers_DocumentStorageDriver::WriteShapeSection(
   XmlObjMgt_Element&           theElement,
   const TDocStd_FormatVersion  theStorageFormatVersion,
-  const Message_ProgressRange& theRange)
+  const System::log::Message_ProgressRange& theRange)
 {
   bool                        isShape(false);
   occ::handle<XmlMDF_ADriver> aDriver;

@@ -124,7 +124,7 @@ IGESCAFControl_Writer::IGESCAFControl_Writer(const occ::handle<XSControl_WorkSes
 }
 
 bool IGESCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& doc,
-                                     const Message_ProgressRange&         theProgress)
+                                     const System::log::Message_ProgressRange&         theProgress)
 {
 
   occ::handle<XCAFDoc_ShapeTool> STool = XCAFDoc_DocumentTool::ShapeTool(doc->Main());
@@ -137,7 +137,7 @@ bool IGESCAFControl_Writer::Transfer(const occ::handle<TDocStd_Document>& doc,
 }
 
 bool IGESCAFControl_Writer::Transfer(const TDF_Label&             label,
-                                     const Message_ProgressRange& theProgress)
+                                     const System::log::Message_ProgressRange& theProgress)
 {
   NCollection_Sequence<TDF_Label> labels;
   labels.Append(label);
@@ -145,12 +145,12 @@ bool IGESCAFControl_Writer::Transfer(const TDF_Label&             label,
 }
 
 bool IGESCAFControl_Writer::Transfer(const NCollection_Sequence<TDF_Label>& labels,
-                                     const Message_ProgressRange&           theProgress)
+                                     const System::log::Message_ProgressRange&           theProgress)
 {
   if (labels.Length() <= 0)
     return false;
   prepareUnit(labels.First());
-  Message_ProgressScope aPS(theProgress, "Labels", labels.Length());
+  System::log::Message_ProgressScope aPS(theProgress, "Labels", labels.Length());
   for (int i = 1; i <= labels.Length() && aPS.More(); i++)
   {
     TopoDS_Shape shape = XCAFDoc_ShapeTool::GetShape(labels.Value(i));
@@ -174,7 +174,7 @@ bool IGESCAFControl_Writer::Transfer(const NCollection_Sequence<TDF_Label>& labe
 
 bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
                                     const char*                          filename,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (!Transfer(doc, theProgress))
     return false;
@@ -183,7 +183,7 @@ bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
 
 bool IGESCAFControl_Writer::Perform(const occ::handle<TDocStd_Document>& doc,
                                     const TCollection_AsciiString&       filename,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (!Transfer(doc, theProgress))
     return false;

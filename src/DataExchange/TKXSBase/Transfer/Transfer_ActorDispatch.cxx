@@ -49,7 +49,7 @@ Transfer_TransferDispatch& Transfer_ActorDispatch::TransferDispatch()
 occ::handle<Transfer_Binder> Transfer_ActorDispatch::Transfer(
   const occ::handle<Standard_Transient>& start,
   const occ::handle<Transfer_TransientProcess>&,
-  const Message_ProgressRange&)
+  const System::log::Message_ProgressRange&)
 {
   thetool.TransferEntity(start);
   return thetool.TransientProcess()->Find(start);

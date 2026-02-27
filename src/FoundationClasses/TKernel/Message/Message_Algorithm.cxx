@@ -13,27 +13,27 @@
 #include <NCollection_HSequence.hpp>
 #include <TColStd_MapIteratorOfPackedMapOfInteger.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_Algorithm, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_Algorithm, Standard_Transient)
 
-Message_Algorithm::Message_Algorithm()
+System::log::Message_Algorithm::Message_Algorithm()
 {
-  myMessenger = Message::DefaultMessenger();
+  myMessenger = System::log::Message::DefaultMessenger();
 }
 
-void Message_Algorithm::SetMessenger(const occ::handle<Message_Messenger>& theMsgr)
+void System::log::Message_Algorithm::SetMessenger(const occ::handle<System::log::Message_Messenger>& theMsgr)
 {
   if (theMsgr.IsNull())
-    myMessenger = Message::DefaultMessenger();
+    myMessenger = System::log::Message::DefaultMessenger();
   else
     myMessenger = theMsgr;
 }
 
-void Message_Algorithm::SetStatus(const Message_Status& theStat)
+void System::log::Message_Algorithm::SetStatus(const Message_Status& theStat)
 {
   myStatus.Set(theStat);
 }
 
-void Message_Algorithm::SetStatus(const Message_Status& theStat, const int theInt)
+void System::log::Message_Algorithm::SetStatus(const Message_Status& theStat, const int theInt)
 {
 
   SetStatus(theStat);
@@ -53,7 +53,7 @@ void Message_Algorithm::SetStatus(const Message_Status& theStat, const int theIn
   occ::down_cast<TColStd_HPackedMapOfInteger>(aData)->ChangeMap().Add(theInt);
 }
 
-void Message_Algorithm::SetStatus(const Message_Status&                           theStat,
+void System::log::Message_Algorithm::SetStatus(const Message_Status&                           theStat,
                                   const occ::handle<TCollection_HExtendedString>& theStr,
                                   const bool                                      noRepetitions)
 {
@@ -89,7 +89,7 @@ void Message_Algorithm::SetStatus(const Message_Status&                         
   aReportSeq->Append(theStr);
 }
 
-void Message_Algorithm::SetStatus(const Message_Status& theStat, const Message_Msg& theMsg)
+void System::log::Message_Algorithm::SetStatus(const Message_Status& theStat, const System::log::Message_Msg& theMsg)
 {
 
   SetStatus(theStat);
@@ -103,14 +103,14 @@ void Message_Algorithm::SetStatus(const Message_Status& theStat, const Message_M
   if (myReportMessages.IsNull())
   {
     myReportMessages =
-      new NCollection_Array1<NCollection_Handle<Message_Msg>>(Message_ExecStatus::FirstStatus,
+      new NCollection_Array1<NCollection_Handle<System::log::Message_Msg>>(Message_ExecStatus::FirstStatus,
                                                               Message_ExecStatus::LastStatus);
   }
 
-  myReportMessages->ChangeValue(aFlagIndex) = new Message_Msg(theMsg);
+  myReportMessages->ChangeValue(aFlagIndex) = new System::log::Message_Msg(theMsg);
 }
 
-void Message_Algorithm::ClearStatus()
+void System::log::Message_Algorithm::ClearStatus()
 {
   myStatus.Clear();
   myReportIntegers.Nullify();
@@ -118,11 +118,11 @@ void Message_Algorithm::ClearStatus()
   myReportMessages.Nullify();
 }
 
-void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
+void System::log::Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
                                            const Message_Gravity     theTraceLevel,
                                            const int                 theMaxCount) const
 {
-  occ::handle<Message_Messenger> aMsgr = GetMessenger();
+  occ::handle<System::log::Message_Messenger> aMsgr = GetMessenger();
   if (aMsgr.IsNull())
   {
     return;
@@ -136,7 +136,7 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
       continue;
     }
 
-    NCollection_Handle<Message_Msg> aMsgCustom;
+    NCollection_Handle<System::log::Message_Msg> aMsgCustom;
     if (!myReportMessages.IsNull())
       aMsgCustom = myReportMessages->Value(i);
     if (!aMsgCustom.IsNull())
@@ -171,11 +171,11 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
     {
       aMsgName = aType->Name();
       aMsgName += aSuffix;
-      if (Message_MsgFile::HasMsg(aMsgName))
+      if (System::log::Message_MsgFile::HasMsg(aMsgName))
         break;
     }
 
-    Message_Msg aMsg(aMsgName);
+    System::log::Message_Msg aMsg(aMsgName);
 
     if (!myReportIntegers.IsNull())
     {
@@ -201,7 +201,7 @@ void Message_Algorithm::SendStatusMessages(const Message_ExecStatus& theStatus,
   }
 }
 
-void Message_Algorithm::SendMessages(const Message_Gravity theTraceLevel,
+void System::log::Message_Algorithm::SendMessages(const Message_Gravity theTraceLevel,
                                      const int             theMaxCount) const
 {
   Message_ExecStatus aStat;
@@ -211,13 +211,13 @@ void Message_Algorithm::SendMessages(const Message_Gravity theTraceLevel,
   SendStatusMessages(aStat, theTraceLevel, theMaxCount);
 }
 
-void Message_Algorithm::AddStatus(const occ::handle<Message_Algorithm>& theOtherAlgo)
+void System::log::Message_Algorithm::AddStatus(const occ::handle<System::log::Message_Algorithm>& theOtherAlgo)
 {
   AddStatus(theOtherAlgo->GetStatus(), theOtherAlgo);
 }
 
-void Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllowedStatus,
-                                  const occ::handle<Message_Algorithm>& theOtherAlgo)
+void System::log::Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllowedStatus,
+                                  const occ::handle<System::log::Message_Algorithm>& theOtherAlgo)
 {
 
   const Message_ExecStatus& aStatusOfAlgo = theOtherAlgo->GetStatus();
@@ -254,7 +254,7 @@ void Message_Algorithm::AddStatus(const Message_ExecStatus&             theAllow
   }
 }
 
-occ::handle<TColStd_HPackedMapOfInteger> Message_Algorithm::GetMessageNumbers(
+occ::handle<TColStd_HPackedMapOfInteger> System::log::Message_Algorithm::GetMessageNumbers(
   const Message_Status& theStatus) const
 {
   if (myReportIntegers.IsNull())
@@ -267,7 +267,7 @@ occ::handle<TColStd_HPackedMapOfInteger> Message_Algorithm::GetMessageNumbers(
   return occ::down_cast<TColStd_HPackedMapOfInteger>(myReportIntegers->Value(aFlagIndex));
 }
 
-occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> Message_Algorithm::
+occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> System::log::Message_Algorithm::
   GetMessageStrings(const Message_Status& theStatus) const
 {
   if (myReportStrings.IsNull())
@@ -281,7 +281,7 @@ occ::handle<NCollection_HSequence<occ::handle<TCollection_HExtendedString>>> Mes
     myReportStrings->Value(aFlagIndex));
 }
 
-TCollection_ExtendedString Message_Algorithm::PrepareReport(
+TCollection_ExtendedString System::log::Message_Algorithm::PrepareReport(
   const occ::handle<TColStd_HPackedMapOfInteger>& theMapError,
   const int                                       theMaxCount)
 {
@@ -304,7 +304,7 @@ TCollection_ExtendedString Message_Algorithm::PrepareReport(
   return aNewReport;
 }
 
-TCollection_ExtendedString Message_Algorithm::PrepareReport(
+TCollection_ExtendedString System::log::Message_Algorithm::PrepareReport(
   const NCollection_Sequence<occ::handle<TCollection_HExtendedString>>& theReportSeq,
   const int                                                             theMaxCount)
 {

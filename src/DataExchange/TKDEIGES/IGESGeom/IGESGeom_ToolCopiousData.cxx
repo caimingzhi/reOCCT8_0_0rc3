@@ -33,7 +33,7 @@ void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousD
   if (!PR.ReadInteger(PR.Current(), aDataType))
   {
 
-    Message_Msg Msg85("XSTEP_85");
+    System::log::Message_Msg Msg85("XSTEP_85");
     PR.SendFail(Msg85);
   }
 
@@ -43,7 +43,7 @@ void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousD
     data = true;
   else
   {
-    Message_Msg Msg86("XSTEP_86");
+    System::log::Message_Msg Msg86("XSTEP_86");
     PR.SendFail(Msg86);
   }
 
@@ -51,7 +51,7 @@ void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousD
   {
     if (!PR.ReadReal(PR.Current(), aZPlane))
     {
-      Message_Msg Msg87("XSTEP_87");
+      System::log::Message_Msg Msg87("XSTEP_87");
       PR.SendFail(Msg87);
     }
   }
@@ -65,7 +65,7 @@ void IGESGeom_ToolCopiousData::ReadOwnParams(const occ::handle<IGESGeom_CopiousD
     else
       upper = 6 * nbData;
 
-    Message_Msg Msg88("XSTEP_88");
+    System::log::Message_Msg Msg88("XSTEP_88");
 
     PR.ReadReals(PR.CurrentList(upper), Msg88, allData);
   }
@@ -182,7 +182,7 @@ void IGESGeom_ToolCopiousData::OwnCheck(const occ::handle<IGESGeom_CopiousData>&
                                         occ::handle<Interface_Check>& ach) const
 {
 
-  Message_Msg Msg71("XSTEP_71");
+  System::log::Message_Msg Msg71("XSTEP_71");
 
   int fn = ent->FormNumber();
   if ((fn > 3 && fn < 11) || (fn > 14 && fn < 63))
@@ -193,7 +193,7 @@ void IGESGeom_ToolCopiousData::OwnCheck(const occ::handle<IGESGeom_CopiousData>&
   int dt = ent->DataType();
   if (dt < 1 || dt > 3)
   {
-    Message_Msg Msg85("XSTEP_85");
+    System::log::Message_Msg Msg85("XSTEP_85");
     ach->SendFail(Msg85);
   }
   if ((dt == 1 && (fn != 1 && fn != 11 && fn != 63)) || (dt == 2 && (fn != 2 && fn != 12))

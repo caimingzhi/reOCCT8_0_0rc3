@@ -1159,7 +1159,7 @@ bool Init_Appli()
   }
   catch (Standard_Failure const& theFail)
   {
-    Message::SendFail() << "TK_Init() failed with " << theFail;
+    System::log::Message::SendFail() << "TK_Init() failed with " << theFail;
   }
 
   Tcl_StaticPackage(interp, "Tk", Tk_Init, (Tcl_PackageInitProc*)nullptr);
@@ -1712,7 +1712,7 @@ static DWORD WINAPI tkLoop(const LPVOID theThreadParameter)
   }
   #endif
 
-  OSD::SetSignal(false);
+  System::os::OSD::SetSignal(false);
 
   isTkLoopStarted = true;
 

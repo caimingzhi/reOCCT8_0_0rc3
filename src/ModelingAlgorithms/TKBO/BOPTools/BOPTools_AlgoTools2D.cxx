@@ -151,7 +151,7 @@ bool BOPTools_AlgoTools2D::HasCurveOnSurface(const TopoDS_Edge&         aE,
   aToler = BRep_Tool::Tolerance(aE);
   BRep_Tool::Range(aE, aFirst, aLast);
 
-  if ((aLast - aFirst) < Precision::PConfusion())
+  if ((aLast - aFirst) < math::precision::Precision::PConfusion())
   {
     return false;
   }
@@ -169,7 +169,7 @@ bool BOPTools_AlgoTools2D::HasCurveOnSurface(const TopoDS_Edge& aE, const TopoDS
 
   BRep_Tool::Range(aE, aFirst, aLast);
 
-  if ((aLast - aFirst) < Precision::PConfusion())
+  if ((aLast - aFirst) < math::precision::Precision::PConfusion())
   {
     return false;
   }
@@ -230,7 +230,7 @@ void BOPTools_AlgoTools2D::AdjustPCurveOnSurf(const BRepAdaptor_Surface&       a
   VMin                  = aBAS.FirstVParameter();
   VMax                  = aBAS.LastVParameter();
 
-  aDelta = Precision::PConfusion();
+  aDelta = math::precision::Precision::PConfusion();
 
   aT = .5 * (aFirst + aLast);
 
@@ -474,7 +474,7 @@ void BOPTools_AlgoTools2D::MakePCurveOnFace(const TopoDS_Face&                  
   occ::handle<GeomAdaptor_Curve>   aBAHC = new GeomAdaptor_Curve(aC3D, aT1, aT2);
 
   double aTolR;
-  double aTR       = Precision::Confusion();
+  double aTR       = math::precision::Precision::Confusion();
   double aMaxTol   = 1.e3 * aTR;
   bool   isAnaSurf = ProjLib::IsAnaSurf(aBAHS);
 
@@ -565,14 +565,14 @@ void BOPTools_AlgoTools2D::MakePCurveOnFace(const TopoDS_Face&                  
 
   double aTCFirst = aC2D->FirstParameter();
   double aTCLast  = aC2D->LastParameter();
-  if ((aTCFirst - aT1) > Precision::PConfusion() || (aT2 - aTCLast) > Precision::PConfusion())
+  if ((aTCFirst - aT1) > math::precision::Precision::PConfusion() || (aT2 - aTCLast) > math::precision::Precision::PConfusion())
   {
     if (aTCFirst < aT1)
       aTCFirst = aT1;
     if (aTCLast > aT2)
       aTCLast = aT2;
 
-    GeomLib::SameRange(Precision::PConfusion(), aC2D, aTCFirst, aTCLast, aT1, aT2, aC2D);
+    GeomLib::SameRange(math::precision::Precision::PConfusion(), aC2D, aTCFirst, aTCLast, aT1, aT2, aC2D);
   }
 
   occ::handle<Geom_Surface> aS = pBAS->Surface().Surface();
@@ -627,7 +627,7 @@ void BOPTools_AlgoTools2D::IsEdgeIsoline(const TopoDS_Edge& theE,
 
   aT /= sqrt(aSqMagn);
 
-  constexpr double aTol = Precision::Angular();
+  constexpr double aTol = math::precision::Precision::Angular();
   const gp_Vec2d   aRefVDir(0.0, 1.0), aRefUDir(1.0, 0.0);
 
   const double aDPv = aT.CrossMagnitude(aRefVDir), aDPu = aT.CrossMagnitude(aRefUDir);

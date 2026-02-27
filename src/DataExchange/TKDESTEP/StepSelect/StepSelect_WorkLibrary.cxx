@@ -65,13 +65,13 @@ int StepSelect_WorkLibrary::ReadStream(const char*                            th
 bool StepSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
 {
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   DeclareAndCast(StepData_StepModel, stepmodel, ctx.Model());
   DeclareAndCast(StepData_Protocol, stepro, ctx.Protocol());
   if (stepmodel.IsNull() || stepro.IsNull())
     return false;
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aStream =
     aFileSystem->OpenOStream(ctx.FileName(), std::ios::out | std::ios::binary | std::ios::trunc);
 

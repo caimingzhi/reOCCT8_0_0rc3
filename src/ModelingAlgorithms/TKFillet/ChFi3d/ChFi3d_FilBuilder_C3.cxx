@@ -53,8 +53,8 @@ extern bool ChFi3d_GetcontextFORCEFILLING();
   #include <OSD_Chronometer.hpp>
 
 extern double t_t3cornerinit, t_spherique, t_torique, t_notfilling, t_filling, t_t3cornerDS;
-extern void   ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void   ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void   ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void   ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
 static int SearchPivot(int* s, double u[3][3], const double t)
@@ -190,7 +190,7 @@ static bool SearchFD(TopOpeBRepDS_DataStructure&       DStr,
 
 static bool ToricCorner(const TopoDS_Face& F, const double rd, const double rf, const gp_Vec& v)
 {
-  if (std::abs(rd - rf) > Precision::Confusion())
+  if (std::abs(rd - rf) > math::precision::Precision::Confusion())
   {
     return false;
   }
@@ -201,14 +201,14 @@ static bool ToricCorner(const TopoDS_Face& F, const double rd, const double rf, 
   }
   double scal1 = std::abs(bs.Plane().Position().XDirection().Dot(v));
   double scal2 = std::abs(bs.Plane().Position().YDirection().Dot(v));
-  return (scal1 <= Precision::Confusion() && scal2 <= Precision::Confusion());
+  return (scal1 <= math::precision::Precision::Confusion() && scal2 <= math::precision::Precision::Confusion());
 }
 
 void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
 {
 
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
   ChFi3d_InitChron(ch);
 #endif
 

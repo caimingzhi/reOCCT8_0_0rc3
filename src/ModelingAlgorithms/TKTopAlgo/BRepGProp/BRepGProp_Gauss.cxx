@@ -26,36 +26,36 @@ namespace
 
   static double AddInf(const double theA, const double theB)
   {
-    if (Precision::IsPositiveInfinite(theA))
+    if (math::precision::Precision::IsPositiveInfinite(theA))
     {
-      if (Precision::IsNegativeInfinite(theB))
+      if (math::precision::Precision::IsNegativeInfinite(theB))
         return 0.0;
       else
-        return Precision::Infinite();
+        return math::precision::Precision::Infinite();
     }
 
-    if (Precision::IsPositiveInfinite(theB))
+    if (math::precision::Precision::IsPositiveInfinite(theB))
     {
-      if (Precision::IsNegativeInfinite(theA))
+      if (math::precision::Precision::IsNegativeInfinite(theA))
         return 0.0;
       else
-        return Precision::Infinite();
+        return math::precision::Precision::Infinite();
     }
 
-    if (Precision::IsNegativeInfinite(theA))
+    if (math::precision::Precision::IsNegativeInfinite(theA))
     {
-      if (Precision::IsPositiveInfinite(theB))
+      if (math::precision::Precision::IsPositiveInfinite(theB))
         return 0.0;
       else
-        return -Precision::Infinite();
+        return -math::precision::Precision::Infinite();
     }
 
-    if (Precision::IsNegativeInfinite(theB))
+    if (math::precision::Precision::IsNegativeInfinite(theB))
     {
-      if (Precision::IsPositiveInfinite(theA))
+      if (math::precision::Precision::IsPositiveInfinite(theA))
         return 0.0;
       else
-        return -Precision::Infinite();
+        return -math::precision::Precision::Infinite();
     }
 
     return theA + theB;
@@ -71,36 +71,36 @@ namespace
     if ((theA == 0.0) || (theB == 0.0))
       return 0.0;
 
-    if (Precision::IsPositiveInfinite(theA))
+    if (math::precision::Precision::IsPositiveInfinite(theA))
     {
       if (theB < 0.0)
-        return -Precision::Infinite();
+        return -math::precision::Precision::Infinite();
       else
-        return Precision::Infinite();
+        return math::precision::Precision::Infinite();
     }
 
-    if (Precision::IsPositiveInfinite(theB))
+    if (math::precision::Precision::IsPositiveInfinite(theB))
     {
       if (theA < 0.0)
-        return -Precision::Infinite();
+        return -math::precision::Precision::Infinite();
       else
-        return Precision::Infinite();
+        return math::precision::Precision::Infinite();
     }
 
-    if (Precision::IsNegativeInfinite(theA))
+    if (math::precision::Precision::IsNegativeInfinite(theA))
     {
       if (theB < 0.0)
-        return +Precision::Infinite();
+        return +math::precision::Precision::Infinite();
       else
-        return -Precision::Infinite();
+        return -math::precision::Precision::Infinite();
     }
 
-    if (Precision::IsNegativeInfinite(theB))
+    if (math::precision::Precision::IsNegativeInfinite(theB))
     {
       if (theA < 0.0)
-        return +Precision::Infinite();
+        return +math::precision::Precision::Infinite();
       else
-        return -Precision::Infinite();
+        return -math::precision::Precision::Infinite();
     }
 
     return theA * theB;
@@ -338,8 +338,8 @@ void BRepGProp_Gauss::checkBounds(const double theU1,
                                   const double theV1,
                                   const double theV2)
 {
-  if (Precision::IsInfinite(theU1) || Precision::IsInfinite(theU2) || Precision::IsInfinite(theV1)
-      || Precision::IsInfinite(theV2))
+  if (math::precision::Precision::IsInfinite(theU1) || math::precision::Precision::IsInfinite(theU2) || math::precision::Precision::IsInfinite(theV1)
+      || math::precision::Precision::IsInfinite(theV2))
   {
     add  = (::AddInf);
     mult = (::MultInf);
@@ -530,7 +530,7 @@ double BRepGProp_Gauss::Compute(BRepGProp_Face&   theSurface,
     {
       if (!theSurface.Load(theDomain.Value()))
       {
-        return Precision::Infinite();
+        return math::precision::Precision::Infinite();
       }
       NbLGaussP[0] = theSurface.LIntOrder(anEpsilon);
     }

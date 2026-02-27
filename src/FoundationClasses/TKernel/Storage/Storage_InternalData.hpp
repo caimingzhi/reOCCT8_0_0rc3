@@ -5,14 +5,17 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Persistent.hpp>
 
+namespace app { namespace storage {
 class Storage_Schema;
+}} // namespace app::storage
+
 class Storage_BucketOfPersistent;
 class Storage_BucketIterator;
 
 class Storage_Bucket
 {
   friend class Storage_BucketIterator;
-  friend class Storage_Schema;
+  friend class app::storage::Storage_Schema;
   friend class Storage_BucketOfPersistent;
 
   Standard_Persistent** mySpace;
@@ -108,6 +111,7 @@ public:
 #include <NCollection_DataMap.hpp>
 #include <Standard_Transient.hpp>
 
+namespace app { namespace storage {
 class Storage_InternalData : public Standard_Transient
 {
 
@@ -132,3 +136,5 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<Standard_Persistent>>>               myReadArray;
   NCollection_DataMap<TCollection_AsciiString, occ::handle<Storage_TypedCallBack>> myTypeBinding;
 };
+}} // namespace app::storage
+

@@ -112,7 +112,7 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   }
 
   double aHeight = DNaming::GetReal(aFunction, PRISM_HEIGHT)->Get();
-  if (aHeight <= Precision::Confusion())
+  if (aHeight <= math::precision::Precision::Confusion())
   {
     aFunction->SetFailure(WRONG_ARGUMENT);
     return -1;
@@ -162,7 +162,7 @@ int DNaming_PrismDriver::Execute(occ::handle<TFunction_Logbook>& theLog) const
   {
     GProp_GProps aGProp;
     BRepGProp::VolumeProperties(aResult, aGProp);
-    if (aGProp.Mass() <= Precision::Confusion())
+    if (aGProp.Mass() <= math::precision::Precision::Confusion())
     {
       aFunction->SetFailure(RESULT_NOT_VALID);
       return -1;

@@ -56,8 +56,8 @@ extern bool ChFi3d_GetcontextFORCEFILLING();
 
 extern double t_t2cornerinit, t_perf2cornerbyinter, t_chfikpartcompdata, t_cheminement,
   t_remplissage, t_t2cornerDS;
-extern void ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
 static bool ToricRotule(const BRepAdaptor_Surface&        fac,
@@ -103,7 +103,7 @@ static void RemoveSD(occ::handle<ChFiDS_Stripe>& Stripe, const int num1, const i
 void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
 {
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
   ChFi3d_InitChron(ch);
 #endif
 

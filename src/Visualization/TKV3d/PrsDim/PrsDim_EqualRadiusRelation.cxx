@@ -92,9 +92,9 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
       aPar += 2 * M_PI * std::trunc(0.5 * LastPar1 / M_PI);
     double aRadius = FirstCirc.Radius();
 
-    if (std::abs(myFirstPoint.Distance(myFirstCenter) - aRadius) >= Precision::Confusion())
+    if (std::abs(myFirstPoint.Distance(myFirstCenter) - aRadius) >= math::precision::Precision::Confusion())
       myFirstPoint = ElCLib::Value(aPar, FirstCirc);
-    if (FirstPoint1.Distance(LastPoint1) > Precision::Confusion())
+    if (FirstPoint1.Distance(LastPoint1) > math::precision::Precision::Confusion())
     {
 
       if (aPar > LastPar1 || aPar < FirstPar1)
@@ -112,9 +112,9 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
       aPar += 2 * M_PI * std::trunc(0.5 * LastPar2 / M_PI);
 
     aRadius = SecondCirc.Radius();
-    if (std::abs(mySecondPoint.Distance(mySecondCenter) - aRadius) >= Precision::Confusion())
+    if (std::abs(mySecondPoint.Distance(mySecondCenter) - aRadius) >= math::precision::Precision::Confusion())
       mySecondPoint = ElCLib::Value(aPar, SecondCirc);
-    if (FirstPoint2.Distance(LastPoint2) > Precision::Confusion())
+    if (FirstPoint2.Distance(LastPoint2) > math::precision::Precision::Confusion())
     {
       if (aPar > LastPar2 || aPar < FirstPar2)
       {
@@ -178,8 +178,8 @@ void PrsDim_EqualRadiusRelation::ComputeSelection(
 
 void PrsDim_EqualRadiusRelation::ComputeRadiusPosition()
 {
-  if (myAutomaticPosition || myFirstCenter.Distance(myPosition) < Precision::Confusion()
-      || mySecondCenter.Distance(myPosition) < Precision::Confusion())
+  if (myAutomaticPosition || myFirstCenter.Distance(myPosition) < math::precision::Precision::Confusion()
+      || mySecondCenter.Distance(myPosition) < math::precision::Precision::Confusion())
     return;
 
   gp_Pnt aPosition;

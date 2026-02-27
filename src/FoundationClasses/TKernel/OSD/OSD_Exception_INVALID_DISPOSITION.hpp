@@ -7,9 +7,12 @@
 #if !defined No_Exception && !defined No_OSD_Exception_INVALID_DISPOSITION
   #define OSD_Exception_INVALID_DISPOSITION_Raise_if(CONDITION, MESSAGE)                           \
     if (CONDITION)                                                                                 \
-      throw OSD_Exception_INVALID_DISPOSITION(MESSAGE);
+      throw System::os::OSD_Exception_INVALID_DISPOSITION(MESSAGE);
 #else
   #define OSD_Exception_INVALID_DISPOSITION_Raise_if(CONDITION, MESSAGE)
 #endif
 
-DEFINE_STANDARD_EXCEPTION(OSD_Exception_INVALID_DISPOSITION, OSD_Exception)
+namespace System { namespace os {
+DEFINE_STANDARD_EXCEPTION(OSD_Exception_INVALID_DISPOSITION, System::os::OSD_Exception)
+}} // namespace System::os
+

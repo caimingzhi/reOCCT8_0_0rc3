@@ -32,9 +32,9 @@ static bool AddSplitPoint(const occ::handle<BOPDS_PaveBlock>& thePBD,
                           const BOPDS_Pave&                   thePave,
                           const double                        theTol);
 
-void BOPAlgo_PaveFiller::ProcessDE(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::ProcessDE(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
 
   for (int anEdgeIndex = 0; anEdgeIndex < myDS->NbSourceShapes(); ++anEdgeIndex)
   {
@@ -86,7 +86,7 @@ void BOPAlgo_PaveFiller::ProcessDE(const Message_ProgressRange& theRange)
         BRep_Builder BB;
         BB.Add(aE, aVn);
         BB.Degenerated(aE, true);
-        BB.UpdateEdge(aE, Precision::Confusion());
+        BB.UpdateEdge(aE, math::precision::Precision::Confusion());
         BOPDS_ShapeInfo aSI;
         aSI.SetShapeType(TopAbs_EDGE);
         aSI.SetShape(aE);
@@ -201,7 +201,7 @@ void BOPAlgo_PaveFiller::FillPaves(const int                                    
   double                     aTolV = BRep_Tool::Tolerance(aDV);
   const BRepAdaptor_Surface& aBAS  = myContext->SurfaceAdaptor(aDF);
 
-  double aTolInt = Precision::PConfusion();
+  double aTolInt = math::precision::Precision::PConfusion();
 
   double aURes = aBAS.UResolution(aTolV);
 
@@ -209,7 +209,7 @@ void BOPAlgo_PaveFiller::FillPaves(const int                                    
 
   aTolInt = std::max(aTolInt, std::max(aURes, aVRes));
 
-  double aTolCmp = Precision::PConfusion();
+  double aTolCmp = math::precision::Precision::PConfusion();
 
   double                    aTD1, aTD2;
   occ::handle<Geom2d_Curve> aC2DDE = BRep_Tool::CurveOnSurface(aDE, aDF, aTD1, aTD2);
@@ -219,7 +219,7 @@ void BOPAlgo_PaveFiller::FillPaves(const int                                    
   }
 
   bool bUDir =
-    std::abs(aC2DDE->Value(aTD1).Y() - aC2DDE->Value(aTD2).Y()) < Precision::PConfusion();
+    std::abs(aC2DDE->Value(aTD1).Y() - aC2DDE->Value(aTD2).Y()) < math::precision::Precision::PConfusion();
 
   aTolCmp = std::max(aTolCmp, (bUDir ? aURes : aVRes));
 

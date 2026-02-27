@@ -28,7 +28,7 @@ namespace
 {
   static constexpr double PIPI = M_PI + M_PI;
 
-  static constexpr double NEGATIVE_RESOLUTION = -Precision::Computational();
+  static constexpr double NEGATIVE_RESOLUTION = -math::precision::Precision::Computational();
 
   static inline void normalizeAngle(double& theAngle)
   {
@@ -50,8 +50,8 @@ namespace
 
 double ElCLib::InPeriod(const double theU, const double theUFirst, const double theULast)
 {
-  if (Precision::IsInfinite(theU) || Precision::IsInfinite(theUFirst)
-      || Precision::IsInfinite(theULast))
+  if (math::precision::Precision::IsInfinite(theU) || math::precision::Precision::IsInfinite(theUFirst)
+      || math::precision::Precision::IsInfinite(theULast))
   {
     return theU;
   }
@@ -72,7 +72,7 @@ void ElCLib::AdjustPeriodic(const double UFirst,
                             double&      U1,
                             double&      U2)
 {
-  if (Precision::IsInfinite(UFirst) || Precision::IsInfinite(ULast))
+  if (math::precision::Precision::IsInfinite(UFirst) || math::precision::Precision::IsInfinite(ULast))
   {
     U1 = UFirst;
     U2 = ULast;

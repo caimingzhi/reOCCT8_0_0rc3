@@ -30,7 +30,7 @@ GeomFill_UniformSection::GeomFill_UniformSection(const occ::handle<Geom_Curve>& 
     if (myCurve->IsPeriodic())
     {
       int M = myCurve->Degree() / 2 + 1;
-      myCurve->RemoveKnot(1, M, Precision::Confusion());
+      myCurve->RemoveKnot(1, M, math::precision::Precision::Confusion());
     }
   }
 }

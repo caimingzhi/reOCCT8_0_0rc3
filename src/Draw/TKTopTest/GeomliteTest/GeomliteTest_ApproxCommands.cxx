@@ -339,7 +339,7 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
   if (n == 3)
   {
     Tolerance = Draw::Atof(a[2]);
-    if (std::abs(Tolerance) < Precision::Confusion() * 1.e-7)
+    if (std::abs(Tolerance) < math::precision::Precision::Confusion() * 1.e-7)
     {
       Constraint = AppParCurves_PassPoint;
     }
@@ -354,7 +354,7 @@ static int smoothing(Draw_Interpretor& di, int n, const char** a)
   {
     int ific  = 3;
     Tolerance = Draw::Atof(a[2]);
-    if (std::abs(Tolerance) < Precision::Confusion() * 1.e-7)
+    if (std::abs(Tolerance) < math::precision::Precision::Confusion() * 1.e-7)
     {
       Constraint = AppParCurves_PassPoint;
     }
@@ -546,7 +546,7 @@ static int smoothingbybezier(Draw_Interpretor& di, int n, const char** a)
       methode = 3;
     }
 
-    if (std::abs(Tolerance) < Precision::Confusion() * 1.e-7)
+    if (std::abs(Tolerance) < math::precision::Precision::Confusion() * 1.e-7)
     {
       Constraint = AppParCurves_PassPoint;
     }

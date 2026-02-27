@@ -2,7 +2,8 @@
 
 #include <Message_ProgressScope.hpp>
 
-class Message_LazyProgressScope : protected Message_ProgressScope
+namespace System { namespace log {
+class Message_LazyProgressScope : protected System::log::Message_ProgressScope
 {
 public:
   Message_LazyProgressScope(const Message_ProgressRange& theRange,
@@ -42,3 +43,5 @@ protected:
   double myPatchProgress;
   bool   myIsLazyAborted;
 };
+}} // namespace System::log
+

@@ -7,6 +7,7 @@
 #include <TCollection_AsciiString.hpp>
 #include <OSD_WhoAmI.hpp>
 
+namespace System { namespace os {
 class OSD_Error
 {
 public:
@@ -32,3 +33,5 @@ private:
   OSD_WhoAmI              myCode;
   int                     extCode{};
 };
+}} // namespace System::os
+

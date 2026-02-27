@@ -30,7 +30,7 @@ void Geom2dLProp_NumericCurInf2d::PerformCurExt(const occ::handle<Geom2d_Curve>&
   isDone = true;
 
   double           EpsH = 1.e-4 * (UMax - UMin);
-  constexpr double Tol  = Precision::PConfusion();
+  constexpr double Tol  = math::precision::Precision::PConfusion();
 
   Geom2dLProp_FuncCurExt F(C, EpsH);
   int                    NbSamples = 100;

@@ -110,9 +110,9 @@ public:
     TheVector D1c;
     TheCurveTool::D1(*myC, myU, myPc, D1c);
 
-    if (Precision::IsInfinite(D1c.X()) || Precision::IsInfinite(D1c.Y()))
+    if (math::precision::Precision::IsInfinite(D1c.X()) || math::precision::Precision::IsInfinite(D1c.Y()))
     {
-      theF = Precision::Infinite();
+      theF = math::precision::Precision::Infinite();
       return false;
     }
 
@@ -362,7 +362,7 @@ public:
     const double aStep  = (myUsupremum - myUinfium) / static_cast<double>(NPoint);
 
     int    aNum = 0;
-    double aMax = -Precision::Infinite();
+    double aMax = -math::precision::Precision::Infinite();
 
     do
     {
@@ -374,7 +374,7 @@ public:
       TheVector VDer;
       TheCurveTool::D1(*myC, u, Ptemp, VDer);
 
-      if (Precision::IsInfinite(VDer.X()) || Precision::IsInfinite(VDer.Y()))
+      if (math::precision::Precision::IsInfinite(VDer.X()) || math::precision::Precision::IsInfinite(VDer.Y()))
       {
         continue;
       }

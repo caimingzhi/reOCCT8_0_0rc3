@@ -18,7 +18,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeUpgrade_FaceDivideArea, ShapeUpgrade_FaceDivide)
 
 ShapeUpgrade_FaceDivideArea::ShapeUpgrade_FaceDivideArea()
 {
-  myMaxArea  = Precision::Infinite();
+  myMaxArea  = math::precision::Precision::Infinite();
   myNbParts  = 0;
   myUnbSplit = myVnbSplit = -1;
   myIsSplittingByNumber   = false;
@@ -28,7 +28,7 @@ ShapeUpgrade_FaceDivideArea::ShapeUpgrade_FaceDivideArea()
 
 ShapeUpgrade_FaceDivideArea::ShapeUpgrade_FaceDivideArea(const TopoDS_Face& F)
 {
-  myMaxArea  = Precision::Infinite();
+  myMaxArea  = math::precision::Precision::Infinite();
   myNbParts  = 0;
   myUnbSplit = myVnbSplit = -1;
   myIsSplittingByNumber   = false;
@@ -52,7 +52,7 @@ bool ShapeUpgrade_FaceDivideArea::Perform(const double)
     myMaxArea = anArea / anbParts;
   }
 
-  if ((anArea - myMaxArea) < Precision::Confusion())
+  if ((anArea - myMaxArea) < math::precision::Precision::Confusion())
     return false;
 
   if (anbParts == 0)

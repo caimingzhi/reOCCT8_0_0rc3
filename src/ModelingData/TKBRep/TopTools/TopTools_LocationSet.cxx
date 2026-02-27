@@ -123,7 +123,7 @@ void TopTools_LocationSet::Dump(Standard_OStream& OS) const
 }
 
 void TopTools_LocationSet::Write(Standard_OStream&            OS,
-                                 const Message_ProgressRange& theProgress) const
+                                 const System::log::Message_ProgressRange& theProgress) const
 {
 
   std::streamsize prec = OS.precision(15);
@@ -131,7 +131,7 @@ void TopTools_LocationSet::Write(Standard_OStream&            OS,
   int i, nbLoc = myMap.Extent();
   OS << "Locations " << nbLoc << "\n";
 
-  Message_ProgressScope PS(theProgress, "Locations", nbLoc);
+  System::log::Message_ProgressScope PS(theProgress, "Locations", nbLoc);
   for (i = 1; i <= nbLoc && PS.More(); i++, PS.Next())
   {
     TopLoc_Location L = myMap(i);
@@ -187,7 +187,7 @@ static void ReadTrsf(gp_Trsf& T, Standard_IStream& IS)
   return;
 }
 
-void TopTools_LocationSet::Read(Standard_IStream& IS, const Message_ProgressRange& theProgress)
+void TopTools_LocationSet::Read(Standard_IStream& IS, const System::log::Message_ProgressRange& theProgress)
 {
   myMap.Clear();
 
@@ -207,7 +207,7 @@ void TopTools_LocationSet::Read(Standard_IStream& IS, const Message_ProgressRang
   TopLoc_Location L;
   gp_Trsf         T;
 
-  Message_ProgressScope PS(theProgress, "Locations", nbLoc);
+  System::log::Message_ProgressScope PS(theProgress, "Locations", nbLoc);
   for (i = 1; i <= nbLoc && PS.More(); i++, PS.Next())
   {
     int typLoc;

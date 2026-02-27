@@ -39,30 +39,30 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
 
   if (!PR.ReadInteger(PR.Current(), tempType))
   {
-    Message_Msg Msg122("XTSEP_122");
+    System::log::Message_Msg Msg122("XTSEP_122");
     PR.SendFail(Msg122);
   }
   if (!PR.ReadInteger(PR.Current(), tempPreference))
   {
-    Message_Msg Msg123("XTSEP_123");
+    System::log::Message_Msg Msg123("XTSEP_123");
     PR.SendFail(Msg123);
   }
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, tempSurface))
   {
-    Message_Msg Msg124("XTSEP_124");
+    System::log::Message_Msg Msg124("XTSEP_124");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg124.Arg(Msg216.Value());
         PR.SendFail(Msg124);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg124.Arg(Msg217.Value());
         PR.SendFail(Msg124);
         break;
@@ -81,7 +81,7 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
   }
   else
   {
-    Message_Msg Msg126("XTSEP_126");
+    System::log::Message_Msg Msg126("XTSEP_126");
     PR.SendFail(Msg126);
   }
 
@@ -97,19 +97,19 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
         tempModelCurves->SetValue(i, tempEnt);
       else
       {
-        Message_Msg Msg127("XTSEP_127");
+        System::log::Message_Msg Msg127("XTSEP_127");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg127.Arg(Msg216.Value());
             PR.SendFail(Msg127);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg127.Arg(Msg217.Value());
             PR.SendFail(Msg127);
             break;
@@ -126,7 +126,7 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
         tempSenses->SetValue(i, tempSense);
       else
       {
-        Message_Msg Msg128("XTSEP_128");
+        System::log::Message_Msg Msg128("XTSEP_128");
         PR.SendFail(Msg128);
       }
 
@@ -137,7 +137,7 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
         occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> tempParCurves;
         if (tempCount > 0)
         {
-          Message_Msg Msg130("XTSEP_130");
+          System::log::Message_Msg Msg130("XTSEP_130");
 
           PR.ReadEnts(IR, PR.CurrentList(tempCount), Msg130, tempParCurves);
         }
@@ -145,7 +145,7 @@ void IGESGeom_ToolBoundary::ReadOwnParams(const occ::handle<IGESGeom_Boundary>& 
       }
       else
       {
-        Message_Msg Msg129("XTSEP_129");
+        System::log::Message_Msg Msg129("XTSEP_129");
         PR.SendFail(Msg129);
       }
     }
@@ -300,12 +300,12 @@ void IGESGeom_ToolBoundary::OwnCheck(const occ::handle<IGESGeom_Boundary>& ent,
 
   if ((ent->BoundaryType() != 0) && (ent->BoundaryType() != 1))
   {
-    Message_Msg Msg122("XTSEP_122");
+    System::log::Message_Msg Msg122("XTSEP_122");
     ach->SendFail(Msg122);
   }
   if ((ent->PreferenceType() < 0) || (ent->PreferenceType() > 3))
   {
-    Message_Msg Msg123("XTSEP_123");
+    System::log::Message_Msg Msg123("XTSEP_123");
     ach->SendFail(Msg123);
   }
 
@@ -313,7 +313,7 @@ void IGESGeom_ToolBoundary::OwnCheck(const occ::handle<IGESGeom_Boundary>& ent,
   {
     if (ent->Surface()->TypeNumber() == 108)
     {
-      Message_Msg Msg125("XTSEP_125");
+      System::log::Message_Msg Msg125("XTSEP_125");
       ach->SendFail(Msg125);
     }
   }
@@ -322,7 +322,7 @@ void IGESGeom_ToolBoundary::OwnCheck(const occ::handle<IGESGeom_Boundary>& ent,
   for (num = ent->NbModelSpaceCurves(), i = 1; i <= num; i++)
     if (ent->Sense(i) != 1 && ent->Sense(i) != 2)
     {
-      Message_Msg Msg128("XTSEP_128");
+      System::log::Message_Msg Msg128("XTSEP_128");
       ach->SendFail(Msg128);
     }
 }

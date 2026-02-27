@@ -37,7 +37,7 @@
 static void OwnInternalShapes(const TopoDS_Shape&,
                               NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&);
 
-void BOPAlgo_Builder::FillImagesSolids(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillImagesSolids(const System::log::Message_ProgressRange& theRange)
 {
   int i = 0, aNbS = myDS->NbSourceShapes();
   for (i = 0; i < aNbS; ++i)
@@ -53,7 +53,7 @@ void BOPAlgo_Builder::FillImagesSolids(const Message_ProgressRange& theRange)
     return;
   }
 
-  Message_ProgressScope aPS(theRange, "Building splits of solids", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Building splits of solids", 10);
 
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> aDraftSolids;
 
@@ -74,9 +74,9 @@ void BOPAlgo_Builder::FillImagesSolids(const Message_ProgressRange& theRange)
 
 void BOPAlgo_Builder::FillIn3DParts(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
-  const Message_ProgressRange&                                              theRange)
+  const System::log::Message_ProgressRange&                                              theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 2);
 
   occ::handle<NCollection_BaseAllocator> anAlloc = new NCollection_IncAllocator;
 
@@ -326,11 +326,11 @@ public:
 
   const TopoDS_Solid& Solid() const { return mySolid; }
 
-  void SetProgressRange(const Message_ProgressRange& theRange) { myRange = theRange; }
+  void SetProgressRange(const System::log::Message_ProgressRange& theRange) { myRange = theRange; }
 
   void Perform()
   {
-    Message_ProgressScope aPS(myRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myRange, nullptr, 1);
     if (!aPS.More())
     {
       return;
@@ -339,18 +339,18 @@ public:
   }
 
 private:
-  void Perform(const Message_ProgressRange&) override {}
+  void Perform(const System::log::Message_ProgressRange&) override {}
 
 private:
   TopoDS_Solid          mySolid;
-  Message_ProgressRange myRange;
+  System::log::Message_ProgressRange myRange;
 };
 
 typedef NCollection_Vector<BOPAlgo_SplitSolid> BOPAlgo_VectorOfBuilderSolid;
 
 void BOPAlgo_Builder::BuildSplitSolids(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
-  const Message_ProgressRange&                                              theRange)
+  const System::log::Message_ProgressRange&                                              theRange)
 {
   bool                                     bFlagSD;
   int                                      i, aNbS;
@@ -365,7 +365,7 @@ void BOPAlgo_Builder::BuildSplitSolids(
   NCollection_Map<BOPTools_Set>                          aMST(100, aAlr0);
   BOPAlgo_VectorOfBuilderSolid                           aVBS;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
 
   aNbS = myDS->NbSourceShapes();
   for (i = 0; i < aNbS; ++i)
@@ -449,7 +449,7 @@ void BOPAlgo_Builder::BuildSplitSolids(
 
   aNbBS = aVBS.Length();
 
-  Message_ProgressScope aPSParallel(aPSOuter.Next(9), "Splitting solids", aNbBS);
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(9), "Splitting solids", aNbBS);
   for (int iS = 0; iS < aNbBS; iS++)
   {
     BOPAlgo_SplitSolid& aSplitSolid = aVBS.ChangeValue(iS);
@@ -468,16 +468,16 @@ void BOPAlgo_Builder::BuildSplitSolids(
     BOPAlgo_SplitSolid& aBS = aVBS(k);
     aSolidsIm.Add(aBS.Solid(), aBS.Areas());
 
-    const occ::handle<Message_Report>& aBSReport       = aBS.GetReport();
+    const occ::handle<System::log::Message_Report>& aBSReport       = aBS.GetReport();
     Message_Gravity                    anAlertTypes[2] = {Message_Warning, Message_Fail};
     for (int iGravity = 0; iGravity < 2; iGravity++)
     {
-      const NCollection_List<occ::handle<Message_Alert>>& anLAlerts =
+      const NCollection_List<occ::handle<System::log::Message_Alert>>& anLAlerts =
         aBSReport->GetAlerts(anAlertTypes[iGravity]);
-      for (NCollection_List<occ::handle<Message_Alert>>::Iterator itA(anLAlerts); itA.More();
+      for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator itA(anLAlerts); itA.More();
            itA.Next())
       {
-        occ::handle<Message_Alert> anAlert = itA.Value();
+        occ::handle<System::log::Message_Alert> anAlert = itA.Value();
 
         occ::handle<TopoDS_AlertWithShape> anAlertWithShape =
           occ::down_cast<TopoDS_AlertWithShape>(itA.Value());
@@ -537,7 +537,7 @@ void BOPAlgo_Builder::BuildSplitSolids(
   }
 }
 
-void BOPAlgo_Builder::FillInternalShapes(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillInternalShapes(const System::log::Message_ProgressRange& theRange)
 {
   int                                      i, j, aNbS, aNbSI, aNbSx;
   TopAbs_ShapeEnum                         aType;
@@ -561,7 +561,7 @@ void BOPAlgo_Builder::FillInternalShapes(const Message_ProgressRange& theRange)
   NCollection_List<TopoDS_Shape>                                aLSC(aAllocator);
   NCollection_List<TopoDS_Shape>                                aLSI(aAllocator);
 
-  Message_ProgressScope aPS(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 10);
 
   const NCollection_List<TopoDS_Shape>& aArguments = myDS->Arguments();
   aIt.Initialize(aArguments);
@@ -727,7 +727,7 @@ void BOPAlgo_Builder::FillInternalShapes(const Message_ProgressRange& theRange)
 
   aMx.Clear();
 
-  Message_ProgressScope aPSLoop(aPS.Next(9), "Looking for internal shapes", aLSd.Size());
+  System::log::Message_ProgressScope aPSLoop(aPS.Next(9), "Looking for internal shapes", aLSd.Size());
 
   aIt.Initialize(aLSd);
   for (; aIt.More(); aIt.Next(), aPSLoop.Next())

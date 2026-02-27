@@ -26,7 +26,7 @@ GeomFill_FunctionGuide::GeomFill_FunctionGuide(const occ::handle<GeomFill_Sectio
       Last(0.0),
       TheUonS(Param)
 {
-  double Tol = Precision::Confusion();
+  double Tol = math::precision::Precision::Confusion();
   if (TheLaw->IsConstant(Tol))
   {
     isconst  = true;

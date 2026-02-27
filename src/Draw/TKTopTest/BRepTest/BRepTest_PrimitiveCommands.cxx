@@ -106,7 +106,7 @@ static int box(Draw_Interpretor&, int n, const char** a)
       }
       else
       {
-        Message::SendFail() << "Syntax error";
+        System::log::Message::SendFail() << "Syntax error";
         return 1;
       }
     }

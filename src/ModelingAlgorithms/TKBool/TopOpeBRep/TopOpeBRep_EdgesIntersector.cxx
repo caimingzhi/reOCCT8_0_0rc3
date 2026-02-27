@@ -626,7 +626,7 @@ bool TopOpeBRep_EdgesIntersector::ComputeSameDomain()
   double    r1 = c1.Radius();
   double    r2 = c2.Radius();
 
-  bool rr = (std::abs(r1 - r2) < Precision::Confusion());
+  bool rr = (std::abs(r1 - r2) < math::precision::Precision::Confusion());
   if (!rr)
     return SetSameDomain(false);
 

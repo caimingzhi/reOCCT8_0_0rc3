@@ -22,13 +22,13 @@ void BRepExtrema_ExtCF::Initialize(const TopoDS_Edge& E, const TopoDS_Face& F)
   myHS = new BRepAdaptor_Surface(Surf);
   double aTolC, aTolS;
 
-  aTolS = std::min(BRep_Tool::Tolerance(F), Precision::Confusion());
+  aTolS = std::min(BRep_Tool::Tolerance(F), math::precision::Precision::Confusion());
   aTolS = std::min(Surf.UResolution(aTolS), Surf.VResolution(aTolS));
-  aTolS = std::max(aTolS, Precision::PConfusion());
+  aTolS = std::max(aTolS, math::precision::Precision::PConfusion());
 
-  aTolC = std::min(BRep_Tool::Tolerance(E), Precision::Confusion());
+  aTolC = std::min(BRep_Tool::Tolerance(E), math::precision::Precision::Confusion());
   aTolC = aC.Resolution(aTolC);
-  aTolC = std::max(aTolC, Precision::PConfusion());
+  aTolC = std::max(aTolC, math::precision::Precision::PConfusion());
 
   double U1, U2, V1, V2;
   BRepTools::UVBounds(F, U1, U2, V1, V2);

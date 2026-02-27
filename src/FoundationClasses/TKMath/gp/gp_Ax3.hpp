@@ -312,7 +312,7 @@ inline void gp_Ax3::SetAxis(const gp_Ax1& theA1)
 inline void gp_Ax3::SetDirection(const gp_Dir& theV)
 {
   double aDot = theV.Dot(vxdir);
-  if (1. - std::abs(aDot) <= Precision::Angular())
+  if (1. - std::abs(aDot) <= math::precision::Precision::Angular())
   {
     if (aDot > 0)
     {
@@ -344,7 +344,7 @@ inline void gp_Ax3::SetDirection(const gp_Dir& theV)
 inline void gp_Ax3::SetXDirection(const gp_Dir& theVx)
 {
   double aDot = theVx.Dot(axis.Direction());
-  if (1. - std::abs(aDot) <= Precision::Angular())
+  if (1. - std::abs(aDot) <= math::precision::Precision::Angular())
   {
     if (aDot > 0)
     {
@@ -375,7 +375,7 @@ inline void gp_Ax3::SetXDirection(const gp_Dir& theVx)
 inline void gp_Ax3::SetYDirection(const gp_Dir& theVy)
 {
   double aDot = theVy.Dot(axis.Direction());
-  if (1. - std::abs(aDot) <= Precision::Angular())
+  if (1. - std::abs(aDot) <= math::precision::Precision::Angular())
   {
     if (aDot > 0)
     {

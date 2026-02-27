@@ -31,7 +31,7 @@ TopoDS_Shape XSAlgo_AlgoContainer::ProcessShape(const TopoDS_Shape&             
                                                 const char*                      thePrscfile,
                                                 const char*                      thePseq,
                                                 occ::handle<Standard_Transient>& theInfo,
-                                                const Message_ProgressRange&     theProgress,
+                                                const System::log::Message_ProgressRange&     theProgress,
                                                 const bool                       theNonManifold,
                                                 const TopAbs_ShapeEnum theDetailingLevel) const
 {
@@ -60,7 +60,7 @@ TopoDS_Shape XSAlgo_AlgoContainer::ProcessShape(const TopoDS_Shape&             
   if (!aSeq)
     aSeq = thePseq;
 
-  occ::handle<Resource_Manager> aRsc = aContext->ResourceManager();
+  occ::handle<System::resource::Resource_Manager> aRsc = aContext->ResourceManager();
   TCollection_AsciiString       aStr(aSeq);
   aStr += ".exec.op";
   if (!aRsc->Find(aStr.ToCString()))
@@ -180,14 +180,14 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_Transien
     if (!msg.IsNull())
     {
       const NCollection_DataMap<TopoDS_Shape,
-                                NCollection_List<Message_Msg>,
+                                NCollection_List<System::log::Message_Msg>,
                                 TopTools_ShapeMapHasher>& msgmap = msg->MapShape();
       if (msgmap.IsBound(orig))
       {
-        const NCollection_List<Message_Msg>& msglist = msgmap.Find(orig);
-        for (NCollection_List<Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
+        const NCollection_List<System::log::Message_Msg>& msglist = msgmap.Find(orig);
+        for (NCollection_List<System::log::Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
         {
-          const Message_Msg& mess = iter.Value();
+          const System::log::Message_Msg& mess = iter.Value();
           sb->AddWarning(TCollection_AsciiString(mess.Value()).ToCString(),
                          TCollection_AsciiString(mess.Original()).ToCString());
         }
@@ -260,14 +260,14 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_FinderPr
     if (!msg.IsNull())
     {
       const NCollection_DataMap<TopoDS_Shape,
-                                NCollection_List<Message_Msg>,
+                                NCollection_List<System::log::Message_Msg>,
                                 TopTools_ShapeMapHasher>& msgmap = msg->MapShape();
       if (msgmap.IsBound(orig))
       {
-        const NCollection_List<Message_Msg>& msglist = msgmap.Find(orig);
-        for (NCollection_List<Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
+        const NCollection_List<System::log::Message_Msg>& msglist = msgmap.Find(orig);
+        for (NCollection_List<System::log::Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
         {
-          const Message_Msg& mess = iter.Value();
+          const System::log::Message_Msg& mess = iter.Value();
           resBinder->AddWarning(TCollection_AsciiString(mess.Value()).ToCString(),
                                 TCollection_AsciiString(mess.Original()).ToCString());
         }

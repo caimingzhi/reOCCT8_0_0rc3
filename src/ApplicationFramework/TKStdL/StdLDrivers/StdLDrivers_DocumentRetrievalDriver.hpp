@@ -14,15 +14,15 @@ public:
     const occ::handle<CDM_Document>&      theNewDocument,
     const occ::handle<CDM_Application>&   theApplication,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Read(
     Standard_IStream&                     theIStream,
-    const occ::handle<Storage_Data>&      theStorageData,
+    const occ::handle<app::storage::Storage_Data>&      theStorageData,
     const occ::handle<CDM_Document>&      theDoc,
     const occ::handle<CDM_Application>&   theApplication,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange()) override;
 
   DEFINE_STANDARD_RTTIEXT(StdLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDriver)
 
@@ -31,7 +31,7 @@ protected:
 
 private:
   occ::handle<StdObjMgt_Persistent> read(const TCollection_ExtendedString& theFileName,
-                                         Storage_HeaderData&               theHeaderData);
+                                         app::storage::Storage_HeaderData&               theHeaderData);
 
   Standard_EXPORT void raiseOnStorageError(Storage_Error theError);
 };

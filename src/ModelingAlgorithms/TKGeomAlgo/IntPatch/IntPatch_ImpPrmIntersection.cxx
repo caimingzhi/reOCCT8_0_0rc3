@@ -494,12 +494,12 @@ double GetLocalStep(const occ::handle<Adaptor3d_Surface>& theSurf, const double 
 
     if (aSType == GeomAbs_BezierSurface || aSType == GeomAbs_BSplineSurface)
     {
-      double       aMinRes = Precision::Infinite();
+      double       aMinRes = math::precision::Precision::Infinite();
       int          aMaxDeg = 0;
       const double aLimRes = 1.e-10;
 
-      aMinRes = std::min(theSurf->UResolution(Precision::Confusion()),
-                         theSurf->VResolution(Precision::Confusion()));
+      aMinRes = std::min(theSurf->UResolution(math::precision::Precision::Confusion()),
+                         theSurf->VResolution(math::precision::Precision::Confusion()));
       aMaxDeg = std::max(theSurf->UDegree(), theSurf->VDegree());
       if (aMinRes < aLimRes && aMaxDeg > 3)
       {
@@ -515,7 +515,7 @@ double GetLocalStep(const occ::handle<Adaptor3d_Surface>& theSurf, const double 
       NCollection_Array1<double> anInts(1, aNbInt + 1);
       theSurf->UIntervals(anInts, GeomAbs_C1);
       int    i;
-      double aMinInt = Precision::Infinite();
+      double aMinInt = math::precision::Precision::Infinite();
       for (i = 1; i <= aNbInt; ++i)
       {
         aMinInt = std::min(aMinInt, anInts(i + 1) - anInts(i));
@@ -537,7 +537,7 @@ double GetLocalStep(const occ::handle<Adaptor3d_Surface>& theSurf, const double 
       NCollection_Array1<double> anInts(1, aNbInt + 1);
       theSurf->VIntervals(anInts, GeomAbs_C1);
       int    i;
-      double aMinInt = Precision::Infinite();
+      double aMinInt = math::precision::Precision::Infinite();
       for (i = 1; i <= aNbInt; ++i)
       {
         aMinInt = std::min(aMinInt, anInts(i + 1) - anInts(i));
@@ -1286,7 +1286,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
 
       if (thesegm.HasFirstPoint() && thesegm.HasLastPoint())
       {
-        double tol2 = Precision::Confusion();
+        double tol2 = math::precision::Precision::Confusion();
         tol2 *= tol2;
         const gp_Pnt& aPf = thesegm.FirstPoint().Value();
         const gp_Pnt& aPl = thesegm.LastPoint().Value();
@@ -1632,7 +1632,7 @@ void IntPatch_ImpPrmIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
     {
       bool aCond = aL->NbPnts() < 2;
       if (!aCond)
-        aCond = (aL->Point(1).IsSame(aL->Point(2), Precision::Confusion()));
+        aCond = (aL->Point(1).IsSame(aL->Point(2), math::precision::Precision::Confusion()));
 
       if (aCond)
       {
@@ -1920,7 +1920,7 @@ static void SearchVertices(const occ::handle<IntSurf_LineOn2S>& Line,
     for (iv = 1; iv <= nbv; iv++)
     {
       const IntSurf_PntOn2S& aV = Vertices->Value(iv);
-      if (aP.IsSame(aV, Precision::Confusion(), Precision::PConfusion()))
+      if (aP.IsSame(aV, math::precision::Precision::Confusion(), math::precision::Precision::PConfusion()))
       {
         type = iv;
         break;
@@ -2326,7 +2326,7 @@ static void VerifyVertices(const occ::handle<IntSurf_LineOn2S>&    Line,
   for (iv = 1; iv <= nbv; iv++)
   {
     const IntSurf_PntOn2S& aV = Vertices->Value(iv);
-    if (aPF.IsSame(aV, Precision::Confusion(), Precision::PConfusion()))
+    if (aPF.IsSame(aV, math::precision::Precision::Confusion(), math::precision::Precision::PConfusion()))
     {
       FIndexSame = iv;
       break;
@@ -2365,7 +2365,7 @@ static void VerifyVertices(const occ::handle<IntSurf_LineOn2S>&    Line,
   for (iv = 1; iv <= nbv; iv++)
   {
     const IntSurf_PntOn2S& aV = Vertices->Value(iv);
-    if (aPL.IsSame(aV, Precision::Confusion(), Precision::PConfusion()))
+    if (aPL.IsSame(aV, math::precision::Precision::Confusion(), math::precision::Precision::PConfusion()))
     {
       LIndexSame = iv;
       break;
@@ -2559,7 +2559,7 @@ static void PutIntVertices(const occ::handle<IntPatch_PointLine>& Line,
     for (iv = 1; iv <= nbv; iv++)
     {
       const IntSurf_PntOn2S& aV = Vertices->Value(iv);
-      if (aP.IsSame(aV, Precision::Confusion(), Precision::PConfusion()))
+      if (aP.IsSame(aV, math::precision::Precision::Confusion(), math::precision::Precision::PConfusion()))
       {
         aPnt = Result->Value(ip).Value();
         Result->Value(ip).ParametersOnS1(U1, V1);
@@ -2613,7 +2613,7 @@ static bool HasInternals(occ::handle<IntSurf_LineOn2S>& Line,
     for (iv = 1; iv <= nbv; iv++)
     {
       const IntSurf_PntOn2S& aV = Vertices->Value(iv);
-      if (aP.IsSame(aV, Precision::Confusion(), Precision::PConfusion()))
+      if (aP.IsSame(aV, math::precision::Precision::Confusion(), math::precision::Precision::PConfusion()))
       {
         result = true;
         break;
@@ -2813,8 +2813,8 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&            th
   }
 
   const double     aDeltaUmax = M_PI_2;
-  constexpr double aTOL3D = 1.e-10, aTOL2D = Precision::PConfusion(),
-                   aTOL2DS = Precision::PConfusion();
+  constexpr double aTOL3D = 1.e-10, aTOL2D = math::precision::Precision::PConfusion(),
+                   aTOL2DS = math::precision::Precision::PConfusion();
 
   const occ::handle<IntSurf_LineOn2S>& aSLine = theLine->Curve();
 
@@ -2933,8 +2933,8 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&            th
 
         const IntSurf_PntOn2S& aRefPt = aSSLine->Value(aBindex - 1);
 
-        constexpr double aCompareTol3D = Precision::Confusion();
-        double           aCompareTol2D = Precision::PConfusion();
+        constexpr double aCompareTol3D = math::precision::Precision::Confusion();
+        double           aCompareTol2D = math::precision::Precision::PConfusion();
 
         IntSurf_PntOn2S      aNewPoint = aRefPt;
         IntPatch_SpecPntType aLastType = IntPatch_SPntNone;
@@ -3295,7 +3295,7 @@ static bool DecomposeResult(const occ::handle<IntPatch_PointLine>&            th
         aRLine->AddVertex(aTPnt);
       }
 
-      if (aLPar - aFPar > Precision::PConfusion())
+      if (aLPar - aFPar > math::precision::Precision::PConfusion())
       {
         aRLine->SetFirstPoint(1);
         aRLine->SetLastPoint(aRLine->NbVertex());
@@ -3359,7 +3359,7 @@ bool IsCoincide(IntPatch_TheSurfFunction&              theFunc,
 
     const gp_Lin2d aLin1(theArc->Line()), aLin2(anArc->Line());
 
-    if (!aLin1.Direction().IsParallel(aLin2.Direction(), Precision::Angular()))
+    if (!aLin1.Direction().IsParallel(aLin2.Direction(), math::precision::Precision::Angular()))
     {
       return false;
     }

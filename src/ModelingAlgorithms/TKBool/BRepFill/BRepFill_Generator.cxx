@@ -117,7 +117,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
       if (IType == 1)
       {
 
-        if (pos.IsEqual(pos1, Precision::Confusion()))
+        if (pos.IsEqual(pos1, math::precision::Precision::Confusion()))
         {
 
           IType = 0;
@@ -127,7 +127,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
           gp_Vec vec(pos1, pos);
           gp_Dir dir(vec);
           axe = gp_Ax1(pos1, dir);
-          if (axe.IsParallel(axe1, Precision::Angular()))
+          if (axe.IsParallel(axe1, math::precision::Precision::Angular()))
           {
 
             IType = 2;
@@ -172,20 +172,20 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
         }
         else
         {
-          if (AdC.Circle().Axis().IsCoaxial(axe1, Precision::Angular(), Precision::Confusion()))
+          if (AdC.Circle().Axis().IsCoaxial(axe1, math::precision::Precision::Angular(), math::precision::Precision::Confusion()))
           {
 
-            if (std::abs(AdC.Circle().Radius() - dist1) < Precision::Confusion())
+            if (std::abs(AdC.Circle().Radius() - dist1) < math::precision::Precision::Confusion())
             {
 
               double h1 = std::abs(last1 - first1), h2 = std::abs(last2 - first2);
-              bool   Same, SameParametricLength = (std::abs(h1 - h2) < Precision::PConfusion());
+              bool   Same, SameParametricLength = (std::abs(h1 - h2) < math::precision::Precision::PConfusion());
               double m1 = (first1 + last1) / 2., m2 = (first2 + last2) / 2.;
               gp_Pnt P1, P2;
               gp_Vec DU;
               AdC1.D1(m1, P1, DU);
               AdC.D0(m2, P2);
-              Same = SameParametricLength && (gp_Vec(P1, P2).IsNormal(DU, Precision::Angular()));
+              Same = SameParametricLength && (gp_Vec(P1, P2).IsNormal(DU, math::precision::Precision::Angular()));
               if (Same)
               {
 
@@ -201,13 +201,13 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
             {
 
               double h1 = std::abs(last1 - first1), h2 = std::abs(last2 - first2);
-              bool   Same, SameParametricLength = (std::abs(h1 - h2) < Precision::PConfusion());
+              bool   Same, SameParametricLength = (std::abs(h1 - h2) < math::precision::Precision::PConfusion());
               double m1 = (first1 + last1) / 2., m2 = (first2 + last2) / 2.;
               gp_Pnt P1, P2;
               gp_Vec DU;
               AdC1.D1(m1, P1, DU);
               AdC.D0(m2, P2);
-              Same = SameParametricLength && (gp_Vec(P1, P2).IsNormal(DU, Precision::Angular()));
+              Same = SameParametricLength && (gp_Vec(P1, P2).IsNormal(DU, math::precision::Precision::Angular()));
               if (Same)
               {
 
@@ -219,7 +219,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
                 IType = 0;
               }
             }
-            if (AdC.Circle().Location().IsEqual(pos1, Precision::Confusion()))
+            if (AdC.Circle().Location().IsEqual(pos1, math::precision::Precision::Confusion()))
             {
 
               IType = 0;
@@ -255,13 +255,13 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
           gp_Vec vec(AdC.Value(first2), AdC.Value(last2));
           gp_Dir aDir(vec);
           axe = gp_Ax1(AdC.Value(first2), aDir);
-          if (axe.IsParallel(axe1, Precision::Angular()))
+          if (axe.IsParallel(axe1, math::precision::Precision::Angular()))
           {
 
-            if (std::abs(dist - dist1) < Precision::Confusion())
+            if (std::abs(dist - dist1) < math::precision::Precision::Confusion())
             {
               gp_Dir dir(gp_Vec(AdC1.Value(first1), AdC.Value(first2)));
-              if (dir.IsNormal(gp_Dir(vec), Precision::Angular()))
+              if (dir.IsNormal(gp_Dir(vec), math::precision::Precision::Angular()))
               {
 
                 IType = 4;
@@ -294,7 +294,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
 
           pos = AdC.Circle().Location();
           axe = AdC.Circle().Axis();
-          if (pos1.IsEqual(pos, Precision::Confusion()))
+          if (pos1.IsEqual(pos, math::precision::Precision::Confusion()))
           {
 
             IType = 0;
@@ -304,7 +304,7 @@ int DetectKPart(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
             gp_Vec vec(pos1, pos);
             gp_Dir dir(vec);
             axe1 = gp_Ax1(pos1, dir);
-            if (axe.IsParallel(axe1, Precision::Angular()))
+            if (axe.IsParallel(axe1, math::precision::Precision::Angular()))
             {
 
               IType = -2;
@@ -738,8 +738,8 @@ void BRepFill_Generator::Perform()
 
         bool SameLoc = false;
 
-        if (std::abs(f1 - C1->FirstParameter()) > Precision::PConfusion()
-            || std::abs(l1 - C1->LastParameter()) > Precision::PConfusion())
+        if (std::abs(f1 - C1->FirstParameter()) > math::precision::Precision::PConfusion()
+            || std::abs(l1 - C1->LastParameter()) > math::precision::Precision::PConfusion())
         {
           C1 = new Geom_TrimmedCurve(C1, f1, l1);
         }
@@ -754,8 +754,8 @@ void BRepFill_Generator::Perform()
           C1->Reverse();
         }
 
-        if (std::abs(f2 - C2->FirstParameter()) > Precision::PConfusion()
-            || std::abs(l2 - C2->LastParameter()) > Precision::PConfusion())
+        if (std::abs(f2 - C2->FirstParameter()) > math::precision::Precision::PConfusion()
+            || std::abs(l2 - C2->LastParameter()) > math::precision::Precision::PConfusion())
         {
           C2 = new Geom_TrimmedCurve(C2, f2, l2);
         }
@@ -773,10 +773,10 @@ void BRepFill_Generator::Perform()
         GeomFill_Generator Generator;
         Generator.AddCurve(C1);
         Generator.AddCurve(C2);
-        Generator.Perform(Precision::PConfusion());
+        Generator.Perform(math::precision::Precision::PConfusion());
 
         Surf = Generator.Surface();
-        B.MakeFace(Face, Surf, Precision::Confusion());
+        B.MakeFace(Face, Surf, math::precision::Precision::Confusion());
       }
       else
       {
@@ -786,7 +786,7 @@ void BRepFill_Generator::Perform()
           myStatus = BRepFill_ThruSectionErrorStatus_Null3DCurve;
           return;
         }
-        B.MakeFace(Face, Surf, Precision::Confusion());
+        B.MakeFace(Face, Surf, math::precision::Precision::Confusion());
       }
 
       double first, last;
@@ -830,7 +830,7 @@ void BRepFill_Generator::Perform()
             Extremities(2) = BRep_Tool::Pnt(V2f);
             CC             = new Geom_BezierCurve(Extremities);
           }
-          B.MakeEdge(Edge3, CC, Precision::Confusion());
+          B.MakeEdge(Edge3, CC, math::precision::Precision::Confusion());
         }
         V1f.Orientation(TopAbs_FORWARD);
         B.Add(Edge3, V1f);
@@ -879,7 +879,7 @@ void BRepFill_Generator::Perform()
             Extremities(2) = BRep_Tool::Pnt(V2l);
             CC             = new Geom_BezierCurve(Extremities);
           }
-          B.MakeEdge(Edge4, CC, Precision::Confusion());
+          B.MakeEdge(Edge4, CC, math::precision::Precision::Confusion());
         }
         V1l.Orientation(TopAbs_FORWARD);
         B.Add(Edge4, V1l);
@@ -920,7 +920,7 @@ void BRepFill_Generator::Perform()
         }
       }
 
-      constexpr double T = Precision::Confusion();
+      constexpr double T = math::precision::Precision::Confusion();
 
       if (IType != 4)
       {

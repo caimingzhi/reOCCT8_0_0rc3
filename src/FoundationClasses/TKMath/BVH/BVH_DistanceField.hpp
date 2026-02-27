@@ -465,7 +465,7 @@ bool BVH_DistanceField<T, N>::Build(BVH_Geometry<T, N>& theGeometry)
   myVoxelSize.y() = (myCornerMax.y() - myCornerMin.y()) / myDimensionY;
   myVoxelSize.z() = (myCornerMax.z() - myCornerMin.z()) / myDimensionZ;
 
-  OSD_Parallel::For(0,
+  System::os::OSD_Parallel::For(0,
                     myDimensionZ,
                     BVH_ParallelDistanceFieldBuilder<T, N>(this, &theGeometry),
                     !IsParallel());

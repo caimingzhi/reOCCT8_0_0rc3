@@ -251,7 +251,7 @@ static void Function_SetUVBounds(double&                               myU1,
     case GeomAbs_Cone:
     {
       double           tol  = Epsilon(1.);
-      constexpr double ptol = Precision::PConfusion();
+      constexpr double ptol = math::precision::Precision::PConfusion();
       gp_Cone          Cone = mySurface->Cone();
       VCouture              = false;
 
@@ -380,11 +380,11 @@ static void Function_SetUVBounds(double&                               myU1,
             isFirst = false;
           }
 
-          if (std::abs(pmin - W1) > Precision::PConfusion()
-              && std::abs(pmin - W2) > Precision::PConfusion())
+          if (std::abs(pmin - W1) > math::precision::Precision::PConfusion()
+              && std::abs(pmin - W2) > math::precision::Precision::PConfusion())
             myU1 -= dmax * .5;
-          if (std::abs(pmax - W1) > Precision::PConfusion()
-              && std::abs(pmax - W2) > Precision::PConfusion())
+          if (std::abs(pmax - W1) > math::precision::Precision::PConfusion()
+              && std::abs(pmax - W2) > math::precision::Precision::PConfusion())
             myU2 += dmax * .5;
 
           if ((myU1 >= 0. && myU1 <= 2 * M_PI) && (myU2 >= 0. && myU2 <= 2 * M_PI))
@@ -507,11 +507,11 @@ static void Function_SetUVBounds(double&                               myU1,
           U1 = U;
         }
 
-        if (std::abs(pmin - W1) > Precision::PConfusion()
-            && std::abs(pmin - W2) > Precision::PConfusion())
+        if (std::abs(pmin - W1) > math::precision::Precision::PConfusion()
+            && std::abs(pmin - W2) > math::precision::Precision::PConfusion())
           myU1 -= dmax * .5;
-        if (std::abs(pmax - W1) > Precision::PConfusion()
-            && std::abs(pmax - W2) > Precision::PConfusion())
+        if (std::abs(pmax - W1) > math::precision::Precision::PConfusion()
+            && std::abs(pmax - W2) > math::precision::Precision::PConfusion())
           myU2 += dmax * .5;
 
         if ((myU1 >= 0. && myU1 <= 2 * M_PI) && (myU2 >= 0. && myU2 <= 2 * M_PI))
@@ -592,7 +592,7 @@ static void Function_SetUVBounds(double&                               myU1,
         double UU = 0.;
         ElSLib::Parameters(SP, P1, U1, V1);
         double eps = 10. * Epsilon(1.);
-        double dt  = std::max(Precision::PConfusion(), 0.01 * (W2 - W1));
+        double dt  = std::max(math::precision::Precision::PConfusion(), 0.01 * (W2 - W1));
         if (std::abs(U1) < eps)
         {
 
@@ -764,11 +764,11 @@ static void Function_SetUVBounds(double&                               myU1,
           U1 = U;
         }
 
-        if (std::abs(pmin - W1) > Precision::PConfusion()
-            && std::abs(pmin - W2) > Precision::PConfusion())
+        if (std::abs(pmin - W1) > math::precision::Precision::PConfusion()
+            && std::abs(pmin - W2) > math::precision::Precision::PConfusion())
           myU1 -= dmax * .5;
-        if (std::abs(pmax - W1) > Precision::PConfusion()
-            && std::abs(pmax - W2) > Precision::PConfusion())
+        if (std::abs(pmax - W1) > math::precision::Precision::PConfusion()
+            && std::abs(pmax - W2) > math::precision::Precision::PConfusion())
           myU2 += dmax * .5;
 
         if ((myU1 >= 0. && myU1 <= 2 * M_PI) && (myU2 >= 0. && myU2 <= 2 * M_PI))
@@ -866,17 +866,17 @@ static void Function_SetUVBounds(double&                               myU1,
         V1 = V;
       }
 
-      if (std::abs(pminU - W1) > Precision::PConfusion()
-          && std::abs(pminU - W2) > Precision::PConfusion())
+      if (std::abs(pminU - W1) > math::precision::Precision::PConfusion()
+          && std::abs(pminU - W2) > math::precision::Precision::PConfusion())
         myU1 -= dmaxU * .5;
-      if (std::abs(pmaxU - W1) > Precision::PConfusion()
-          && std::abs(pmaxU - W2) > Precision::PConfusion())
+      if (std::abs(pmaxU - W1) > math::precision::Precision::PConfusion()
+          && std::abs(pmaxU - W2) > math::precision::Precision::PConfusion())
         myU2 += dmaxU * .5;
-      if (std::abs(pminV - W1) > Precision::PConfusion()
-          && std::abs(pminV - W2) > Precision::PConfusion())
+      if (std::abs(pminV - W1) > math::precision::Precision::PConfusion()
+          && std::abs(pminV - W2) > math::precision::Precision::PConfusion())
         myV1 -= dmaxV * .5;
-      if (std::abs(pmaxV - W1) > Precision::PConfusion()
-          && std::abs(pmaxV - W2) > Precision::PConfusion())
+      if (std::abs(pmaxV - W1) > math::precision::Precision::PConfusion()
+          && std::abs(pmaxV - W2) > math::precision::Precision::PConfusion())
         myV2 += dmaxV * .5;
 
       if ((myU1 >= 0. && myU1 <= 2 * M_PI) && (myU2 >= 0. && myU2 <= 2 * M_PI))
@@ -1022,7 +1022,7 @@ static double ComputeTolV(const occ::handle<Adaptor3d_Surface>& theSurf, const d
 }
 
 ProjLib_ComputeApprox::ProjLib_ComputeApprox()
-    : myTolerance(Precision::PApproximation()),
+    : myTolerance(math::precision::Precision::PApproximation()),
       myDegMin(-1),
       myDegMax(-1),
       myMaxSegments(-1),
@@ -1033,7 +1033,7 @@ ProjLib_ComputeApprox::ProjLib_ComputeApprox()
 ProjLib_ComputeApprox::ProjLib_ComputeApprox(const occ::handle<Adaptor3d_Curve>&   C,
                                              const occ::handle<Adaptor3d_Surface>& S,
                                              const double                          Tol)
-    : myTolerance(std::max(Tol, Precision::PApproximation())),
+    : myTolerance(std::max(Tol, math::precision::Precision::PApproximation())),
       myDegMin(-1),
       myDegMax(-1),
       myMaxSegments(-1),
@@ -1170,7 +1170,7 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
     const double aTolU = ComputeTolU(S, myTolerance);
     const double aTolV = ComputeTolV(S, myTolerance);
     const double aTol2d =
-      std::max(std::sqrt(aTolU * aTolU + aTolV * aTolV), Precision::PConfusion());
+      std::max(std::sqrt(aTolU * aTolU + aTolV * aTolV), math::precision::Precision::PConfusion());
 
     Approx_FitAndDivide2d Fit(Deg1, Deg2, myTolerance, aTol2d, true, aFistC, aLastC);
     Fit.SetMaxSegments(aMaxSegments);
@@ -1226,7 +1226,7 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
 
         int    aDeg       = myBSpline->Degree();
         bool   OK         = true;
-        double aSmoothTol = std::max(Precision::Confusion(), aNewTol2d);
+        double aSmoothTol = std::max(math::precision::Precision::Confusion(), aNewTol2d);
         for (int ij = 2; ij < NbKnots; ij++)
         {
           OK = OK && myBSpline->RemoveKnot(ij, aDeg - 1, aSmoothTol);
@@ -1306,7 +1306,7 @@ void ProjLib_ComputeApprox::Perform(const occ::handle<Adaptor3d_Curve>&   C,
       double   aNbPer;
       gp_Pnt2d P2d = F.Value(Umid);
       du           = u - P2d.X();
-      du           = (du < 0) ? (du - Precision::PConfusion()) : (du + Precision::PConfusion());
+      du           = (du < 0) ? (du - math::precision::Precision::PConfusion()) : (du + math::precision::Precision::PConfusion());
       modf(du / M_PI, &aNbPer);
       number = (int)aNbPer;
       du     = number * M_PI;

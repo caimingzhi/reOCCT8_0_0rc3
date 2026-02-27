@@ -12,6 +12,7 @@
 #include <Standard_Integer.hpp>
 #include <Standard_Real.hpp>
 
+namespace System { namespace resource {
 class Resource_Manager : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Resource_Manager, Standard_Transient)
@@ -70,3 +71,5 @@ private:
   bool                                                                     myVerbose;
   bool                                                                     myInitialized;
 };
+}} // namespace System::resource
+

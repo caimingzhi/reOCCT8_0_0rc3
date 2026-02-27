@@ -126,7 +126,7 @@ double Extrema_GFuncExtCC<TheCurve1,
   const double aStep = (anEndParam - aStartParam) / (double)NPoint;
 
   int    aNum = 0;
-  double aMax = -Precision::Infinite();
+  double aMax = -math::precision::Precision::Infinite();
 
   do
   {

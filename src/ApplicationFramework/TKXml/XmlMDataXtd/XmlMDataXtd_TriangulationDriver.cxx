@@ -13,7 +13,7 @@ IMPLEMENT_DOMSTRING(NullString, "null")
 IMPLEMENT_DOMSTRING(ExistString, "exists")
 
 XmlMDataXtd_TriangulationDriver::XmlMDataXtd_TriangulationDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

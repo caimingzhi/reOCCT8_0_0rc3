@@ -34,7 +34,7 @@ void CDF_MetaDataDriver::CreateReference(const occ::handle<CDM_MetaData>&,
 }
 
 occ::handle<PCDM_ReferenceIterator> CDF_MetaDataDriver::ReferenceIterator(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return new PCDM_ReferenceIterator(theMessageDriver);
 }

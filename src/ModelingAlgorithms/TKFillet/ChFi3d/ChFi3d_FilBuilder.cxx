@@ -52,8 +52,8 @@
 extern bool   ChFi3d_GettraceCHRON();
 extern double t_computedata, t_completedata;
 
-extern void ChFi3d_InitChron(OSD_Chronometer& ch);
-extern void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time);
+extern void ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
+extern void ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
 static double MaxRad(const occ::handle<ChFiDS_FilSpine>& fsp,
@@ -1389,7 +1389,7 @@ bool ChFi3d_FilBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_Surf
                                     int&                                                intl)
 {
 #ifdef OCCT_DEBUG
-  OSD_Chronometer ch;
+  System::os::OSD_Chronometer ch;
 #endif
   occ::handle<ChFiDS_SurfData> Data = SeqData(1);
   occ::handle<ChFiDS_FilSpine> fsp  = occ::down_cast<ChFiDS_FilSpine>(Spine);
@@ -2074,7 +2074,7 @@ void ChFi3d_FilBuilder::SplitSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfDa
   for (; ii <= Nbpnt && Line->Point(ii).Parameter() <= VLast; ii++)
   {
     for (; ii <= Nbpnt && Line->Point(ii).Parameter() < VLast
-           && Line->Point(ii).Parameter() - b < Precision::PConfusion();
+           && Line->Point(ii).Parameter() - b < math::precision::Precision::PConfusion();
          ii++)
     {
     }

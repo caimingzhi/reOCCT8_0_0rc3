@@ -421,7 +421,7 @@ static double TriangleTriangleSqDistance(const BVH_Vec3d& theNode11,
       const BVH_Vec3d &aPFirst = anEdges[iE].first, aPLast = anEdges[iE].second;
       BVH_Vec3d        anEdge  = (aPLast - aPFirst);
       double           aLength = anEdge.Modulus();
-      if (aLength < Precision::Confusion())
+      if (aLength < math::precision::Precision::Confusion())
         continue;
       anEdge /= aLength;
 

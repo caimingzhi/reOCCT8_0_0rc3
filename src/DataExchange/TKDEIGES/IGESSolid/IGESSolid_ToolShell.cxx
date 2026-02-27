@@ -33,7 +33,7 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
   bool sb = PR.ReadInteger(PR.Current(), nbfaces);
   if (sb && nbfaces > 0)
   {
-    Message_Msg Msg180("XSTEP_180");
+    System::log::Message_Msg Msg180("XSTEP_180");
 
     bool                        abool;
     occ::handle<IGESSolid_Face> aface;
@@ -47,26 +47,26 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
         tempFaces->SetValue(i, aface);
       else
       {
-        Message_Msg Msg201("XSTEP_201");
+        System::log::Message_Msg Msg201("XSTEP_201");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg201.Arg(Msg216.Value());
             PR.SendFail(Msg201);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg201.Arg(Msg217.Value());
             PR.SendFail(Msg201);
             break;
           }
           case IGESData_TypeError:
           {
-            Message_Msg Msg218("IGES_218");
+            System::log::Message_Msg Msg218("IGES_218");
             Msg201.Arg(Msg218.Value());
             PR.SendFail(Msg201);
             break;
@@ -83,7 +83,7 @@ void IGESSolid_ToolShell::ReadOwnParams(const occ::handle<IGESSolid_Shell>&     
   }
   else
   {
-    Message_Msg Msg200("XSTEP_200");
+    System::log::Message_Msg Msg200("XSTEP_200");
     PR.SendFail(Msg200);
   }
 
@@ -150,7 +150,7 @@ void IGESSolid_ToolShell::OwnCheck(const occ::handle<IGESSolid_Shell>& ent,
 
   if (ent->NbFaces() <= 0)
   {
-    Message_Msg Msg200("XSTEP_200");
+    System::log::Message_Msg Msg200("XSTEP_200");
     ach->SendFail(Msg200);
   }
 }

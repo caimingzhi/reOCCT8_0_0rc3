@@ -60,7 +60,7 @@ bool IsRightContour(const NCollection_Sequence<gp_Pnt>& pts, const double prec)
 
       BRep_Builder B;
       TopoDS_Face  theFace;
-      B.MakeFace(theFace, thePlane, Precision::Confusion());
+      B.MakeFace(theFace, thePlane, math::precision::Precision::Confusion());
       TopoDS_Wire theWire = mkPoly.Wire();
       B.Add(theFace, theWire);
       occ::handle<ShapeAnalysis_Wire> saw = new ShapeAnalysis_Wire(theWire, theFace, prec);
@@ -98,7 +98,7 @@ ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(
   const NCollection_Array1<gp_Pnt>& pnts,
   const double                      prec)
 {
-  myPrecision = (prec > 0.0) ? prec : Precision::Confusion();
+  myPrecision = (prec > 0.0) ? prec : math::precision::Precision::Confusion();
 
   BRepBuilderAPI_MakePolygon mkPoly;
   for (int i = pnts.Lower(); i <= pnts.Upper(); i++)
@@ -115,12 +115,12 @@ ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(
 ShapeConstruct_MakeTriangulation::ShapeConstruct_MakeTriangulation(const TopoDS_Wire& wire,
                                                                    const double       prec)
 {
-  myPrecision = (prec > 0.0) ? prec : Precision::Confusion();
+  myPrecision = (prec > 0.0) ? prec : math::precision::Precision::Confusion();
   myWire      = wire;
   Build();
 }
 
-void ShapeConstruct_MakeTriangulation::Build(const Message_ProgressRange&)
+void ShapeConstruct_MakeTriangulation::Build(const System::log::Message_ProgressRange&)
 {
   if (myShape.IsNull())
   {
@@ -404,7 +404,7 @@ void ShapeConstruct_MakeTriangulation::AddFacet(const TopoDS_Wire& wire)
 
   BRep_Builder B;
   TopoDS_Face  theFace;
-  B.MakeFace(theFace, thePlane, Precision::Confusion());
+  B.MakeFace(theFace, thePlane, math::precision::Precision::Confusion());
   B.Add(theFace, wire);
 
   if (myShape.IsNull())

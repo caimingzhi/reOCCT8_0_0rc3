@@ -10,7 +10,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMXCAFDoc_DatumDriver, BinMDF_ADriver)
 
-BinMXCAFDoc_DatumDriver::BinMXCAFDoc_DatumDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+BinMXCAFDoc_DatumDriver::BinMXCAFDoc_DatumDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_Datum)->Name())
 {
 }

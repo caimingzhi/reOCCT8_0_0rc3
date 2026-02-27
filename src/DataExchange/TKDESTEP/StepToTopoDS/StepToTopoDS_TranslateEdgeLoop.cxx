@@ -125,7 +125,7 @@ static void CheckPCurves(TopoDS_Wire&       aWire,
       mySurf->Bounds(u1, u2, v1, v2);
       ElCLib::AdjustPeriodic(u1,
                              u2,
-                             std::min(std::abs(w2 - w1) / 2, Precision::PConfusion()),
+                             std::min(std::abs(w2 - w1) / 2, math::precision::Precision::PConfusion()),
                              w1,
                              w2);
       B.Range(myEdge, aFace, w1, w2);
@@ -304,7 +304,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
       V2        = TopoDS::Vertex(myTranVertex2.Value());
       gp_Pnt p1 = BRep_Tool::Pnt(V1);
       gp_Pnt p2 = BRep_Tool::Pnt(V2);
-      if (p1.Distance(p2) <= Precision::Confusion())
+      if (p1.Distance(p2) <= math::precision::Precision::Confusion())
       {
         bool Fixed = true;
         if (!iseV)
@@ -644,7 +644,7 @@ void StepToTopoDS_TranslateEdgeLoop::Init(const occ::handle<StepShape_FaceBound>
       myEdgePro->Compute(preci);
       if (myEdgePro->IsFirstDone() && myEdgePro->IsLastDone())
       {
-        if (std::abs(myEdgePro->FirstParam() - myEdgePro->LastParam()) < Precision::PConfusion())
+        if (std::abs(myEdgePro->FirstParam() - myEdgePro->LastParam()) < math::precision::Precision::PConfusion())
           continue;
         B.Range(edge, Face, myEdgePro->FirstParam(), myEdgePro->LastParam());
       }

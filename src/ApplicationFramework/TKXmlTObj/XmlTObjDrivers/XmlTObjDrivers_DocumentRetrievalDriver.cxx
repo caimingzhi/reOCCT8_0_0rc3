@@ -8,7 +8,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_DocumentRetrievalDriver,
 XmlTObjDrivers_DocumentRetrievalDriver::XmlTObjDrivers_DocumentRetrievalDriver() = default;
 
 occ::handle<XmlMDF_ADriverTable> XmlTObjDrivers_DocumentRetrievalDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMsgDrv)
+  const occ::handle<System::log::Message_Messenger>& theMsgDrv)
 {
 
   occ::handle<XmlMDF_ADriverTable> aTable = XmlLDrivers::AttributeDrivers(theMsgDrv);

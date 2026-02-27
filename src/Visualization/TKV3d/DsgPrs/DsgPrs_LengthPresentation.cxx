@@ -35,7 +35,7 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   gp_Lin L2(AttachmentPoint2, aDirection);
   gp_Pnt Proj1 = ElCLib::Value(ElCLib::Parameter(L1, OffsetPoint), L1);
   gp_Pnt Proj2 = ElCLib::Value(ElCLib::Parameter(L2, OffsetPoint), L2);
-  gp_Lin L3    = Proj1.IsEqual(Proj2, Precision::Confusion()) ? gp_Lin(Proj1, aDirection)
+  gp_Lin L3    = Proj1.IsEqual(Proj2, math::precision::Precision::Confusion()) ? gp_Lin(Proj1, aDirection)
                                                               : gce_MakeLin(Proj1, Proj2);
   double parmin, parmax, parcur;
   parmin      = ElCLib::Parameter(L3, Proj1);
@@ -187,7 +187,7 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   gp_Lin L2(AttachmentPoint2, aDirection);
   gp_Pnt Proj1 = ElCLib::Value(ElCLib::Parameter(L1, OffsetPoint), L1);
   gp_Pnt Proj2 = ElCLib::Value(ElCLib::Parameter(L2, OffsetPoint), L2);
-  gp_Lin L3    = Proj1.IsEqual(Proj2, Precision::Confusion()) ? gp_Lin(Proj1, aDirection)
+  gp_Lin L3    = Proj1.IsEqual(Proj2, math::precision::Precision::Confusion()) ? gp_Lin(Proj1, aDirection)
                                                               : gce_MakeLin(Proj1, Proj2);
   double parmin, parmax, parcur;
   parmin      = ElCLib::Parameter(L3, Proj1);
@@ -308,7 +308,7 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
   int    NodeNumber;
 
   Alpha = std::abs(deltaU);
-  if (Alpha > Precision::Angular() && Alpha < Precision::Infinite())
+  if (Alpha > math::precision::Precision::Angular() && Alpha < math::precision::Precision::Infinite())
   {
     NodeNumber = std::max(4, int(50. * Alpha / M_PI));
     delta      = deltaU / (double)(NodeNumber - 1);
@@ -318,7 +318,7 @@ void DsgPrs_LengthPresentation::Add(const occ::handle<Prs3d_Presentation>& aPres
     aPresentation->CurrentGroup()->AddPrimitiveArray(aPrims);
   }
   Alpha = std::abs(deltaV);
-  if (Alpha > Precision::Angular() && Alpha < Precision::Infinite())
+  if (Alpha > math::precision::Precision::Angular() && Alpha < math::precision::Precision::Infinite())
   {
     NodeNumber = std::max(4, int(50. * Alpha / M_PI));
     delta      = deltaV / (double)(NodeNumber - 1);

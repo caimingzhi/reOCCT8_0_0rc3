@@ -34,7 +34,7 @@ void IGESGeom_ToolTransformationMatrix::ReadOwnParams(
         aMatrix->SetValue(I, J, temp);
       else
       {
-        Message_Msg Msg215("XSTEP_215");
+        System::log::Message_Msg Msg215("XSTEP_215");
         PR.SendFail(Msg215);
       }
     }
@@ -117,7 +117,7 @@ void IGESGeom_ToolTransformationMatrix::OwnCheck(
   int form = ent->FormNumber();
   if ((form != 0) && (form != 1) && ((form < 10) || (form > 12)))
   {
-    Message_Msg Msg71("XSTEP_71");
+    System::log::Message_Msg Msg71("XSTEP_71");
     ach->SendFail(Msg71);
   }
 }

@@ -334,7 +334,7 @@ static int OCC295(Draw_Interpretor& di, int argc, const char** argv)
   bsplc1->SetPole(bsplc1->NbPoles(), pmid);
   bsplc2->SetPole(1, pmid);
   GeomConvert_CompCurveToBSplineCurve connect3d(bsplc1);
-  if (!connect3d.Add(bsplc2, Precision::Confusion(), After, false))
+  if (!connect3d.Add(bsplc2, math::precision::Precision::Confusion(), After, false))
     return 1;
   BRepBuilderAPI_MakeEdge MkEdge(connect3d.BSplineCurve());
   if (MkEdge.IsDone())
@@ -413,15 +413,15 @@ static int OCC405(Draw_Interpretor& di, int argc, const char** argv)
   occ::handle<Geom_BSplineCurve> bsplc2 = occ::down_cast<Geom_BSplineCurve>(ac2);
   if (bsplc1.IsNull() || bsplc2.IsNull())
     return 1;
-  if (bsplc1->FirstParameter() < f1 - Precision::PConfusion()
-      || bsplc1->LastParameter() > l1 + Precision::PConfusion())
+  if (bsplc1->FirstParameter() < f1 - math::precision::Precision::PConfusion()
+      || bsplc1->LastParameter() > l1 + math::precision::Precision::PConfusion())
   {
     occ::handle<Geom_BSplineCurve> aBstmp = occ::down_cast<Geom_BSplineCurve>(bsplc1->Copy());
     aBstmp->Segment(f1, l1);
     bsplc1 = aBstmp;
   }
-  if (bsplc2->FirstParameter() < f2 - Precision::PConfusion()
-      || bsplc2->LastParameter() > l2 + Precision::PConfusion())
+  if (bsplc2->FirstParameter() < f2 - math::precision::Precision::PConfusion()
+      || bsplc2->LastParameter() > l2 + math::precision::Precision::PConfusion())
   {
     occ::handle<Geom_BSplineCurve> aBstmp = occ::down_cast<Geom_BSplineCurve>(bsplc2->Copy());
     aBstmp->Segment(f2, l2);
@@ -431,7 +431,7 @@ static int OCC405(Draw_Interpretor& di, int argc, const char** argv)
   bsplc1->SetPole(bsplc1->NbPoles(), pmid);
   bsplc2->SetPole(1, pmid);
   GeomConvert_CompCurveToBSplineCurve connect3d(bsplc1);
-  if (!connect3d.Add(bsplc2, Precision::Confusion(), After, false))
+  if (!connect3d.Add(bsplc2, math::precision::Precision::Confusion(), After, false))
     return 1;
   BRepBuilderAPI_MakeEdge MkEdge(connect3d.BSplineCurve());
   if (MkEdge.IsDone())
@@ -482,7 +482,7 @@ static int OCC395(Draw_Interpretor& di, int argc, const char** argv)
   bsplc1->SetPole(bsplc1->NbPoles(), pmid);
   bsplc2->SetPole(1, pmid);
   GeomConvert_CompCurveToBSplineCurve connect3d(bsplc1);
-  if (!connect3d.Add(bsplc2, Precision::Confusion(), After, false))
+  if (!connect3d.Add(bsplc2, math::precision::Precision::Confusion(), After, false))
     return 1;
   BRepBuilderAPI_MakeEdge MkEdge(connect3d.BSplineCurve());
   if (MkEdge.IsDone())
@@ -616,7 +616,7 @@ static int OCC710(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   TCollection_AsciiString in(argv[1]);
-  OSD_File*               aFile    = new OSD_File(in);
+  System::os::OSD_File*               aFile    = new System::os::OSD_File(in);
   bool                    anExists = aFile->Exists();
   if (anExists)
     di << "1\n";

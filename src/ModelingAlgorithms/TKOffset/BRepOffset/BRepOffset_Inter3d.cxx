@@ -62,7 +62,7 @@ static void ExtentEdge(const TopoDS_Face&, const TopoDS_Edge& E, TopoDS_Edge& NE
 
 void BRepOffset_Inter3d::CompletInt(const NCollection_List<TopoDS_Shape>& SetOfFaces,
                                     const BRepAlgo_Image&                 InitOffsetFace,
-                                    const Message_ProgressRange&          theRange)
+                                    const System::log::Message_ProgressRange&          theRange)
 {
 
   BOPTools_BoxTree aBBTree;
@@ -93,7 +93,7 @@ void BRepOffset_Inter3d::CompletInt(const NCollection_List<TopoDS_Shape>& SetOfF
 
   const std::vector<BOPTools_BoxPairSelector::PairIDs>& aPairs   = aSelector.Pairs();
   const int                                             aNbPairs = static_cast<int>(aPairs.size());
-  Message_ProgressScope aPS(theRange, "Complete intersection", aNbPairs);
+  System::log::Message_ProgressScope aPS(theRange, "Complete intersection", aNbPairs);
   for (int iPair = 0; iPair < aNbPairs; ++iPair, aPS.Next())
   {
     if (!aPS.More())
@@ -199,7 +199,7 @@ void BRepOffset_Inter3d::ConnexIntByArc(const NCollection_List<TopoDS_Shape>&,
                                         const TopoDS_Shape&          ShapeInit,
                                         const BRepOffset_Analyse&    Analyse,
                                         const BRepAlgo_Image&        InitOffsetFace,
-                                        const Message_ProgressRange& theRange)
+                                        const System::log::Message_ProgressRange& theRange)
 {
   ChFiDS_TypeOfConcavity OT = ChFiDS_Concave;
   if (mySide == TopAbs_OUT)
@@ -209,8 +209,8 @@ void BRepOffset_Inter3d::ConnexIntByArc(const NCollection_List<TopoDS_Shape>&,
   TopoDS_Face                    F1, F2;
   TopoDS_Edge                    NullEdge;
   TopoDS_Face                    NullFace;
-  Message_ProgressScope          aPSOuter(theRange, nullptr, 2);
-  Message_ProgressScope          aPSIntF(aPSOuter.Next(), "Intersecting offset faces", 1, true);
+  System::log::Message_ProgressScope          aPSOuter(theRange, nullptr, 2);
+  System::log::Message_ProgressScope          aPSIntF(aPSOuter.Next(), "Intersecting offset faces", 1, true);
 
   for (; Exp.More(); Exp.Next(), aPSIntF.Next())
   {
@@ -242,7 +242,7 @@ void BRepOffset_Inter3d::ConnexIntByArc(const NCollection_List<TopoDS_Shape>&,
 
   TopoDS_Vertex                            V[2];
   NCollection_List<TopoDS_Shape>::Iterator it;
-  Message_ProgressScope                    aPSIntT(aPSOuter.Next(), "Intersecting tubes", 1, true);
+  System::log::Message_ProgressScope                    aPSIntT(aPSOuter.Next(), "Intersecting tubes", 1, true);
   for (Exp.Init(ShapeInit, TopAbs_EDGE); Exp.More(); Exp.Next(), aPSIntT.Next())
   {
     if (!aPSIntT.More())
@@ -362,7 +362,7 @@ void BRepOffset_Inter3d::ConnexIntByInt(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            MES,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            Build,
   NCollection_List<TopoDS_Shape>&                                                      Failed,
-  const Message_ProgressRange&                                                         theRange,
+  const System::log::Message_ProgressRange&                                                         theRange,
   const bool                                                                           bIsPlanar)
 {
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> VEmap;
@@ -375,7 +375,7 @@ void BRepOffset_Inter3d::ConnexIntByInt(
 
   TopExp::MapShapes(SI, TopAbs_EDGE, VEmap);
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
   if (bIsPlanar)
   {
     aNb = VEmap.Extent();
@@ -526,7 +526,7 @@ void BRepOffset_Inter3d::ConnexIntByInt(
   }
 
   aNb = VEmap.Extent();
-  Message_ProgressScope aPSInter(aPSOuter.Next(8), "Intersecting offset faces", aNb);
+  System::log::Message_ProgressScope aPSInter(aPSOuter.Next(8), "Intersecting offset faces", aNb);
   for (i = 1; i <= aNb; ++i, aPSInter.Next())
   {
     if (!aPSInter.More())
@@ -719,7 +719,7 @@ void BRepOffset_Inter3d::ConnexIntByInt(
   }
 
   aNb = aDMIntE.Extent();
-  Message_ProgressScope aPSPostTreat(aPSOuter.Next(2), "Creating unique intersection", aNb);
+  System::log::Message_ProgressScope aPSPostTreat(aPSOuter.Next(2), "Creating unique intersection", aNb);
   for (i = 1; i <= aNb; ++i, aPSPostTreat.Next())
   {
     if (!aPSPostTreat.More())
@@ -901,7 +901,7 @@ void BRepOffset_Inter3d::ContextIntByInt(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            MES,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&            Build,
   NCollection_List<TopoDS_Shape>&                                                      Failed,
-  const Message_ProgressRange&                                                         theRange,
+  const System::log::Message_ProgressRange&                                                         theRange,
   const bool                                                                           bIsPlanar)
 {
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> MV;
@@ -927,7 +927,7 @@ void BRepOffset_Inter3d::ContextIntByInt(
   }
   TopAbs_State Side = TopAbs_OUT;
 
-  Message_ProgressScope aPS(theRange, "Intersecting with deepening faces", aNb);
+  System::log::Message_ProgressScope aPS(theRange, "Intersecting with deepening faces", aNb);
   for (i = 1; i <= aNb; i++, aPS.Next())
   {
     if (!aPS.More())
@@ -1117,7 +1117,7 @@ void BRepOffset_Inter3d::ContextIntByArc(
   const BRepOffset_Analyse&                                            Analyse,
   const BRepAlgo_Image&                                                InitOffsetFace,
   BRepAlgo_Image&                                                      InitOffsetEdge,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
   NCollection_List<TopoDS_Shape>                         LInt1, LInt2;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> MV;
@@ -1135,7 +1135,7 @@ void BRepOffset_Inter3d::ContextIntByArc(
     myTouched.Add(CF);
   }
 
-  Message_ProgressScope aPS(theRange, "Intersecting with deepening faces", ContextFaces.Extent());
+  System::log::Message_ProgressScope aPS(theRange, "Intersecting with deepening faces", ContextFaces.Extent());
   for (j = 1; j <= ContextFaces.Extent(); j++, aPS.Next())
   {
     if (!aPS.More())

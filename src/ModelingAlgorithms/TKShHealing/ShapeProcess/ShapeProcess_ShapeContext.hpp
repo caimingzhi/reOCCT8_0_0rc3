@@ -13,7 +13,10 @@
 class ShapeExtend_MsgRegistrator;
 class ShapeBuild_ReShape;
 class BRepTools_Modifier;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 
 class ShapeProcess_ShapeContext : public ShapeProcess_Context
 {
@@ -59,7 +62,7 @@ public:
     const occ::handle<ShapeExtend_MsgRegistrator>& msg = nullptr);
 
   Standard_EXPORT void AddMessage(const TopoDS_Shape&   S,
-                                  const Message_Msg&    msg,
+                                  const System::log::Message_Msg&    msg,
                                   const Message_Gravity gravity = Message_Warning);
 
   Standard_EXPORT bool GetContinuity(const char* param, GeomAbs_Shape& val) const;

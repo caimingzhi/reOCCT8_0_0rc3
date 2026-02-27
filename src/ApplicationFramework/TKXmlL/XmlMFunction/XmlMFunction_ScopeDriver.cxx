@@ -15,7 +15,7 @@ IMPLEMENT_DOMSTRING(LastLabelIndex, "lastlabel")
 IMPLEMENT_DOMSTRING(ExtString, "string")
 
 XmlMFunction_ScopeDriver::XmlMFunction_ScopeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

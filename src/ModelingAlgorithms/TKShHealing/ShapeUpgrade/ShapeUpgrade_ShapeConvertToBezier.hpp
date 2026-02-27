@@ -8,7 +8,10 @@
 #include <ShapeUpgrade_ShapeDivide.hpp>
 class TopoDS_Shape;
 class ShapeUpgrade_FaceDivide;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 
 class ShapeUpgrade_ShapeConvertToBezier : public ShapeUpgrade_ShapeDivide
 {
@@ -64,11 +67,11 @@ public:
 protected:
   Standard_EXPORT occ::handle<ShapeUpgrade_FaceDivide> GetSplitFaceTool() const override;
 
-  Standard_EXPORT Message_Msg GetFaceMsg() const override;
+  Standard_EXPORT System::log::Message_Msg GetFaceMsg() const override;
 
-  Standard_EXPORT Message_Msg GetWireMsg() const override;
+  Standard_EXPORT System::log::Message_Msg GetWireMsg() const override;
 
-  Standard_EXPORT Message_Msg GetEdgeMsg() const override;
+  Standard_EXPORT System::log::Message_Msg GetEdgeMsg() const override;
 
 private:
   bool my2dMode;

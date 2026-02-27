@@ -23,7 +23,7 @@ IMPLEMENT_DOMSTRING(GeomPlaneString, "plane")
 IMPLEMENT_DOMSTRING(GeomCylinderString, "cylinder")
 
 XmlMDataXtd_GeometryDriver::XmlMDataXtd_GeometryDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

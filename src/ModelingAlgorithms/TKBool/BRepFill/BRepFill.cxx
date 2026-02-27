@@ -90,7 +90,7 @@ static void CutEdge(const TopoDS_Edge&   CurrentEdge,
   double                  first, last;
   occ::handle<Geom_Curve> C = BRep_Tool::Curve(CurrentEdge, first, last);
   TopoDS_Vertex           Vf, Vl, Vi;
-  B.MakeVertex(Vi, C->Value(Param), Precision::Confusion());
+  B.MakeVertex(Vi, C->Value(Param), math::precision::Precision::Confusion());
   TopExp::Vertices(CurrentEdge, Vf, Vl);
   if (VRef.IsSame(Vf))
   {
@@ -193,8 +193,8 @@ TopoDS_Face BRepFill::Face(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
 
   TopoDS_Vertex V1f, V1l, V2f, V2l;
 
-  if (std::abs(f1 - C1->FirstParameter()) > Precision::PConfusion()
-      || std::abs(l1 - C1->LastParameter()) > Precision::PConfusion())
+  if (std::abs(f1 - C1->FirstParameter()) > math::precision::Precision::PConfusion()
+      || std::abs(l1 - C1->LastParameter()) > math::precision::Precision::PConfusion())
   {
     C1 = new Geom_TrimmedCurve(C1, f1, l1);
   }
@@ -218,8 +218,8 @@ TopoDS_Face BRepFill::Face(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
     TopExp::Vertices(Edge1, V1f, V1l);
   }
 
-  if (std::abs(f2 - C2->FirstParameter()) > Precision::PConfusion()
-      || std::abs(l2 - C2->LastParameter()) > Precision::PConfusion())
+  if (std::abs(f2 - C2->FirstParameter()) > math::precision::Precision::PConfusion()
+      || std::abs(l2 - C2->LastParameter()) > math::precision::Precision::PConfusion())
   {
     C2 = new Geom_TrimmedCurve(C2, f2, l2);
   }
@@ -248,12 +248,12 @@ TopoDS_Face BRepFill::Face(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
   GeomFill_Generator Generator;
   Generator.AddCurve(C1);
   Generator.AddCurve(C2);
-  Generator.Perform(Precision::PConfusion());
+  Generator.Perform(math::precision::Precision::PConfusion());
 
   occ::handle<Geom_Surface> Surf = Generator.Surface();
   occ::handle<Geom_Curve>   Iso;
 
-  B.MakeFace(Face, Surf, Precision::Confusion());
+  B.MakeFace(Face, Surf, math::precision::Precision::Confusion());
 
   Surf->Bounds(f1, l1, f2, l2);
 
@@ -263,7 +263,7 @@ TopoDS_Face BRepFill::Face(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
   Tol = std::max(BRep_Tool::Tolerance(V1f), BRep_Tool::Tolerance(V2f));
   if (Iso->Value(f2).Distance(Iso->Value(l2)) > Tol)
   {
-    B.MakeEdge(Edge3, Iso, Precision::Confusion());
+    B.MakeEdge(Edge3, Iso, math::precision::Precision::Confusion());
   }
   else
   {
@@ -286,7 +286,7 @@ TopoDS_Face BRepFill::Face(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
     Tol = std::max(BRep_Tool::Tolerance(V1l), BRep_Tool::Tolerance(V2l));
     if (Iso->Value(l2).Distance(Iso->Value(f2)) > Tol)
     {
-      B.MakeEdge(Edge4, Iso, Precision::Confusion());
+      B.MakeEdge(Edge4, Iso, math::precision::Precision::Confusion());
     }
     else
     {
@@ -312,7 +312,7 @@ TopoDS_Face BRepFill::Face(const TopoDS_Edge& Edge1, const TopoDS_Edge& Edge2)
 
   B.Add(Face, W);
 
-  double T = Precision::Confusion();
+  double T = math::precision::Precision::Confusion();
 
   if (Edge1.Orientation() == TopAbs_REVERSED)
   {
@@ -414,8 +414,8 @@ TopoDS_Shell BRepFill::Shell(const TopoDS_Wire& Wire1, const TopoDS_Wire& Wire2)
 
     TopoDS_Vertex V1f, V1l, V2f, V2l;
 
-    if (std::abs(f1 - C1->FirstParameter()) > Precision::PConfusion()
-        || std::abs(l1 - C1->LastParameter()) > Precision::PConfusion())
+    if (std::abs(f1 - C1->FirstParameter()) > math::precision::Precision::PConfusion()
+        || std::abs(l1 - C1->LastParameter()) > math::precision::Precision::PConfusion())
     {
       C1 = new Geom_TrimmedCurve(C1, f1, l1);
     }
@@ -435,8 +435,8 @@ TopoDS_Shell BRepFill::Shell(const TopoDS_Wire& Wire1, const TopoDS_Wire& Wire2)
     else
       TopExp::Vertices(Edge1, V1f, V1l);
 
-    if (std::abs(f2 - C2->FirstParameter()) > Precision::PConfusion()
-        || std::abs(l2 - C2->LastParameter()) > Precision::PConfusion())
+    if (std::abs(f2 - C2->FirstParameter()) > math::precision::Precision::PConfusion()
+        || std::abs(l2 - C2->LastParameter()) > math::precision::Precision::PConfusion())
     {
       C2 = new Geom_TrimmedCurve(C2, f2, l2);
     }
@@ -459,12 +459,12 @@ TopoDS_Shell BRepFill::Shell(const TopoDS_Wire& Wire1, const TopoDS_Wire& Wire2)
     GeomFill_Generator Generator;
     Generator.AddCurve(C1);
     Generator.AddCurve(C2);
-    Generator.Perform(Precision::PConfusion());
+    Generator.Perform(math::precision::Precision::PConfusion());
 
     occ::handle<Geom_Surface> Surf = Generator.Surface();
     occ::handle<Geom_Curve>   Iso;
 
-    B.MakeFace(Face, Surf, Precision::Confusion());
+    B.MakeFace(Face, Surf, math::precision::Precision::Confusion());
 
     Surf->Bounds(f1, l1, f2, l2);
 
@@ -475,7 +475,7 @@ TopoDS_Shell BRepFill::Shell(const TopoDS_Wire& Wire1, const TopoDS_Wire& Wire2)
       Tol = std::max(BRep_Tool::Tolerance(V1f), BRep_Tool::Tolerance(V2f));
       if (Iso->Value(f2).Distance(Iso->Value(l2)) > Tol)
       {
-        B.MakeEdge(Edge3, Iso, Precision::Confusion());
+        B.MakeEdge(Edge3, Iso, math::precision::Precision::Confusion());
       }
       else
       {
@@ -511,7 +511,7 @@ TopoDS_Shell BRepFill::Shell(const TopoDS_Wire& Wire1, const TopoDS_Wire& Wire2)
       Tol = std::max(BRep_Tool::Tolerance(V1l), BRep_Tool::Tolerance(V2l));
       if (Iso->Value(l2).Distance(Iso->Value(f2)) > Tol)
       {
-        B.MakeEdge(Edge4, Iso, Precision::Confusion());
+        B.MakeEdge(Edge4, Iso, math::precision::Precision::Confusion());
       }
       else
       {
@@ -541,7 +541,7 @@ TopoDS_Shell BRepFill::Shell(const TopoDS_Wire& Wire1, const TopoDS_Wire& Wire2)
 
     B.Add(Shell, Face);
 
-    double T = Precision::Confusion();
+    double T = math::precision::Precision::Confusion();
 
     if (Edge1.Orientation() == TopAbs_REVERSED)
     {
@@ -640,7 +640,7 @@ void BRepFill::Axe(const TopoDS_Shape& Spine,
 
   Normal = occ::down_cast<Geom_Plane>(S)->Pln().Axis().Direction();
 
-  double DistMin = Precision::Infinite();
+  double DistMin = math::precision::Precision::Infinite();
   double Dist;
 
   double            Tol2 = 1.e-10;
@@ -744,7 +744,7 @@ void BRepFill::Axe(const TopoDS_Shape& Spine,
       BE.Initialize(E);
       for (PE.Init(Profile, TopAbs_VERTEX); PE.More(); PE.Next())
       {
-        Dist                   = Precision::Infinite();
+        Dist                   = math::precision::Precision::Infinite();
         const TopoDS_Vertex& V = TopoDS::Vertex(PE.Current());
         BE.Perform(V);
         if (BE.IsDone())
@@ -923,7 +923,7 @@ void BRepFill::ComputeACR(const TopoDS_Wire& wire, NCollection_Array1<double>& A
 
   ACR(0) = ACR(nbEdges);
 
-  if (ACR(0) > Precision::Confusion())
+  if (ACR(0) > math::precision::Precision::Confusion())
   {
     for (i = 1; i <= nbEdges; i++)
     {

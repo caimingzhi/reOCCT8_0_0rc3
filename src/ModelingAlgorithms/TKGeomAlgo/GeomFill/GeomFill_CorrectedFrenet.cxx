@@ -252,7 +252,7 @@ static bool FindPlane(const occ::handle<Adaptor3d_Curve>& theC, occ::handle<Geom
       {
         const gp_XYZ& xyz = TabP->Value(ii).XYZ();
         dist              = a * xyz.X() + b * xyz.Y() + c * xyz.Z() + d;
-        found             = (std::abs(dist) <= Precision::Confusion());
+        found             = (std::abs(dist) <= math::precision::Precision::Confusion());
       }
       return found;
     }
@@ -422,13 +422,13 @@ bool GeomFill_CorrectedFrenet::InitInterval(const double                  First,
 
   int          i         = 1;
   double       currParam = Param;
-  const double DLast     = Last - Precision::PConfusion();
+  const double DLast     = Last - math::precision::Precision::PConfusion();
 
   while (Param < Last)
   {
     if (currParam > DLast)
     {
-      if (std::abs(DLast - Param) < Precision::SquareConfusion())
+      if (std::abs(DLast - Param) < math::precision::Precision::SquareConfusion())
       {
         Param = currParam;
       }
@@ -453,7 +453,7 @@ bool GeomFill_CorrectedFrenet::InitInterval(const double                  First,
       angleAT = CalcAngleAT(Tangent, Normal, prevTangent, prevNormal);
 
       if (isConst && i > 1)
-        if (std::abs(angleAT) > Precision::PConfusion())
+        if (std::abs(angleAT) > math::precision::Precision::PConfusion())
           isConst = false;
 
       angleAT += (i > 1) ? EvolAT(i - 1) : startAng;
@@ -461,7 +461,7 @@ bool GeomFill_CorrectedFrenet::InitInterval(const double                  First,
       prevNormal = Normal;
 
       if (isZero)
-        if (std::abs(angleAT) > Precision::PConfusion())
+        if (std::abs(angleAT) > math::precision::Precision::PConfusion())
           isZero = false;
 
       aT += Tangent;
@@ -478,9 +478,9 @@ bool GeomFill_CorrectedFrenet::InitInterval(const double                  First,
       CS.D1(Param, PonC, D1);
       double L    = std::max(PonC.XYZ().Modulus() / 2, LengthMin);
       double norm = D1.Magnitude();
-      if (norm < Precision::Confusion())
+      if (norm < math::precision::Precision::Confusion())
       {
-        norm = Precision::Confusion();
+        norm = math::precision::Precision::Confusion();
       }
       currStep = L / norm;
       if (currStep > Step)
@@ -522,7 +522,7 @@ bool GeomFill_CorrectedFrenet::InitInterval(const double                  First,
       angleATarr->ChangeValue(aParamIndex) = EvolAT(aParamIndex);
     }
 
-    Law_Interpolate lawAT(angleATarr, pararr, false, Precision::PConfusion());
+    Law_Interpolate lawAT(angleATarr, pararr, false, math::precision::Precision::PConfusion());
     lawAT.Perform();
     occ::handle<Law_BSpline> BS = lawAT.Curve();
     smoothlaw(BS, angleATarr, pararr, 0.1);
@@ -540,7 +540,7 @@ double GeomFill_CorrectedFrenet::CalcAngleAT(const gp_Vec& Tangent,
   double angle;
   gp_Vec Normal_rot, cross;
   angle = Tangent.Angle(prevTangent);
-  if (std::abs(angle) > Precision::Angular() && std::abs(angle) < M_PI - Precision::Angular())
+  if (std::abs(angle) > math::precision::Precision::Angular() && std::abs(angle) < M_PI - math::precision::Precision::Angular())
   {
     cross      = Tangent.Crossed(prevTangent).Normalized();
     Normal_rot = Normal + sin(angle) * cross.Crossed(Normal)
@@ -549,8 +549,8 @@ double GeomFill_CorrectedFrenet::CalcAngleAT(const gp_Vec& Tangent,
   else
     Normal_rot = Normal;
   double angleAT = Normal_rot.Angle(prevNormal);
-  if (angleAT > Precision::Angular() && M_PI - angleAT > Precision::Angular())
-    if (Normal_rot.Crossed(prevNormal).IsOpposite(prevTangent, Precision::Angular()))
+  if (angleAT > math::precision::Precision::Angular() && M_PI - angleAT > math::precision::Precision::Angular())
+    if (Normal_rot.Crossed(prevNormal).IsOpposite(prevTangent, math::precision::Precision::Angular()))
       angleAT = -angleAT;
   return angleAT;
 }
@@ -767,7 +767,7 @@ int GeomFill_CorrectedFrenet::NbIntervals(const GeomAbs_Shape S) const
 
   frenet->Intervals(FrenetInt, S);
   EvolAroundT->Intervals(LawInt, S);
-  GeomLib::FuseIntervals(FrenetInt, LawInt, Fusion, Precision::PConfusion(), true);
+  GeomLib::FuseIntervals(FrenetInt, LawInt, Fusion, math::precision::Precision::PConfusion(), true);
 
   return Fusion.Length() - 1;
 }
@@ -795,7 +795,7 @@ void GeomFill_CorrectedFrenet::Intervals(NCollection_Array1<double>& T, const Ge
 
   frenet->Intervals(FrenetInt, S);
   EvolAroundT->Intervals(LawInt, S);
-  GeomLib::FuseIntervals(FrenetInt, LawInt, Fusion, Precision::PConfusion(), true);
+  GeomLib::FuseIntervals(FrenetInt, LawInt, Fusion, math::precision::Precision::PConfusion(), true);
 
   for (int i = 1; i <= Fusion.Length(); i++)
     T.ChangeValue(i) = Fusion.Value(i);
@@ -806,7 +806,7 @@ void GeomFill_CorrectedFrenet::SetInterval(const double First, const double Last
   GeomFill_TrihedronLaw::SetInterval(First, Last);
   frenet->SetInterval(First, Last);
   if (!isFrenet)
-    TLaw = EvolAroundT->Trim(First, Last, Precision::PConfusion() / 2);
+    TLaw = EvolAroundT->Trim(First, Last, math::precision::Precision::PConfusion() / 2);
 }
 
 GeomFill_Trihedron GeomFill_CorrectedFrenet::EvaluateBestMode()
@@ -835,7 +835,7 @@ GeomFill_Trihedron GeomFill_CorrectedFrenet::EvaluateBestMode()
       return GeomFill_IsDiscreteTrihedron;
 
     occ::handle<Law_Function> trimmedlaw =
-      EvolAroundT->Trim(tmin, tmax, Precision::PConfusion() / 2);
+      EvolAroundT->Trim(tmin, tmax, math::precision::Precision::PConfusion() / 2);
     Step = (Int(i + 1) - Int(i)) / NbSamples;
     for (j = 0; j <= NbSamples; j++)
     {

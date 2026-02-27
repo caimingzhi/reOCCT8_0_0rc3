@@ -7,6 +7,7 @@
 #include <TCollection_AsciiString.hpp>
 #include <OSD_Error.hpp>
 
+namespace System { namespace os {
 class OSD_Environment
 {
 public:
@@ -44,3 +45,5 @@ private:
   TCollection_AsciiString myValue;
   OSD_Error               myError;
 };
+}} // namespace System::os
+

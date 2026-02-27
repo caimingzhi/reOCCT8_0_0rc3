@@ -665,7 +665,7 @@ public:
 
   void setAskNextFrame(bool theToDraw = true) { myToAskNextFrame = theToDraw; }
 
-  bool hasPanningAnchorPoint() const { return !Precision::IsInfinite(myPanPnt3d.X()); }
+  bool hasPanningAnchorPoint() const { return !math::precision::Precision::IsInfinite(myPanPnt3d.X()); }
 
   const gp_Pnt& panningAnchorPoint() const { return myPanPnt3d; }
 
@@ -825,7 +825,7 @@ protected:
   bool                                                   myMouseActiveIdleRotation;
   NCollection_Vec2<int>                                  myMousePressPoint;
   NCollection_Vec2<int>                                  myMouseProgressPoint;
-  OSD_Timer                                              myMouseClickTimer;
+  System::os::OSD_Timer                                              myMouseClickTimer;
   int                                                    myMouseClickCounter;
   int                                                    myMouseSingleButton;
   bool                                                   myMouseStopDragOnUnclick;
@@ -841,7 +841,7 @@ protected:
   float myTouchDraggingThresholdPx;
 
   Aspect_Touch myTouchClick;
-  OSD_Timer    myTouchDoubleTapTimer;
+  System::os::OSD_Timer    myTouchDoubleTapTimer;
 
   NCollection_Vec2<double> myStartPanCoord;
   NCollection_Vec2<double> myStartRotCoord;

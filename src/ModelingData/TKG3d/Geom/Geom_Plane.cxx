@@ -128,10 +128,10 @@ bool Geom_Plane::IsVPeriodic() const
 void Geom_Plane::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
 
-  U1 = -Precision::Infinite();
-  U2 = Precision::Infinite();
-  V1 = -Precision::Infinite();
-  V2 = Precision::Infinite();
+  U1 = -math::precision::Precision::Infinite();
+  U2 = math::precision::Precision::Infinite();
+  V1 = -math::precision::Precision::Infinite();
+  V2 = math::precision::Precision::Infinite();
 }
 
 void Geom_Plane::Coefficients(double& A, double& B, double& C, double& D) const
@@ -221,9 +221,9 @@ occ::handle<Geom_Curve> Geom_Plane::VIso(const double V) const
 
 void Geom_Plane::TransformParameters(double& U, double& V, const gp_Trsf& T) const
 {
-  if (!Precision::IsInfinite(U))
+  if (!math::precision::Precision::IsInfinite(U))
     U *= std::abs(T.ScaleFactor());
-  if (!Precision::IsInfinite(V))
+  if (!math::precision::Precision::IsInfinite(V))
     V *= std::abs(T.ScaleFactor());
 }
 

@@ -16,11 +16,11 @@ public:
 
   Standard_EXPORT bool Write(const TopoDS_Shape&          theShape,
                              const char*                  theFileName,
-                             const Message_ProgressRange& theProgress = Message_ProgressRange());
+                             const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Write(const TopoDS_Shape&          theShape,
                              Standard_OStream&            theStream,
-                             const Message_ProgressRange& theProgress = Message_ProgressRange());
+                             const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
 private:
   bool myASCIIMode;

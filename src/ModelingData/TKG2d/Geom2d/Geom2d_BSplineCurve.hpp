@@ -70,7 +70,7 @@ public:
 
   Standard_EXPORT void Segment(const double U1,
                                const double U2,
-                               const double theTolerance = Precision::PConfusion());
+                               const double theTolerance = math::precision::Precision::PConfusion());
 
   Standard_EXPORT void SetKnot(const int Index, const double K);
 

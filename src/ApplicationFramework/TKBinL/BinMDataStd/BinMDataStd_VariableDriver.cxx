@@ -9,7 +9,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_VariableDriver, BinMDF_ADriver)
 
 BinMDataStd_VariableDriver::BinMDataStd_VariableDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }

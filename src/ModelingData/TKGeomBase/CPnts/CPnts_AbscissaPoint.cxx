@@ -293,7 +293,7 @@ void CPnts_AbscissaPoint::Init(const Adaptor2d_Curve2d& C,
 
 void CPnts_AbscissaPoint::Perform(const double Abscissa, const double U0, const double Resolution)
 {
-  if (myL < Precision::Confusion())
+  if (myL < math::precision::Precision::Confusion())
   {
 
     myDone  = true;
@@ -312,7 +312,7 @@ void CPnts_AbscissaPoint::Perform(const double Abscissa,
                                   const double Ui,
                                   const double Resolution)
 {
-  if (myL < Precision::Confusion())
+  if (myL < math::precision::Precision::Confusion())
   {
 
     myDone  = true;
@@ -338,7 +338,7 @@ void CPnts_AbscissaPoint::AdvPerform(const double Abscissa,
                                      const double Ui,
                                      const double Resolution)
 {
-  if (myL < Precision::Confusion())
+  if (myL < math::precision::Precision::Confusion())
   {
 
     myDone  = true;

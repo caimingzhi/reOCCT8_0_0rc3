@@ -1265,17 +1265,17 @@ void V3d_View::SetZoom(const double theCoef, const bool theToStart)
   double aViewHeight = aCamera->ViewDimensions().Y();
 
   double aCoef = theCoef;
-  if (aViewWidth < aCoef * Precision::Confusion())
+  if (aViewWidth < aCoef * math::precision::Precision::Confusion())
   {
-    aCoef = aViewWidth / Precision::Confusion();
+    aCoef = aViewWidth / math::precision::Precision::Confusion();
   }
   else if (aViewWidth > aCoef * 1e12)
   {
     aCoef = aViewWidth / 1e12;
   }
-  if (aViewHeight < aCoef * Precision::Confusion())
+  if (aViewHeight < aCoef * math::precision::Precision::Confusion())
   {
-    aCoef = aViewHeight / Precision::Confusion();
+    aCoef = aViewHeight / math::precision::Precision::Confusion();
   }
   else if (aViewHeight > aCoef * 1e12)
   {
@@ -1343,7 +1343,7 @@ void V3d_View::FitAll(const Bnd_Box& theBox, const double theMargin, const bool 
     return;
   }
 
-  if (!FitMinMax(Camera(), theBox, theMargin, 10.0 * Precision::Confusion()))
+  if (!FitMinMax(Camera(), theBox, theMargin, 10.0 * math::precision::Precision::Confusion()))
   {
     return;
   }
@@ -2191,17 +2191,17 @@ void V3d_View::ZoomAtPoint(const int theMouseStartX,
   double aViewHeight = aCamera->ViewDimensions().Y();
 
   double aCoef = aDZoom;
-  if (aViewWidth < aCoef * Precision::Confusion())
+  if (aViewWidth < aCoef * math::precision::Precision::Confusion())
   {
-    aCoef = aViewWidth / Precision::Confusion();
+    aCoef = aViewWidth / math::precision::Precision::Confusion();
   }
   else if (aViewWidth > aCoef * 1e12)
   {
     aCoef = aViewWidth / 1e12;
   }
-  if (aViewHeight < aCoef * Precision::Confusion())
+  if (aViewHeight < aCoef * math::precision::Precision::Confusion())
   {
-    aCoef = aViewHeight / Precision::Confusion();
+    aCoef = aViewHeight / math::precision::Precision::Confusion();
   }
   else if (aViewHeight > aCoef * 1e12)
   {
@@ -2393,7 +2393,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
 
       if (!theImage.InitZero(aFormat, size_t(aTargetSize.x()), size_t(aTargetSize.y())))
       {
-        Message::SendFail(TCollection_AsciiString("Fail to allocate an image ") + aTargetSize.x()
+        System::log::Message::SendFail(TCollection_AsciiString("Fail to allocate an image ") + aTargetSize.x()
                           + "x" + aTargetSize.y() + " for view dump");
         return false;
       }
@@ -2401,7 +2401,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
   }
   if (theImage.IsEmpty())
   {
-    Message::SendFail("V3d_View::ToPixMap() has been called without image dimensions");
+    System::log::Message::SendFail("V3d_View::ToPixMap() has been called without image dimensions");
     return false;
   }
   aTargetSize.x() = (int)theImage.SizeX();
@@ -2443,7 +2443,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
     int aMaxTexSizeY = MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit_MaxViewDumpSizeY);
     if (theParams.TileSize > aMaxTexSizeX || theParams.TileSize > aMaxTexSizeY)
     {
-      Message::SendFail(
+      System::log::Message::SendFail(
         TCollection_AsciiString("Image dump can not be performed - specified tile size (")
         + theParams.TileSize + ") exceeds hardware limits (" + aMaxTexSizeX + "x" + aMaxTexSizeY
         + ")");
@@ -2454,10 +2454,10 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
     {
       if (MyViewer->Driver()->InquireLimit(Graphic3d_TypeOfLimit_IsWorkaroundFBO))
       {
-        Message::SendWarning("Warning, workaround for Intel driver problem with empty FBO for "
+        System::log::Message::SendWarning("Warning, workaround for Intel driver problem with empty FBO for "
                              "images with big width is applied");
       }
-      Message::SendInfo(TCollection_AsciiString("Info, tiling image dump is used, image size (")
+      System::log::Message::SendInfo(TCollection_AsciiString("Info, tiling image dump is used, image size (")
                         + aFBOVPSize.x() + "x" + aFBOVPSize.y() + ") exceeds hardware limits ("
                         + aMaxTexSizeX + "x" + aMaxTexSizeY + ")");
       aFBOVPSize.x() = std::min(aFBOVPSize.x(), aMaxTexSizeX);
@@ -2480,7 +2480,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
     }
     aFBOVPSize = aWinSize;
 
-    Message::SendWarning(
+    System::log::Message::SendWarning(
       "Warning, on screen buffer is used for image dump - content might be invalid");
   }
 
@@ -2535,7 +2535,7 @@ bool V3d_View::ToPixMap(Image_PixMap& theImage, const V3d_ImageDumpOptions& theP
 
       if (!myView->ShadowMapDump(theImage, theParams.LightName))
       {
-        Message::SendFail("OpenGl_View::BufferDump() failed to dump shadowmap");
+        System::log::Message::SendFail("OpenGl_View::BufferDump() failed to dump shadowmap");
         isSuccess = false;
       }
     }

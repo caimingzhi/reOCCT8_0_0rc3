@@ -75,7 +75,7 @@ public:
     const occ::handle<Transfer_FinderProcess>&   FP,
     const occ::handle<Interface_InterfaceModel>& model,
     const int                                    modetrans   = 0,
-    const Message_ProgressRange&                 theProgress = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange&                 theProgress = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT virtual bool RecognizeWriteShape(const TopoDS_Shape& shape,
                                                    const int           modetrans = 0) const;
@@ -85,7 +85,7 @@ public:
     const occ::handle<Transfer_FinderProcess>&   FP,
     const occ::handle<Interface_InterfaceModel>& model,
     const int                                    modetrans   = 0,
-    const Message_ProgressRange&                 theProgress = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange&                 theProgress = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT void AddSessionItem(const occ::handle<Standard_Transient>& theItem,
                                       const char*                            theName,

@@ -150,7 +150,7 @@ void DsgPrs::ComputePlanarFacesLengthPresentation(const double  FirstArrowLength
   EndOfArrow1 = ElCLib::Value(ElCLib::Parameter(FirstLin, OffsetPoint), FirstLin);
   EndOfArrow2 = ElCLib::Value(ElCLib::Parameter(SecondLin, OffsetPoint), SecondLin);
 
-  if (EndOfArrow1.SquareDistance(EndOfArrow2) > Precision::SquareConfusion())
+  if (EndOfArrow1.SquareDistance(EndOfArrow2) > math::precision::Precision::SquareConfusion())
   {
     gp_Dir LengthDir(gp_Vec(EndOfArrow1, EndOfArrow2));
     if ((FirstArrowLength + SecondArrowLength) * (FirstArrowLength + SecondArrowLength)
@@ -182,7 +182,7 @@ void DsgPrs::ComputeCurvilinearFacesLengthPresentation(const double FirstArrowLe
   GeomAPI_ProjectPointOnCurve ProjectorOnCurve;
   double                      U1, V1, U2, V2;
   double                      LastU, LastV;
-  constexpr double            SquareTolerance = Precision::SquareConfusion();
+  constexpr double            SquareTolerance = math::precision::Precision::SquareConfusion();
 
   ProjectorOnSurface.Init(AttachmentPoint1, SecondSurf);
   int    Index(1);
@@ -199,7 +199,7 @@ void DsgPrs::ComputeCurvilinearFacesLengthPresentation(const double FirstArrowLe
       LocalDir = gp_Dir(gp_Vec(AttachmentPoint1, ProjectorOnSurface.Point(i)));
     else
       LocalDir = gp_Dir(D1U ^ D1V);
-    if (DirAttach.IsParallel(LocalDir, Precision::Angular())
+    if (DirAttach.IsParallel(LocalDir, math::precision::Precision::Angular())
         && ProjectorOnSurface.Distance(i) < MinDist)
     {
       Index   = i;
@@ -215,7 +215,7 @@ void DsgPrs::ComputeCurvilinearFacesLengthPresentation(const double FirstArrowLe
   else
     DirOfArrow1 = DirAttach;
 
-  if (EndOfArrow2.SquareDistance(AttachmentPoint2) > Precision::SquareConfusion())
+  if (EndOfArrow2.SquareDistance(AttachmentPoint2) > math::precision::Precision::SquareConfusion())
   {
     VCurve = SecondSurf->VIso(V1);
     ProjectorOnCurve.Init(EndOfArrow2, VCurve);
@@ -275,7 +275,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
                                            double&       FirstParAttachCirc,
                                            double&       LastParAttachCirc)
 {
-  if (Value > Precision::Angular() && std::abs(M_PI - Value) > Precision::Angular())
+  if (Value > math::precision::Precision::Angular() && std::abs(M_PI - Value) > math::precision::Precision::Angular())
   {
 
     gp_Ax2 ax(CenterPoint, axisdir, dir1);
@@ -329,7 +329,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
     EndOfArrow1 = ElCLib::Value(Par1, AngleCirc);
     EndOfArrow2 = ElCLib::Value(Par2, AngleCirc);
     double beta = 0.;
-    if (AngleCirc.Radius() > Precision::Confusion())
+    if (AngleCirc.Radius() > math::precision::Precision::Confusion())
       beta = ArrowLength / AngleCirc.Radius();
     gp_Pnt OriginOfArrow1 = ElCLib::Value(Par1 + beta, AngleCirc);
     gp_Pnt OriginOfArrow2 = ElCLib::Value(Par2 - beta, AngleCirc);
@@ -353,7 +353,7 @@ void DsgPrs::ComputeFacesAnglePresentation(const double  ArrowLength,
   }
 
   gp_Lin SecondLin(CenterPoint, dir2);
-  if (SecondLin.Contains(AttachmentPoint2, Precision::Confusion()))
+  if (SecondLin.Contains(AttachmentPoint2, math::precision::Precision::Confusion()))
     ProjAttachPoint2 = AttachmentPoint2;
   else
   {
@@ -409,8 +409,8 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double,
   gp_Dir dir1(gp_Vec(Center, FirstPoint));
   gp_Dir dir2(gp_Vec(Center, SecondPoint));
   double Angle = dir1.Angle(dir2);
-  SpecCase     = Angle <= Precision::Angular() || (M_PI - Angle) <= Precision::Angular()
-             || Value <= Precision::Confusion();
+  SpecCase     = Angle <= math::precision::Precision::Angular() || (M_PI - Angle) <= math::precision::Precision::Angular()
+             || Value <= math::precision::Precision::Confusion();
   if (!SpecCase)
   {
 
@@ -422,7 +422,7 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double,
     gp_Vec vec2(dir2);
     vec2 *= FilletCirc.Radius();
     gp_Vec PosVec;
-    if (!Center.IsEqual(Position, Precision::Confusion()))
+    if (!Center.IsEqual(Position, math::precision::Precision::Confusion()))
       PosVec.SetXYZ(gp_Vec(Center, Position).XYZ());
     else
       PosVec.SetXYZ((vec1.Added(vec2)).XYZ());
@@ -457,7 +457,7 @@ void DsgPrs::ComputeFilletRadiusPresentation(const double,
         DrawPosition = ElCLib::Value(ElCLib::Parameter(L2, Position), L2);
       }
     }
-    if ((dir1 ^ dir2).IsOpposite(NormalDir, Precision::Angular()))
+    if ((dir1 ^ dir2).IsOpposite(NormalDir, math::precision::Precision::Angular()))
     {
       gp_Dir newdir = NormalDir.Reversed();
       gp_Ax2 axnew(Center, newdir, dir1);

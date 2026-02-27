@@ -229,7 +229,7 @@ occ::handle<Geom2d_BSplineCurve> Geom2dConvert::CurveToBSplineCurve(
 
           Geom2dConvert_CompCurveToBSplineCurve CCTBSpl(TheCurve1, Parameterisation);
 
-          CCTBSpl.Add(TheCurve2, Precision::PConfusion(), true);
+          CCTBSpl.Add(TheCurve2, math::precision::Precision::PConfusion(), true);
 
           TheCurve = CCTBSpl.BSplineCurve();
         }
@@ -267,7 +267,7 @@ occ::handle<Geom2d_BSplineCurve> Geom2dConvert::CurveToBSplineCurve(
 
           Geom2dConvert_CompCurveToBSplineCurve CCTBSpl(TheCurve1, Parameterisation);
 
-          CCTBSpl.Add(TheCurve2, Precision::PConfusion(), true);
+          CCTBSpl.Add(TheCurve2, math::precision::Precision::PConfusion(), true);
 
           TheCurve = CCTBSpl.BSplineCurve();
         }
@@ -560,14 +560,14 @@ static bool NeedToBeTreated(const occ::handle<Geom2d_BSplineCurve>& BS)
   {
     BS->Weights(tabWeights);
     return (BSplCLib::IsRational(tabWeights, 1, BS->NbPoles()))
-           && ((BS->Weight(1) < (1 - Precision::Confusion()))
-               || (BS->Weight(1) > (1 + Precision::Confusion()))
-               || (BS->Weight(2) < (1 - Precision::Confusion()))
-               || (BS->Weight(2) > (1 + Precision::Confusion()))
-               || (BS->Weight(BS->NbPoles() - 1) < (1 - Precision::Confusion()))
-               || (BS->Weight(BS->NbPoles() - 1) > (1 + Precision::Confusion()))
-               || (BS->Weight(BS->NbPoles()) < (1 - Precision::Confusion()))
-               || (BS->Weight(BS->NbPoles()) > (1 + Precision::Confusion())));
+           && ((BS->Weight(1) < (1 - math::precision::Precision::Confusion()))
+               || (BS->Weight(1) > (1 + math::precision::Precision::Confusion()))
+               || (BS->Weight(2) < (1 - math::precision::Precision::Confusion()))
+               || (BS->Weight(2) > (1 + math::precision::Precision::Confusion()))
+               || (BS->Weight(BS->NbPoles() - 1) < (1 - math::precision::Precision::Confusion()))
+               || (BS->Weight(BS->NbPoles() - 1) > (1 + math::precision::Precision::Confusion()))
+               || (BS->Weight(BS->NbPoles()) < (1 - math::precision::Precision::Confusion()))
+               || (BS->Weight(BS->NbPoles()) > (1 + math::precision::Precision::Confusion())));
   }
   else
     return false;
@@ -587,8 +587,8 @@ static bool Need2DegRepara(const NCollection_Array1<occ::handle<Geom2d_BSplineCu
     tab(i)->D1(tab(i)->LastParameter(), Pint, Vec2);
     Rapport = Rapport * Vec2.Magnitude() / Vec1.Magnitude();
   }
-  return (Rapport > (1.0e0 + Precision::Confusion()))
-         || (Rapport < (1.0e0 - Precision::Confusion()));
+  return (Rapport > (1.0e0 + math::precision::Precision::Confusion()))
+         || (Rapport < (1.0e0 - math::precision::Precision::Confusion()));
 }
 
 static int Indexmin(const NCollection_Array1<occ::handle<Geom2d_BSplineCurve>>& tab)
@@ -797,7 +797,7 @@ static GeomAbs_Shape Continuity(const occ::handle<Geom2d_Curve>& C1,
                                 const bool                       r1,
                                 const bool                       r2)
 {
-  return Continuity(C1, C2, u1, u2, r1, r2, Precision::Confusion(), Precision::Angular());
+  return Continuity(C1, C2, u1, u2, r1, r2, math::precision::Precision::Confusion(), math::precision::Precision::Angular());
 }
 
 class Geom2dConvert_reparameterise_evaluator : public BSplCLib_EvaluatorFunction
@@ -995,7 +995,7 @@ void Geom2dConvert::ConcatG1(
     Curve2->SetPeriodic();
     Curve2->RemoveKnot(Curve2->LastUKnotIndex(),
                        Curve2->Multiplicity(Curve2->LastUKnotIndex()) - 1,
-                       Precision::Confusion());
+                       math::precision::Precision::Confusion());
     ArrayOfConcatenated->SetValue(0, Curve2);
   }
 
@@ -1042,7 +1042,7 @@ void Geom2dConvert::ConcatC1(
            ArrayOfConcatenated,
            ClosedFlag,
            ClosedTolerance,
-           Precision::Angular());
+           math::precision::Precision::Angular());
 }
 
 void Geom2dConvert::ConcatC1(
@@ -1242,7 +1242,7 @@ void Geom2dConvert::ConcatC1(
     Curve2->SetPeriodic();
     Curve2->RemoveKnot(Curve2->LastUKnotIndex(),
                        Curve2->Multiplicity(Curve2->LastUKnotIndex()) - 1,
-                       Precision::Confusion());
+                       math::precision::Precision::Confusion());
     ArrayOfConcatenated->SetValue(0, Curve2);
   }
 
@@ -1381,7 +1381,7 @@ void Geom2dConvert::C0BSplineToArrayOfC1BSplineCurve(
   occ::handle<NCollection_HArray1<occ::handle<Geom2d_BSplineCurve>>>& tabBS,
   const double                                                        tolerance)
 {
-  C0BSplineToArrayOfC1BSplineCurve(BS, tabBS, tolerance, Precision::Angular());
+  C0BSplineToArrayOfC1BSplineCurve(BS, tabBS, tolerance, math::precision::Precision::Angular());
 }
 
 void Geom2dConvert::C0BSplineToArrayOfC1BSplineCurve(

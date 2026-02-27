@@ -287,9 +287,9 @@ void IntAna_Curve::InternalUVValue(const double theta,
   if (aDiscriminant < aTolD)
     aDiscriminant = 0.0;
 
-  if (std::abs(A) <= Precision::PConfusion())
+  if (std::abs(A) <= math::precision::Precision::PConfusion())
   {
-    if (std::abs(B) <= Precision::PConfusion())
+    if (std::abs(B) <= math::precision::Precision::PConfusion())
     {
       Param2 = 0.0;
     }
@@ -359,7 +359,7 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
 {
   const double aPIpPI = M_PI + M_PI, anEpsAng = 1.e-8, InternalPrecision = 1.e-8;
 
-  constexpr double aSqTolPrecision = Precision::SquareConfusion();
+  constexpr double aSqTolPrecision = math::precision::Precision::SquareConfusion();
 
   double aTheta = 0.0;
 
@@ -418,7 +418,7 @@ void IntAna_Curve::FindParameter(const gp_Pnt& theP, NCollection_List<double>& t
     if (aParams[i] < myFirstParameter)
       continue;
 
-    if (i && (aParams[i] - aParams[i - 1]) < Precision::PConfusion())
+    if (i && (aParams[i] - aParams[i - 1]) < math::precision::Precision::PConfusion())
       continue;
 
     double U = 0.0, V = 0.0, A = 0.0, B = 0.0, C = 0.0, sint = 0.0, cost = 0.0, SigneSqrtDis = 0.0;

@@ -299,8 +299,8 @@ namespace
     EXPECT_NEAR(aLoc(2), 2.0, 1.0e-6) << "Location output method Y";
 
     const math_Vector& aLocDirect = aPowell.Location();
-    EXPECT_NEAR(aLoc(1), aLocDirect(1), Precision::Confusion()) << "Location methods should match";
-    EXPECT_NEAR(aLoc(2), aLocDirect(2), Precision::Confusion()) << "Location methods should match";
+    EXPECT_NEAR(aLoc(1), aLocDirect(1), math::precision::Precision::Confusion()) << "Location methods should match";
+    EXPECT_NEAR(aLoc(2), aLocDirect(2), math::precision::Precision::Confusion()) << "Location methods should match";
   }
 
   TEST(MathPowellTest, UnperformedState)

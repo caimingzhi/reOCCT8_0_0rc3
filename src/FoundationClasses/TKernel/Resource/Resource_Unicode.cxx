@@ -27,7 +27,7 @@ static inline bool isshift(unsigned int c)
   return c >= 0x80 && c <= 0xff;
 }
 
-void Resource_Unicode::ConvertSJISToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
+void System::resource::Resource_Unicode::ConvertSJISToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
 {
   tostr.Clear();
 
@@ -60,7 +60,7 @@ void Resource_Unicode::ConvertSJISToUnicode(const char* fromstr, TCollection_Ext
   }
 }
 
-void Resource_Unicode::ConvertEUCToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
+void System::resource::Resource_Unicode::ConvertEUCToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
 {
   tostr.Clear();
 
@@ -93,7 +93,7 @@ void Resource_Unicode::ConvertEUCToUnicode(const char* fromstr, TCollection_Exte
   }
 }
 
-void Resource_Unicode::ConvertGBToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
+void System::resource::Resource_Unicode::ConvertGBToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
 {
   tostr.Clear();
 
@@ -126,7 +126,7 @@ void Resource_Unicode::ConvertGBToUnicode(const char* fromstr, TCollection_Exten
   }
 }
 
-bool Resource_Unicode::ConvertGBKToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
+bool System::resource::Resource_Unicode::ConvertGBKToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
 {
   tostr.Clear();
 
@@ -244,7 +244,7 @@ bool Resource_Unicode::ConvertGBKToUnicode(const char* fromstr, TCollection_Exte
   return true;
 }
 
-bool Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
+bool System::resource::Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_ExtendedString& tostr)
 {
   tostr.Clear();
 
@@ -356,7 +356,7 @@ bool Resource_Unicode::ConvertBig5ToUnicode(const char* fromstr, TCollection_Ext
   return true;
 }
 
-bool Resource_Unicode::ConvertUnicodeToSJIS(const TCollection_ExtendedString& fromstr,
+bool System::resource::Resource_Unicode::ConvertUnicodeToSJIS(const TCollection_ExtendedString& fromstr,
                                             Standard_PCharacter&              tostr,
                                             const int                         maxsize)
 {
@@ -410,7 +410,7 @@ bool Resource_Unicode::ConvertUnicodeToSJIS(const TCollection_ExtendedString& fr
   return true;
 }
 
-bool Resource_Unicode::ConvertUnicodeToEUC(const TCollection_ExtendedString& fromstr,
+bool System::resource::Resource_Unicode::ConvertUnicodeToEUC(const TCollection_ExtendedString& fromstr,
                                            Standard_PCharacter&              tostr,
                                            const int                         maxsize)
 {
@@ -464,7 +464,7 @@ bool Resource_Unicode::ConvertUnicodeToEUC(const TCollection_ExtendedString& fro
   return true;
 }
 
-bool Resource_Unicode::ConvertUnicodeToGB(const TCollection_ExtendedString& fromstr,
+bool System::resource::Resource_Unicode::ConvertUnicodeToGB(const TCollection_ExtendedString& fromstr,
                                           Standard_PCharacter&              tostr,
                                           const int                         maxsize)
 {
@@ -518,7 +518,7 @@ bool Resource_Unicode::ConvertUnicodeToGB(const TCollection_ExtendedString& from
   return true;
 }
 
-bool Resource_Unicode::ConvertUnicodeToANSI(const TCollection_ExtendedString& fromstr,
+bool System::resource::Resource_Unicode::ConvertUnicodeToANSI(const TCollection_ExtendedString& fromstr,
                                             Standard_PCharacter&              tostr,
                                             const int                         maxsize)
 {
@@ -568,7 +568,7 @@ static Resource_FormatType& Resource_Current_Format()
   if (!AlreadyRead)
   {
     AlreadyRead                       = true;
-    occ::handle<Resource_Manager> mgr = new Resource_Manager("CharSet");
+    occ::handle<System::resource::Resource_Manager> mgr = new System::resource::Resource_Manager("CharSet");
     if (mgr->Find("FormatType"))
     {
       TCollection_AsciiString form = mgr->Value("FormatType");
@@ -597,24 +597,24 @@ static Resource_FormatType& Resource_Current_Format()
   return theformat;
 }
 
-void Resource_Unicode::SetFormat(const Resource_FormatType typecode)
+void System::resource::Resource_Unicode::SetFormat(const Resource_FormatType typecode)
 {
   AlreadyRead               = true;
   Resource_Current_Format() = typecode;
 }
 
-Resource_FormatType Resource_Unicode::GetFormat()
+Resource_FormatType System::resource::Resource_Unicode::GetFormat()
 {
   return Resource_Current_Format();
 }
 
-void Resource_Unicode::ReadFormat()
+void System::resource::Resource_Unicode::ReadFormat()
 {
   AlreadyRead = false;
-  Resource_Unicode::GetFormat();
+  System::resource::Resource_Unicode::GetFormat();
 }
 
-void Resource_Unicode::ConvertFormatToUnicode(const Resource_FormatType   theFormat,
+void System::resource::Resource_Unicode::ConvertFormatToUnicode(const Resource_FormatType   theFormat,
                                               const char*                 theFromStr,
                                               TCollection_ExtendedString& theToStr)
 {
@@ -700,7 +700,7 @@ void Resource_Unicode::ConvertFormatToUnicode(const Resource_FormatType   theFor
   }
 }
 
-bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         theFormat,
+bool System::resource::Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         theFormat,
                                               const TCollection_ExtendedString& theFromStr,
                                               Standard_PCharacter&              theToStr,
                                               const int                         theMaxSize)
@@ -796,7 +796,7 @@ bool Resource_Unicode::ConvertUnicodeToFormat(const Resource_FormatType         
     case Resource_FormatType_GBK:
     case Resource_FormatType_Big5:
     {
-      throw Standard_NotImplemented("Resource_Unicode::ConvertUnicodeToFormat - convert from GBK "
+      throw Standard_NotImplemented("System::resource::Resource_Unicode::ConvertUnicodeToFormat - convert from GBK "
                                     "and Big5 to Unocode is not implemented");
     }
   }

@@ -241,7 +241,7 @@ static int BUC60811(Draw_Interpretor& di, int argc, const char** argv)
   array1.SetValue(3, 2, gp_Pnt(200, 300, 0));
   array1.SetValue(3, 3, gp_Pnt(400, 300, 0));
   BZ1 = new Geom_BezierSurface(array1);
-  BRepBuilderAPI_MakeFace bzf1(BZ1, Precision::Confusion());
+  BRepBuilderAPI_MakeFace bzf1(BZ1, math::precision::Precision::Confusion());
   TopoDS_Face             F1 = bzf1.Face();
   ais1                       = new AIS_Shape(F1);
   DBRep::Set("F1", F1);
@@ -288,7 +288,7 @@ static int BUC60811(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Geom_OffsetSurface> offsurf;
   offsurf = new Geom_OffsetSurface(BZ1, -100);
-  BRepBuilderAPI_MakeFace bzf2(offsurf, Precision::Confusion());
+  BRepBuilderAPI_MakeFace bzf2(offsurf, math::precision::Precision::Confusion());
   const TopoDS_Face&      F2    = bzf2.Face();
   occ::handle<AIS_Shape>  ais22 = new AIS_Shape(F2);
   aContext->Display(ais22, false);
@@ -374,13 +374,13 @@ static int BUC60856(Draw_Interpretor& di, int, const char** argv)
   double                                      R1 = 8, R2 = 16;
   gp_Pnt                                      P1(0, 0, 20), P2(0, 0, 45);
   occ::handle<Geom_RectangularTrimmedSurface> S = GC_MakeTrimmedCone(P1, P2, R1, R2).Value();
-  TopoDS_Shape           myshape = BRepBuilderAPI_MakeFace(S, Precision::Confusion()).Shape();
+  TopoDS_Shape           myshape = BRepBuilderAPI_MakeFace(S, math::precision::Precision::Confusion()).Shape();
   occ::handle<AIS_Shape> ais1    = new AIS_Shape(myshape);
   aContext->Display(ais1, false);
   aContext->SetColor(ais1, Quantity_NOC_BLUE1, false);
 
   occ::handle<Geom_RectangularTrimmedSurface> S2 = GC_MakeTrimmedCone(P1, P2, R1, 0).Value();
-  TopoDS_Shape           myshape2 = BRepBuilderAPI_MakeFace(S2, Precision::Confusion()).Shape();
+  TopoDS_Shape           myshape2 = BRepBuilderAPI_MakeFace(S2, math::precision::Precision::Confusion()).Shape();
   occ::handle<AIS_Shape> ais2     = new AIS_Shape(myshape2);
   aContext->Display(ais2, false);
   aContext->SetColor(ais2, Quantity_NOC_RED, false);

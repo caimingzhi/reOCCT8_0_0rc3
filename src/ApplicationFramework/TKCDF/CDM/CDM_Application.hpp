@@ -10,17 +10,23 @@
 
 class CDM_MetaData;
 class CDM_Document;
+namespace System { namespace resource {
 class Resource_Manager;
+}} // namespace System::resource
+
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class PCDM_ReaderFilter;
 
 class CDM_Application : public Standard_Transient
 {
 
 public:
-  Standard_EXPORT virtual occ::handle<Resource_Manager> Resources() = 0;
+  Standard_EXPORT virtual occ::handle<System::resource::Resource_Manager> Resources() = 0;
 
-  Standard_EXPORT virtual occ::handle<Message_Messenger> MessageDriver();
+  Standard_EXPORT virtual occ::handle<System::log::Message_Messenger> MessageDriver();
 
   Standard_EXPORT virtual void BeginOfUpdate(const occ::handle<CDM_Document>& aDocument);
 
@@ -59,10 +65,10 @@ private:
     const occ::handle<CDM_MetaData>&      aMetaData,
     const bool                            UseStorageConfiguration,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange()) = 0;
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange()) = 0;
 
   Standard_EXPORT virtual int DocumentVersion(const occ::handle<CDM_MetaData>& aMetaData) = 0;
 
-  occ::handle<Message_Messenger>                                             myMessenger;
+  occ::handle<System::log::Message_Messenger>                                             myMessenger;
   NCollection_DataMap<TCollection_ExtendedString, occ::handle<CDM_MetaData>> myMetaDataLookUpTable;
 };

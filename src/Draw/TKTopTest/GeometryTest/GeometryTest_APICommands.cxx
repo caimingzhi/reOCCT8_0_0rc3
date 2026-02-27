@@ -39,7 +39,7 @@ static void showProjSolution(Draw_Interpretor& di,
   Sprintf(name, "%s%d", "ext_", i);
   di << name << " ";
   char* temp = name;
-  if (P.Distance(P1) > Precision::Confusion())
+  if (P.Distance(P1) > math::precision::Precision::Confusion())
   {
     occ::handle<Geom_Line>         L  = new Geom_Line(P, gp_Vec(P, P1));
     occ::handle<Geom_TrimmedCurve> CT = new Geom_TrimmedCurve(L, 0., P.Distance(P1));
@@ -63,7 +63,7 @@ static int proj(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 5)
   {
-    Message::SendFail() << " Use proj curve/surf x y z [{extrema algo: g(grad)/t(tree)}|{u v}]";
+    System::log::Message::SendFail() << " Use proj curve/surf x y z [{extrema algo: g(grad)/t(tree)}|{u v}]";
     return 1;
   }
 
@@ -107,7 +107,7 @@ static int proj(Draw_Interpretor& di, int n, const char** a)
     {
       const gp_XY            aP2d(Draw::Atof(a[5]), Draw::Atof(a[6]));
       GeomAdaptor_Surface    aGAS(GS);
-      Extrema_GenLocateExtPS aProjector(aGAS, Precision::PConfusion(), Precision::PConfusion());
+      Extrema_GenLocateExtPS aProjector(aGAS, math::precision::Precision::PConfusion(), math::precision::Precision::PConfusion());
       aProjector.Perform(P, aP2d.X(), aP2d.Y(), false);
       if (!aProjector.IsDone())
       {
@@ -282,7 +282,7 @@ static int surfapp(Draw_Interpretor& di, int n, const char** a)
       for (j = 1; j <= Nv; j++)
       {
         double d = Points(1, j).Distance(Points(Nu, j));
-        if (d <= Precision::Confusion())
+        if (d <= math::precision::Precision::Confusion())
         {
           RemoveLast = true;
           break;
@@ -395,7 +395,7 @@ static int surfint(Draw_Interpretor& di, int n, const char** a)
     for (j = 1; j <= Nv; j++)
     {
       double d = Points(1, j).Distance(Points(Nu, j));
-      if (d <= Precision::Confusion())
+      if (d <= math::precision::Precision::Confusion())
       {
         RemoveLast = true;
         break;

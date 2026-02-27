@@ -53,7 +53,7 @@ public:
 
   void SetAngularTolerance(const double theValue)
   {
-    myAngTol = (theValue < Precision::Angular() ? Precision::Angular() : theValue);
+    myAngTol = (theValue < math::precision::Precision::Angular() ? math::precision::Precision::Angular() : theValue);
   }
 
   Standard_EXPORT void Build();

@@ -9,9 +9,16 @@
 
 #include <mutex>
 
+namespace System { namespace log {
 class Message_CompositeAlerts;
-class Message_Messenger;
+}} // namespace System::log
 
+namespace System { namespace log {
+class Message_Messenger;
+}} // namespace System::log
+
+
+namespace System { namespace log {
 class Message_Report : public Standard_Transient
 {
 public:
@@ -104,3 +111,5 @@ protected:
   int  myLimit;
   bool myIsActiveInMessenger;
 };
+}} // namespace System::log
+

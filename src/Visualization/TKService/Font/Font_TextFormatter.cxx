@@ -296,7 +296,7 @@ bool Font_TextFormatter::GlyphBoundingBox(const int theIndex, Font_Rect& theBndB
   }
 
   const NCollection_Vec2<float>& aNextLeftCorner = BottomLeft(theIndex + 1);
-  if (std::abs(aLeftCorner.y() - aNextLeftCorner.y()) < Precision::Confusion())
+  if (std::abs(aLeftCorner.y() - aNextLeftCorner.y()) < math::precision::Precision::Confusion())
   {
     theBndBox.Right = aNextLeftCorner.x();
   }
@@ -329,7 +329,7 @@ bool Font_TextFormatter::IsLFSymbol(const int theIndex) const
     return false;
   }
 
-  return std::abs(aBndBox.Right - aBndBox.Left) < Precision::Confusion();
+  return std::abs(aBndBox.Right - aBndBox.Left) < math::precision::Precision::Confusion();
 }
 
 float Font_TextFormatter::FirstPosition() const

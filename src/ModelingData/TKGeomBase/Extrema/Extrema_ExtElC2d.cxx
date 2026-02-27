@@ -35,7 +35,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Lin2d& C1, const gp_Lin2d& C2, const
 
   gp_Vec2d D1(C1.Direction());
   gp_Vec2d D2(C2.Direction());
-  if (D1.IsParallel(D2, Precision::Angular()))
+  if (D1.IsParallel(D2, math::precision::Precision::Angular()))
   {
     myIsPar     = true;
     mySqDist[0] = C2.SquareDistance(C1.Location());
@@ -253,7 +253,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Circ2d& C2)
 
   gp_Vec2d     DO1O2(O1, O2);
   const double aSqDCenters = DO1O2.SquareMagnitude();
-  if (aSqDCenters < Precision::SquareConfusion())
+  if (aSqDCenters < math::precision::Precision::SquareConfusion())
   {
     myIsPar          = true;
     myNbExt          = 1;
@@ -306,7 +306,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Elips2d& C2)
 
   int i, j;
 
-  Extrema_ExtPElC2d ExtElip(C1.Location(), C2, Precision::Confusion(), 0.0, 2.0 * M_PI);
+  Extrema_ExtPElC2d ExtElip(C1.Location(), C2, math::precision::Precision::Confusion(), 0.0, 2.0 * M_PI);
 
   if (ExtElip.IsDone())
   {
@@ -314,7 +314,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Elips2d& C2)
     {
       Extrema_ExtPElC2d ExtCirc(ExtElip.Point(i).Value(),
                                 C1,
-                                Precision::Confusion(),
+                                math::precision::Precision::Confusion(),
                                 0.0,
                                 2.0 * M_PI);
       if (ExtCirc.IsDone())
@@ -344,7 +344,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Hypr2d& C2)
 
   int i, j;
 
-  Extrema_ExtPElC2d ExtHyp(C1.Location(), C2, Precision::Confusion(), RealFirst(), RealLast());
+  Extrema_ExtPElC2d ExtHyp(C1.Location(), C2, math::precision::Precision::Confusion(), RealFirst(), RealLast());
 
   if (ExtHyp.IsDone())
   {
@@ -352,7 +352,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Hypr2d& C2)
     {
       Extrema_ExtPElC2d ExtCirc(ExtHyp.Point(i).Value(),
                                 C1,
-                                Precision::Confusion(),
+                                math::precision::Precision::Confusion(),
                                 0.0,
                                 2.0 * M_PI);
       if (ExtCirc.IsDone())
@@ -382,7 +382,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Parab2d& C2)
 
   int i, j;
 
-  Extrema_ExtPElC2d ExtParab(C1.Location(), C2, Precision::Confusion(), RealFirst(), RealLast());
+  Extrema_ExtPElC2d ExtParab(C1.Location(), C2, math::precision::Precision::Confusion(), RealFirst(), RealLast());
 
   if (ExtParab.IsDone())
   {
@@ -390,7 +390,7 @@ Extrema_ExtElC2d::Extrema_ExtElC2d(const gp_Circ2d& C1, const gp_Parab2d& C2)
     {
       Extrema_ExtPElC2d ExtCirc(ExtParab.Point(i).Value(),
                                 C1,
-                                Precision::Confusion(),
+                                math::precision::Precision::Confusion(),
                                 0.0,
                                 2.0 * M_PI);
       if (ExtCirc.IsDone())

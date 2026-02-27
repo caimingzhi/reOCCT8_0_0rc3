@@ -22,7 +22,7 @@ TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
   const TopoDS_Shell&                        aShell,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   done = false;
   if (aShell.Closed())
@@ -69,7 +69,7 @@ TopoDSToStep_MakeFacetedBrep::TopoDSToStep_MakeFacetedBrep(
   const TopoDS_Solid&                        aSolid,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   done = false;
 

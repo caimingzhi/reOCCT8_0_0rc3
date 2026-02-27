@@ -27,7 +27,7 @@ public:
   Standard_EXPORT virtual void Init(const TopoDS_Solid& solid);
 
   Standard_EXPORT virtual bool Perform(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT TopoDS_Solid SolidFromShell(const TopoDS_Shell& shell);
 

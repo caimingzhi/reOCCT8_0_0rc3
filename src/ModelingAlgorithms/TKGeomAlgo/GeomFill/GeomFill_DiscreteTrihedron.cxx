@@ -14,7 +14,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomFill_DiscreteTrihedron, GeomFill_TrihedronLaw)
 
-static const double TolConf = Precision::Confusion();
+static const double TolConf = math::precision::Precision::Confusion();
 
 GeomFill_DiscreteTrihedron::GeomFill_DiscreteTrihedron()
     : myUseFrenet(false)
@@ -96,7 +96,7 @@ void GeomFill_DiscreteTrihedron::Init()
     if (norm < TolConf)
     {
       double subdelta = (myKnots->Value(i + 1) - myKnots->Value(i)) / NbSamples;
-      if (subdelta < Precision::PConfusion())
+      if (subdelta < math::precision::Precision::PConfusion())
         subdelta = myKnots->Value(i + 1) - myKnots->Value(i);
       SubPnt = myTrimmed->Value(Param + subdelta);
       Tangent.SetXYZ(SubPnt.XYZ() - Pnt.XYZ());
@@ -154,7 +154,7 @@ bool GeomFill_DiscreteTrihedron::D0(const double Param,
   {
 
     int              Index  = -1;
-    constexpr double TolPar = Precision::PConfusion();
+    constexpr double TolPar = math::precision::Precision::PConfusion();
 
     int    NbSamples = 10;
     gp_Pnt Origin(0., 0., 0.);
@@ -190,7 +190,7 @@ bool GeomFill_DiscreteTrihedron::D0(const double Param,
       if (norm < TolConf)
       {
         double subdelta = (myKnots->Value(Index + 1) - Param) / NbSamples;
-        if (subdelta < Precision::PConfusion())
+        if (subdelta < math::precision::Precision::PConfusion())
           subdelta = myKnots->Value(Index + 1) - Param;
         gp_Pnt SubPnt = myTrimmed->Value(Param + subdelta);
         Tangent.SetXYZ(SubPnt.XYZ() - myPoint.XYZ());

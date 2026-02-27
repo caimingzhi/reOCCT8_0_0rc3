@@ -17,7 +17,10 @@ typedef FILE* FSD_BStream;
 
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
+namespace app { namespace storage {
 class Storage_HeaderData;
+}} // namespace app::storage
+
 
 #ifndef OCCT_BINARY_FILE_DO_INVERSE
   #if defined(SOLARIS) || defined(IRIX)
@@ -28,10 +31,11 @@ class Storage_HeaderData;
   #endif
 #endif
 
-class FSD_BinaryFile : public Storage_BaseDriver
+namespace app { namespace file { namespace stream {
+class FSD_BinaryFile : public app::storage::Storage_BaseDriver
 {
 public:
-  DEFINE_STANDARD_RTTIEXT(FSD_BinaryFile, Storage_BaseDriver)
+  DEFINE_STANDARD_RTTIEXT(FSD_BinaryFile, app::storage::Storage_BaseDriver)
 
 public:
   Standard_EXPORT FSD_BinaryFile();
@@ -88,7 +92,7 @@ public:
                                 NCollection_Sequence<TCollection_AsciiString>& userInfo) override;
 
   Standard_EXPORT void ReadCompleteInfo(Standard_IStream&          theIStream,
-                                        occ::handle<Storage_Data>& theData) override;
+                                        occ::handle<app::storage::Storage_Data>& theData) override;
 
   Standard_EXPORT Storage_Error EndReadInfoSection() override;
 
@@ -222,41 +226,41 @@ public:
 
   Standard_EXPORT void SkipObject() override;
 
-  Standard_EXPORT Storage_BaseDriver& PutReference(const int aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutReference(const int aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutCharacter(const char aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutCharacter(const char aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutExtCharacter(const char16_t aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutExtCharacter(const char16_t aValue) override;
 
   Standard_EXPORT static int PutInteger(Standard_OStream& theOStream,
                                         const int         aValue,
                                         const bool        theOnlyCount = false);
 
-  Standard_EXPORT Storage_BaseDriver& PutInteger(const int aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutInteger(const int aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutBoolean(const bool aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutBoolean(const bool aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutReal(const double aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutReal(const double aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& PutShortReal(const float aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& PutShortReal(const float aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetReference(int& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetReference(int& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetCharacter(char& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetCharacter(char& aValue) override;
 
   Standard_EXPORT static void GetReference(Standard_IStream& theIStream, int& aValue);
 
-  Standard_EXPORT Storage_BaseDriver& GetExtCharacter(char16_t& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetExtCharacter(char16_t& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetInteger(int& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetInteger(int& aValue) override;
 
   Standard_EXPORT static void GetInteger(Standard_IStream& theIStream, int& aValue);
 
-  Standard_EXPORT Storage_BaseDriver& GetBoolean(bool& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetBoolean(bool& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetReal(double& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetReal(double& aValue) override;
 
-  Standard_EXPORT Storage_BaseDriver& GetShortReal(float& aValue) override;
+  Standard_EXPORT app::storage::Storage_BaseDriver& GetShortReal(float& aValue) override;
 
   Standard_EXPORT Storage_Error Close() override;
 
@@ -288,7 +292,7 @@ public:
                                          FSD_FileHeader&   theFileHeader);
 
   Standard_EXPORT static void ReadHeaderData(Standard_IStream&                      theIStream,
-                                             const occ::handle<Storage_HeaderData>& theHeaderData);
+                                             const occ::handle<app::storage::Storage_HeaderData>& theHeaderData);
 
   Standard_EXPORT static void ReadString(Standard_IStream&        theIStream,
                                          TCollection_AsciiString& buffer);
@@ -330,3 +334,5 @@ private:
   FSD_BStream    myStream;
   FSD_FileHeader myHeader{};
 };
+}}} // namespace app::file::stream
+

@@ -289,7 +289,7 @@ void BOPDS_DS::Init(const double theFuzz)
     i1 = i2 + 1;
   }
 
-  aTolAdd          = std::max(theFuzz, Precision::Confusion()) * 0.5;
+  aTolAdd          = std::max(theFuzz, math::precision::Precision::Confusion()) * 0.5;
   myNbSourceShapes = NbShapes();
 
   for (j = 0; j < myNbSourceShapes; ++j)
@@ -341,8 +341,8 @@ void BOPDS_DS::Init(const double theFuzz)
         aEx.Orientation(TopAbs_FORWARD);
 
         aC3D  = BRep_Tool::Curve(aEx, aT1, aT2);
-        bInf1 = Precision::IsNegativeInfinite(aT1);
-        bInf2 = Precision::IsPositiveInfinite(aT2);
+        bInf1 = math::precision::Precision::IsNegativeInfinite(aT1);
+        bInf2 = math::precision::Precision::IsPositiveInfinite(aT2);
 
         if (bInf1)
         {
@@ -1683,7 +1683,7 @@ bool BOPDS_DS::CheckCoincidence(const occ::handle<BOPDS_PaveBlock>& aPB1,
 
     aTol = BRep_Tool::MaxTolerance(aE1, TopAbs_VERTEX);
     aTol = aTol + BRep_Tool::MaxTolerance(aE2, TopAbs_VERTEX)
-           + std::max(theFuzz, Precision::Confusion());
+           + std::max(theFuzz, math::precision::Precision::Confusion());
     if (aD < aTol)
     {
       aT2x = aPPC.LowerDistanceParameter();
@@ -2027,7 +2027,7 @@ bool BOPDS_DS::IsValidShrunkData(const occ::handle<BOPDS_PaveBlock>& thePB)
   for (int i = 0; i < 2; ++i)
   {
     const TopoDS_Vertex& aV   = TopoDS::Vertex(Shape(nV[i]));
-    double               aTol = BRep_Tool::Tolerance(aV) + Precision::Confusion();
+    double               aTol = BRep_Tool::Tolerance(aV) + math::precision::Precision::Confusion();
 
     gp_Pnt aP = BRep_Tool::Pnt(aV);
 

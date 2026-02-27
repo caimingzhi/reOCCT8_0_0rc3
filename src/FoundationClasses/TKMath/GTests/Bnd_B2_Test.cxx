@@ -27,10 +27,10 @@ TEST(Bnd_B2dTest, ConstructorWithCenterAndHSize)
   gp_XY aMin = aBox.CornerMin();
   gp_XY aMax = aBox.CornerMax();
 
-  EXPECT_NEAR(aMin.X(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 13.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 13.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, Clear)
@@ -51,18 +51,18 @@ TEST(Bnd_B2dTest, AddPoint)
 
   gp_XY aMin = aBox.CornerMin();
   gp_XY aMax = aBox.CornerMax();
-  EXPECT_NEAR(aMin.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 2.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 2.0, math::precision::Precision::Confusion());
 
   aBox.Add(gp_XY(4.0, 5.0));
   aMin = aBox.CornerMin();
   aMax = aBox.CornerMax();
-  EXPECT_NEAR(aMin.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 5.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, AddPnt2d)
@@ -72,8 +72,8 @@ TEST(Bnd_B2dTest, AddPnt2d)
 
   EXPECT_FALSE(aBox.IsVoid());
   gp_XY aMin = aBox.CornerMin();
-  EXPECT_NEAR(aMin.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 2.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, AddBox)
@@ -85,10 +85,10 @@ TEST(Bnd_B2dTest, AddBox)
 
   gp_XY aMin = aBox1.CornerMin();
   gp_XY aMax = aBox1.CornerMax();
-  EXPECT_NEAR(aMin.X(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 4.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, SquareExtent)
@@ -96,7 +96,7 @@ TEST(Bnd_B2dTest, SquareExtent)
   Bnd_B2d aBox(gp_XY(0.0, 0.0), gp_XY(3.0, 4.0));
   double  aSqExtent = aBox.SquareExtent();
 
-  EXPECT_NEAR(aSqExtent, 100.0, Precision::Confusion());
+  EXPECT_NEAR(aSqExtent, 100.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, Enlarge)
@@ -106,10 +106,10 @@ TEST(Bnd_B2dTest, Enlarge)
 
   gp_XY aMin = aBox.CornerMin();
   gp_XY aMax = aBox.CornerMax();
-  EXPECT_NEAR(aMin.X(), -1.5, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), -1.5, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 1.5, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 1.5, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), -1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), -1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 1.5, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, Limit)
@@ -123,10 +123,10 @@ TEST(Bnd_B2dTest, Limit)
 
   gp_XY aMin = aBox1.CornerMin();
   gp_XY aMax = aBox1.CornerMax();
-  EXPECT_NEAR(aMin.X(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 5.0, math::precision::Precision::Confusion());
 
   Bnd_B2d aBox3(gp_XY(0.0, 0.0), gp_XY(1.0, 1.0));
   Bnd_B2d aBox4(gp_XY(10.0, 10.0), gp_XY(1.0, 1.0));
@@ -204,10 +204,10 @@ TEST(Bnd_B2dTest, Transformed)
   gp_XY aMin = aTransformedBox.CornerMin();
   gp_XY aMax = aTransformedBox.CornerMax();
 
-  EXPECT_NEAR(aMin.X(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 5.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2dTest, SetCenterAndHSize)
@@ -220,10 +220,10 @@ TEST(Bnd_B2dTest, SetCenterAndHSize)
   gp_XY aMin = aBox.CornerMin();
   gp_XY aMax = aBox.CornerMax();
 
-  EXPECT_NEAR(aMin.X(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 13.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 13.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B2fTest, FloatPrecision)

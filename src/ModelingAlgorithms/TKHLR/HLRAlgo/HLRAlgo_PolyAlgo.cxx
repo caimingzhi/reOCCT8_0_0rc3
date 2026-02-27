@@ -42,7 +42,7 @@ void HLRAlgo_PolyAlgo::Update()
   double           xTrianMax, yTrianMax, zTrianMax;
   double           xSegmnMin, ySegmnMin, zSegmnMin;
   double           xSegmnMax, ySegmnMax, zSegmnMax;
-  constexpr double Big = Precision::Infinite();
+  constexpr double Big = math::precision::Precision::Infinite();
   Bnd_Box          aBox;
 
   myNbrShell = myHShell.Size();

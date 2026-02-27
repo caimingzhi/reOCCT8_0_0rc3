@@ -29,7 +29,7 @@
 
 BRepOffset_MakeSimpleOffset::BRepOffset_MakeSimpleOffset()
     : myOffsetValue(0.),
-      myTolerance(Precision::Confusion()),
+      myTolerance(math::precision::Precision::Confusion()),
       myIsBuildSolid(false),
       myMaxAngle(0.0),
       myError(BRepOffsetSimple_OK),
@@ -42,7 +42,7 @@ BRepOffset_MakeSimpleOffset::BRepOffset_MakeSimpleOffset(const TopoDS_Shape& the
                                                          const double        theOffsetValue)
     : myInputShape(theInputShape),
       myOffsetValue(theOffsetValue),
-      myTolerance(Precision::Confusion()),
+      myTolerance(math::precision::Precision::Confusion()),
       myIsBuildSolid(false),
       myMaxAngle(0.0),
       myError(BRepOffsetSimple_OK),
@@ -498,7 +498,7 @@ TopoDS_Face BRepOffset_MakeSimpleOffset::BuildWallFace(const TopoDS_Edge& theOri
     GeomFill_Generator ThrusecGenerator;
     ThrusecGenerator.AddCurve(TrEdgeCurve);
     ThrusecGenerator.AddCurve(TrOffsetCurve);
-    ThrusecGenerator.Perform(Precision::PConfusion());
+    ThrusecGenerator.Perform(math::precision::Precision::PConfusion());
     occ::handle<Geom_Surface> theSurf = ThrusecGenerator.Surface();
 
     double Uf, Ul, Vf, Vl;
@@ -506,18 +506,18 @@ TopoDS_Face BRepOffset_MakeSimpleOffset::BuildWallFace(const TopoDS_Edge& theOri
     TopLoc_Location          Loc;
     occ::handle<Geom2d_Line> EdgeLine2d, OELine2d, aLine2d, aLine2d2;
     EdgeLine2d = new Geom2d_Line(gp_Pnt2d(0., Vf), gp_Dir2d(gp_Dir2d::D::X));
-    aBB.UpdateEdge(theOrigEdge, EdgeLine2d, theSurf, Loc, Precision::Confusion());
+    aBB.UpdateEdge(theOrigEdge, EdgeLine2d, theSurf, Loc, math::precision::Precision::Confusion());
     OELine2d = new Geom2d_Line(gp_Pnt2d(0., Vl), gp_Dir2d(gp_Dir2d::D::X));
-    aBB.UpdateEdge(aNewEdge, OELine2d, theSurf, Loc, Precision::Confusion());
+    aBB.UpdateEdge(aNewEdge, OELine2d, theSurf, Loc, math::precision::Precision::Confusion());
     double UonV1 = (ToReverse) ? Ul : Uf;
     double UonV2 = (ToReverse) ? Uf : Ul;
     aLine2d      = new Geom2d_Line(gp_Pnt2d(UonV2, 0.), gp_Dir2d(gp_Dir2d::D::Y));
     aLine2d2     = new Geom2d_Line(gp_Pnt2d(UonV1, 0.), gp_Dir2d(gp_Dir2d::D::Y));
     if (aWall1.IsSame(aWall2))
     {
-      aBB.UpdateEdge(aWall1, aLine2d, aLine2d2, theSurf, Loc, Precision::Confusion());
+      aBB.UpdateEdge(aWall1, aLine2d, aLine2d2, theSurf, Loc, math::precision::Precision::Confusion());
       occ::handle<Geom_Curve> BSplC34 = theSurf->UIso(Uf);
-      aBB.UpdateEdge(aWall1, BSplC34, Precision::Confusion());
+      aBB.UpdateEdge(aWall1, BSplC34, math::precision::Precision::Confusion());
       aBB.Range(aWall1, Vf, Vl);
     }
     else
@@ -526,15 +526,15 @@ TopoDS_Face BRepOffset_MakeSimpleOffset::BuildWallFace(const TopoDS_Edge& theOri
       aBB.SameRange(aWall1, false);
       aBB.SameParameter(aWall2, false);
       aBB.SameRange(aWall2, false);
-      aBB.UpdateEdge(aWall1, aLine2d, theSurf, Loc, Precision::Confusion());
+      aBB.UpdateEdge(aWall1, aLine2d, theSurf, Loc, math::precision::Precision::Confusion());
       aBB.Range(aWall1, theSurf, Loc, Vf, Vl);
-      aBB.UpdateEdge(aWall2, aLine2d2, theSurf, Loc, Precision::Confusion());
+      aBB.UpdateEdge(aWall2, aLine2d2, theSurf, Loc, math::precision::Precision::Confusion());
       aBB.Range(aWall2, theSurf, Loc, Vf, Vl);
       occ::handle<Geom_Curve> BSplC3 = theSurf->UIso(UonV2);
-      aBB.UpdateEdge(aWall1, BSplC3, Precision::Confusion());
+      aBB.UpdateEdge(aWall1, BSplC3, math::precision::Precision::Confusion());
       aBB.Range(aWall1, Vf, Vl, true);
       occ::handle<Geom_Curve> BSplC4 = theSurf->UIso(UonV1);
-      aBB.UpdateEdge(aWall2, BSplC4, Precision::Confusion());
+      aBB.UpdateEdge(aWall2, BSplC4, math::precision::Precision::Confusion());
       aBB.Range(aWall2, Vf, Vl, true);
     }
 

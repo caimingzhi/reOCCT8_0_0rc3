@@ -9,7 +9,7 @@
 ShapeUpgrade_ShapeDivideArea::ShapeUpgrade_ShapeDivideArea()
 
 {
-  myMaxArea  = Precision::Infinite();
+  myMaxArea  = math::precision::Precision::Infinite();
   myNbParts  = 0;
   myUnbSplit = myVnbSplit = -1;
   myIsSplittingByNumber   = false;
@@ -19,7 +19,7 @@ ShapeUpgrade_ShapeDivideArea::ShapeUpgrade_ShapeDivideArea(const TopoDS_Shape& S
     : ShapeUpgrade_ShapeDivide(S)
 
 {
-  myMaxArea  = Precision::Infinite();
+  myMaxArea  = math::precision::Precision::Infinite();
   myNbParts  = 0;
   myUnbSplit = myVnbSplit = -1;
   myIsSplittingByNumber   = false;

@@ -28,14 +28,14 @@ public:
     const occ::handle<Transfer_FinderProcess>& FP,
     const int                                  theTessellatedGeomParam,
     const StepData_Factors&                    theLocalFactors = StepData_Factors(),
-    const Message_ProgressRange&               theProgress     = Message_ProgressRange());
+    const System::log::Message_ProgressRange&               theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Init(const TopoDS_Shape&                        S,
                             TopoDSToStep_Tool&                         T,
                             const occ::handle<Transfer_FinderProcess>& FP,
                             const int                                  theTessellatedGeomParam,
                             const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                            const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                            const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
   Standard_EXPORT TopoDSToStep_BuilderError Error() const;
 

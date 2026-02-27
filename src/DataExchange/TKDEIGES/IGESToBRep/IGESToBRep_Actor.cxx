@@ -102,7 +102,7 @@ bool IGESToBRep_Actor::Recognize(const occ::handle<Standard_Transient>& start)
 occ::handle<Transfer_Binder> IGESToBRep_Actor::Transfer(
   const occ::handle<Standard_Transient>&        start,
   const occ::handle<Transfer_TransientProcess>& TP,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
   DeclareAndCast(IGESData_IGESModel, mymodel, themodel);
   DeclareAndCast(IGESData_IGESEntity, ent, start);
@@ -122,7 +122,7 @@ occ::handle<Transfer_Binder> IGESToBRep_Actor::Transfer(
       || (typnum == 408) || (typnum == 308))
   {
 
-    Message_ProgressScope aPS(theProgress, "Transfer stage", 2);
+    System::log::Message_ProgressScope aPS(theProgress, "Transfer stage", 2);
 
     XSAlgo_ShapeProcessor::PrepareForTransfer();
     IGESToBRep_CurveAndSurface CAS;

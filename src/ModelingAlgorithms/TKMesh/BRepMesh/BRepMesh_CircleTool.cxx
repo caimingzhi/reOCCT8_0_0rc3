@@ -6,7 +6,7 @@
 #include <BRepMesh_CircleInspector.hpp>
 
 BRepMesh_CircleTool::BRepMesh_CircleTool(const occ::handle<NCollection_IncAllocator>& theAllocator)
-    : myTolerance(Precision::PConfusion()),
+    : myTolerance(math::precision::Precision::PConfusion()),
       myAllocator(theAllocator),
       myCellFilter(10.0, theAllocator),
       mySelector(myTolerance, 64, theAllocator)
@@ -15,7 +15,7 @@ BRepMesh_CircleTool::BRepMesh_CircleTool(const occ::handle<NCollection_IncAlloca
 
 BRepMesh_CircleTool::BRepMesh_CircleTool(const int theReservedSize,
                                          const occ::handle<NCollection_IncAllocator>& theAllocator)
-    : myTolerance(Precision::PConfusion()),
+    : myTolerance(math::precision::Precision::PConfusion()),
       myAllocator(theAllocator),
       myCellFilter(10.0, theAllocator),
       mySelector(myTolerance, std::max(theReservedSize, 64), theAllocator)
@@ -51,7 +51,7 @@ bool BRepMesh_CircleTool::MakeCircle(const gp_XY& thePoint1,
                                      gp_XY&       theLocation,
                                      double&      theRadius)
 {
-  static const double aPrecision   = Precision::PConfusion();
+  static const double aPrecision   = math::precision::Precision::PConfusion();
   static const double aSqPrecision = aPrecision * aPrecision;
 
   gp_XY aLink1(

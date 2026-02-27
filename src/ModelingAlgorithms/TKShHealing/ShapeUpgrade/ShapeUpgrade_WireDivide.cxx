@@ -64,7 +64,7 @@ void ShapeUpgrade_WireDivide::Init(const TopoDS_Wire& W, const occ::handle<Geom_
 {
 
   myWire = W;
-  BRepLib_MakeFace mkf(S, Precision::Confusion());
+  BRepLib_MakeFace mkf(S, math::precision::Precision::Confusion());
   myFace   = mkf.Face();
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
 }
@@ -88,7 +88,7 @@ void ShapeUpgrade_WireDivide::SetFace(const TopoDS_Face& F)
 
 void ShapeUpgrade_WireDivide::SetSurface(const occ::handle<Geom_Surface>& S)
 {
-  BRepLib_MakeFace mkf(S, Precision::Confusion());
+  BRepLib_MakeFace mkf(S, math::precision::Precision::Confusion());
   myFace = mkf.Face();
 }
 
@@ -96,7 +96,7 @@ void ShapeUpgrade_WireDivide::SetSurface(const occ::handle<Geom_Surface>& S,
                                          const TopLoc_Location&           L)
 {
   BRep_Builder B;
-  B.MakeFace(myFace, S, L, Precision::Confusion());
+  B.MakeFace(myFace, S, L, math::precision::Precision::Confusion());
 }
 
 static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>& orig3d,
@@ -104,7 +104,7 @@ static void CorrectSplitValues(const occ::handle<NCollection_HSequence<double>>&
                                const occ::handle<NCollection_HSequence<double>>& new2d,
                                const occ::handle<NCollection_HSequence<double>>& new3d)
 {
-  constexpr double         preci = Precision::PConfusion();
+  constexpr double         preci = math::precision::Precision::PConfusion();
   int                      len3d = orig3d->Length();
   int                      len2d = orig2d->Length();
   NCollection_Array1<bool> fixNew2d(1, len3d);
@@ -683,11 +683,11 @@ void ShapeUpgrade_WireDivide::Perform()
           TopoDS_Vertex aNMVer =
             ShapeAnalysis_TransferParametersProj::CopyNMVertex(aVold, newEdge, E);
           Context()->Replace(aVold, aNMVer);
-          if (fabs(apar - afpar) <= Precision::PConfusion())
+          if (fabs(apar - afpar) <= math::precision::Precision::PConfusion())
           {
             Context()->Replace(aNMVer, V1);
           }
-          else if (fabs(apar - alpar) <= Precision::PConfusion())
+          else if (fabs(apar - alpar) <= math::precision::Precision::PConfusion())
           {
             Context()->Replace(aNMVer, V);
           }

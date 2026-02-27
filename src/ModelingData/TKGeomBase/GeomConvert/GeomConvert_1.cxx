@@ -323,8 +323,8 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
   double VFirst = std::min(V1, V2);
   double VLast  = std::max(V1, V2);
 
-  if (Precision::IsNegativeInfinite(UFirst) || Precision::IsPositiveInfinite(ULast)
-      || Precision::IsNegativeInfinite(VFirst) || Precision::IsPositiveInfinite(VLast))
+  if (math::precision::Precision::IsNegativeInfinite(UFirst) || math::precision::Precision::IsPositiveInfinite(ULast)
+      || math::precision::Precision::IsNegativeInfinite(VFirst) || math::precision::Precision::IsPositiveInfinite(VLast))
   {
     throw Standard_DomainError("GeomConvert::SurfaceToBSplineSurface() - infinite surface");
   }
@@ -373,7 +373,7 @@ occ::handle<Geom_BSplineSurface> GeomConvert::SurfaceToBSplineSurface(
       return SurfaceToBSplineSurface(aStrim);
     }
 
-    const bool   isUClosed = std::abs((ULast - UFirst) - 2. * M_PI) <= Precision::PConfusion();
+    const bool   isUClosed = std::abs((ULast - UFirst) - 2. * M_PI) <= math::precision::Precision::PConfusion();
     const double eps       = 100. * Epsilon(2. * M_PI);
 
     if (Surf->IsKind(STANDARD_TYPE(Geom_Plane)))

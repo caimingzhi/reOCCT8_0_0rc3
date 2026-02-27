@@ -11,7 +11,10 @@
 class ShapeUpgrade_FaceDivide;
 class ShapeBuild_ReShape;
 class ShapeExtend_BasicMsgRegistrator;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 
 #ifdef Status
   #undef Status
@@ -52,7 +55,7 @@ public:
   Standard_EXPORT occ::handle<ShapeExtend_BasicMsgRegistrator> MsgRegistrator() const;
 
   Standard_EXPORT void SendMsg(const TopoDS_Shape&   shape,
-                               const Message_Msg&    message,
+                               const System::log::Message_Msg&    message,
                                const Message_Gravity gravity = Message_Info) const;
 
   Standard_EXPORT bool Status(const ShapeExtend_Status status) const;
@@ -64,11 +67,11 @@ public:
 protected:
   Standard_EXPORT virtual occ::handle<ShapeUpgrade_FaceDivide> GetSplitFaceTool() const;
 
-  Standard_EXPORT virtual Message_Msg GetFaceMsg() const;
+  Standard_EXPORT virtual System::log::Message_Msg GetFaceMsg() const;
 
-  Standard_EXPORT virtual Message_Msg GetWireMsg() const;
+  Standard_EXPORT virtual System::log::Message_Msg GetWireMsg() const;
 
-  Standard_EXPORT virtual Message_Msg GetEdgeMsg() const;
+  Standard_EXPORT virtual System::log::Message_Msg GetEdgeMsg() const;
 
   occ::handle<ShapeBuild_ReShape>              myContext;
   occ::handle<ShapeExtend_BasicMsgRegistrator> myMsgReg;

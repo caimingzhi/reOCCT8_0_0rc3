@@ -195,7 +195,7 @@ void Geom_RectangularTrimmedSurface::SetTrim(const double U1,
       utrim2 = U2;
       ElCLib::AdjustPeriodic(Udeb,
                              Ufin,
-                             std::min(std::abs(utrim2 - utrim1) / 2, Precision::PConfusion()),
+                             std::min(std::abs(utrim2 - utrim1) / 2, math::precision::Precision::PConfusion()),
                              utrim1,
                              utrim2);
     }
@@ -214,7 +214,7 @@ void Geom_RectangularTrimmedSurface::SetTrim(const double U1,
         utrim2     = U1;
       }
 
-      if ((Udeb - utrim1 > Precision::PConfusion()) || (utrim2 - Ufin > Precision::PConfusion()))
+      if ((Udeb - utrim1 > math::precision::Precision::PConfusion()) || (utrim2 - Ufin > math::precision::Precision::PConfusion()))
         throw Standard_ConstructionError(
           "Geom_RectangularTrimmedSurface::U parameters out of range");
     }
@@ -239,7 +239,7 @@ void Geom_RectangularTrimmedSurface::SetTrim(const double U1,
       vtrim2 = V2;
       ElCLib::AdjustPeriodic(Vdeb,
                              Vfin,
-                             std::min(std::abs(vtrim2 - vtrim1) / 2, Precision::PConfusion()),
+                             std::min(std::abs(vtrim2 - vtrim1) / 2, math::precision::Precision::PConfusion()),
                              vtrim1,
                              vtrim2);
     }
@@ -258,7 +258,7 @@ void Geom_RectangularTrimmedSurface::SetTrim(const double U1,
         vtrim2     = V1;
       }
 
-      if ((Vdeb - vtrim1 > Precision::PConfusion()) || (vtrim2 - Vfin > Precision::PConfusion()))
+      if ((Vdeb - vtrim1 > math::precision::Precision::PConfusion()) || (vtrim2 - Vfin > math::precision::Precision::PConfusion()))
         throw Standard_ConstructionError(
           "Geom_RectangularTrimmedSurface::V parameters out of range");
     }

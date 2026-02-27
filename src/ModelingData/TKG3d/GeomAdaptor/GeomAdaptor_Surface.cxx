@@ -47,7 +47,7 @@
 #include <Standard_Integer.hpp>
 #include <NCollection_Array1.hpp>
 
-static const double PosTol = Precision::PConfusion() * 0.5;
+static const double PosTol = math::precision::Precision::PConfusion() * 0.5;
 
 IMPLEMENT_STANDARD_RTTIEXT(GeomAdaptor_Surface, Adaptor3d_Surface)
 
@@ -68,7 +68,7 @@ namespace
     double newFirst, newLast;
     BSplCLib::LocateParameter(Degree, TK, TM, PFirst, IsPeriodic, 1, Nb, Index1, newFirst);
     BSplCLib::LocateParameter(Degree, TK, TM, PLast, IsPeriodic, 1, Nb, Index2, newLast);
-    constexpr double EpsKnot = Precision::PConfusion();
+    constexpr double EpsKnot = math::precision::Precision::PConfusion();
     if (std::abs(newFirst - TK(Index1 + 1)) < EpsKnot)
       Index1++;
     if (std::abs(newLast - TK(Index2)) < EpsKnot)
@@ -807,10 +807,10 @@ bool GeomAdaptor_Surface::IsUClosed() const
   double U1, U2, V1, V2;
   mySurface->Bounds(U1, U2, V1, V2);
   if (mySurface->IsUPeriodic())
-    return (std::abs(std::abs(U1 - U2) - std::abs(myUFirst - myULast)) < Precision::PConfusion());
+    return (std::abs(std::abs(U1 - U2) - std::abs(myUFirst - myULast)) < math::precision::Precision::PConfusion());
 
-  return (std::abs(U1 - myUFirst) < Precision::PConfusion()
-          && std::abs(U2 - myULast) < Precision::PConfusion());
+  return (std::abs(U1 - myUFirst) < math::precision::Precision::PConfusion()
+          && std::abs(U2 - myULast) < math::precision::Precision::PConfusion());
 }
 
 bool GeomAdaptor_Surface::IsVClosed() const
@@ -821,10 +821,10 @@ bool GeomAdaptor_Surface::IsVClosed() const
   double U1, U2, V1, V2;
   mySurface->Bounds(U1, U2, V1, V2);
   if (mySurface->IsVPeriodic())
-    return (std::abs(std::abs(V1 - V2) - std::abs(myVFirst - myVLast)) < Precision::PConfusion());
+    return (std::abs(std::abs(V1 - V2) - std::abs(myVFirst - myVLast)) < math::precision::Precision::PConfusion());
 
-  return (std::abs(V1 - myVFirst) < Precision::PConfusion()
-          && std::abs(V2 - myVLast) < Precision::PConfusion());
+  return (std::abs(V1 - myVFirst) < math::precision::Precision::PConfusion()
+          && std::abs(V2 - myVLast) < math::precision::Precision::PConfusion());
 }
 
 bool GeomAdaptor_Surface::IsUPeriodic() const
@@ -1345,7 +1345,7 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
     {
       occ::handle<Geom_ToroidalSurface> S(occ::down_cast<Geom_ToroidalSurface>(mySurface));
       const double                      R = S->MajorRadius() + S->MinorRadius();
-      if (R > Precision::Confusion())
+      if (R > math::precision::Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
@@ -1353,7 +1353,7 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
     {
       occ::handle<Geom_SphericalSurface> S(occ::down_cast<Geom_SphericalSurface>(mySurface));
       const double                       R = S->Radius();
-      if (R > Precision::Confusion())
+      if (R > math::precision::Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
@@ -1361,7 +1361,7 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
     {
       occ::handle<Geom_CylindricalSurface> S(occ::down_cast<Geom_CylindricalSurface>(mySurface));
       const double                         R = S->Radius();
-      if (R > Precision::Confusion())
+      if (R > math::precision::Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
@@ -1370,7 +1370,7 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
       if (myVLast - myVFirst > 1.e10)
       {
 
-        return Precision::Parametric(R3d);
+        return math::precision::Precision::Parametric(R3d);
       }
       occ::handle<Geom_ConicalSurface> S(occ::down_cast<Geom_ConicalSurface>(mySurface));
       occ::handle<Geom_Curve>          C      = S->VIso(myVLast);
@@ -1378,7 +1378,7 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
       C                                       = S->VIso(myVFirst);
       const double Rayon2                     = occ::down_cast<Geom_Circle>(C)->Radius();
       const double R                          = (Rayon1 > Rayon2) ? Rayon1 : Rayon2;
-      return (R > Precision::Confusion() ? (R3d / R) : 0.);
+      return (R > math::precision::Precision::Confusion() ? (R3d / R) : 0.);
     }
     case GeomAbs_Plane:
     {
@@ -1404,7 +1404,7 @@ double GeomAdaptor_Surface::UResolution(const double R3d) const
       return gabase.UResolution(R3d);
     }
     default:
-      return Precision::Parametric(R3d);
+      return math::precision::Precision::Parametric(R3d);
   }
 
   if (Res <= 1.)
@@ -1431,7 +1431,7 @@ double GeomAdaptor_Surface::VResolution(const double R3d) const
     {
       occ::handle<Geom_ToroidalSurface> S(occ::down_cast<Geom_ToroidalSurface>(mySurface));
       const double                      R = S->MinorRadius();
-      if (R > Precision::Confusion())
+      if (R > math::precision::Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
@@ -1439,7 +1439,7 @@ double GeomAdaptor_Surface::VResolution(const double R3d) const
     {
       occ::handle<Geom_SphericalSurface> S(occ::down_cast<Geom_SphericalSurface>(mySurface));
       const double                       R = S->Radius();
-      if (R > Precision::Confusion())
+      if (R > math::precision::Precision::Confusion())
         Res = R3d / (2. * R);
       break;
     }
@@ -1470,7 +1470,7 @@ double GeomAdaptor_Surface::VResolution(const double R3d) const
       return gabase.VResolution(R3d);
     }
     default:
-      return Precision::Parametric(R3d);
+      return math::precision::Precision::Parametric(R3d);
   }
 
   if (Res <= 1.)

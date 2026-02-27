@@ -11,9 +11,9 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Extrema_POnSurf()
-      : myU(Precision::Infinite()),
-        myV(Precision::Infinite()),
-        myP(gp_Pnt(Precision::Infinite(), Precision::Infinite(), Precision::Infinite()))
+      : myU(math::precision::Precision::Infinite()),
+        myV(math::precision::Precision::Infinite()),
+        myP(gp_Pnt(math::precision::Precision::Infinite(), math::precision::Precision::Infinite(), math::precision::Precision::Infinite()))
   {
   }
 

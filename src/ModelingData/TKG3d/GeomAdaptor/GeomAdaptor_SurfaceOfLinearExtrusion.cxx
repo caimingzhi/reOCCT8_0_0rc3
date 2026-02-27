@@ -200,7 +200,7 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
     case GeomAbs_Line:
     {
       gp_Dir D = myBasisCurve->Line().Direction();
-      if (!myDirection.IsParallel(D, Precision::Angular()))
+      if (!myDirection.IsParallel(D, math::precision::Precision::Angular()))
         return GeomAbs_Plane;
       break;
     }
@@ -208,9 +208,9 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
     case GeomAbs_Circle:
     {
       gp_Dir D = (myBasisCurve->Circle()).Axis().Direction();
-      if (myDirection.IsParallel(D, Precision::Angular()))
+      if (myDirection.IsParallel(D, math::precision::Precision::Angular()))
         return GeomAbs_Cylinder;
-      else if (myDirection.IsNormal(D, Precision::Angular()))
+      else if (myDirection.IsNormal(D, math::precision::Precision::Angular()))
         return GeomAbs_Plane;
       break;
     }
@@ -218,7 +218,7 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
     case GeomAbs_Ellipse:
     {
       gp_Dir D = (myBasisCurve->Ellipse()).Axis().Direction();
-      if (myDirection.IsNormal(D, Precision::Angular()))
+      if (myDirection.IsNormal(D, math::precision::Precision::Angular()))
         return GeomAbs_Plane;
       break;
     }
@@ -226,7 +226,7 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
     case GeomAbs_Parabola:
     {
       gp_Dir D = (myBasisCurve->Parabola()).Axis().Direction();
-      if (myDirection.IsNormal(D, Precision::Angular()))
+      if (myDirection.IsNormal(D, math::precision::Precision::Angular()))
         return GeomAbs_Plane;
       break;
     }
@@ -234,7 +234,7 @@ GeomAbs_SurfaceType GeomAdaptor_SurfaceOfLinearExtrusion::GetType() const
     case GeomAbs_Hyperbola:
     {
       gp_Dir D = (myBasisCurve->Hyperbola()).Axis().Direction();
-      if (myDirection.IsNormal(D, Precision::Angular()))
+      if (myDirection.IsNormal(D, math::precision::Precision::Angular()))
         return GeomAbs_Plane;
       break;
     }
@@ -255,16 +255,16 @@ gp_Pln GeomAdaptor_SurfaceOfLinearExtrusion::Plane() const
   gp_Vec D1u, newZ;
   double UFirst = myBasisCurve->FirstParameter();
   double ULast  = myBasisCurve->LastParameter();
-  if (Precision::IsNegativeInfinite(UFirst) && Precision::IsPositiveInfinite(ULast))
+  if (math::precision::Precision::IsNegativeInfinite(UFirst) && math::precision::Precision::IsPositiveInfinite(ULast))
   {
     UFirst = -100.;
     ULast  = 100.;
   }
-  else if (Precision::IsNegativeInfinite(UFirst))
+  else if (math::precision::Precision::IsNegativeInfinite(UFirst))
   {
     UFirst = ULast - 200.;
   }
-  else if (Precision::IsPositiveInfinite(ULast))
+  else if (math::precision::Precision::IsPositiveInfinite(ULast))
   {
     ULast = UFirst + 200.;
   }

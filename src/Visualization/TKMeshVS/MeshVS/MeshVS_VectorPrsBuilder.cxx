@@ -171,7 +171,7 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
 
   GetMinMaxVectorValue(IsElement, aMinValue, aMaxValue);
 
-  if (aMaxValue - aMinValue > Precision::Confusion())
+  if (aMaxValue - aMinValue > math::precision::Precision::Confusion())
   {
     k = 0.8 * aMaxLen / (aMaxValue - aMinValue);
     b = aMaxLen - k * aMaxValue;
@@ -202,7 +202,7 @@ void MeshVS_VectorPrsBuilder::Build(const occ::handle<Prs3d_Presentation>& Prs,
     {
       aValue = aVec.Magnitude();
 
-      if (std::abs(aValue) < Precision::Confusion())
+      if (std::abs(aValue) < math::precision::Precision::Confusion())
         continue;
 
       if (aSource->GetGeom(aKey, IsElement, aCoords, NbNodes, aType))

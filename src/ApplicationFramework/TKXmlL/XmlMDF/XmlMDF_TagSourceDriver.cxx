@@ -7,7 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDF_TagSourceDriver, XmlMDF_ADriver)
 
-XmlMDF_TagSourceDriver::XmlMDF_TagSourceDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMDF_TagSourceDriver::XmlMDF_TagSourceDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

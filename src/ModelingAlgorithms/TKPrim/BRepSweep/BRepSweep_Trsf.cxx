@@ -74,7 +74,7 @@ bool BRepSweep_Trsf::Process(const TopoDS_Shape& aGenS, const Sweep_NumShape& aD
 
 void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumShape& aDirS)
 {
-  constexpr double tl = Precision::Confusion();
+  constexpr double tl = math::precision::Precision::Confusion();
 
   double        ta = 0.00175;
   GeomAbs_Shape cont;

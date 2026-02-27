@@ -98,7 +98,7 @@ bool ShapeCustom_DirectModification::NewSurface(const TopoDS_Face&         F,
       return false;
   }
 
-  SendMsg(F, Message_Msg("DirectModification.NewSurface.MSG0"));
+  SendMsg(F, System::log::Message_Msg("DirectModification.NewSurface.MSG0"));
 
   Tol = BRep_Tool::Tolerance(F);
 

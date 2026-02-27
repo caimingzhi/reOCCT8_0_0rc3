@@ -41,7 +41,7 @@ static int chamf_throat_with_penetration(Draw_Interpretor& di, int narg, const c
       offset = Draw::Atof(a[i + 2]);
       throat = Draw::Atof(a[i + 3]);
 
-      if (offset > Precision::Confusion() && throat > offset)
+      if (offset > math::precision::Precision::Confusion() && throat > offset)
         aMCh.Add(offset, throat, E, F);
     }
     i += NbArg;
@@ -93,7 +93,7 @@ static int chamf_throat(Draw_Interpretor& di, int narg, const char** a)
     {
       throat = Draw::Atof(a[i + 1]);
 
-      if (throat > Precision::Confusion())
+      if (throat > math::precision::Precision::Confusion())
         aMCh.Add(throat, E);
     }
     i += 2;
@@ -161,7 +161,7 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
       {
 
         d1 = atof(a[i + 1]);
-        if (aMCh.Contour(E) == 0 && d1 > Precision::Confusion())
+        if (aMCh.Contour(E) == 0 && d1 > math::precision::Precision::Confusion())
           aMCh.Add(d1, E);
         i += 2;
       }
@@ -177,8 +177,8 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
             d1    = Draw::Atof(a[i + 3]);
             angle = Draw::Atof(a[i + 4]);
             angle *= M_PI / 180.;
-            if (aMCh.Contour(E) == 0 && d1 > Precision::Confusion()
-                && angle > Precision::Confusion() && M_PI / 2 - angle > Precision::Confusion())
+            if (aMCh.Contour(E) == 0 && d1 > math::precision::Precision::Confusion()
+                && angle > math::precision::Precision::Confusion() && M_PI / 2 - angle > math::precision::Precision::Confusion())
               aMCh.AddDA(d1, angle, E, F);
             i += 5;
           }
@@ -187,7 +187,7 @@ static int chamfer(Draw_Interpretor& di, int narg, const char** a)
 
             d1 = Draw::Atof(a[i + 2]);
             d2 = Draw::Atof(a[i + 3]);
-            if (aMCh.Contour(E) == 0 && d1 > Precision::Confusion() && d2 > Precision::Confusion())
+            if (aMCh.Contour(E) == 0 && d1 > math::precision::Precision::Confusion() && d2 > math::precision::Precision::Confusion())
               aMCh.Add(d1, d2, E, F);
             i += 4;
           }

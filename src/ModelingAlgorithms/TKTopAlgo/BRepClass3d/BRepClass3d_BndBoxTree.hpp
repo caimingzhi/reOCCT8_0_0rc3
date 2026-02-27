@@ -68,7 +68,7 @@ public:
   void SetCurrentLine(const gp_Lin& theL, const double theMaxParam)
   {
     myL = theL;
-    myLC.Load(new Geom_Line(theL), -Precision::PConfusion(), theMaxParam);
+    myLC.Load(new Geom_Line(theL), -math::precision::Precision::PConfusion(), theMaxParam);
   }
 
   void GetEdgeParam(const int i, TopoDS_Edge& theOutE, double& theOutParam, double& outLParam) const

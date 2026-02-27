@@ -1160,7 +1160,7 @@ bool FindLine(gp_Pnt&                                                 Psurf,
               aParaInt   = para;
               theLineIdx = i;
             }
-            if (aSqDist < Precision::SquarePConfusion())
+            if (aSqDist < math::precision::Precision::SquarePConfusion())
             {
               amelioration = 100;
             }
@@ -2450,7 +2450,7 @@ void IntPatch_ImpImpIntersection::Perform(const occ::handle<Adaptor3d_Surface>& 
       const occ::handle<Adaptor3d_Surface>& aSCyl = bReverse ? S1 : S2;
       VMin                                        = aSCyl->FirstVParameter();
       VMax                                        = aSCyl->LastVParameter();
-      H = (Precision::IsNegativeInfinite(VMin) || Precision::IsPositiveInfinite(VMax))
+      H = (math::precision::Precision::IsNegativeInfinite(VMin) || math::precision::Precision::IsPositiveInfinite(VMax))
             ? 0
             : (VMax - VMin);
 
@@ -3670,7 +3670,7 @@ bool IntPTo(const IntSurf_Quadric&                            theQuad1,
       for (i = 1; i <= NbSol; ++i)
       {
         gp_Circ aC = inter.Circle(i);
-        if (!aPln.Axis().IsNormal(aTorus.Axis(), Precision::Angular()))
+        if (!aPln.Axis().IsNormal(aTorus.Axis(), math::precision::Precision::Angular()))
         {
           AdjustToSeam(aTorus, aC);
         }
@@ -3901,7 +3901,7 @@ ComputationMethods::stCoeffsValue::stCoeffsValue(const gp_Cylinder& theCyl1,
     }
   }
 
-  if (std::abs(aDetV1V2) < Precision::Angular())
+  if (std::abs(aDetV1V2) < math::precision::Precision::Angular())
   {
     throw Standard_Failure("Error. Exception in divide by zerro (IntCyCyTrim)!!!!");
   }
@@ -5149,7 +5149,7 @@ bool InscribePoint(const double theUfTarget,
                    const double thePeriod,
                    const bool   theFlForce)
 {
-  if (Precision::IsInfinite(theUGiven))
+  if (math::precision::Precision::IsInfinite(theUGiven))
   {
     return false;
   }
@@ -5246,7 +5246,7 @@ static bool ExcludeNearElements(double       theArr[],
   {
     double &anA = theArr[i], &anB = theArr[i - 1];
 
-    if (Precision::IsInfinite(anA))
+    if (math::precision::Precision::IsInfinite(anA))
       break;
 
     if ((anA - anB) < theTol)
@@ -5256,7 +5256,7 @@ static bool ExcludeNearElements(double       theArr[],
       else
         anA = anB;
 
-      anB     = Precision::Infinite();
+      anB     = math::precision::Precision::Infinite();
       aRetVal = true;
     }
   }
@@ -5864,23 +5864,23 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
 
   theU1crit[6] = std::abs((aSl - theCoeffs.mC) / theCoeffs.mB) < 1.0
                    ? -acos((aSl - theCoeffs.mC) / theCoeffs.mB) + theCoeffs.mFI1
-                   : Precision::Infinite();
+                   : math::precision::Precision::Infinite();
   theU1crit[7] = std::abs((aSf - theCoeffs.mC) / theCoeffs.mB) < 1.0
                    ? -acos((aSf - theCoeffs.mC) / theCoeffs.mB) + theCoeffs.mFI1
-                   : Precision::Infinite();
+                   : math::precision::Precision::Infinite();
   theU1crit[8] = std::abs((aSf - theCoeffs.mC) / theCoeffs.mB) < 1.0
                    ? acos((aSf - theCoeffs.mC) / theCoeffs.mB) + theCoeffs.mFI1
-                   : Precision::Infinite();
+                   : math::precision::Precision::Infinite();
   theU1crit[9] = std::abs((aSl - theCoeffs.mC) / theCoeffs.mB) < 1.0
                    ? acos((aSl - theCoeffs.mC) / theCoeffs.mB) + theCoeffs.mFI1
-                   : Precision::Infinite();
+                   : math::precision::Precision::Infinite();
 
   theU1crit[10] = theCoeffs.mFI1;
   theU1crit[11] = M_PI + theCoeffs.mFI1;
 
   for (int i = 0; i < theNbCritPointsMax; i++)
   {
-    if (Precision::IsInfinite(theU1crit[i]))
+    if (math::precision::Precision::IsInfinite(theU1crit[i]))
     {
       continue;
     }
@@ -5898,7 +5898,7 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
   while (theNbCritPointsMax > 0)
   {
     double& anB = theU1crit[theNbCritPointsMax - 1];
-    if (Precision::IsInfinite(anB))
+    if (math::precision::Precision::IsInfinite(anB))
     {
       theNbCritPointsMax--;
       continue;
@@ -5912,7 +5912,7 @@ static void CriticalPointsComputing(const ComputationMethods::stCoeffsValue& the
     if (std::abs(anB - anA - thePeriod) < theTol2D)
     {
       anA = (anA + anB - thePeriod) / 2.0;
-      anB = Precision::Infinite();
+      anB = math::precision::Precision::Infinite();
       theNbCritPointsMax--;
     }
 
@@ -5931,7 +5931,7 @@ void WorkWithBoundaries::BoundaryEstimation(const gp_Cylinder& theCy1,
   const double aCosA   = aD1.Dot(aD2);
   const double aSqSinA = aD1.XYZ().CrossSquareMagnitude(aD2.XYZ());
 
-  if (aSqSinA < Precision::Angular() * Precision::Angular())
+  if (aSqSinA < math::precision::Precision::Angular() * math::precision::Precision::Angular())
     return;
 
   const double aSinA     = sqrt(aSqSinA);
@@ -5952,8 +5952,8 @@ void WorkWithBoundaries::BoundaryEstimation(const gp_Cylinder& theCy1,
   theOutBoxS2.Add(aV02 - aHDV2);
   theOutBoxS2.Add(aV02 + aHDV2);
 
-  theOutBoxS1.Enlarge(Precision::Confusion());
-  theOutBoxS2.Enlarge(Precision::Confusion());
+  theOutBoxS1.Enlarge(math::precision::Precision::Confusion());
+  theOutBoxS2.Enlarge(math::precision::Precision::Confusion());
 
   double aU1 = 0.0, aV1 = 0.0, aU2 = 0.0, aV2 = 0.0;
   myUVSurf1.Get(aU1, aV1, aU2, aV2);
@@ -6069,7 +6069,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
   int aNbPts =
     std::min(RealToInt((aUSurf1l - aUSurf1f) / du) + 1, RealToInt(20.0 * theCyl1.Radius()));
   const int    aNbPoints = std::min(std::max(aNbMinPoints, aNbPts), aNbMaxPoints);
-  const double aStepMin  = std::max(aTol2D, Precision::PConfusion()),
+  const double aStepMin  = std::max(aTol2D, math::precision::Precision::PConfusion()),
                aStepMax  = (aUSurf1l - aUSurf1f > M_PI / 100.0)
                              ? (aUSurf1l - aUSurf1f) / IntToReal(aNbPoints)
                              : aUSurf1l - aUSurf1f;
@@ -6089,18 +6089,18 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
   }
 
   const int aNbCritPointsMax           = 12;
-  double    anU1crit[aNbCritPointsMax] = {Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite(),
-                                          Precision::Infinite()};
+  double    anU1crit[aNbCritPointsMax] = {math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite(),
+                                          math::precision::Precision::Infinite()};
 
   int aNbCritPoints = aNbCritPointsMax;
   CriticalPointsComputing(anEquationCoeffs,
@@ -6705,7 +6705,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           anU1 = aMinUexp;
         }
 
-        if (Precision::PConfusion() >= (anUl - anU1))
+        if (math::precision::Precision::PConfusion() >= (anUl - anU1))
           anU1 = anUl;
 
         anUf = anU1;
@@ -6736,7 +6736,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
           aP.SetValue(aWLine[i]->Point(1).Value());
 
           if (theSPnt.IsEmpty()
-              || !theSPnt.Last().PntOn2S().IsSame(aP.PntOn2S(), Precision::Confusion()))
+              || !theSPnt.Last().PntOn2S().IsSame(aP.PntOn2S(), math::precision::Precision::Confusion()))
           {
             theSPnt.Append(aP);
           }
@@ -6750,7 +6750,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
             const IntSurf_PntOn2S& aPf = aWLine[i]->Point(1);
             const IntSurf_PntOn2S& aPl = aWLine[i]->Point(2);
 
-            if (aPf.IsSame(aPl, Precision::Confusion()))
+            if (aPf.IsSame(aPl, math::precision::Precision::Confusion()))
               isGood = false;
           }
           else if (aWLine[i]->NbPnts() > 2)
@@ -6784,7 +6784,7 @@ static IntPatch_ImpImpIntersection::IntStatus CyCyNoGeometric(
                 const gp_Vec aN2 = aQuad2.Normale(aP2);
                 const gp_Vec aTg(aN1.Crossed(aN2));
 
-                if (aTg.SquareMagnitude() < Precision::SquareConfusion())
+                if (aTg.SquareMagnitude() < math::precision::Precision::SquareConfusion())
                 {
 
                   break;
@@ -7758,11 +7758,11 @@ bool ExploreCurve(const gp_Cone&                  theCo,
   {
     double aPrm = anItr.Value();
 
-    if ((aPrm - aT1) < Precision::PConfusion())
+    if ((aPrm - aT1) < math::precision::Precision::PConfusion())
       continue;
 
     bool isLast = false;
-    if ((aT2 - aPrm) < Precision::PConfusion())
+    if ((aT2 - aPrm) < math::precision::Precision::PConfusion())
     {
       aPrm   = aT2;
       isLast = true;
@@ -7788,7 +7788,7 @@ bool ExploreCurve(const gp_Cone&                  theCo,
     return false;
   }
 
-  if ((aT2 - aT1) > Precision::PConfusion())
+  if ((aT2 - aT1) > math::precision::Precision::PConfusion())
   {
     IntAna_Curve aC1 = theCrv;
     aC1.SetDomain(aT1, aT2);
@@ -8431,12 +8431,12 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
 
       if (param >= paramapex)
       {
-        if (qwe > Precision::PConfusion())
+        if (qwe > math::precision::Precision::PConfusion())
         {
           trans1 = IntSurf_Out;
           trans2 = IntSurf_In;
         }
-        else if (qwe < -Precision::PConfusion())
+        else if (qwe < -math::precision::Precision::PConfusion())
         {
           trans1 = IntSurf_In;
           trans2 = IntSurf_Out;
@@ -8448,12 +8448,12 @@ bool IntCoSp(const IntSurf_Quadric&                            Quad1,
       }
       else
       {
-        if (qwe < -Precision::PConfusion())
+        if (qwe < -math::precision::Precision::PConfusion())
         {
           trans1 = IntSurf_Out;
           trans2 = IntSurf_In;
         }
-        else if (qwe > Precision::PConfusion())
+        else if (qwe > math::precision::Precision::PConfusion())
         {
           trans1 = IntSurf_In;
           trans2 = IntSurf_Out;

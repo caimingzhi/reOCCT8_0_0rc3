@@ -31,7 +31,7 @@ TopoDSToStep_Builder::TopoDSToStep_Builder(const TopoDS_Shape&                  
                                            const occ::handle<Transfer_FinderProcess>& FP,
                                            const int                    theTessellatedGeomParam,
                                            const StepData_Factors&      theLocalFactors,
-                                           const Message_ProgressRange& theProgress)
+                                           const System::log::Message_ProgressRange& theProgress)
 {
   done = false;
   Init(aShape, aTool, FP, theTessellatedGeomParam, theLocalFactors, theProgress);
@@ -42,7 +42,7 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
                                 const occ::handle<Transfer_FinderProcess>& FP,
                                 const int                                  theTessellatedGeomParam,
                                 const StepData_Factors&                    theLocalFactors,
-                                const Message_ProgressRange&               theProgress)
+                                const System::log::Message_ProgressRange&               theProgress)
 {
 
   if (myTool.IsBound(aShape))
@@ -68,12 +68,12 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
 
       TopoDSToStep_MakeStepFace MkFace;
 
-      Message_ProgressScope aPS(theProgress, nullptr, (theTessellatedGeomParam != 0) ? 2 : 1);
+      System::log::Message_ProgressScope aPS(theProgress, nullptr, (theTessellatedGeomParam != 0) ? 2 : 1);
 
       int nbshapes = 0;
       for (anExp.Init(myShell, TopAbs_FACE); anExp.More(); anExp.Next())
         nbshapes++;
-      Message_ProgressScope aPS1(aPS.Next(), nullptr, nbshapes);
+      System::log::Message_ProgressScope aPS1(aPS.Next(), nullptr, nbshapes);
       for (anExp.Init(myShell, TopAbs_FACE); anExp.More() && aPS1.More(); anExp.Next(), aPS1.Next())
       {
         const TopoDS_Face Face = TopoDS::Face(anExp.Current());
@@ -151,7 +151,7 @@ void TopoDSToStep_Builder::Init(const TopoDS_Shape&                        aShap
 
       if (theTessellatedGeomParam == 1 || (theTessellatedGeomParam == 2 && !MkFace.IsDone()))
       {
-        Message_ProgressScope aPS(theProgress, nullptr, 1);
+        System::log::Message_ProgressScope aPS(theProgress, nullptr, 1);
 
         MkTessFace.Init(Face, myTool, FP, true, theLocalFactors, aPS.Next());
       }

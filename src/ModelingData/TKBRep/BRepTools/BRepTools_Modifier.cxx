@@ -66,7 +66,7 @@ static NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MapE, MapF;
 #endif
 
 void BRepTools_Modifier::Perform(const occ::handle<BRepTools_Modification>& M,
-                                 const Message_ProgressRange&               theProgress)
+                                 const System::log::Message_ProgressRange&               theProgress)
 {
   if (myShape.IsNull())
   {
@@ -80,7 +80,7 @@ void BRepTools_Modifier::Perform(const occ::handle<BRepTools_Modification>& M,
 #endif
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>::Iterator theIter(myMap);
 
-  Message_ProgressScope aPS(theProgress, "Converting Shape", 2);
+  System::log::Message_ProgressScope aPS(theProgress, "Converting Shape", 2);
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     aMVE, aMEF;
@@ -177,7 +177,7 @@ void BRepTools_Modifier::Put(const TopoDS_Shape& S)
 bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
                                  const occ::handle<BRepTools_Modification>& M,
                                  bool&                                      theNewGeom,
-                                 const Message_ProgressRange&               theProgress)
+                                 const System::log::Message_ProgressRange&               theProgress)
 {
 #ifdef DEBUG_Modifier
   int iF = MapF.Contains(S) ? MapF.FindIndex(S) : 0;
@@ -287,7 +287,7 @@ bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
         ++aShapeCount;
     }
 
-    Message_ProgressScope aPS(theProgress, "Converting SubShapes", aShapeCount);
+    System::log::Message_ProgressScope aPS(theProgress, "Converting SubShapes", aShapeCount);
 
     for (it.Initialize(S, false); it.More() && aPS.More(); it.Next())
     {

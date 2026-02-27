@@ -184,7 +184,7 @@ BRepMesh_ModelPostProcessor::~BRepMesh_ModelPostProcessor() = default;
 
 bool BRepMesh_ModelPostProcessor::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                                   const IMeshTools_Parameters&        theParameters,
-                                                  const Message_ProgressRange&        theRange)
+                                                  const System::log::Message_ProgressRange&        theRange)
 {
   (void)theRange;
   if (theModel.IsNull())
@@ -192,9 +192,9 @@ bool BRepMesh_ModelPostProcessor::performInternal(const occ::handle<IMeshData_Mo
     return false;
   }
 
-  OSD_Parallel::For(0, theModel->EdgesNb(), PolygonCommitter(theModel), true);
+  System::os::OSD_Parallel::For(0, theModel->EdgesNb(), PolygonCommitter(theModel), true);
 
-  OSD_Parallel::For(0,
+  System::os::OSD_Parallel::For(0,
                     theModel->FacesNb(),
                     DeflectionEstimator(theModel, theParameters),
                     !theParameters.InParallel);

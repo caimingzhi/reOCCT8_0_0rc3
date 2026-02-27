@@ -8,7 +8,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_TreeNodeDriver, BinMDF_ADriver)
 
 BinMDataStd_TreeNodeDriver::BinMDataStd_TreeNodeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, nullptr)
 {
 }

@@ -40,7 +40,7 @@ void VrmlConverter_WFDeflectionShape::Add(Standard_OStream&                     
 
       diagonal = std::sqrt((Xmax - Xmin) * (Xmax - Xmin) + (Ymax - Ymin) * (Ymax - Ymin)
                            + (Zmax - Zmin) * (Zmax - Zmin));
-      diagonal = std::max(diagonal, Precision::Confusion());
+      diagonal = std::max(diagonal, math::precision::Precision::Confusion());
       theRequestedDeflection = aDrawer->DeviationCoefficient() * diagonal;
     }
     else

@@ -8,6 +8,7 @@
 
 #include <Standard.hpp>
 
+namespace System { namespace log {
 class Message_Level
 {
 public:
@@ -31,5 +32,7 @@ private:
   occ::handle<Message_AlertExtended> myRootAlert;
   occ::handle<Message_AlertExtended> myLastAlert;
 };
+}} // namespace System::log
 
-#define OCCT_ADD_MESSAGE_LEVEL_SENTRY(theMessage) Message_Level aLevel(theMessage);
+
+#define OCCT_ADD_MESSAGE_LEVEL_SENTRY(theMessage) System::log::Message_Level aLevel(theMessage);

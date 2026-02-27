@@ -102,14 +102,14 @@ RWStl_Reader::RWStl_Reader()
 {
 }
 
-bool RWStl_Reader::Read(const char* theFile, const Message_ProgressRange& theProgress)
+bool RWStl_Reader::Read(const char* theFile, const System::log::Message_ProgressRange& theProgress)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream =
     aFileSystem->OpenIStream(theFile, std::ios::in | std::ios::binary);
   if (aStream.get() == nullptr)
   {
-    Message::SendFail(TCollection_AsciiString("Error: file '") + theFile + "' is not found");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: file '") + theFile + "' is not found");
     return false;
   }
 
@@ -121,7 +121,7 @@ bool RWStl_Reader::Read(const char* theFile, const Message_ProgressRange& thePro
 
   Standard_ReadLineBuffer aBuffer(THE_BUFFER_SIZE);
 
-  Message_ProgressScope aPS(theProgress, nullptr, 1, true);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, 1, true);
   while (aStream->good())
   {
     if (isAscii)
@@ -151,7 +151,7 @@ bool RWStl_Reader::IsAscii(Standard_IStream& theStream, const bool isSeekgAvaila
   std::streamsize aNbRead = theStream.read(aBuffer, THE_STL_MIN_FILE_SIZE).gcount();
   if (!theStream)
   {
-    Message::SendFail("Error: Cannot read file");
+    System::log::Message::SendFail("Error: Cannot read file");
     return true;
   }
 
@@ -230,7 +230,7 @@ static bool ReadVertex(const char* theStr, double& theX, double& theY, double& t
 bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
                              Standard_ReadLineBuffer&     theBuffer,
                              const std::streampos         theUntilPos,
-                             const Message_ProgressRange& theProgress)
+                             const System::log::Message_ProgressRange& theProgress)
 {
 
   const int64_t aStartPos = GETPOS(theStream.tellg());
@@ -245,7 +245,7 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
   }
   if (aLine == nullptr)
   {
-    Message::SendFail("Error: premature end of file");
+    System::log::Message::SendFail("Error: premature end of file");
     return false;
   }
 
@@ -259,7 +259,7 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
 
   const int             aStepB   = 1024 * 1024;
   const int             aNbSteps = 1 + int((GETPOS(theUntilPos) - aStartPos) / aStepB);
-  Message_ProgressScope aPS(theProgress, "Reading text STL file", aNbSteps);
+  System::log::Message_ProgressScope aPS(theProgress, "Reading text STL file", aNbSteps);
   int64_t               aProgressPos = aStartPos + aStepB;
   int                   aNbLine      = 1;
 
@@ -274,7 +274,7 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
     aLine = theBuffer.ReadLine(theStream, aLineLen);
     if (aLine == nullptr)
     {
-      Message::SendFail("Error: premature end of file");
+      System::log::Message::SendFail("Error: premature end of file");
       return false;
     }
     if (str_starts_with(aLine, "endsolid", 8))
@@ -284,7 +284,7 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
     }
     if (!str_starts_with(aLine, "facet", 5))
     {
-      Message::SendFail(TCollection_AsciiString("Error: unexpected format of facet at line ")
+      System::log::Message::SendFail(TCollection_AsciiString("Error: unexpected format of facet at line ")
                         + (aNbLine + 1));
       return false;
     }
@@ -292,7 +292,7 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
     aLine = theBuffer.ReadLine(theStream, aLineLen);
     if (aLine == nullptr || !str_starts_with(aLine, "outer", 5))
     {
-      Message::SendFail(TCollection_AsciiString("Error: unexpected format of facet at line ")
+      System::log::Message::SendFail(TCollection_AsciiString("Error: unexpected format of facet at line ")
                         + (aNbLine + 1));
       return false;
     }
@@ -313,7 +313,7 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
                       aReadVertex.ChangeCoord(2),
                       aReadVertex.ChangeCoord(3)))
       {
-        Message::SendFail(TCollection_AsciiString("Error: cannot read vertex coordinates at line ")
+        System::log::Message::SendFail(TCollection_AsciiString("Error: cannot read vertex coordinates at line ")
                           + aNbLine);
         return false;
       }
@@ -338,13 +338,13 @@ bool RWStl_Reader::ReadAscii(Standard_IStream&            theStream,
   return aPS.More();
 }
 
-bool RWStl_Reader::ReadBinary(Standard_IStream& theStream, const Message_ProgressRange& theProgress)
+bool RWStl_Reader::ReadBinary(Standard_IStream& theStream, const System::log::Message_ProgressRange& theProgress)
 {
 
   char aHeader[THE_STL_HEADER_SIZE + 1];
   if (theStream.read(aHeader, THE_STL_HEADER_SIZE).gcount() != std::streamsize(THE_STL_HEADER_SIZE))
   {
-    Message::SendFail("Error: Corrupted binary STL file");
+    System::log::Message::SendFail("Error: Corrupted binary STL file");
     return false;
   }
 
@@ -354,7 +354,7 @@ bool RWStl_Reader::ReadBinary(Standard_IStream& theStream, const Message_Progres
   aMergeTool.SetMergeAngle(myMergeAngle);
   aMergeTool.SetMergeTolerance(myMergeTolearance);
 
-  Message_ProgressScope aPS(theProgress, "Reading binary STL file", aNbFacets);
+  System::log::Message_ProgressScope aPS(theProgress, "Reading binary STL file", aNbFacets);
   int                   aNbRead = 0;
 
   const int THE_CHUNK_NBFACETS = 80;
@@ -374,7 +374,7 @@ bool RWStl_Reader::ReadBinary(Standard_IStream& theStream, const Message_Progres
       const std::streamsize aDataToRead = aNbFacesInBuffer * aFaceDataLen;
       if (theStream.read(aBuffer, aDataToRead).gcount() != aDataToRead)
       {
-        Message::SendFail("Error: binary STL read failed");
+        System::log::Message::SendFail("Error: binary STL read failed");
         return false;
       }
       aBufferPtr = aBuffer;

@@ -39,7 +39,7 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
   bool st = PR.ReadInteger(PR.Current(), length);
   if (!st)
   {
-    Message_Msg Msg184("XSTEP_184");
+    System::log::Message_Msg Msg184("XSTEP_184");
     PR.SendFail(Msg184);
   }
 
@@ -57,19 +57,19 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
         tempCurves->SetValue(i, anent);
       else
       {
-        Message_Msg Msg185("XSTEP_185");
+        System::log::Message_Msg Msg185("XSTEP_185");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg185.Arg(Msg216.Value());
             PR.SendFail(Msg185);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg185.Arg(Msg217.Value());
             PR.SendFail(Msg185);
             break;
@@ -84,26 +84,26 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
         tempStartVertexList->SetValue(i, avert);
       else
       {
-        Message_Msg Msg188("XSTEP_188");
+        System::log::Message_Msg Msg188("XSTEP_188");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg188.Arg(Msg216.Value());
             PR.SendFail(Msg188);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg188.Arg(Msg217.Value());
             PR.SendFail(Msg188);
             break;
           }
           case IGESData_TypeError:
           {
-            Message_Msg Msg218("IGES_218");
+            System::log::Message_Msg Msg218("IGES_218");
             Msg188.Arg(Msg218.Value());
             PR.SendFail(Msg188);
             break;
@@ -118,7 +118,7 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
         tempStartVertexIndex->SetValue(i, anint);
       else
       {
-        Message_Msg Msg186("XSTEP_186");
+        System::log::Message_Msg Msg186("XSTEP_186");
         PR.SendFail(Msg186);
       }
 
@@ -126,26 +126,26 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
         tempEndVertexList->SetValue(i, avert);
       else
       {
-        Message_Msg Msg189("XSTEP_189");
+        System::log::Message_Msg Msg189("XSTEP_189");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg189.Arg(Msg216.Value());
             PR.SendFail(Msg189);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg189.Arg(Msg217.Value());
             PR.SendFail(Msg189);
             break;
           }
           case IGESData_TypeError:
           {
-            Message_Msg Msg218("IGES_218");
+            System::log::Message_Msg Msg218("IGES_218");
             Msg189.Arg(Msg218.Value());
             PR.SendFail(Msg189);
             break;
@@ -160,7 +160,7 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
         tempEndVertexIndex->SetValue(i, anint);
       else
       {
-        Message_Msg Msg187("XSTEP_187");
+        System::log::Message_Msg Msg187("XSTEP_187");
         PR.SendFail(Msg187);
       }
     }
@@ -168,7 +168,7 @@ void IGESSolid_ToolEdgeList::ReadOwnParams(const occ::handle<IGESSolid_EdgeList>
 
   if (st && length <= 0)
   {
-    Message_Msg Msg184("XSTEP_184");
+    System::log::Message_Msg Msg184("XSTEP_184");
     PR.SendFail(Msg184);
   }
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -271,7 +271,7 @@ void IGESSolid_ToolEdgeList::OwnCheck(const occ::handle<IGESSolid_EdgeList>& ent
 
   if (ent->NbEdges() <= 0)
   {
-    Message_Msg Msg184("XSTEP_184");
+    System::log::Message_Msg Msg184("XSTEP_184");
     ach->SendFail(Msg184);
   }
 }

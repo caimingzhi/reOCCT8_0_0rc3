@@ -21,7 +21,7 @@ const occ::handle<Standard_Transient>& XmlDrivers::Factory(const Standard_GUID& 
   if (theGUID == XmlStorageDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "XmlDrivers : Storage Plugin" << std::endl;
+    std::cout << "XmlDrivers : app::storage::Storage System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_sd =
       new XmlDrivers_DocumentStorageDriver("Copyright: Open Cascade, 2001-2002");
@@ -31,7 +31,7 @@ const occ::handle<Standard_Transient>& XmlDrivers::Factory(const Standard_GUID& 
   if (theGUID == XmlRetrievalDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "XmlDrivers : Retrieval Plugin" << std::endl;
+    std::cout << "XmlDrivers : Retrieval System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_rd = new XmlDrivers_DocumentRetrievalDriver();
     return model_rd;
@@ -50,7 +50,7 @@ void XmlDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp)
 }
 
 occ::handle<XmlMDF_ADriverTable> XmlDrivers::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   occ::handle<XmlMDF_ADriverTable> aTable = new XmlMDF_ADriverTable();
 

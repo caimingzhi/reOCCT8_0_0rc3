@@ -444,7 +444,7 @@ void BRepFill_Draft::BuildShell(const occ::handle<Geom_Surface>& Surf, const boo
   {
 
     BRepLib_MakeFace MkF;
-    MkF.Init(Surf, true, Precision::Confusion());
+    MkF.Init(Surf, true, math::precision::Precision::Confusion());
     Fuse(MkF.Face(), KeepOutSide);
   }
 }
@@ -524,7 +524,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
   {
 
     TopoDS_Edge                aSEMin;
-    double                     Dmin = Precision::Infinite();
+    double                     Dmin = math::precision::Precision::Infinite();
     BRepExtrema_DistShapeShape DistTool;
     DistTool.LoadS1(myWire);
 
@@ -540,7 +540,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
         {
           Dmin   = D;
           aSEMin = TopoDS::Edge(aSE);
-          if (Dmin < Precision::Confusion())
+          if (Dmin < math::precision::Precision::Confusion())
             break;
         }
       }
@@ -605,7 +605,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
     NCollection_List<TopoDS_Shape> aLO, aLT;
     aLO.Append(Sol1);
     aLT.Append(Sol2);
-    aBuilder.BuildBOP(aLO, aLT, BOPAlgo_CUT, Message_ProgressRange());
+    aBuilder.BuildBOP(aLO, aLT, BOPAlgo_CUT, System::log::Message_ProgressRange());
     if (!aBuilder.HasErrors())
     {
       TopoDS_Solid    aCutMin;
@@ -616,7 +616,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
         anExpS.Next();
         if (anExpS.More())
         {
-          double                     aDMin = Precision::Infinite();
+          double                     aDMin = math::precision::Precision::Infinite();
           BRepExtrema_DistShapeShape DistTool;
           DistTool.LoadS1(myWire);
 
@@ -651,7 +651,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
 
         aLO.Clear();
         aLO.Append(aCutMin);
-        aGluer.BuildBOP(aLO, State1, aLT, State2, Message_ProgressRange());
+        aGluer.BuildBOP(aLO, State1, aLT, State2, System::log::Message_ProgressRange());
 
         if (!aGluer.HasErrors())
         {
@@ -673,7 +673,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
     aLO.Append(Sol1);
     aLT.Append(Sol2);
 
-    aBuilder.BuildBOP(aLO, State1, aLT, State2, Message_ProgressRange());
+    aBuilder.BuildBOP(aLO, State1, aLT, State2, System::log::Message_ProgressRange());
     if (aBuilder.HasErrors())
       return false;
 
@@ -773,7 +773,7 @@ bool BRepFill_Draft::Sewing()
       BS.Add(solid, TopoDS::Shell(myShape));
 
       BRepClass3d_SolidClassifier SC(solid);
-      SC.PerformInfinitePoint(Precision::Confusion());
+      SC.PerformInfinitePoint(math::precision::Precision::Confusion());
       if (SC.State() == TopAbs_IN)
       {
         BS.MakeSolid(solid);

@@ -190,7 +190,7 @@ void TopOpeBRepBuild_PaveClassifier::AdjustOnPeriodic()
   double p1 = myP1, p2 = myP2;
 #endif
 
-  double tol = Precision::PConfusion();
+  double tol = math::precision::Precision::PConfusion();
 
   if (mySameParameters)
   {

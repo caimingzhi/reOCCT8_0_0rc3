@@ -75,12 +75,12 @@ bool RWPly_PlyWriterContext::Open(const TCollection_AsciiString&       theName,
     return true;
   }
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   myStream = aFileSystem->OpenOStream(theName, std::ios::out | std::ios::binary);
   if (myStream.get() == nullptr || !myStream->good())
   {
     myStream.reset();
-    Message::SendFail() << "Error: file cannot be created\n" << theName;
+    System::log::Message::SendFail() << "Error: file cannot be created\n" << theName;
     return false;
   }
   return true;
@@ -97,18 +97,18 @@ bool RWPly_PlyWriterContext::Close(bool theIsAborted)
   bool aResult = myStream->good();
   if (!aResult)
   {
-    Message::SendFail() << "Error: file cannot be written\n" << myName;
+    System::log::Message::SendFail() << "Error: file cannot be written\n" << myName;
   }
   else if (!theIsAborted)
   {
     if (myNbVerts != myNbHeaderVerts)
     {
-      Message::SendFail() << "Error: written less number of vertices (" << myNbVerts
+      System::log::Message::SendFail() << "Error: written less number of vertices (" << myNbVerts
                           << ") than specified in PLY header (" << myNbHeaderVerts << ")";
     }
     else if (myNbElems != myNbHeaderElems)
     {
-      Message::SendFail() << "Error: written less number of elements (" << myNbElems
+      System::log::Message::SendFail() << "Error: written less number of elements (" << myNbElems
                           << ") than specified in PLY header (" << myNbHeaderElems << ")";
     }
   }

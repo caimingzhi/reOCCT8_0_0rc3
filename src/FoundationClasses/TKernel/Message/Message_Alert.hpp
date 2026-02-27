@@ -2,6 +2,7 @@
 
 #include <Standard_Type.hpp>
 
+namespace System { namespace log {
 class Message_Alert : public Standard_Transient
 {
 public:
@@ -15,9 +16,11 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Message_Alert, Standard_Transient)
 };
+}} // namespace System::log
+
 
 #define DEFINE_SIMPLE_ALERT(Alert)                                                                 \
-  class Alert : public Message_Alert                                                               \
+  class Alert : public System::log::Message_Alert                                                               \
   {                                                                                                \
-    DEFINE_STANDARD_RTTI_INLINE(Alert, Message_Alert)                                              \
+    DEFINE_STANDARD_RTTI_INLINE(Alert, System::log::Message_Alert)                                              \
   };

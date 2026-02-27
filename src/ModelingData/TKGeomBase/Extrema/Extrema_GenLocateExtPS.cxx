@@ -13,7 +13,7 @@
 static void CorrectTol(const double theU0, const double theV0, math_Vector& theTol)
 {
 
-  constexpr double aTolRef  = Precision::PConfusion();
+  constexpr double aTolRef  = math::precision::Precision::PConfusion();
   double           anEpsRef = Epsilon(1.);
   double           epsu     = Epsilon(theU0);
   const double     tolog10  = 0.43429;
@@ -48,9 +48,9 @@ bool Extrema_GenLocateExtPS::IsMinDist(const gp_Pnt&            theP,
                                        const double             theV0)
 {
   double du =
-    std::max(theS.UResolution(10. * Precision::Confusion()), 10. * Precision::PConfusion());
+    std::max(theS.UResolution(10. * math::precision::Precision::Confusion()), 10. * math::precision::Precision::PConfusion());
   double dv =
-    std::max(theS.VResolution(10. * Precision::Confusion()), 10. * Precision::PConfusion());
+    std::max(theS.VResolution(10. * math::precision::Precision::Confusion()), 10. * math::precision::Precision::PConfusion());
   double u, v;
   gp_Pnt aP0 = theS.Value(theU0, theV0);
   double d0  = theP.SquareDistance(aP0);
@@ -155,8 +155,8 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
       CorrectTol(theU0, theV0, aTol);
     }
 
-    bool isCorrectTol = (std::abs(aTol(1) - myTolU) > Precision::PConfusion()
-                         || std::abs(aTol(2) - myTolV) > Precision::PConfusion());
+    bool isCorrectTol = (std::abs(aTol(1) - myTolU) > math::precision::Precision::PConfusion()
+                         || std::abs(aTol(2) - myTolV) > math::precision::Precision::PConfusion());
 
     math_FunctionSetRoot aSR(F, aTol);
     aSR.Perform(F, aStart, aBoundInf, aBoundSup);
@@ -168,7 +168,7 @@ void Extrema_GenLocateExtPS::Perform(const gp_Pnt& theP,
         aTol(1) = myTolU;
         aTol(2) = myTolV;
       }
-      math_NewtonFunctionSetRoot aNSR(F, aTol, Precision::Confusion());
+      math_NewtonFunctionSetRoot aNSR(F, aTol, math::precision::Precision::Confusion());
       aNSR.Perform(F, aStart, aBoundInf, aBoundSup);
       if (!aSR.IsDone() && !aNSR.IsDone())
       {

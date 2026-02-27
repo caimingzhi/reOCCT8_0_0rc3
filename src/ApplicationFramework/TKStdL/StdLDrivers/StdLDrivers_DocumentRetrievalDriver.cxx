@@ -29,10 +29,10 @@ void StdLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
                                                const occ::handle<CDM_Document>&  theNewDocument,
                                                const occ::handle<CDM_Application>&,
                                                const occ::handle<PCDM_ReaderFilter>&,
-                                               const Message_ProgressRange&)
+                                               const System::log::Message_ProgressRange&)
 {
 
-  Storage_HeaderData                aHeaderData;
+  app::storage::Storage_HeaderData                aHeaderData;
   occ::handle<StdObjMgt_Persistent> aPDocument = read(theFileName, aHeaderData);
   if (aPDocument.IsNull())
     return;
@@ -44,11 +44,11 @@ void StdLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
 
 occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
   const TCollection_ExtendedString& theFileName,
-  Storage_HeaderData&               theHeaderData)
+  app::storage::Storage_HeaderData&               theHeaderData)
 {
   int i;
 
-  occ::handle<Storage_BaseDriver> aFileDriver;
+  occ::handle<app::storage::Storage_BaseDriver> aFileDriver;
   if (PCDM::FileDriverType(TCollection_AsciiString(theFileName), aFileDriver) == PCDM_TOFD_Unknown)
   {
     myReaderStatus = PCDM_RS_UnknownFileDriver;
@@ -73,11 +73,11 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
   if (!theHeaderData.Read(aFileDriver))
     raiseOnStorageError(theHeaderData.ErrorStatus());
 
-  Storage_TypeData aTypeData;
+  app::storage::Storage_TypeData aTypeData;
   if (!aTypeData.Read(aFileDriver))
     raiseOnStorageError(aTypeData.ErrorStatus());
 
-  Storage_RootData aRootData;
+  app::storage::Storage_RootData aRootData;
   if (!aRootData.Read(aFileDriver))
     raiseOnStorageError(aRootData.ErrorStatus());
 
@@ -106,7 +106,7 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
       aCurTypeNum  = aTypeData.Type(aCurTypeName);
 
       TCollection_AsciiString newName;
-      if (Storage_Schema::CheckTypeMigration(aCurTypeName, newName))
+      if (app::storage::Storage_Schema::CheckTypeMigration(aCurTypeName, newName))
       {
 #ifdef OCCT_DEBUG
         std::cout << "CheckTypeMigration:OldType = " << aCurTypeName << " Len = " << aCurTypeNum
@@ -158,7 +158,7 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
       aFileDriver->ReadReferenceType(aRef, aType);
       anError = Storage_VSOk;
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       anError = Storage_VSTypeMismatch;
     }
@@ -181,15 +181,15 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
       aReadData.ReadPersistentObject(i);
       anError = Storage_VSOk;
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       anError = Storage_VSTypeMismatch;
     }
-    catch (Storage_StreamFormatError const&)
+    catch (app::storage::Storage_StreamFormatError const&)
     {
       anError = Storage_VSFormatError;
     }
-    catch (Storage_StreamReadError const&)
+    catch (app::storage::Storage_StreamReadError const&)
     {
       anError = Storage_VSFormatError;
     }
@@ -203,11 +203,11 @@ occ::handle<StdObjMgt_Persistent> StdLDrivers_DocumentRetrievalDriver::read(
 }
 
 void StdLDrivers_DocumentRetrievalDriver::Read(Standard_IStream&,
-                                               const occ::handle<Storage_Data>&,
+                                               const occ::handle<app::storage::Storage_Data>&,
                                                const occ::handle<CDM_Document>&,
                                                const occ::handle<CDM_Application>&,
                                                const occ::handle<PCDM_ReaderFilter>&,
-                                               const Message_ProgressRange&)
+                                               const System::log::Message_ProgressRange&)
 {
   throw Standard_NotImplemented(
     "Reading from stream is not supported by StdLDrivers_DocumentRetrievalDriver");

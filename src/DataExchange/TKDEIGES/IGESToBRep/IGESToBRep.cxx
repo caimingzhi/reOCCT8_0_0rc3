@@ -246,7 +246,7 @@ bool IGESToBRep::TransferPCurve(const TopoDS_Edge& fromedge,
       {
         OCC_CATCH_SIGNALS
         occ::handle<Geom2d_Curve> newpcurve;
-        GeomLib::SameRange(Precision::PConfusion(), oldpcurve, olda, oldb, a, b, newpcurve);
+        GeomLib::SameRange(math::precision::Precision::PConfusion(), oldpcurve, olda, oldb, a, b, newpcurve);
         if (!newpcurve.IsNull())
         {
           olda      = a;

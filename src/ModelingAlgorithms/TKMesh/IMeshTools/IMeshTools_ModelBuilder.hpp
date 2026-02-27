@@ -8,7 +8,7 @@
 
 struct IMeshTools_Parameters;
 
-class IMeshTools_ModelBuilder : public Message_Algorithm
+class IMeshTools_ModelBuilder : public System::log::Message_Algorithm
 {
 public:
   ~IMeshTools_ModelBuilder() override = default;
@@ -31,7 +31,7 @@ public:
     }
   }
 
-  DEFINE_STANDARD_RTTIEXT(IMeshTools_ModelBuilder, Message_Algorithm)
+  DEFINE_STANDARD_RTTIEXT(IMeshTools_ModelBuilder, System::log::Message_Algorithm)
 
 protected:
   IMeshTools_ModelBuilder() {}

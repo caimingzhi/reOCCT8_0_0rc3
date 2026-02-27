@@ -7,7 +7,7 @@ class XmlMXCAFDoc_VisMaterialToolDriver : public XmlMDF_ADriver
   DEFINE_STANDARD_RTTIEXT(XmlMXCAFDoc_VisMaterialToolDriver, XmlMDF_ADriver)
 public:
   Standard_EXPORT XmlMXCAFDoc_VisMaterialToolDriver(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

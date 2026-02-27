@@ -38,7 +38,7 @@ static TopoDS_Face BuildDraftFace(
   const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                      theImages,
   occ::handle<IntTools_Context>&     theCtx,
-  const occ::handle<Message_Report>& theReport);
+  const occ::handle<System::log::Message_Report>& theReport);
 
 class BOPAlgo_PairOfShapeBoolean : public BOPAlgo_ParallelAlgo
 {
@@ -66,7 +66,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -89,11 +89,11 @@ typedef NCollection_Vector<BOPAlgo_PairOfShapeBoolean> BOPAlgo_VectorOfPairOfSha
 class BOPAlgo_SplitFace : public BOPAlgo_BuilderFace
 {
 public:
-  void SetProgressRange(const Message_ProgressRange& theRange) { myRange = theRange; }
+  void SetProgressRange(const System::log::Message_ProgressRange& theRange) { myRange = theRange; }
 
   void Perform()
   {
-    Message_ProgressScope aPS(myRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myRange, nullptr, 1);
     if (!aPS.More())
     {
       return;
@@ -102,10 +102,10 @@ public:
   }
 
 private:
-  void Perform(const Message_ProgressRange&) override {};
+  void Perform(const System::log::Message_ProgressRange&) override {};
 
 private:
-  Message_ProgressRange myRange;
+  System::log::Message_ProgressRange myRange;
 };
 
 typedef NCollection_Vector<BOPAlgo_SplitFace> BOPAlgo_VectorOfBuilderFace;
@@ -140,7 +140,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -161,9 +161,9 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_VFI> BOPAlgo_VectorOfVFI;
 
-void BOPAlgo_Builder::FillImagesFaces(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillImagesFaces(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Filling splits of faces", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Filling splits of faces", 10);
   BuildSplitFaces(aPS.Next(9));
   if (HasErrors())
   {
@@ -177,7 +177,7 @@ void BOPAlgo_Builder::FillImagesFaces(const Message_ProgressRange& theRange)
   FillInternalVertices(aPS.Next(0.5));
 }
 
-void BOPAlgo_Builder::BuildSplitFaces(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::BuildSplitFaces(const System::log::Message_ProgressRange& theRange)
 {
   bool                                     bHasFaceInfo, bIsClosed, bIsDegenerated, bToReverse;
   int                                      i, j, k, aNbS, aNbPBIn, aNbPBOn, aNbPBSc, aNbAV, nSp;
@@ -196,7 +196,7 @@ void BOPAlgo_Builder::BuildSplitFaces(const Message_ProgressRange& theRange)
   NCollection_List<TopoDS_Shape>                         aLE(aAllocator);
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMDE(100, aAllocator);
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
 
   NCollection_IndexedDataMap<int, NCollection_List<TopoDS_Shape>> aFacesIm;
 
@@ -429,7 +429,7 @@ void BOPAlgo_Builder::BuildSplitFaces(const Message_ProgressRange& theRange)
 
   int aNbBF = aVBF.Length();
 
-  Message_ProgressScope aPSParallel(aPSOuter.Next(9), "Splitting faces", aNbBF);
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(9), "Splitting faces", aNbBF);
   for (int iF = 0; iF < aNbBF; iF++)
   {
     BOPAlgo_SplitFace& aBF = aVBF.ChangeValue(iF);
@@ -485,7 +485,7 @@ static void AddEdgeSet(const TopoDS_Shape&                           theS,
   pLF->Append(theS);
 }
 
-void BOPAlgo_Builder::FillSameDomainFaces(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillSameDomainFaces(const System::log::Message_ProgressRange& theRange)
 {
 
   const NCollection_Vector<BOPDS_InterfFF>& aFFs   = myDS->InterfFF();
@@ -493,7 +493,7 @@ void BOPAlgo_Builder::FillSameDomainFaces(const Message_ProgressRange& theRange)
   if (!aNbFFs)
     return;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
 
   occ::handle<NCollection_BaseAllocator> aAllocator = new NCollection_IncAllocator;
 
@@ -616,7 +616,7 @@ void BOPAlgo_Builder::FillSameDomainFaces(const Message_ProgressRange& theRange)
 
   aPSOuter.Next();
 
-  Message_ProgressScope aPSParallel(aPSOuter.Next(6), "Checking SD faces", aVPSB.Size());
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(6), "Checking SD faces", aVPSB.Size());
   for (int iPSB = 0; iPSB < aVPSB.Size(); ++iPSB)
   {
     aVPSB.ChangeValue(iPSB).SetProgressRange(aPSParallel.Next());
@@ -642,7 +642,7 @@ void BOPAlgo_Builder::FillSameDomainFaces(const Message_ProgressRange& theRange)
 
   BOPAlgo_Tools::MakeBlocks(aDMSLS, aMBlocks, aAllocator);
 
-  Message_ProgressScope aPS(aPSOuter.Next(3), "Filling same domain faces map", aMBlocks.Size());
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(3), "Filling same domain faces map", aMBlocks.Size());
 
   NCollection_List<NCollection_List<TopoDS_Shape>>::Iterator aItB(aMBlocks);
   for (; aItB.More(); aItB.Next(), aPS.Next())
@@ -720,9 +720,9 @@ void BOPAlgo_Builder::FillSameDomainFaces(const Message_ProgressRange& theRange)
   aDMSLS.Clear();
 }
 
-void BOPAlgo_Builder::FillInternalVertices(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::FillInternalVertices(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
 
   BOPAlgo_VectorOfVFI aVVFI;
 
@@ -765,7 +765,7 @@ void BOPAlgo_Builder::FillInternalVertices(const Message_ProgressRange& theRange
     }
   }
 
-  Message_ProgressScope aPSParallel(aPSOuter.Next(), "Looking for internal shapes", aVVFI.Size());
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(), "Looking for internal shapes", aVVFI.Size());
   for (int iVFI = 0; iVFI < aVVFI.Size(); ++iVFI)
   {
     aVVFI.ChangeValue(iVFI).SetProgressRange(aPSParallel.Next());
@@ -824,7 +824,7 @@ TopoDS_Face BuildDraftFace(
   const NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>&
                                      theImages,
   occ::handle<IntTools_Context>&     theCtx,
-  const occ::handle<Message_Report>& theReport)
+  const occ::handle<System::log::Message_Report>& theReport)
 {
   BRep_Builder aBB;
 

@@ -63,7 +63,7 @@ int IGESSelect_WorkLibrary::ReadFile(const char*                            name
                                      occ::handle<Interface_InterfaceModel>& model,
                                      const occ::handle<Interface_Protocol>& protocol) const
 {
-  Message_Messenger::StreamBuffer sout    = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout    = System::log::Message::SendInfo();
   occ::handle<IGESData_IGESModel> igesmod = new IGESData_IGESModel;
   DeclareAndCast(IGESData_Protocol, prot, protocol);
 
@@ -83,14 +83,14 @@ int IGESSelect_WorkLibrary::ReadFile(const char*                            name
 
 bool IGESSelect_WorkLibrary::WriteFile(IFSelect_ContextWrite& ctx) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   DeclareAndCast(IGESData_IGESModel, igesmod, ctx.Model());
   DeclareAndCast(IGESData_Protocol, prot, ctx.Protocol());
 
   if (igesmod.IsNull() || prot.IsNull())
     return false;
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aStream =
     aFileSystem->OpenOStream(ctx.FileName(), std::ios::out | std::ios::binary);
   if (aStream.get() == nullptr)

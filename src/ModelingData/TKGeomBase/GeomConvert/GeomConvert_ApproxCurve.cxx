@@ -52,7 +52,7 @@ void GeomConvert_ApproxCurve_Eval::Evaluate(int*    Dimension,
 
   if (StartEnd[0] != StartEndSav[0] || StartEnd[1] != StartEndSav[1])
   {
-    fonct          = fonct->Trim(StartEnd[0], StartEnd[1], Precision::PConfusion());
+    fonct          = fonct->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::PConfusion());
     StartEndSav[0] = StartEnd[0];
     StartEndSav[1] = StartEnd[1];
   }

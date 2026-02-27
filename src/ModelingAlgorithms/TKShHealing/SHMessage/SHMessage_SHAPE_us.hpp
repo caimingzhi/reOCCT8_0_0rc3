@@ -1,6 +1,6 @@
 static const char SHMessage_SHAPE_us[] =
   "\n"
-  "! Message file for Shape Healing\n"
+  "! System::log::Message file for Shape Healing\n"
   "\n"
   "\n"
   "! ------------------------------------------------------------------------------\n"

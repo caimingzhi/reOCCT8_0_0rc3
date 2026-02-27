@@ -144,13 +144,13 @@ bool XCAFDoc_DimTolTool::FindDimTol(const int                                   
     {
       for (int i = 1; i <= aVal->Length(); i++)
       {
-        if (std::abs(aVal->Value(i) - aVal1->Value(i)) > Precision::Confusion())
+        if (std::abs(aVal->Value(i) - aVal1->Value(i)) > math::precision::Precision::Confusion())
           IsEqual = false;
       }
     }
     else if (kind < 50)
     {
-      if (std::abs(aVal->Value(1) - aVal1->Value(1)) > Precision::Confusion())
+      if (std::abs(aVal->Value(1) - aVal1->Value(1)) > math::precision::Precision::Confusion())
         IsEqual = false;
     }
     if (IsEqual)

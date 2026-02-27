@@ -49,7 +49,7 @@ TEST(BRepMesh_GeomTool_Test, OCC25547_StaticMethodsExportAndFunctionality)
   double aDiff = anIntPnt.Distance(gp::Origin2d());
   EXPECT_EQ(anIntFlag, BRepMesh_GeomTool::Cross)
     << "BRepMesh_GeomTool::IntLinLin should return Cross flag";
-  EXPECT_LE(aDiff, Precision::PConfusion())
+  EXPECT_LE(aDiff, math::precision::Precision::PConfusion())
     << "BRepMesh_GeomTool failed to intersect two lines at origin";
 
   anIntFlag = BRepMesh_GeomTool::IntSegSeg(aRefPnts[0],
@@ -63,6 +63,6 @@ TEST(BRepMesh_GeomTool_Test, OCC25547_StaticMethodsExportAndFunctionality)
   aDiff = anIntPnt.Distance(gp::Origin2d());
   EXPECT_EQ(anIntFlag, BRepMesh_GeomTool::Cross)
     << "BRepMesh_GeomTool::IntSegSeg should return Cross flag";
-  EXPECT_LE(aDiff, Precision::PConfusion())
+  EXPECT_LE(aDiff, math::precision::Precision::PConfusion())
     << "BRepMesh_GeomTool failed to intersect two segments at origin";
 }

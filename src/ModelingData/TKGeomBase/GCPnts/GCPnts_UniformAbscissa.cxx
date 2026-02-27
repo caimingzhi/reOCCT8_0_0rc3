@@ -131,7 +131,7 @@ static bool Perform(NCollection_Array1<double>& theParameters,
       isLocalDone = false;
       isNotDone   = true;
       aDelta -= aDelta / 10;
-      if (aDelta <= Precision::PConfusion())
+      if (aDelta <= math::precision::Precision::PConfusion())
       {
         break;
       }
@@ -336,9 +336,9 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   myNbPoints = 0;
   myDone     = false;
 
-  const double anEPSILON = theC.Resolution(std::max(theTol, Precision::Confusion()));
+  const double anEPSILON = theC.Resolution(std::max(theTol, math::precision::Precision::Confusion()));
   const double aL        = GCPnts_AbscissaPoint::Length(theC, theU1, theU2, anEPSILON);
-  if (aL <= Precision::Confusion())
+  if (aL <= math::precision::Precision::Confusion())
   {
     return;
   }
@@ -439,10 +439,10 @@ void GCPnts_UniformAbscissa::initialize(const TheCurve& theC,
   myNbPoints = 0;
   myDone     = false;
 
-  const double anEPSILON = theC.Resolution(std::max(theTol, Precision::Confusion()));
+  const double anEPSILON = theC.Resolution(std::max(theTol, math::precision::Precision::Confusion()));
 
   const double aL = GCPnts_AbscissaPoint::Length(theC, theU1, theU2, anEPSILON);
-  if (aL <= Precision::Confusion())
+  if (aL <= math::precision::Precision::Confusion())
   {
     return;
   }

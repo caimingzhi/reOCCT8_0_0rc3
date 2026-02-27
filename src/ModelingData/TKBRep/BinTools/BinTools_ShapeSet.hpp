@@ -38,21 +38,21 @@ public:
 
   Standard_EXPORT void Write(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Read(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Write(const TopoDS_Shape& S, Standard_OStream& OS) override;
 
   Standard_EXPORT virtual void WriteGeometry(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT virtual void ReadGeometry(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void ReadFlagsAndSubs(TopoDS_Shape&          S,
                                                 const TopAbs_ShapeEnum T,
@@ -75,27 +75,27 @@ public:
 
   Standard_EXPORT void ReadPolygon3D(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void WritePolygon3D(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT void ReadTriangulation(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void WriteTriangulation(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) const;
 
   Standard_EXPORT void ReadPolygonOnTriangulation(
     Standard_IStream&            IS,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void WritePolygonOnTriangulation(
     Standard_OStream&            OS,
-    const Message_ProgressRange& theRange = Message_ProgressRange()) const;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) const;
 
 private:
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myShapes;

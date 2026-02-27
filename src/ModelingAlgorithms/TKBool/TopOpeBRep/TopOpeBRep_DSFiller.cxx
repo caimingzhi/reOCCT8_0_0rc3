@@ -249,7 +249,7 @@ static bool FUN_shareNOG(const occ::handle<TopOpeBRepDS_HDataStructure>& HDS,
   TopExp::MapShapes(F1, TopAbs_EDGE, map1);
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> map2;
   TopExp::MapShapes(F2, TopAbs_EDGE, map2);
-  double tola = Precision::Angular();
+  double tola = math::precision::Precision::Angular();
 
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& lIF1 = BDS.ShapeInterferences(F1);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator it1(lIF1);

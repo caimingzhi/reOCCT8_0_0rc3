@@ -3,7 +3,7 @@
 #include <TObj_ObjectIterator.hpp>
 #include <Message_Status.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(TObj_CheckModel, Message_Algorithm)
+IMPLEMENT_STANDARD_RTTIEXT(TObj_CheckModel, System::log::Message_Algorithm)
 
 bool TObj_CheckModel::Perform()
 {

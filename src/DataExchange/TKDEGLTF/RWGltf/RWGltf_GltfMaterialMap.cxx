@@ -206,7 +206,7 @@ void RWGltf_GltfMaterialMap::FlushGlbImages(RWGltf_GltfOStreamWriter* theWriter)
       const TCollection_AsciiString anImageFormat = aTexture->MimeType();
       if (anImageFormat != "image/png" && anImageFormat != "image/jpeg")
       {
-        Message::SendWarning(TCollection_AsciiString("Warning! Non-standard mime-type ")
+        System::log::Message::SendWarning(TCollection_AsciiString("Warning! Non-standard mime-type ")
                              + anImageFormat + " (texture " + aTexture->TextureId()
                              + ") within glTF file");
       }

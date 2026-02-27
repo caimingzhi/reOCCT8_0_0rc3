@@ -82,8 +82,8 @@ static int XSTEPDRAWRUN(Draw_Interpretor& di, int argc, const char** argv)
     mess.AssignCat(" ");
   }
 
-  const occ::handle<Message_Messenger>&              aMsgMgr = Message::DefaultMessenger();
-  NCollection_Sequence<occ::handle<Message_Printer>> aPrinters;
+  const occ::handle<System::log::Message_Messenger>&              aMsgMgr = System::log::Message::DefaultMessenger();
+  NCollection_Sequence<occ::handle<System::log::Message_Printer>> aPrinters;
   aPrinters.Append(aMsgMgr->ChangePrinters());
   aMsgMgr->AddPrinter(new Draw_Printer(di));
 

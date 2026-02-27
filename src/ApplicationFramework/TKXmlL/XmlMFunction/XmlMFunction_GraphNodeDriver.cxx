@@ -11,7 +11,7 @@ IMPLEMENT_DOMSTRING(LastNextIndex, "lastnext")
 IMPLEMENT_DOMSTRING(ExecutionStatus, "exec")
 
 XmlMFunction_GraphNodeDriver::XmlMFunction_GraphNodeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

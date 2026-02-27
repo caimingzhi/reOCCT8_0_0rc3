@@ -86,7 +86,7 @@ std::mutex& DE_Wrapper::GlobalLoadMutex()
 bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
                       const occ::handle<TDocStd_Document>& theDocument,
                       occ::handle<XSControl_WorkSession>&  theWS,
-                      const Message_ProgressRange&         theProgress)
+                      const System::log::Message_ProgressRange&         theProgress)
 {
   if (theDocument.IsNull())
   {
@@ -107,7 +107,7 @@ bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
 bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
                        const occ::handle<TDocStd_Document>& theDocument,
                        occ::handle<XSControl_WorkSession>&  theWS,
-                       const Message_ProgressRange&         theProgress)
+                       const System::log::Message_ProgressRange&         theProgress)
 {
   if (theDocument.IsNull())
   {
@@ -127,7 +127,7 @@ bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
 
 bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
                       const occ::handle<TDocStd_Document>& theDocument,
-                      const Message_ProgressRange&         theProgress)
+                      const System::log::Message_ProgressRange&         theProgress)
 {
   if (theDocument.IsNull())
   {
@@ -143,7 +143,7 @@ bool DE_Wrapper::Read(const TCollection_AsciiString&       thePath,
 
 bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
                        const occ::handle<TDocStd_Document>& theDocument,
-                       const Message_ProgressRange&         theProgress)
+                       const System::log::Message_ProgressRange&         theProgress)
 {
   if (theDocument.IsNull())
   {
@@ -160,7 +160,7 @@ bool DE_Wrapper::Write(const TCollection_AsciiString&       thePath,
 bool DE_Wrapper::Read(const TCollection_AsciiString&      thePath,
                       TopoDS_Shape&                       theShape,
                       occ::handle<XSControl_WorkSession>& theWS,
-                      const Message_ProgressRange&        theProgress)
+                      const System::log::Message_ProgressRange&        theProgress)
 {
   if (theWS.IsNull())
   {
@@ -177,7 +177,7 @@ bool DE_Wrapper::Read(const TCollection_AsciiString&      thePath,
 bool DE_Wrapper::Write(const TCollection_AsciiString&      thePath,
                        const TopoDS_Shape&                 theShape,
                        occ::handle<XSControl_WorkSession>& theWS,
-                       const Message_ProgressRange&        theProgress)
+                       const System::log::Message_ProgressRange&        theProgress)
 {
   if (theWS.IsNull())
   {
@@ -193,7 +193,7 @@ bool DE_Wrapper::Write(const TCollection_AsciiString&      thePath,
 
 bool DE_Wrapper::Read(const TCollection_AsciiString& thePath,
                       TopoDS_Shape&                  theShape,
-                      const Message_ProgressRange&   theProgress)
+                      const System::log::Message_ProgressRange&   theProgress)
 {
 
   occ::handle<DE_Provider> aProvider;
@@ -206,7 +206,7 @@ bool DE_Wrapper::Read(const TCollection_AsciiString& thePath,
 
 bool DE_Wrapper::Write(const TCollection_AsciiString& thePath,
                        const TopoDS_Shape&            theShape,
-                       const Message_ProgressRange&   theProgress)
+                       const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<DE_Provider> aProvider;
   if (!FindProvider(thePath, false, aProvider))
@@ -260,9 +260,9 @@ bool DE_Wrapper::Save(const TCollection_AsciiString&                   theResour
                       const NCollection_List<TCollection_AsciiString>& theFormats,
                       const NCollection_List<TCollection_AsciiString>& theVendors)
 {
-  OSD_Path       aPath = theResourcePath;
-  OSD_File       aFile(aPath);
-  OSD_Protection aProt;
+  System::os::OSD_Path       aPath = theResourcePath;
+  System::os::OSD_File       aFile(aPath);
+  System::os::OSD_Protection aProt;
   {
     try
     {
@@ -502,7 +502,7 @@ bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
   {
     return false;
   }
-  OSD_Path                      aPath(thePath);
+  System::os::OSD_Path                      aPath(thePath);
   const TCollection_AsciiString anExtr = aPath.Extension();
   for (NCollection_DataMap<TCollection_AsciiString,
                            NCollection_IndexedDataMap<TCollection_AsciiString,
@@ -541,7 +541,7 @@ bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
     return false;
   }
 
-  OSD_Path                      aPath(thePath);
+  System::os::OSD_Path                      aPath(thePath);
   const TCollection_AsciiString anExtr = aPath.Extension();
   for (NCollection_DataMap<TCollection_AsciiString,
                            NCollection_IndexedDataMap<TCollection_AsciiString,
@@ -573,7 +573,7 @@ bool DE_Wrapper::FindReadProvider(const TCollection_AsciiString& thePath,
 bool DE_Wrapper::FindWriteProvider(const TCollection_AsciiString& thePath,
                                    occ::handle<DE_Provider>&      theProvider) const
 {
-  OSD_Path                      aPath(thePath);
+  System::os::OSD_Path                      aPath(thePath);
   const TCollection_AsciiString anExtr = aPath.Extension();
   for (NCollection_DataMap<TCollection_AsciiString,
                            NCollection_IndexedDataMap<TCollection_AsciiString,
@@ -648,7 +648,7 @@ void DE_Wrapper::sort(const occ::handle<DE_ConfigurationContext>& theResource)
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
                       const occ::handle<TDocStd_Document>& theDocument,
                       occ::handle<XSControl_WorkSession>&  theWS,
-                      const Message_ProgressRange&         theProgress)
+                      const System::log::Message_ProgressRange&         theProgress)
 {
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, "DE_Wrapper Read"))
   {
@@ -661,13 +661,13 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
   Standard_IStream&        aFirstStream = theStreams.First().Stream;
   if (!FindReadProvider(aFirstKey, aFirstStream, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -678,7 +678,7 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
                        const occ::handle<TDocStd_Document>& theDocument,
                        occ::handle<XSControl_WorkSession>&  theWS,
-                       const Message_ProgressRange&         theProgress)
+                       const System::log::Message_ProgressRange&         theProgress)
 {
   if (!DE_ValidationUtils::ValidateWriteStreamList(theStreams, "DE_Wrapper Write"))
   {
@@ -690,13 +690,13 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
   occ::handle<DE_Provider> aProvider;
   if (!FindWriteProvider(aFirstKey, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -706,7 +706,7 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
 
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
                       const occ::handle<TDocStd_Document>& theDocument,
-                      const Message_ProgressRange&         theProgress)
+                      const System::log::Message_ProgressRange&         theProgress)
 {
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, "DE_Wrapper Read"))
   {
@@ -719,13 +719,13 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
   Standard_IStream&        aFirstStream = theStreams.First().Stream;
   if (!FindReadProvider(aFirstKey, aFirstStream, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -735,7 +735,7 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&         theStreams,
 
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
                        const occ::handle<TDocStd_Document>& theDocument,
-                       const Message_ProgressRange&         theProgress)
+                       const System::log::Message_ProgressRange&         theProgress)
 {
   if (!DE_ValidationUtils::ValidateWriteStreamList(theStreams, "DE_Wrapper Write"))
   {
@@ -747,13 +747,13 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
   occ::handle<DE_Provider> aProvider;
   if (!FindWriteProvider(aFirstKey, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -764,7 +764,7 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&        theStreams,
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList&        theStreams,
                       TopoDS_Shape&                       theShape,
                       occ::handle<XSControl_WorkSession>& theWS,
-                      const Message_ProgressRange&        theProgress)
+                      const System::log::Message_ProgressRange&        theProgress)
 {
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, "DE_Wrapper Read"))
   {
@@ -777,13 +777,13 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&        theStreams,
   Standard_IStream&        aFirstStream = theStreams.First().Stream;
   if (!FindReadProvider(aFirstKey, aFirstStream, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -794,7 +794,7 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList&        theStreams,
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList&       theStreams,
                        const TopoDS_Shape&                 theShape,
                        occ::handle<XSControl_WorkSession>& theWS,
-                       const Message_ProgressRange&        theProgress)
+                       const System::log::Message_ProgressRange&        theProgress)
 {
   if (!DE_ValidationUtils::ValidateWriteStreamList(theStreams, "DE_Wrapper Write"))
   {
@@ -806,13 +806,13 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&       theStreams,
   occ::handle<DE_Provider> aProvider;
   if (!FindWriteProvider(aFirstKey, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -822,7 +822,7 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList&       theStreams,
 
 bool DE_Wrapper::Read(DE_Provider::ReadStreamList& theStreams,
                       TopoDS_Shape&                theShape,
-                      const Message_ProgressRange& theProgress)
+                      const System::log::Message_ProgressRange& theProgress)
 {
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, "DE_Wrapper Read"))
   {
@@ -835,13 +835,13 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList& theStreams,
   Standard_IStream&        aFirstStream = theStreams.First().Stream;
   if (!FindReadProvider(aFirstKey, aFirstStream, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }
@@ -851,7 +851,7 @@ bool DE_Wrapper::Read(DE_Provider::ReadStreamList& theStreams,
 
 bool DE_Wrapper::Write(DE_Provider::WriteStreamList& theStreams,
                        const TopoDS_Shape&           theShape,
-                       const Message_ProgressRange&  theProgress)
+                       const System::log::Message_ProgressRange&  theProgress)
 {
   if (!DE_ValidationUtils::ValidateWriteStreamList(theStreams, "DE_Wrapper Write"))
   {
@@ -863,13 +863,13 @@ bool DE_Wrapper::Write(DE_Provider::WriteStreamList& theStreams,
   occ::handle<DE_Provider> aProvider;
   if (!FindWriteProvider(aFirstKey, aProvider))
   {
-    Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
+    System::log::Message::SendFail() << "Error: DE_Wrapper cannot find provider for stream " << aFirstKey;
     return false;
   }
 
   if (!aProvider->GetNode()->IsStreamSupported())
   {
-    Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
+    System::log::Message::SendFail() << "Error: Provider " << aProvider->GetFormat() << " "
                         << aProvider->GetVendor() << " doesn't support stream operations";
     return false;
   }

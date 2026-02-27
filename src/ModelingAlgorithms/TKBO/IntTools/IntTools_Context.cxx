@@ -319,7 +319,7 @@ Geom2dHatch_Hatcher& IntTools_Context::Hatcher(const TopoDS_Face& aF)
     aTolHatch3D   = 1.e-8;
     aTolArcIntr   = 1.e-10;
     aTolTangfIntr = 1.e-10;
-    aEpsT         = Precision::PConfusion();
+    aEpsT         = math::precision::Precision::PConfusion();
 
     Geom2dHatch_Intersector aIntr(aTolArcIntr, aTolTangfIntr);
     pHatcher = (Geom2dHatch_Hatcher*)myAllocator->Allocate(sizeof(Geom2dHatch_Hatcher));
@@ -381,8 +381,8 @@ IntTools_SurfaceRangeLocalizeData& IntTools_Context::SurfaceData(const TopoDS_Fa
       sizeof(IntTools_SurfaceRangeLocalizeData));
     new (pSData) IntTools_SurfaceRangeLocalizeData(3,
                                                    3,
-                                                   10. * Precision::PConfusion(),
-                                                   10. * Precision::PConfusion());
+                                                   10. * math::precision::Precision::PConfusion(),
+                                                   10. * math::precision::Precision::PConfusion());
 
     myProjSDataMap.Bind(aF, pSData);
   }
@@ -412,7 +412,7 @@ int IntTools_Context::ComputePE(const gp_Pnt&      aP1,
     aDist = aProjector.LowerDistance();
 
     aTolE2  = BRep_Tool::Tolerance(aE2);
-    aTolSum = aTolP1 + aTolE2 + Precision::Confusion();
+    aTolSum = aTolP1 + aTolE2 + math::precision::Precision::Confusion();
 
     aT = aProjector.LowerDistanceParameter();
     if (aDist > aTolSum)
@@ -432,7 +432,7 @@ int IntTools_Context::ComputePE(const gp_Pnt&      aP1,
       if (aV.Orientation() == TopAbs_FORWARD || aV.Orientation() == TopAbs_REVERSED)
       {
         gp_Pnt aPV    = BRep_Tool::Pnt(aV);
-        aTolSum       = aTolP1 + BRep_Tool::Tolerance(aV) + Precision::Confusion();
+        aTolSum       = aTolP1 + BRep_Tool::Tolerance(aV) + math::precision::Precision::Confusion();
         double aDist1 = aP1.Distance(aPV);
         if (aDist1 < aDist && aDist1 < aTolSum)
         {
@@ -441,7 +441,7 @@ int IntTools_Context::ComputePE(const gp_Pnt&      aP1,
         }
       }
     }
-    if (Precision::IsInfinite(aDist))
+    if (math::precision::Precision::IsInfinite(aDist))
     {
       return -3;
     }
@@ -482,7 +482,7 @@ int IntTools_Context::ComputeVE(const TopoDS_Vertex& theV,
 
   aTolV   = BRep_Tool::Tolerance(theV);
   aTolE   = BRep_Tool::Tolerance(theE);
-  aTolSum = aTolV + aTolE + std::max(theFuzz, Precision::Confusion());
+  aTolSum = aTolV + aTolE + std::max(theFuzz, math::precision::Precision::Confusion());
 
   theTol = aDist + aTolE;
   theT   = aProjector.LowerDistanceParameter();
@@ -518,7 +518,7 @@ int IntTools_Context::ComputeVF(const TopoDS_Vertex& theVertex,
   aTolV = BRep_Tool::Tolerance(theVertex);
   aTolF = BRep_Tool::Tolerance(theFace);
 
-  aTolSum = aTolV + aTolF + std::max(theFuzz, Precision::Confusion());
+  aTolSum = aTolV + aTolF + std::max(theFuzz, math::precision::Precision::Confusion());
   theTol  = aDist + aTolF;
   aProjector.LowerDistanceParameters(theU, theV);
 
@@ -737,9 +737,9 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
   aLast  = aC3D->LastParameter();
 
   bool   bFirstValid = false;
-  double aFirstDist  = Precision::Infinite();
+  double aFirstDist  = math::precision::Precision::Infinite();
 
-  if (!Precision::IsInfinite(aFirst))
+  if (!math::precision::Precision::IsInfinite(aFirst))
   {
     gp_Pnt aPCFirst = aC3D->Value(aFirst);
     aFirstDist      = aPv.Distance(aPCFirst);
@@ -758,7 +758,7 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
           aT                        = aPOncurve.Parameter();
 
           if ((aT > (aLast + aFirst) * 0.5) || (aPv.Distance(aPOncurve.Value()) > aTolSum)
-              || (aPCFirst.Distance(aPOncurve.Value()) < Precision::Confusion()))
+              || (aPCFirst.Distance(aPOncurve.Value()) < math::precision::Precision::Confusion()))
             aT = aFirst;
         }
         else
@@ -784,7 +784,7 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
             aT                               = aPOncurve.Parameter();
 
             if ((aT > (aLast + aFirst) * 0.5) || (aPv.Distance(aPOncurve.Value()) > aTolSum)
-                || (aPCFirst.Distance(aPOncurve.Value()) < Precision::Confusion()))
+                || (aPCFirst.Distance(aPOncurve.Value()) < math::precision::Precision::Confusion()))
               aT = aFirst;
           }
         }
@@ -792,7 +792,7 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
     }
   }
 
-  if (!Precision::IsInfinite(aLast))
+  if (!math::precision::Precision::IsInfinite(aLast))
   {
     gp_Pnt aPCLast = aC3D->Value(aLast);
     aDist          = aPv.Distance(aPCLast);
@@ -815,7 +815,7 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
           aT                        = aPOncurve.Parameter();
 
           if ((aT < (aLast + aFirst) * 0.5) || (aPv.Distance(aPOncurve.Value()) > aTolSum)
-              || (aPCLast.Distance(aPOncurve.Value()) < Precision::Confusion()))
+              || (aPCLast.Distance(aPOncurve.Value()) < math::precision::Precision::Confusion()))
             aT = aLast;
         }
         else
@@ -841,7 +841,7 @@ bool IntTools_Context::IsVertexOnLine(const TopoDS_Vertex&  aV,
             aT                               = aPOncurve.Parameter();
 
             if ((aT < (aLast + aFirst) * 0.5) || (aPv.Distance(aPOncurve.Value()) > aTolSum)
-                || (aPCLast.Distance(aPOncurve.Value()) < Precision::Confusion()))
+                || (aPCLast.Distance(aPOncurve.Value()) < math::precision::Precision::Confusion()))
               aT = aLast;
           }
         }

@@ -1543,7 +1543,7 @@ static int readbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   bool        isBinaryFormat = true;
   {
 
-    const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
     std::shared_ptr<std::istream>      aFile =
       aFileSystem->OpenIStream(aFileName, std::ios::in | std::ios::binary);
     if (aFile.get() == nullptr)

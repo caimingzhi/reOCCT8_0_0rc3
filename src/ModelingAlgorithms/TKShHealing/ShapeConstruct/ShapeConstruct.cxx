@@ -413,8 +413,8 @@ static inline HCurve GetCurveCopy(const HCurve&             curve,
 template <class HCurve>
 static inline void SegmentCurve(HCurve& curve, const double first, const double last)
 {
-  if (curve->FirstParameter() < first - Precision::PConfusion()
-      || curve->LastParameter() > last + Precision::PConfusion())
+  if (curve->FirstParameter() < first - math::precision::Precision::PConfusion()
+      || curve->LastParameter() > last + math::precision::Precision::PConfusion())
   {
     if (curve->IsPeriodic())
       curve->Segment(first, last);
@@ -442,7 +442,7 @@ static inline void GetReversedParameters(const HPoint& p11,
   double d22   = p22.Distance(p12);
   double Dmin1 = std::min(d11, d21);
   double Dmin2 = std::min(d12, d22);
-  if (fabs(Dmin1 - Dmin2) <= Precision::Confusion() || Dmin2 > Dmin1)
+  if (fabs(Dmin1 - Dmin2) <= math::precision::Precision::Confusion() || Dmin2 > Dmin1)
   {
     isRev1 = (d11 < d21);
   }
@@ -473,9 +473,9 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom_Curve>& ac3d1,
   ShapeConstruct_Curve           scc;
   bool                           After = true;
   occ::handle<Geom_BSplineCurve> bsplc1 =
-    scc.ConvertToBSpline(c3d1, first1, last1, Precision::Confusion());
+    scc.ConvertToBSpline(c3d1, first1, last1, math::precision::Precision::Confusion());
   occ::handle<Geom_BSplineCurve> bsplc2 =
-    scc.ConvertToBSpline(c3d2, first2, last2, Precision::Confusion());
+    scc.ConvertToBSpline(c3d2, first2, last2, math::precision::Precision::Confusion());
 
   if (bsplc1.IsNull() || bsplc2.IsNull())
     return false;
@@ -502,7 +502,7 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom_Curve>& ac3d1,
   bsplc1->SetPole(bsplc1->NbPoles(), pmid);
   bsplc2->SetPole(1, pmid);
   GeomConvert_CompCurveToBSplineCurve connect3d(bsplc1);
-  if (!connect3d.Add(bsplc2, Precision::Confusion(), After, false))
+  if (!connect3d.Add(bsplc2, math::precision::Precision::Confusion(), After, false))
     return false;
   c3dOut = connect3d.BSplineCurve();
   return true;
@@ -528,9 +528,9 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
   bool                 After = true;
 
   occ::handle<Geom2d_BSplineCurve> bsplc12d =
-    scc.ConvertToBSpline(c2d1, first1, last1, Precision::Confusion());
+    scc.ConvertToBSpline(c2d1, first1, last1, math::precision::Precision::Confusion());
   occ::handle<Geom2d_BSplineCurve> bsplc22d =
-    scc.ConvertToBSpline(c2d2, first2, last2, Precision::Confusion());
+    scc.ConvertToBSpline(c2d2, first2, last2, math::precision::Precision::Confusion());
 
   if (bsplc12d.IsNull() || bsplc22d.IsNull())
     return false;
@@ -560,7 +560,7 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
     gp_Pnt2d pp3 = bsplc12d->Value((bsplc12d->FirstParameter() + bsplc12d->LastParameter()) * 0.5);
 
     double leng     = pp1.Distance(pp2);
-    bool   isCircle = (leng < pp1.Distance(pp3) + Precision::PConfusion());
+    bool   isCircle = (leng < pp1.Distance(pp3) + math::precision::Precision::PConfusion());
     if ((pp1.Distance(bsplc22d->Pole(1)) < leng) && !isCircle)
       return false;
   }
@@ -577,7 +577,7 @@ bool ShapeConstruct::JoinCurves(const occ::handle<Geom2d_Curve>& aC2d1,
   occ::handle<Geom_BSplineCurve> bspl2 =
     occ::down_cast<Geom_BSplineCurve>(GeomAPI::To3d(bsplc22d, vPln));
   GeomConvert_CompCurveToBSplineCurve connect2d(bspl1);
-  if (!connect2d.Add(bspl2, Precision::PConfusion(), After, false))
+  if (!connect2d.Add(bspl2, math::precision::Precision::PConfusion(), After, false))
     return false;
   C2dOut = GeomAPI::To2d(connect2d.BSplineCurve(), vPln);
 

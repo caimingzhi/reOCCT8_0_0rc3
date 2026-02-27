@@ -39,19 +39,19 @@ const OSD_WhoAmI Iam = OSD_WProcess;
 
 #ifndef _WIN32
 
-OSD_Process::OSD_Process() = default;
+System::os::OSD_Process::OSD_Process() = default;
 
-void OSD_Process::TerminalType(TCollection_AsciiString& Name)
+void System::os::OSD_Process::TerminalType(TCollection_AsciiString& Name)
 {
   TCollection_AsciiString which = "TERM";
-  OSD_Environment         term(which, "");
+  System::os::OSD_Environment         term(which, "");
 
   term.Value();
   which = term.Value();
   Name  = term.Name();
 }
 
-Quantity_Date OSD_Process::SystemDate()
+Quantity_Date System::os::OSD_Process::SystemDate()
 {
   Quantity_Date   result;
   int             month = 0, day = 0, year = 0, hh = 0, mn = 0, ss = 0;
@@ -78,12 +78,12 @@ Quantity_Date OSD_Process::SystemDate()
   return (result);
 }
 
-int OSD_Process::ProcessId()
+int System::os::OSD_Process::ProcessId()
 {
   return (getpid());
 }
 
-TCollection_AsciiString OSD_Process::UserName()
+TCollection_AsciiString System::os::OSD_Process::UserName()
 {
   #if defined(__EMSCRIPTEN__)
 
@@ -94,15 +94,15 @@ TCollection_AsciiString OSD_Process::UserName()
   #endif
 }
 
-bool OSD_Process::IsSuperUser()
+bool System::os::OSD_Process::IsSuperUser()
 {
   return getuid() == 0;
 }
 
-OSD_Path OSD_Process::CurrentDirectory()
+System::os::OSD_Path System::os::OSD_Process::CurrentDirectory()
 {
   char                    cwd[MAXPATHLEN + 1];
-  OSD_Path                result;
+  System::os::OSD_Path                result;
   TCollection_AsciiString Name;
 
   if (!getcwd(cwd, MAXPATHLEN + 1))
@@ -123,14 +123,14 @@ OSD_Path OSD_Process::CurrentDirectory()
     }
   #else
     Name += TCollection_AsciiString("/");
-    result = OSD_Path(Name);
+    result = System::os::OSD_Path(Name);
 
   #endif
   }
   return (result);
 }
 
-void OSD_Process::SetCurrentDirectory(const OSD_Path& where)
+void System::os::OSD_Process::SetCurrentDirectory(const System::os::OSD_Path& where)
 {
   TCollection_AsciiString Name;
   int                     status;
@@ -142,39 +142,39 @@ void OSD_Process::SetCurrentDirectory(const OSD_Path& where)
     myError.SetValue(errno, Iam, "Move to directory");
 }
 
-void OSD_Process::Reset()
+void System::os::OSD_Process::Reset()
 {
   myError.Reset();
 }
 
-bool OSD_Process::Failed() const
+bool System::os::OSD_Process::Failed() const
 {
   return (myError.Failed());
 }
 
-void OSD_Process::Perror()
+void System::os::OSD_Process::Perror()
 {
   myError.Perror();
 }
 
-int OSD_Process::Error() const
+int System::os::OSD_Process::Error() const
 {
   return (myError.Error());
 }
 
 #else
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 
-OSD_Process::OSD_Process() {}
+System::os::OSD_Process::OSD_Process() {}
 
-void OSD_Process ::TerminalType(TCollection_AsciiString& Name)
+void System::os::OSD_Process ::TerminalType(TCollection_AsciiString& Name)
 {
 
   Name = "WIN32 console";
 }
 
-Quantity_Date OSD_Process ::SystemDate()
+Quantity_Date System::os::OSD_Process ::SystemDate()
 {
 
   Quantity_Date retVal;
@@ -188,7 +188,7 @@ Quantity_Date OSD_Process ::SystemDate()
   return retVal;
 }
 
-TCollection_AsciiString OSD_Process::UserName()
+TCollection_AsciiString System::os::OSD_Process::UserName()
 {
   #ifndef OCCT_UWP
   wchar_t                 aUserName[UNLEN + 1];
@@ -205,7 +205,7 @@ TCollection_AsciiString OSD_Process::UserName()
   #endif
 }
 
-bool OSD_Process ::IsSuperUser()
+bool System::os::OSD_Process ::IsSuperUser()
 {
   #ifndef OCCT_UWP
   bool          retVal = FALSE;
@@ -244,14 +244,14 @@ bool OSD_Process ::IsSuperUser()
   #endif
 }
 
-int OSD_Process::ProcessId()
+int System::os::OSD_Process::ProcessId()
 {
   return (int)GetCurrentProcessId();
 }
 
-OSD_Path OSD_Process::CurrentDirectory()
+System::os::OSD_Path System::os::OSD_Process::CurrentDirectory()
 {
-  OSD_Path anCurrentDirectory;
+  System::os::OSD_Path anCurrentDirectory;
   #ifndef OCCT_UWP
   const DWORD aBuffLen = GetCurrentDirectoryW(0, NULL);
   if (aBuffLen > 0)
@@ -262,7 +262,7 @@ OSD_Path OSD_Process::CurrentDirectory()
     const TCollection_AsciiString aPath(aBuff);
     delete[] aBuff;
 
-    anCurrentDirectory = OSD_Path(aPath);
+    anCurrentDirectory = System::os::OSD_Path(aPath);
   }
   else
   {
@@ -272,7 +272,7 @@ OSD_Path OSD_Process::CurrentDirectory()
   return anCurrentDirectory;
 }
 
-void OSD_Process ::SetCurrentDirectory(const OSD_Path& where)
+void System::os::OSD_Process ::SetCurrentDirectory(const System::os::OSD_Path& where)
 {
 
   TCollection_AsciiString path;
@@ -285,25 +285,25 @@ void OSD_Process ::SetCurrentDirectory(const OSD_Path& where)
     _osd_wnt_set_error(myError, OSD_WProcess);
 }
 
-bool OSD_Process ::Failed() const
+bool System::os::OSD_Process ::Failed() const
 {
 
   return myError.Failed();
 }
 
-void OSD_Process ::Reset()
+void System::os::OSD_Process ::Reset()
 {
 
   myError.Reset();
 }
 
-void OSD_Process ::Perror()
+void System::os::OSD_Process ::Perror()
 {
 
   myError.Perror();
 }
 
-int OSD_Process ::Error() const
+int System::os::OSD_Process ::Error() const
 {
 
   return myError.Error();
@@ -311,7 +311,7 @@ int OSD_Process ::Error() const
 
 #endif
 
-TCollection_AsciiString OSD_Process::ExecutablePath()
+TCollection_AsciiString System::os::OSD_Process::ExecutablePath()
 {
 #ifdef _WIN32
   wchar_t aBuff[MAX_PATH + 2];
@@ -385,7 +385,7 @@ TCollection_AsciiString OSD_Process::ExecutablePath()
 #endif
 }
 
-TCollection_AsciiString OSD_Process::ExecutableFolder()
+TCollection_AsciiString System::os::OSD_Process::ExecutableFolder()
 {
   TCollection_AsciiString aFullPath  = ExecutablePath();
   int                     aLastSplit = -1;

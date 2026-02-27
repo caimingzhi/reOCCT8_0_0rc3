@@ -20,7 +20,10 @@ class Interface_ParamList;
 class Interface_Check;
 class IGESData_IGESEntity;
 class IGESData_IGESReaderData;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 class gp_XY;
 class gp_XYZ;
 class TCollection_HAsciiString;
@@ -78,7 +81,7 @@ public:
   Standard_EXPORT bool ReadInteger(const IGESData_ParamCursor& PC, const char* mess, int& val);
 
   Standard_EXPORT bool ReadBoolean(const IGESData_ParamCursor& PC,
-                                   const Message_Msg&          amsg,
+                                   const System::log::Message_Msg&          amsg,
                                    bool&                       val,
                                    const bool                  exact = true);
 
@@ -91,16 +94,16 @@ public:
 
   Standard_EXPORT bool ReadReal(const IGESData_ParamCursor& PC, const char* mess, double& val);
 
-  Standard_EXPORT bool ReadXY(const IGESData_ParamCursor& PC, Message_Msg& amsg, gp_XY& val);
+  Standard_EXPORT bool ReadXY(const IGESData_ParamCursor& PC, System::log::Message_Msg& amsg, gp_XY& val);
 
   Standard_EXPORT bool ReadXY(const IGESData_ParamCursor& PC, const char* mess, gp_XY& val);
 
-  Standard_EXPORT bool ReadXYZ(const IGESData_ParamCursor& PC, Message_Msg& amsg, gp_XYZ& val);
+  Standard_EXPORT bool ReadXYZ(const IGESData_ParamCursor& PC, System::log::Message_Msg& amsg, gp_XYZ& val);
 
   Standard_EXPORT bool ReadXYZ(const IGESData_ParamCursor& PC, const char* mess, gp_XYZ& val);
 
   Standard_EXPORT bool ReadText(const IGESData_ParamCursor&            thePC,
-                                const Message_Msg&                     theMsg,
+                                const System::log::Message_Msg&                     theMsg,
                                 occ::handle<TCollection_HAsciiString>& theVal);
 
   Standard_EXPORT bool ReadText(const IGESData_ParamCursor&            PC,
@@ -162,7 +165,7 @@ public:
   }
 
   Standard_EXPORT bool ReadInts(const IGESData_ParamCursor&            PC,
-                                const Message_Msg&                     amsg,
+                                const System::log::Message_Msg&                     amsg,
                                 occ::handle<NCollection_HArray1<int>>& val,
                                 const int                              index = 1);
 
@@ -172,7 +175,7 @@ public:
                                 const int                              index = 1);
 
   Standard_EXPORT bool ReadReals(const IGESData_ParamCursor&               PC,
-                                 Message_Msg&                              amsg,
+                                 System::log::Message_Msg&                              amsg,
                                  occ::handle<NCollection_HArray1<double>>& val,
                                  const int                                 index = 1);
 
@@ -183,7 +186,7 @@ public:
 
   Standard_EXPORT bool ReadTexts(
     const IGESData_ParamCursor&                                              PC,
-    const Message_Msg&                                                       amsg,
+    const System::log::Message_Msg&                                                       amsg,
     occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>>& val,
     const int                                                                index = 1);
 
@@ -196,7 +199,7 @@ public:
   Standard_EXPORT bool ReadEnts(
     const occ::handle<IGESData_IGESReaderData>&                         IR,
     const IGESData_ParamCursor&                                         PC,
-    const Message_Msg&                                                  amsg,
+    const System::log::Message_Msg&                                                  amsg,
     occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>& val,
     const int                                                           index = 1);
 
@@ -209,7 +212,7 @@ public:
 
   Standard_EXPORT bool ReadEntList(const occ::handle<IGESData_IGESReaderData>& IR,
                                    const IGESData_ParamCursor&                 PC,
-                                   Message_Msg&                                amsg,
+                                   System::log::Message_Msg&                                amsg,
                                    Interface_EntityList&                       val,
                                    const bool                                  ord = true);
 
@@ -227,9 +230,9 @@ public:
 
   Standard_EXPORT bool ReadingEntityNumber(const int num, const char* mess, int& val);
 
-  Standard_EXPORT void SendFail(const Message_Msg& amsg);
+  Standard_EXPORT void SendFail(const System::log::Message_Msg& amsg);
 
-  Standard_EXPORT void SendWarning(const Message_Msg& amsg);
+  Standard_EXPORT void SendWarning(const System::log::Message_Msg& amsg);
 
   Standard_EXPORT void AddFail(const char* afail, const char* bfail = "");
 

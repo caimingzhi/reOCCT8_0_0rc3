@@ -567,8 +567,8 @@ bool TopOpeBRepTool_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_E
     return false;
   }
 
-  const double tollin = Precision::Confusion();
-  const double tolang = Precision::Angular();
+  const double tollin = math::precision::Precision::Confusion();
+  const double tolang = math::precision::Precision::Angular();
   if (typC1 == STANDARD_TYPE(Geom_Line))
   {
     gp_Lin li1(occ::down_cast<Geom_Line>(C1)->Lin());
@@ -836,7 +836,7 @@ bool TopOpeBRepTool_FuseEdges::UpdatePCurve(const TopoDS_Edge&                  
             occ::handle<Geom2d_BoundedCurve> BC = occ::down_cast<Geom2d_BoundedCurve>(C);
             if (BC.IsNull())
               BC = new Geom2d_TrimmedCurve(C, first, last);
-            if (!Concat.Add(BC, Precision::PConfusion()))
+            if (!Concat.Add(BC, math::precision::Precision::PConfusion()))
 
               return false;
           }
@@ -844,8 +844,8 @@ bool TopOpeBRepTool_FuseEdges::UpdatePCurve(const TopoDS_Edge&                  
 
           double first = Curv2d->FirstParameter();
           double last  = Curv2d->LastParameter();
-          if (std::abs(first - ef) > Precision::PConfusion()
-              || std::abs(last - el) > Precision::PConfusion())
+          if (std::abs(first - ef) > math::precision::Precision::PConfusion()
+              || std::abs(last - el) > math::precision::Precision::PConfusion())
           {
             occ::handle<Geom2d_BSplineCurve> bc = occ::down_cast<Geom2d_BSplineCurve>(Curv2d);
             NCollection_Array1<double>       Knots(1, bc->NbKnots());

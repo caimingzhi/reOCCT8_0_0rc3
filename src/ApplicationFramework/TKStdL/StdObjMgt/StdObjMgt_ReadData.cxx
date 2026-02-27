@@ -5,7 +5,7 @@
 
 #include <Standard_GUID.hpp>
 
-StdObjMgt_ReadData::StdObjMgt_ReadData(const occ::handle<Storage_BaseDriver>& theDriver,
+StdObjMgt_ReadData::StdObjMgt_ReadData(const occ::handle<app::storage::Storage_BaseDriver>& theDriver,
                                        const int                              theNumberOfObjects)
     : myDriver(theDriver),
       myPersistentObjects(1, theNumberOfObjects)

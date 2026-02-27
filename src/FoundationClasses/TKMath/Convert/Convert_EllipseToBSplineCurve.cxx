@@ -86,7 +86,7 @@ Convert_EllipseToBSplineCurve::Convert_EllipseToBSplineCurve(
     : Convert_ConicToBSplineCurve(0, 0, 0)
 {
 #ifndef No_Exception
-  double Tol   = Precision::PConfusion();
+  double Tol   = math::precision::Precision::PConfusion();
   double delta = ULast - UFirst;
 #endif
   Standard_DomainError_Raise_if((delta > (2 * M_PI + Tol)) || (delta <= 0.0e0),

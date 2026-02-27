@@ -25,11 +25,11 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
                                                 IGESData_ParamReader& PR) const
 {
 
-  Message_Msg Msg100("XSTEP_100");
-  Message_Msg Msg101("XSTEP_101");
-  Message_Msg Msg102("XSTEP_102");
-  Message_Msg Msg103("XSTEP_103");
-  Message_Msg Msg159("XSTEP_159");
+  System::log::Message_Msg Msg100("XSTEP_100");
+  System::log::Message_Msg Msg101("XSTEP_101");
+  System::log::Message_Msg Msg102("XSTEP_102");
+  System::log::Message_Msg Msg103("XSTEP_103");
+  System::log::Message_Msg Msg159("XSTEP_159");
 
   int                                      I, J;
   int                                      anIndexU, anIndexV, aDegU, aDegV;
@@ -48,7 +48,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
 
   if (!FlagindexU || !FlagindexV)
   {
-    Message_Msg Msg97("XSTEP_97");
+    System::log::Message_Msg Msg97("XSTEP_97");
     PR.SendFail(Msg97);
   }
 
@@ -58,7 +58,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
 
   if (!FlagdegU || !FlagdegV)
   {
-    Message_Msg Msg98("XSTEP_98");
+    System::log::Message_Msg Msg98("XSTEP_98");
     PR.SendFail(Msg98);
   }
 
@@ -89,7 +89,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
     allPoles   = new NCollection_HArray2<gp_XYZ>(0, anIndexU, 0, anIndexV);
 
     bool        BadWeigth = false;
-    Message_Msg Msg105("XSTEP_105");
+    System::log::Message_Msg Msg105("XSTEP_105");
 
     for (J = 0; J <= anIndexV; J++)
     {
@@ -98,7 +98,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
 
         if (PR.ReadReal(PR.Current(), tempVal))
         {
-          if (tempVal < Precision::PConfusion())
+          if (tempVal < math::precision::Precision::PConfusion())
           {
             BadWeigth = true;
           }
@@ -106,7 +106,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
         }
         else
         {
-          Message_Msg Msg104("XSTEP_104");
+          System::log::Message_Msg Msg104("XSTEP_104");
           PR.SendFail(Msg104);
         }
       }
@@ -133,13 +133,13 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
 
   if (!PR.ReadReal(PR.Current(), aUmin) || !PR.ReadReal(PR.Current(), aVmin))
   {
-    Message_Msg Msg106("XSTEP_106");
+    System::log::Message_Msg Msg106("XSTEP_106");
     PR.SendFail(Msg106);
   }
 
   if (!PR.ReadReal(PR.Current(), aUmax) || !PR.ReadReal(PR.Current(), aVmax))
   {
-    Message_Msg Msg107("XSTEP_107");
+    System::log::Message_Msg Msg107("XSTEP_107");
     PR.SendFail(Msg107);
   }
 
@@ -169,7 +169,7 @@ void IGESGeom_ToolBSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_BSpli
     PR.SendWarning(Msg159);
   if (pbfin < 0)
   {
-    Message_Msg Msg158("XSTEP_158");
+    System::log::Message_Msg Msg158("XSTEP_158");
     PR.SendFail(Msg158);
   }
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
@@ -332,13 +332,13 @@ void IGESGeom_ToolBSplineSurface::OwnCheck(const occ::handle<IGESGeom_BSplineSur
 
   if (ent->NbKnotsU() != (indU + ent->DegreeU() + 2))
   {
-    Message_Msg Msg160("XSTEP_160");
+    System::log::Message_Msg Msg160("XSTEP_160");
     Msg160.Arg(indU + ent->DegreeU() + 2);
     ach->SendFail(Msg160);
   }
   if (ent->NbKnotsV() != (indV + ent->DegreeV() + 2))
   {
-    Message_Msg Msg161("XSTEP_161");
+    System::log::Message_Msg Msg161("XSTEP_161");
     Msg161.Arg(indV + ent->DegreeV() + 2);
     ach->SendFail(Msg161);
   }
@@ -349,7 +349,7 @@ void IGESGeom_ToolBSplineSurface::OwnCheck(const occ::handle<IGESGeom_BSplineSur
 
   if (!Flag)
   {
-    Message_Msg Msg104("XSTEP_104");
+    System::log::Message_Msg Msg104("XSTEP_104");
     ach->SendFail(Msg104);
   }
 

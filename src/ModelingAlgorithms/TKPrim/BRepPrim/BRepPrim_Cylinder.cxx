@@ -59,7 +59,7 @@ TopoDS_Face BRepPrim_Cylinder::MakeEmptyLateralFace() const
 {
   occ::handle<Geom_CylindricalSurface> C = new Geom_CylindricalSurface(Axes(), myRadius);
   TopoDS_Face                          F;
-  myBuilder.Builder().MakeFace(F, C, Precision::Confusion());
+  myBuilder.Builder().MakeFace(F, C, math::precision::Precision::Confusion());
   return F;
 }
 

@@ -14,10 +14,10 @@ Geom2dConvert_PPoint::Geom2dConvert_PPoint(const double             theParameter
 
 bool Geom2dConvert_PPoint::operator==(const Geom2dConvert_PPoint& theOther) const
 {
-  return (fabs(myParameter - theOther.Parameter()) <= Precision::PConfusion());
+  return (fabs(myParameter - theOther.Parameter()) <= math::precision::Precision::PConfusion());
 }
 
 bool Geom2dConvert_PPoint::operator!=(const Geom2dConvert_PPoint& theOther) const
 {
-  return (fabs(myParameter - theOther.Parameter()) > Precision::PConfusion());
+  return (fabs(myParameter - theOther.Parameter()) > math::precision::Precision::PConfusion());
 }

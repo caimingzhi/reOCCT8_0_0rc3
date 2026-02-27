@@ -21,7 +21,7 @@ namespace
 
   void checkPointsEqual(const gp_Pnt& theP1,
                         const gp_Pnt& theP2,
-                        const double  theTolerance = Precision::Confusion())
+                        const double  theTolerance = math::precision::Precision::Confusion())
   {
     EXPECT_NEAR(theP1.X(), theP2.X(), theTolerance);
     EXPECT_NEAR(theP1.Y(), theP2.Y(), theTolerance);
@@ -30,7 +30,7 @@ namespace
 
   void checkVectorsEqual(const gp_Vec& theV1,
                          const gp_Vec& theV2,
-                         const double  theTolerance = Precision::Confusion())
+                         const double  theTolerance = math::precision::Precision::Confusion())
   {
     EXPECT_NEAR(theV1.X(), theV2.X(), theTolerance);
     EXPECT_NEAR(theV1.Y(), theV2.Y(), theTolerance);
@@ -39,7 +39,7 @@ namespace
 
   void checkDirectorsEqual(const gp_Dir& theD1,
                            const gp_Dir& theD2,
-                           const double  theTolerance = Precision::Confusion())
+                           const double  theTolerance = math::precision::Precision::Confusion())
   {
     EXPECT_NEAR(theD1.X(), theD2.X(), theTolerance);
     EXPECT_NEAR(theD1.Y(), theD2.Y(), theTolerance);
@@ -52,15 +52,15 @@ TEST(ElClibTests, InPeriod)
 
   const double PI2 = 2.0 * M_PI;
 
-  EXPECT_NEAR(ElCLib::InPeriod(0.5, 0.0, PI2), 0.5, Precision::Confusion());
-  EXPECT_NEAR(ElCLib::InPeriod(PI2 + 0.5, 0.0, PI2), 0.5, Precision::Confusion());
-  EXPECT_NEAR(ElCLib::InPeriod(-0.5, 0.0, PI2), PI2 - 0.5, Precision::Confusion());
-  EXPECT_NEAR(ElCLib::InPeriod(-PI2 - 0.5, 0.0, PI2), PI2 - 0.5, Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(0.5, 0.0, PI2), 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(PI2 + 0.5, 0.0, PI2), 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(-0.5, 0.0, PI2), PI2 - 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(-PI2 - 0.5, 0.0, PI2), PI2 - 0.5, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(ElCLib::InPeriod(1.7, 1.5, 4.5), 1.7, Precision::Confusion());
-  EXPECT_NEAR(ElCLib::InPeriod(4.7, 1.5, 4.5), 1.7, Precision::Confusion());
-  EXPECT_NEAR(ElCLib::InPeriod(7.7, 1.5, 4.5), 1.7, Precision::Confusion());
-  EXPECT_NEAR(ElCLib::InPeriod(1.3, 1.5, 4.5), 4.3, Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(1.7, 1.5, 4.5), 1.7, math::precision::Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(4.7, 1.5, 4.5), 1.7, math::precision::Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(7.7, 1.5, 4.5), 1.7, math::precision::Precision::Confusion());
+  EXPECT_NEAR(ElCLib::InPeriod(1.3, 1.5, 4.5), 4.3, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, AdjustPeriodic)
@@ -70,34 +70,34 @@ TEST(ElClibTests, AdjustPeriodic)
 
   U1 = 0.5;
   U2 = 0.7;
-  ElCLib::AdjustPeriodic(0.0, PI2, Precision::Confusion(), U1, U2);
-  EXPECT_NEAR(U1, 0.5, Precision::Confusion());
-  EXPECT_NEAR(U2, 0.7, Precision::Confusion());
+  ElCLib::AdjustPeriodic(0.0, PI2, math::precision::Precision::Confusion(), U1, U2);
+  EXPECT_NEAR(U1, 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(U2, 0.7, math::precision::Precision::Confusion());
 
   U1 = 0.5;
   U2 = 0.5 + PI2 + 0.2;
-  ElCLib::AdjustPeriodic(0.0, PI2, Precision::Confusion(), U1, U2);
-  EXPECT_NEAR(U1, 0.5, Precision::Confusion());
+  ElCLib::AdjustPeriodic(0.0, PI2, math::precision::Precision::Confusion(), U1, U2);
+  EXPECT_NEAR(U1, 0.5, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(U2, 0.7, Precision::Confusion());
+  EXPECT_NEAR(U2, 0.7, math::precision::Precision::Confusion());
 
   U1 = 0.5 + PI2;
   U2 = 0.7 + PI2;
-  ElCLib::AdjustPeriodic(0.0, PI2, Precision::Confusion(), U1, U2);
-  EXPECT_NEAR(U1, 0.5, Precision::Confusion());
-  EXPECT_NEAR(U2, 0.7, Precision::Confusion());
+  ElCLib::AdjustPeriodic(0.0, PI2, math::precision::Precision::Confusion(), U1, U2);
+  EXPECT_NEAR(U1, 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(U2, 0.7, math::precision::Precision::Confusion());
 
   U1 = -0.5;
   U2 = 0.7;
-  ElCLib::AdjustPeriodic(0.0, PI2, Precision::Confusion(), U1, U2);
-  EXPECT_NEAR(U1, PI2 - 0.5, Precision::Confusion());
-  EXPECT_NEAR(U2, 0.7 + PI2, Precision::Confusion());
+  ElCLib::AdjustPeriodic(0.0, PI2, math::precision::Precision::Confusion(), U1, U2);
+  EXPECT_NEAR(U1, PI2 - 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(U2, 0.7 + PI2, math::precision::Precision::Confusion());
 
   U1 = 1.0;
-  U2 = 1.0 + 0.5 * Precision::Confusion();
-  ElCLib::AdjustPeriodic(0.0, PI2, Precision::Confusion(), U1, U2);
-  EXPECT_NEAR(U1, 1.0, Precision::Confusion());
-  EXPECT_NEAR(U2, 1.0 + PI2, Precision::Confusion());
+  U2 = 1.0 + 0.5 * math::precision::Precision::Confusion();
+  ElCLib::AdjustPeriodic(0.0, PI2, math::precision::Precision::Confusion(), U1, U2);
+  EXPECT_NEAR(U1, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(U2, 1.0 + PI2, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, Line3D)
@@ -124,7 +124,7 @@ TEST(ElClibTests, Line3D)
 
   const gp_Pnt aTestPoint(1.0, 2.0, 10.0);
   const double aCalculatedParam = ElCLib::Parameter(aLin, aTestPoint);
-  EXPECT_NEAR(aCalculatedParam, 7.0, Precision::Confusion());
+  EXPECT_NEAR(aCalculatedParam, 7.0, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, Circle3D)
@@ -175,7 +175,7 @@ TEST(ElClibTests, Circle3D)
   checkVectorsEqual(aVecDN3, aExpectedVecD3_3);
 
   const double aCalculatedParam = ElCLib::Parameter(aCircle, aExpectedPoint);
-  EXPECT_NEAR(aCalculatedParam, aParam, Precision::Confusion());
+  EXPECT_NEAR(aCalculatedParam, aParam, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, Ellipse3D)
@@ -201,7 +201,7 @@ TEST(ElClibTests, Ellipse3D)
   checkVectorsEqual(aVecD1, aExpectedVecD1);
 
   const double aCalculatedParam = ElCLib::Parameter(anEllipse, aExpectedPoint);
-  EXPECT_NEAR(aCalculatedParam, aParam, Precision::Confusion());
+  EXPECT_NEAR(aCalculatedParam, aParam, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, Hyperbola3D)
@@ -227,7 +227,7 @@ TEST(ElClibTests, Hyperbola3D)
   checkVectorsEqual(aVecD1, aExpectedVecD1);
 
   const double aCalculatedParam = ElCLib::Parameter(aHyperbola, aExpectedPoint);
-  EXPECT_NEAR(aCalculatedParam, aParam, Precision::Confusion());
+  EXPECT_NEAR(aCalculatedParam, aParam, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, Parabola3D)
@@ -252,7 +252,7 @@ TEST(ElClibTests, Parabola3D)
   checkVectorsEqual(aVecD1, aExpectedVecD1);
 
   const double aCalculatedParam = ElCLib::Parameter(aParabola, aExpectedPoint);
-  EXPECT_NEAR(aCalculatedParam, aParam, Precision::Confusion());
+  EXPECT_NEAR(aCalculatedParam, aParam, math::precision::Precision::Confusion());
 }
 
 TEST(ElClibTests, To3dConversion)
@@ -275,7 +275,7 @@ TEST(ElClibTests, To3dConversion)
   const gp_Dir2d aDir2d(1.0, 2.0);
   const gp_Dir   aDir3d = ElCLib::To3d(anAxis, aDir2d);
   const gp_Dir   aExpectedDir3d(1.0 / sqrt(5.0), 2.0 / sqrt(5.0), 0.0);
-  checkDirectorsEqual(aDir3d, aExpectedDir3d, Precision::Confusion());
+  checkDirectorsEqual(aDir3d, aExpectedDir3d, math::precision::Precision::Confusion());
 
   const gp_Pnt2d  aLoc2d(0.0, 0.0);
   const gp_Dir2d  aDir2dX(gp_Dir2d::D::X);
@@ -283,6 +283,6 @@ TEST(ElClibTests, To3dConversion)
   const double    aRadius = 2.0;
   const gp_Circ2d aCirc2d(anAxis2d, aRadius);
   const gp_Circ   aCirc3d = ElCLib::To3d(anAxis, aCirc2d);
-  EXPECT_NEAR(aCirc3d.Radius(), aRadius, Precision::Confusion());
-  checkPointsEqual(aCirc3d.Location(), aLoc, Precision::Confusion());
+  EXPECT_NEAR(aCirc3d.Radius(), aRadius, math::precision::Precision::Confusion());
+  checkPointsEqual(aCirc3d.Location(), aLoc, math::precision::Precision::Confusion());
 }

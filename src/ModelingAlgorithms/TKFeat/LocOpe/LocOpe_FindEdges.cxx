@@ -70,7 +70,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
         continue;
       }
 
-      double Tol = Precision::Confusion();
+      double Tol = math::precision::Precision::Confusion();
       if (Tt == STANDARD_TYPE(Geom_Line))
       {
         gp_Lin lif  = occ::down_cast<Geom_Line>(Cf)->Lin();
@@ -109,7 +109,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
           p2 = ElCLib::Value(lf, cif);
 
           double prm1  = ElCLib::Parameter(cit, p1);
-          double Tol2d = Precision::PConfusion();
+          double Tol2d = math::precision::Precision::PConfusion();
           if (std::abs(prm1 - ft) <= Tol2d)
             prm1 = ft;
           prm1 = ElCLib::InPeriod(prm1, ft, ft + 2. * M_PI);
@@ -125,7 +125,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
           }
           else
           {
-            if (std::abs(prm1 - ft) <= Precision::Angular())
+            if (std::abs(prm1 - ft) <= math::precision::Precision::Angular())
             {
               prm1 += 2. * M_PI;
             }
@@ -179,7 +179,7 @@ void LocOpe_FindEdges::Set(const TopoDS_Shape& FFrom, const TopoDS_Shape& FTo)
           }
           else
           {
-            if (std::abs(prm1 - ft) <= Precision::Angular())
+            if (std::abs(prm1 - ft) <= math::precision::Precision::Angular())
             {
               prm1 += 2. * M_PI;
             }

@@ -464,7 +464,7 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
     borne = 7;
   }
   double Length = V.Magnitude();
-  if (Length < Precision::Confusion())
+  if (Length < math::precision::Precision::Confusion())
   {
     return 1;
   }
@@ -540,7 +540,7 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
       if (Su->DynamicType() == STANDARD_TYPE(Geom_Plane))
       {
         gp_Pln pl = occ::down_cast<Geom_Plane>(Su)->Pln();
-        if (pl.Contains(gp_Lin(pl.Location(), V), Precision::Confusion(), Precision::Angular()))
+        if (pl.Contains(gp_Lin(pl.Location(), V), math::precision::Precision::Confusion(), math::precision::Precision::Angular()))
         {
           FEIF.Set(ToPrism, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -552,7 +552,7 @@ static int PRW(Draw_Interpretor& theCommands, int narg, const char** a)
       else if (Su->DynamicType() == STANDARD_TYPE(Geom_CylindricalSurface))
       {
         gp_Cylinder cy = occ::down_cast<Geom_CylindricalSurface>(Su)->Cylinder();
-        if (V.IsParallel(cy.Axis().Direction(), Precision::Angular()))
+        if (V.IsParallel(cy.Axis().Direction(), math::precision::Precision::Angular()))
         {
           FEIF.Set(ToPrism, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -659,7 +659,7 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
     V.SetCoord(Draw::Atof(a[4]), Draw::Atof(a[5]), Draw::Atof(a[6]));
   }
   double Length = V.Magnitude();
-  if (Length < Precision::Confusion())
+  if (Length < math::precision::Precision::Confusion())
   {
     return 1;
   }
@@ -725,7 +725,7 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (Su->DynamicType() == STANDARD_TYPE(Geom_Plane))
       {
         gp_Pln pl = occ::down_cast<Geom_Plane>(Su)->Pln();
-        if (pl.Contains(gp_Lin(pl.Location(), V), Precision::Confusion(), Precision::Angular()))
+        if (pl.Contains(gp_Lin(pl.Location(), V), math::precision::Precision::Confusion(), math::precision::Precision::Angular()))
         {
           FEIF.Set(ToPrism, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -737,7 +737,7 @@ static int PRF(Draw_Interpretor& theCommands, int narg, const char** a)
       else if (Su->DynamicType() == STANDARD_TYPE(Geom_CylindricalSurface))
       {
         gp_Cylinder cy = occ::down_cast<Geom_CylindricalSurface>(Su)->Cylinder();
-        if (V.IsParallel(cy.Axis().Direction(), Precision::Angular()))
+        if (V.IsParallel(cy.Axis().Direction(), math::precision::Precision::Angular()))
         {
           FEIF.Set(ToPrism, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -797,7 +797,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
 
   if (narg < 3)
   {
-    Message::SendFail()
+    System::log::Message::SendFail()
       << "Invalid number of arguments. Should be : splitshape result shape [splitedges] "
          "[face wire/edge/compound [wire/edge/compound ...] "
          "[face wire/edge/compound [wire/edge/compound...] ...] "
@@ -807,7 +807,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
   TopoDS_Shape S = DBRep::Get(a[2]);
   if (S.IsNull())
   {
-    Message::SendFail() << "Invalid input shape " << a[2];
+    System::log::Message::SendFail() << "Invalid input shape " << a[2];
     return 1;
   }
   BRepFeat_SplitShape Spls(S);
@@ -837,7 +837,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
     TopoDS_Shape aSh = DBRep::Get(a[i]);
     if (aSh.IsNull())
     {
-      Message::SendFail() << "Invalid input shape " << a[i];
+      System::log::Message::SendFail() << "Invalid input shape " << a[i];
       return 1;
     }
 
@@ -928,7 +928,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
         TopoDS_Shape aSh = DBRep::Get(a[i]);
         if (aSh.IsNull())
         {
-          Message::SendFail() << "Invalid input shape " << a[i];
+          System::log::Message::SendFail() << "Invalid input shape " << a[i];
           return 1;
         }
         TopExp_Explorer aExpE(aSh, TopAbs_EDGE, TopAbs_FACE);
@@ -937,7 +937,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
       }
       else
       {
-        Message::SendFail()
+        System::log::Message::SendFail()
           << "Invalid input arguments. Should be : splitshape result shape [splitedges] "
              "[face wire/edge/compound [wire/edge/compound ...] "
              "[face wire/edge/compound [wire/edge/compound...] ...] "
@@ -966,7 +966,7 @@ static int SPLS(Draw_Interpretor&, int narg, const char** a)
 
     if (Ew.IsNull())
     {
-      Message::SendFail() << "Invalid input shape " << a[i + 1];
+      System::log::Message::SendFail() << "Invalid input shape " << a[i + 1];
       return 1;
     }
     Spls.Add(TopoDS::Edge(Ew), TopoDS::Edge(Es));
@@ -996,7 +996,7 @@ int thickshell(Draw_Interpretor& theCommands, int n, const char** a)
   }
 
   bool   Inter = false;
-  double Tol   = Precision::Confusion();
+  double Tol   = math::precision::Precision::Confusion();
   if (n > 5)
     Tol = Draw::Atof(a[5]);
 
@@ -1106,7 +1106,7 @@ int offsetshape(Draw_Interpretor& theCommands, int n, const char** a)
 
   BRepOffset_MakeOffset B;
   int                   IB  = 4;
-  double                Tol = Precision::Confusion();
+  double                Tol = math::precision::Precision::Confusion();
   if (n > 4)
   {
     TopoDS_Shape SF = DBRep::Get(a[4], TopAbs_FACE);
@@ -1150,7 +1150,7 @@ int offsetshape(Draw_Interpretor& theCommands, int n, const char** a)
 static BRepOffset_MakeOffset TheOffset;
 static double                TheRadius;
 static bool                  theYaBouchon;
-static double                TheTolerance   = Precision::Confusion();
+static double                TheTolerance   = math::precision::Precision::Confusion();
 static bool                  TheInter       = false;
 static GeomAbs_JoinType      TheJoin        = GeomAbs_Arc;
 static bool                  RemoveIntEdges = false;
@@ -1428,7 +1428,7 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
       if (Su->DynamicType() == STANDARD_TYPE(Geom_Plane))
       {
         gp_Pln pl = occ::down_cast<Geom_Plane>(Su)->Pln();
-        if (pl.Axis().IsParallel(theAxis, Precision::Angular()))
+        if (pl.Axis().IsParallel(theAxis, math::precision::Precision::Angular()))
         {
           FEIF.Set(ToRotate, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -1440,7 +1440,7 @@ static int ROW(Draw_Interpretor& theCommands, int narg, const char** a)
       else if (Su->DynamicType() == STANDARD_TYPE(Geom_CylindricalSurface))
       {
         gp_Cylinder cy = occ::down_cast<Geom_CylindricalSurface>(Su)->Cylinder();
-        if (cy.Axis().IsCoaxial(theAxis, Precision::Angular(), Precision::Confusion()))
+        if (cy.Axis().IsCoaxial(theAxis, math::precision::Precision::Angular(), math::precision::Precision::Confusion()))
         {
           FEIF.Set(ToRotate, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -1598,7 +1598,7 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
       if (Su->DynamicType() == STANDARD_TYPE(Geom_Plane))
       {
         gp_Pln pl = occ::down_cast<Geom_Plane>(Su)->Pln();
-        if (pl.Axis().IsParallel(theAxis, Precision::Angular()))
+        if (pl.Axis().IsParallel(theAxis, math::precision::Precision::Angular()))
         {
           FEIF.Set(ToRotate, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -1610,7 +1610,7 @@ static int ROF(Draw_Interpretor& theCommands, int narg, const char** a)
       else if (Su->DynamicType() == STANDARD_TYPE(Geom_CylindricalSurface))
       {
         gp_Cylinder cy = occ::down_cast<Geom_CylindricalSurface>(Su)->Cylinder();
-        if (cy.Axis().IsCoaxial(theAxis, Precision::Angular(), Precision::Confusion()))
+        if (cy.Axis().IsCoaxial(theAxis, math::precision::Precision::Angular(), math::precision::Precision::Confusion()))
         {
           FEIF.Set(ToRotate, fac);
           for (FEIF.Init(); FEIF.More(); FEIF.Next())
@@ -2642,7 +2642,7 @@ static int ComputeSimpleOffset(Draw_Interpretor& theCommands, int narg, const ch
 
   bool   makeSolid = (narg > 4 && !strcasecmp(a[4], "solid"));
   int    iTolArg   = (makeSolid ? 5 : 4);
-  double aTol      = (narg > iTolArg ? Draw::Atof(a[iTolArg]) : Precision::Confusion());
+  double aTol      = (narg > iTolArg ? Draw::Atof(a[iTolArg]) : math::precision::Precision::Confusion());
 
   BRepOffset_MakeSimpleOffset aMaker(aShape, anOffsetValue);
   aMaker.SetTolerance(aTol);

@@ -94,7 +94,7 @@ void PrsDim_OffsetDimension::Compute(const occ::handle<PrsMgr_PresentationManage
     double uPnt, vPnt;
     ElSLib::Parameters(bPln, aPnt, uPnt, vPnt);
     gp_Pnt bPnt = ElSLib::Value(uPnt, vPnt, bPln);
-    if (aPnt.IsEqual(bPnt, Precision::Confusion()))
+    if (aPnt.IsEqual(bPnt, math::precision::Precision::Confusion()))
     {
       gp_Ax1 aAx1 = aPln.Axis();
       myDirAttach = aAx1.Direction();
@@ -132,13 +132,13 @@ void PrsDim_OffsetDimension::ComputeSelection(const occ::handle<SelectMgr_Select
 
   occ::handle<SelectMgr_EntityOwner> own = new SelectMgr_EntityOwner(this, 7);
 
-  if (!Proj1.IsEqual(Proj2, Precision::Confusion()))
+  if (!Proj1.IsEqual(Proj2, math::precision::Precision::Confusion()))
   {
     L3 = gce_MakeLin(Proj1, Proj2);
   }
   else
   {
-    if (!Proj1.IsEqual(Tcurpos, Precision::Confusion()))
+    if (!Proj1.IsEqual(Tcurpos, math::precision::Precision::Confusion()))
     {
       gp_Vec v3(Proj1, Tcurpos);
       gp_Dir d3(v3);
@@ -176,18 +176,18 @@ void PrsDim_OffsetDimension::ComputeSelection(const occ::handle<SelectMgr_Select
   gp_Pnt PointMax = ElCLib::Value(parmax, L3);
 
   occ::handle<Select3D_SensitiveSegment> seg;
-  if (!PointMin.IsEqual(PointMax, Precision::Confusion()))
+  if (!PointMin.IsEqual(PointMax, math::precision::Precision::Confusion()))
   {
     seg = new Select3D_SensitiveSegment(own, PointMin, PointMax);
     aSel->Add(seg);
   }
 
-  if (!myTFAttach.IsEqual(Proj1, Precision::Confusion()))
+  if (!myTFAttach.IsEqual(Proj1, math::precision::Precision::Confusion()))
   {
     seg = new Select3D_SensitiveSegment(own, myTFAttach, Proj1);
     aSel->Add(seg);
   }
-  if (!myTSAttach.IsEqual(Proj2, Precision::Confusion()))
+  if (!myTSAttach.IsEqual(Proj2, math::precision::Precision::Confusion()))
   {
     seg = new Select3D_SensitiveSegment(own, myTSAttach, Proj2);
     aSel->Add(seg);
@@ -331,7 +331,7 @@ void PrsDim_OffsetDimension::ComputeTwoFacesOffset(const occ::handle<Prs3d_Prese
       gp_Ax2 ax2(myFAttach, norm1);
       myDirAttach = ax2.XDirection();
       curpos      = myFAttach.Translated(trans);
-      if (myVal <= Precision::Confusion())
+      if (myVal <= math::precision::Precision::Confusion())
       {
         gp_Vec vecnorm1 = norm1.XYZ() * .001;
         curpos.Translate(vecnorm1);
@@ -351,7 +351,7 @@ void PrsDim_OffsetDimension::ComputeTwoFacesOffset(const occ::handle<Prs3d_Prese
 
     curpos    = myPosition;
     myFAttach = PrsDim::Nearest(myFShape, curpos);
-    if (myFAttach.Distance(curpos) <= Precision::Confusion())
+    if (myFAttach.Distance(curpos) <= math::precision::Precision::Confusion())
     {
       gp_Ax2 ax2(myFAttach, norm1);
       myDirAttach = ax2.XDirection();
@@ -361,7 +361,7 @@ void PrsDim_OffsetDimension::ComputeTwoFacesOffset(const occ::handle<Prs3d_Prese
     {
       gp_Dir orient(myFAttach.XYZ() - curpos.XYZ());
       gp_Ax2 ax2(myFAttach, norm1);
-      if (orient.Angle(norm1) <= Precision::Angular())
+      if (orient.Angle(norm1) <= math::precision::Precision::Angular())
       {
         myDirAttach = ax2.XDirection();
       }

@@ -86,7 +86,7 @@ int BRepOffsetAPI_MakeFilling::Add(const double        U,
   return myFilling.Add(U, V, Support, Order);
 }
 
-void BRepOffsetAPI_MakeFilling::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_MakeFilling::Build(const System::log::Message_ProgressRange&)
 {
   myFilling.Build();
   myShape = myFilling.Face();

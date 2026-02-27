@@ -23,7 +23,7 @@ public:
 
 public:
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 protected:
   NCollection_List<TopoDS_Shape> myTools;

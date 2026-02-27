@@ -80,7 +80,7 @@ bool BRepGProp_TFunction::Value(const double X, double& F)
 
   double aAbsCoeff = std::abs(aCoeff);
 
-  if (aAbsCoeff <= Precision::Angular())
+  if (aAbsCoeff <= math::precision::Precision::Angular())
   {
 
     F = 0.;

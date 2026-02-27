@@ -24,7 +24,7 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
   IGESData_ParamReader&                           PR) const
 {
 
-  Message_Msg Msg213("XSTEP_213");
+  System::log::Message_Msg Msg213("XSTEP_213");
 
   bool                                temphasscale;
   double                              tempScaleFactor;
@@ -38,26 +38,26 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
                      STANDARD_TYPE(IGESBasic_SubfigureDef),
                      tempSubfigureDef))
   {
-    Message_Msg Msg212("XSTEP_212");
+    System::log::Message_Msg Msg212("XSTEP_212");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg212.Arg(Msg216.Value());
         PR.SendFail(Msg212);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg212.Arg(Msg217.Value());
         PR.SendFail(Msg212);
         break;
       }
       case IGESData_TypeError:
       {
-        Message_Msg Msg218("IGES_218");
+        System::log::Message_Msg Msg218("IGES_218");
         Msg212.Arg(Msg218.Value());
         PR.SendFail(Msg212);
         break;
@@ -75,7 +75,7 @@ void IGESBasic_ToolSingularSubfigure::ReadOwnParams(
     temphasscale = PR.ReadReal(PR.Current(), tempScaleFactor);
     if (!temphasscale)
     {
-      Message_Msg Msg214("XSTEP_214");
+      System::log::Message_Msg Msg214("XSTEP_214");
       PR.SendFail(Msg214);
     }
   }

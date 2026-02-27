@@ -49,7 +49,7 @@ namespace
          aCurrParam        = safeIncrement(aCurrParam, theEndParam, aParametricStep))
     {
       const gp_Pnt aCurrentPoint = theCurve.Value(aCurrParam);
-      if (aStartPoint.SquareDistance(aCurrentPoint) > Precision::Confusion())
+      if (aStartPoint.SquareDistance(aCurrentPoint) > math::precision::Precision::Confusion())
       {
         return false;
       }
@@ -178,10 +178,10 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
               dist3dptcourant_ancienpnt = P3d.Distance(Ancienpnt3d);
           }
           bool IsRealCurve3d = true;
-          if (dist3dptcourant_ancienpnt < Precision::Confusion())
+          if (dist3dptcourant_ancienpnt < math::precision::Precision::Confusion())
           {
             gp_Pnt MidP3d = aCurveAdaptor3D.Value(u - du / 2.);
-            if (P3d.Distance(MidP3d) < Precision::Confusion())
+            if (P3d.Distance(MidP3d) < math::precision::Precision::Confusion())
               IsRealCurve3d = false;
           }
           if (IsRealCurve3d)

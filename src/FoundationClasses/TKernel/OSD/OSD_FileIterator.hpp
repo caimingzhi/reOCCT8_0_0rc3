@@ -4,8 +4,12 @@
 #include <OSD_Error.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace os {
 class OSD_Path;
+}} // namespace System::os
 
+
+namespace System { namespace os {
 class OSD_FileIterator
 {
 public:
@@ -52,3 +56,5 @@ private:
   int   myInit;
 #endif
 };
+}} // namespace System::os
+

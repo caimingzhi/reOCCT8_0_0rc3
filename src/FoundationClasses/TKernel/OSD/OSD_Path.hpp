@@ -6,6 +6,7 @@
 #include <TCollection_AsciiString.hpp>
 #include <OSD_SysType.hpp>
 
+namespace System { namespace os {
 class OSD_Path
 {
 public:
@@ -173,3 +174,5 @@ private:
   bool                    myUNCFlag;
   OSD_SysType             mySysDep;
 };
+}} // namespace System::os
+

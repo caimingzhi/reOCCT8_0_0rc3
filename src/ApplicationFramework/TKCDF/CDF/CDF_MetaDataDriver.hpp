@@ -6,7 +6,10 @@ class CDM_MetaData;
 class TCollection_ExtendedString;
 class CDM_Document;
 class PCDM_ReferenceIterator;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class CDF_MetaDataDriver : public Standard_Transient
 {
@@ -57,7 +60,7 @@ public:
   Standard_EXPORT virtual TCollection_ExtendedString DefaultFolder() = 0;
 
   Standard_EXPORT virtual occ::handle<PCDM_ReferenceIterator> ReferenceIterator(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT bool Find(const TCollection_ExtendedString& aFolder,
                             const TCollection_ExtendedString& aName);

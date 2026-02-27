@@ -24,14 +24,14 @@ namespace
 
 ShapeProcess_Context::ShapeProcess_Context()
 {
-  myMessenger = Message::DefaultMessenger();
+  myMessenger = System::log::Message::DefaultMessenger();
   myTraceLev  = 1;
 }
 
 ShapeProcess_Context::ShapeProcess_Context(const char* file, const char* scope)
 {
   Init(file, scope);
-  myMessenger = Message::DefaultMessenger();
+  myMessenger = System::log::Message::DefaultMessenger();
   myTraceLev  = 1;
 }
 
@@ -44,7 +44,7 @@ bool ShapeProcess_Context::Init(const char* file, const char* scope)
   }
   else
   {
-    myRC = new Resource_Manager();
+    myRC = new System::resource::Resource_Manager();
   }
   if (scope && scope[0])
   {
@@ -53,20 +53,20 @@ bool ShapeProcess_Context::Init(const char* file, const char* scope)
   return true;
 }
 
-occ::handle<Resource_Manager> ShapeProcess_Context::LoadResourceManager(const char* name)
+occ::handle<System::resource::Resource_Manager> ShapeProcess_Context::LoadResourceManager(const char* name)
 {
 
   std::lock_guard<std::mutex> aLock(GetShapeProcessMutex());
 
-  static occ::handle<Resource_Manager> sRC;
+  static occ::handle<System::resource::Resource_Manager> sRC;
   static std::time_t                   sMtime, sUMtime;
   static TCollection_AsciiString       sName;
 
   struct stat             buf;
   std::time_t             aMtime(0), aUMtime(0);
   TCollection_AsciiString aPath, aUserPath;
-  Resource_Manager::GetResourcePath(aPath, name, false);
-  Resource_Manager::GetResourcePath(aUserPath, name, true);
+  System::resource::Resource_Manager::GetResourcePath(aPath, name, false);
+  System::resource::Resource_Manager::GetResourcePath(aUserPath, name, true);
   if (!aPath.IsEmpty())
   {
     stat(aPath.ToCString(), &buf);
@@ -102,10 +102,10 @@ occ::handle<Resource_Manager> ShapeProcess_Context::LoadResourceManager(const ch
   if (sRC.IsNull())
   {
 #ifdef OCCT_DEBUG
-    std::cout << "Info: ShapeProcess_Context: Reload Resource_Manager: " << sName.ToCString()
+    std::cout << "Info: ShapeProcess_Context: Reload System::resource::Resource_Manager: " << sName.ToCString()
               << " -> " << name << std::endl;
 #endif
-    sRC = new Resource_Manager(name);
+    sRC = new System::resource::Resource_Manager(name);
     if (!isFileModified)
     {
       sName   = name;
@@ -114,10 +114,10 @@ occ::handle<Resource_Manager> ShapeProcess_Context::LoadResourceManager(const ch
     }
   }
 
-  return new Resource_Manager(*sRC);
+  return new System::resource::Resource_Manager(*sRC);
 }
 
-const occ::handle<Resource_Manager>& ShapeProcess_Context::ResourceManager() const
+const occ::handle<System::resource::Resource_Manager>& ShapeProcess_Context::ResourceManager() const
 {
   return myRC;
 }
@@ -329,15 +329,15 @@ const char* ShapeProcess_Context::StringVal(const char* param, const char* def) 
   return def;
 }
 
-void ShapeProcess_Context::SetMessenger(const occ::handle<Message_Messenger>& messenger)
+void ShapeProcess_Context::SetMessenger(const occ::handle<System::log::Message_Messenger>& messenger)
 {
   if (messenger.IsNull())
-    myMessenger = Message::DefaultMessenger();
+    myMessenger = System::log::Message::DefaultMessenger();
   else
     myMessenger = messenger;
 }
 
-occ::handle<Message_Messenger> ShapeProcess_Context::Messenger() const
+occ::handle<System::log::Message_Messenger> ShapeProcess_Context::Messenger() const
 {
   return myMessenger;
 }

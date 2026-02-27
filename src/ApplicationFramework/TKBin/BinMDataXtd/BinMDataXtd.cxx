@@ -11,7 +11,7 @@
 static int myDocumentVersion = -1;
 
 void BinMDataXtd::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
-                             const occ::handle<Message_Messenger>&   theMsgDriver)
+                             const occ::handle<System::log::Message_Messenger>&   theMsgDriver)
 {
   theDriverTable->AddDriver(new BinMDataXtd_ConstraintDriver(theMsgDriver));
   theDriverTable->AddDriver(new BinMDataXtd_GeometryDriver(theMsgDriver));

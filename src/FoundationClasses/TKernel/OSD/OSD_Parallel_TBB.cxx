@@ -14,7 +14,7 @@ Standard_DISABLE_DEPRECATION_WARNINGS
   Standard_ENABLE_DEPRECATION_WARNINGS
 
   void
-  OSD_Parallel::forEachExternal(UniversalIterator&      theBegin,
+  System::os::OSD_Parallel::forEachExternal(UniversalIterator&      theBegin,
                                 UniversalIterator&      theEnd,
                                 const FunctorInterface& theFunctor,
                                 int                     theNbItems)
@@ -26,7 +26,7 @@ Standard_DISABLE_DEPRECATION_WARNINGS
   #else
   try
   {
-    const occ::handle<OSD_ThreadPool>& aThreadPool = OSD_ThreadPool::DefaultPool();
+    const occ::handle<System::os::OSD_ThreadPool>& aThreadPool = System::os::OSD_ThreadPool::DefaultPool();
     const int aNbThreads = theNbItems > 0 ? aThreadPool->NbDefaultThreadsToLaunch() : -1;
     tbb::task_scheduler_init aScheduler(aNbThreads);
     tbb::parallel_for_each(theBegin, theEnd, theFunctor);

@@ -412,7 +412,7 @@ bool Draft_Modification::NewParameter(const TopoDS_Vertex& V,
     }
 
     double           FirstPar = GC->FirstParameter(), LastPar = GC->LastParameter();
-    constexpr double pconf = Precision::PConfusion();
+    constexpr double pconf = math::precision::Precision::PConfusion();
     if (std::abs(paramf - LastPar) <= pconf)
     {
       paramf = FirstPar;

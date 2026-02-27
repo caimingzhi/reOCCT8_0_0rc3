@@ -165,7 +165,7 @@ protected:
   Standard_EXPORT Aspect_WindowInputListener();
 
 protected:
-  OSD_Timer myEventTimer;
+  System::os::OSD_Timer myEventTimer;
 
 protected:
   Aspect_VKeySet myKeys;

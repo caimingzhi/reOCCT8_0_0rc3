@@ -79,7 +79,7 @@ const TopoDS_Edge& BRepFilletAPI_MakeFillet2d::BasisEdge(const TopoDS_Edge& E) c
   return myMakeChFi2d.BasisEdge(E);
 }
 
-void BRepFilletAPI_MakeFillet2d::Build(const Message_ProgressRange&)
+void BRepFilletAPI_MakeFillet2d::Build(const System::log::Message_ProgressRange&)
 {
 
   if (Status() == ChFi2d_IsDone)

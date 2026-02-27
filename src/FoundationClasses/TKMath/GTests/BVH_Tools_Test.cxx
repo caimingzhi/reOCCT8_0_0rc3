@@ -11,16 +11,16 @@ TEST(BVH_ToolsTest, PointBoxSquareDistance)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   double aDist1 = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(0.5, 0.5, 0.5), aBox);
-  EXPECT_NEAR(aDist1, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist1, 0.0, math::precision::Precision::Confusion());
 
   double aDist2 = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(0.5, 0.5, 1.0), aBox);
-  EXPECT_NEAR(aDist2, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist2, 0.0, math::precision::Precision::Confusion());
 
   double aDist3 = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(2.0, 0.5, 0.5), aBox);
-  EXPECT_NEAR(aDist3, 1.0, Precision::Confusion());
+  EXPECT_NEAR(aDist3, 1.0, math::precision::Precision::Confusion());
 
   double aDist4 = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(2.0, 2.0, 2.0), aBox);
-  EXPECT_NEAR(aDist4, 3.0, Precision::Confusion());
+  EXPECT_NEAR(aDist4, 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistance)
@@ -30,10 +30,10 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistance)
   BVH_Box<double, 3> aBox3(BVH_Vec3d(0.5, 0.5, 0.5), BVH_Vec3d(1.5, 1.5, 1.5));
 
   double aDist1 = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox1, aBox2);
-  EXPECT_NEAR(aDist1, 1.0, Precision::Confusion());
+  EXPECT_NEAR(aDist1, 1.0, math::precision::Precision::Confusion());
 
   double aDist2 = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox1, aBox3);
-  EXPECT_NEAR(aDist2, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist2, 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxProjection)
@@ -41,14 +41,14 @@ TEST(BVH_ToolsTest, PointBoxProjection)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   BVH_Vec3d aProj1 = BVH_Tools<double, 3>::PointBoxProjection(BVH_Vec3d(0.5, 0.5, 0.5), aBox);
-  EXPECT_NEAR(aProj1.x(), 0.5, Precision::Confusion());
-  EXPECT_NEAR(aProj1.y(), 0.5, Precision::Confusion());
-  EXPECT_NEAR(aProj1.z(), 0.5, Precision::Confusion());
+  EXPECT_NEAR(aProj1.x(), 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj1.y(), 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj1.z(), 0.5, math::precision::Precision::Confusion());
 
   BVH_Vec3d aProj2 = BVH_Tools<double, 3>::PointBoxProjection(BVH_Vec3d(2.0, 0.5, 0.5), aBox);
-  EXPECT_NEAR(aProj2.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj2.y(), 0.5, Precision::Confusion());
-  EXPECT_NEAR(aProj2.z(), 0.5, Precision::Confusion());
+  EXPECT_NEAR(aProj2.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj2.y(), 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj2.z(), 0.5, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersection)
@@ -63,8 +63,8 @@ TEST(BVH_ToolsTest, RayBoxIntersection)
                                                         aTimeEnter,
                                                         aTimeLeave);
   EXPECT_TRUE(aHit1);
-  EXPECT_NEAR(aTimeEnter, 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 2.0, math::precision::Precision::Confusion());
 
   bool aHit2 = BVH_Tools<double, 3>::RayBoxIntersection(BVH_Vec3d(-1.0, 5.0, 0.5),
                                                         BVH_Vec3d(1.0, 0.0, 0.0),
@@ -80,7 +80,7 @@ TEST(BVH_ToolsTest, RayBoxIntersection)
                                                         aTimeLeave);
   EXPECT_TRUE(aHit3);
   EXPECT_LE(aTimeEnter, 0.0);
-  EXPECT_NEAR(aTimeLeave, 0.5, Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 0.5, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersectionParallelRay)
@@ -114,25 +114,25 @@ TEST(BVH_ToolsTest, PointTriangleProjection)
                                                                    aNode0,
                                                                    aNode1,
                                                                    aNode2);
-  EXPECT_NEAR(aProj1.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj1.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj1.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj1.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj1.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj1.z(), 0.0, math::precision::Precision::Confusion());
 
   BVH_Vec3d aProj2 = BVH_Tools<double, 3>::PointTriangleProjection(BVH_Vec3d(0.5, -1.0, 0.0),
                                                                    aNode0,
                                                                    aNode1,
                                                                    aNode2);
-  EXPECT_NEAR(aProj2.x(), 0.5, Precision::Confusion());
-  EXPECT_NEAR(aProj2.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj2.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj2.x(), 0.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj2.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj2.z(), 0.0, math::precision::Precision::Confusion());
 
   BVH_Vec3d aProj3 = BVH_Tools<double, 3>::PointTriangleProjection(BVH_Vec3d(0.25, 0.25, 1.0),
                                                                    aNode0,
                                                                    aNode1,
                                                                    aNode2);
-  EXPECT_NEAR(aProj3.x(), 0.25, Precision::Confusion());
-  EXPECT_NEAR(aProj3.y(), 0.25, Precision::Confusion());
-  EXPECT_NEAR(aProj3.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj3.x(), 0.25, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj3.y(), 0.25, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj3.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxSquareDistance2D)
@@ -140,10 +140,10 @@ TEST(BVH_ToolsTest, PointBoxSquareDistance2D)
   BVH_Box<double, 2> aBox(BVH_Vec2d(0.0, 0.0), BVH_Vec2d(1.0, 1.0));
 
   double aDist1 = BVH_Tools<double, 2>::PointBoxSquareDistance(BVH_Vec2d(0.5, 0.5), aBox);
-  EXPECT_NEAR(aDist1, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist1, 0.0, math::precision::Precision::Confusion());
 
   double aDist2 = BVH_Tools<double, 2>::PointBoxSquareDistance(BVH_Vec2d(2.0, 0.5), aBox);
-  EXPECT_NEAR(aDist2, 1.0, Precision::Confusion());
+  EXPECT_NEAR(aDist2, 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersectionDiagonalRay)
@@ -178,8 +178,8 @@ TEST(BVH_ToolsTest, RayBoxIntersectionNegativeDirection)
                                                        aTimeEnter,
                                                        aTimeLeave);
   EXPECT_TRUE(aHit);
-  EXPECT_NEAR(aTimeEnter, 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersectionTouchingEdge)
@@ -220,7 +220,7 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistanceTouching)
   BVH_Box<double, 3> aBox2(BVH_Vec3d(1.0, 0.0, 0.0), BVH_Vec3d(2.0, 1.0, 1.0));
 
   double aDist = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox1, aBox2);
-  EXPECT_NEAR(aDist, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistanceOneInsideOther)
@@ -229,7 +229,7 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistanceOneInsideOther)
   BVH_Box<double, 3> aBox2(BVH_Vec3d(2.0, 2.0, 2.0), BVH_Vec3d(3.0, 3.0, 3.0));
 
   double aDist = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox1, aBox2);
-  EXPECT_NEAR(aDist, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistanceCornerToCorner)
@@ -238,7 +238,7 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistanceCornerToCorner)
   BVH_Box<double, 3> aBox2(BVH_Vec3d(2.0, 2.0, 2.0), BVH_Vec3d(3.0, 3.0, 3.0));
 
   double aDist = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox1, aBox2);
-  EXPECT_NEAR(aDist, 3.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxProjectionNegativeCoords)
@@ -246,9 +246,9 @@ TEST(BVH_ToolsTest, PointBoxProjectionNegativeCoords)
   BVH_Box<double, 3> aBox(BVH_Vec3d(-1.0, -1.0, -1.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   BVH_Vec3d aProj = BVH_Tools<double, 3>::PointBoxProjection(BVH_Vec3d(-5.0, -5.0, -5.0), aBox);
-  EXPECT_NEAR(aProj.x(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), -1.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), -1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionOnEdge01)
@@ -261,9 +261,9 @@ TEST(BVH_ToolsTest, PointTriangleProjectionOnEdge01)
                                                                   aNode0,
                                                                   aNode1,
                                                                   aNode2);
-  EXPECT_NEAR(aProj.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionOnEdge12)
@@ -274,9 +274,9 @@ TEST(BVH_ToolsTest, PointTriangleProjectionOnEdge12)
 
   BVH_Vec3d aProj =
     BVH_Tools<double, 3>::PointTriangleProjection(BVH_Vec3d(2.0, 2.0, 0.0), aNode0, aNode1, aNode2);
-  EXPECT_NEAR(aProj.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionOnEdge20)
@@ -289,9 +289,9 @@ TEST(BVH_ToolsTest, PointTriangleProjectionOnEdge20)
                                                                   aNode0,
                                                                   aNode1,
                                                                   aNode2);
-  EXPECT_NEAR(aProj.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionVertex1)
@@ -304,9 +304,9 @@ TEST(BVH_ToolsTest, PointTriangleProjectionVertex1)
                                                                   aNode0,
                                                                   aNode1,
                                                                   aNode2);
-  EXPECT_NEAR(aProj.x(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionVertex2)
@@ -319,9 +319,9 @@ TEST(BVH_ToolsTest, PointTriangleProjectionVertex2)
                                                                   aNode0,
                                                                   aNode1,
                                                                   aNode2);
-  EXPECT_NEAR(aProj.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjection3D)
@@ -336,7 +336,7 @@ TEST(BVH_ToolsTest, PointTriangleProjection3D)
 
   EXPECT_GE(aProj.x(), 0.0);
   EXPECT_GE(aProj.y(), 0.0);
-  EXPECT_LE(aProj.x() + aProj.y(), 1.0 + Precision::Confusion());
+  EXPECT_LE(aProj.x() + aProj.y(), 1.0 + math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistance2D)
@@ -345,7 +345,7 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistance2D)
   BVH_Box<double, 2> aBox2(BVH_Vec2d(3.0, 0.0), BVH_Vec2d(4.0, 1.0));
 
   double aDist = BVH_Tools<double, 2>::BoxBoxSquareDistance(aBox1, aBox2);
-  EXPECT_NEAR(aDist, 4.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxProjection2D)
@@ -353,8 +353,8 @@ TEST(BVH_ToolsTest, PointBoxProjection2D)
   BVH_Box<double, 2> aBox(BVH_Vec2d(0.0, 0.0), BVH_Vec2d(1.0, 1.0));
 
   BVH_Vec2d aProj = BVH_Tools<double, 2>::PointBoxProjection(BVH_Vec2d(2.0, 2.0), aBox);
-  EXPECT_NEAR(aProj.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxSquareDistanceAtVertex)
@@ -362,7 +362,7 @@ TEST(BVH_ToolsTest, PointBoxSquareDistanceAtVertex)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   double aDist = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(0.0, 0.0, 0.0), aBox);
-  EXPECT_NEAR(aDist, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxSquareDistanceAtEdge)
@@ -370,7 +370,7 @@ TEST(BVH_ToolsTest, PointBoxSquareDistanceAtEdge)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   double aDist = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(0.5, 0.0, 0.0), aBox);
-  EXPECT_NEAR(aDist, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxSquareDistanceFloat)
@@ -427,8 +427,8 @@ TEST(BVH_ToolsTest, RayBoxIntersectionYAxis)
                                                        aTimeEnter,
                                                        aTimeLeave);
   EXPECT_TRUE(aHit);
-  EXPECT_NEAR(aTimeEnter, 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersectionZAxis)
@@ -443,8 +443,8 @@ TEST(BVH_ToolsTest, RayBoxIntersectionZAxis)
                                                        aTimeEnter,
                                                        aTimeLeave);
   EXPECT_TRUE(aHit);
-  EXPECT_NEAR(aTimeEnter, 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistanceFloat)
@@ -472,7 +472,7 @@ TEST(BVH_ToolsTest, PointBoxSquareDistanceNegativeBox)
 
   double aDist = BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(0.0, 0.0, 0.0), aBox);
 
-  EXPECT_NEAR(aDist, 3.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistanceEdgeToEdge)
@@ -481,7 +481,7 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistanceEdgeToEdge)
   BVH_Box<double, 3> aBox2(BVH_Vec3d(2.0, 2.0, 0.0), BVH_Vec3d(3.0, 3.0, 1.0));
 
   double aDist = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox1, aBox2);
-  EXPECT_NEAR(aDist, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionFloat)
@@ -505,11 +505,11 @@ TEST(BVH_ToolsTest, PointBoxSquareDistanceLargeBox)
 
   double aDist1 =
     BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(500.0, 500.0, 500.0), aBox);
-  EXPECT_NEAR(aDist1, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist1, 0.0, math::precision::Precision::Confusion());
 
   double aDist2 =
     BVH_Tools<double, 3>::PointBoxSquareDistance(BVH_Vec3d(1001.0, 500.0, 500.0), aBox);
-  EXPECT_NEAR(aDist2, 1.0, Precision::Confusion());
+  EXPECT_NEAR(aDist2, 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersectionLargeBox)
@@ -524,8 +524,8 @@ TEST(BVH_ToolsTest, RayBoxIntersectionLargeBox)
                                                        aTimeEnter,
                                                        aTimeLeave);
   EXPECT_TRUE(aHit);
-  EXPECT_NEAR(aTimeEnter, 100.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 1100.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 100.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 1100.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointTriangleProjectionCentroid)
@@ -536,9 +536,9 @@ TEST(BVH_ToolsTest, PointTriangleProjectionCentroid)
 
   BVH_Vec3d aProj =
     BVH_Tools<double, 3>::PointTriangleProjection(BVH_Vec3d(1.0, 1.0, 5.0), aNode0, aNode1, aNode2);
-  EXPECT_NEAR(aProj.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.y(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.y(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj.z(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, BoxBoxSquareDistanceSameBox)
@@ -546,7 +546,7 @@ TEST(BVH_ToolsTest, BoxBoxSquareDistanceSameBox)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   double aDist = BVH_Tools<double, 3>::BoxBoxSquareDistance(aBox, aBox);
-  EXPECT_NEAR(aDist, 0.0, Precision::Confusion());
+  EXPECT_NEAR(aDist, 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, PointBoxProjectionAllCorners)
@@ -554,14 +554,14 @@ TEST(BVH_ToolsTest, PointBoxProjectionAllCorners)
   BVH_Box<double, 3> aBox(BVH_Vec3d(0.0, 0.0, 0.0), BVH_Vec3d(1.0, 1.0, 1.0));
 
   BVH_Vec3d aProj1 = BVH_Tools<double, 3>::PointBoxProjection(BVH_Vec3d(-1.0, -1.0, -1.0), aBox);
-  EXPECT_NEAR(aProj1.x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj1.y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aProj1.z(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aProj1.x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj1.y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj1.z(), 0.0, math::precision::Precision::Confusion());
 
   BVH_Vec3d aProj2 = BVH_Tools<double, 3>::PointBoxProjection(BVH_Vec3d(2.0, 2.0, 2.0), aBox);
-  EXPECT_NEAR(aProj2.x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj2.y(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aProj2.z(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aProj2.x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj2.y(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aProj2.z(), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersection2D)
@@ -577,8 +577,8 @@ TEST(BVH_ToolsTest, RayBoxIntersection2D)
                                                         aTimeEnter,
                                                         aTimeLeave);
   EXPECT_TRUE(aHit1);
-  EXPECT_NEAR(aTimeEnter, 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 2.0, math::precision::Precision::Confusion());
 
   bool aHit2 = BVH_Tools<double, 2>::RayBoxIntersection(BVH_Vec2d(-1.0, 2.0),
                                                         BVH_Vec2d(1.0, 0.0),
@@ -600,8 +600,8 @@ TEST(BVH_ToolsTest, RayBoxIntersection2D)
                                                         aTimeEnter,
                                                         aTimeLeave);
   EXPECT_TRUE(aHit4);
-  EXPECT_NEAR(aTimeEnter, 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTimeLeave, 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTimeEnter, 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTimeLeave, 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_ToolsTest, RayBoxIntersectionEarlyExit)

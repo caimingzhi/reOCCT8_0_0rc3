@@ -48,14 +48,14 @@ public:
   Standard_EXPORT IFSelect_ReturnStatus
     TransferWriteTransient(const occ::handle<Interface_InterfaceModel>& theModel,
                            const occ::handle<Standard_Transient>&       theObj,
-                           const Message_ProgressRange& theProgress = Message_ProgressRange());
+                           const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool RecognizeShape(const TopoDS_Shape& theShape);
 
   Standard_EXPORT IFSelect_ReturnStatus
     TransferWriteShape(const occ::handle<Interface_InterfaceModel>& theModel,
                        const TopoDS_Shape&                          theShape,
-                       const Message_ProgressRange& theProgress = Message_ProgressRange());
+                       const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT Interface_CheckIterator CheckList() const;
 

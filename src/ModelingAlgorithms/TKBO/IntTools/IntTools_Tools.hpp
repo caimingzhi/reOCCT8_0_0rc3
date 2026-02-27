@@ -111,7 +111,7 @@ public:
                                                const double                     theLast,
                                                double&                          theMaxDist,
                                                double&                          theMaxPar,
-                                               const double theTolRange = Precision::PConfusion(),
+                                               const double theTolRange = math::precision::Precision::PConfusion(),
                                                const bool   theToRunParallel = false);
 
   Standard_EXPORT static double ComputeIntRange(const double theTol1,

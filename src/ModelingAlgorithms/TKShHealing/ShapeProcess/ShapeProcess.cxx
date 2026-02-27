@@ -61,7 +61,7 @@ bool ShapeProcess::FindOperator(const char* name, occ::handle<ShapeProcess_Opera
 
 bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
                            const char*                              seq,
-                           const Message_ProgressRange&             theProgress)
+                           const System::log::Message_ProgressRange&             theProgress)
 {
   ScopeLock aSequenceScope(*context, seq);
 
@@ -74,7 +74,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
 #endif
     if (context->TraceLevel() > 0)
     {
-      Message_Msg SMSG3("SP.Sequence.Warn.NoSeq");
+      System::log::Message_Msg SMSG3("SP.Sequence.Warn.NoSeq");
       context->Messenger()->Send(SMSG3 << seq, Message_Warning);
     }
     return false;
@@ -92,7 +92,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
 
   if (context->TraceLevel() >= 2)
   {
-    Message_Msg             SMSG0("SP.Sequence.Info.Seq");
+    System::log::Message_Msg             SMSG0("SP.Sequence.Info.Seq");
     TCollection_AsciiString Seq;
     for (int i1 = 1; i1 <= sequenceOfOperators.Length(); i1++)
     {
@@ -105,15 +105,15 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
   }
 
   bool                  isDone = false;
-  Message_ProgressScope aPS(theProgress, nullptr, sequenceOfOperators.Length());
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, sequenceOfOperators.Length());
   for (i = 1; i <= sequenceOfOperators.Length() && aPS.More(); i++)
   {
     oper                         = sequenceOfOperators.Value(i);
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
 
     if (context->TraceLevel() >= 2)
     {
-      Message_Msg SMSG5("SP.Sequence.Info.Operator");
+      System::log::Message_Msg SMSG5("SP.Sequence.Info.Operator");
       SMSG5 << i << sequenceOfOperators.Length() << oper.ToCString();
       context->Messenger()->Send(SMSG5, Message_Alarm);
     }
@@ -123,7 +123,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
     {
       if (context->TraceLevel() > 0)
       {
-        Message_Msg SMSG1("SP.Sequence.Error.NoOp");
+        System::log::Message_Msg SMSG1("SP.Sequence.Error.NoOp");
         context->Messenger()->Send(SMSG1 << oper, Message_Alarm);
       }
       continue;
@@ -138,7 +138,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Msg SMSG2("SP.Sequence.Error.Except");
+      System::log::Message_Msg SMSG2("SP.Sequence.Error.Except");
       SMSG2 << oper << anException.what();
       context->Messenger()->Send(SMSG2, Message_Alarm);
     }
@@ -149,7 +149,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& context,
 
 bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& theContext,
                            const ShapeProcess::OperationsFlags&     theOperations,
-                           const Message_ProgressRange&             theProgress)
+                           const System::log::Message_ProgressRange&             theProgress)
 {
   if (!theContext)
   {
@@ -164,14 +164,14 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& theContext,
   }
 
   bool                  anIsAnySuccess = false;
-  Message_ProgressScope aProgressScope(theProgress,
+  System::log::Message_ProgressScope aProgressScope(theProgress,
                                        nullptr,
                                        static_cast<double>(anOperators.size()));
   for (const auto& anOperator : anOperators)
   {
     const char*                               anOperationName = anOperator.first;
     const occ::handle<ShapeProcess_Operator>& anOperation     = anOperator.second;
-    Message_ProgressRange                     aProgressRange  = aProgressScope.Next();
+    System::log::Message_ProgressRange                     aProgressRange  = aProgressScope.Next();
     ScopeLock                                 anOperationScope(*theContext, anOperationName);
     try
     {
@@ -180,7 +180,7 @@ bool ShapeProcess::Perform(const occ::handle<ShapeProcess_Context>& theContext,
     }
     catch (const Standard_Failure& anException)
     {
-      Message_Msg aMessage("SP.Sequence.Error.Except");
+      System::log::Message_Msg aMessage("SP.Sequence.Error.Except");
       aMessage << anOperationName << anException.what();
       theContext->Messenger()->Send(aMessage, Message_Alarm);
     }

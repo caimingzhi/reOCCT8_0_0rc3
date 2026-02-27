@@ -9,7 +9,10 @@
 #include <TCollection_ExtendedString.hpp>
 #include <Storage_Error.hpp>
 #include <Standard_Transient.hpp>
+namespace app { namespace storage {
 class Storage_BaseDriver;
+}} // namespace app::storage
+
 
 class StdStorage_HeaderData : public Standard_Transient
 {
@@ -18,9 +21,9 @@ class StdStorage_HeaderData : public Standard_Transient
 public:
   DEFINE_STANDARD_RTTIEXT(StdStorage_HeaderData, Standard_Transient)
 
-  Standard_EXPORT bool Read(const occ::handle<Storage_BaseDriver>& theDriver);
+  Standard_EXPORT bool Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver);
 
-  Standard_EXPORT bool Write(const occ::handle<Storage_BaseDriver>& theDriver);
+  Standard_EXPORT bool Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver);
 
   Standard_EXPORT TCollection_AsciiString CreationDate() const;
 

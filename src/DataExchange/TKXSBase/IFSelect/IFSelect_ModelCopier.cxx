@@ -119,7 +119,7 @@ Interface_CheckIterator IFSelect_ModelCopier::Copying(
   const occ::handle<Interface_Protocol>&   protocol,
   Interface_CopyTool&                      TC)
 {
-  Message::SendInfo() << "** WorkSession : Copying split data before sending" << std::endl;
+  System::log::Message::SendInfo() << "** WorkSession : Copying split data before sending" << std::endl;
   const Interface_Graph&  G = eval.Graph();
   Interface_CheckIterator checks;
   theshareout = eval.ShareOut();
@@ -157,7 +157,7 @@ Interface_CheckIterator IFSelect_ModelCopier::SendCopied(
   const occ::handle<IFSelect_WorkLibrary>& WL,
   const occ::handle<Interface_Protocol>&   protocol)
 {
-  Message::SendInfo() << "** WorkSession : Sending split data already copied" << std::endl;
+  System::log::Message::SendInfo() << "** WorkSession : Sending split data already copied" << std::endl;
   int                     nb = NbFiles();
   Interface_CheckIterator checks;
   if (nb > 0)
@@ -177,7 +177,7 @@ Interface_CheckIterator IFSelect_ModelCopier::SendCopied(
         char mess[100];
         Sprintf(mess, "Split Send (WriteFile) abandon on file n0.%d", i);
         checks.CCheck(0)->AddFail(mess);
-        Message::SendInfo() << "  **  Sending File n0." << i << " has failed, abandon  **"
+        System::log::Message::SendInfo() << "  **  Sending File n0." << i << " has failed, abandon  **"
                             << std::endl;
         return checks;
       }
@@ -206,7 +206,7 @@ Interface_CheckIterator IFSelect_ModelCopier::Sending(
   const Interface_Graph&  G = eval.Graph();
   Interface_CheckIterator checks;
   int                     i = 0;
-  Message::SendInfo() << "** WorkSession : Copying then sending split data" << std::endl;
+  System::log::Message::SendInfo() << "** WorkSession : Copying then sending split data" << std::endl;
   theshareout = eval.ShareOut();
   theremain   = new NCollection_HArray1<int>(0, G.Size());
   theremain->Init(0);
@@ -240,7 +240,7 @@ Interface_CheckIterator IFSelect_ModelCopier::Sending(
       char mess[100];
       Sprintf(mess, "Split Send (WriteFile) abandon on file n0.%d", i);
       checks.CCheck(0)->AddFail(mess);
-      Message::SendInfo() << "  **  Sending File " << filename << " has failed, abandon  **"
+      System::log::Message::SendInfo() << "  **  Sending File " << filename << " has failed, abandon  **"
                           << std::endl;
       checks.SetName("X-STEP WorkSession : Split Send (only Write)");
       return checks;
@@ -260,7 +260,7 @@ Interface_CheckIterator IFSelect_ModelCopier::SendAll(
 {
   Interface_CheckIterator checks;
   checks.SetName("X-STEP WorkSession : Send All");
-  Message::SendInfo() << "** WorkSession : Sending all data" << std::endl;
+  System::log::Message::SendInfo() << "** WorkSession : Sending all data" << std::endl;
   const occ::handle<Interface_InterfaceModel>& model = G.Model();
   if (model.IsNull() || protocol.IsNull() || WL.IsNull())
     return checks;
@@ -304,7 +304,7 @@ Interface_CheckIterator IFSelect_ModelCopier::SendSelected(
 {
   Interface_CheckIterator checks;
   checks.SetName("X-STEP WorkSession : Send Selected");
-  Message::SendInfo() << "** WorkSession : Sending selected data" << std::endl;
+  System::log::Message::SendInfo() << "** WorkSession : Sending selected data" << std::endl;
   const occ::handle<Interface_InterfaceModel>& original = G.Model();
   if (original.IsNull() || protocol.IsNull() || WL.IsNull())
     return checks;

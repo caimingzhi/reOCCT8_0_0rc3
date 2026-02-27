@@ -38,7 +38,7 @@ public:
   void SetTransferProcess(const occ::handle<Transfer_FinderProcess>& TP) { myTP = TP; }
 
   Standard_EXPORT bool AddShape(const TopoDS_Shape&          sh,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool AddGeom(const occ::handle<Standard_Transient>& geom);
 

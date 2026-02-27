@@ -65,7 +65,7 @@ RWObj_Reader::RWObj_Reader()
 
 bool RWObj_Reader::read(std::istream&                  theStream,
                         const TCollection_AsciiString& theFile,
-                        const Message_ProgressRange&   theProgress,
+                        const System::log::Message_ProgressRange&   theProgress,
                         const bool                     theToProbe)
 {
   myMemEstim     = 0;
@@ -84,13 +84,13 @@ bool RWObj_Reader::read(std::istream&                  theStream,
   myActiveSubMesh = RWObj_SubMesh();
 
   TCollection_AsciiString aFileName;
-  OSD_Path::FolderAndFileFromPath(theFile, myFolder, aFileName);
+  System::os::OSD_Path::FolderAndFileFromPath(theFile, myFolder, aFileName);
   myCurrElem.resize(1024, -1);
 
   Standard_CLocaleSentry aLocaleSentry;
   if (!theStream.good())
   {
-    Message::SendFail(TCollection_AsciiString("Error: file '") + theFile + "' is not found");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: file '") + theFile + "' is not found");
     return false;
   }
 
@@ -99,7 +99,7 @@ bool RWObj_Reader::read(std::istream&                  theStream,
   theStream.seekg(0, std::istream::beg);
   if (aFileLen <= 0L)
   {
-    Message::SendFail(TCollection_AsciiString("Error: file '") + theFile + "' is empty");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: file '") + theFile + "' is empty");
     return false;
   }
 
@@ -108,8 +108,8 @@ bool RWObj_Reader::read(std::istream&                  theStream,
 
   const int             aNbMiBTotal  = int(aFileLen / (1024 * 1024));
   int                   aNbMiBPassed = 0;
-  Message_ProgressScope aPS(theProgress, "Reading text OBJ file", aNbMiBTotal);
-  OSD_Timer             aTimer;
+  System::log::Message_ProgressScope aPS(theProgress, "Reading text OBJ file", aNbMiBTotal);
+  System::os::OSD_Timer             aTimer;
   aTimer.Start();
   bool        isStart    = true;
   int64_t     aPosition  = 0;
@@ -252,7 +252,7 @@ bool RWObj_Reader::read(std::istream&                  theStream,
   }
   if (myNbElemsBig != 0)
   {
-    Message::SendWarning(TCollection_AsciiString("Warning: OBJ reader, ") + myNbElemsBig
+    System::log::Message::SendWarning(TCollection_AsciiString("Warning: OBJ reader, ") + myNbElemsBig
                          + " polygon(s) have been split into triangles");
   }
 
@@ -326,7 +326,7 @@ void RWObj_Reader::pushIndices(const char* thePos)
       if (a3Indices[0] < myObjVerts.Lower() || a3Indices[0] > myObjVerts.Upper())
       {
         myToAbort = true;
-        Message::SendFail(TCollection_AsciiString("Error: invalid OBJ syntax at line ") + myNbLines
+        System::log::Message::SendFail(TCollection_AsciiString("Error: invalid OBJ syntax at line ") + myNbLines
                           + ": vertex index is out of range");
         return;
       }
@@ -337,12 +337,12 @@ void RWObj_Reader::pushIndices(const char* thePos)
       {
         if (myObjVertsUV.IsEmpty())
         {
-          Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
+          System::log::Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
                                + myNbLines + ": UV index is specified but no UV nodes are defined");
         }
         else if (a3Indices[1] < myObjVertsUV.Lower() || a3Indices[1] > myObjVertsUV.Upper())
         {
-          Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
+          System::log::Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
                                + myNbLines + ": UV index is out of range");
           setNodeUV(anIndex, NCollection_Vec2<float>(0.0f, 0.0f));
         }
@@ -355,13 +355,13 @@ void RWObj_Reader::pushIndices(const char* thePos)
       {
         if (myObjNorms.IsEmpty())
         {
-          Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
+          System::log::Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
                                + myNbLines
                                + ": Normal index is specified but no Normals nodes are defined");
         }
         else if (a3Indices[2] < myObjNorms.Lower() || a3Indices[2] > myObjNorms.Upper())
         {
-          Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
+          System::log::Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
                                + myNbLines + ": Normal index is out of range");
           setNodeNormal(anIndex, NCollection_Vec3<float>(0.0f, 0.0f, 1.0f));
         }
@@ -570,7 +570,7 @@ int RWObj_Reader::triangulatePolygon(const NCollection_Array1<int>& theIndices)
   }
   catch (Standard_Failure const& theFailure)
   {
-    Message::SendWarning(TCollection_AsciiString("Error: exception raised during polygon split\n[")
+    System::log::Message::SendWarning(TCollection_AsciiString("Error: exception raised during polygon split\n[")
                          + theFailure.what() + "]");
   }
   return triangulatePolygonFan(theIndices);
@@ -631,7 +631,7 @@ void RWObj_Reader::pushMaterial(const char* theMaterialName)
   }
   else if (!myMaterials.IsBound(aNewMat))
   {
-    Message::SendWarning(TCollection_AsciiString("Warning: use of undefined OBJ material at line ")
+    System::log::Message::SendWarning(TCollection_AsciiString("Warning: use of undefined OBJ material at line ")
                          + myNbLines);
     return;
   }
@@ -652,7 +652,7 @@ void RWObj_Reader::readMaterialLib(const char* theFileName)
   TCollection_AsciiString aMatPath;
   if (!RWObj_Tools::ReadName(theFileName, aMatPath))
   {
-    Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
+    System::log::Message::SendWarning(TCollection_AsciiString("Warning: invalid OBJ syntax at line ")
                          + myNbLines);
     return;
   }
@@ -671,7 +671,7 @@ bool RWObj_Reader::checkMemory()
     return true;
   }
 
-  Message::SendFail(TCollection_AsciiString("Error: OBJ file content does not fit into ")
+  System::log::Message::SendFail(TCollection_AsciiString("Error: OBJ file content does not fit into ")
                     + int(myMemLimitBytes / (1024 * 1024)) + " MiB limit."
                     + "\nMesh data will be truncated.");
   myToAbort = true;

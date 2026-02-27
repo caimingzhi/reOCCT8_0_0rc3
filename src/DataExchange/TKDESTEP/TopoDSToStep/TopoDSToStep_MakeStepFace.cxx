@@ -173,12 +173,12 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
           gp_Ax2                  Ax2(pos.XYZ() + X.XYZ() * TS->MajorRadius(), X ^ dir, X);
           occ::handle<Geom_Curve> BasisCurve = new Geom_Circle(Ax2, TS->MinorRadius());
 
-          if (VL - VF - 2 * M_PI < -Precision::PConfusion())
+          if (VL - VF - 2 * M_PI < -math::precision::Precision::PConfusion())
             BasisCurve =
               ShapeAlgo::AlgoContainer()->ConvertCurveToBSpline(BasisCurve,
                                                                 VF,
                                                                 VL,
-                                                                Precision::Approximation(),
+                                                                math::precision::Precision::Approximation(),
                                                                 GeomAbs_C1,
                                                                 100,
                                                                 9);

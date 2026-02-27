@@ -24,7 +24,7 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
                                              IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg121("XSTEP_121");
+  System::log::Message_Msg Msg121("XSTEP_121");
 
   int                              anOffsetType, aFunctionCoord, aTaperedOffsetType;
   double                           offDistance1, offDistance2;
@@ -36,19 +36,19 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aBaseCurve))
   {
-    Message_Msg Msg110("XSTEP_110");
+    System::log::Message_Msg Msg110("XSTEP_110");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg110.Arg(Msg216.Value());
         PR.SendFail(Msg110);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg110.Arg(Msg217.Value());
         PR.SendFail(Msg110);
         break;
@@ -61,25 +61,25 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
 
   if (!PR.ReadInteger(PR.Current(), anOffsetType))
   {
-    Message_Msg Msg111("XSTEP_111");
+    System::log::Message_Msg Msg111("XSTEP_111");
     PR.SendFail(Msg111);
   }
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aFunction, true))
   {
-    Message_Msg Msg112("XSTEP_112");
+    System::log::Message_Msg Msg112("XSTEP_112");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg112.Arg(Msg216.Value());
         PR.SendFail(Msg112);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg112.Arg(Msg217.Value());
         PR.SendFail(Msg112);
         break;
@@ -92,37 +92,37 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
 
   if (!PR.ReadInteger(PR.Current(), aFunctionCoord))
   {
-    Message_Msg Msg113("XSTEP_113");
+    System::log::Message_Msg Msg113("XSTEP_113");
     PR.SendFail(Msg113);
   }
 
   if (!PR.ReadInteger(PR.Current(), aTaperedOffsetType))
   {
-    Message_Msg Msg114("XSTEP_114");
+    System::log::Message_Msg Msg114("XSTEP_114");
     PR.SendFail(Msg114);
   }
 
   if (!PR.ReadReal(PR.Current(), offDistance1))
   {
-    Message_Msg Msg115("XSTEP_115");
+    System::log::Message_Msg Msg115("XSTEP_115");
     PR.SendFail(Msg115);
   }
 
   if (!PR.ReadReal(PR.Current(), arcLength1))
   {
-    Message_Msg Msg116("XSTEP_116");
+    System::log::Message_Msg Msg116("XSTEP_116");
     PR.SendFail(Msg116);
   }
 
   if (!PR.ReadReal(PR.Current(), offDistance2))
   {
-    Message_Msg Msg117("XSTEP_117");
+    System::log::Message_Msg Msg117("XSTEP_117");
     PR.SendFail(Msg117);
   }
 
   if (!PR.ReadReal(PR.Current(), arcLength2))
   {
-    Message_Msg Msg118("XSTEP_118");
+    System::log::Message_Msg Msg118("XSTEP_118");
     PR.SendFail(Msg118);
   }
 
@@ -130,13 +130,13 @@ void IGESGeom_ToolOffsetCurve::ReadOwnParams(const occ::handle<IGESGeom_OffsetCu
 
   if (!PR.ReadReal(PR.Current(), anOffsetParam))
   {
-    Message_Msg Msg119("XSTEP_119");
+    System::log::Message_Msg Msg119("XSTEP_119");
     PR.SendFail(Msg119);
   }
 
   if (!PR.ReadReal(PR.Current(), anotherOffsetParam))
   {
-    Message_Msg Msg120("XSTEP_120");
+    System::log::Message_Msg Msg120("XSTEP_120");
     PR.SendFail(Msg120);
   }
 
@@ -264,13 +264,13 @@ void IGESGeom_ToolOffsetCurve::OwnCheck(const occ::handle<IGESGeom_OffsetCurve>&
   int ot = ent->OffsetType();
   if (ot < 1 || ot > 3)
   {
-    Message_Msg Msg111("XSTEP_111");
+    System::log::Message_Msg Msg111("XSTEP_111");
     ach->SendFail(Msg111);
   }
 
   if (ot != 1 && ((ent->TaperedOffsetType() < 1) || (ent->TaperedOffsetType() > 2)))
   {
-    Message_Msg Msg114("XSTEP_114");
+    System::log::Message_Msg Msg114("XSTEP_114");
     ach->SendFail(Msg114);
   }
 }

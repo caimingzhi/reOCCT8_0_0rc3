@@ -4,6 +4,7 @@
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
+namespace System { namespace os {
 class OSD_FileSystem : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(OSD_FileSystem, Standard_Transient)
@@ -42,3 +43,5 @@ public:
 
   Standard_EXPORT ~OSD_FileSystem() override;
 };
+}} // namespace System::os
+

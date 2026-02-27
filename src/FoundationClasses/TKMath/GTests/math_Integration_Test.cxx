@@ -356,7 +356,7 @@ namespace
 
     if (anIntegrator.IsDone())
     {
-      EXPECT_NEAR(anIntegrator.Value(), 0.0, Precision::Confusion())
+      EXPECT_NEAR(anIntegrator.Value(), 0.0, math::precision::Precision::Confusion())
         << "Zero-length interval should give zero integral";
     }
   }

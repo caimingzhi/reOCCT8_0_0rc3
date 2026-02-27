@@ -182,7 +182,7 @@ static void readTexture(const BinObjMgt_Persistent& theSource,
 }
 
 BinMXCAFDoc_VisMaterialDriver::BinMXCAFDoc_VisMaterialDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_VisMaterial)->Name())
 {
 }

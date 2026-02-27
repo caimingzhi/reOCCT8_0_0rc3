@@ -90,7 +90,7 @@ void PrsDim_ParallelRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
   gp_Lin                             L3;
   occ::handle<SelectMgr_EntityOwner> own = new SelectMgr_EntityOwner(this, 7);
 
-  if (!Proj1.IsEqual(Proj2, Precision::Confusion()))
+  if (!Proj1.IsEqual(Proj2, math::precision::Precision::Confusion()))
   {
     L3 = gce_MakeLin(Proj1, Proj2);
   }
@@ -124,17 +124,17 @@ void PrsDim_ParallelRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
 
   occ::handle<Select3D_SensitiveSegment> seg;
 
-  if (!PointMin.IsEqual(PointMax, Precision::Confusion()))
+  if (!PointMin.IsEqual(PointMax, math::precision::Precision::Confusion()))
   {
     seg = new Select3D_SensitiveSegment(own, PointMin, PointMax);
     aSelection->Add(seg);
   }
-  if (!myFAttach.IsEqual(Proj1, Precision::Confusion()))
+  if (!myFAttach.IsEqual(Proj1, math::precision::Precision::Confusion()))
   {
     seg = new Select3D_SensitiveSegment(own, myFAttach, Proj1);
     aSelection->Add(seg);
   }
-  if (!mySAttach.IsEqual(Proj2, Precision::Confusion()))
+  if (!mySAttach.IsEqual(Proj2, math::precision::Precision::Confusion()))
   {
     seg = new Select3D_SensitiveSegment(own, mySAttach, Proj2);
     aSelection->Add(seg);
@@ -303,7 +303,7 @@ void PrsDim_ParallelRelation::ComputeTwoEdgesParallel(
   }
   TCollection_ExtendedString aText(" //");
 
-  if (l1.Distance(l2) <= Precision::Confusion())
+  if (l1.Distance(l2) <= math::precision::Precision::Confusion())
   {
     myArrowSize = 0.;
   }

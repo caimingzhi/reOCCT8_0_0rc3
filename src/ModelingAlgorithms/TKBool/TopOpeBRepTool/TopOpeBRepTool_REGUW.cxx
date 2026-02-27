@@ -548,7 +548,7 @@ bool TopOpeBRepTool_REGUW::NearestE(const NCollection_List<TopoDS_Shape>& loe,
     throw Standard_Failure("TopOpeBRepTool_REGUW : NO INIT");
   efound.Nullify();
   double fac   = 0.45678;
-  double tola  = Precision::Angular();
+  double tola  = math::precision::Precision::Angular();
   int    iv0e1 = (iStep == 1) ? REVERSED : FORWARD;
 
   NCollection_List<TopoDS_Shape>::Iterator ite(loe);

@@ -104,7 +104,7 @@ void TopOpeBRepTool_HBoxTool::ComputeBoxOnVertices(const TopoDS_Shape& S, Bnd_Bo
     B.Update(-1.e5, -1.e5, -1.e5, 1.e5, 1.e5, 1.e5);
     return;
   }
-  double tol = Precision::Confusion();
+  double tol = math::precision::Precision::Confusion();
   for (; ex.More(); ex.Next())
   {
     double x, y, z;

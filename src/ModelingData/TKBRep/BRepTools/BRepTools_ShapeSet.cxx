@@ -194,10 +194,10 @@ void BRepTools_ShapeSet::DumpGeometry(Standard_OStream& OS) const
 }
 
 void BRepTools_ShapeSet::WriteGeometry(Standard_OStream&            OS,
-                                       const Message_ProgressRange& theProgress)
+                                       const System::log::Message_ProgressRange& theProgress)
 {
 
-  Message_ProgressScope aPS(theProgress, "Geometry", 100);
+  System::log::Message_ProgressScope aPS(theProgress, "Geometry", 100);
 
   myCurves2d.Write(OS, aPS.Next(20));
   if (aPS.UserBreak())
@@ -223,10 +223,10 @@ void BRepTools_ShapeSet::WriteGeometry(Standard_OStream&            OS,
 }
 
 void BRepTools_ShapeSet::ReadGeometry(Standard_IStream&            IS,
-                                      const Message_ProgressRange& theProgress)
+                                      const System::log::Message_ProgressRange& theProgress)
 {
 
-  Message_ProgressScope aPS(theProgress, "Geometry", 100);
+  System::log::Message_ProgressScope aPS(theProgress, "Geometry", 100);
 
   myCurves2d.Read(IS, aPS.Next(20));
   if (aPS.UserBreak())
@@ -1043,11 +1043,11 @@ void BRepTools_ShapeSet::Check(const TopAbs_ShapeEnum T, TopoDS_Shape& S)
 
 void BRepTools_ShapeSet::WritePolygonOnTriangulation(Standard_OStream&            OS,
                                                      const bool                   Compact,
-                                                     const Message_ProgressRange& theProgress) const
+                                                     const System::log::Message_ProgressRange& theProgress) const
 {
   int i, j, nbpOntri = myNodes.Extent();
 
-  Message_ProgressScope aPS(theProgress, "Polygons On Triangulation", nbpOntri);
+  System::log::Message_ProgressScope aPS(theProgress, "Polygons On Triangulation", nbpOntri);
   if (Compact)
     OS << "PolygonOnTriangulations " << nbpOntri << "\n";
   else
@@ -1110,7 +1110,7 @@ void BRepTools_ShapeSet::DumpPolygonOnTriangulation(Standard_OStream& OS) const
 }
 
 void BRepTools_ShapeSet::ReadPolygonOnTriangulation(Standard_IStream&            IS,
-                                                    const Message_ProgressRange& theProgress)
+                                                    const System::log::Message_ProgressRange& theProgress)
 {
   char buffer[255];
   IS >> buffer;
@@ -1123,7 +1123,7 @@ void BRepTools_ShapeSet::ReadPolygonOnTriangulation(Standard_IStream&           
   occ::handle<Poly_PolygonOnTriangulation> Poly;
   IS >> nbpol;
 
-  Message_ProgressScope aPS(theProgress, "Polygons On Triangulation", nbpol);
+  System::log::Message_ProgressScope aPS(theProgress, "Polygons On Triangulation", nbpol);
   for (i = 1; i <= nbpol && aPS.More(); i++, aPS.Next())
   {
     IS >> nbnodes;
@@ -1158,11 +1158,11 @@ void BRepTools_ShapeSet::ReadPolygonOnTriangulation(Standard_IStream&           
 
 void BRepTools_ShapeSet::WritePolygon3D(Standard_OStream&            OS,
                                         const bool                   Compact,
-                                        const Message_ProgressRange& theProgress) const
+                                        const System::log::Message_ProgressRange& theProgress) const
 {
   int i, j, nbpol = myPolygons3D.Extent();
 
-  Message_ProgressScope aPS(theProgress, "3D Polygons", nbpol);
+  System::log::Message_ProgressScope aPS(theProgress, "3D Polygons", nbpol);
 
   if (Compact)
     OS << "Polygon3D " << nbpol << "\n";
@@ -1237,7 +1237,7 @@ void BRepTools_ShapeSet::DumpPolygon3D(Standard_OStream& OS) const
 }
 
 void BRepTools_ShapeSet::ReadPolygon3D(Standard_IStream&            IS,
-                                       const Message_ProgressRange& theProgress)
+                                       const System::log::Message_ProgressRange& theProgress)
 {
   char buffer[255];
 
@@ -1250,7 +1250,7 @@ void BRepTools_ShapeSet::ReadPolygon3D(Standard_IStream&            IS,
   occ::handle<Poly_Polygon3D> P;
   IS >> nbpol;
 
-  Message_ProgressScope aPS(theProgress, "3D Polygons", nbpol);
+  System::log::Message_ProgressScope aPS(theProgress, "3D Polygons", nbpol);
   for (i = 1; i <= nbpol && aPS.More(); i++, aPS.Next())
   {
     IS >> nbnodes;
@@ -1282,12 +1282,12 @@ void BRepTools_ShapeSet::ReadPolygon3D(Standard_IStream&            IS,
 
 void BRepTools_ShapeSet::WriteTriangulation(Standard_OStream&            OS,
                                             const bool                   Compact,
-                                            const Message_ProgressRange& theProgress) const
+                                            const System::log::Message_ProgressRange& theProgress) const
 {
   int i, j, nbNodes, nbtri = myTriangulations.Extent();
   int nbTriangles = 0, n1, n2, n3;
 
-  Message_ProgressScope aPS(theProgress, "Triangulations", nbtri);
+  System::log::Message_ProgressScope aPS(theProgress, "Triangulations", nbtri);
 
   if (Compact)
     OS << "Triangulations " << nbtri << "\n";
@@ -1431,7 +1431,7 @@ void BRepTools_ShapeSet::DumpTriangulation(Standard_OStream& OS) const
 }
 
 void BRepTools_ShapeSet::ReadTriangulation(Standard_IStream&            IS,
-                                           const Message_ProgressRange& theProgress)
+                                           const System::log::Message_ProgressRange& theProgress)
 {
   char   buffer[255];
   int    i, j, nbtri = 0;
@@ -1448,7 +1448,7 @@ void BRepTools_ShapeSet::ReadTriangulation(Standard_IStream&            IS,
 
   IS >> nbtri;
 
-  Message_ProgressScope aPS(theProgress, "Triangulations", nbtri);
+  System::log::Message_ProgressScope aPS(theProgress, "Triangulations", nbtri);
   for (i = 1; i <= nbtri && aPS.More(); i++, aPS.Next())
   {
 

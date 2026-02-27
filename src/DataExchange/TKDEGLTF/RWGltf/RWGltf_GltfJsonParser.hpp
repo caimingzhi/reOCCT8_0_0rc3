@@ -104,7 +104,7 @@ public:
 
   void SetToApplyScale(bool theToApplyScale) { myToApplyScale = theToApplyScale; }
 
-  Standard_EXPORT bool Parse(const Message_ProgressRange& theProgress);
+  Standard_EXPORT bool Parse(const System::log::Message_ProgressRange& theProgress);
 
   NCollection_Vector<TopoDS_Face>& FaceList() { return myFaceList; }
 
@@ -115,7 +115,7 @@ protected:
 
   Standard_EXPORT bool gltfParseRoots();
 
-  Standard_EXPORT bool gltfParseScene(const Message_ProgressRange& theProgress);
+  Standard_EXPORT bool gltfParseScene(const System::log::Message_ProgressRange& theProgress);
 
   Standard_EXPORT void gltfParseAsset();
 
@@ -151,12 +151,12 @@ protected:
 protected:
   Standard_EXPORT bool gltfParseSceneNodes(NCollection_Sequence<TopoDS_Shape>& theShapeSeq,
                                            const RWGltf_JsonValue&             theSceneNodes,
-                                           const Message_ProgressRange&        theProgress);
+                                           const System::log::Message_ProgressRange&        theProgress);
 
   Standard_EXPORT bool gltfParseSceneNode(TopoDS_Shape&                  theNodeShape,
                                           const TCollection_AsciiString& theSceneNodeId,
                                           const RWGltf_JsonValue&        theSceneNode,
-                                          const Message_ProgressRange&   theProgress);
+                                          const System::log::Message_ProgressRange&   theProgress);
 
   Standard_EXPORT bool gltfParseMesh(TopoDS_Shape&                  theMeshShape,
                                      const TCollection_AsciiString& theMeshId,

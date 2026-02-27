@@ -154,7 +154,7 @@ bool gp_Ax3::InitFromJson(const Standard_SStream& theSStream, int& theStreamPos)
   vxdir = gp_Dir(aXDir);
   vydir = gp_Dir(anYDir);
 
-  if (!Direction().IsEqual(aDir, Precision::Angular()))
+  if (!Direction().IsEqual(aDir, math::precision::Precision::Angular()))
     return false;
 
   theStreamPos = aPos;

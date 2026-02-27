@@ -50,7 +50,7 @@ static int distmini(Draw_Interpretor& di, int n, const char** a)
   const char * ns1 = (a[2]), *ns2 = (a[3]), *ns0 = (a[1]);
   TopoDS_Shape S1(DBRep::Get(ns1)), S2(DBRep::Get(ns2));
 
-  double aDeflection = Precision::Confusion();
+  double aDeflection = math::precision::Precision::Confusion();
   int    anIndex     = 4;
   if (n >= 5 && a[4][0] != '-')
   {
@@ -149,7 +149,7 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
 {
   if (theNbArgs < 3 || theNbArgs > 6)
   {
-    Message::SendFail() << "Usage: " << theArgs[0]
+    System::log::Message::SendFail() << "Usage: " << theArgs[0]
                         << " Shape1 Shape2 [-tol <value> | -value] [-profile]";
     return 1;
   }
@@ -159,7 +159,7 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
 
   if (aShape1.IsNull() || aShape2.IsNull())
   {
-    Message::SendFail() << "Error: Failed to find specified shapes";
+    System::log::Message::SendFail() << "Error: Failed to find specified shapes";
     return 1;
   }
 
@@ -179,14 +179,14 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
       isTolerance = true;
       if (++anArgIdx >= theNbArgs)
       {
-        Message::SendFail() << "Error: wrong syntax at argument '" << aFlag;
+        System::log::Message::SendFail() << "Error: wrong syntax at argument '" << aFlag;
         return 1;
       }
 
       const double aTolerance = Draw::Atof(theArgs[anArgIdx]);
       if (aTolerance < 0.0)
       {
-        Message::SendFail() << "Error: Tolerance value should be non-negative";
+        System::log::Message::SendFail() << "Error: Tolerance value should be non-negative";
         return 1;
       }
       else
@@ -197,7 +197,7 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
     else if (aFlag == "-value")
     {
       isValue = true;
-      aTool.SetTolerance(Precision::Infinite());
+      aTool.SetTolerance(math::precision::Precision::Infinite());
     }
     else if (aFlag == "-profile")
     {
@@ -207,14 +207,14 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
 
   if (isTolerance && isValue)
   {
-    Message::SendFail() << "Error: Proximity value could not be computed if the tolerance is set";
+    System::log::Message::SendFail() << "Error: Proximity value could not be computed if the tolerance is set";
     return 1;
   }
 
   double aInitTime = 0.0;
   double aWorkTime = 0.0;
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
 
   if (aProfile)
   {
@@ -241,7 +241,7 @@ static int ShapeProximity(Draw_Interpretor& theDI, int theNbArgs, const char** t
 
   if (!aTool.IsDone())
   {
-    Message::SendFail() << "Error: Failed to perform proximity test";
+    System::log::Message::SendFail() << "Error: Failed to perform proximity test";
     return 1;
   }
 
@@ -344,14 +344,14 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
 {
   if (theNbArgs < 2 || theNbArgs > 5)
   {
-    Message::SendFail() << "Usage: " << theArgs[0] << " Shape [-tol <value>] [-profile]";
+    System::log::Message::SendFail() << "Usage: " << theArgs[0] << " Shape [-tol <value>] [-profile]";
     return 1;
   }
 
   TopoDS_Shape aShape = DBRep::Get(theArgs[1]);
   if (aShape.IsNull())
   {
-    Message::SendFail() << "Error: Failed to find specified shape";
+    System::log::Message::SendFail() << "Error: Failed to find specified shape";
     return 1;
   }
 
@@ -367,14 +367,14 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
     {
       if (++anArgIdx >= theNbArgs)
       {
-        Message::SendFail() << "Error: wrong syntax at argument '" << aFlag;
+        System::log::Message::SendFail() << "Error: wrong syntax at argument '" << aFlag;
         return 1;
       }
 
       const double aValue = Draw::Atof(theArgs[anArgIdx]);
       if (aValue < 0.0)
       {
-        Message::SendFail() << "Error: Tolerance value should be non-negative";
+        System::log::Message::SendFail() << "Error: Tolerance value should be non-negative";
         return 1;
       }
       else
@@ -389,7 +389,7 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
     }
   }
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
 
   double aInitTime = 0.0;
   double aWorkTime = 0.0;
@@ -413,7 +413,7 @@ static int ShapeSelfIntersection(Draw_Interpretor& theDI, int theNbArgs, const c
 
   if (!aTool.IsDone())
   {
-    Message::SendFail() << "Error: Failed to perform proximity test";
+    System::log::Message::SendFail() << "Error: Failed to perform proximity test";
     return 1;
   }
 

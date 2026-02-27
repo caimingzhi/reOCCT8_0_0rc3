@@ -46,7 +46,7 @@ public:
     const TCollection_ExtendedString&     aName,
     const bool                            UseStorageConfiguration = true,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange());
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<CDM_Document> Retrieve(
     const TCollection_ExtendedString&     aFolder,
@@ -54,7 +54,7 @@ public:
     const TCollection_ExtendedString&     aVersion,
     const bool                            UseStorageConfiguration = true,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange());
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange());
 
   Standard_EXPORT PCDM_ReaderStatus CanRetrieve(const TCollection_ExtendedString& theFolder,
                                                 const TCollection_ExtendedString& theName,
@@ -71,7 +71,7 @@ public:
     Standard_IStream&                     theIStream,
     occ::handle<CDM_Document>&            theDocument,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange());
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual occ::handle<PCDM_Reader> ReaderFromFormat(
     const TCollection_ExtendedString& aFormat);
@@ -101,14 +101,14 @@ private:
     const occ::handle<CDM_MetaData>&      aMetaData,
     const bool                            UseStorageConfiguration,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT occ::handle<CDM_Document> Retrieve(
     const occ::handle<CDM_MetaData>&      aMetaData,
     const bool                            UseStorageConfiguration,
     const bool                            IsComponent,
     const occ::handle<PCDM_ReaderFilter>& theFilter = occ::handle<PCDM_ReaderFilter>(),
-    const Message_ProgressRange&          theRange  = Message_ProgressRange());
+    const System::log::Message_ProgressRange&          theRange  = System::log::Message_ProgressRange());
 
   Standard_EXPORT int DocumentVersion(const occ::handle<CDM_MetaData>& theMetaData) override;
 

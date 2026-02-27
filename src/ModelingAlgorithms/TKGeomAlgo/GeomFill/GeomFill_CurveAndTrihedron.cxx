@@ -173,7 +173,7 @@ int GeomFill_CurveAndTrihedron::NbIntervals(const GeomAbs_Shape S) const
   myTrimmed->Intervals(IntC, S);
   myLaw->Intervals(IntL, S);
 
-  GeomLib::FuseIntervals(IntC, IntL, Inter, Precision::PConfusion() * 0.99);
+  GeomLib::FuseIntervals(IntC, IntL, Inter, math::precision::Precision::PConfusion() * 0.99);
   return Inter.Length() - 1;
 }
 
@@ -201,7 +201,7 @@ void GeomFill_CurveAndTrihedron::Intervals(NCollection_Array1<double>& T,
   myTrimmed->Intervals(IntC, S);
   myLaw->Intervals(IntL, S);
 
-  GeomLib::FuseIntervals(IntC, IntL, Inter, Precision::PConfusion() * 0.99);
+  GeomLib::FuseIntervals(IntC, IntL, Inter, math::precision::Precision::PConfusion() * 0.99);
   for (int ii = 1; ii <= Inter.Length(); ii++)
     T(ii) = Inter(ii);
 }

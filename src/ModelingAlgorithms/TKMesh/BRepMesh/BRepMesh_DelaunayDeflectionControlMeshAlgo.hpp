@@ -21,7 +21,7 @@ public:
 
   void Perform(const IMeshData::IFaceHandle& theDFace,
                const IMeshTools_Parameters&  theParameters,
-               const Message_ProgressRange&  theRange) override
+               const System::log::Message_ProgressRange&  theRange) override
   {
     myRangeSplitter.Reset(theDFace, theParameters);
     myClassifier = new BRepMesh_Classifier;
@@ -238,14 +238,14 @@ protected:
                                          &this->getRangeSplitter());
   }
 
-  void postProcessMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange) override
+  void postProcessMesh(BRepMesh_Delaun& theMesher, const System::log::Message_ProgressRange& theRange) override
   {
     if (!theRange.More())
     {
       return;
     }
 
-    InsertionBaseClass::postProcessMesh(theMesher, Message_ProgressRange());
+    InsertionBaseClass::postProcessMesh(theMesher, System::log::Message_ProgressRange());
 
     if (!myIsPreProcessSurfaceNodes)
     {
@@ -258,7 +258,7 @@ protected:
 
   bool insertNodes(const Handle(IMeshData::ListOfPnt2d)& theNodes,
                    BRepMesh_Delaun&                      theMesher,
-                   const Message_ProgressRange&          theRange)
+                   const System::log::Message_ProgressRange&          theRange)
   {
     if (theNodes.IsNull() || theNodes->IsEmpty())
     {
@@ -335,9 +335,9 @@ public:
   ~BRepMesh_DelaunayDeflectionControlMeshAlgo() override = default;
 
 protected:
-  void postProcessMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange) override
+  void postProcessMesh(BRepMesh_Delaun& theMesher, const System::log::Message_ProgressRange& theRange) override
   {
-    Message_ProgressScope aPS(theRange, "Post process mesh", 2);
+    System::log::Message_ProgressScope aPS(theRange, "Post process mesh", 2);
 
     DelaunayInsertionBaseClass::postProcessMesh(theMesher, aPS.Next());
     if (!aPS.More())
@@ -356,7 +356,7 @@ protected:
     }
   }
 
-  virtual void optimizeMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange)
+  virtual void optimizeMesh(BRepMesh_Delaun& theMesher, const System::log::Message_ProgressRange& theRange)
   {
     occ::handle<NCollection_IncAllocator> aTmpAlloc =
       new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE);
@@ -370,7 +370,7 @@ protected:
 
     const int             aIterationsNb = 11;
     bool                  isInserted    = true;
-    Message_ProgressScope aPS(theRange, "Iteration", aIterationsNb);
+    System::log::Message_ProgressScope aPS(theRange, "Iteration", aIterationsNb);
     for (int aPass = 1; aPass <= aIterationsNb && isInserted && !myIsAllDegenerated; ++aPass)
     {
       if (!aPS.More())
@@ -621,8 +621,8 @@ private:
     gp_Dir                           aNorm1, aNorm2;
     const occ::handle<Geom_Surface>& aSurf = this->getDFace()->GetSurface()->Surface().Surface();
 
-    if ((GeomLib::NormEstim(aSurf, theNodeInfo1.Point2d, Precision::Confusion(), aNorm1) == 0)
-        && (GeomLib::NormEstim(aSurf, theNodeInfo2.Point2d, Precision::Confusion(), aNorm2) == 0))
+    if ((GeomLib::NormEstim(aSurf, theNodeInfo1.Point2d, math::precision::Precision::Confusion(), aNorm1) == 0)
+        && (GeomLib::NormEstim(aSurf, theNodeInfo2.Point2d, math::precision::Precision::Confusion(), aNorm2) == 0))
     {
       double anAngle = aNorm1.Angle(aNorm2);
       if (anAngle > this->getParameters().AngleInterior)

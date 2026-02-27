@@ -53,10 +53,10 @@ void DrawTrSurf_Surface::DrawOn(Draw_Display& dis, const bool Iso) const
   double UFirst, ULast, VFirst, VLast;
   surf->Bounds(UFirst, ULast, VFirst, VLast);
 
-  bool UfirstInf = Precision::IsNegativeInfinite(UFirst);
-  bool UlastInf  = Precision::IsPositiveInfinite(ULast);
-  bool VfirstInf = Precision::IsNegativeInfinite(VFirst);
-  bool VlastInf  = Precision::IsPositiveInfinite(VLast);
+  bool UfirstInf = math::precision::Precision::IsNegativeInfinite(UFirst);
+  bool UlastInf  = math::precision::Precision::IsPositiveInfinite(ULast);
+  bool VfirstInf = math::precision::Precision::IsNegativeInfinite(VFirst);
+  bool VlastInf  = math::precision::Precision::IsPositiveInfinite(VLast);
 
   if (UfirstInf || UlastInf)
   {

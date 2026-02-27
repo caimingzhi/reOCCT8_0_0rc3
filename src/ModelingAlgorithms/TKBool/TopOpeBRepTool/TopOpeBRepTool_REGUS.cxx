@@ -741,7 +741,7 @@ bool TopOpeBRepTool_REGUS::NearestF(const TopoDS_Edge&                    e,
   double eps  = 0.45678;
   double pare = (1 - eps) * f + eps * l;
 
-  double tola = Precision::Angular() * 1.e3;
+  double tola = math::precision::Precision::Angular() * 1.e3;
 
   gp_Dir x, y;
   bool   ok = ::FUN_vectors(fref, e, pare, y, x, tola, false);

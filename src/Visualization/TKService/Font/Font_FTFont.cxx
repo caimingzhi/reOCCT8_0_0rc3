@@ -91,7 +91,7 @@ bool Font_FTFont::Init(const occ::handle<NCollection_Buffer>& theData,
 
   if (!myFTLib->IsValid())
   {
-    Message::SendTrace("FreeType library is unavailable");
+    System::log::Message::SendTrace("FreeType library is unavailable");
     Release();
     return false;
   }
@@ -106,7 +106,7 @@ bool Font_FTFont::Init(const occ::handle<NCollection_Buffer>& theData,
                            &myFTFace)
         != 0)
     {
-      Message::SendTrace(TCollection_AsciiString("Font '") + myFontPath
+      System::log::Message::SendTrace(TCollection_AsciiString("Font '") + myFontPath
                          + "' failed to load from memory");
       Release();
       return false;
@@ -125,7 +125,7 @@ bool Font_FTFont::Init(const occ::handle<NCollection_Buffer>& theData,
 
   if (FT_Select_Charmap(myFTFace, ft_encoding_unicode) != 0)
   {
-    Message::SendTrace(TCollection_AsciiString("Font '") + myFontPath
+    System::log::Message::SendTrace(TCollection_AsciiString("Font '") + myFontPath
                        + "' doesn't contains Unicode charmap");
     Release();
     return false;
@@ -137,7 +137,7 @@ bool Font_FTFont::Init(const occ::handle<NCollection_Buffer>& theData,
                             theParams.Resolution)
            != 0)
   {
-    Message::SendTrace(TCollection_AsciiString("Font '") + myFontPath
+    System::log::Message::SendTrace(TCollection_AsciiString("Font '") + myFontPath
                        + "' doesn't contains Unicode charmap of requested size");
     Release();
     return false;
@@ -277,7 +277,7 @@ bool Font_FTFont::findAndInitFallback(Font_UnicodeSubset theSubset)
       aRequestedFont->FontPathAny(myFontAspect, aParams.ToSynthesizeItalic, aFaceId);
     if (myFallbackFaces[theSubset]->Init(aPath, aParams, aFaceId))
     {
-      Message::SendTrace(TCollection_AsciiString("Font_FTFont, using fallback font '")
+      System::log::Message::SendTrace(TCollection_AsciiString("Font_FTFont, using fallback font '")
                          + aRequestedFont->FontName() + "'" + " for symbols unsupported by '"
                          + myFTFace->family_name + "'");
     }

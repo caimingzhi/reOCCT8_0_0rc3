@@ -10,7 +10,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDocStd_XLinkDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(DocEntryString, "documentEntry")
 
-XmlMDocStd_XLinkDriver::XmlMDocStd_XLinkDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMDocStd_XLinkDriver::XmlMDocStd_XLinkDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

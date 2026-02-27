@@ -10,7 +10,10 @@ typedef TopTools_LocationSet* TopTools_LocationSetPtr;
 #include <XmlObjMgt_RRelocationTable.hpp>
 #include <XmlObjMgt_SRelocationTable.hpp>
 #include <XmlObjMgt_Element.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 class TopLoc_Location;
@@ -20,7 +23,7 @@ class XmlMXCAFDoc_LocationDriver : public XmlMDF_ADriver
 
 public:
   Standard_EXPORT XmlMXCAFDoc_LocationDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

@@ -19,7 +19,7 @@ static int qcurve(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
 {
   if (theArgsNb < 5)
   {
-    Message::SendFail() << "Error: wrong number of argument";
+    System::log::Message::SendFail() << "Error: wrong number of argument";
     return 1;
   }
 
@@ -47,7 +47,7 @@ static int qcurve(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
   {
     if (theArgsNb < 6)
     {
-      Message::SendFail() << "Error: wrong number of arguments";
+      System::log::Message::SendFail() << "Error: wrong number of arguments";
       return 1;
     }
     aResult2d = new Geom2d_Line(gp_Pnt2d(Draw::Atof(theArgVec[2]), Draw::Atof(theArgVec[3])),
@@ -57,7 +57,7 @@ static int qcurve(Draw_Interpretor&, int theArgsNb, const char** theArgVec)
   }
   else
   {
-    Message::SendFail() << "Error: wrong command name";
+    System::log::Message::SendFail() << "Error: wrong command name";
     return 1;
   }
 
@@ -77,7 +77,7 @@ static int solutions(Draw_Interpretor& theDI, GccAna_Circ2d3Tan& theCirTan3, con
 {
   if (!theCirTan3.IsDone())
   {
-    Message::SendFail() << "GccAna_Circ2d3Tan is not done";
+    System::log::Message::SendFail() << "GccAna_Circ2d3Tan is not done";
     return 1;
   }
 
@@ -138,7 +138,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
 {
   if (theArgsNb < 5)
   {
-    Message::SendFail() << "Error: wrong number of arguments";
+    System::log::Message::SendFail() << "Error: wrong number of arguments";
     return 1;
   }
 
@@ -154,7 +154,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   bool     anIsPoint2 = DrawTrSurf::GetPoint2d(theArgVec[3], aPoint2);
   bool     anIsPoint3 = DrawTrSurf::GetPoint2d(theArgVec[4], aPoint3);
 
-  double aTolerance = Precision::Confusion();
+  double aTolerance = math::precision::Precision::Confusion();
   if (theArgsNb > 5)
     aTolerance = Draw::Atof(theArgVec[5]);
 
@@ -162,7 +162,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   {
     if (!anIsPoint1 || !anIsPoint2 || !anIsPoint3)
     {
-      Message::SendFail() << "Error: wrong points definition";
+      System::log::Message::SendFail() << "Error: wrong points definition";
       return 1;
     }
     GccAna_Circ2d3Tan aCircBuilder(aPoint1, aPoint2, aPoint3, aTolerance);
@@ -173,7 +173,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   {
     if (!anIsPoint2 || !anIsPoint3)
     {
-      Message::SendFail() << "Error: wrong points definition";
+      System::log::Message::SendFail() << "Error: wrong points definition";
       return 1;
     }
     Geom2dAdaptor_Curve anAdaptorCurve1(aQCurve1->GetCurve());
@@ -189,7 +189,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
       GccAna_Circ2d3Tan   aCircBuilder(aQualifiedLin1, aPoint2, aPoint3, aTolerance);
       return solutions(theDI, aCircBuilder, theArgVec[1]);
     }
-    Message::SendFail() << "Error: wrong curve type";
+    System::log::Message::SendFail() << "Error: wrong curve type";
     return 1;
   }
 
@@ -197,7 +197,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
   {
     if (!anIsPoint3)
     {
-      Message::SendFail() << "Error: wrong point definition";
+      System::log::Message::SendFail() << "Error: wrong point definition";
       return 1;
     }
     Geom2dAdaptor_Curve anAdaptorCurve1(aQCurve1->GetCurve());
@@ -224,7 +224,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
       GccAna_Circ2d3Tan   aCircBuilder(aQualifiedLin1, aQualifiedLin2, aPoint3, aTolerance);
       return solutions(theDI, aCircBuilder, theArgVec[1]);
     }
-    Message::SendFail() << "Error: wrong curve type";
+    System::log::Message::SendFail() << "Error: wrong curve type";
     return 1;
   }
 
@@ -274,7 +274,7 @@ static int circ2d3Tan(Draw_Interpretor& theDI, int theArgsNb, const char** theAr
     return solutions(theDI, aCircBuilder, theArgVec[1]);
   }
 
-  Message::SendFail() << "Error: wrong curve type";
+  System::log::Message::SendFail() << "Error: wrong curve type";
   return 1;
 }
 

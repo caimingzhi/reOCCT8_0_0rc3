@@ -41,7 +41,7 @@ static int DDataStd_Rmdraw(Draw_Interpretor&, int nb, const char** arg)
 {
   if (nb != 2)
   {
-    Message::SendFail() << "Syntax error: wrong number of arguments";
+    System::log::Message::SendFail() << "Syntax error: wrong number of arguments";
     return 1;
   }
 
@@ -52,7 +52,7 @@ static int DDataStd_Rmdraw(Draw_Interpretor&, int nb, const char** arg)
   }
   else
   {
-    Message::SendFail() << "Syntax error: variable '" << arg[1] << "' not found";
+    System::log::Message::SendFail() << "Syntax error: variable '" << arg[1] << "' not found";
     return 1;
   }
 }

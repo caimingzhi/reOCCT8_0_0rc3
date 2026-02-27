@@ -5,7 +5,10 @@
 
 #include <XmlDrivers_DocumentRetrievalDriver.hpp>
 class XmlMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class XmlXCAFDrivers_DocumentRetrievalDriver : public XmlDrivers_DocumentRetrievalDriver
 {
@@ -14,7 +17,7 @@ public:
   Standard_EXPORT XmlXCAFDrivers_DocumentRetrievalDriver();
 
   Standard_EXPORT occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver) override;
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver) override;
 
   DEFINE_STANDARD_RTTIEXT(XmlXCAFDrivers_DocumentRetrievalDriver,
                           XmlDrivers_DocumentRetrievalDriver)

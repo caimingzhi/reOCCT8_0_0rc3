@@ -69,9 +69,9 @@ void BOPAlgo_Section::fillPISteps(BOPAlgo_PISteps& theSteps) const
 }
 
 void BOPAlgo_Section::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
-                                       const Message_ProgressRange& theRange)
+                                       const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Building result of SECTION operation", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Building result of SECTION operation", 100);
   myPaveFiller = (BOPAlgo_PaveFiller*)&theFiller;
   myDS         = myPaveFiller->PDS();
   myContext    = myPaveFiller->Context();
@@ -130,9 +130,9 @@ void BOPAlgo_Section::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   PostTreat(aPS.Next(aSteps.GetStep(PIOperation_PostTreat)));
 }
 
-void BOPAlgo_Section::BuildSection(const Message_ProgressRange& theRange)
+void BOPAlgo_Section::BuildSection(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope          aPS(theRange, "Building the result of Section operation", 1);
+  System::log::Message_ProgressScope          aPS(theRange, "Building the result of Section operation", 1);
   int                            i, aNbMS, aNbLE;
   int                            j, nE, nV, aNb, aNbF, aNbPBSc;
   TopoDS_Shape                   aRC, aRC1;

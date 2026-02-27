@@ -32,7 +32,7 @@ public:
 public:
   Standard_EXPORT void Perform(const TopoDS_Shape&          theS,
                                const double                 theAngle,
-                               const Message_ProgressRange& theRange = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
 public:
   bool IsDone() const { return myDone; }
@@ -102,7 +102,7 @@ public:
 
 private:
   Standard_EXPORT void TreatTangentFaces(const NCollection_List<TopoDS_Shape>& theEdges,
-                                         const Message_ProgressRange&          theRange);
+                                         const System::log::Message_ProgressRange&          theRange);
 
 private:
   TopoDS_Shape myShape;

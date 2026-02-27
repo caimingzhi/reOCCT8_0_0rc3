@@ -76,7 +76,7 @@ Standard_EXPORT void FUN_ComputeGeomData(const TopoDS_Shape& F,
   bool sphere = FUN_sphere(F);
   bool plane  = FUN_tool_plane(F);
 
-  BRepLProp_SLProps props(surf, uu, vv, 2, Precision::Confusion());
+  BRepLProp_SLProps props(surf, uu, vv, 2, math::precision::Precision::Confusion());
   bool              curdef = props.IsCurvatureDefined();
   if (!curdef)
     throw Standard_ProgramError("TopOpeBRepDS_FaceInterferenceTool::Init");
@@ -101,7 +101,7 @@ Standard_EXPORT void FUN_ComputeGeomData(const TopoDS_Shape& F,
       throw Standard_Failure("FUN_ComputeGeomData");
 
     D1       = Norm;
-    double x = D1.X(), y = D1.Y(), z = D1.Z(), tol = Precision::Confusion();
+    double x = D1.X(), y = D1.Y(), z = D1.Z(), tol = math::precision::Precision::Confusion();
     bool   nullx = (std::abs(x) < tol), nully = (std::abs(y) < tol), nullz = (std::abs(z) < tol);
     if (nullx && nully)
       D2 = gp_Dir(gp_Dir::D::X);
@@ -177,7 +177,7 @@ void TopOpeBRepDS_FaceInterferenceTool::Init(const TopoDS_Shape&                
     }
   }
 
-  myTole = Precision::Angular();
+  myTole = math::precision::Precision::Angular();
   gp_Pnt2d uv;
   bool     ok = false;
   double   d  = 0.;

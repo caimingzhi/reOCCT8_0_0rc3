@@ -90,8 +90,8 @@ void Geom_SurfaceOfLinearExtrusion::SetBasisCurve(const occ::handle<Geom_Curve>&
 void Geom_SurfaceOfLinearExtrusion::Bounds(double& U1, double& U2, double& V1, double& V2) const
 {
 
-  V1 = -Precision::Infinite();
-  V2 = Precision::Infinite();
+  V1 = -math::precision::Precision::Infinite();
+  V2 = math::precision::Precision::Infinite();
   U1 = basisCurve->FirstParameter();
   U2 = basisCurve->LastParameter();
 }
@@ -214,7 +214,7 @@ void Geom_SurfaceOfLinearExtrusion::TransformParameters(double&        U,
                                                         const gp_Trsf& T) const
 {
   U = basisCurve->TransformedParameter(U, T);
-  if (!Precision::IsInfinite(V))
+  if (!math::precision::Precision::IsInfinite(V))
     V *= std::abs(T.ScaleFactor());
 }
 

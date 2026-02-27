@@ -10,5 +10,5 @@ class RWObj
 public:
   Standard_EXPORT static occ::handle<Poly_Triangulation> ReadFile(
     const char*                  theFile,
-    const Message_ProgressRange& aProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& aProgress = System::log::Message_ProgressRange());
 };

@@ -61,25 +61,25 @@ public:
 
 public:
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT virtual void PerformWithFiller(
     const BOPAlgo_PaveFiller&    theFiller,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
 public:
   Standard_EXPORT virtual void BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
                                         const TopAbs_State                    theObjState,
                                         const NCollection_List<TopoDS_Shape>& theTools,
                                         const TopAbs_State                    theToolsState,
-                                        const Message_ProgressRange&          theRange,
-                                        occ::handle<Message_Report>           theReport = nullptr);
+                                        const System::log::Message_ProgressRange&          theRange,
+                                        occ::handle<System::log::Message_Report>           theReport = nullptr);
 
   void BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
                 const NCollection_List<TopoDS_Shape>& theTools,
                 const BOPAlgo_Operation               theOperation,
-                const Message_ProgressRange&          theRange,
-                occ::handle<Message_Report>           theReport = nullptr)
+                const System::log::Message_ProgressRange&          theRange,
+                occ::handle<System::log::Message_Report>           theReport = nullptr)
   {
     TopAbs_State anObjState, aToolsState;
     switch (theOperation)
@@ -119,7 +119,7 @@ public:
   }
 
 protected:
-  Standard_EXPORT void PrepareHistory(const Message_ProgressRange& theRange);
+  Standard_EXPORT void PrepareHistory(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT virtual const NCollection_List<TopoDS_Shape>* LocModified(
     const TopoDS_Shape& theS);
@@ -218,10 +218,10 @@ protected:
 
 protected:
   Standard_EXPORT virtual void PerformInternal(const BOPAlgo_PaveFiller&    thePF,
-                                               const Message_ProgressRange& theRange);
+                                               const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT virtual void PerformInternal1(const BOPAlgo_PaveFiller&    thePF,
-                                                const Message_ProgressRange& theRange);
+                                                const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT virtual void BuildResult(const TopAbs_ShapeEnum theType);
 
@@ -233,29 +233,29 @@ protected:
   Standard_EXPORT virtual void Prepare();
 
 protected:
-  Standard_EXPORT void FillImagesVertices(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillImagesVertices(const System::log::Message_ProgressRange& theRange);
 
 protected:
-  Standard_EXPORT void FillImagesEdges(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillImagesEdges(const System::log::Message_ProgressRange& theRange);
 
 protected:
   Standard_EXPORT void FillImagesContainers(const TopAbs_ShapeEnum       theType,
-                                            const Message_ProgressRange& theRange);
+                                            const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void FillImagesContainer(const TopoDS_Shape&    theS,
                                            const TopAbs_ShapeEnum theType);
 
 protected:
-  Standard_EXPORT void FillImagesFaces(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillImagesFaces(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void BuildSplitFaces(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void BuildSplitFaces(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void FillSameDomainFaces(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillSameDomainFaces(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT void FillInternalVertices(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillInternalVertices(const System::log::Message_ProgressRange& theRange);
 
 protected:
-  Standard_EXPORT void FillImagesSolids(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillImagesSolids(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void BuildDraftSolid(const TopoDS_Shape&             theSolid,
                                        TopoDS_Shape&                   theDraftSolid,
@@ -263,23 +263,23 @@ protected:
 
   Standard_EXPORT virtual void FillIn3DParts(
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
-    const Message_ProgressRange&                                              theRange);
+    const System::log::Message_ProgressRange&                                              theRange);
 
   Standard_EXPORT void BuildSplitSolids(
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
-    const Message_ProgressRange&                                              theRange);
+    const System::log::Message_ProgressRange&                                              theRange);
 
-  Standard_EXPORT void FillInternalShapes(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillInternalShapes(const System::log::Message_ProgressRange& theRange);
 
 protected:
-  Standard_EXPORT void FillImagesCompounds(const Message_ProgressRange& theRange);
+  Standard_EXPORT void FillImagesCompounds(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void FillImagesCompound(
     const TopoDS_Shape&                                     theS,
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMF);
 
 protected:
-  Standard_EXPORT virtual void PostTreat(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PostTreat(const System::log::Message_ProgressRange& theRange);
 
 protected:
   NCollection_List<TopoDS_Shape> myArguments;

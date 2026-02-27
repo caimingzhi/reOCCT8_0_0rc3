@@ -423,7 +423,7 @@ const char* BRepMesh_Dump(void* theMeshHandlePtr, const char* theFileNameStr)
           aPnt[i]            = gp_Pnt(aNode.X(), aNode.Y(), 0.);
         }
 
-        if (aPnt[0].SquareDistance(aPnt[1]) < Precision::SquareConfusion())
+        if (aPnt[0].SquareDistance(aPnt[1]) < math::precision::Precision::SquareConfusion())
           continue;
 
         aBuilder.Add(aMesh, BRepBuilderAPI_MakeEdge(aPnt[0], aPnt[1]));

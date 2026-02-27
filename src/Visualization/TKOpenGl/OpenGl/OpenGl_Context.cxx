@@ -1038,7 +1038,7 @@ void OpenGl_Context::PushMessage(const unsigned int                theSource,
   aMsg += (int)theId;
   aMsg += " | Severity: ";
   aMsg += aSev;
-  aMsg += " | Message:\n  ";
+  aMsg += " | System::log::Message:\n  ";
   aMsg += theMessage;
   Messenger()->Send(aMsg, aGrav);
 }
@@ -1384,7 +1384,7 @@ void OpenGl_Context::init(const bool theIsCoreProfile)
     }
     if (!myIsSRgbWindow)
     {
-      Message::SendTrace("OpenGl_Context, warning: window buffer is not sRGB-ready.\n"
+      System::log::Message::SendTrace("OpenGl_Context, warning: window buffer is not sRGB-ready.\n"
                          "Check OpenGL window creation parameters for optimal performance.");
     }
   }

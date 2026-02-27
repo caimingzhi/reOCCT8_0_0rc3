@@ -516,7 +516,7 @@ Standard_EXPORT bool FUN_tool_EitangenttoFe(const gp_Dir&      ngFe,
     return false;
 
   double prod    = ngFe.Dot(tgEi);
-  double tol     = Precision::Parametric(Precision::Confusion());
+  double tol     = math::precision::Precision::Parametric(math::precision::Precision::Confusion());
   bool   tangent = (std::abs(prod) <= tol);
   return tangent;
 }
@@ -690,7 +690,7 @@ Standard_EXPORT bool FUN_tool_Eshared(const TopoDS_Shape& v,
 
 Standard_EXPORT bool FUN_tool_parVonE(const TopoDS_Vertex& v, const TopoDS_Edge& E, double& par)
 {
-  double          tol    = Precision::Confusion();
+  double          tol    = math::precision::Precision::Confusion();
   bool            isVofE = false;
   TopExp_Explorer ex;
   for (ex.Init(E, TopAbs_VERTEX); ex.More(); ex.Next())
@@ -976,7 +976,7 @@ Standard_EXPORT int FUN_tool_comparebndkole(const TopoDS_Shape& sh1, const TopoD
   NCollection_Array1<double> xyz1(1, 6), xyz2(1, 6);
   bnd1.Get(xyz1(1), xyz1(2), xyz1(3), xyz1(4), xyz1(5), xyz1(6));
   bnd2.Get(xyz2(1), xyz2(2), xyz2(3), xyz2(4), xyz2(5), xyz2(6));
-  double tol = Precision::Confusion();
+  double tol = math::precision::Precision::Confusion();
 
   int neq, n2sup;
   neq = n2sup = 0;
@@ -1160,7 +1160,7 @@ Standard_EXPORT bool FUN_tool_curvesSO(const TopoDS_Edge& E1,
   ok = TopOpeBRepTool_TOOL::TggeomE(p2, E2, tg2);
   if (!ok)
     return false;
-  double tola = Precision::Angular() * 1.e3;
+  double tola = math::precision::Precision::Angular() * 1.e3;
   bool   oppo = tg1.IsOpposite(tg2, tola);
   bool   samo = tg1.IsParallel(tg2, tola);
   if (oppo)

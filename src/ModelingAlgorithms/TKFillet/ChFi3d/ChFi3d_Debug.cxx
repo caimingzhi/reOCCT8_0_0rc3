@@ -18,7 +18,7 @@
 
 #ifdef OCCT_DEBUG
   #include <OSD_Chronometer.hpp>
-OSD_Chronometer simul, elspine, chemine;
+System::os::OSD_Chronometer simul, elspine, chemine;
 #endif
 
 static bool ChFi3d_traceCHRON = false;
@@ -186,13 +186,13 @@ bool ChFi3d_GetcontextNOOPT()
 
 #ifdef OCCT_DEBUG
 
-Standard_EXPORT void ChFi3d_InitChron(OSD_Chronometer& ch)
+Standard_EXPORT void ChFi3d_InitChron(System::os::OSD_Chronometer& ch)
 {
   ch.Reset();
   ch.Start();
 }
 
-Standard_EXPORT void ChFi3d_ResultChron(OSD_Chronometer& ch, double& time)
+Standard_EXPORT void ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time)
 {
   double tch;
   ch.Stop();

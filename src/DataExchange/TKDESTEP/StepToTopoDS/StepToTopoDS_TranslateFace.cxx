@@ -485,7 +485,7 @@ void StepToTopoDS_TranslateFace::Init(const occ::handle<StepShape_FaceSurface>& 
 
   TopoDS_Face  aResultFace;
   BRep_Builder aFaceBuilder;
-  aFaceBuilder.MakeFace(aResultFace, aGeomSurface, Precision::Confusion());
+  aFaceBuilder.MakeFace(aResultFace, aGeomSurface, math::precision::Precision::Confusion());
 
   for (int aBoundIndex = 1; aBoundIndex <= theFaceSurface->NbBounds(); ++aBoundIndex)
   {

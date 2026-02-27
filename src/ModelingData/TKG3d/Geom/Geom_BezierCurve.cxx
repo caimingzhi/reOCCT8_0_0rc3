@@ -295,7 +295,7 @@ double Geom_BezierCurve::ReversedParameter(const double U) const
 
 void Geom_BezierCurve::Segment(const double U1, const double U2)
 {
-  closed = (std::abs(Value(U1).Distance(Value(U2))) <= Precision::Confusion());
+  closed = (std::abs(Value(U1).Distance(Value(U2))) <= math::precision::Precision::Confusion());
 
   NCollection_Array1<double>  bidflatknots(BSplCLib::FlatBezierKnots(Degree()),
                                           1,
@@ -342,7 +342,7 @@ void Geom_BezierCurve::SetPole(const int Index, const gp_Pnt& P)
 
   if (Index == 1 || Index == cpoles.Length())
   {
-    closed = (cpoles(1).Distance(cpoles(NbPoles())) <= Precision::Confusion());
+    closed = (cpoles(1).Distance(cpoles(NbPoles())) <= math::precision::Precision::Confusion());
   }
 }
 
@@ -591,7 +591,7 @@ void Geom_BezierCurve::Init(const occ::handle<NCollection_HArray1<gp_Pnt>>& Pole
   int nbpoles = Poles->Length();
 
   const NCollection_Array1<gp_Pnt>& cpoles = Poles->Array1();
-  closed = cpoles(1).Distance(cpoles(nbpoles)) <= Precision::Confusion();
+  closed = cpoles(1).Distance(cpoles(nbpoles)) <= math::precision::Precision::Confusion();
 
   rational = !Weights.IsNull();
 

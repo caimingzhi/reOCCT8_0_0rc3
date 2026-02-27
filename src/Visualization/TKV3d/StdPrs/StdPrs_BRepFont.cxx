@@ -71,7 +71,7 @@ namespace
     aF.Orientation(TopAbs_FORWARD);
     BRep_Builder aB;
     aB.Add(aF, theW1);
-    BRepTopAdaptor_FClass2d aClass2d(aF, ::Precision::PConfusion());
+    BRepTopAdaptor_FClass2d aClass2d(aF, math::precision::Precision::PConfusion());
     for (TopoDS_Iterator anEdgeIter(theW2); anEdgeIter.More(); anEdgeIter.Next())
     {
       const TopoDS_Edge&        anEdge  = TopoDS::Edge(anEdgeIter.Value());
@@ -102,7 +102,7 @@ namespace
 } // namespace
 
 StdPrs_BRepFont::StdPrs_BRepFont()
-    : myPrecision(Precision::Confusion()),
+    : myPrecision(math::precision::Precision::Confusion()),
       myScaleUnits(1.0),
       myIsCompositeCurve(false),
       my3Poles(1, 3),
@@ -123,7 +123,7 @@ void StdPrs_BRepFont::init()
 StdPrs_BRepFont::StdPrs_BRepFont(const NCollection_String& theFontPath,
                                  const double              theSize,
                                  const int                 theFaceId)
-    : myPrecision(Precision::Confusion()),
+    : myPrecision(math::precision::Precision::Confusion()),
       myScaleUnits(1.0),
       myIsCompositeCurve(false),
       my3Poles(1, 3),
@@ -144,7 +144,7 @@ StdPrs_BRepFont::StdPrs_BRepFont(const NCollection_String& theFontName,
                                  const Font_FontAspect     theFontAspect,
                                  const double              theSize,
                                  const Font_StrictLevel    theStrictLevel)
-    : myPrecision(Precision::Confusion()),
+    : myPrecision(math::precision::Precision::Confusion()),
       myScaleUnits(1.0),
       myIsCompositeCurve(false),
       my3Poles(1, 3),
@@ -588,7 +588,7 @@ bool StdPrs_BRepFont::renderGlyph(const char32_t theChar, TopoDS_Shape& theShape
       TopoDS_Face aFace;
       myBuilder.MakeFace(aFace, mySurface, myPrecision);
       myBuilder.Add(aFace, aWireDraft);
-      BRepTopAdaptor_FClass2d aClass2d(aFace, ::Precision::PConfusion());
+      BRepTopAdaptor_FClass2d aClass2d(aFace, math::precision::Precision::PConfusion());
       TopAbs_State            aState = aClass2d.PerformInfinitePoint();
       if (aState != TopAbs_OUT)
       {

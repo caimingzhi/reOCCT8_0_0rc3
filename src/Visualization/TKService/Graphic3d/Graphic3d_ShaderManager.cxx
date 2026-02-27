@@ -1005,7 +1005,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramUnlit
     }
     else
     {
-      Message::SendWarning("Warning: stipple lines in GLSL will be ignored");
+      System::log::Message::SendWarning("Warning: stipple lines in GLSL will be ignored");
     }
   }
 
@@ -1452,12 +1452,12 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong
   bool        toUseTexColor      = false;
   if (isFlatNormal != theIsFlatNormal)
   {
-    Message::SendWarning(
+    System::log::Message::SendWarning(
       "Warning: flat shading requires OpenGL ES 3.0+ or GL_OES_standard_derivatives extension");
   }
   else if (isFlatNormal && myToReverseDFdxSign)
   {
-    Message::SendWarning("Warning: applied workaround for GLSL flat shading normal computation "
+    System::log::Message::SendWarning("Warning: applied workaround for GLSL flat shading normal computation "
                          "using dFdx/dFdy on Adreno");
   }
 
@@ -1524,7 +1524,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getStdProgramPhong
         }
         else
         {
-          Message::SendWarning(
+          System::log::Message::SendWarning(
             "Warning: ignoring Normal Map texture in GLSL due to hardware capabilities");
         }
       }
@@ -1913,7 +1913,7 @@ occ::handle<Graphic3d_ShaderProgram> Graphic3d_ShaderManager::getPBREnvBakingPro
       }
       else
       {
-        Message::SendWarning("Warning: incomplete PBR lighting implementation due to missing "
+        System::log::Message::SendWarning("Warning: incomplete PBR lighting implementation due to missing "
                              "OpenGL ES 3.0 or GL_EXT_shader_texture_lod support.");
       }
       break;

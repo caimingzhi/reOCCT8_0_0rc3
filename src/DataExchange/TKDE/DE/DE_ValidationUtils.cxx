@@ -21,7 +21,7 @@ bool DE_ValidationUtils::ValidateConfigurationNode(
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": Configuration Node is null";
+      System::log::Message::SendFail() << "Error during " << theContext << ": Configuration Node is null";
     }
     return false;
   }
@@ -30,7 +30,7 @@ bool DE_ValidationUtils::ValidateConfigurationNode(
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext
+      System::log::Message::SendFail() << "Error during " << theContext
                           << ": Configuration Node is not of expected type. Expected: "
                           << theExpectedType->Name() << ", got: " << theNode->DynamicType()->Name();
     }
@@ -48,21 +48,21 @@ bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& t
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": File path is empty";
+      System::log::Message::SendFail() << "Error during " << theContext << ": File path is empty";
     }
     return false;
   }
 
   try
   {
-    OSD_Path aOSDPath(thePath);
-    OSD_File aFile(aOSDPath);
+    System::os::OSD_Path aOSDPath(thePath);
+    System::os::OSD_File aFile(aOSDPath);
 
     if (!aFile.Exists())
     {
       if (theIsVerbose)
       {
-        Message::SendFail() << "Error during " << theContext << ": File '" << thePath
+        System::log::Message::SendFail() << "Error during " << theContext << ": File '" << thePath
                             << "' does not exist";
       }
       return false;
@@ -73,7 +73,7 @@ bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& t
     {
       if (theIsVerbose)
       {
-        Message::SendFail() << "Error during " << theContext << ": Cannot open file '" << thePath
+        System::log::Message::SendFail() << "Error during " << theContext << ": Cannot open file '" << thePath
                             << "' for reading";
       }
       return false;
@@ -83,7 +83,7 @@ bool DE_ValidationUtils::ValidateFileForReading(const TCollection_AsciiString& t
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": Cannot access file '" << thePath
+      System::log::Message::SendFail() << "Error during " << theContext << ": Cannot access file '" << thePath
                           << "': " << anException.what();
     }
     return false;
@@ -100,7 +100,7 @@ bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& t
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": File path is empty";
+      System::log::Message::SendFail() << "Error during " << theContext << ": File path is empty";
     }
     return false;
   }
@@ -113,7 +113,7 @@ bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& t
     {
       if (theIsVerbose)
       {
-        Message::SendFail() << "Error during " << theContext << ": Cannot open file '" << thePath
+        System::log::Message::SendFail() << "Error during " << theContext << ": Cannot open file '" << thePath
                             << "' for writing";
       }
       return false;
@@ -123,7 +123,7 @@ bool DE_ValidationUtils::ValidateFileForWriting(const TCollection_AsciiString& t
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": Cannot access file '" << thePath
+      System::log::Message::SendFail() << "Error during " << theContext << ": Cannot access file '" << thePath
                           << "': " << anException.what();
     }
     return false;
@@ -140,7 +140,7 @@ bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamLis
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": Stream list is empty";
+      System::log::Message::SendFail() << "Error during " << theContext << ": Stream list is empty";
     }
     return false;
   }
@@ -149,7 +149,7 @@ bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamLis
   {
     if (theIsVerbose)
     {
-      Message::SendWarning() << "Warning during " << theContext << ": Received "
+      System::log::Message::SendWarning() << "Warning during " << theContext << ": Received "
                              << theStreams.Size() << " streams, using only the first one";
     }
   }
@@ -162,7 +162,7 @@ bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamLis
       if (theIsVerbose)
       {
         TCollection_AsciiString aKeyInfo = aNode.Path.IsEmpty() ? "<empty path>" : aNode.Path;
-        Message::SendFail() << "Error during " << theContext << ": Input stream '" << aKeyInfo
+        System::log::Message::SendFail() << "Error during " << theContext << ": Input stream '" << aKeyInfo
                             << "' is in invalid state";
       }
       return false;
@@ -174,7 +174,7 @@ bool DE_ValidationUtils::ValidateReadStreamList(const DE_Provider::ReadStreamLis
     {
       const DE_Provider::ReadStreamNode& aNode = theStreams.First();
       TCollection_AsciiString aKeyInfo         = aNode.Path.IsEmpty() ? "<empty path>" : aNode.Path;
-      Message::SendFail() << "Error during " << theContext << ": Cannot access input stream '"
+      System::log::Message::SendFail() << "Error during " << theContext << ": Cannot access input stream '"
                           << aKeyInfo << "'";
     }
     return false;
@@ -191,7 +191,7 @@ bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": Stream list is empty";
+      System::log::Message::SendFail() << "Error during " << theContext << ": Stream list is empty";
     }
     return false;
   }
@@ -200,7 +200,7 @@ bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  
   {
     if (theIsVerbose)
     {
-      Message::SendWarning() << "Warning during " << theContext << ": Received "
+      System::log::Message::SendWarning() << "Warning during " << theContext << ": Received "
                              << theStreams.Size() << " streams, using only the first one";
     }
   }
@@ -213,7 +213,7 @@ bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  
       if (theIsVerbose)
       {
         TCollection_AsciiString aKeyInfo = aNode.Path.IsEmpty() ? "<empty path>" : aNode.Path;
-        Message::SendFail() << "Error during " << theContext << ": Output stream '" << aKeyInfo
+        System::log::Message::SendFail() << "Error during " << theContext << ": Output stream '" << aKeyInfo
                             << "' is in invalid state";
       }
       return false;
@@ -225,7 +225,7 @@ bool DE_ValidationUtils::ValidateWriteStreamList(DE_Provider::WriteStreamList&  
     {
       const DE_Provider::WriteStreamNode& aNode = theStreams.First();
       TCollection_AsciiString aKeyInfo = aNode.Path.IsEmpty() ? "<empty path>" : aNode.Path;
-      Message::SendFail() << "Error during " << theContext << ": Cannot access output stream '"
+      System::log::Message::SendFail() << "Error during " << theContext << ": Cannot access output stream '"
                           << aKeyInfo << "'";
     }
     return false;
@@ -242,7 +242,7 @@ bool DE_ValidationUtils::ValidateDocument(const occ::handle<TDocStd_Document>& t
   {
     if (theIsVerbose)
     {
-      Message::SendFail() << "Error during " << theContext << ": Document handle is null";
+      System::log::Message::SendFail() << "Error during " << theContext << ": Document handle is null";
     }
     return false;
   }
@@ -256,7 +256,7 @@ bool DE_ValidationUtils::WarnLengthUnitNotSupported(const double                
 {
   if (theIsVerbose && theLengthUnit != 1.0)
   {
-    Message::SendWarning() << "Warning during " << theContext
+    System::log::Message::SendWarning() << "Warning during " << theContext
                            << ": Format doesn't support custom length unit scaling (unit: "
                            << theLengthUnit << ")";
   }
@@ -267,7 +267,7 @@ bool DE_ValidationUtils::WarnLengthUnitNotSupported(const double                
 bool DE_ValidationUtils::CreateContentBuffer(const TCollection_AsciiString&   thePath,
                                              occ::handle<NCollection_Buffer>& theBuffer)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream =
     aFileSystem->OpenIStream(thePath, std::ios::in | std::ios::binary);
 

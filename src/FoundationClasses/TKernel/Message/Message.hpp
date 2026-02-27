@@ -8,8 +8,12 @@
 
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace log {
 class Message_Report;
+}} // namespace System::log
 
+
+namespace System { namespace log {
 class Message
 {
 public:
@@ -84,8 +88,10 @@ public:
   }
 
   static Standard_EXPORT bool ToOSDMetric(const Message_MetricType theMetric,
-                                          OSD_MemInfo::Counter&    theMemInfo);
+                                          System::os::OSD_MemInfo::Counter&    theMemInfo);
 
-  static Standard_EXPORT bool ToMessageMetric(const OSD_MemInfo::Counter theMemInfo,
+  static Standard_EXPORT bool ToMessageMetric(const System::os::OSD_MemInfo::Counter theMemInfo,
                                               Message_MetricType&        theMetric);
 };
+}} // namespace System::log
+

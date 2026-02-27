@@ -12,28 +12,28 @@
 #include <Precision.hpp>
 #include <Standard_Dump.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_Report, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_Report, Standard_Transient)
 
-Message_Report::Message_Report()
+System::log::Message_Report::Message_Report()
     : myLimit(-1),
       myIsActiveInMessenger(false)
 {
 }
 
-void Message_Report::AddAlert(Message_Gravity                   theGravity,
-                              const occ::handle<Message_Alert>& theAlert)
+void System::log::Message_Report::AddAlert(Message_Gravity                   theGravity,
+                              const occ::handle<System::log::Message_Alert>& theAlert)
 {
   std::lock_guard<std::mutex> aLock(myMutex);
 
   if (myAlertLevels.IsEmpty())
   {
-    occ::handle<Message_CompositeAlerts> aCompositeAlert = compositeAlerts(true);
+    occ::handle<System::log::Message_CompositeAlerts> aCompositeAlert = compositeAlerts(true);
     if (aCompositeAlert->AddAlert(theGravity, theAlert))
     {
       return;
     }
 
-    const NCollection_List<occ::handle<Message_Alert>>& anAlerts =
+    const NCollection_List<occ::handle<System::log::Message_Alert>>& anAlerts =
       aCompositeAlert->Alerts(theGravity);
     if (anAlerts.Extent() > myLimit)
     {
@@ -45,10 +45,10 @@ void Message_Report::AddAlert(Message_Gravity                   theGravity,
   myAlertLevels.Last()->AddAlert(theGravity, theAlert);
 }
 
-const NCollection_List<occ::handle<Message_Alert>>& Message_Report::GetAlerts(
+const NCollection_List<occ::handle<System::log::Message_Alert>>& System::log::Message_Report::GetAlerts(
   Message_Gravity theGravity) const
 {
-  static const NCollection_List<occ::handle<Message_Alert>> anEmptyList;
+  static const NCollection_List<occ::handle<System::log::Message_Alert>> anEmptyList;
   if (myCompositAlerts.IsNull())
   {
     return anEmptyList;
@@ -56,7 +56,7 @@ const NCollection_List<occ::handle<Message_Alert>>& Message_Report::GetAlerts(
   return myCompositAlerts->Alerts(theGravity);
 }
 
-bool Message_Report::HasAlert(const occ::handle<Standard_Type>& theType)
+bool System::log::Message_Report::HasAlert(const occ::handle<Standard_Type>& theType)
 {
   for (int iGravity = Message_Trace; iGravity <= Message_Fail; ++iGravity)
   {
@@ -66,7 +66,7 @@ bool Message_Report::HasAlert(const occ::handle<Standard_Type>& theType)
   return false;
 }
 
-bool Message_Report::HasAlert(const occ::handle<Standard_Type>& theType, Message_Gravity theGravity)
+bool System::log::Message_Report::HasAlert(const occ::handle<Standard_Type>& theType, Message_Gravity theGravity)
 {
   if (compositeAlerts().IsNull())
   {
@@ -76,40 +76,40 @@ bool Message_Report::HasAlert(const occ::handle<Standard_Type>& theType, Message
   return compositeAlerts()->HasAlert(theType, theGravity);
 }
 
-bool Message_Report::IsActiveInMessenger(const occ::handle<Message_Messenger>&) const
+bool System::log::Message_Report::IsActiveInMessenger(const occ::handle<System::log::Message_Messenger>&) const
 {
   return myIsActiveInMessenger;
 }
 
-void Message_Report::ActivateInMessenger(const bool                            toActivate,
-                                         const occ::handle<Message_Messenger>& theMessenger)
+void System::log::Message_Report::ActivateInMessenger(const bool                            toActivate,
+                                         const occ::handle<System::log::Message_Messenger>& theMessenger)
 {
   if (toActivate == IsActiveInMessenger())
     return;
 
   myIsActiveInMessenger = toActivate;
-  occ::handle<Message_Messenger> aMessenger =
-    theMessenger.IsNull() ? Message::DefaultMessenger() : theMessenger;
+  occ::handle<System::log::Message_Messenger> aMessenger =
+    theMessenger.IsNull() ? System::log::Message::DefaultMessenger() : theMessenger;
   if (toActivate)
   {
-    occ::handle<Message_PrinterToReport> aPrinterToReport = new Message_PrinterToReport();
+    occ::handle<System::log::Message_PrinterToReport> aPrinterToReport = new System::log::Message_PrinterToReport();
     aPrinterToReport->SetReport(this);
     aMessenger->AddPrinter(aPrinterToReport);
   }
   else
   {
-    NCollection_Sequence<occ::handle<Message_Printer>> aPrintersToRemove;
-    for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator anIterator(
+    NCollection_Sequence<occ::handle<System::log::Message_Printer>> aPrintersToRemove;
+    for (NCollection_Sequence<occ::handle<System::log::Message_Printer>>::Iterator anIterator(
            aMessenger->Printers());
          anIterator.More();
          anIterator.Next())
     {
-      const occ::handle<Message_Printer>& aPrinter = anIterator.Value();
-      if (aPrinter->IsKind(STANDARD_TYPE(Message_PrinterToReport))
-          && occ::down_cast<Message_PrinterToReport>(aPrinter)->Report() == this)
+      const occ::handle<System::log::Message_Printer>& aPrinter = anIterator.Value();
+      if (aPrinter->IsKind(STANDARD_TYPE(System::log::Message_PrinterToReport))
+          && occ::down_cast<System::log::Message_PrinterToReport>(aPrinter)->Report() == this)
         aPrintersToRemove.Append(aPrinter);
     }
-    for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator anIterator(aPrintersToRemove);
+    for (NCollection_Sequence<occ::handle<System::log::Message_Printer>>::Iterator anIterator(aPrintersToRemove);
          anIterator.More();
          anIterator.Next())
     {
@@ -118,17 +118,17 @@ void Message_Report::ActivateInMessenger(const bool                            t
   }
 }
 
-void Message_Report::UpdateActiveInMessenger(const occ::handle<Message_Messenger>& theMessenger)
+void System::log::Message_Report::UpdateActiveInMessenger(const occ::handle<System::log::Message_Messenger>& theMessenger)
 {
-  occ::handle<Message_Messenger> aMessenger =
-    theMessenger.IsNull() ? Message::DefaultMessenger() : theMessenger;
-  for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator anIterator(
+  occ::handle<System::log::Message_Messenger> aMessenger =
+    theMessenger.IsNull() ? System::log::Message::DefaultMessenger() : theMessenger;
+  for (NCollection_Sequence<occ::handle<System::log::Message_Printer>>::Iterator anIterator(
          aMessenger->Printers());
        anIterator.More();
        anIterator.Next())
   {
-    if (anIterator.Value()->IsKind(STANDARD_TYPE(Message_PrinterToReport))
-        && occ::down_cast<Message_PrinterToReport>(anIterator.Value())->Report() == this)
+    if (anIterator.Value()->IsKind(STANDARD_TYPE(System::log::Message_PrinterToReport))
+        && occ::down_cast<System::log::Message_PrinterToReport>(anIterator.Value())->Report() == this)
     {
       myIsActiveInMessenger = true;
       return;
@@ -137,22 +137,22 @@ void Message_Report::UpdateActiveInMessenger(const occ::handle<Message_Messenger
   myIsActiveInMessenger = false;
 }
 
-void Message_Report::AddLevel(Message_Level* theLevel, const TCollection_AsciiString& theName)
+void System::log::Message_Report::AddLevel(System::log::Message_Level* theLevel, const TCollection_AsciiString& theName)
 {
   std::lock_guard<std::mutex> aLock(myMutex);
 
   myAlertLevels.Append(theLevel);
 
-  occ::handle<Message_AlertExtended> aLevelRootAlert = new Message_AlertExtended();
+  occ::handle<System::log::Message_AlertExtended> aLevelRootAlert = new System::log::Message_AlertExtended();
 
-  occ::handle<Message_Attribute> anAttribute;
+  occ::handle<System::log::Message_Attribute> anAttribute;
   if (!ActiveMetrics().IsEmpty())
   {
-    anAttribute = new Message_AttributeMeter(theName);
+    anAttribute = new System::log::Message_AttributeMeter(theName);
   }
   else
   {
-    anAttribute = new Message_Attribute(theName);
+    anAttribute = new System::log::Message_Attribute(theName);
   }
   aLevelRootAlert->SetAttribute(anAttribute);
   theLevel->SetRootAlert(aLevelRootAlert, myAlertLevels.Size() == 1);
@@ -166,19 +166,19 @@ void Message_Report::AddLevel(Message_Level* theLevel, const TCollection_AsciiSt
 
   {
 
-    Message_Level* aPrevLevel = myAlertLevels.Value(myAlertLevels.Size() - 1);
+    System::log::Message_Level* aPrevLevel = myAlertLevels.Value(myAlertLevels.Size() - 1);
     aPrevLevel->AddAlert(Message_Info, aLevelRootAlert);
   }
 }
 
-void Message_Report::RemoveLevel(Message_Level* theLevel)
+void System::log::Message_Report::RemoveLevel(System::log::Message_Level* theLevel)
 {
   std::lock_guard<std::mutex> aLock(myMutex);
 
   for (int aLevelIndex = myAlertLevels.Size(); aLevelIndex >= 1; aLevelIndex--)
   {
-    Message_Level* aLevel = myAlertLevels.Value(aLevelIndex);
-    Message_AttributeMeter::StopAlert(aLevel->RootAlert());
+    System::log::Message_Level* aLevel = myAlertLevels.Value(aLevelIndex);
+    System::log::Message_AttributeMeter::StopAlert(aLevel->RootAlert());
 
     myAlertLevels.Remove(aLevelIndex);
     if (aLevel == theLevel)
@@ -188,7 +188,7 @@ void Message_Report::RemoveLevel(Message_Level* theLevel)
   }
 }
 
-void Message_Report::Clear()
+void System::log::Message_Report::Clear()
 {
   if (compositeAlerts().IsNull())
   {
@@ -201,7 +201,7 @@ void Message_Report::Clear()
   myAlertLevels.Clear();
 }
 
-void Message_Report::Clear(Message_Gravity theGravity)
+void System::log::Message_Report::Clear(Message_Gravity theGravity)
 {
   if (compositeAlerts().IsNull())
   {
@@ -214,7 +214,7 @@ void Message_Report::Clear(Message_Gravity theGravity)
   myAlertLevels.Clear();
 }
 
-void Message_Report::Clear(const occ::handle<Standard_Type>& theType)
+void System::log::Message_Report::Clear(const occ::handle<Standard_Type>& theType)
 {
   if (compositeAlerts().IsNull())
   {
@@ -227,7 +227,7 @@ void Message_Report::Clear(const occ::handle<Standard_Type>& theType)
   myAlertLevels.Clear();
 }
 
-void Message_Report::SetActiveMetric(const Message_MetricType theMetricType, const bool theActivate)
+void System::log::Message_Report::SetActiveMetric(const Message_MetricType theMetricType, const bool theActivate)
 {
   if (theActivate == myActiveMetrics.Contains(theMetricType))
   {
@@ -244,7 +244,7 @@ void Message_Report::SetActiveMetric(const Message_MetricType theMetricType, con
   }
 }
 
-void Message_Report::Dump(Standard_OStream& theOS)
+void System::log::Message_Report::Dump(Standard_OStream& theOS)
 {
   for (int iGravity = Message_Trace; iGravity <= Message_Fail; ++iGravity)
   {
@@ -252,7 +252,7 @@ void Message_Report::Dump(Standard_OStream& theOS)
   }
 }
 
-void Message_Report::Dump(Standard_OStream& theOS, Message_Gravity theGravity)
+void System::log::Message_Report::Dump(Standard_OStream& theOS, Message_Gravity theGravity)
 {
   if (compositeAlerts().IsNull())
   {
@@ -267,7 +267,7 @@ void Message_Report::Dump(Standard_OStream& theOS, Message_Gravity theGravity)
   dumpMessages(theOS, theGravity, compositeAlerts());
 }
 
-void Message_Report::SendMessages(const occ::handle<Message_Messenger>& theMessenger)
+void System::log::Message_Report::SendMessages(const occ::handle<System::log::Message_Messenger>& theMessenger)
 {
   for (int aGravIter = Message_Trace; aGravIter <= Message_Fail; ++aGravIter)
   {
@@ -275,7 +275,7 @@ void Message_Report::SendMessages(const occ::handle<Message_Messenger>& theMesse
   }
 }
 
-void Message_Report::SendMessages(const occ::handle<Message_Messenger>& theMessenger,
+void System::log::Message_Report::SendMessages(const occ::handle<System::log::Message_Messenger>& theMessenger,
                                   Message_Gravity                       theGravity)
 {
   if (compositeAlerts().IsNull())
@@ -286,7 +286,7 @@ void Message_Report::SendMessages(const occ::handle<Message_Messenger>& theMesse
   sendMessages(theMessenger, theGravity, compositeAlerts());
 }
 
-void Message_Report::Merge(const occ::handle<Message_Report>& theOther)
+void System::log::Message_Report::Merge(const occ::handle<System::log::Message_Report>& theOther)
 {
   for (int aGravIter = Message_Trace; aGravIter <= Message_Fail; ++aGravIter)
   {
@@ -294,9 +294,9 @@ void Message_Report::Merge(const occ::handle<Message_Report>& theOther)
   }
 }
 
-void Message_Report::Merge(const occ::handle<Message_Report>& theOther, Message_Gravity theGravity)
+void System::log::Message_Report::Merge(const occ::handle<System::log::Message_Report>& theOther, Message_Gravity theGravity)
 {
-  for (NCollection_List<occ::handle<Message_Alert>>::Iterator anIt(theOther->GetAlerts(theGravity));
+  for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator anIt(theOther->GetAlerts(theGravity));
        anIt.More();
        anIt.Next())
   {
@@ -304,39 +304,39 @@ void Message_Report::Merge(const occ::handle<Message_Report>& theOther, Message_
   }
 }
 
-const occ::handle<Message_CompositeAlerts>& Message_Report::compositeAlerts(const bool isCreate)
+const occ::handle<System::log::Message_CompositeAlerts>& System::log::Message_Report::compositeAlerts(const bool isCreate)
 {
   if (myCompositAlerts.IsNull() && isCreate)
   {
-    myCompositAlerts = new Message_CompositeAlerts();
+    myCompositAlerts = new System::log::Message_CompositeAlerts();
   }
 
   return myCompositAlerts;
 }
 
-void Message_Report::sendMessages(const occ::handle<Message_Messenger>&       theMessenger,
+void System::log::Message_Report::sendMessages(const occ::handle<System::log::Message_Messenger>&       theMessenger,
                                   Message_Gravity                             theGravity,
-                                  const occ::handle<Message_CompositeAlerts>& theCompositeAlert)
+                                  const occ::handle<System::log::Message_CompositeAlerts>& theCompositeAlert)
 {
   if (theCompositeAlert.IsNull())
   {
     return;
   }
 
-  const NCollection_List<occ::handle<Message_Alert>>& anAlerts =
+  const NCollection_List<occ::handle<System::log::Message_Alert>>& anAlerts =
     theCompositeAlert->Alerts(theGravity);
-  for (NCollection_List<occ::handle<Message_Alert>>::Iterator anIt(anAlerts); anIt.More();
+  for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator anIt(anAlerts); anIt.More();
        anIt.Next())
   {
     theMessenger->Send(anIt.Value()->GetMessageKey(), theGravity);
-    occ::handle<Message_AlertExtended> anExtendedAlert =
-      occ::down_cast<Message_AlertExtended>(anIt.Value());
+    occ::handle<System::log::Message_AlertExtended> anExtendedAlert =
+      occ::down_cast<System::log::Message_AlertExtended>(anIt.Value());
     if (anExtendedAlert.IsNull())
     {
       continue;
     }
 
-    occ::handle<Message_CompositeAlerts> aCompositeAlerts = anExtendedAlert->CompositeAlerts();
+    occ::handle<System::log::Message_CompositeAlerts> aCompositeAlerts = anExtendedAlert->CompositeAlerts();
     if (aCompositeAlerts.IsNull())
     {
       continue;
@@ -346,24 +346,24 @@ void Message_Report::sendMessages(const occ::handle<Message_Messenger>&       th
   }
 }
 
-void Message_Report::dumpMessages(Standard_OStream&                           theOS,
+void System::log::Message_Report::dumpMessages(Standard_OStream&                           theOS,
                                   Message_Gravity                             theGravity,
-                                  const occ::handle<Message_CompositeAlerts>& theCompositeAlert)
+                                  const occ::handle<System::log::Message_CompositeAlerts>& theCompositeAlert)
 {
   if (theCompositeAlert.IsNull())
   {
     return;
   }
 
-  const NCollection_List<occ::handle<Message_Alert>>& anAlerts =
+  const NCollection_List<occ::handle<System::log::Message_Alert>>& anAlerts =
     theCompositeAlert->Alerts(theGravity);
-  for (NCollection_List<occ::handle<Message_Alert>>::Iterator anIt(anAlerts); anIt.More();
+  for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator anIt(anAlerts); anIt.More();
        anIt.Next())
   {
     theOS << anIt.Value()->GetMessageKey() << std::endl;
 
-    occ::handle<Message_AlertExtended> anExtendedAlert =
-      occ::down_cast<Message_AlertExtended>(anIt.Value());
+    occ::handle<System::log::Message_AlertExtended> anExtendedAlert =
+      occ::down_cast<System::log::Message_AlertExtended>(anIt.Value());
     if (anExtendedAlert.IsNull())
     {
       continue;
@@ -373,7 +373,7 @@ void Message_Report::dumpMessages(Standard_OStream&                           th
   }
 }
 
-void Message_Report::DumpJson(Standard_OStream& theOStream, int theDepth) const
+void System::log::Message_Report::DumpJson(Standard_OStream& theOStream, int theDepth) const
 {
   OCCT_DUMP_TRANSIENT_CLASS_BEGIN(theOStream)
 

@@ -807,17 +807,17 @@ Geom2dGcc_Circ2d2TanRadGeo::Geom2dGcc_Circ2d2TanRadGeo(const Geom2dGcc_QCurve& Q
         {
           if (!Intp.IsEmpty())
           {
-            constexpr double aSQApproxTol = Precision::Approximation() * Precision::Approximation();
+            constexpr double aSQApproxTol = math::precision::Precision::Approximation() * math::precision::Precision::Approximation();
             for (int i = 1; i <= Intp.NbPoints() && NbrSol < aNbSolMAX; i++)
             {
               double aU0 = Intp.Point(i).ParamOnFirst();
               double aV0 = Intp.Point(i).ParamOnSecond();
 
-              double aU1 = aU0 - Precision::PApproximation();
-              double aV1 = aV0 - Precision::PApproximation();
+              double aU1 = aU0 - math::precision::Precision::PApproximation();
+              double aV1 = aV0 - math::precision::Precision::PApproximation();
 
-              double aU2 = aU0 + Precision::PApproximation();
-              double aV2 = aV0 + Precision::PApproximation();
+              double aU2 = aU0 + math::precision::Precision::PApproximation();
+              double aV2 = aV0 + math::precision::Precision::PApproximation();
 
               gp_Pnt2d P11 = C1.Value(aU1);
               gp_Pnt2d P12 = C2.Value(aV1);

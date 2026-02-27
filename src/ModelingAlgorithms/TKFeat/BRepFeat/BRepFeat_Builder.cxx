@@ -147,7 +147,7 @@ void BRepFeat_Builder::FillRemoved()
   }
 }
 
-void BRepFeat_Builder::PerformResult(const Message_ProgressRange& theRange)
+void BRepFeat_Builder::PerformResult(const System::log::Message_ProgressRange& theRange)
 {
   myOperation = myFuse ? BOPAlgo_FUSE : BOPAlgo_CUT;
   if (myShapes.IsEmpty())
@@ -157,7 +157,7 @@ void BRepFeat_Builder::PerformResult(const Message_ProgressRange& theRange)
   }
 
   double                aWhole = 100.;
-  Message_ProgressScope aPS(theRange, "BRepFeat_Builder", aWhole);
+  System::log::Message_ProgressScope aPS(theRange, "BRepFeat_Builder", aWhole);
   double                aBSPart = 15;
   aWhole -= aBSPart;
 
@@ -740,7 +740,7 @@ void BRepFeat_Builder::FillRemoved(const TopoDS_Shape&                          
 
 void BRepFeat_Builder::FillIn3DParts(
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& theDraftSolids,
-  const Message_ProgressRange&                                              theRange)
+  const System::log::Message_ProgressRange&                                              theRange)
 {
   GetReport()->Clear();
 

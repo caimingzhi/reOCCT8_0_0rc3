@@ -166,7 +166,7 @@ static int saveModel(Draw_Interpretor& di, int argc, const char** argv)
     }
     if (anUseStream)
     {
-      const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+      const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
       std::shared_ptr<std::ostream>      aFileStream =
         aFileSystem->OpenOStream(argv[2], std::ios::out | std::ios::binary);
       isSaved = aModel->SaveAs(*aFileStream);
@@ -212,7 +212,7 @@ static int loadModel(Draw_Interpretor& di, int argc, const char** argv)
     aModel = new TObjDRAW_Model();
     if (anUseStream)
     {
-      const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+      const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
       std::shared_ptr<std::istream>      aFileStream =
         aFileSystem->OpenIStream(aPath, std::ios::in | std::ios::binary);
       isLoaded = aModel->Load(*aFileStream);
@@ -561,7 +561,7 @@ void TObjDRAW::Factory(Draw_Interpretor& theDI)
   TObjDRAW::Init(theDI);
 
 #ifdef OCCT_DEBUG
-  theDI << "Draw Plugin : All TKTObjDRAW commands are loaded\n";
+  theDI << "Draw System::plugin::Plugin : All TKTObjDRAW commands are loaded\n";
 #endif
 }
 

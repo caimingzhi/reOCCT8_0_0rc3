@@ -121,13 +121,13 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
 static gp_XYZ GetAnyNormal(gp_XYZ orig)
 {
   gp_XYZ Norm;
-  if (std::abs(orig.Z()) < Precision::Confusion())
+  if (std::abs(orig.Z()) < math::precision::Precision::Confusion())
     Norm.SetCoord(0, 0, 1);
   else
   {
     Norm.SetCoord(orig.Z(), 0, -orig.X());
     double nrm = Norm.Modulus();
-    if (nrm < Precision::Confusion())
+    if (nrm < math::precision::Precision::Confusion())
       Norm.SetCoord(0, 0, 1);
     else
       Norm = Norm / nrm;
@@ -148,7 +148,7 @@ static bool ArePolesPlanar(const NCollection_Array1<gp_Pnt>& Poles, gp_XYZ& Norm
   for (i = 1; i < Poles.Length(); i++)
     Normal += Poles(i).XYZ() ^ Poles(i + 1).XYZ();
 
-  constexpr double tol = Precision::Confusion();
+  constexpr double tol = math::precision::Precision::Confusion();
   double           nrm = Normal.Modulus();
   if (nrm < tol)
   {
@@ -235,19 +235,19 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
 
   double Umin = Udeb;
   double Umax = Ufin;
-  if (Precision::IsNegativeInfinite(Udeb))
-    Umin = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Ufin))
-    Umax = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Udeb))
+    Umin = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Ufin))
+    Umax = math::precision::Precision::Infinite();
 
   double First = mycurve->FirstParameter();
   double Last  = mycurve->LastParameter();
 
-  if (Umin - First < Precision::PConfusion())
+  if (Umin - First < math::precision::Precision::PConfusion())
     Umin = First;
-  if (Last - Umax < Precision::PConfusion())
+  if (Last - Umax < math::precision::Precision::PConfusion())
     Umax = Last;
-  if (Umin - First > Precision::PConfusion() || Last - Umax > Precision::PConfusion())
+  if (Umin - First > math::precision::Precision::PConfusion() || Last - Umax > math::precision::Precision::PConfusion())
   {
     try
     {
@@ -255,7 +255,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
       occ::handle<Geom_BSplineCurve> bspl = occ::down_cast<Geom_BSplineCurve>(mycurve->Copy());
       if (!bspl.IsNull())
       {
-        if (std::abs(Umax - Umin) > Precision::PConfusion())
+        if (std::abs(Umax - Umin) > math::precision::Precision::PConfusion())
           bspl->Segment(Umin, Umax);
         mycurve = bspl;
       }
@@ -442,7 +442,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
 
   gp_Pnt pfirst, plast;
   start->D0(U1, pfirst);
-  if (std::abs(Ufin - Udeb - 2 * M_PI) <= Precision::PConfusion())
+  if (std::abs(Ufin - Udeb - 2 * M_PI) <= math::precision::Precision::PConfusion())
     plast = pfirst;
   else
     start->D0(U2, plast);
@@ -478,7 +478,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
     return res;
   }
 
-  if (std::abs(Ufin - Udeb - 2 * M_PI) <= Precision::PConfusion())
+  if (std::abs(Ufin - Udeb - 2 * M_PI) <= math::precision::Precision::PConfusion())
   {
 
     occ::handle<Geom_Ellipse> copystart = occ::down_cast<Geom_Ellipse>(start->Copy());
@@ -487,7 +487,7 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
     occ::handle<Geom_BSplineCurve> Bspline;
 
     const occ::handle<Geom_Curve>& aCopy = copystart;
-    GeomConvert_ApproxCurve        approx(aCopy, Precision::Approximation(), GeomAbs_C1, 100, 6);
+    GeomConvert_ApproxCurve        approx(aCopy, math::precision::Precision::Approximation(), GeomAbs_C1, 100, 6);
     if (approx.HasResult())
       Bspline = approx.Curve();
     if (Bspline.IsNull())
@@ -559,10 +559,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
   IGESConvGeom_GeomBuilder       Build;
   double                         U1 = Udeb;
   double                         U2 = Ufin;
-  if (Precision::IsNegativeInfinite(Udeb))
-    U1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Ufin))
-    U2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Udeb))
+    U1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Ufin))
+    U2 = math::precision::Precision::Infinite();
 
   double xloc, yloc, zloc;
   start->Hypr().Location().Coord(xloc, yloc, zloc);
@@ -617,10 +617,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
   IGESConvGeom_GeomBuilder       Build;
   double                         U1 = Udeb;
   double                         U2 = Ufin;
-  if (Precision::IsNegativeInfinite(Udeb))
-    U1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Ufin))
-    U2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Udeb))
+    U1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Ufin))
+    U2 = math::precision::Precision::Infinite();
 
   double xloc, yloc, zloc;
   start->Parab().Location().Coord(xloc, yloc, zloc);
@@ -673,10 +673,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
   occ::handle<IGESGeom_Line> Line = new IGESGeom_Line;
   double                     U1   = Udeb;
   double                     U2   = Ufin;
-  if (Precision::IsNegativeInfinite(Udeb))
-    U1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Ufin))
-    U2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Udeb))
+    U1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Ufin))
+    U2 = math::precision::Precision::Infinite();
 
   double X1, Y1, Z1, X2, Y2, Z2;
   start->Value(U1).Coord(X1, Y1, Z1);
@@ -702,10 +702,10 @@ occ::handle<IGESData_IGESEntity> GeomToIGES_GeomCurve::TransferCurve(
   occ::handle<IGESGeom_OffsetCurve> OffsetC = new IGESGeom_OffsetCurve;
   double                            U1      = Udeb;
   double                            U2      = Ufin;
-  if (Precision::IsNegativeInfinite(Udeb))
-    U1 = -Precision::Infinite();
-  if (Precision::IsPositiveInfinite(Ufin))
-    U2 = Precision::Infinite();
+  if (math::precision::Precision::IsNegativeInfinite(Udeb))
+    U1 = -math::precision::Precision::Infinite();
+  if (math::precision::Precision::IsPositiveInfinite(Ufin))
+    U2 = math::precision::Precision::Infinite();
 
   if (Interface_Static::IVal("write.iges.offset.mode") == 0)
   {

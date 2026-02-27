@@ -39,13 +39,13 @@ protected:
 
   Standard_EXPORT BOPAlgo_BuilderArea(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 
-  virtual void PerformShapesToAvoid(const Message_ProgressRange& theRange) = 0;
+  virtual void PerformShapesToAvoid(const System::log::Message_ProgressRange& theRange) = 0;
 
-  virtual void PerformLoops(const Message_ProgressRange& theRange) = 0;
+  virtual void PerformLoops(const System::log::Message_ProgressRange& theRange) = 0;
 
-  virtual void PerformAreas(const Message_ProgressRange& theRange) = 0;
+  virtual void PerformAreas(const System::log::Message_ProgressRange& theRange) = 0;
 
-  virtual void PerformInternalShapes(const Message_ProgressRange& theRange) = 0;
+  virtual void PerformInternalShapes(const System::log::Message_ProgressRange& theRange) = 0;
 
   occ::handle<IntTools_Context>        myContext;
   NCollection_List<TopoDS_Shape>       myShapes;

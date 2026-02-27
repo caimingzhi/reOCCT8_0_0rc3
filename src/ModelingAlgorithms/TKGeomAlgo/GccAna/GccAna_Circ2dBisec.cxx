@@ -17,7 +17,7 @@ GccAna_Circ2dBisec::GccAna_Circ2dBisec(const gp_Circ2d& Circ1, const gp_Circ2d& 
 {
 
   WellDone             = false;
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   double R1  = Circ1.Radius();
   double R2  = Circ2.Radius();

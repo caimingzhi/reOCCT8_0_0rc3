@@ -16,7 +16,7 @@ IMPLEMENT_DOMSTRING(ExtString, "string")
 IMPLEMENT_DOMSTRING(AttributeIDString, "refarrattguid")
 
 XmlMDataStd_ReferenceArrayDriver::XmlMDataStd_ReferenceArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

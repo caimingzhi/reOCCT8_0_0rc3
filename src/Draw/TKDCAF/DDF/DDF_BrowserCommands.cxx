@@ -18,14 +18,14 @@ static int DFBrowse(Draw_Interpretor& di, int n, const char** a)
 {
   if (n < 2)
   {
-    Message::SendFail() << "Use: " << a[0] << " document [brower_name]";
+    System::log::Message::SendFail() << "Use: " << a[0] << " document [brower_name]";
     return 1;
   }
 
   occ::handle<TDF_Data> DF;
   if (!DDF::GetDF(a[1], DF))
   {
-    Message::SendFail() << "Error: document " << a[1] << " is not found";
+    System::log::Message::SendFail() << "Error: document " << a[1] << " is not found";
     return 1;
   }
 
@@ -36,7 +36,7 @@ static int DFBrowse(Draw_Interpretor& di, int n, const char** a)
 
   TCollection_AsciiString aTclScript(getenv("CSF_DrawPluginDefaults"));
   aTclScript.AssignCat("/dftree.tcl");
-  OSD_File aTclScriptFile(aTclScript);
+  System::os::OSD_File aTclScriptFile(aTclScript);
   if (aTclScriptFile.Exists())
   {
 #ifdef OCCT_DEBUG
@@ -46,7 +46,7 @@ static int DFBrowse(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    Message::SendFail() << "Error: Could not load script " << aTclScript << "\n"
+    System::log::Message::SendFail() << "Error: Could not load script " << aTclScript << "\n"
                         << "Check environment variable CSF_DrawPluginDefaults";
   }
 
@@ -64,7 +64,7 @@ static int DFOpenLabel(Draw_Interpretor& di, int n, const char** a)
   occ::handle<DDF_Browser> browser = occ::down_cast<DDF_Browser>(Draw::GetExisting(a[1]));
   if (browser.IsNull())
   {
-    Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
+    System::log::Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
     return 1;
   }
 
@@ -85,7 +85,7 @@ static int DFOpenAttributeList(Draw_Interpretor& di, int n, const char** a)
   occ::handle<DDF_Browser> browser = occ::down_cast<DDF_Browser>(Draw::GetExisting(a[1]));
   if (browser.IsNull())
   {
-    Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
+    System::log::Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
     return 1;
   }
 
@@ -108,7 +108,7 @@ static int DFOpenAttribute(Draw_Interpretor& di, int n, const char** a)
   occ::handle<DDF_Browser> browser = occ::down_cast<DDF_Browser>(Draw::GetExisting(a[1]));
   if (browser.IsNull())
   {
-    Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
+    System::log::Message::SendFail() << "Syntax error: browser '" << a[1] << "' not found";
     return 1;
   }
 

@@ -102,14 +102,14 @@ void Graphic3d_CullingTool::SetCullingDistance(CullingContext& theCtx, double th
   theCtx.DistCull = -1.0;
   if (!myIsProjectionParallel)
   {
-    theCtx.DistCull = theDistance > 0.0 && !Precision::IsInfinite(theDistance) ? theDistance : -1.0;
+    theCtx.DistCull = theDistance > 0.0 && !math::precision::Precision::IsInfinite(theDistance) ? theDistance : -1.0;
   }
 }
 
 void Graphic3d_CullingTool::SetCullingSize(CullingContext& theCtx, double theSize) const
 {
   theCtx.SizeCull2 = -1.0;
-  if (theSize > 0.0 && !Precision::IsInfinite(theSize))
+  if (theSize > 0.0 && !math::precision::Precision::IsInfinite(theSize))
   {
     theCtx.SizeCull2 = myPixelSize * theSize;
     theCtx.SizeCull2 *= myCamScale;

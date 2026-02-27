@@ -25,7 +25,7 @@
 #include <Message_Messenger.hpp>
 
 void BinMDataStd::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
-                             const occ::handle<Message_Messenger>&   theMsgDriver)
+                             const occ::handle<System::log::Message_Messenger>&   theMsgDriver)
 {
   theDriverTable->AddDriver(new BinMDataStd_ExpressionDriver(theMsgDriver));
   theDriverTable->AddDriver(new BinMDataStd_IntegerArrayDriver(theMsgDriver));

@@ -4,6 +4,7 @@
 #include <NCollection_DefineAlloc.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace log {
 class Message_Attribute : public Standard_Transient
 {
   DEFINE_STANDARD_RTTIEXT(Message_Attribute, Standard_Transient)
@@ -22,3 +23,5 @@ public:
 private:
   TCollection_AsciiString myName;
 };
+}} // namespace System::log
+

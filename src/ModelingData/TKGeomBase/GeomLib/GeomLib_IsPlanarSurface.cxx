@@ -23,7 +23,7 @@ static bool Controle(const NCollection_Array1<gp_Pnt>& Poles,
   double           gx, gy, gz;
   gp_Pnt           Bary;
   gp_Dir           DX, DY;
-  constexpr double aTolSingular = Precision::Confusion();
+  constexpr double aTolSingular = math::precision::Precision::Confusion();
 
   GeomLib::Inertia(Poles, Bary, DX, DY, gx, gy, gz);
   if (gz < Tol && gy > aTolSingular)

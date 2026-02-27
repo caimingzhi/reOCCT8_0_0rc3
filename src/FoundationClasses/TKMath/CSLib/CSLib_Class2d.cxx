@@ -238,7 +238,7 @@ CSLib_Class2d::Result CSLib_Class2d::internalSiDansOuOn(const double thePx,
 
     const double aEdgeDx = myPnts2dX.Value(aNextIdx) - myPnts2dX.Value(aPrevIdx);
     if ((myPnts2dX.Value(aPrevIdx) - thePx) * aCurrDx < 0.0
-        && std::abs(aEdgeDx) > Precision::PConfusion())
+        && std::abs(aEdgeDx) > math::precision::Precision::PConfusion())
     {
       const double aInterpY =
         myPnts2dY.Value(aNextIdx)

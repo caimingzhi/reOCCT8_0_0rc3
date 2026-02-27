@@ -1416,9 +1416,9 @@ void GetIntersection(const TheCurve&             theC1,
 
   double aTol2 = theTolConf * theTolConf;
   double aPTol1 =
-    std::max(100. * Epsilon(std::max(std::abs(theT1f), std::abs(theT1l))), Precision::PConfusion());
+    std::max(100. * Epsilon(std::max(std::abs(theT1f), std::abs(theT1l))), math::precision::Precision::PConfusion());
   double aPTol2 =
-    std::max(100. * Epsilon(std::max(std::abs(theT2f), std::abs(theT2l))), Precision::PConfusion());
+    std::max(100. * Epsilon(std::max(std::abs(theT2f), std::abs(theT2l))), math::precision::Precision::PConfusion());
   gp_Pnt2d  aP1f, aP1l, aP2f, aP2l;
   Bnd_Box2d aB1, aB2;
 

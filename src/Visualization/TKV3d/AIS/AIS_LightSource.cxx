@@ -82,7 +82,7 @@ void AIS_LightSourceOwner::HilightWithColor(const occ::handle<PrsMgr_Presentatio
     NCollection_Array1<gp_Pnt> aCircPoints(0, aNbPnts);
     const gp_Dir               aDirNorm(gp_Vec(gp::Origin(), aDetPnt));
     gp_Dir                     aDirNormToPln(gp::DY());
-    if (!gp::DX().IsParallel(aDirNorm, Precision::Angular()))
+    if (!gp::DX().IsParallel(aDirNorm, math::precision::Precision::Angular()))
     {
       aDirNormToPln = gp::DX().Crossed(aDirNorm);
     }
@@ -241,7 +241,7 @@ bool AIS_LightSource::ProcessDragging(const occ::handle<AIS_InteractiveContext>&
       theCtx->MainSelector()->Pick(theDragTo.x(), theDragTo.y(), theView);
       gp_Pnt aCurrPosition = mySensSphere->LastDetectedPoint();
       if (aCurrPosition.X() != RealLast()
-          && aStartPosition.Distance(aCurrPosition) > Precision::Confusion())
+          && aStartPosition.Distance(aCurrPosition) > math::precision::Precision::Confusion())
       {
         gp_Quaternion aQRot;
         aQRot.SetRotation(gp_Vec(gp_Pnt(0, 0, 0), aStartPosition),

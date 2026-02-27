@@ -6,6 +6,7 @@
 
 class TCollection_AsciiString;
 
+namespace app { namespace storage {
 class Storage
 {
 public:
@@ -13,3 +14,5 @@ public:
 
   Standard_EXPORT static TCollection_AsciiString Version();
 };
+}} // namespace app::storage
+

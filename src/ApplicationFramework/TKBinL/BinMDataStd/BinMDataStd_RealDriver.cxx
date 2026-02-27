@@ -7,7 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_RealDriver, BinMDF_ADriver)
 
-BinMDataStd_RealDriver::BinMDataStd_RealDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+BinMDataStd_RealDriver::BinMDataStd_RealDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_Real)->Name())
 {
 }

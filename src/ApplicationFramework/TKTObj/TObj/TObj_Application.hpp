@@ -9,7 +9,7 @@ class TObj_Application : public TDocStd_Application
 public:
   Standard_EXPORT static occ::handle<TObj_Application> GetInstance();
 
-  occ::handle<Message_Messenger>& Messenger() { return myMessenger; }
+  occ::handle<System::log::Message_Messenger>& Messenger() { return myMessenger; }
 
 public:
   Standard_EXPORT virtual bool SaveDocument(const occ::handle<TDocStd_Document>& theSourceDoc,
@@ -54,7 +54,7 @@ protected:
 private:
   bool                           myIsError;
   bool                           myIsVerbose;
-  occ::handle<Message_Messenger> myMessenger;
+  occ::handle<System::log::Message_Messenger> myMessenger;
 
 public:
   DEFINE_STANDARD_RTTIEXT(TObj_Application, TDocStd_Application)

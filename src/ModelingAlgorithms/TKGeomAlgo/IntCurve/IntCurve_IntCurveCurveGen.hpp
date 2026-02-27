@@ -32,15 +32,15 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve& C, const double TolConf,
     {
       double paraminf = TheCurveTool::FirstParameter(C);
       double paramsup = TheCurveTool::LastParameter(C);
-      if (Precision::IsInfinite(paraminf) && Precision::IsInfinite(paramsup))
+      if (math::precision::Precision::IsInfinite(paraminf) && math::precision::Precision::IsInfinite(paramsup))
       {
         done = false;
         return;
       }
 
-      if (paraminf > -Precision::Infinite())
+      if (paraminf > -math::precision::Precision::Infinite())
       {
-        if (paramsup < Precision::Infinite())
+        if (paramsup < math::precision::Precision::Infinite())
         {
 
           D1.SetValues(TheCurveTool::Value(C, paraminf),
@@ -58,7 +58,7 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve& C, const double TolConf,
       }
       else
       {
-        if (paramsup < Precision::Infinite())
+        if (paramsup < math::precision::Precision::Infinite())
         {
 
           D1.SetValues(TheCurveTool::Value(C, paramsup), paramsup, TolDomain, false);
@@ -127,9 +127,9 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
     {
       double paraminf = TheCurveTool::FirstParameter(C1);
       double paramsup = TheCurveTool::LastParameter(C1);
-      if (paraminf > -Precision::Infinite())
+      if (paraminf > -math::precision::Precision::Infinite())
       {
-        if (paramsup < Precision::Infinite())
+        if (paramsup < math::precision::Precision::Infinite())
         {
 
           D1.SetValues(TheCurveTool::Value(C1, paraminf),
@@ -147,7 +147,7 @@ IntRes2d_Domain IntCurve_IntCurveCurveGen::ComputeDomain(const TheCurve& C1,
       }
       else
       {
-        if (paramsup < Precision::Infinite())
+        if (paramsup < math::precision::Precision::Infinite())
         {
 
           D1.SetValues(TheCurveTool::Value(C1, paramsup), paramsup, TolDomain, false);
@@ -175,8 +175,8 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve&        C1,
   }
   else
   {
-    param1inf = (D1.HasFirstPoint()) ? (D1.FirstParameter()) : -Precision::Infinite();
-    param1sup = (D1.HasLastPoint()) ? (D1.LastParameter()) : Precision::Infinite();
+    param1inf = (D1.HasFirstPoint()) ? (D1.FirstParameter()) : -math::precision::Precision::Infinite();
+    param1sup = (D1.HasLastPoint()) ? (D1.LastParameter()) : math::precision::Precision::Infinite();
   }
   int nbi2 = TheCurveTool::NbIntervals(C2);
   if (nbi2 > 1)
@@ -186,8 +186,8 @@ void IntCurve_IntCurveCurveGen::Perform(const TheCurve&        C1,
   }
   else
   {
-    param2inf = (D2.HasFirstPoint()) ? (D2.FirstParameter()) : -Precision::Infinite();
-    param2sup = (D2.HasLastPoint()) ? (D2.LastParameter()) : Precision::Infinite();
+    param2inf = (D2.HasFirstPoint()) ? (D2.FirstParameter()) : -math::precision::Precision::Infinite();
+    param2sup = (D2.HasLastPoint()) ? (D2.LastParameter()) : math::precision::Precision::Infinite();
   }
   if (nbi1 > 1 || nbi2 > 1)
   {

@@ -121,6 +121,6 @@ gp_Dir IGESGeom_CircularArc::TransformedAxis() const
 
 bool IGESGeom_CircularArc::IsClosed() const
 {
-  return (std::abs(theStart.X() - theEnd.X()) < Precision::PConfusion()
-          && std::abs(theStart.Y() - theEnd.Y()) < Precision::PConfusion());
+  return (std::abs(theStart.X() - theEnd.X()) < math::precision::Precision::PConfusion()
+          && std::abs(theStart.Y() - theEnd.Y()) < math::precision::Precision::PConfusion());
 }

@@ -21,8 +21,8 @@ RWMesh_MaterialMap::RWMesh_MaterialMap(const TCollection_AsciiString& theFile)
       myMatNameAsKey(true)
 {
   TCollection_AsciiString aFileName, aFileExt;
-  OSD_Path::FolderAndFileFromPath(theFile, myFolder, aFileName);
-  OSD_Path::FileNameAndExtension(aFileName, myShortFileNameBase, aFileExt);
+  System::os::OSD_Path::FolderAndFileFromPath(theFile, myFolder, aFileName);
+  System::os::OSD_Path::FileNameAndExtension(aFileName, myShortFileNameBase, aFileExt);
   if (myFolder.IsEmpty())
   {
     myFolder = ".";
@@ -111,12 +111,12 @@ bool RWMesh_MaterialMap::copyFileTo(const TCollection_AsciiString& theFileSrc,
 
   try
   {
-    OSD_Path aSrcPath(theFileSrc);
-    OSD_Path aDstPath(theFileDst);
-    OSD_File aFileSrc(aSrcPath);
+    System::os::OSD_Path aSrcPath(theFileSrc);
+    System::os::OSD_Path aDstPath(theFileDst);
+    System::os::OSD_File aFileSrc(aSrcPath);
     if (!aFileSrc.Exists())
     {
-      Message::SendFail(TCollection_AsciiString("Failed to copy file - source file '") + theFileSrc
+      System::log::Message::SendFail(TCollection_AsciiString("Failed to copy file - source file '") + theFileSrc
                         + "' does not exist");
       return false;
     }
@@ -125,7 +125,7 @@ bool RWMesh_MaterialMap::copyFileTo(const TCollection_AsciiString& theFileSrc,
   }
   catch (Standard_Failure const& theException)
   {
-    Message::SendFail(TCollection_AsciiString("Failed to copy file\n") + theException.what());
+    System::log::Message::SendFail(TCollection_AsciiString("Failed to copy file\n") + theException.what());
     return false;
   }
 }
@@ -141,7 +141,7 @@ bool RWMesh_MaterialMap::CopyTexture(TCollection_AsciiString&          theResTex
   if (!aTextureSrc.IsEmpty() && theTexture->FileOffset() <= 0 && theTexture->FileLength() <= 0)
   {
     TCollection_AsciiString aSrcTexFolder;
-    OSD_Path::FolderAndFileFromPath(aTextureSrc, aSrcTexFolder, aTexFileName);
+    System::os::OSD_Path::FolderAndFileFromPath(aTextureSrc, aSrcTexFolder, aTexFileName);
     const TCollection_AsciiString aResTexFile = myTexFolder + aTexFileName;
     theResTexture                             = myTexFolderShort + aTexFileName;
     return copyFileTo(aTextureSrc, aResTexFile);
@@ -168,22 +168,22 @@ bool RWMesh_MaterialMap::CreateTextureFolder()
 
   myTexFolderShort = myShortFileNameBase + "_textures/";
   myTexFolder      = myFolder + "/" + myTexFolderShort;
-  OSD_Path      aTexFolderPath(myTexFolder);
-  OSD_Directory aTexDir(aTexFolderPath);
+  System::os::OSD_Path      aTexFolderPath(myTexFolder);
+  System::os::OSD_Directory aTexDir(aTexFolderPath);
   if (aTexDir.Exists())
   {
     return true;
   }
 
-  OSD_Path      aResFolderPath(myFolder);
-  OSD_Directory aResDir(aResFolderPath);
+  System::os::OSD_Path      aResFolderPath(myFolder);
+  System::os::OSD_Directory aResDir(aResFolderPath);
   if (!aResDir.Exists())
   {
-    Message::SendFail() << "Failed to create textures folder '" << myFolder << "'";
+    System::log::Message::SendFail() << "Failed to create textures folder '" << myFolder << "'";
     return false;
   }
-  const OSD_Protection aParentProt = aResDir.Protection();
-  OSD_Protection       aProt       = aParentProt;
+  const System::os::OSD_Protection aParentProt = aResDir.Protection();
+  System::os::OSD_Protection       aProt       = aParentProt;
   if (aProt.User() == OSD_None)
   {
     aProt.SetUser(OSD_RWXD);
@@ -197,7 +197,7 @@ bool RWMesh_MaterialMap::CreateTextureFolder()
   if (aTexDir.Failed())
   {
 
-    Message::SendFail() << "Failed to create textures folder '" << myTexFolder << "'";
+    System::log::Message::SendFail() << "Failed to create textures folder '" << myTexFolder << "'";
     myTexFolder = myFolder;
     myTexFolderShort.Clear();
     return true;

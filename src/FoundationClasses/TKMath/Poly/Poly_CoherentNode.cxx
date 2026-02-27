@@ -4,8 +4,8 @@
 void Poly_CoherentNode::Clear(const occ::handle<NCollection_BaseAllocator>& theAlloc)
 {
   Poly_CoherentTriPtr::RemoveList(myTriangles, theAlloc);
-  myUV[0]     = Precision::Infinite();
-  myUV[1]     = Precision::Infinite();
+  myUV[0]     = math::precision::Precision::Infinite();
+  myUV[1]     = math::precision::Precision::Infinite();
   myNormal[0] = 0.f;
   myNormal[1] = 0.f;
   myNormal[2] = 0.f;

@@ -42,7 +42,7 @@ IntImp_IntCS::IntImp_IntCS(const double       U,
 
   if (MarginCoef > 0.)
   {
-    if (!Precision::IsInfinite(u0) && !Precision::IsInfinite(u1))
+    if (!math::precision::Precision::IsInfinite(u0) && !math::precision::Precision::IsInfinite(u1))
     {
       double marg = (u1 - u0) * MarginCoef;
       if (u0 > u1)
@@ -50,7 +50,7 @@ IntImp_IntCS::IntImp_IntCS(const double       U,
       u0 -= marg;
       u1 += marg;
     }
-    if (!Precision::IsInfinite(v0) && !Precision::IsInfinite(v1))
+    if (!math::precision::Precision::IsInfinite(v0) && !math::precision::Precision::IsInfinite(v1))
     {
       double marg = (v1 - v0) * MarginCoef;
       if (v0 > v1)
@@ -100,9 +100,9 @@ void IntImp_IntCS::Perform(const double          U,
   BornInf(3) = w0;
   BornSup(3) = w1;
 
-  Tolerance(1) = ThePSurfaceTool::UResolution(S, Precision::Confusion());
-  Tolerance(2) = ThePSurfaceTool::VResolution(S, Precision::Confusion());
-  Tolerance(3) = TheCurveTool::Resolution(C, Precision::Confusion());
+  Tolerance(1) = ThePSurfaceTool::UResolution(S, math::precision::Precision::Confusion());
+  Tolerance(2) = ThePSurfaceTool::VResolution(S, math::precision::Precision::Confusion());
+  Tolerance(3) = TheCurveTool::Resolution(C, math::precision::Precision::Confusion());
   Rsnld.SetTolerance(Tolerance);
   int autretentative = 0;
   done               = false;

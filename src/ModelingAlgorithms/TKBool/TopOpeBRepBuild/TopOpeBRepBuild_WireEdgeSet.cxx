@@ -355,7 +355,7 @@ void TopOpeBRepBuild_WireEdgeSet::IsUVISO(const TopoDS_Edge& E,
   {
     occ::handle<Geom2d_Line> HL(occ::down_cast<Geom2d_Line>(PC));
     const gp_Dir2d&          D   = HL->Direction();
-    double                   tol = Precision::Angular();
+    double                   tol = math::precision::Precision::Angular();
 
     if (D.IsParallel(gp_Dir2d(gp_Dir2d::D::Y), tol))
       uiso = true;

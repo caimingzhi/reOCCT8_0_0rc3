@@ -487,9 +487,9 @@ public:
   Standard_EXPORT void ApplyProjectionMatrix();
 
 public:
-  inline const occ::handle<Message_Messenger>& Messenger() const
+  inline const occ::handle<System::log::Message_Messenger>& Messenger() const
   {
-    return ::Message::DefaultMessenger();
+    return System::log::Message::DefaultMessenger();
   }
 
   Standard_EXPORT void PushMessage(const unsigned int                theSource,

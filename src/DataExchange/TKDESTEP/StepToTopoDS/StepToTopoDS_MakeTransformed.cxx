@@ -69,7 +69,7 @@ TopoDS_Shape StepToTopoDS_MakeTransformed::TranslateMappedItem(
   const occ::handle<StepRepr_MappedItem>&       mapit,
   const occ::handle<Transfer_TransientProcess>& TP,
   const StepData_Factors&                       theLocalFactors,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
   TopoDS_Shape theResult;
 

@@ -131,7 +131,7 @@ bool IFSelect_SessionFile::ReadFile(const char* filename)
 
 bool IFSelect_SessionFile::RecognizeFile(const char* headerline)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   SplitLine(headerline);
   if (theline.Length() != 4)
@@ -450,7 +450,7 @@ bool IFSelect_SessionFile::WriteOwn(const occ::handle<Standard_Transient>& item)
 
 int IFSelect_SessionFile::ReadSession()
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   thedone = true;
 
@@ -809,7 +809,7 @@ int IFSelect_SessionFile::ReadSession()
 
 int IFSelect_SessionFile::ReadEnd()
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (theline.Length() != 2 || !theline.Value(1).IsEqual("!XSTEP")
       || !theline.Value(2).IsEqual("END"))
   {
@@ -867,7 +867,7 @@ void IFSelect_SessionFile::SplitLine(const char* line)
 
 bool IFSelect_SessionFile::ReadOwn(occ::handle<Standard_Transient>& item)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   if (theline.Length() < 2)
     return false;
@@ -889,7 +889,7 @@ bool IFSelect_SessionFile::ReadOwn(occ::handle<Standard_Transient>& item)
 
 void IFSelect_SessionFile::AddItem(const occ::handle<Standard_Transient>& item, const bool active)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   const TCollection_AsciiString& name = theline.Value(1);
   int                            id   = 0;
@@ -945,7 +945,7 @@ void IFSelect_SessionFile::SendVoid()
 
 void IFSelect_SessionFile::SendItem(const occ::handle<Standard_Transient>& par)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   char laligne[100];
   int  filenum = 0;
@@ -1034,7 +1034,7 @@ TCollection_AsciiString IFSelect_SessionFile::TextValue(const int num) const
 
 occ::handle<Standard_Transient> IFSelect_SessionFile::ItemValue(const int num) const
 {
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
 
   occ::handle<Standard_Transient> res;
   int                             nm = num + thelastgen;

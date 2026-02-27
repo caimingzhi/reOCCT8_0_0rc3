@@ -8,7 +8,7 @@ public:
   BRepPreviewAPI_MakeBox() = default;
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 private:
   void makeVertex(const gp_Pnt& thePoint);

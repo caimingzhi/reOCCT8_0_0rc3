@@ -26,7 +26,7 @@ static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
   if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)
   {
     Bnd_Box box;
-    BndLib_AddSurface::Add(aFace->Surface(), Precision::Confusion(), box);
+    BndLib_AddSurface::Add(aFace->Surface(), math::precision::Precision::Confusion(), box);
 
     double Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, diagonal;
     box.Get(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax);
@@ -35,7 +35,7 @@ static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
     {
       diagonal = std::sqrt((Xmax - Xmin) * (Xmax - Xmin) + (Ymax - Ymin) * (Ymax - Ymin)
                            + (Zmax - Zmin) * (Zmax - Zmin));
-      diagonal = std::max(diagonal, Precision::Confusion());
+      diagonal = std::max(diagonal, math::precision::Precision::Confusion());
       theRequestedDeflection = aDrawer->DeviationCoefficient() * diagonal;
     }
     else

@@ -37,7 +37,7 @@ public:
     TranslateMappedItem(const occ::handle<StepRepr_MappedItem>&       mapit,
                         const occ::handle<Transfer_TransientProcess>& TP,
                         const StepData_Factors&      theLocalFactors = StepData_Factors(),
-                        const Message_ProgressRange& theProgress     = Message_ProgressRange());
+                        const System::log::Message_ProgressRange& theProgress     = System::log::Message_ProgressRange());
 
 private:
   gp_Trsf theTrsf;

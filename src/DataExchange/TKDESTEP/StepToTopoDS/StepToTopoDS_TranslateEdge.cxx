@@ -125,7 +125,7 @@ static TopoDS_Edge MakeEdge(const occ::handle<Geom_Curve>& C3D,
 {
   BRep_Builder B;
   TopoDS_Edge  E;
-  B.MakeEdge(E, C3D, Precision::Confusion());
+  B.MakeEdge(E, C3D, math::precision::Precision::Confusion());
   B.Add(E, V1);
   B.Add(E, V2);
   B.UpdateVertex(V1, U1, E, 0.);
@@ -353,7 +353,7 @@ void StepToTopoDS_TranslateEdge::MakeFromCurve3D(const occ::handle<StepGeom_Curv
   {
 
     if (std::abs(temp1 - temp2) < preci
-        && std::abs(U2 - U1 - pnt1.Distance(pnt2)) < Precision::Confusion()
+        && std::abs(U2 - U1 - pnt1.Distance(pnt2)) < math::precision::Precision::Confusion()
         && C1->IsKind(STANDARD_TYPE(Geom_Line)))
     {
       occ::handle<Geom_Line> aLine    = occ::down_cast<Geom_Line>(C1);

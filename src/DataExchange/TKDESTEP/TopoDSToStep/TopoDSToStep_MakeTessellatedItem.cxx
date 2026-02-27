@@ -71,7 +71,7 @@ TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem(
   const occ::handle<Transfer_FinderProcess>& theFP,
   const bool                                 theToPreferSurfaceSet,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 
 {
   Init(theFace, theTool, theFP, theToPreferSurfaceSet, theLocalFactors, theProgress);
@@ -82,7 +82,7 @@ TopoDSToStep_MakeTessellatedItem::TopoDSToStep_MakeTessellatedItem(
   TopoDSToStep_Tool&                         theTool,
   const occ::handle<Transfer_FinderProcess>& theFP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 
 {
   Init(theShell, theTool, theFP, theLocalFactors, theProgress);
@@ -93,7 +93,7 @@ void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Face&                  
                                             const occ::handle<Transfer_FinderProcess>& theFP,
                                             const bool                   theToPreferSurfaceSet,
                                             const StepData_Factors&      theLocalFactors,
-                                            const Message_ProgressRange& theProgress)
+                                            const System::log::Message_ProgressRange& theProgress)
 {
   done = false;
   if (theProgress.UserBreak())
@@ -169,7 +169,7 @@ void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Shell&                 
                                             TopoDSToStep_Tool&                         theTool,
                                             const occ::handle<Transfer_FinderProcess>& theFP,
                                             const StepData_Factors&      theLocalFactors,
-                                            const Message_ProgressRange& theProgress)
+                                            const System::log::Message_ProgressRange& theProgress)
 {
   done = false;
   theTessellatedItem.Nullify();
@@ -183,7 +183,7 @@ void TopoDSToStep_MakeTessellatedItem::Init(const TopoDS_Shell&                 
   {
   }
 
-  Message_ProgressScope aPS(theProgress, nullptr, aNbFaces);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, aNbFaces);
 
   NCollection_Sequence<occ::handle<StepVisual_TessellatedStructuredItem>> aTessFaces;
   for (anExp.Init(theShell, TopAbs_FACE); anExp.More() && aPS.More(); anExp.Next(), aPS.Next())

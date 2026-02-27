@@ -13,7 +13,10 @@
 class CDM_MetaData;
 class CDM_Application;
 class CDM_Reference;
+namespace System { namespace resource {
 class Resource_Manager;
+}} // namespace System::resource
+
 
 class CDM_Document : public Standard_Transient
 {
@@ -195,7 +198,7 @@ protected:
   bool myResourcesAreLoaded;
 
 private:
-  Standard_EXPORT occ::handle<Resource_Manager> StorageResource();
+  Standard_EXPORT occ::handle<System::resource::Resource_Manager> StorageResource();
 
   Standard_EXPORT void AddToReference(const occ::handle<CDM_Reference>& aReference);
 

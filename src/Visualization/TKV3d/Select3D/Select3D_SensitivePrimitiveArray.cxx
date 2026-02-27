@@ -291,7 +291,7 @@ bool Select3D_SensitivePrimitiveArray::InitTriangulation(
     myGroups = new Select3D_PrimArraySubGroupArray(0, theNbGroups - 1);
     const int                                    aDivStep = (aNbTris / theNbGroups) * 3;
     Select3D_SensitivePrimitiveArray_InitFunctor anInitFunctor(*this, aDivStep, theToEvalMinMax);
-    OSD_Parallel::For(myGroups->Lower(), myGroups->Upper() + 1, anInitFunctor);
+    System::os::OSD_Parallel::For(myGroups->Lower(), myGroups->Upper() + 1, anInitFunctor);
     if (!anInitFunctor.IsDone())
     {
       return false;
@@ -452,7 +452,7 @@ bool Select3D_SensitivePrimitiveArray::InitPoints(
     myGroups = new Select3D_PrimArraySubGroupArray(0, theNbGroups - 1);
     const int                                    aDivStep = aNbPoints / theNbGroups;
     Select3D_SensitivePrimitiveArray_InitFunctor anInitFunctor(*this, aDivStep, theToEvalMinMax);
-    OSD_Parallel::For(myGroups->Lower(), myGroups->Upper() + 1, anInitFunctor);
+    System::os::OSD_Parallel::For(myGroups->Lower(), myGroups->Upper() + 1, anInitFunctor);
     if (!anInitFunctor.IsDone())
     {
       return false;
@@ -621,7 +621,7 @@ void Select3D_SensitivePrimitiveArray::BVH()
   if (aNbToUpdate > 0)
   {
     Select3D_SensitivePrimitiveArray_BVHFunctor aFunctor(*myGroups);
-    OSD_Parallel::For(myGroups->Lower(), myGroups->Upper() + 1, aFunctor, aNbToUpdate <= 1);
+    System::os::OSD_Parallel::For(myGroups->Lower(), myGroups->Upper() + 1, aFunctor, aNbToUpdate <= 1);
   }
 }
 

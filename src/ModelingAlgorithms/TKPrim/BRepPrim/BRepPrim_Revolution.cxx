@@ -36,7 +36,7 @@ TopoDS_Face BRepPrim_Revolution::MakeEmptyLateralFace() const
   occ::handle<Geom_SurfaceOfRevolution> S = new Geom_SurfaceOfRevolution(myMeridian, Axes().Axis());
 
   TopoDS_Face F;
-  myBuilder.Builder().MakeFace(F, S, Precision::Confusion());
+  myBuilder.Builder().MakeFace(F, S, math::precision::Precision::Confusion());
   return F;
 }
 
@@ -47,7 +47,7 @@ TopoDS_Edge BRepPrim_Revolution::MakeEmptyMeridianEdge(const double Ang) const
   gp_Trsf                 T;
   T.SetRotation(Axes().Axis(), Ang);
   C->Transform(T);
-  myBuilder.Builder().MakeEdge(E, C, Precision::Confusion());
+  myBuilder.Builder().MakeEdge(E, C, math::precision::Precision::Confusion());
   return E;
 }
 
@@ -58,5 +58,5 @@ gp_Pnt2d BRepPrim_Revolution::MeridianValue(const double V) const
 
 void BRepPrim_Revolution::SetMeridianPCurve(TopoDS_Edge& E, const TopoDS_Face& F) const
 {
-  myBuilder.Builder().UpdateEdge(E, myPMeridian, F, Precision::Confusion());
+  myBuilder.Builder().UpdateEdge(E, myPMeridian, F, math::precision::Precision::Confusion());
 }

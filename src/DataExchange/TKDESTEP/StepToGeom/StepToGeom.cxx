@@ -164,7 +164,7 @@ occ::handle<Geom_Axis2Placement> StepToGeom::MakeAxis2Placement(
       if (!D.IsNull())
       {
         const gp_Dir Vxgp = D->Dir();
-        if (!Ngp.IsParallel(Vxgp, Precision::Angular()))
+        if (!Ngp.IsParallel(Vxgp, math::precision::Precision::Angular()))
         {
           gpAx2                  = gp_Ax2(Pgp, Ngp, Vxgp);
           isDefaultDirectionUsed = false;
@@ -1148,7 +1148,7 @@ occ::handle<Geom_ConicalSurface> StepToGeom::MakeConicalSurface(
     const double R   = SS->Radius() * theLocalFactors.LengthFactor();
     const double Ang = SS->SemiAngle() * theLocalFactors.PlaneAngleFactor();
 
-    return new Geom_ConicalSurface(A->Ax2(), std::max(Ang, Precision::Angular()), R);
+    return new Geom_ConicalSurface(A->Ax2(), std::max(Ang, math::precision::Precision::Angular()), R);
   }
   return nullptr;
 }
@@ -1281,7 +1281,7 @@ occ::handle<Geom_Direction> StepToGeom::MakeDirection(const occ::handle<StepGeom
     const double Y = SD->DirectionRatiosValue(2);
     const double Z = SD->DirectionRatiosValue(3);
 
-    if (Precision::IsInfinite(X) || Precision::IsInfinite(Y) || Precision::IsInfinite(Z))
+    if (math::precision::Precision::IsInfinite(X) || math::precision::Precision::IsInfinite(Y) || math::precision::Precision::IsInfinite(Z))
     {
       return nullptr;
     }
@@ -1442,7 +1442,7 @@ occ::handle<Geom_Line> StepToGeom::MakeLine(const occ::handle<StepGeom_Line>& SC
     occ::handle<Geom_VectorWithMagnitude> D = MakeVectorWithMagnitude(SC->Dir(), theLocalFactors);
     if (!D.IsNull())
     {
-      if (D->Vec().SquareMagnitude() < Precision::Confusion() * Precision::Confusion())
+      if (D->Vec().SquareMagnitude() < math::precision::Precision::Confusion() * math::precision::Precision::Confusion())
         return nullptr;
       const gp_Dir V(D->Vec());
       return new Geom_Line(P->Pnt(), V);
@@ -1679,7 +1679,7 @@ occ::handle<Geom_Surface> StepToGeom::MakeSurface(const occ::handle<StepGeom_Sur
         const double anOffset = OS->Distance() * theLocalFactors.LengthFactor();
         if (aBasisSurface->Continuity() == GeomAbs_C0)
         {
-          const BRepBuilderAPI_MakeFace aBFace(aBasisSurface, Precision::Confusion());
+          const BRepBuilderAPI_MakeFace aBFace(aBasisSurface, math::precision::Precision::Confusion());
           if (aBFace.IsDone())
           {
             const TopoDS_Shape aResult =
@@ -1744,7 +1744,7 @@ occ::handle<Geom_SurfaceOfLinearExtrusion> StepToGeom::MakeSurfaceOfLinearExtrus
     {
       const gp_Dir           D(V->Vec());
       occ::handle<Geom_Line> aLine = occ::down_cast<Geom_Line>(C);
-      if (!aLine.IsNull() && aLine->Lin().Direction().IsParallel(D, Precision::Angular()))
+      if (!aLine.IsNull() && aLine->Lin().Direction().IsParallel(D, math::precision::Precision::Angular()))
         return occ::handle<Geom_SurfaceOfLinearExtrusion>();
       return new Geom_SurfaceOfLinearExtrusion(C, D);
     }
@@ -1769,14 +1769,14 @@ occ::handle<Geom_SurfaceOfRevolution> StepToGeom::MakeSurfaceOfRevolution(
         const occ::handle<Geom_Conic> conic = occ::down_cast<Geom_Conic>(C);
         const gp_Pnt                  pc    = conic->Location();
         const gp_Lin                  rl(A);
-        if (rl.Distance(pc) < Precision::Confusion())
+        if (rl.Distance(pc) < math::precision::Precision::Confusion())
         {
           const gp_Dir dirline = A.Direction();
           const gp_Dir norm    = conic->Axis().Direction();
           const gp_Dir xAxis   = conic->XAxis().Direction();
 
-          if (dirline.IsNormal(norm, Precision::Angular())
-              && (dirline.IsParallel(xAxis, Precision::Angular())
+          if (dirline.IsNormal(norm, math::precision::Precision::Angular())
+              && (dirline.IsParallel(xAxis, math::precision::Precision::Angular())
                   || C->IsKind(STANDARD_TYPE(Geom_Circle))))
           {
 
@@ -1935,7 +1935,7 @@ static bool ExtractParameter(const occ::handle<Geom_Curve>& aGeomCurve,
 
       ShapeAnalysis_Curve sac;
       gp_Pnt              p;
-      sac.Project(aGeomCurve, thegpPnt, Precision::Confusion(), p, aParam);
+      sac.Project(aGeomCurve, thegpPnt, math::precision::Precision::Confusion(), p, aParam);
 
       return true;
     }
@@ -1964,7 +1964,7 @@ static bool ExtractParameter(const occ::handle<Geom_Curve>& aGeomCurve,
 
       ShapeAnalysis_Curve sac;
       gp_Pnt              p;
-      sac.Project(aGeomCurve, thegpPnt, Precision::Confusion(), p, aParam);
+      sac.Project(aGeomCurve, thegpPnt, math::precision::Precision::Confusion(), p, aParam);
 
       return true;
     }
@@ -2084,15 +2084,15 @@ occ::handle<Geom_TrimmedCurve> StepToGeom::MakeTrimmedCurve(
       else if (trim2 > cl)
         trim2 = cl;
     }
-    if (std::abs(trim1 - trim2) < Precision::PConfusion())
+    if (std::abs(trim1 - trim2) < math::precision::Precision::PConfusion())
     {
       if (theCurve->IsPeriodic())
       {
-        ElCLib::AdjustPeriodic(cf, cl, Precision::PConfusion(), trim1, trim2);
+        ElCLib::AdjustPeriodic(cf, cl, math::precision::Precision::PConfusion(), trim1, trim2);
       }
       else if (theCurve->IsClosed())
       {
-        if (std::abs(trim1 - cf) < Precision::PConfusion())
+        if (std::abs(trim1 - cf) < math::precision::Precision::PConfusion())
         {
           trim2 += cl;
         }
@@ -2221,7 +2221,7 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
                        SR.RotationAboutDirection()->DirectionOfAxis()->DirectionRatiosValue(2),
                        SR.RotationAboutDirection()->DirectionOfAxis()->DirectionRatiosValue(3));
   double anAngle = SR.RotationAboutDirection()->RotationAngle();
-  if (std::abs(anAngle) < Precision::Angular())
+  if (std::abs(anAngle) < math::precision::Precision::Angular())
   {
 
     anYPRRotation = new NCollection_HArray1<double>(1, 3);
@@ -2286,7 +2286,7 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
   double aCA   = std::cos(anAngle);
   double aYaw = 0, aPitch = 0, aRoll = 0;
 
-  if (std::abs(dy) < Precision::Confusion() && std::abs(dx * dz) < Precision::SquareConfusion())
+  if (std::abs(dy) < math::precision::Precision::Confusion() && std::abs(dx * dz) < math::precision::Precision::SquareConfusion())
   {
     while (anAngle <= -M_PI)
     {
@@ -2298,7 +2298,7 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
     }
 
     aYaw = anUcf * anAngle;
-    if (std::abs(anAngle - M_PI) >= Precision::Angular())
+    if (std::abs(anAngle - M_PI) >= math::precision::Precision::Angular())
     {
       aRoll = -aYaw;
     }
@@ -2310,7 +2310,7 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
     anYPRRotation->SetValue(1, 0.);
     anYPRRotation->SetValue(2, 0.);
     anYPRRotation->SetValue(3, 0.);
-    if (std::abs(dx) >= Precision::Confusion())
+    if (std::abs(dx) >= math::precision::Precision::Confusion())
     {
       if (dx > 0.)
         anYPRRotation->SetValue(3, aYaw);
@@ -2327,8 +2327,8 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
     return anYPRRotation;
   }
 
-  if (std::abs(dy) >= Precision::Confusion() && std::abs(dx) < Precision::Confusion()
-      && std::abs(dz) < Precision::Confusion())
+  if (std::abs(dy) >= math::precision::Precision::Confusion() && std::abs(dx) < math::precision::Precision::Confusion()
+      && std::abs(dz) < math::precision::Precision::Confusion())
   {
     if (aCA >= 0.)
     {
@@ -2359,10 +2359,10 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
     {dx * dy * aCm1 + dz * aSA, dy * dy * aCm1 + aCA, dy * dz * aCm1 - dx * aSA},
     {dx * dz * aCm1 - dy * aSA, dy * dz * aCm1 + dx * aSA, dz * dz * aCm1 + aCA}};
 
-  if (std::abs(std::abs(aRotMat[0][2] - 1.)) < Precision::Confusion())
+  if (std::abs(std::abs(aRotMat[0][2] - 1.)) < math::precision::Precision::Confusion())
   {
 
-    if (std::abs(aRotMat[0][2] - 1.) < Precision::Confusion())
+    if (std::abs(aRotMat[0][2] - 1.) < math::precision::Precision::Confusion())
       aPitch = M_PI_2;
     else
       aPitch = -M_PI_2;
@@ -2385,7 +2385,7 @@ occ::handle<NCollection_HArray1<double>> StepToGeom::MakeYprRotation(
 
     if (aRotMat[0][0] < 0.)
     {
-      if (aYaw < 0. || std::abs(aYaw) < Precision::Angular())
+      if (aYaw < 0. || std::abs(aYaw) < math::precision::Precision::Angular())
         aYaw = aYaw + M_PI;
       else
         aYaw = aYaw - M_PI;

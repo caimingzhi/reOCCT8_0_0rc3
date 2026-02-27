@@ -5,14 +5,14 @@
 #include <OSD_Path.hpp>
 #include <Standard_Assert.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(OSD_LocalFileSystem, OSD_FileSystem)
+IMPLEMENT_STANDARD_RTTIEXT(System::os::OSD_LocalFileSystem, System::os::OSD_FileSystem)
 
-bool OSD_LocalFileSystem::IsSupportedPath(const TCollection_AsciiString& theUrl) const
+bool System::os::OSD_LocalFileSystem::IsSupportedPath(const TCollection_AsciiString& theUrl) const
 {
-  return !OSD_Path::IsRemoteProtocolPath(theUrl.ToCString());
+  return !System::os::OSD_Path::IsRemoteProtocolPath(theUrl.ToCString());
 }
 
-bool OSD_LocalFileSystem::IsOpenIStream(const std::shared_ptr<std::istream>& theStream) const
+bool System::os::OSD_LocalFileSystem::IsOpenIStream(const std::shared_ptr<std::istream>& theStream) const
 {
   std::shared_ptr<OSD_IStreamBuffer> aFileStream =
     std::dynamic_pointer_cast<OSD_IStreamBuffer>(theStream);
@@ -24,7 +24,7 @@ bool OSD_LocalFileSystem::IsOpenIStream(const std::shared_ptr<std::istream>& the
   return (aFileBuf != nullptr) ? aFileBuf->is_open() : false;
 }
 
-bool OSD_LocalFileSystem::IsOpenOStream(const std::shared_ptr<std::ostream>& theStream) const
+bool System::os::OSD_LocalFileSystem::IsOpenOStream(const std::shared_ptr<std::ostream>& theStream) const
 {
   std::shared_ptr<OSD_OStreamBuffer> aFileStream =
     std::dynamic_pointer_cast<OSD_OStreamBuffer>(theStream);
@@ -36,7 +36,7 @@ bool OSD_LocalFileSystem::IsOpenOStream(const std::shared_ptr<std::ostream>& the
   return (aFileBuf != nullptr) ? aFileBuf->is_open() : false;
 }
 
-std::shared_ptr<std::streambuf> OSD_LocalFileSystem::OpenStreamBuffer(
+std::shared_ptr<std::streambuf> System::os::OSD_LocalFileSystem::OpenStreamBuffer(
   const TCollection_AsciiString& theUrl,
   const std::ios_base::openmode  theMode,
   const int64_t                  theOffset,

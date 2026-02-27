@@ -17,7 +17,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT math_NewtonMinimum(const math_MultipleVarFunctionWithHessian& theFunction,
-                                     const double theTolerance       = Precision::Confusion(),
+                                     const double theTolerance       = math::precision::Precision::Confusion(),
                                      const int    theNbIterations    = 40,
                                      const double theConvexity       = 1.0e-6,
                                      const bool   theWithSingularity = true);

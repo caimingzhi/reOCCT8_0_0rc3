@@ -297,7 +297,7 @@ void BOPAlgo_BOP::BuildResult(const TopAbs_ShapeEnum theType)
   }
 }
 
-void BOPAlgo_BOP::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_BOP::Perform(const System::log::Message_ProgressRange& theRange)
 {
   occ::handle<NCollection_BaseAllocator>   aAllocator;
   BOPAlgo_PaveFiller*                      pPF;
@@ -334,7 +334,7 @@ void BOPAlgo_BOP::Perform(const Message_ProgressRange& theRange)
   pPF = new BOPAlgo_PaveFiller(aAllocator);
   pPF->SetArguments(aLS);
   pPF->SetRunParallel(myRunParallel);
-  Message_ProgressScope aPS(theRange, "Performing Boolean operation", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Performing Boolean operation", 10);
 
   pPF->SetFuzzyValue(myFuzzyValue);
   pPF->SetNonDestructive(myNonDestructive);
@@ -355,7 +355,7 @@ void BOPAlgo_BOP::fillPIConstants(const double theWhole, BOPAlgo_PISteps& theSte
 }
 
 void BOPAlgo_BOP::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
-                                   const Message_ProgressRange& theRange)
+                                   const System::log::Message_ProgressRange& theRange)
 {
   myPaveFiller     = (BOPAlgo_PaveFiller*)&theFiller;
   myDS             = myPaveFiller->PDS();
@@ -384,7 +384,7 @@ void BOPAlgo_BOP::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
       return;
     }
   }
-  Message_ProgressScope aPS(theRange, "Building the result of Boolean operation", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Building the result of Boolean operation", 100);
 
   BOPAlgo_PISteps aSteps(PIOperation_Last);
   analyzeProgress(100, aSteps);
@@ -500,9 +500,9 @@ void BOPAlgo_BOP::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   PostTreat(aPS.Next(aSteps.GetStep(PIOperation_PostTreat)));
 }
 
-void BOPAlgo_BOP::BuildRC(const Message_ProgressRange& theRange)
+void BOPAlgo_BOP::BuildRC(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 1);
 
   TopAbs_ShapeEnum aType;
   TopoDS_Compound  aC;
@@ -775,9 +775,9 @@ void BOPAlgo_BOP::BuildRC(const Message_ProgressRange& theRange)
   myRC = aC;
 }
 
-void BOPAlgo_BOP::BuildShape(const Message_ProgressRange& theRange)
+void BOPAlgo_BOP::BuildShape(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 10.);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 10.);
 
   if (myDims[0] == 3 && myDims[1] == 3)
   {
@@ -785,8 +785,8 @@ void BOPAlgo_BOP::BuildShape(const Message_ProgressRange& theRange)
     bool hasNotClosedSolids = CheckArgsForOpenSolid();
     if (hasNotClosedSolids)
     {
-      occ::handle<Message_Report> aReport = new Message_Report();
-      BuildBOP(myArguments, myTools, myOperation, Message_ProgressRange(), aReport);
+      occ::handle<System::log::Message_Report> aReport = new System::log::Message_Report();
+      BuildBOP(myArguments, myTools, myOperation, System::log::Message_ProgressRange(), aReport);
       if (aReport->GetAlerts(Message_Fail).IsEmpty())
       {
 
@@ -983,9 +983,9 @@ void BOPAlgo_BOP::BuildShape(const Message_ProgressRange& theRange)
   myShape = aResult;
 }
 
-void BOPAlgo_BOP::BuildSolid(const Message_ProgressRange& theRange)
+void BOPAlgo_BOP::BuildSolid(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, nullptr, 10.);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 10.);
 
   NCollection_List<TopoDS_Shape> aLSC;
 
@@ -1252,9 +1252,9 @@ bool BOPAlgo_BOP::CheckArgsForOpenSolid()
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aFailedSolids;
   {
-    const NCollection_List<occ::handle<Message_Alert>>& aList =
+    const NCollection_List<occ::handle<System::log::Message_Alert>>& aList =
       myReport->GetAlerts(Message_Warning);
-    for (NCollection_List<occ::handle<Message_Alert>>::Iterator aIt(aList); aIt.More(); aIt.Next())
+    for (NCollection_List<occ::handle<System::log::Message_Alert>>::Iterator aIt(aList); aIt.More(); aIt.Next())
     {
       const occ::handle<Standard_Type>& aType = aIt.Value()->DynamicType();
       if (aType != STANDARD_TYPE(BOPAlgo_AlertSolidBuilderUnusedFaces))

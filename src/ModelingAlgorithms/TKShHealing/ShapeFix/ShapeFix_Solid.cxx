@@ -125,7 +125,7 @@ static void CollectSolids(
       if (!theMapStatus.IsBound(aShell1))
       {
 
-        bsc3d.PerformInfinitePoint(Precision::Confusion());
+        bsc3d.PerformInfinitePoint(math::precision::Precision::Confusion());
         infinstatus = bsc3d.State();
 
         if (infinstatus != TopAbs_UNKNOWN && infinstatus != TopAbs_ON)
@@ -172,7 +172,7 @@ static void CollectSolids(
         {
           TopoDS_Vertex aV  = TopoDS::Vertex(amapVert.FindKey(k));
           gp_Pnt        aPf = BRep_Tool::Pnt(aV);
-          bsc3d.Perform(aPf, Precision::Confusion());
+          bsc3d.Perform(aPf, math::precision::Precision::Confusion());
           pointstatus = bsc3d.State();
           if (pointstatus == TopAbs_ON)
             numon++;
@@ -183,7 +183,7 @@ static void CollectSolids(
 #ifdef OCCT_DEBUG_GET_MIDDLE_POINT
           gp_Pnt pmid;
           GetMiddlePoint(aShell2, pmid);
-          bsc3d.Perform(pmid, Precision::Confusion());
+          bsc3d.Perform(pmid, math::precision::Precision::Confusion());
 #endif
           pointstatus = TopAbs_OUT;
         }
@@ -290,7 +290,7 @@ static bool CreateSolids(const TopoDS_Shape&                                    
       {
         OCC_CATCH_SIGNALS
         BRepClass3d_SolidClassifier bsc3d(aSolid);
-        bsc3d.PerformInfinitePoint(Precision::Confusion());
+        bsc3d.PerformInfinitePoint(math::precision::Precision::Confusion());
         infinstatus = bsc3d.State();
       }
       catch (Standard_Failure const& anException)
@@ -330,7 +330,7 @@ static bool CreateSolids(const TopoDS_Shape&                                    
         B.MakeSolid(solid);
         B.Add(solid, aShellHole);
         BRepClass3d_SolidClassifier bsc3dHol(solid);
-        bsc3dHol.PerformInfinitePoint(Precision::Confusion());
+        bsc3dHol.PerformInfinitePoint(math::precision::Precision::Confusion());
         infinstatus = bsc3dHol.State();
       }
       if (infinstatus == TopAbs_OUT)
@@ -387,7 +387,7 @@ static bool CreateSolids(const TopoDS_Shape&                                    
   return isDone;
 }
 
-bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
+bool ShapeFix_Solid::Perform(const System::log::Message_ProgressRange& theProgress)
 {
 
   bool status = false;
@@ -402,12 +402,12 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
   for (TopExp_Explorer aExpSh(S, TopAbs_SHELL); aExpSh.More(); aExpSh.Next())
     aNbShells++;
 
-  Message_ProgressScope aPS(theProgress, "Fixing solid stage", 2);
+  System::log::Message_ProgressScope aPS(theProgress, "Fixing solid stage", 2);
 
   if (NeedFix(myFixShellMode))
   {
 
-    Message_ProgressScope aPSFixShell(aPS.Next(), "Fixing shell", aNbShells);
+    System::log::Message_ProgressScope aPSFixShell(aPS.Next(), "Fixing shell", aNbShells);
 
     for (TopExp_Explorer aExpSh(S, TopAbs_SHELL); aExpSh.More() && aPSFixShell.More();
          aExpSh.Next())
@@ -470,7 +470,7 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
         if (ShapeExtend::DecodeStatus(myStatus, ShapeExtend_DONE2))
         {
 
-          SendWarning(Message_Msg("FixAdvSolid.FixOrientation.MSG20"));
+          SendWarning(System::log::Message_Msg("FixAdvSolid.FixOrientation.MSG20"));
 
           Context()->Replace(tmpShape, aSol);
           tmpShape = aSol;
@@ -485,7 +485,7 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
       TopoDS_Iterator aIt(tmpShape, false);
       Context()->Replace(tmpShape, aIt.Value());
 
-      SendFail(Message_Msg("FixAdvSolid.FixShell.MSG10"));
+      SendFail(System::log::Message_Msg("FixAdvSolid.FixShell.MSG10"));
     }
   }
   else
@@ -495,7 +495,7 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMapSolids;
     if (CreateSolids(aResShape, aMapSolids))
     {
-      SendWarning(Message_Msg("FixAdvSolid.FixOrientation.MSG20"));
+      SendWarning(System::log::Message_Msg("FixAdvSolid.FixOrientation.MSG20"));
 
       if (aMapSolids.Extent() == 1)
       {
@@ -513,18 +513,18 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
           mySolid = aResSol;
           if (aResSol.ShapeType() == TopAbs_SHELL)
 
-            SendFail(Message_Msg("FixAdvSolid.FixShell.MSG10"));
+            SendFail(System::log::Message_Msg("FixAdvSolid.FixShell.MSG10"));
         }
         Context()->Replace(aResShape, mySolid);
       }
       else if (aMapSolids.Extent() > 1)
       {
-        SendWarning(Message_Msg("FixAdvSolid.FixOrientation.MSG30"));
+        SendWarning(System::log::Message_Msg("FixAdvSolid.FixOrientation.MSG30"));
 
         BRep_Builder    aB;
         TopoDS_Compound aComp;
         aB.MakeCompound(aComp);
-        Message_ProgressScope aPSCreatingSolid(aPS.Next(), "Creating solid", aMapSolids.Extent());
+        System::log::Message_ProgressScope aPSCreatingSolid(aPS.Next(), "Creating solid", aMapSolids.Extent());
         for (int i = 1; (i <= aMapSolids.Extent()) && (aPSCreatingSolid.More());
              i++, aPSCreatingSolid.Next())
         {
@@ -540,7 +540,7 @@ bool ShapeFix_Solid::Perform(const Message_ProgressRange& theProgress)
           }
           else if (aResShape.ShapeType() == TopAbs_SHELL)
 
-            SendFail(Message_Msg("FixAdvSolid.FixShell.MSG10"));
+            SendFail(System::log::Message_Msg("FixAdvSolid.FixShell.MSG10"));
 
           aB.Add(aComp, aResSh);
         }
@@ -574,7 +574,7 @@ TopoDS_Solid ShapeFix_Solid::SolidFromShell(const TopoDS_Shell& shell)
   {
     OCC_CATCH_SIGNALS
     BRepClass3d_SolidClassifier bsc3d(solid);
-    constexpr double            t = Precision::Confusion();
+    constexpr double            t = math::precision::Precision::Confusion();
     bsc3d.PerformInfinitePoint(t);
 
     if (bsc3d.State() == TopAbs_IN)

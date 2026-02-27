@@ -371,9 +371,9 @@ namespace
 
     gp_Vec Normal;
     Normal = Vec3d[0] ^ Vec3d[1];
-    if (Normal.SquareMagnitude() < Precision::Confusion())
+    if (Normal.SquareMagnitude() < math::precision::Precision::Confusion())
     {
-      return (Vec.IsParallel(Vec3d[0], Precision::Confusion()));
+      return (Vec.IsParallel(Vec3d[0], math::precision::Precision::Confusion()));
     }
 
     double amin, amax;
@@ -516,11 +516,11 @@ namespace
       gp_Pnt            P;
       BRepAdaptor_Curve AC(Arc);
       AC.D1(Precedant.ParameterOnArc(), P, tgarc);
-      tochange = tgarc.IsParallel(Precedant.Vector(), Precision::Confusion());
+      tochange = tgarc.IsParallel(Precedant.Vector(), math::precision::Precision::Confusion());
     }
 
     if (tochange)
-      Courant.SetArc(Precision::Confusion(),
+      Courant.SetArc(math::precision::Precision::Confusion(),
                      Arc,
                      Precedant.ParameterOnArc(),
                      TopAbs::Reverse(Precedant.TransitionOnArc()));
@@ -808,7 +808,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
   PExt.Initialize(els,
                   Spine->FirstParameter(1),
                   Spine->LastParameter(nbed),
-                  Precision::Confusion());
+                  math::precision::Precision::Confusion());
   TopAbs_State Pos1, Pos2;
   for (nbessai = 0; nbessai <= nbessaimax; nbessai++)
   {
@@ -839,7 +839,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
     I1->Initialize((const occ::handle<Adaptor3d_Surface>&)HS1);
     PC->D1(woned, P1, derive);
 
-    if (derive.Magnitude() > Precision::PConfusion())
+    if (derive.Magnitude() > math::precision::Precision::PConfusion())
     {
       derive.Normalize();
       derive.Rotate(M_PI / 2);
@@ -995,7 +995,7 @@ static void ChFi3d_BuildPlane(TopOpeBRepDS_DataStructure&         DStr,
     if (theProp.IsNormalDefined())
     {
       const occ::handle<Geom_Plane> Pln  = new Geom_Plane(theProp.Value(), theProp.Normal());
-      TopoDS_Face                   NewF = BRepLib_MakeFace(Pln, Precision::Confusion());
+      TopoDS_Face                   NewF = BRepLib_MakeFace(Pln, math::precision::Precision::Confusion());
       NewF.Orientation(F.Orientation());
       pons.SetCoord(0., 0.);
       HS->Initialize(NewF);

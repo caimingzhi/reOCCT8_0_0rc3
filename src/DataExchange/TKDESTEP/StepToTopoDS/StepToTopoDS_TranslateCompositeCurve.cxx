@@ -163,8 +163,8 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
           BRepBuilderAPI_MakeEdge MkEdge(c3d, c3d->FirstParameter(), c3d->LastParameter());
           if (MkEdge.IsDone())
           {
-            if (Precision::IsNegativeInfinite(c3d->FirstParameter())
-                || Precision::IsPositiveInfinite(c3d->LastParameter()))
+            if (math::precision::Precision::IsNegativeInfinite(c3d->FirstParameter())
+                || math::precision::Precision::IsPositiveInfinite(c3d->LastParameter()))
             {
               myInfiniteSegment = true;
               TP->AddWarning(CC, "Segment with infinite parameters");
@@ -198,8 +198,8 @@ bool StepToTopoDS_TranslateCompositeCurve::Init(const occ::handle<StepGeom_Compo
             BRepBuilderAPI_MakeEdge MkEdge(c2d, Surf, c2d->FirstParameter(), c2d->LastParameter());
             if (MkEdge.IsDone())
             {
-              if (Precision::IsNegativeInfinite(c2d->FirstParameter())
-                  || Precision::IsPositiveInfinite(c2d->LastParameter()))
+              if (math::precision::Precision::IsNegativeInfinite(c2d->FirstParameter())
+                  || math::precision::Precision::IsPositiveInfinite(c2d->LastParameter()))
               {
                 myInfiniteSegment = true;
                 TP->AddWarning(CC, "Segment with infinite parameters");

@@ -238,8 +238,8 @@ namespace
 
     double aFixIsoParam = aMinParam;
     bool   isIsoLine    = false;
-    if (aMaxParam - aSavedParam < Precision::PConfusion()
-        || aSavedParam - aMinParam < Precision::PConfusion())
+    if (aMaxParam - aSavedParam < math::precision::Precision::PConfusion()
+        || aSavedParam - aMinParam < math::precision::Precision::PConfusion())
     {
       aFixIsoParam = aSavedParam;
       isIsoLine    = true;
@@ -253,15 +253,15 @@ namespace
 
       if (isIsoLine)
       {
-        if (aMaxParam - aParam < Precision::PConfusion()
-            || aParam - aMinParam < Precision::PConfusion())
+        if (aMaxParam - aParam < math::precision::Precision::PConfusion()
+            || aParam - aMinParam < math::precision::Precision::PConfusion())
           aParam = aFixIsoParam;
       }
       else
       {
-        if (aMaxParam - aParam < Precision::PConfusion())
+        if (aMaxParam - aParam < math::precision::Precision::PConfusion())
           aParam = aMaxParam;
-        if (aParam - aMinParam < Precision::PConfusion())
+        if (aParam - aMinParam < math::precision::Precision::PConfusion())
           aParam = aMinParam;
       }
 
@@ -274,11 +274,11 @@ namespace
     for (int i = 0; i < 3; i++)
     {
       double aDiff = thePnt[i + 1].Coord(theIdx) - thePnt[i].Coord(theIdx);
-      if (aDiff < -Precision::PConfusion())
+      if (aDiff < -math::precision::Precision::PConfusion())
       {
         aSumDiff *= -1.0;
       }
-      if (aDiff * aPrevDiff < -Precision::PConfusion())
+      if (aDiff * aPrevDiff < -math::precision::Precision::PConfusion())
       {
         isJump = true;
       }
@@ -340,7 +340,7 @@ namespace
     }
 
     GeomAdaptor_Curve            aC3DAdaptor(theCurve);
-    double                       aMinParSpeed = Precision::Infinite();
+    double                       aMinParSpeed = math::precision::Precision::Infinite();
     NCollection_Sequence<double> aKnotCoeffs;
 
     for (; anIdx <= theBSpline->NbKnots() && aFirstParam < theLast; anIdx++)
@@ -394,7 +394,7 @@ namespace
     }
 
     const double aMaxQuotientCoeff = 1500.0;
-    return (anEvenlyCoeff > aMaxQuotientCoeff && aMinParSpeed > Precision::Confusion());
+    return (anEvenlyCoeff > aMaxQuotientCoeff && aMinParSpeed > math::precision::Precision::Confusion());
   }
 
   int generateCurvePoints(const occ::handle<Geom_Curve>&                     theCurve,
@@ -484,7 +484,7 @@ namespace
 } // namespace
 
 ShapeConstruct_ProjectCurveOnSurface::ShapeConstruct_ProjectCurveOnSurface()
-    : myPreci(Precision::Confusion()),
+    : myPreci(math::precision::Precision::Confusion()),
       myStatus(ShapeExtend::EncodeStatus(ShapeExtend_OK)),
       myAdjustOverDegen(1)
 {
@@ -734,11 +734,11 @@ occ::handle<Geom2d_Curve> ShapeConstruct_ProjectCurveOnSurface::getLine(
 
   if (aTol2 > 1.0)
   {
-    aTolWorking = Precision::Confusion();
+    aTolWorking = math::precision::Precision::Confusion();
     aTol2       = aTolWorking * aTolWorking;
   }
-  if (aTol2 < Precision::SquareConfusion())
-    aTol2 = Precision::SquareConfusion();
+  if (aTol2 < math::precision::Precision::SquareConfusion())
+    aTol2 = math::precision::Precision::SquareConfusion();
   const double anOldTol2 = aTol2;
 
   int      aSavedPointNum = -1;
@@ -820,7 +820,7 @@ occ::handle<Geom2d_Curve> ShapeConstruct_ProjectCurveOnSurface::getLine(
   aTol2 = anOldTol2;
 
   const double dPar = theParams(aNb) - theParams(1);
-  if (std::abs(dPar) < Precision::PConfusion())
+  if (std::abs(dPar) < math::precision::Precision::PConfusion())
     return nullptr;
 
   const gp_Vec2d            aVec0(aP2d[0], aP2d[3]);
@@ -837,7 +837,7 @@ occ::handle<Geom2d_Curve> ShapeConstruct_ProjectCurveOnSurface::getLine(
       gp_Vec      aNormalVec, aDu, aDv;
       aSurf->D1(aCurPoint.X(), aCurPoint.Y(), aCurP, aDu, aDv);
       aNormalVec = aDu ^ aDv;
-      if (aNormalVec.SquareMagnitude() < Precision::SquareConfusion())
+      if (aNormalVec.SquareMagnitude() < math::precision::Precision::SquareConfusion())
       {
         isNormalCheck = false;
         break;
@@ -867,7 +867,7 @@ occ::handle<Geom2d_Curve> ShapeConstruct_ProjectCurveOnSurface::getLine(
   }
 
   const double aLLength = aVec0.Magnitude();
-  if (std::abs(aLLength - dPar) <= Precision::PConfusion())
+  if (std::abs(aLLength - dPar) <= math::precision::Precision::PConfusion())
   {
     const gp_XY    aDirL = aVec0.XY() / aLLength;
     const gp_Pnt2d aPL(aP2d[0].XY() - theParams(1) * aDirL);
@@ -909,7 +909,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
     bool aChangeCycle = false;
     if (!myCache.IsEmpty()
         && myCache(0).first.Distance(thePoints(1)) > myCache(0).first.Distance(thePoints(theNbPnt))
-        && myCache(0).first.Distance(thePoints(theNbPnt)) < Precision::Confusion())
+        && myCache(0).first.Distance(thePoints(theNbPnt)) < math::precision::Precision::Confusion())
     {
       aChangeCycle = true;
     }
@@ -991,9 +991,9 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
     {
       Cf = cIso->FirstParameter();
       Cl = cIso->LastParameter();
-      if (Precision::IsInfinite(Cf))
+      if (math::precision::Precision::IsInfinite(Cf))
         Cf = -1000;
-      if (Precision::IsInfinite(Cl))
+      if (math::precision::Precision::IsInfinite(Cl))
         Cl = +1000;
 
       tdeb = pout(2);
@@ -1058,7 +1058,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
   if (!myCache.IsEmpty()
       && myCache(0).first.Distance(thePoints(1)) > myCache(0).first.Distance(thePoints(theNbPnt)))
   {
-    if (myCache(0).first.Distance(thePoints(theNbPnt)) < Precision::Confusion())
+    if (myCache(0).first.Distance(thePoints(theNbPnt)) < math::precision::Precision::Confusion())
       aChangeCycle = true;
   }
 
@@ -1101,7 +1101,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
           p2d = valueP2;
         else
         {
-          p2d = mySurf->NextValueOfUV(p2d, p3d, myPreci, Precision::Confusion() + 1000 * gap);
+          p2d = mySurf->NextValueOfUV(p2d, p3d, myPreci, math::precision::Precision::Confusion() + 1000 * gap);
           gap = mySurf->Gap();
         }
       }
@@ -1152,7 +1152,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
                 p2d = mySurf->NextValueOfUV(aCachePnt.second,
                                             p3d,
                                             myPreci,
-                                            Precision::Confusion() + gap);
+                                            math::precision::Precision::Confusion() + gap);
                 if (aPntIndex == 1)
                 {
                   isFromCache = true;
@@ -1169,7 +1169,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
         }
         else
         {
-          p2d = mySurf->NextValueOfUV(p2d, p3d, myPreci, Precision::Confusion() + 1000 * gap);
+          p2d = mySurf->NextValueOfUV(p2d, p3d, myPreci, math::precision::Precision::Confusion() + 1000 * gap);
         }
         gap = mySurf->Gap();
       }
@@ -1210,8 +1210,8 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
 
   const gp_Pnt aPointFirst = thePoints.First();
   const gp_Pnt aPointLast  = thePoints.Last();
-  const double aTolFirst   = (theTolFirst < 0) ? Precision::Confusion() : theTolFirst;
-  const double aTolLast    = (theTolLast < 0) ? Precision::Confusion() : theTolLast;
+  const double aTolFirst   = (theTolFirst < 0) ? math::precision::Precision::Confusion() : theTolFirst;
+  const double aTolLast    = (theTolLast < 0) ? math::precision::Precision::Confusion() : theTolLast;
 
   for (int i = 1;; i++)
   {
@@ -1221,19 +1221,19 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
     bool     IsUiso;
     if (!mySurf->Singularity(i, aPreci, aP3d, aFirstP2d, aLastP2d, aFirstPar, aLastPar, IsUiso))
       break;
-    if (aPreci <= Precision::Confusion() && aPointFirst.Distance(aP3d) <= aTolFirst)
+    if (aPreci <= math::precision::Precision::Confusion() && aPointFirst.Distance(aP3d) <= aTolFirst)
     {
       correctExtremity(theC3D, theParams, thePoints2d, true, aFirstP2d, IsUiso);
     }
-    if (aPreci <= Precision::Confusion() && aPointLast.Distance(aP3d) <= aTolLast)
+    if (aPreci <= math::precision::Precision::Confusion() && aPointLast.Distance(aP3d) <= aTolLast)
     {
       correctExtremity(theC3D, theParams, thePoints2d, false, aFirstP2d, IsUiso);
     }
   }
 
   double       dist2d;
-  const double TolOnUPeriod = Precision::Confusion() * Up;
-  const double TolOnVPeriod = Precision::Confusion() * Vp;
+  const double TolOnUPeriod = math::precision::Precision::Confusion() * Up;
+  const double TolOnVPeriod = math::precision::Precision::Confusion() * Vp;
 
   if (mySurf->IsUClosed(myPreci) || needResolveUJump)
   {
@@ -1466,10 +1466,10 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
         for (ind = 1; ind <= thePoints2d.Length(); ind++)
         {
           double CurX = thePoints2d(ind).X();
-          if (mySurf->IsDegenerated(thePoints(ind), Precision::Confusion()))
+          if (mySurf->IsDegenerated(thePoints(ind), math::precision::Precision::Confusion()))
             continue;
           OnBound =
-            (std::abs(std::abs(CurX - 0.5 * (ul + uf)) - Up / 2) <= Precision::PConfusion());
+            (std::abs(std::abs(CurX - 0.5 * (ul + uf)) - Up / 2) <= math::precision::Precision::PConfusion());
           if (!start && std::abs(std::abs(CurX - PrevX) - Up / 2) <= 0.01 * Up)
             break;
           start       = false;
@@ -1479,7 +1479,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
         if (ind <= thePoints2d.Length())
         {
           PrevX     = (myAdjustOverDegen ? uf : ul);
-          double dU = Up / 2 + Precision::PConfusion();
+          double dU = Up / 2 + math::precision::Precision::PConfusion();
           if (PrevOnBound)
           {
             thePoints2d.ChangeValue(ind - 1).SetX(PrevX);
@@ -1532,10 +1532,10 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
         for (ind = 1; ind <= thePoints2d.Length(); ind++)
         {
           double CurY = thePoints2d(ind).Y();
-          if (mySurf->IsDegenerated(thePoints(ind), Precision::Confusion()))
+          if (mySurf->IsDegenerated(thePoints(ind), math::precision::Precision::Confusion()))
             continue;
           OnBound =
-            (std::abs(std::abs(CurY - 0.5 * (vl + vf)) - Vp / 2) <= Precision::PConfusion());
+            (std::abs(std::abs(CurY - 0.5 * (vl + vf)) - Vp / 2) <= math::precision::Precision::PConfusion());
           if (!start && std::abs(std::abs(CurY - PrevY) - Vp / 2) <= 0.01 * Vp)
             break;
           start       = false;
@@ -1545,7 +1545,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::approxPCurve(const int               
         if (ind <= thePoints2d.Length())
         {
           PrevY     = (myAdjustOverDegen ? vf : vl);
-          double dV = Vp / 2 + Precision::PConfusion();
+          double dV = Vp / 2 + math::precision::Precision::PConfusion();
           if (PrevOnBound)
           {
             thePoints2d.ChangeValue(ind - 1).SetY(PrevY);
@@ -1662,7 +1662,7 @@ void ShapeConstruct_ProjectCurveOnSurface::correctExtremity(const occ::handle<Ge
   for (;;)
   {
     if (std::abs(SecondPointOfLine.Coord(3 - IndCoord) - FinishCoord)
-        <= 2 * Precision::PConfusion())
+        <= 2 * math::precision::Precision::PConfusion())
       break;
 
     gp_Vec2d     aVec(FirstPointOfLine, SecondPointOfLine);
@@ -1686,12 +1686,12 @@ void ShapeConstruct_ProjectCurveOnSurface::correctExtremity(const occ::handle<Ge
     FirstPointOfLine   = SecondPointOfLine;
     FirstParam         = SecondParam;
     SecondParam        = (FirstParam + FinishParam) / 2;
-    if (std::abs(SecondParam - FirstParam) <= 2 * Precision::PConfusion())
+    if (std::abs(SecondParam - FirstParam) <= 2 * math::precision::Precision::PConfusion())
       break;
     gp_Pnt aP3d;
     theC3D->D0(SecondParam, aP3d);
     SecondPointOfLine =
-      mySurf->NextValueOfUV(FirstPointOfLine, aP3d, myPreci, Precision::Confusion());
+      mySurf->NextValueOfUV(FirstPointOfLine, aP3d, myPreci, math::precision::Precision::Confusion());
     if (IsPeriodic)
       adjustSecondToFirstPoint(FirstPointOfLine, SecondPointOfLine, mySurf->Surface());
 
@@ -1755,7 +1755,7 @@ void ShapeConstruct_ProjectCurveOnSurface::insertAdditionalPointOrAdjust(
       while (std::abs(MidCoord - thePrevCoord) >= thePeriod / 2 - theTolOnPeriod
              || std::abs(theCurCoord - MidCoord) >= thePeriod / 2 - theTolOnPeriod)
       {
-        if (MidPar - FirstT <= Precision::PConfusion() || LastT - MidPar <= Precision::PConfusion())
+        if (MidPar - FirstT <= math::precision::Precision::PConfusion() || LastT - MidPar <= math::precision::Precision::PConfusion())
         {
           Success = false;
           break;
@@ -2097,7 +2097,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
   {
     OCC_CATCH_SIGNALS
 
-    constexpr double prec = Precision::Confusion();
+    constexpr double prec = math::precision::Precision::Confusion();
 
     bool isoParam = false;
     theIsoPar2d3d = false;
@@ -2133,7 +2133,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
 
       if (j == 1)
       {
-        if (Precision::IsInfinite(U1))
+        if (math::precision::Precision::IsInfinite(U1))
           continue;
         cI     = mySurf->UIso(U1);
         isoU   = true;
@@ -2142,7 +2142,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
       }
       else if (j == 2)
       {
-        if (Precision::IsInfinite(U2))
+        if (math::precision::Precision::IsInfinite(U2))
           continue;
         cI     = mySurf->UIso(U2);
         isoU   = true;
@@ -2151,7 +2151,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
       }
       else if (j == 3)
       {
-        if (Precision::IsInfinite(V1))
+        if (math::precision::Precision::IsInfinite(V1))
           continue;
         cI     = mySurf->VIso(V1);
         isoU   = false;
@@ -2160,7 +2160,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
       }
       else if (j == 4)
       {
-        if (Precision::IsInfinite(V2))
+        if (math::precision::Precision::IsInfinite(V2))
           continue;
         cI     = mySurf->VIso(V2);
         isoU   = false;
@@ -2229,9 +2229,9 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
 
         double Cf = cI->FirstParameter();
         double Cl = cI->LastParameter();
-        if (Precision::IsInfinite(Cf))
+        if (math::precision::Precision::IsInfinite(Cf))
           Cf = -1000;
-        if (Precision::IsInfinite(Cl))
+        if (math::precision::Precision::IsInfinite(Cl))
           Cl = +1000;
 
         ShapeAnalysis_Curve sac;
@@ -2244,7 +2244,7 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
         }
       }
 
-      if (mp[0] > 0 && mp[1] > 0 && std::abs(tp[0] - tp[1]) < Precision::PConfusion())
+      if (mp[0] > 0 && mp[1] > 0 && std::abs(tp[0] - tp[1]) < math::precision::Precision::PConfusion())
         continue;
 
       if (mp[0] > 0 && (!theP1OnIso || currd2[0] < mind2[0]))
@@ -2324,9 +2324,9 @@ bool ShapeConstruct_ProjectCurveOnSurface::isAnIsoparametric(const int          
         bool   isoByDistance = true;
         Cf                   = theCIso->FirstParameter();
         Cl                   = theCIso->LastParameter();
-        if (Precision::IsInfinite(Cf))
+        if (math::precision::Precision::IsInfinite(Cf))
           Cf = -1000;
-        if (Precision::IsInfinite(Cl))
+        if (math::precision::Precision::IsInfinite(Cl))
           Cl = +1000;
 
         ShapeAnalysis_Curve sac;

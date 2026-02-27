@@ -172,7 +172,7 @@ void BRepTools::AddUVBounds(const TopoDS_Face& aF, const TopoDS_Edge& aE, Bnd_Bo
 
     if (aS->DynamicType() == STANDARD_TYPE(Geom_BSplineSurface) && (aXmin < aUmin || aXmax > aUmax))
     {
-      constexpr double aTol2 = 100 * Precision::Confusion() * Precision::Confusion();
+      constexpr double aTol2 = 100 * math::precision::Precision::Confusion() * math::precision::Precision::Confusion();
       isUPeriodic            = true;
       gp_Pnt P1, P2;
 
@@ -249,7 +249,7 @@ void BRepTools::AddUVBounds(const TopoDS_Face& aF, const TopoDS_Edge& aE, Bnd_Bo
 
     if (aS->DynamicType() == STANDARD_TYPE(Geom_BSplineSurface) && (aYmin < aVmin || aYmax > aVmax))
     {
-      constexpr double aTol2 = 100 * Precision::Confusion() * Precision::Confusion();
+      constexpr double aTol2 = 100 * math::precision::Precision::Confusion() * math::precision::Precision::Confusion();
       isVPeriodic            = true;
       gp_Pnt P1, P2;
 
@@ -491,10 +491,10 @@ TopoDS_Wire BRepTools::OuterWire(const TopoDS_Face& F)
       {
         const TopoDS_Wire& W = TopoDS::Wire(expw.Current());
         BRepTools::UVBounds(F, W, umin, umax, vmin, vmax);
-        if (((umin - UMin) <= Precision::PConfusion())
-            && ((umax - UMax) >= -Precision::PConfusion())
-            && ((vmin - VMin) <= Precision::PConfusion())
-            && ((vmax - VMax) >= -Precision::PConfusion()))
+        if (((umin - UMin) <= math::precision::Precision::PConfusion())
+            && ((umax - UMax) >= -math::precision::Precision::PConfusion())
+            && ((vmin - VMin) <= math::precision::Precision::PConfusion())
+            && ((vmax - VMax) >= -math::precision::Precision::PConfusion()))
         {
           Wres = W;
           UMin = umin;
@@ -533,7 +533,7 @@ void BRepTools::Write(const TopoDS_Shape&          theShape,
                       const bool                   theWithTriangles,
                       const bool                   theWithNormals,
                       const TopTools_FormatVersion theVersion,
-                      const Message_ProgressRange& theProgress)
+                      const System::log::Message_ProgressRange& theProgress)
 {
   BRepTools_ShapeSet aShapeSet(theWithTriangles, theWithNormals);
   aShapeSet.SetFormatNb(theVersion);
@@ -545,7 +545,7 @@ void BRepTools::Write(const TopoDS_Shape&          theShape,
 void BRepTools::Read(TopoDS_Shape&                Sh,
                      std::istream&                S,
                      const BRep_Builder&          B,
-                     const Message_ProgressRange& theProgress)
+                     const System::log::Message_ProgressRange& theProgress)
 {
   BRepTools_ShapeSet SS(B);
   SS.Read(S, theProgress);
@@ -557,9 +557,9 @@ bool BRepTools::Write(const TopoDS_Shape&          theShape,
                       const bool                   theWithTriangles,
                       const bool                   theWithNormals,
                       const TopTools_FormatVersion theVersion,
-                      const Message_ProgressRange& theProgress)
+                      const System::log::Message_ProgressRange& theProgress)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aStream =
     aFileSystem->OpenOStream(theFile, std::ios::out | std::ios::binary);
   if (aStream.get() == nullptr || !aStream->good())
@@ -595,9 +595,9 @@ bool BRepTools::Write(const TopoDS_Shape&          theShape,
 bool BRepTools::Read(TopoDS_Shape&                Sh,
                      const char*                  File,
                      const BRep_Builder&          B,
-                     const Message_ProgressRange& theProgress)
+                     const System::log::Message_ProgressRange& theProgress)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream     = aFileSystem->OpenIStream(File, std::ios::in);
   if (aStream.get() == nullptr)
   {
@@ -856,15 +856,15 @@ bool BRepTools::Triangulation(const TopoDS_Shape& theShape,
 bool BRepTools::LoadTriangulation(const TopoDS_Shape&                theShape,
                                   const int                          theTriangulationIdx,
                                   const bool                         theToSetAsActive,
-                                  const occ::handle<OSD_FileSystem>& theFileSystem)
+                                  const occ::handle<System::os::OSD_FileSystem>& theFileSystem)
 {
   Standard_ASSERT_RAISE(theTriangulationIdx >= -1, "Invalid negative triangulation index!");
 
   bool                               wasLoaded = false;
   BRep_Builder                       aBuilder;
   TopLoc_Location                    aDummyLoc;
-  const occ::handle<OSD_FileSystem>& aFileSystem =
-    !theFileSystem.IsNull() ? theFileSystem : OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem =
+    !theFileSystem.IsNull() ? theFileSystem : System::os::OSD_FileSystem::DefaultFileSystem();
   for (TopExp_Explorer aFaceIter(theShape, TopAbs_FACE); aFaceIter.More(); aFaceIter.Next())
   {
     const TopoDS_Face&              aFace = TopoDS::Face(aFaceIter.Current());
@@ -914,12 +914,12 @@ bool BRepTools::LoadTriangulation(const TopoDS_Shape&                theShape,
 }
 
 bool BRepTools::LoadAllTriangulations(const TopoDS_Shape&                theShape,
-                                      const occ::handle<OSD_FileSystem>& theFileSystem)
+                                      const occ::handle<System::os::OSD_FileSystem>& theFileSystem)
 {
   bool                               wasLoaded = false;
   TopLoc_Location                    aDummyLoc;
-  const occ::handle<OSD_FileSystem>& aFileSystem =
-    !theFileSystem.IsNull() ? theFileSystem : OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem =
+    !theFileSystem.IsNull() ? theFileSystem : System::os::OSD_FileSystem::DefaultFileSystem();
   for (TopExp_Explorer aFaceIter(theShape, TopAbs_FACE); aFaceIter.More(); aFaceIter.Next())
   {
     const TopoDS_Face& aFace = TopoDS::Face(aFaceIter.Current());
@@ -1147,7 +1147,7 @@ double BRepTools::EvalAndUpdateTol(const TopoDS_Edge&               theE,
 
       int    nbint = 22;
       double dt    = (last - first) / nbint;
-      dt           = std::max(dt, Precision::Confusion());
+      dt           = std::max(dt, math::precision::Precision::Confusion());
       double   d, dmax = 0.;
       gp_Pnt2d aP2d;
       gp_Pnt   aPC, aPS;

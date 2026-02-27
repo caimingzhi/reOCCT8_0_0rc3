@@ -58,13 +58,13 @@ const TopoDS_Shape& BOPAlgo_CellsBuilder::GetAllParts() const
 }
 
 void BOPAlgo_CellsBuilder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
-                                            const Message_ProgressRange& theRange)
+                                            const System::log::Message_ProgressRange& theRange)
 {
 
   bool isHistory = HasHistory();
   SetToFillHistory(false);
 
-  Message_ProgressScope aPS(theRange, "Performing MakeCells operation", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Performing MakeCells operation", 1);
   BOPAlgo_Builder::PerformInternal1(theFiller, aPS.Next());
   if (HasErrors())
   {
@@ -265,7 +265,7 @@ void BOPAlgo_CellsBuilder::AddToResult(const NCollection_List<TopoDS_Shape>& the
   {
     if (bChanged)
     {
-      PrepareHistory(Message_ProgressRange());
+      PrepareHistory(System::log::Message_ProgressRange());
     }
   }
   else
@@ -298,7 +298,7 @@ void BOPAlgo_CellsBuilder::AddAllToResult(const int theMaterial, const bool theU
 
   if (!theUpdate)
   {
-    PrepareHistory(Message_ProgressRange());
+    PrepareHistory(System::log::Message_ProgressRange());
   }
   else
   {
@@ -396,7 +396,7 @@ void BOPAlgo_CellsBuilder::RemoveFromResult(const NCollection_List<TopoDS_Shape>
   {
     myShape = aResult;
 
-    PrepareHistory(Message_ProgressRange());
+    PrepareHistory(System::log::Message_ProgressRange());
   }
 }
 
@@ -411,7 +411,7 @@ void BOPAlgo_CellsBuilder::RemoveAllFromResult()
   myShapeMaterial.Clear();
   myMapModified.Clear();
 
-  PrepareHistory(Message_ProgressRange());
+  PrepareHistory(System::log::Message_ProgressRange());
 }
 
 void BOPAlgo_CellsBuilder::RemoveInternalBoundaries()
@@ -578,7 +578,7 @@ void BOPAlgo_CellsBuilder::RemoveInternalBoundaries()
 
     myShape = aResult;
 
-    PrepareHistory(Message_ProgressRange());
+    PrepareHistory(System::log::Message_ProgressRange());
   }
 }
 

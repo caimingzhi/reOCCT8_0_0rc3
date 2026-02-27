@@ -224,7 +224,7 @@ bool MeshVS_Tool::GetNormal(const NCollection_Array1<double>& Nodes, gp_Vec& Nor
   bool res = true;
 
   double           normal[3], first_vec[3], cur_vec[3], xx, yy, zz;
-  constexpr double conf = Precision::Confusion();
+  constexpr double conf = math::precision::Precision::Confusion();
 
   for (i = 0; i < 3; i++)
   {
@@ -286,7 +286,7 @@ bool MeshVS_Tool::GetAverageNormal(const NCollection_Array1<double>& Nodes, gp_V
   bool res = true;
 
   double           normal[3], first_vec[3], cur_vec[3], xx, yy, zz;
-  constexpr double conf = Precision::Confusion();
+  constexpr double conf = math::precision::Precision::Confusion();
 
   for (i = 0; i < 3; i++)
   {

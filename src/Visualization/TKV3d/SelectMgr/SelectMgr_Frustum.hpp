@@ -280,7 +280,7 @@ bool SelectMgr_Frustum<N>::hasSegmentOverlap(const gp_Pnt& theStartPnt,
                                              const gp_Pnt& theEndPnt) const
 {
   const gp_XYZ& aDir = theEndPnt.XYZ() - theStartPnt.XYZ();
-  if (aDir.Modulus() < Precision::Confusion())
+  if (aDir.Modulus() < math::precision::Precision::Confusion())
     return true;
 
   const int anIncFactor = (Camera()->IsOrthographic() && N == 4) ? 2 : 1;
@@ -527,7 +527,7 @@ bool SelectMgr_Frustum<N>::hasSphereOverlap(const gp_Pnt& thePnt,
   }
   const gp_Vec aVecPlane1(myVertices[0], myVertices[2]);
   const gp_Vec aVecPlane2(myVertices[0], myVertices[2 * N - 2]);
-  if (aVecPlane1.IsParallel(aVecPlane2, Precision::Angular()))
+  if (aVecPlane1.IsParallel(aVecPlane2, math::precision::Precision::Angular()))
   {
     return false;
   }
@@ -558,7 +558,7 @@ bool SelectMgr_Frustum<N>::isDotInside(const gp_Pnt&                     thePnt,
     const gp_Vec aVec2(thePnt, aVert2);
     anAngle += aVec1.Angle(aVec2);
   }
-  return std::abs(anAngle - 2.0 * M_PI) < Precision::Angular();
+  return std::abs(anAngle - 2.0 * M_PI) < math::precision::Precision::Angular();
 }
 
 template <int N>
@@ -576,7 +576,7 @@ bool SelectMgr_Frustum<N>::isSegmentsIntersect(const gp_Pnt& thePnt1Seg1,
                        thePnt2Seg2.X() - thePnt1Seg1.X(),
                        thePnt2Seg2.Y() - thePnt1Seg1.Y(),
                        thePnt2Seg2.Z() - thePnt1Seg1.Z());
-  if (std::abs(aMatPln.Determinant()) > Precision::Confusion())
+  if (std::abs(aMatPln.Determinant()) > math::precision::Precision::Confusion())
   {
     return false;
   }
@@ -761,7 +761,7 @@ bool SelectMgr_Frustum<N>::hasCylinderOverlap(const double   theBottomRad,
   }
 
   gp_Pnt       aPoints[6];
-  const gp_Dir aDirEndFaces = (aCylNorm.IsParallel(aViewRayDir, Precision::Angular()))
+  const gp_Dir aDirEndFaces = (aCylNorm.IsParallel(aViewRayDir, math::precision::Precision::Angular()))
                                 ? gp::DY().Transformed(theTrsf)
                                 : aCylNorm.Crossed(aViewRayDir);
 

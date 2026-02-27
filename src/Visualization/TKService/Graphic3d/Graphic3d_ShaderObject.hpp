@@ -64,7 +64,7 @@ public:
 
   Standard_EXPORT virtual bool IsDone() const;
 
-  const OSD_Path& Path() const { return myPath; }
+  const System::os::OSD_Path& Path() const { return myPath; }
 
   const TCollection_AsciiString& Source() const { return mySource; }
 
@@ -78,7 +78,7 @@ public:
 protected:
   TCollection_AsciiString myID;
   TCollection_AsciiString mySource;
-  OSD_Path                myPath;
+  System::os::OSD_Path                myPath;
 
 private:
   Graphic3d_TypeOfShaderObject myType;

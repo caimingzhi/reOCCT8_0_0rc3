@@ -85,7 +85,7 @@ static void SplitFileName(const char*              filename,
 static IFSelect_ReturnStatus funstatus(const occ::handle<IFSelect_SessionPilot>&)
 {
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   sout << "Processor Version : " << XSTEP_PROCESSOR_VERSION << std::endl;
   sout << "OL Version        : " << XSTEP_SYSTEM_VERSION << std::endl;
   sout << "Configuration     : " << XSTEP_Config << std::endl;
@@ -98,7 +98,7 @@ static IFSelect_ReturnStatus fun1(const occ::handle<IFSelect_SessionPilot>& pilo
   occ::handle<IFSelect_WorkSession> WS = pilot->Session();
 
   bool                            hand = !WS->ErrorHandle();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (hand)
     sout << " --  Mode Catch Error now Active" << std::endl;
   else
@@ -113,7 +113,7 @@ static IFSelect_ReturnStatus fun3(const occ::handle<IFSelect_SessionPilot>& pilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Read/Load : give file name !" << std::endl;
@@ -166,7 +166,7 @@ static IFSelect_ReturnStatus fun4(const occ::handle<IFSelect_SessionPilot>& pilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Write All : give file name !" << std::endl;
@@ -181,7 +181,7 @@ static IFSelect_ReturnStatus fun5(const occ::handle<IFSelect_SessionPilot>& pilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Write Selected : give file name + givelist !" << std::endl;
@@ -207,7 +207,7 @@ static IFSelect_ReturnStatus fun6(const occ::handle<IFSelect_SessionPilot>& pilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Write Entitie(s) : give file name + n0s entitie(s)!" << std::endl;
@@ -249,7 +249,7 @@ static IFSelect_ReturnStatus fun7(const occ::handle<IFSelect_SessionPilot>& pilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give entity number" << std::endl;
@@ -278,7 +278,7 @@ static IFSelect_ReturnStatus fun8(const occ::handle<IFSelect_SessionPilot>& pilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give label to search" << std::endl;
@@ -330,7 +330,7 @@ static IFSelect_ReturnStatus funcount(const occ::handle<IFSelect_SessionPilot>& 
   const char*                       arg1     = pilot->Arg(1);
   bool                              listmode = (arg0[0] == 'l');
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Designer signature ou compteur, + facultatif selection + facultatif entite"
@@ -407,7 +407,7 @@ static IFSelect_ReturnStatus funsigntype(const occ::handle<IFSelect_SessionPilot
   const char*                       arg1 = pilot->Arg(1);
 
   occ::handle<IFSelect_Signature> signtype = WS->SignType();
-  Message_Messenger::StreamBuffer sout     = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout     = System::log::Message::SendInfo();
   if (signtype.IsNull())
     sout << "signtype actually undefined" << std::endl;
   else
@@ -457,7 +457,7 @@ static IFSelect_ReturnStatus funsigncase(const occ::handle<IFSelect_SessionPilot
   const char*                       arg1 = pilot->Arg(1);
 
   occ::handle<IFSelect_Signature> signcase = GetCasted(IFSelect_Signature, WS->NamedItem(arg1));
-  Message_Messenger::StreamBuffer sout     = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout     = System::log::Message::SendInfo();
   if (signcase.IsNull())
     sout << "Not a Signature : " << arg1 << std::endl;
   else
@@ -496,7 +496,7 @@ static IFSelect_ReturnStatus fun10(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
 
   int                             i, nb;
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     nb = Interface_Category::NbCategories();
@@ -525,7 +525,7 @@ static IFSelect_ReturnStatus fun11(const occ::handle<IFSelect_SessionPilot>& pil
 
   int niv = 0;
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   switch (arg1[0])
   {
     case '?':
@@ -585,7 +585,7 @@ static IFSelect_ReturnStatus fundumpent(const occ::handle<IFSelect_SessionPilot>
   occ::handle<IFSelect_WorkLibrary> WL     = WS->WorkLibrary();
   int                               levdef = 0, levmax = 10, level;
   WL->DumpLevels(levdef, levmax);
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2 || (argc == 2 && levmax < 0))
   {
     sout << "Give n0 or id of entity";
@@ -636,7 +636,7 @@ static IFSelect_ReturnStatus funsign(const occ::handle<IFSelect_SessionPilot>& p
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
-  Message_Messenger::StreamBuffer   sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer   sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << " Give signature name + n0 or id of entity" << std::endl;
@@ -662,7 +662,7 @@ static IFSelect_ReturnStatus funqp(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
-  Message_Messenger::StreamBuffer   sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer   sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << " Give 2 numeros or labels : dad son" << std::endl;
@@ -705,7 +705,7 @@ static IFSelect_ReturnStatus fun14(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 1)
   {
     sout << "Give integer value for IntParam" << std::endl;
@@ -724,7 +724,7 @@ static IFSelect_ReturnStatus fun15(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner 2 arguments : nom Parametre et Valeur" << std::endl;
@@ -743,7 +743,7 @@ static IFSelect_ReturnStatus fun16(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 1)
   {
     sout << "Give text value for TextParam" << std::endl;
@@ -762,7 +762,7 @@ static IFSelect_ReturnStatus fun17(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner 2 arguments : nom Parametre et Valeur" << std::endl;
@@ -780,7 +780,7 @@ static IFSelect_ReturnStatus fun19(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give 1 argument : Selection Name" << std::endl;
@@ -798,7 +798,7 @@ static IFSelect_ReturnStatus fun20(const occ::handle<IFSelect_SessionPilot>& pil
   char mode = pilot->Arg(0)[0];
   if (mode == 'g')
     mode = pilot->Arg(0)[4];
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Entity ID, or Selection Name [+ optional other selection or entity]" << std::endl;
@@ -861,7 +861,7 @@ static IFSelect_ReturnStatus fun20c(const occ::handle<IFSelect_SessionPilot>& pi
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
   int                               argc = pilot->NbWords();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Entity ID, or Selection Name [+ optional other selection or entity]" << std::endl;
@@ -881,7 +881,7 @@ static IFSelect_ReturnStatus funselsuite(const occ::handle<IFSelect_SessionPilot
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
   int                               argc = pilot->NbWords();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Entity ID, or Selection Name [+ optional other selection or entity]" << std::endl;
@@ -936,7 +936,7 @@ static IFSelect_ReturnStatus fun22(const occ::handle<IFSelect_SessionPilot>& pil
   }
   else
     mode = 0;
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (mode <= 0)
   {
     if (mode < 0)
@@ -954,7 +954,7 @@ static IFSelect_ReturnStatus fun24(const occ::handle<IFSelect_SessionPilot>& pil
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
   int                               argc = pilot->NbWords();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   TCollection_AsciiString         label;
   if (argc < 2)
   {
@@ -995,7 +995,7 @@ static IFSelect_ReturnStatus fun25(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner nom du Fichier" << std::endl;
@@ -1013,7 +1013,7 @@ static IFSelect_ReturnStatus fun26(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner nom du Fichier" << std::endl;
@@ -1042,7 +1042,7 @@ static IFSelect_ReturnStatus fun27(const occ::handle<IFSelect_SessionPilot>& pil
     arg2 = anEmptyStr;
   }
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2 || (argc == 3 && strcmp(arg1, "-p") == 0))
   {
     occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> li =
@@ -1130,7 +1130,7 @@ static IFSelect_ReturnStatus fun29(const occ::handle<IFSelect_SessionPilot>& pil
   occ::handle<IFSelect_WorkSession> WS = pilot->Session();
 
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> list = WS->SentFiles();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (list.IsNull())
   {
     sout << "List of Sent Files not enabled" << std::endl;
@@ -1149,7 +1149,7 @@ static IFSelect_ReturnStatus fun30(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     if (WS->FilePrefix().IsNull())
@@ -1169,7 +1169,7 @@ static IFSelect_ReturnStatus fun31(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     if (WS->FileExtension().IsNull())
@@ -1190,7 +1190,7 @@ static IFSelect_ReturnStatus fun32(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Dispatch and Root name" << std::endl;
@@ -1217,7 +1217,7 @@ static IFSelect_ReturnStatus fun33(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     if (WS->DefaultFileRoot().IsNull())
@@ -1235,7 +1235,7 @@ static IFSelect_ReturnStatus fun34(const occ::handle<IFSelect_SessionPilot>& pil
 {
   occ::handle<IFSelect_WorkSession> WS = pilot->Session();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (!WS->HasModel())
   {
     sout << "No Model loaded, abort" << std::endl;
@@ -1273,7 +1273,7 @@ static IFSelect_ReturnStatus fun36(const occ::handle<IFSelect_SessionPilot>& pil
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
   int                               argc = pilot->NbWords();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   IFSelect_ReturnStatus           stat = IFSelect_RetVoid;
   if (argc < 2)
     sout << "Split : last dispatch list defined" << std::endl;
@@ -1320,7 +1320,7 @@ static IFSelect_ReturnStatus fun37(const occ::handle<IFSelect_SessionPilot>& pil
     numod = IFSelect_RemainForget;
   else
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     if (argc < 2)
       sout << "Donner un Mode - ";
     sout << "Modes possibles : l  list, c compute, u undo, f forget" << std::endl;
@@ -1341,7 +1341,7 @@ static IFSelect_ReturnStatus fun38(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner nom selection et mode (k=keep,r=remove)" << std::endl;
@@ -1392,7 +1392,7 @@ static IFSelect_ReturnStatus fun41(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner Nom du Modifier" << std::endl;
@@ -1439,7 +1439,7 @@ static IFSelect_ReturnStatus fun42(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner Nom Modifier; + Nom Selection optionnel\n"
@@ -1474,7 +1474,7 @@ static IFSelect_ReturnStatus fun43(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner Nom Modifier; + Nom Dispatch ou Transformer optionnel :\n"
@@ -1511,7 +1511,7 @@ static IFSelect_ReturnStatus fun44(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Designer un modifier" << std::endl;
@@ -1536,7 +1536,7 @@ static IFSelect_ReturnStatus fun45(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg2 = pilot->Arg(2);
   const char*                       arg3 = pilot->Arg(3);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 4)
   {
     sout << "modifmove MF rang1 rang2, M for Model F for File" << std::endl;
@@ -1571,7 +1571,7 @@ static IFSelect_ReturnStatus fun51(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner Noms Dispatch et Selection Finale" << std::endl;
@@ -1616,7 +1616,7 @@ static IFSelect_ReturnStatus fun_dispcount(const occ::handle<IFSelect_SessionPil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give IntParam Name for Count" << std::endl;
@@ -1639,7 +1639,7 @@ static IFSelect_ReturnStatus fun_dispfiles(const occ::handle<IFSelect_SessionPil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give IntParam Name for NbFiles" << std::endl;
@@ -1662,7 +1662,7 @@ static IFSelect_ReturnStatus fun_dispsign(const occ::handle<IFSelect_SessionPilo
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner Nom Signature" << std::endl;
@@ -1685,7 +1685,7 @@ static IFSelect_ReturnStatus fun56(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner Nom du Dispatch" << std::endl;
@@ -1718,7 +1718,7 @@ static IFSelect_ReturnStatus fun57(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Name to Remove !" << std::endl;
@@ -1735,7 +1735,7 @@ static IFSelect_ReturnStatus fun58(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "evaldisp mode disp [disp ...] :  Mode + Name(s) of Dispatch(es). Mode:\n"
@@ -1778,7 +1778,7 @@ static IFSelect_ReturnStatus fun_evaladisp(const occ::handle<IFSelect_SessionPil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "evaladisp mode(=0-1-2-3) disp [givelist] :  Mode + Dispatch [+ GiveList]\n  If "
@@ -1841,7 +1841,7 @@ static IFSelect_ReturnStatus fun_writedisp(const occ::handle<IFSelect_SessionPil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "writedisp filename disp [givelist] :  FileName + Dispatch [+ GiveList]\n  If GiveList "
@@ -1913,7 +1913,7 @@ static IFSelect_ReturnStatus fun59(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
 
   int                             mode = 0;
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
     sout << " -- mode par defaut 0\n";
   else
@@ -1932,7 +1932,7 @@ static IFSelect_ReturnStatus fun60(const occ::handle<IFSelect_SessionPilot>& pil
   Interface_CheckIterator            chlist  = WS->LastRunCheckList();
   occ::handle<IFSelect_CheckCounter> counter = new IFSelect_CheckCounter(false);
   counter->Analyse(chlist, WS->Model(), false);
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   counter->PrintCount(sout);
   return IFSelect_RetVoid;
 }
@@ -1943,7 +1943,7 @@ static IFSelect_ReturnStatus fun61(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Transformer Name" << std::endl;
@@ -2023,7 +2023,7 @@ static IFSelect_ReturnStatus fun6465(const occ::handle<IFSelect_SessionPilot>& p
     pilot->Perform();
     modif = GetCasted(IFSelect_Modifier, pilot->RecordedItem());
   }
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (modif.IsNull())
   {
     sout << "Not a Modifier name : " << arg1 << std::endl;
@@ -2090,7 +2090,7 @@ static IFSelect_ReturnStatus fun66(const occ::handle<IFSelect_SessionPilot>& pil
   int  argc = pilot->NbWords();
   if (argc >= 2)
     opt = pilot->Word(1).Value(1);
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (opt != 'f' && opt != 'l')
   {
     sout << "Donner option : f -> root-first  l -> root-last" << std::endl;
@@ -2105,7 +2105,7 @@ static IFSelect_ReturnStatus fun70(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give Selection Name" << std::endl;
@@ -2131,7 +2131,7 @@ static IFSelect_ReturnStatus fun71(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner Noms Selections cible et input" << std::endl;
@@ -2166,7 +2166,7 @@ static IFSelect_ReturnStatus fun73(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc >= 2 && arg1[0] == '?')
     argc = 1;
   if (argc < 2)
@@ -2243,7 +2243,7 @@ static IFSelect_ReturnStatus fun76(const occ::handle<IFSelect_SessionPilot>& pil
   occ::handle<IFSelect_Selection> sel = new IFSelect_SelectDiff;
   if (sel.IsNull())
     return IFSelect_RetFail;
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
     sout << "Diff without input : don't forget to define them (ctlmain, ctlsec)!" << std::endl;
   DeclareAndCast(IFSelect_Selection, selmain, WS->NamedItem(arg1));
@@ -2264,7 +2264,7 @@ static IFSelect_ReturnStatus fun77(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Give Control and MainInput Names" << std::endl;
@@ -2285,7 +2285,7 @@ static IFSelect_ReturnStatus fun78(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Give Control and SecondInput Names" << std::endl;
@@ -2313,7 +2313,7 @@ static IFSelect_ReturnStatus fun80(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner n0 Combine et une Input" << std::endl;
@@ -2334,7 +2334,7 @@ static IFSelect_ReturnStatus fun81(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   const char*                       arg2 = pilot->Arg(2);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Donner n0 Combine et RANG a supprimer" << std::endl;
@@ -2354,7 +2354,7 @@ static IFSelect_ReturnStatus fun82(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give IntParam Name for Entity n0" << std::endl;
@@ -2385,7 +2385,7 @@ static IFSelect_ReturnStatus fun85(const occ::handle<IFSelect_SessionPilot>& pil
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner le TYPE a selectionner" << std::endl;
@@ -2417,7 +2417,7 @@ static IFSelect_ReturnStatus fun89(const occ::handle<IFSelect_SessionPilot>& pil
   int         argc = pilot->NbWords();
   const char* arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner le TYPE a selectionner" << std::endl;
@@ -2436,7 +2436,7 @@ static IFSelect_ReturnStatus fun90(const occ::handle<IFSelect_SessionPilot>& pil
       IFSelect_Functions::GiveList(pilot->Session(), pilot->CommandPart(1));
     if (list.IsNull())
       return IFSelect_RetFail;
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "SelectPointed : " << list->Length() << " entities" << std::endl;
     sp->AddList(list);
   }
@@ -2449,7 +2449,7 @@ static IFSelect_ReturnStatus fun91(const occ::handle<IFSelect_SessionPilot>& pil
   int                               argc = pilot->NbWords();
   const char*                       arg1 = pilot->Arg(1);
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner NOM SelectPointed + Option(s) :\n"
@@ -2552,7 +2552,7 @@ static IFSelect_ReturnStatus fun93(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg2 = pilot->Arg(2);
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Give name of Signature or Counter, text + option exact(D) else contains" << std::endl;
@@ -2588,7 +2588,7 @@ static IFSelect_ReturnStatus fun94(const occ::handle<IFSelect_SessionPilot>& pil
   const char*                       arg1 = pilot->Arg(1);
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner nom signature" << std::endl;
@@ -2610,7 +2610,7 @@ static IFSelect_ReturnStatus funbselected(const occ::handle<IFSelect_SessionPilo
   const char*                       arg1 = pilot->Arg(1);
   occ::handle<IFSelect_WorkSession> WS   = pilot->Session();
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Donner nom selection (deduction) a appliquer" << std::endl;
@@ -2630,7 +2630,7 @@ static IFSelect_ReturnStatus funbselected(const occ::handle<IFSelect_SessionPilo
 static IFSelect_ReturnStatus fun_editlist(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                             argc = pilot->NbWords();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give the name of an EditForm or an Editor" << std::endl;
@@ -2687,7 +2687,7 @@ static IFSelect_ReturnStatus fun_editlist(const occ::handle<IFSelect_SessionPilo
 static IFSelect_ReturnStatus fun_editvalue(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                             argc = pilot->NbWords();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 3)
   {
     sout << "Give the name of an EditForm + name of Value [+ newvalue or . to nullify]"
@@ -2818,7 +2818,7 @@ static IFSelect_ReturnStatus fun_editvalue(const occ::handle<IFSelect_SessionPil
 static IFSelect_ReturnStatus fun_editclear(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                             argc = pilot->NbWords();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give the name of an EditForm [+ name of Value  else all]" << std::endl;
@@ -2861,7 +2861,7 @@ static IFSelect_ReturnStatus fun_editclear(const occ::handle<IFSelect_SessionPil
 static IFSelect_ReturnStatus fun_editapply(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                             argc = pilot->NbWords();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give the name of an EditForm [+ option keep to re-apply edited values]" << std::endl;
@@ -2916,7 +2916,7 @@ static IFSelect_ReturnStatus fun_editapply(const occ::handle<IFSelect_SessionPil
 static IFSelect_ReturnStatus fun_editload(const occ::handle<IFSelect_SessionPilot>& pilot)
 {
   int                             argc = pilot->NbWords();
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   if (argc < 2)
   {
     sout << "Give the name of an EditForm [+ Entity-Ident]" << std::endl;
@@ -3019,7 +3019,7 @@ occ::handle<IFSelect_Dispatch> IFSelect_Functions::GiveDispatch(
   if (disp.IsNull())
     return disp;
 
-  Message_Messenger::StreamBuffer sout = Message::SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
   DeclareAndCast(IFSelect_DispPerCount, dc, disp);
   if (!dc.IsNull())
   {

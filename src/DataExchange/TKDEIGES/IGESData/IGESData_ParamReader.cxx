@@ -273,7 +273,7 @@ bool IGESData_ParamReader::ReadInteger(const IGESData_ParamCursor& PC, const cha
 }
 
 bool IGESData_ParamReader::ReadBoolean(const IGESData_ParamCursor& PC,
-                                       const Message_Msg&          amsg,
+                                       const System::log::Message_Msg&          amsg,
                                        bool&                       val,
                                        const bool                  exact)
 {
@@ -361,7 +361,7 @@ bool IGESData_ParamReader::ReadReal(const IGESData_ParamCursor& PC, const char* 
   return ReadingReal(theindex, mess, val);
 }
 
-bool IGESData_ParamReader::ReadXY(const IGESData_ParamCursor& PC, Message_Msg&, gp_XY& val)
+bool IGESData_ParamReader::ReadXY(const IGESData_ParamCursor& PC, System::log::Message_Msg&, gp_XY& val)
 {
   if (!PrepareRead(PC, false, 2))
     return false;
@@ -383,7 +383,7 @@ bool IGESData_ParamReader::ReadXY(const IGESData_ParamCursor& PC, const char* me
   return stat;
 }
 
-bool IGESData_ParamReader::ReadXYZ(const IGESData_ParamCursor& PC, Message_Msg&, gp_XYZ& val)
+bool IGESData_ParamReader::ReadXYZ(const IGESData_ParamCursor& PC, System::log::Message_Msg&, gp_XYZ& val)
 {
   if (!PrepareRead(PC, false, 3))
     return false;
@@ -408,7 +408,7 @@ bool IGESData_ParamReader::ReadXYZ(const IGESData_ParamCursor& PC, const char* m
 }
 
 bool IGESData_ParamReader::ReadText(const IGESData_ParamCursor&            thePC,
-                                    const Message_Msg&                     theMsg,
+                                    const System::log::Message_Msg&                     theMsg,
                                     occ::handle<TCollection_HAsciiString>& theVal)
 {
   if (!PrepareRead(thePC, false))
@@ -635,7 +635,7 @@ bool IGESData_ParamReader::ReadEntity(const occ::handle<IGESData_IGESReaderData>
 }
 
 bool IGESData_ParamReader::ReadInts(const IGESData_ParamCursor&            PC,
-                                    const Message_Msg&                     amsg,
+                                    const System::log::Message_Msg&                     amsg,
                                     occ::handle<NCollection_HArray1<int>>& val,
                                     const int                              index)
 {
@@ -705,7 +705,7 @@ bool IGESData_ParamReader::ReadInts(const IGESData_ParamCursor&            PC,
 }
 
 bool IGESData_ParamReader::ReadReals(const IGESData_ParamCursor& PC,
-                                     Message_Msg&,
+                                     System::log::Message_Msg&,
                                      occ::handle<NCollection_HArray1<double>>& val,
                                      const int                                 index)
 {
@@ -752,7 +752,7 @@ bool IGESData_ParamReader::ReadReals(const IGESData_ParamCursor&               P
 
 bool IGESData_ParamReader::ReadTexts(
   const IGESData_ParamCursor&                                              PC,
-  const Message_Msg&                                                       amsg,
+  const System::log::Message_Msg&                                                       amsg,
   occ::handle<NCollection_HArray1<occ::handle<TCollection_HAsciiString>>>& val,
   const int                                                                index)
 {
@@ -855,7 +855,7 @@ bool IGESData_ParamReader::ReadTexts(
 bool IGESData_ParamReader::ReadEnts(
   const occ::handle<IGESData_IGESReaderData>&                         IR,
   const IGESData_ParamCursor&                                         PC,
-  const Message_Msg&                                                  amsg,
+  const System::log::Message_Msg&                                                  amsg,
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>>& val,
   const int                                                           index)
 {
@@ -978,7 +978,7 @@ bool IGESData_ParamReader::ReadEnts(
 
 bool IGESData_ParamReader::ReadEntList(const occ::handle<IGESData_IGESReaderData>& IR,
                                        const IGESData_ParamCursor&                 PC,
-                                       Message_Msg&                                amsg,
+                                       System::log::Message_Msg&                                amsg,
                                        Interface_EntityList&                       val,
                                        const bool                                  ord)
 {
@@ -995,7 +995,7 @@ bool IGESData_ParamReader::ReadEntList(const occ::handle<IGESData_IGESReaderData
       return false;
     if (nval < 0)
     {
-      Message_Msg Msg219("XSTEP_219");
+      System::log::Message_Msg Msg219("XSTEP_219");
       amsg.Arg(Msg219.Value());
       SendWarning(amsg);
     }
@@ -1004,13 +1004,13 @@ bool IGESData_ParamReader::ReadEntList(const occ::handle<IGESData_IGESReaderData
     DeclareAndCast(IGESData_IGESEntity, anent, IR->BoundEntity(nval));
     if (anent.IsNull())
     {
-      Message_Msg Msg216("XSTEP_216");
+      System::log::Message_Msg Msg216("XSTEP_216");
       amsg.Arg(Msg216.Value());
       SendWarning(amsg);
     }
     else if (IR->DirType(nval).Type() == 0)
     {
-      Message_Msg Msg217("XSTEP_217");
+      System::log::Message_Msg Msg217("XSTEP_217");
       SendWarning(TCollection_AsciiString(Msg217.Value()).ToCString());
     }
     else if (ord)
@@ -1223,13 +1223,13 @@ bool IGESData_ParamReader::ReadingEntityNumber(const int num, const char* mess, 
   return true;
 }
 
-void IGESData_ParamReader::SendFail(const Message_Msg& amsg)
+void IGESData_ParamReader::SendFail(const System::log::Message_Msg& amsg)
 {
   thecheck->SendFail(amsg);
   thelast = false;
 }
 
-void IGESData_ParamReader::SendWarning(const Message_Msg& amsg)
+void IGESData_ParamReader::SendWarning(const System::log::Message_Msg& amsg)
 {
   thecheck->SendWarning(amsg);
   thelast = false;

@@ -33,7 +33,7 @@ occ::handle<NCollection_HArray1<double>> Extrema_CurveTool::DeflCurvIntervals(
   }
 
   double dLdt = L / (tl - tf);
-  if (L <= Precision::Confusion() || dLdt < epsd || (tl - tf) > 10000.)
+  if (L <= math::precision::Precision::Confusion() || dLdt < epsd || (tl - tf) > 10000.)
   {
     nbpnts    = 2;
     Intervals = new NCollection_HArray1<double>(1, nbpnts);
@@ -52,8 +52,8 @@ occ::handle<NCollection_HArray1<double>> Extrema_CurveTool::DeflCurvIntervals(
     return Intervals;
   }
 
-  double aMinLen = std::max(.00001 * L, Precision::Confusion());
-  double aTol    = std::max(0.00001 * (tl - tf), Precision::PConfusion());
+  double aMinLen = std::max(.00001 * L, math::precision::Precision::Confusion());
+  double aTol    = std::max(0.00001 * (tl - tf), math::precision::Precision::PConfusion());
 
   GCPnts_TangentialDeflection aPntGen(C, M_PI / 6, aDefl, 2, aTol, aMinLen);
   nbpnts    = aPntGen.NbPoints();

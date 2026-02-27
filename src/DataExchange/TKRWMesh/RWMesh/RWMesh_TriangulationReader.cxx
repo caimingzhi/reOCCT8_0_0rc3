@@ -61,7 +61,7 @@ void RWMesh_TriangulationReader::LoadingStatistic::PrintStatistic(
                                                             LoadedTrianglesNb);
   if (!aStatisticInfo.IsEmpty())
   {
-    Message::SendWarning(aStatisticInfo);
+    System::log::Message::SendWarning(aStatisticInfo);
   }
 }
 
@@ -80,7 +80,7 @@ RWMesh_TriangulationReader::~RWMesh_TriangulationReader()
 
 bool RWMesh_TriangulationReader::Load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                                       const occ::handle<Poly_Triangulation>&         theDestMesh,
-                                      const occ::handle<OSD_FileSystem>& theFileSystem) const
+                                      const occ::handle<System::os::OSD_FileSystem>& theFileSystem) const
 {
   Standard_ASSERT_RETURN(!theDestMesh.IsNull(),
                          "The destination mesh should be initialized before loading data to it",
@@ -127,7 +127,7 @@ bool RWMesh_TriangulationReader::finalizeLoading(
                        theSourceMesh->NbDeferredTriangles(),
                        theSourceMesh->DegeneratedTriNb(),
                        theDestMesh->NbTriangles());
-    Message::SendTrace(aStatisticInfo);
+    System::log::Message::SendTrace(aStatisticInfo);
   }
   return true;
 }
@@ -140,7 +140,7 @@ bool RWMesh_TriangulationReader::setNbEdges(const occ::handle<Poly_Triangulation
     occ::down_cast<RWMesh_TriangulationSource>(theMesh);
   if (aMesh.IsNull())
   {
-    Message::SendWarning("Only triangulation loading is supported.");
+    System::log::Message::SendWarning("Only triangulation loading is supported.");
     return false;
   }
   if (theNbTris >= 1)
@@ -159,7 +159,7 @@ int RWMesh_TriangulationReader::setEdge(const occ::handle<Poly_Triangulation>& t
     occ::down_cast<RWMesh_TriangulationSource>(theMesh);
   if (aMesh.IsNull())
   {
-    Message::SendWarning("Only triangulation loading is supported.");
+    System::log::Message::SendWarning("Only triangulation loading is supported.");
     return 0;
   }
   if (theEdge < 1 || theEdge > theMesh->NbNodes())

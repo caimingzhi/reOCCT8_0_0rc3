@@ -11,7 +11,7 @@ ShapeExtend_MsgRegistrator::ShapeExtend_MsgRegistrator()
   = default;
 
 void ShapeExtend_MsgRegistrator::Send(const occ::handle<Standard_Transient>& object,
-                                      const Message_Msg&                     message,
+                                      const System::log::Message_Msg&                     message,
                                       const Message_Gravity)
 {
   if (object.IsNull())
@@ -23,19 +23,19 @@ void ShapeExtend_MsgRegistrator::Send(const occ::handle<Standard_Transient>& obj
   }
   if (myMapTransient.IsBound(object))
   {
-    NCollection_List<Message_Msg>& list = myMapTransient.ChangeFind(object);
+    NCollection_List<System::log::Message_Msg>& list = myMapTransient.ChangeFind(object);
     list.Append(message);
   }
   else
   {
-    NCollection_List<Message_Msg> list;
+    NCollection_List<System::log::Message_Msg> list;
     list.Append(message);
     myMapTransient.Bind(object, list);
   }
 }
 
 void ShapeExtend_MsgRegistrator::Send(const TopoDS_Shape& shape,
-                                      const Message_Msg&  message,
+                                      const System::log::Message_Msg&  message,
                                       const Message_Gravity)
 {
   if (shape.IsNull())
@@ -47,12 +47,12 @@ void ShapeExtend_MsgRegistrator::Send(const TopoDS_Shape& shape,
   }
   if (myMapShape.IsBound(shape))
   {
-    NCollection_List<Message_Msg>& list = myMapShape.ChangeFind(shape);
+    NCollection_List<System::log::Message_Msg>& list = myMapShape.ChangeFind(shape);
     list.Append(message);
   }
   else
   {
-    NCollection_List<Message_Msg> list;
+    NCollection_List<System::log::Message_Msg> list;
     list.Append(message);
     myMapShape.Bind(shape, list);
   }

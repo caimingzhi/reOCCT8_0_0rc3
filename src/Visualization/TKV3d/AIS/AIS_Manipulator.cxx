@@ -481,7 +481,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
     case AIS_MM_Scaling:
     {
       const gp_Lin aLine(myStartPosition.Location(), myAxes[myCurrentIndex].Position().Direction());
-      Extrema_ExtElC anExtrema(anInputLine, aLine, Precision::Angular());
+      Extrema_ExtElC anExtrema(anInputLine, aLine, math::precision::Precision::Angular());
       if (!anExtrema.IsDone() || anExtrema.IsParallel() || anExtrema.NbExt() != 1)
       {
 
@@ -497,7 +497,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
         myHasStartedTransformation = true;
         return true;
       }
-      else if (aNewPosition.Distance(myStartPick) < Precision::Confusion())
+      else if (aNewPosition.Distance(myStartPick) < math::precision::Precision::Confusion())
       {
         return false;
       }
@@ -510,7 +510,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       }
       else if (myCurrentMode == AIS_MM_Scaling)
       {
-        if (aNewPosition.Distance(myStartPosition.Location()) < Precision::Confusion())
+        if (aNewPosition.Distance(myStartPosition.Location()) < math::precision::Precision::Confusion())
         {
           return false;
         }
@@ -528,8 +528,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       const gp_Ax1        aCurrAxis = getAx1FromAx2Dir(myStartPosition, myCurrentIndex);
       IntAna_IntConicQuad aIntersector(anInputLine,
                                        gp_Pln(aPosLoc, aCurrAxis.Direction()),
-                                       Precision::Angular(),
-                                       Precision::Intersection());
+                                       math::precision::Precision::Angular(),
+                                       math::precision::Precision::Intersection());
       if (!aIntersector.IsDone() || aIntersector.IsParallel() || aIntersector.NbPoints() < 1)
       {
         return false;
@@ -546,20 +546,20 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
         return true;
       }
 
-      if (aNewPosition.Distance(myStartPick) < Precision::Confusion())
+      if (aNewPosition.Distance(myStartPick) < math::precision::Precision::Confusion())
       {
         return false;
       }
 
       gp_Dir aStartAxis =
-        aPosLoc.IsEqual(myStartPick, Precision::Confusion())
+        aPosLoc.IsEqual(myStartPick, math::precision::Precision::Confusion())
           ? getAx1FromAx2Dir(myStartPosition, (myCurrentIndex + 1) % 3).Direction()
           : gce_MakeDir(aPosLoc, myStartPick);
 
       gp_Dir aCurrentAxis = gce_MakeDir(aPosLoc, aNewPosition);
       double anAngle      = aStartAxis.AngleWithRef(aCurrentAxis, aCurrAxis.Direction());
 
-      if (std::abs(anAngle) < Precision::Confusion())
+      if (std::abs(anAngle) < math::precision::Precision::Confusion())
       {
         return false;
       }
@@ -610,8 +610,8 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
       const gp_Ax1        aCurrAxis = getAx1FromAx2Dir(myStartPosition, myCurrentIndex);
       IntAna_IntConicQuad aIntersector(anInputLine,
                                        gp_Pln(aPosLoc, aCurrAxis.Direction()),
-                                       Precision::Angular(),
-                                       Precision::Intersection());
+                                       math::precision::Precision::Angular(),
+                                       math::precision::Precision::Intersection());
       if (!aIntersector.IsDone() || aIntersector.NbPoints() < 1)
       {
         return false;
@@ -625,7 +625,7 @@ bool AIS_Manipulator::ObjectTransformation(const int                    theMaxX,
         return true;
       }
 
-      if (aNewPosition.Distance(myStartPick) < Precision::Confusion())
+      if (aNewPosition.Distance(myStartPick) < math::precision::Precision::Confusion())
       {
         return false;
       }
@@ -981,9 +981,9 @@ gp_Trsf AIS_Manipulator::Transform(const int                    thePX,
 
 void AIS_Manipulator::SetPosition(const gp_Ax2& thePosition)
 {
-  if (!myPosition.Location().IsEqual(thePosition.Location(), Precision::Confusion())
-      || !myPosition.Direction().IsEqual(thePosition.Direction(), Precision::Angular())
-      || !myPosition.XDirection().IsEqual(thePosition.XDirection(), Precision::Angular()))
+  if (!myPosition.Location().IsEqual(thePosition.Location(), math::precision::Precision::Confusion())
+      || !myPosition.Direction().IsEqual(thePosition.Direction(), math::precision::Precision::Angular())
+      || !myPosition.XDirection().IsEqual(thePosition.XDirection(), math::precision::Precision::Angular()))
   {
     myPosition = thePosition;
     myAxes[0].SetPosition(getAx1FromAx2Dir(thePosition, 0));

@@ -11,7 +11,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_IntegerListDriver, BinMDF_ADriver)
 
 BinMDataStd_IntegerListDriver::BinMDataStd_IntegerListDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_IntegerList)->Name())
 {
 }

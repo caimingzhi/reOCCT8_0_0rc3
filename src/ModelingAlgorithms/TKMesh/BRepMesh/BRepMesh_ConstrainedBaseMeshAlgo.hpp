@@ -16,5 +16,5 @@ public:
 protected:
   virtual std::pair<int, int> getCellsCount(const int) { return std::pair<int, int>(-1, -1); }
 
-  virtual void postProcessMesh(BRepMesh_Delaun&, const Message_ProgressRange&) {}
+  virtual void postProcessMesh(BRepMesh_Delaun&, const System::log::Message_ProgressRange&) {}
 };

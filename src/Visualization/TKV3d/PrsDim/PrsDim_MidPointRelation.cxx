@@ -111,7 +111,7 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
   occ::handle<Select3D_SensitiveSegment> seg;
   occ::handle<SelectMgr_EntityOwner>     own = new SelectMgr_EntityOwner(this, 7);
 
-  if (!myMidPoint.IsEqual(myFAttach, Precision::Confusion()))
+  if (!myMidPoint.IsEqual(myFAttach, math::precision::Precision::Confusion()))
   {
 
     seg = new Select3D_SensitiveSegment(own, myFAttach, myMidPoint);
@@ -120,7 +120,7 @@ void PrsDim_MidPointRelation::ComputeSelection(const occ::handle<SelectMgr_Selec
     seg = new Select3D_SensitiveSegment(own, mySAttach, myMidPoint);
     aSel->Add(seg);
   }
-  if (!myMidPoint.IsEqual(myPosition, Precision::Confusion()))
+  if (!myMidPoint.IsEqual(myPosition, math::precision::Precision::Confusion()))
   {
 
     seg = new Select3D_SensitiveSegment(own, myMidPoint, myPosition);
@@ -352,7 +352,7 @@ void PrsDim_MidPointRelation::ComputePointsOnLine(const gp_Lin& aLin, const bool
   gp_Pnt anAttach = ElCLib::Value(ppar, aLin);
 
   double dist = anAttach.Distance(myMidPoint) / 10.0;
-  if (dist < Precision::Confusion())
+  if (dist < math::precision::Precision::Confusion())
     dist = 10.0;
 
   double fpar = ppar + dist;
@@ -390,7 +390,7 @@ void PrsDim_MidPointRelation::ComputePointsOnLine(const gp_Pnt& pnt1,
   double dist     = myMidPoint.Distance(aProjPnt);
   double ll       = pnt1.Distance(pnt2);
   double segm     = std::min(dist, ll) * 0.75;
-  if (dist < Precision::Confusion())
+  if (dist < math::precision::Precision::Confusion())
     segm = ll * 0.75;
 
   gp_Pnt anAttach, aPnt1, aPnt2;
@@ -447,7 +447,7 @@ void PrsDim_MidPointRelation::ComputePointsOnCirc(const gp_Circ& aCirc,
 {
   gp_Pnt curpos = myMidPoint;
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   gp_Pnt           aCenter = aCirc.Location();
   if (aCenter.Distance(curpos) <= confusion)
   {
@@ -569,7 +569,7 @@ void PrsDim_MidPointRelation::ComputePointsOnElips(const gp_Elips& anEll,
 {
   gp_Pnt curpos = myMidPoint;
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   gp_Pnt           aCenter = anEll.Location();
   if (aCenter.Distance(curpos) <= confusion)
   {

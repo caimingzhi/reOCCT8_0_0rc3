@@ -11,22 +11,22 @@
 #include <Standard_Dump.hpp>
 #include <TCollection_ExtendedString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_PrinterToReport, Message_Printer)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_PrinterToReport, System::log::Message_Printer)
 
-const occ::handle<Message_Report>& Message_PrinterToReport::Report() const
+const occ::handle<System::log::Message_Report>& System::log::Message_PrinterToReport::Report() const
 {
   if (!myReport.IsNull())
   {
     return myReport;
   }
 
-  return Message::DefaultReport(true);
+  return System::log::Message::DefaultReport(true);
 }
 
-void Message_PrinterToReport::SendStringStream(const Standard_SStream& theStream,
+void System::log::Message_PrinterToReport::SendStringStream(const Standard_SStream& theStream,
                                                const Message_Gravity   theGravity) const
 {
-  const occ::handle<Message_Report>& aReport = Report();
+  const occ::handle<System::log::Message_Report>& aReport = Report();
   if (!aReport->ActiveMetrics().IsEmpty())
   {
     sendMetricAlert(theStream.str().c_str(), theGravity);
@@ -34,8 +34,8 @@ void Message_PrinterToReport::SendStringStream(const Standard_SStream& theStream
   }
   if (Standard_Dump::HasChildKey(Standard_Dump::Text(theStream)))
   {
-    Message_AlertExtended::AddAlert(aReport,
-                                    new Message_AttributeStream(theStream, myName),
+    System::log::Message_AlertExtended::AddAlert(aReport,
+                                    new System::log::Message_AttributeStream(theStream, myName),
                                     theGravity);
     myName.Clear();
   }
@@ -51,22 +51,22 @@ void Message_PrinterToReport::SendStringStream(const Standard_SStream& theStream
   }
 }
 
-void Message_PrinterToReport::SendObject(const occ::handle<Standard_Transient>& theObject,
+void System::log::Message_PrinterToReport::SendObject(const occ::handle<Standard_Transient>& theObject,
                                          const Message_Gravity                  theGravity) const
 {
-  const occ::handle<Message_Report>& aReport = Report();
+  const occ::handle<System::log::Message_Report>& aReport = Report();
   if (!aReport->ActiveMetrics().IsEmpty())
   {
     sendMetricAlert(myName, theGravity);
     return;
   }
 
-  Message_AlertExtended::AddAlert(aReport,
-                                  new Message_AttributeObject(theObject, myName),
+  System::log::Message_AlertExtended::AddAlert(aReport,
+                                  new System::log::Message_AttributeObject(theObject, myName),
                                   theGravity);
 }
 
-void Message_PrinterToReport::send(const TCollection_AsciiString& theString,
+void System::log::Message_PrinterToReport::send(const TCollection_AsciiString& theString,
                                    const Message_Gravity          theGravity) const
 {
   if (!myName.IsEmpty())
@@ -76,17 +76,17 @@ void Message_PrinterToReport::send(const TCollection_AsciiString& theString,
     send(aName, theGravity);
   }
 
-  const occ::handle<Message_Report>& aReport = Report();
+  const occ::handle<System::log::Message_Report>& aReport = Report();
   if (!aReport->ActiveMetrics().IsEmpty())
   {
     sendMetricAlert(theString, theGravity);
     return;
   }
-  Message_AlertExtended::AddAlert(aReport, new Message_Attribute(theString), theGravity);
+  System::log::Message_AlertExtended::AddAlert(aReport, new System::log::Message_Attribute(theString), theGravity);
 }
 
-void Message_PrinterToReport::sendMetricAlert(const TCollection_AsciiString& theValue,
+void System::log::Message_PrinterToReport::sendMetricAlert(const TCollection_AsciiString& theValue,
                                               const Message_Gravity          theGravity) const
 {
-  Message_AlertExtended::AddAlert(Report(), new Message_AttributeMeter(theValue), theGravity);
+  System::log::Message_AlertExtended::AddAlert(Report(), new System::log::Message_AttributeMeter(theValue), theGravity);
 }

@@ -128,7 +128,7 @@ void BOPAlgo_PaveFiller::SetSectionAttribute(const BOPAlgo_SectionAttribute& the
   mySectionAttribute = theSecAttr;
 }
 
-void BOPAlgo_PaveFiller::Init(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::Init(const System::log::Message_ProgressRange& theRange)
 {
   if (!myArguments.Extent())
   {
@@ -136,7 +136,7 @@ void BOPAlgo_PaveFiller::Init(const Message_ProgressRange& theRange)
     return;
   }
 
-  Message_ProgressScope aPS(theRange, "Initialization of Intersection algorithm", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Initialization of Intersection algorithm", 1);
   NCollection_List<TopoDS_Shape>::Iterator aIt(myArguments);
   for (; aIt.More(); aIt.Next())
   {
@@ -163,7 +163,7 @@ void BOPAlgo_PaveFiller::Init(const Message_ProgressRange& theRange)
   SetNonDestructive();
 }
 
-void BOPAlgo_PaveFiller::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::Perform(const System::log::Message_ProgressRange& theRange)
 {
   try
   {
@@ -178,9 +178,9 @@ void BOPAlgo_PaveFiller::Perform(const Message_ProgressRange& theRange)
   }
 }
 
-void BOPAlgo_PaveFiller::PerformInternal(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformInternal(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPS(theRange, "Performing intersection of shapes", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Performing intersection of shapes", 100);
 
   Init(aPS.Next(5));
   if (HasErrors())
@@ -294,12 +294,12 @@ void BOPAlgo_PaveFiller::PerformInternal(const Message_ProgressRange& theRange)
   }
 }
 
-void BOPAlgo_PaveFiller::RepeatIntersection(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::RepeatIntersection(const System::log::Message_ProgressRange& theRange)
 {
 
   NCollection_Map<int>  anExtraInterfMap;
   const int             aNbS = myDS->NbSourceShapes();
-  Message_ProgressScope aPS(theRange, "Repeat intersection", 3);
+  System::log::Message_ProgressScope aPS(theRange, "Repeat intersection", 3);
   for (int i = 0; i < aNbS; ++i)
   {
     const BOPDS_ShapeInfo& aSI = myDS->ShapeInfo(i);

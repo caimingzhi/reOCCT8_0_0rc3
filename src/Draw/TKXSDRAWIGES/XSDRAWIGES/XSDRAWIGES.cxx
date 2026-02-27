@@ -138,7 +138,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   }
 
   occ::handle<Draw_ProgressIndicator> progress = new Draw_ProgressIndicator(theDI, 1);
-  Message_ProgressScope               aPSRoot(progress->Start(), "Reading", 100);
+  System::log::Message_ProgressScope               aPSRoot(progress->Start(), "Reading", 100);
 
   IGESControl_Reader Reader(XSDRAW::Session(), false);
   bool               aFullMode = true;
@@ -155,7 +155,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   IFSelect_ReturnStatus readstat = IFSelect_RetVoid;
 
 #ifdef CHRONOMESURE
-  OSD_Timer Chr;
+  System::os::OSD_Timer Chr;
   Chr.Reset();
   IDT_SetLevel(3);
 #endif
@@ -450,7 +450,7 @@ static int igesbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
           aPSRoot.SetName("Translation");
           progress->Show(aPSRoot);
 
-          Message_ProgressScope aPS(aPSRoot.Next(80), "Root", nbl);
+          System::log::Message_ProgressScope aPS(aPSRoot.Next(80), "Root", nbl);
           for (int ill = 1; ill <= nbl && aPS.More(); ill++)
           {
             nent = Reader.Model()->Number(list->Value(ill));
@@ -551,7 +551,7 @@ static int brepiges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   int         aNumShapesProcessed = 0;
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI, 1);
-  Message_ProgressScope               aRootProgress(aProgress->Start(), "Translating", 100);
+  System::log::Message_ProgressScope               aRootProgress(aProgress->Start(), "Translating", 100);
   aProgress->Show(aRootProgress);
 
   XSAlgo_ShapeProcessor::ProcessingData aProcessingData =
@@ -559,7 +559,7 @@ static int brepiges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   anIgesWriter.SetShapeFixParameters(std::move(aProcessingData.first));
   anIgesWriter.SetShapeProcessFlags(aProcessingData.second);
 
-  Message_ProgressScope aStepProgress(aRootProgress.Next(90), nullptr, theNbArgs);
+  System::log::Message_ProgressScope aStepProgress(aRootProgress.Next(90), nullptr, theNbArgs);
   for (int i = 1; i < theNbArgs && aStepProgress.More(); i++)
   {
     const char* aVariableName = theArgVec[i];
@@ -913,12 +913,12 @@ static int ReadIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
       }
   }
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI);
-  Message_ProgressScope aRootScope(aProgress->Start(), "IGES import", isModified ? 2 : 1);
+  System::log::Message_ProgressScope aRootScope(aProgress->Start(), "IGES import", isModified ? 2 : 1);
 
   IFSelect_ReturnStatus aReadStatus = IFSelect_RetVoid;
   if (isModified)
   {
-    Message_ProgressScope aReadScope(aRootScope.Next(), "File reading", 1);
+    System::log::Message_ProgressScope aReadScope(aRootScope.Next(), "File reading", 1);
     aReadScope.Show();
     aReadStatus = aReader.ReadFile(aFileName.ToCString());
   }
@@ -986,7 +986,7 @@ static int WriteIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
     XSDRAW::FileAndVar(theArgVec[2], theArgVec[1], "IGES", aFileName, aModelName);
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(theDI);
-  Message_ProgressScope aRootScope(aProgress->Start(), "IGES export", isModified ? 2 : 1);
+  System::log::Message_ProgressScope aRootScope(aProgress->Start(), "IGES export", isModified ? 2 : 1);
 
   IGESCAFControl_Writer aWriter(XSDRAW::Session(), true);
   if (theNbArgs == 4)
@@ -1020,7 +1020,7 @@ static int WriteIges(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
   if (isModified)
   {
-    Message_ProgressScope aWriteScope(aRootScope.Next(), "File writing", 1);
+    System::log::Message_ProgressScope aWriteScope(aRootScope.Next(), "File writing", 1);
     aWriteScope.Show();
     theDI << "Writing IGES model to file " << theArgVec[2] << "\n";
     if (aWriter.Write(aFileName.ToCString()))

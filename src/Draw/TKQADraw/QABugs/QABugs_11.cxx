@@ -952,7 +952,7 @@ static int OCC22(Draw_Interpretor& di, int argc, const char** argv)
 
     ShapeUpgrade_ShapeDivideAngle aShapeUpgrade(M_PI / 2.);
 
-    aShapeUpgrade.SetPrecision(Precision::Confusion());
+    aShapeUpgrade.SetPrecision(math::precision::Precision::Confusion());
 
     aShapeUpgrade.SetMaxTolerance(0.1);
 
@@ -1801,7 +1801,7 @@ static int OCC5698(Draw_Interpretor& di, int argc, const char** argv)
   check_curve.D0(check_par, check_pnt);
 
   double error_dist = pnt.Distance(check_pnt);
-  if (error_dist > Precision::Confusion())
+  if (error_dist > math::precision::Precision::Confusion())
   {
 
     di << "error_dist = " << error_dist << "  ( " << error_dist / need_length * 100 << " %)\n";
@@ -2055,9 +2055,9 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
       Succes = false;
     }
 #ifdef _WIN32
-    catch (OSD_Exception_ACCESS_VIOLATION const&)
+    catch (System::os::OSD_Exception_ACCESS_VIOLATION const&)
 #else
-    catch (OSD_SIGSEGV const&)
+    catch (System::os::OSD_SIGSEGV const&)
 #endif
     {
       di << "Caught, OK\n";
@@ -2085,7 +2085,7 @@ static int OCC6143(Draw_Interpretor& di, int argc, const char** argv)
       di << "Error - no exception is raised!\n";
       Succes = false;
     }
-    catch (OSD_Exception_STACK_OVERFLOW const&)
+    catch (System::os::OSD_Exception_STACK_OVERFLOW const&)
     {
       di << "Caught, OK\n";
     }
@@ -2177,9 +2177,9 @@ static Standard_NOINLINE int OCC30762(Draw_Interpretor& theDI, int theNbArgs, co
       std::cout << "Error: writing by NULL address - no exception is raised!\n";
     }
 #ifdef _WIN32
-    catch (OSD_Exception_ACCESS_VIOLATION const& aSegException)
+    catch (System::os::OSD_Exception_ACCESS_VIOLATION const& aSegException)
 #else
-    catch (OSD_SIGSEGV const& aSegException)
+    catch (System::os::OSD_SIGSEGV const& aSegException)
 #endif
     {
       theDI << " Caught (";
@@ -2252,7 +2252,7 @@ static int OCC7141(Draw_Interpretor& di, int argc, const char** argv)
       writer.Write(aFilePath.ToCString());
     }
   }
-  catch (OSD_Exception_STACK_OVERFLOW const&)
+  catch (System::os::OSD_Exception_STACK_OVERFLOW const&)
   {
     di << "Failed : STACK OVERFLOW\n\n";
   }
@@ -2334,7 +2334,7 @@ static int OCC8169(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Geom_Surface> thePlane = BRep_Tool::Surface(theFace);
 
-  constexpr double aConfusion = Precision::Confusion();
+  constexpr double aConfusion = math::precision::Precision::Confusion();
   double           aP1first, aP1last, aP2first, aP2last;
 
   occ::handle<Geom_Curve>   aCurve1   = BRep_Tool::Curve(theEdge1, aP1first, aP1last);
@@ -4199,7 +4199,7 @@ int OCC17424(Draw_Interpretor& di, int argc, const char** argv)
   double PInf = Draw::Atof(argv[8]);
 
   IntCurvesFace_ShapeIntersector intersector;
-  intersector.Load(shape, Precision::Intersection());
+  intersector.Load(shape, math::precision::Precision::Intersection());
 
   gp_Pnt origin(X_Pnt, Y_Pnt, Z_Pnt);
   gp_Dir dir(X_Dir, Y_Dir, Z_Dir);
@@ -4340,7 +4340,7 @@ int OCC22736(Draw_Interpretor& di, int argc, const char** argv)
   gp_Trsf2d Tcomp;
   Tcomp = M2.Multiplied(M1);
 
-  constexpr double aTol    = Precision::Confusion();
+  constexpr double aTol    = math::precision::Precision::Confusion();
   int              aStatus = 0;
 
   gp_Pnt2d p1MirrorM1 = p1.Transformed(M1);
@@ -4446,11 +4446,11 @@ int OCC28478(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
 
-  Message_ProgressScope anOuter(aProgress->Start(), "Outer", nbOuter);
+  System::log::Message_ProgressScope anOuter(aProgress->Start(), "Outer", nbOuter);
   for (int i = 0; i < nbOuter && anOuter.More(); i++)
   {
 
-    Message_ProgressScope anInner(anOuter.Next(), "Inner", nbInner, isInf);
+    System::log::Message_ProgressScope anInner(anOuter.Next(), "Inner", nbInner, isInf);
     for (int j = 0; j < (isInf ? 2 * nbInner : nbInner) && anInner.More(); j++, anInner.Next())
     {
     }
@@ -4463,10 +4463,10 @@ namespace
 {
   struct Task
   {
-    Message_ProgressRange Range;
+    System::log::Message_ProgressRange Range;
     math_Matrix           Mat1, Mat2, Mat3;
 
-    Task(const Message_ProgressRange& thePR, int theSize)
+    Task(const System::log::Message_ProgressRange& thePR, int theSize)
         : Range(thePR),
           Mat1(1, theSize, 1, theSize, 0.12345),
           Mat2(1, theSize, 1, theSize, 12345),
@@ -4514,7 +4514,7 @@ int OCC25748(Draw_Interpretor& di, int argc, const char** argv)
     }
   }
 
-  OSD_Timer aTimerWhole;
+  System::os::OSD_Timer aTimerWhole;
   aTimerWhole.Start();
 
   occ::handle<Draw_ProgressIndicator> aProgress;
@@ -4522,7 +4522,7 @@ int OCC25748(Draw_Interpretor& di, int argc, const char** argv)
   {
     aProgress = new Draw_ProgressIndicator(di, 1);
   }
-  Message_ProgressScope aPS(Message_ProgressIndicator::Start(aProgress),
+  System::log::Message_ProgressScope aPS(System::log::Message_ProgressIndicator::Start(aProgress),
                             "Parallel data processing",
                             nIter);
 
@@ -4533,9 +4533,9 @@ int OCC25748(Draw_Interpretor& di, int argc, const char** argv)
     aTasks.push_back(Task(aPS.Next(), aMatSize));
   }
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
-  OSD_Parallel::ForEach(aTasks.begin(), aTasks.end(), Functor(), !isParallel);
+  System::os::OSD_Parallel::ForEach(aTasks.begin(), aTasks.end(), Functor(), !isParallel);
   aTimer.Stop();
 
   aTimerWhole.Stop();

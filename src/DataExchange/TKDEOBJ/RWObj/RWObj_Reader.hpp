@@ -42,7 +42,7 @@ class RWObj_Reader : public Standard_Transient
 public:
   Standard_EXPORT RWObj_Reader();
 
-  bool Read(const TCollection_AsciiString& theFile, const Message_ProgressRange& theProgress)
+  bool Read(const TCollection_AsciiString& theFile, const System::log::Message_ProgressRange& theProgress)
   {
     std::ifstream aStream;
     OSD_OpenStream(aStream, theFile, std::ios_base::in | std::ios_base::binary);
@@ -51,12 +51,12 @@ public:
 
   bool Read(std::istream&                  theStream,
             const TCollection_AsciiString& theFile,
-            const Message_ProgressRange&   theProgress)
+            const System::log::Message_ProgressRange&   theProgress)
   {
     return read(theStream, theFile, theProgress, false);
   }
 
-  bool Probe(const TCollection_AsciiString& theFile, const Message_ProgressRange& theProgress)
+  bool Probe(const TCollection_AsciiString& theFile, const System::log::Message_ProgressRange& theProgress)
   {
     std::ifstream aStream;
     OSD_OpenStream(aStream, theFile, std::ios_base::in | std::ios_base::binary);
@@ -65,7 +65,7 @@ public:
 
   bool Probe(std::istream&                  theStream,
              const TCollection_AsciiString& theFile,
-             const Message_ProgressRange&   theProgress)
+             const System::log::Message_ProgressRange&   theProgress)
   {
     return read(theStream, theFile, theProgress, true);
   }
@@ -102,7 +102,7 @@ public:
 protected:
   Standard_EXPORT bool read(std::istream&                  theStream,
                             const TCollection_AsciiString& theFile,
-                            const Message_ProgressRange&   theProgress,
+                            const System::log::Message_ProgressRange&   theProgress,
                             const bool                     theToProbe);
 
 protected:

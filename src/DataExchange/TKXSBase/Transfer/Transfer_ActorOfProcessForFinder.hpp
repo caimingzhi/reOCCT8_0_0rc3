@@ -29,7 +29,7 @@ public:
   Standard_EXPORT virtual occ::handle<Transfer_Binder> Transferring(
     const occ::handle<Transfer_Finder>&           start,
     const occ::handle<Transfer_ProcessForFinder>& TP,
-    const Message_ProgressRange&                  theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&                  theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<Transfer_SimpleBinderOfTransient> TransientResult(
     const occ::handle<Standard_Transient>& res) const;

@@ -77,7 +77,7 @@ int props(Draw_Interpretor& di, int n, const char** a)
 
   if (witheps)
   {
-    if (std::abs(eps) < Precision::Angular())
+    if (std::abs(eps) < math::precision::Precision::Angular())
       return 2;
     if (*a[0] == 'l')
       BRepGProp::LinearProperties(S, G, SkipShared);

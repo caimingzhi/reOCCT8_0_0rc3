@@ -36,21 +36,21 @@ public:
                                         const char*                               theUnit);
 
   Standard_EXPORT bool Transfer(const occ::handle<TDocStd_Document>& doc,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const NCollection_Sequence<TDF_Label>& labels,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const TDF_Label&             label,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const occ::handle<TDocStd_Document>& doc,
                                const TCollection_AsciiString&       filename,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const occ::handle<TDocStd_Document>& doc,
                                const char*                          filename,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void SetColorMode(const bool colormode);
 

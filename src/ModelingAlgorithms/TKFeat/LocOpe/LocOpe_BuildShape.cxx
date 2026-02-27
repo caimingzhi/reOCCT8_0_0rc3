@@ -174,7 +174,7 @@ void LocOpe_BuildShape::Perform(const NCollection_List<TopoDS_Shape>& L)
           B.MakeSolid(newSo);
           B.Add(newSo, newSh);
           BRepClass3d_SolidClassifier Class(newSo);
-          Class.PerformInfinitePoint(Precision::Confusion());
+          Class.PerformInfinitePoint(math::precision::Precision::Confusion());
           if (Class.State() == TopAbs_IN)
           {
             lresult.Append(newSh.Oriented(TopAbs_REVERSED));

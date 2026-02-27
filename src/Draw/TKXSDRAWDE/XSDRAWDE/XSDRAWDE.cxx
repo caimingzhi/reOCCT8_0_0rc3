@@ -129,12 +129,12 @@ static int CompareConfiguration(Draw_Interpretor& theDI, int theNbArgs, const ch
     TCollection_AsciiString        aCompValue;
     if (!aResourceMapSecond.Find(anOrigKey, aCompValue))
     {
-      Message::SendWarning() << "Second configuration don't have the next scope : " << anOrigKey;
+      System::log::Message::SendWarning() << "Second configuration don't have the next scope : " << anOrigKey;
       anDiffers++;
     }
     if (!aCompValue.IsEqual(anOrigValue))
     {
-      Message::SendWarning() << "Configurations have differs value with the next scope :"
+      System::log::Message::SendWarning() << "Configurations have differs value with the next scope :"
                              << anOrigKey << " First value : " << anOrigValue
                              << " Second value : " << aCompValue;
       anDiffers++;

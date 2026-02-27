@@ -1785,7 +1785,7 @@ bool Geom_BezierSurface::IsUClosed() const
 
   while (Closed && j <= Length)
   {
-    Closed = (Poles(Lower, j).Distance(Poles(Upper, j)) <= Precision::Confusion());
+    Closed = (Poles(Lower, j).Distance(Poles(Upper, j)) <= math::precision::Precision::Confusion());
     j++;
   }
   return Closed;
@@ -1801,7 +1801,7 @@ bool Geom_BezierSurface::IsVClosed() const
   int                               i      = Poles.LowerRow();
   while (Closed && i <= Length)
   {
-    Closed = (Poles(i, Lower).Distance(Poles(i, Upper)) <= Precision::Confusion());
+    Closed = (Poles(i, Lower).Distance(Poles(i, Upper)) <= math::precision::Precision::Confusion());
     i++;
   }
   return Closed;

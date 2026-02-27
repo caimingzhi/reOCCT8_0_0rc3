@@ -311,7 +311,7 @@ bool TopOpeBRep_EdgesIntersector::IsVertex1(const int Index)
       if (V.Orientation() == TopAbs_INTERNAL)
       {
         double parV = BRep_Tool::Parameter(V, E, myFace1);
-        if (std::abs(par - parV) <= Precision::PConfusion())
+        if (std::abs(par - parV) <= math::precision::Precision::PConfusion())
         {
           myIsVertexValue  = true;
           myIsVertexVertex = V;
@@ -356,9 +356,9 @@ gp_Pnt TopOpeBRep_EdgesIntersector::Value1() const
 {
   gp_Pnt2d p2 = Point1().Value();
   gp_Pnt   p;
-  if (Precision::IsInfinite(p2.X()) || Precision::IsInfinite(p2.Y()))
+  if (math::precision::Precision::IsInfinite(p2.X()) || math::precision::Precision::IsInfinite(p2.Y()))
   {
-    double inf = Precision::Infinite();
+    double inf = math::precision::Precision::Infinite();
     p.SetCoord(inf, inf, inf);
   }
   else

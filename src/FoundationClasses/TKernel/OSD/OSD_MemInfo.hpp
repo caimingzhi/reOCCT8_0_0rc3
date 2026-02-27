@@ -2,6 +2,7 @@
 
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace os {
 class OSD_MemInfo
 {
 
@@ -58,3 +59,5 @@ private:
   size_t myCounters[MemCounter_NB];
   bool   myActiveCounters[MemCounter_NB];
 };
+}} // namespace System::os
+

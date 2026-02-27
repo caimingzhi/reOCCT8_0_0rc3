@@ -18,7 +18,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BinDrivers_DocumentRetrievalDriver, BinLDrivers_Docum
 BinDrivers_DocumentRetrievalDriver::BinDrivers_DocumentRetrievalDriver() = default;
 
 occ::handle<BinMDF_ADriverTable> BinDrivers_DocumentRetrievalDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return BinDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -26,7 +26,7 @@ occ::handle<BinMDF_ADriverTable> BinDrivers_DocumentRetrievalDriver::AttributeDr
 void BinDrivers_DocumentRetrievalDriver::ReadShapeSection(BinLDrivers_DocumentSection&,
                                                           Standard_IStream& theIS,
                                                           const bool,
-                                                          const Message_ProgressRange& theRange)
+                                                          const System::log::Message_ProgressRange& theRange)
 
 {
 
@@ -67,7 +67,7 @@ void BinDrivers_DocumentRetrievalDriver::Clear()
 }
 
 void BinDrivers_DocumentRetrievalDriver::EnableQuickPartReading(
-  const occ::handle<Message_Messenger>& theMessageDriver,
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver,
   bool                                  theValue)
 {
   if (myDrivers.IsNull())

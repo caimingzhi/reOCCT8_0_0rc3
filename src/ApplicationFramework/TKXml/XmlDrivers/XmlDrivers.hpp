@@ -5,7 +5,10 @@
 class Standard_Transient;
 class Standard_GUID;
 class XmlMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDocStd_Application;
 
 class XmlDrivers
@@ -17,5 +20,5 @@ public:
   Standard_EXPORT static void DefineFormat(const occ::handle<TDocStd_Application>& theApp);
 
   Standard_EXPORT static occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 };

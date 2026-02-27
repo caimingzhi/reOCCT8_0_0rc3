@@ -7,9 +7,12 @@
 #if !defined No_Exception && !defined No_Resource_NoSuchResource
   #define Resource_NoSuchResource_Raise_if(CONDITION, MESSAGE)                                     \
     if (CONDITION)                                                                                 \
-      throw Resource_NoSuchResource(MESSAGE);
+      throw System::resource::Resource_NoSuchResource(MESSAGE);
 #else
   #define Resource_NoSuchResource_Raise_if(CONDITION, MESSAGE)
 #endif
 
+namespace System { namespace resource {
 DEFINE_STANDARD_EXCEPTION(Resource_NoSuchResource, Standard_NoSuchObject)
+}} // namespace System::resource
+

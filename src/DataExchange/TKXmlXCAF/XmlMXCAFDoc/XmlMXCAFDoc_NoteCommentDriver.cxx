@@ -8,7 +8,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteCommentDriver, XmlMXCAFDoc_NoteDriver
 IMPLEMENT_DOMSTRING(Comment, "comment")
 
 XmlMXCAFDoc_NoteCommentDriver::XmlMXCAFDoc_NoteCommentDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMXCAFDoc_NoteDriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_NoteComment)->Name())
 {
 }
@@ -53,7 +53,7 @@ void XmlMXCAFDoc_NoteCommentDriver::Paste(const occ::handle<TDF_Attribute>& theS
 }
 
 XmlMXCAFDoc_NoteCommentDriver::XmlMXCAFDoc_NoteCommentDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver,
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver,
   const char*                           theName)
     : XmlMXCAFDoc_NoteDriver(theMsgDriver, theName)
 {

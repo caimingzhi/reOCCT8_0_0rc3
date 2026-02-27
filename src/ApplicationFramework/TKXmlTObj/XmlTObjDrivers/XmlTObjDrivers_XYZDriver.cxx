@@ -14,7 +14,7 @@ IMPLEMENT_DOMSTRING(CoordY, "Y")
 IMPLEMENT_DOMSTRING(CoordZ, "Z")
 
 XmlTObjDrivers_XYZDriver::XmlTObjDrivers_XYZDriver(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
     : XmlMDF_ADriver(theMessageDriver, nullptr)
 {
 }

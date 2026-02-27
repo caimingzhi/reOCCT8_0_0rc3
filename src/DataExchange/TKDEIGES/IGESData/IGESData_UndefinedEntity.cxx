@@ -153,7 +153,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg60("XSTEP_60");
+    System::log::Message_Msg Msg60("XSTEP_60");
     ach->SendFail(Msg60);
     thedstat += 8;
     v[3] = 0;
@@ -171,7 +171,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg61("XSTEP_61");
+    System::log::Message_Msg Msg61("XSTEP_61");
     ach->SendFail(Msg61);
     thedstat += 32;
     v[3] = 0;
@@ -189,7 +189,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg62("XSTEP_62");
+    System::log::Message_Msg Msg62("XSTEP_62");
     ach->SendFail(Msg62);
     thedstat += 128;
     v[5] = 0;
@@ -207,7 +207,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg63("XSTEP_63");
+    System::log::Message_Msg Msg63("XSTEP_63");
     ach->SendFail(Msg63);
     thedstat |= 1;
     v[6] = 0;
@@ -225,7 +225,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg64("XSTEP_64");
+    System::log::Message_Msg Msg64("XSTEP_64");
     ach->SendFail(Msg64);
     thedstat |= 1;
     v[7] = 0;
@@ -246,7 +246,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg70("XSTEP_70");
+    System::log::Message_Msg Msg70("XSTEP_70");
     ach->SendFail(Msg70);
     thedstat += 512;
     v[14] = 0;
@@ -264,7 +264,7 @@ bool IGESData_UndefinedEntity::ReadDir(const occ::handle<IGESData_IGESReaderData
 
   if (iapb)
   {
-    Message_Msg Msg72("XSTEP_72");
+    System::log::Message_Msg Msg72("XSTEP_72");
     ach->SendFail(Msg72);
     thedstat += 1024;
     for (i = 0; i < 8; i++)

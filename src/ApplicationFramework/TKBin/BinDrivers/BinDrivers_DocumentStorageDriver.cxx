@@ -15,7 +15,7 @@ IMPLEMENT_STANDARD_RTTIEXT(BinDrivers_DocumentStorageDriver, BinLDrivers_Documen
 BinDrivers_DocumentStorageDriver::BinDrivers_DocumentStorageDriver() = default;
 
 occ::handle<BinMDF_ADriverTable> BinDrivers_DocumentStorageDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return BinDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -35,7 +35,7 @@ bool BinDrivers_DocumentStorageDriver::IsWithTriangles() const
 }
 
 void BinDrivers_DocumentStorageDriver::SetWithTriangles(
-  const occ::handle<Message_Messenger>& theMessageDriver,
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver,
   const bool                            theWithTriangulation)
 {
   if (myDrivers.IsNull())
@@ -60,7 +60,7 @@ void BinDrivers_DocumentStorageDriver::SetWithTriangles(
 }
 
 void BinDrivers_DocumentStorageDriver::EnableQuickPartWriting(
-  const occ::handle<Message_Messenger>& theMessageDriver,
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver,
   const bool                            theValue)
 {
   if (myDrivers.IsNull())
@@ -112,7 +112,7 @@ bool BinDrivers_DocumentStorageDriver::IsWithNormals() const
 }
 
 void BinDrivers_DocumentStorageDriver::SetWithNormals(
-  const occ::handle<Message_Messenger>& theMessageDriver,
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver,
   const bool                            theWithNormals)
 {
   if (myDrivers.IsNull())
@@ -139,7 +139,7 @@ void BinDrivers_DocumentStorageDriver::SetWithNormals(
 void BinDrivers_DocumentStorageDriver::WriteShapeSection(BinLDrivers_DocumentSection& theSection,
                                                          Standard_OStream&            theOS,
                                                          const TDocStd_FormatVersion  theDocVer,
-                                                         const Message_ProgressRange& theRange)
+                                                         const System::log::Message_ProgressRange& theRange)
 {
   const size_t aShapesSectionOffset = (size_t)theOS.tellp();
 

@@ -38,7 +38,7 @@ void GeomAPI_ExtremaCurveCurve::Init(const occ::handle<Geom_Curve>& C1,
 
   myTotalExt = false;
 
-  constexpr double Tol = Precision::PConfusion();
+  constexpr double Tol = math::precision::Precision::PConfusion();
   myC1.Load(C1);
   myC2.Load(C2);
 
@@ -74,7 +74,7 @@ void GeomAPI_ExtremaCurveCurve::Init(const occ::handle<Geom_Curve>& C1,
 
   myTotalExt = false;
 
-  constexpr double Tol = Precision::PConfusion();
+  constexpr double Tol = math::precision::Precision::PConfusion();
   myC1.Load(C1);
   myC2.Load(C2);
 
@@ -230,8 +230,8 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
   double u21 = myC2.FirstParameter();
   double u22 = myC2.LastParameter();
 
-  bool infinite = Precision::IsInfinite(u11) && Precision::IsInfinite(u12)
-                  && Precision::IsInfinite(u21) && Precision::IsInfinite(u22);
+  bool infinite = math::precision::Precision::IsInfinite(u11) && math::precision::Precision::IsInfinite(u12)
+                  && math::precision::Precision::IsInfinite(u21) && math::precision::Precision::IsInfinite(u22);
 
   myIsInfinite = false;
 
@@ -256,7 +256,7 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
     Parameters(myIndex, myTotalPars[0], myTotalPars[1]);
     myTotalDist = sqrt(myExtCC.SquareDistance(myIndex));
 
-    if (myTotalDist <= Precision::Confusion())
+    if (myTotalDist <= math::precision::Precision::Confusion())
       return;
   }
 
@@ -273,7 +273,7 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
     myTotalPars[0]   = u11;
     myTotalPars[1]   = u21;
 
-    if (myTotalDist <= Precision::Confusion())
+    if (myTotalDist <= math::precision::Precision::Confusion())
       return;
   }
 
@@ -285,7 +285,7 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
     myTotalPars[0]   = u11;
     myTotalPars[1]   = u22;
 
-    if (myTotalDist <= Precision::Confusion())
+    if (myTotalDist <= math::precision::Precision::Confusion())
       return;
   }
 
@@ -297,7 +297,7 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
     myTotalPars[0]   = u12;
     myTotalPars[1]   = u21;
 
-    if (myTotalDist <= Precision::Confusion())
+    if (myTotalDist <= math::precision::Precision::Confusion())
       return;
   }
 
@@ -309,11 +309,11 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
     myTotalPars[0]   = u12;
     myTotalPars[1]   = u22;
 
-    if (myTotalDist <= Precision::Confusion())
+    if (myTotalDist <= math::precision::Precision::Confusion())
       return;
   }
 
-  if (!Precision::IsInfinite(u11))
+  if (!math::precision::Precision::IsInfinite(u11))
   {
     GeomAPI_ProjectPointOnCurve proj(P11, myC2.Curve(), u21, u22);
 
@@ -329,13 +329,13 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
         myTotalPoints[1] = proj.NearestPoint();
         myTotalPars[1]   = proj.LowerDistanceParameter();
 
-        if (myTotalDist <= Precision::Confusion())
+        if (myTotalDist <= math::precision::Precision::Confusion())
           return;
       }
     }
   }
 
-  if (!Precision::IsInfinite(u12))
+  if (!math::precision::Precision::IsInfinite(u12))
   {
     GeomAPI_ProjectPointOnCurve proj(P12, myC2.Curve(), u21, u22);
 
@@ -351,13 +351,13 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
         myTotalPoints[1] = proj.NearestPoint();
         myTotalPars[1]   = proj.LowerDistanceParameter();
 
-        if (myTotalDist <= Precision::Confusion())
+        if (myTotalDist <= math::precision::Precision::Confusion())
           return;
       }
     }
   }
 
-  if (!Precision::IsInfinite(u21))
+  if (!math::precision::Precision::IsInfinite(u21))
   {
     GeomAPI_ProjectPointOnCurve proj(P21, myC1.Curve(), u11, u12);
 
@@ -373,13 +373,13 @@ void GeomAPI_ExtremaCurveCurve::TotalPerform()
         myTotalPoints[1] = P21;
         myTotalPars[1]   = u21;
 
-        if (myTotalDist <= Precision::Confusion())
+        if (myTotalDist <= math::precision::Precision::Confusion())
           return;
       }
     }
   }
 
-  if (!Precision::IsInfinite(u22))
+  if (!math::precision::Precision::IsInfinite(u22))
   {
     GeomAPI_ProjectPointOnCurve proj(P22, myC1.Curve(), u11, u12);
 

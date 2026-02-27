@@ -96,12 +96,12 @@ double Geom2d_Hyperbola::ReversedParameter(const double U) const
 
 double Geom2d_Hyperbola::FirstParameter() const
 {
-  return -Precision::Infinite();
+  return -math::precision::Precision::Infinite();
 }
 
 double Geom2d_Hyperbola::LastParameter() const
 {
-  return Precision::Infinite();
+  return math::precision::Precision::Infinite();
 }
 
 bool Geom2d_Hyperbola::IsClosed() const

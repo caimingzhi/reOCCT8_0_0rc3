@@ -207,7 +207,7 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
   cf = theCurve2d->FirstParameter();
   cl = theCurve2d->LastParameter();
 
-  if (Precision::IsInfinite(cf) || Precision::IsInfinite(cl))
+  if (math::precision::Precision::IsInfinite(cf) || math::precision::Precision::IsInfinite(cl))
   {
     if (theCurve2d->IsKind(STANDARD_TYPE(Geom2d_Line)))
     {
@@ -230,8 +230,8 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
           vl = std::min(vl, 23.);
         }
       }
-      if (!Precision::IsInfinite(uf) && !Precision::IsInfinite(ul) && !Precision::IsInfinite(vf)
-          && !Precision::IsInfinite(vl))
+      if (!math::precision::Precision::IsInfinite(uf) && !math::precision::Precision::IsInfinite(ul) && !math::precision::Precision::IsInfinite(vf)
+          && !math::precision::Precision::IsInfinite(vl))
       {
         double                   cfi, cli;
         occ::handle<Geom2d_Line> lin = occ::down_cast<Geom2d_Line>(theCurve2d);
@@ -278,7 +278,7 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
           cl = cfi;
         }
       }
-      else if (!Precision::IsInfinite(uf) && !Precision::IsInfinite(ul))
+      else if (!math::precision::Precision::IsInfinite(uf) && !math::precision::Precision::IsInfinite(ul))
       {
         occ::handle<Geom2d_Line> lin = occ::down_cast<Geom2d_Line>(theCurve2d);
         gp_Dir2d                 dir = lin->Direction();
@@ -352,7 +352,7 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
   gp_Pnt              pnt;
   double              dist = sac.Project(COnS, Pt1, preci, pnt, w1, false);
 
-  if (Precision::IsInfinite(dist))
+  if (math::precision::Precision::IsInfinite(dist))
     return;
 
   myFirstDone  = true;
@@ -360,13 +360,13 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
 
   dist = sac.Project(COnS, Pt2, preci, pnt, w2, false);
 
-  if (Precision::IsInfinite(dist))
+  if (math::precision::Precision::IsInfinite(dist))
     return;
 
   myLastDone  = true;
   myLastParam = w2;
 
-  if (fabs(w1 - w2) < Precision::PConfusion())
+  if (fabs(w1 - w2) < math::precision::Precision::PConfusion())
   {
     if (!theSurface->IsUPeriodic() && !theSurface->IsVPeriodic())
       return;
@@ -385,15 +385,15 @@ void ShapeFix_EdgeProjAux::Init2d(const double preci)
     return;
   }
 
-  if (COnS.Value(Uinf).Distance(COnS.Value(Usup)) < Precision::Confusion())
+  if (COnS.Value(Uinf).Distance(COnS.Value(Usup)) < math::precision::Precision::Confusion())
   {
 
-    if (std::abs(myFirstParam - Uinf) < ::Precision::PConfusion()
-        && std::abs(myLastParam - Uinf) < ::Precision::PConfusion())
+    if (std::abs(myFirstParam - Uinf) < math::precision::Precision::PConfusion()
+        && std::abs(myLastParam - Uinf) < math::precision::Precision::PConfusion())
       myLastParam = w2 = Usup;
 
-    else if (std::abs(myFirstParam - Usup) < ::Precision::PConfusion()
-             && std::abs(myLastParam - Usup) < ::Precision::PConfusion())
+    else if (std::abs(myFirstParam - Usup) < math::precision::Precision::PConfusion()
+             && std::abs(myLastParam - Usup) < math::precision::Precision::PConfusion())
       myFirstParam = w1 = Uinf;
   }
 
@@ -495,7 +495,7 @@ void ShapeFix_EdgeProjAux::Init3d(const double preci)
   double w1 = COnS.FirstParameter();
   double w2 = COnS.LastParameter();
 
-  if ((!Precision::IsInfinite(w1) && !Precision::IsInfinite(w2)
+  if ((!math::precision::Precision::IsInfinite(w1) && !math::precision::Precision::IsInfinite(w2)
        && theCurve2d->Continuity() != GeomAbs_C0)
       || IsIso(theCurve2d))
   {
@@ -521,7 +521,7 @@ void ShapeFix_EdgeProjAux::UpdateParam2d(const occ::handle<Geom2d_Curve>& theCur
   double cf = theCurve2d->FirstParameter();
   double cl = theCurve2d->LastParameter();
 
-  constexpr double preci2d = Precision::PConfusion();
+  constexpr double preci2d = math::precision::Precision::PConfusion();
 
   if (ShapeAnalysis_Curve::IsPeriodic(theCurve2d))
   {

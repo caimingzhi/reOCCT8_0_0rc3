@@ -21,7 +21,7 @@
 #include <algorithm>
 #include <cerrno>
 
-IMPLEMENT_STANDARD_RTTIEXT(Resource_Manager, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(System::resource::Resource_Manager, Standard_Transient)
 
 enum Resource_KindOfLine
 {
@@ -32,15 +32,15 @@ enum Resource_KindOfLine
   Resource_KOL_Error
 };
 
-static Resource_KindOfLine WhatKindOfLine(OSD_File&                aFile,
+static Resource_KindOfLine WhatKindOfLine(System::os::OSD_File&                aFile,
                                           TCollection_AsciiString& aToken1,
                                           TCollection_AsciiString& aToken2);
 
-static int GetLine(OSD_File& aFile, TCollection_AsciiString& aLine);
+static int GetLine(System::os::OSD_File& aFile, TCollection_AsciiString& aLine);
 
 static bool Debug;
 
-Resource_Manager::Resource_Manager(const TCollection_AsciiString& theName,
+System::resource::Resource_Manager::Resource_Manager(const TCollection_AsciiString& theName,
                                    const TCollection_AsciiString& theDefaultsDirectory,
                                    const TCollection_AsciiString& theUserDefaultsDirectory,
                                    const bool                     theIsVerbose)
@@ -50,7 +50,7 @@ Resource_Manager::Resource_Manager(const TCollection_AsciiString& theName,
 {
   if (!theDefaultsDirectory.IsEmpty())
   {
-    OSD_Path anOSDPath(theDefaultsDirectory);
+    System::os::OSD_Path anOSDPath(theDefaultsDirectory);
     if (!anOSDPath.Name().IsEmpty())
     {
       anOSDPath.DownTrek(anOSDPath.Name() + anOSDPath.Extension());
@@ -68,7 +68,7 @@ Resource_Manager::Resource_Manager(const TCollection_AsciiString& theName,
 
   if (!theUserDefaultsDirectory.IsEmpty())
   {
-    OSD_Path anOSDPath(theUserDefaultsDirectory);
+    System::os::OSD_Path anOSDPath(theUserDefaultsDirectory);
     if (!anOSDPath.Name().IsEmpty())
     {
       anOSDPath.DownTrek(anOSDPath.Name() + anOSDPath.Extension());
@@ -85,17 +85,17 @@ Resource_Manager::Resource_Manager(const TCollection_AsciiString& theName,
   }
 }
 
-Resource_Manager::Resource_Manager(const char* aName, const bool Verbose)
+System::resource::Resource_Manager::Resource_Manager(const char* aName, const bool Verbose)
     : myName(aName),
       myVerbose(Verbose),
       myInitialized(false)
 {
-  OSD_Environment envDebug("ResourceDebug");
+  System::os::OSD_Environment envDebug("ResourceDebug");
   Debug = (!envDebug.Value().IsEmpty());
 
   TCollection_AsciiString Directory;
 
-  OSD_Environment envVerbose("CSF_ResourceVerbose");
+  System::os::OSD_Environment envVerbose("CSF_ResourceVerbose");
   if (!envVerbose.Value().IsEmpty())
     myVerbose = true;
 
@@ -116,23 +116,23 @@ Resource_Manager::Resource_Manager(const char* aName, const bool Verbose)
               << "UserDefaults\" not set." << std::endl;
 }
 
-Resource_Manager::Resource_Manager()
+System::resource::Resource_Manager::Resource_Manager()
     : myName(""),
       myVerbose(false),
       myInitialized(false)
 {
 }
 
-void Resource_Manager::Load(
+void System::resource::Resource_Manager::Load(
   const TCollection_AsciiString&                                         thePath,
   NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& aMap)
 {
   Resource_KindOfLine     aKind;
   TCollection_AsciiString Token1, Token2;
-  OSD_Path                Path(thePath);
-  OSD_File                File     = Path;
+  System::os::OSD_Path                Path(thePath);
+  System::os::OSD_File                File     = Path;
   TCollection_AsciiString FileName = Path.Name();
-  File.Open(OSD_ReadOnly, OSD_Protection());
+  File.Open(OSD_ReadOnly, System::os::OSD_Protection());
   if (File.Failed())
   {
     if (myVerbose)
@@ -168,7 +168,7 @@ void Resource_Manager::Load(
               << " file \"" << FileName << "\" loaded" << std::endl;
 }
 
-static Resource_KindOfLine WhatKindOfLine(OSD_File&                aFile,
+static Resource_KindOfLine WhatKindOfLine(System::os::OSD_File&                aFile,
                                           TCollection_AsciiString& aToken1,
                                           TCollection_AsciiString& aToken2)
 {
@@ -231,7 +231,7 @@ static Resource_KindOfLine WhatKindOfLine(OSD_File&                aFile,
   return Resource_KOL_Resource;
 }
 
-static int GetLine(OSD_File& aFile, TCollection_AsciiString& aLine)
+static int GetLine(System::os::OSD_File& aFile, TCollection_AsciiString& aLine)
 {
   TCollection_AsciiString Buffer;
   int                     BufSize = 10;
@@ -254,14 +254,14 @@ static int GetLine(OSD_File& aFile, TCollection_AsciiString& aLine)
   return 1;
 }
 
-bool Resource_Manager::Save() const
+bool System::resource::Resource_Manager::Save() const
 {
   TCollection_AsciiString anEnvVar("CSF_");
   anEnvVar += myName;
   anEnvVar += "UserDefaults";
 
   TCollection_AsciiString dir;
-  OSD_Environment         anEnv(anEnvVar);
+  System::os::OSD_Environment         anEnv(anEnvVar);
   dir = anEnv.Value();
   if (dir.IsEmpty())
   {
@@ -272,8 +272,8 @@ bool Resource_Manager::Save() const
   }
 
   TCollection_AsciiString aFilePath(dir);
-  OSD_Path                anOSDPath(aFilePath);
-  OSD_Directory           Dir     = anOSDPath;
+  System::os::OSD_Path                anOSDPath(aFilePath);
+  System::os::OSD_Directory           Dir     = anOSDPath;
   bool                    aStatus = true;
   if (!Dir.Exists())
   {
@@ -281,7 +281,7 @@ bool Resource_Manager::Save() const
       try
       {
         OCC_CATCH_SIGNALS
-        Dir.Build(OSD_Protection(OSD_RX, OSD_RWXD, OSD_RX, OSD_RX));
+        Dir.Build(System::os::OSD_Protection(OSD_RX, OSD_RWXD, OSD_RX, OSD_RX));
       }
       catch (Standard_Failure const&)
       {
@@ -306,8 +306,8 @@ bool Resource_Manager::Save() const
   anOSDPath.SetExtension("");
   anOSDPath.SystemName(aFilePath);
 
-  OSD_File       File = anOSDPath;
-  OSD_Protection theProt;
+  System::os::OSD_File       File = anOSDPath;
+  System::os::OSD_Protection theProt;
   aStatus = true;
   {
     try
@@ -368,7 +368,7 @@ bool Resource_Manager::Save() const
   return true;
 }
 
-int Resource_Manager::Integer(const char* aResourceName) const
+int System::resource::Resource_Manager::Integer(const char* aResourceName) const
 {
   TCollection_AsciiString Result = Value(aResourceName);
   if (!Result.IsIntegerValue())
@@ -381,7 +381,7 @@ int Resource_Manager::Integer(const char* aResourceName) const
   return Result.IntegerValue();
 }
 
-double Resource_Manager::Real(const char* aResourceName) const
+double System::resource::Resource_Manager::Real(const char* aResourceName) const
 {
   TCollection_AsciiString Result = Value(aResourceName);
   if (!Result.IsRealValue())
@@ -394,17 +394,17 @@ double Resource_Manager::Real(const char* aResourceName) const
   return Result.RealValue();
 }
 
-const char* Resource_Manager::Value(const char* aResource) const
+const char* System::resource::Resource_Manager::Value(const char* aResource) const
 {
   TCollection_AsciiString Resource(aResource);
   if (myUserMap.IsBound(Resource))
     return myUserMap(Resource).ToCString();
   if (myRefMap.IsBound(Resource))
     return myRefMap(Resource).ToCString();
-  throw Resource_NoSuchResource(aResource);
+  throw System::resource::Resource_NoSuchResource(aResource);
 }
 
-const char16_t* Resource_Manager::ExtValue(const char* aResource)
+const char16_t* System::resource::Resource_Manager::ExtValue(const char* aResource)
 {
   TCollection_AsciiString Resource(aResource);
   if (myExtStrMap.IsBound(Resource))
@@ -413,23 +413,23 @@ const char16_t* Resource_Manager::ExtValue(const char* aResource)
   TCollection_AsciiString    Result = Value(aResource);
   TCollection_ExtendedString ExtResult;
 
-  Resource_Unicode::ConvertFormatToUnicode(Result.ToCString(), ExtResult);
+  System::resource::Resource_Unicode::ConvertFormatToUnicode(Result.ToCString(), ExtResult);
 
   myExtStrMap.Bind(Resource, ExtResult);
   return myExtStrMap(Resource).ToExtString();
 }
 
-void Resource_Manager::SetResource(const char* aResourceName, const int aValue)
+void System::resource::Resource_Manager::SetResource(const char* aResourceName, const int aValue)
 {
   SetResource(aResourceName, TCollection_AsciiString(aValue).ToCString());
 }
 
-void Resource_Manager::SetResource(const char* aResourceName, const double aValue)
+void System::resource::Resource_Manager::SetResource(const char* aResourceName, const double aValue)
 {
   SetResource(aResourceName, TCollection_AsciiString(aValue).ToCString());
 }
 
-void Resource_Manager::SetResource(const char* aResource, const char16_t* aValue)
+void System::resource::Resource_Manager::SetResource(const char* aResource, const char16_t* aValue)
 {
   Standard_PCharacter        pStr;
   TCollection_AsciiString    Resource = aResource;
@@ -443,11 +443,11 @@ void Resource_Manager::SetResource(const char* aResource, const char16_t* aValue
 
   pStr = (Standard_PCharacter)FormatStr.ToCString();
 
-  Resource_Unicode::ConvertUnicodeToFormat(ExtValue, pStr, FormatStr.Length());
+  System::resource::Resource_Unicode::ConvertUnicodeToFormat(ExtValue, pStr, FormatStr.Length());
   SetResource(aResource, FormatStr.ToCString());
 }
 
-void Resource_Manager::SetResource(const char* aResource, const char* aValue)
+void System::resource::Resource_Manager::SetResource(const char* aResource, const char* aValue)
 {
   TCollection_AsciiString Resource = aResource;
   TCollection_AsciiString Value    = aValue;
@@ -455,19 +455,19 @@ void Resource_Manager::SetResource(const char* aResource, const char* aValue)
     myUserMap(Resource) = Value;
 }
 
-bool Resource_Manager::Find(const char* aResource) const
+bool System::resource::Resource_Manager::Find(const char* aResource) const
 {
   TCollection_AsciiString Resource(aResource);
   return myUserMap.IsBound(Resource) || myRefMap.IsBound(Resource);
 }
 
-bool Resource_Manager::Find(const TCollection_AsciiString& theResource,
+bool System::resource::Resource_Manager::Find(const TCollection_AsciiString& theResource,
                             TCollection_AsciiString&       theValue) const
 {
   return myUserMap.Find(theResource, theValue) || myRefMap.Find(theResource, theValue);
 }
 
-void Resource_Manager::GetResourcePath(TCollection_AsciiString& aPath,
+void System::resource::Resource_Manager::GetResourcePath(TCollection_AsciiString& aPath,
                                        const char*              aName,
                                        const bool               isUserDefaults)
 {
@@ -478,14 +478,14 @@ void Resource_Manager::GetResourcePath(TCollection_AsciiString& aPath,
   anEnvVar += isUserDefaults ? "UserDefaults" : "Defaults";
 
   TCollection_AsciiString dir;
-  OSD_Environment         anEnv(anEnvVar);
+  System::os::OSD_Environment         anEnv(anEnvVar);
   dir = anEnv.Value();
   if (dir.IsEmpty())
     return;
 
   TCollection_AsciiString aResPath(dir);
 
-  OSD_Path anOSDPath(aResPath);
+  System::os::OSD_Path anOSDPath(aResPath);
 
   if (!anOSDPath.Name().IsEmpty())
   {
@@ -497,7 +497,7 @@ void Resource_Manager::GetResourcePath(TCollection_AsciiString& aPath,
   anOSDPath.SystemName(aPath);
 }
 
-NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& Resource_Manager::GetMap(
+NCollection_DataMap<TCollection_AsciiString, TCollection_AsciiString>& System::resource::Resource_Manager::GetMap(
   bool theRefMap)
 {
   return theRefMap ? myRefMap : myUserMap;

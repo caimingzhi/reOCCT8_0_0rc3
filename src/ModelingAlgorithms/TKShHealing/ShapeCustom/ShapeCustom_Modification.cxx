@@ -20,7 +20,7 @@ occ::handle<ShapeExtend_BasicMsgRegistrator> ShapeCustom_Modification::MsgRegist
 }
 
 void ShapeCustom_Modification::SendMsg(const TopoDS_Shape&   shape,
-                                       const Message_Msg&    message,
+                                       const System::log::Message_Msg&    message,
                                        const Message_Gravity gravity) const
 {
   if (!myMsgReg.IsNull())

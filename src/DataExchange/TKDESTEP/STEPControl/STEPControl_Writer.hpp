@@ -45,14 +45,14 @@ public:
     Transfer(const TopoDS_Shape&             sh,
              const STEPControl_StepModelType mode,
              const bool                      compgraph   = true,
-             const Message_ProgressRange&    theProgress = Message_ProgressRange());
+             const System::log::Message_ProgressRange&    theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT IFSelect_ReturnStatus
     Transfer(const TopoDS_Shape&             sh,
              const STEPControl_StepModelType mode,
              const DESTEP_Parameters&        theParams,
              const bool                      compgraph   = true,
-             const Message_ProgressRange&    theProgress = Message_ProgressRange());
+             const System::log::Message_ProgressRange&    theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT IFSelect_ReturnStatus Write(const char* theFileName);
 

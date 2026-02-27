@@ -1338,7 +1338,7 @@ bool OpenGl_ShaderProgram::UpdateDebugDump(const occ::handle<OpenGl_Context>& th
   TCollection_AsciiString aFolder = theFolder;
   if (aFolder.IsEmpty())
   {
-    OSD_Environment aShaderVar("CSF_ShadersDirectoryDump");
+    System::os::OSD_Environment aShaderVar("CSF_ShadersDirectoryDump");
     aFolder = aShaderVar.Value();
     if (aFolder.IsEmpty())
     {

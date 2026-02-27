@@ -29,7 +29,10 @@ class IntTools_Context;
 class TopoDS_Solid;
 class IntTools_Range;
 class TopoDS_Shell;
+namespace System { namespace log {
 class Message_Report;
+}} // namespace System::log
+
 
 class BOPTools_AlgoTools
 {
@@ -46,7 +49,7 @@ public:
 
   Standard_EXPORT static int ComputeVV(const TopoDS_Vertex& theV1,
                                        const TopoDS_Vertex& theV2,
-                                       const double         theFuzz = Precision::Confusion());
+                                       const double         theFuzz = math::precision::Precision::Confusion());
 
 public:
   Standard_EXPORT static void MakeVertex(const NCollection_List<TopoDS_Shape>& theLV,
@@ -186,7 +189,7 @@ public:
     const TopoDS_Shape&                  theSplit,
     const TopoDS_Shape&                  theShape,
     const occ::handle<IntTools_Context>& theContext,
-    const occ::handle<Message_Report>&   theReport = nullptr);
+    const occ::handle<System::log::Message_Report>&   theReport = nullptr);
 
   Standard_EXPORT static bool IsSplitToReverse(const TopoDS_Face&                   theSplit,
                                                const TopoDS_Face&                   theShape,
@@ -262,7 +265,7 @@ public:
   Standard_EXPORT static bool AreFacesSameDomain(const TopoDS_Face&                   theF1,
                                                  const TopoDS_Face&                   theF2,
                                                  const occ::handle<IntTools_Context>& theContext,
-                                                 const double theFuzz = Precision::Confusion());
+                                                 const double theFuzz = math::precision::Precision::Confusion());
 
 public:
   Standard_EXPORT static bool GetEdgeOff(const TopoDS_Edge& theEdge,

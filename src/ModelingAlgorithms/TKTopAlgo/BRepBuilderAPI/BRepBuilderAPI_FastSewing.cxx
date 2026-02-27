@@ -168,8 +168,8 @@ bool BRepBuilderAPI_FastSewing::Add(const TopoDS_Shape& theShape)
       double aUf = 0.0, aUl = 0.0, aVf = 0.0, aVl = 0.0;
       aSurf->Bounds(aUf, aUl, aVf, aVl);
 
-      if (Precision::IsInfinite(aUf) || Precision::IsInfinite(aUl) || Precision::IsInfinite(aVf)
-          || Precision::IsInfinite(aVl))
+      if (math::precision::Precision::IsInfinite(aUf) || math::precision::Precision::IsInfinite(aUl) || math::precision::Precision::IsInfinite(aVf)
+          || math::precision::Precision::IsInfinite(aVl))
       {
         SetStatus(FS_InfiniteSurface);
         continue;
@@ -203,8 +203,8 @@ bool BRepBuilderAPI_FastSewing::Add(const occ::handle<Geom_Surface>& theSurface)
   double aUf = 0.0, aUl = 0.0, aVf = 0.0, aVl = 0.0;
   theSurface->Bounds(aUf, aUl, aVf, aVl);
 
-  if (Precision::IsInfinite(aUf) || Precision::IsInfinite(aUl) || Precision::IsInfinite(aVf)
-      || Precision::IsInfinite(aVl))
+  if (math::precision::Precision::IsInfinite(aUf) || math::precision::Precision::IsInfinite(aUl) || math::precision::Precision::IsInfinite(aVf)
+      || math::precision::Precision::IsInfinite(aVl))
   {
     SetStatus(FS_InfiniteSurface);
     return false;

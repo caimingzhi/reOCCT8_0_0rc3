@@ -85,11 +85,11 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
       V3 = L2;
 
     Ratio = 1;
-    if ((V1 > Precision::Confusion()) && (V2 > Precision::Confusion()))
+    if ((V1 > math::precision::Precision::Confusion()) && (V2 > math::precision::Precision::Confusion()))
     {
       Ratio = V2 / V1;
     }
-    if ((Ratio < Precision::Confusion()) || (Ratio > 1 / Precision::Confusion()))
+    if ((Ratio < math::precision::Precision::Confusion()) || (Ratio > 1 / math::precision::Precision::Confusion()))
     {
       Ratio = 1;
     }
@@ -134,11 +134,11 @@ GeomConvert_CompBezierSurfacesToBSplineSurface::GeomConvert_CompBezierSurfacesTo
       V3 = L2;
 
     Ratio = 1;
-    if ((V1 > Precision::Confusion()) && (V2 > Precision::Confusion()))
+    if ((V1 > math::precision::Precision::Confusion()) && (V2 > math::precision::Precision::Confusion()))
     {
       Ratio = V2 / V1;
     }
-    if ((Ratio < Precision::Confusion()) || (Ratio > 1 / Precision::Confusion()))
+    if ((Ratio < math::precision::Precision::Confusion()) || (Ratio > 1 / math::precision::Precision::Confusion()))
     {
       Ratio = 1;
     }

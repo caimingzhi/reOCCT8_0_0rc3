@@ -19,7 +19,7 @@ bool Transfer_ActorOfProcessForTransient::Recognize(const occ::handle<Standard_T
 occ::handle<Transfer_Binder> Transfer_ActorOfProcessForTransient::Transferring(
   const occ::handle<Standard_Transient>&,
   const occ::handle<Transfer_ProcessForTransient>&,
-  const Message_ProgressRange&)
+  const System::log::Message_ProgressRange&)
 {
   return NullResult();
 }

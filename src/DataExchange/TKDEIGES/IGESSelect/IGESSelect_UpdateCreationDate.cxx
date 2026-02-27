@@ -22,7 +22,7 @@ void IGESSelect_UpdateCreationDate::Performing(IFSelect_ContextModif&           
                                                Interface_CopyTool&) const
 {
   int           jour, mois, annee, heure, minute, seconde, millisec, microsec;
-  OSD_Process   system;
+  System::os::OSD_Process   system;
   Quantity_Date ladate = system.SystemDate();
   ladate.Values(mois, jour, annee, heure, minute, seconde, millisec, microsec);
 

@@ -143,7 +143,7 @@ BRepMesh_GeomTool::BRepMesh_GeomTool(const BRepAdaptor_Curve& theCurve,
                            theAngDeflection,
                            theLinDeflection,
                            theMinPointsNb,
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            theMinSize);
 }
 
@@ -167,7 +167,7 @@ BRepMesh_GeomTool::BRepMesh_GeomTool(const occ::handle<BRepAdaptor_Surface>& the
                            theAngDeflection,
                            theLinDeflection,
                            theMinPointsNb,
-                           Precision::PConfusion(),
+                           math::precision::Precision::PConfusion(),
                            theMinSize);
 }
 
@@ -228,7 +228,7 @@ bool BRepMesh_GeomTool::Normal(const occ::handle<BRepAdaptor_Surface>& theSurfac
   theSurface->D1(theParamU, theParamV, thePoint, aD1U, aD1V);
 
   CSLib_DerivativeStatus aStatus;
-  CSLib::Normal(aD1U, aD1V, Precision::Angular(), aStatus, theNormal);
+  CSLib::Normal(aD1U, aD1V, math::precision::Precision::Angular(), aStatus, theNormal);
   if (aStatus != CSLib_Done)
   {
     gp_Vec aD2U, aD2V, aD2UV;
@@ -239,7 +239,7 @@ bool BRepMesh_GeomTool::Normal(const occ::handle<BRepAdaptor_Surface>& theSurfac
                   aD2U,
                   aD2V,
                   aD2UV,
-                  Precision::Angular(),
+                  math::precision::Precision::Angular(),
                   isOK,
                   aNormalStatus,
                   theNormal);
@@ -359,7 +359,7 @@ BRepMesh_GeomTool::IntFlag BRepMesh_GeomTool::IntSegSeg(const gp_XY& theStartPnt
     return BRepMesh_GeomTool::NoIntersection;
   }
 
-  constexpr double aPrec    = Precision::PConfusion();
+  constexpr double aPrec    = math::precision::Precision::PConfusion();
   const double     aEndPrec = 1 - aPrec;
   for (int i = 0; i < 2; ++i)
   {
@@ -424,7 +424,7 @@ int BRepMesh_GeomTool::classifyPoint(const gp_XY& thePoint1,
   gp_XY aP1 = thePoint2 - thePoint1;
   gp_XY aP2 = thePointToCheck - thePoint1;
 
-  constexpr double aPrec   = Precision::PConfusion();
+  constexpr double aPrec   = math::precision::Precision::PConfusion();
   const double     aSqPrec = aPrec * aPrec;
   double           aDist   = std::abs(aP1 ^ aP2);
   if (aDist > aPrec)

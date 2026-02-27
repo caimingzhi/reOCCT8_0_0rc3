@@ -127,7 +127,7 @@ static int Cirtang(Draw_Interpretor& theDI, int theNArgs, const char** theArgVal
     return 1;
   }
 
-  double                    aTol = Precision::Confusion();
+  double                    aTol = math::precision::Precision::Confusion();
   occ::handle<Geom2d_Curve> aC[3];
   gp_Pnt2d                  aP[3];
   double                    aRadius = -1.0;
@@ -326,7 +326,7 @@ static int lintang(Draw_Interpretor& di, int n, const char** a)
     double                ang = Draw::Atof(a[4]) * (M_PI / 180.0);
     Geom2dGcc_Lin2dTanObl ct3(Geom2dGcc::Unqualified(C1),
                               L->Lin2d(),
-                              Precision::Angular(),
+                              math::precision::Precision::Angular(),
                               (C1->FirstParameter() + C1->LastParameter()) / 2.,
                               ang);
     if (ct3.IsDone())
@@ -347,7 +347,7 @@ static int lintang(Draw_Interpretor& di, int n, const char** a)
   {
     Geom2dGcc_Lin2d2Tan ct3(Geom2dGcc::Unqualified(C1),
                             Geom2dGcc::Unqualified(C2),
-                            Precision::Angular(),
+                            math::precision::Precision::Angular(),
                             (C1->FirstParameter() + C1->LastParameter()) / 2.,
                             (C2->FirstParameter() + C2->LastParameter()) / 2.);
     if (ct3.IsDone())

@@ -84,9 +84,9 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
       {
         gp_Dir D1 = HLRBRep_BCurveTool::Circle(myCurve).Axis().Direction();
         D1.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
-        if (D1.IsParallel(gp::DZ(), Precision::Angular()))
+        if (D1.IsParallel(gp::DZ(), math::precision::Precision::Angular()))
           myType = GeomAbs_Circle;
-        else if (std::abs(D1.Dot(gp::DZ())) < Precision::Angular() * 10)
+        else if (std::abs(D1.Dot(gp::DZ())) < math::precision::Precision::Angular() * 10)
           myType = GeomAbs_OtherCurve;
         else
         {
@@ -105,7 +105,7 @@ double HLRBRep_Curve::Update(double TotMin[16], double TotMax[16])
       {
         gp_Dir D1 = HLRBRep_BCurveTool::Ellipse(myCurve).Axis().Direction();
         D1.Transform(((HLRAlgo_Projector*)myProj)->Transformation());
-        if (D1.IsParallel(gp::DZ(), Precision::Angular()))
+        if (D1.IsParallel(gp::DZ(), math::precision::Precision::Angular()))
         {
           myOX   = 0.;
           myType = GeomAbs_Ellipse;

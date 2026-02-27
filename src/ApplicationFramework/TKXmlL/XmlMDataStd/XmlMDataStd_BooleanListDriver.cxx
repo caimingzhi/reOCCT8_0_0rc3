@@ -14,7 +14,7 @@ IMPLEMENT_DOMSTRING(LastIndexString, "last")
 IMPLEMENT_DOMSTRING(AttributeIDString, "boollistattguid")
 
 XmlMDataStd_BooleanListDriver::XmlMDataStd_BooleanListDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

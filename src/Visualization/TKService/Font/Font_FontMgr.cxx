@@ -78,7 +78,7 @@ namespace
                                              nullptr};
   #endif
 
-  static void addDirsRecursively(const OSD_Path&                           thePath,
+  static void addDirsRecursively(const System::os::OSD_Path&                           thePath,
                                  NCollection_Map<TCollection_AsciiString>& theDirsMap)
   {
     TCollection_AsciiString aDirName;
@@ -88,9 +88,9 @@ namespace
       return;
     }
 
-    for (OSD_DirectoryIterator aDirIterator(thePath, "*"); aDirIterator.More(); aDirIterator.Next())
+    for (System::os::OSD_DirectoryIterator aDirIterator(thePath, "*"); aDirIterator.More(); aDirIterator.Next())
     {
-      OSD_Path aChildDirPath;
+      System::os::OSD_Path aChildDirPath;
       aDirIterator.Values().Path(aChildDirPath);
 
       TCollection_AsciiString aChildDirName;
@@ -98,7 +98,7 @@ namespace
       if (!aChildDirName.IsEqual(".") && !aChildDirName.IsEqual(".."))
       {
         aChildDirName = aDirName + "/" + aChildDirName;
-        OSD_Path aPath(aChildDirName);
+        System::os::OSD_Path aPath(aChildDirName);
         addDirsRecursively(aPath, theDirsMap);
       }
     }
@@ -651,7 +651,7 @@ void Font_FontMgr::InitFontDataBase()
         }
 
         TCollection_AsciiString aPathStr((const char*)aFcFolder);
-        OSD_Path                aPath(aPathStr);
+        System::os::OSD_Path                aPath(aPathStr);
         addDirsRecursively(aPath, aMapOfFontsDirs);
       }
       FcStrListDone(aFcFontDir);
@@ -659,15 +659,15 @@ void Font_FontMgr::InitFontDataBase()
     FcConfigDestroy(aFcCfg);
   }
 
-  const OSD_Protection aProtectRead(OSD_R, OSD_R, OSD_R, OSD_R);
+  const System::os::OSD_Protection aProtectRead(OSD_R, OSD_R, OSD_R, OSD_R);
   if (aMapOfFontsDirs.IsEmpty())
   {
-    Message::SendAlarm("Font_FontMgr, fontconfig library returns an empty folder list");
+    System::log::Message::SendAlarm("Font_FontMgr, fontconfig library returns an empty folder list");
 
     for (int anIter = 0; myFontServiceConf[anIter] != nullptr; ++anIter)
     {
       const TCollection_AsciiString aFileOfFontsPath(myFontServiceConf[anIter]);
-      OSD_File                      aFile(aFileOfFontsPath);
+      System::os::OSD_File                      aFile(aFileOfFontsPath);
       if (!aFile.Exists())
       {
         continue;
@@ -707,7 +707,7 @@ void Font_FontMgr::InitFontDataBase()
             aFontPath.RightAdjust();
             if (!aFontPath.IsEmpty())
             {
-              OSD_Path aPath(aFontPath);
+              System::os::OSD_Path aPath(aFontPath);
               addDirsRecursively(aPath, aMapOfFontsDirs);
             }
             aPathNumber++;
@@ -723,7 +723,7 @@ void Font_FontMgr::InitFontDataBase()
   {
     const char*             anItem = myDefaultFontsDirs[anIter];
     TCollection_AsciiString aPathStr(anItem);
-    OSD_Path                aPath(aPathStr);
+    System::os::OSD_Path                aPath(aPathStr);
     addDirsRecursively(aPath, aMapOfFontsDirs);
   }
 
@@ -739,14 +739,14 @@ void Font_FontMgr::InitFontDataBase()
   {
   #if defined(HAVE_FREETYPE) && !defined(__ANDROID__) && !defined(__APPLE__)                       \
     && !defined(__EMSCRIPTEN__)
-    OSD_File aReadFile(anIter.Value() + "/fonts.dir");
+    System::os::OSD_File aReadFile(anIter.Value() + "/fonts.dir");
     if (!aReadFile.Exists())
     {
   #endif
-      OSD_Path aFolderPath(anIter.Value());
-      for (OSD_FileIterator aFileIter(aFolderPath, "*"); aFileIter.More(); aFileIter.Next())
+      System::os::OSD_Path aFolderPath(anIter.Value());
+      for (System::os::OSD_FileIterator aFileIter(aFolderPath, "*"); aFileIter.More(); aFileIter.Next())
       {
-        OSD_Path aFontFilePath;
+        System::os::OSD_Path aFontFilePath;
         aFileIter.Values().Path(aFontFilePath);
 
         TCollection_AsciiString aFontFileName;
@@ -920,7 +920,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFallbackFont(Font_UnicodeSubset t
         aRange = "Arabic";
         break;
     }
-    Message::SendFail(TCollection_AsciiString("Font_FontMgr, error: unable to find ") + aRange
+    System::log::Message::SendFail(TCollection_AsciiString("Font_FontMgr, error: unable to find ") + aRange
                       + " fallback font!");
   }
   return aFont;
@@ -991,7 +991,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFont(const TCollection_AsciiStrin
     {
       if (isAliasUsed && myToTraceAliases)
       {
-        Message::SendTrace(TCollection_AsciiString("Font_FontMgr, using font alias '")
+        System::log::Message::SendTrace(TCollection_AsciiString("Font_FontMgr, using font alias '")
                            + aFont->FontName()
                            + "'"
                              " instead of requested '"
@@ -1017,7 +1017,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFont(const TCollection_AsciiStrin
   {
     if (theDoFailMsg && myToPrintErrors)
     {
-      Message::SendFail("Font_FontMgr, error: unable to find any font!");
+      System::log::Message::SendFail("Font_FontMgr, error: unable to find any font!");
     }
     return occ::handle<Font_SystemFont>();
   }
@@ -1028,7 +1028,7 @@ occ::handle<Font_SystemFont> Font_FontMgr::FindFont(const TCollection_AsciiStrin
     TCollection_AsciiString aDesc = TCollection_AsciiString() + "'" + theFontName + "'"
                                     + TCollection_AsciiString() + " ["
                                     + Font_FontMgr::FontAspectToString(theFontAspect) + "]";
-    Message::SendWarning(TCollection_AsciiString("Font_FontMgr, warning: unable to find font ")
+    System::log::Message::SendWarning(TCollection_AsciiString("Font_FontMgr, warning: unable to find font ")
                          + aDesc + "; " + aFont->ToString() + " is used instead");
   }
   return aFont;

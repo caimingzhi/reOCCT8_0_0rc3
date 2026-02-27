@@ -331,7 +331,7 @@ bool AIS_Plane::Size(double& X, double& Y) const
 {
   X = myDrawer->PlaneAspect()->PlaneXLength();
   Y = myDrawer->PlaneAspect()->PlaneYLength();
-  return std::abs(X - Y) <= Precision::Confusion();
+  return std::abs(X - Y) <= math::precision::Precision::Confusion();
 }
 
 void AIS_Plane::SetMinimumSize(const double theValue)
@@ -437,9 +437,9 @@ void AIS_Plane::ComputeFrame()
 
     U = 2.4 * std::abs(U);
     V = 2.4 * std::abs(V);
-    if (U < 10 * Precision::Confusion())
+    if (U < 10 * math::precision::Precision::Confusion())
       U = 0.1;
-    if (V < 10 * Precision::Confusion())
+    if (V < 10 * math::precision::Precision::Confusion())
       V = 0.1;
     SetSize(U, V);
     myDrawer->PlaneAspect()->SetPlaneLength(U, V);

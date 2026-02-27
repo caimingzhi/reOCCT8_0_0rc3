@@ -29,20 +29,20 @@ void Extrema_GlobOptFuncCQuadric::value(double ct, double& F)
       ElSLib::Parameters(myTorus, aCP, u, v);
       break;
     default:
-      F = Precision::Infinite();
+      F = math::precision::Precision::Infinite();
       return;
   }
 
   if (mySType != GeomAbs_Plane)
   {
-    if (myUl > 2. * M_PI + Precision::PConfusion())
+    if (myUl > 2. * M_PI + math::precision::Precision::PConfusion())
     {
       u += 2. * M_PI;
     }
   }
   if (mySType == GeomAbs_Torus)
   {
-    if (myVl > 2. * M_PI + Precision::PConfusion())
+    if (myVl > 2. * M_PI + math::precision::Precision::PConfusion())
     {
       v += 2. * M_PI;
     }
@@ -109,24 +109,24 @@ void Extrema_GlobOptFuncCQuadric::LoadQuad(const Adaptor3d_Surface* S,
 
   if (myS->IsUPeriodic())
   {
-    constexpr double aTMax = 2. * M_PI + Precision::PConfusion();
-    if (myUf > aTMax || myUf < -Precision::PConfusion() || std::abs(myUl - myUf) > aTMax)
+    constexpr double aTMax = 2. * M_PI + math::precision::Precision::PConfusion();
+    if (myUf > aTMax || myUf < -math::precision::Precision::PConfusion() || std::abs(myUl - myUf) > aTMax)
     {
       ElCLib::AdjustPeriodic(0.,
                              2. * M_PI,
-                             std::min(std::abs(myUl - myUf) / 2, Precision::PConfusion()),
+                             std::min(std::abs(myUl - myUf) / 2, math::precision::Precision::PConfusion()),
                              myUf,
                              myUl);
     }
   }
   if (myS->IsVPeriodic())
   {
-    constexpr double aTMax = 2. * M_PI + Precision::PConfusion();
-    if (myVf > aTMax || myVf < -Precision::PConfusion() || std::abs(myVl - myVf) > aTMax)
+    constexpr double aTMax = 2. * M_PI + math::precision::Precision::PConfusion();
+    if (myVf > aTMax || myVf < -math::precision::Precision::PConfusion() || std::abs(myVl - myVf) > aTMax)
     {
       ElCLib::AdjustPeriodic(0.,
                              2. * M_PI,
-                             std::min(std::abs(myVl - myVf) / 2, Precision::PConfusion()),
+                             std::min(std::abs(myVl - myVf) / 2, math::precision::Precision::PConfusion()),
                              myVf,
                              myVl);
     }
@@ -170,7 +170,7 @@ bool Extrema_GlobOptFuncCQuadric::Value(const math_Vector& X, double& F)
     return false;
 
   value(ct, F);
-  return !Precision::IsInfinite(F);
+  return !math::precision::Precision::IsInfinite(F);
 }
 
 void Extrema_GlobOptFuncCQuadric::QuadricParameters(const math_Vector& theCT,
@@ -206,14 +206,14 @@ void Extrema_GlobOptFuncCQuadric::QuadricParameters(const math_Vector& theCT,
 
   if (mySType != GeomAbs_Plane)
   {
-    if (myUl > 2. * M_PI + Precision::PConfusion())
+    if (myUl > 2. * M_PI + math::precision::Precision::PConfusion())
     {
       u += 2. * M_PI;
     }
   }
   if (mySType == GeomAbs_Torus)
   {
-    if (myVl > 2. * M_PI + Precision::PConfusion())
+    if (myVl > 2. * M_PI + math::precision::Precision::PConfusion())
     {
       v += 2. * M_PI;
     }

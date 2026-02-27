@@ -57,7 +57,7 @@ bool RWObj_CafWriter::toSkipFaceMesh(const RWMesh_FaceIterator& theFaceIter)
 bool RWObj_CafWriter::Perform(
   const occ::handle<TDocStd_Document>&                                                theDocument,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
   NCollection_Sequence<TDF_Label> aRoots;
   occ::handle<XCAFDoc_ShapeTool>  aShapeTool = XCAFDoc_DocumentTool::ShapeTool(theDocument->Main());
@@ -70,11 +70,11 @@ bool RWObj_CafWriter::Perform(
   const NCollection_Sequence<TDF_Label>&          theRootLabels,
   const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
   const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-  const Message_ProgressRange&                                                        theProgress)
+  const System::log::Message_ProgressRange&                                                        theProgress)
 {
   TCollection_AsciiString aFolder, aFileName, aFullFileNameBase, aShortFileNameBase, aFileExt;
-  OSD_Path::FolderAndFileFromPath(myFile, aFolder, aFileName);
-  OSD_Path::FileNameAndExtension(aFileName, aShortFileNameBase, aFileExt);
+  System::os::OSD_Path::FolderAndFileFromPath(myFile, aFolder, aFileName);
+  System::os::OSD_Path::FileNameAndExtension(aFileName, aShortFileNameBase, aFileExt);
 
   double aLengthUnit = 1.;
   if (XCAFDoc_DocumentTool::GetLengthUnit(theDocument, aLengthUnit))
@@ -84,7 +84,7 @@ bool RWObj_CafWriter::Perform(
 
   if (theRootLabels.IsEmpty() || (theLabelFilter != nullptr && theLabelFilter->IsEmpty()))
   {
-    Message::SendFail("Nothing to export into OBJ file");
+    System::log::Message::SendFail("Nothing to export into OBJ file");
     return false;
   }
 
@@ -117,7 +117,7 @@ bool RWObj_CafWriter::Perform(
   }
   if (aNbNodesAll == 0 || aNbElemsAll == 0)
   {
-    Message::SendFail("No mesh data to save");
+    System::log::Message::SendFail("No mesh data to save");
     return false;
   }
 
@@ -153,7 +153,7 @@ bool RWObj_CafWriter::Perform(
   }
 
   const double              aPatchStep = 2048.0;
-  Message_LazyProgressScope aPSentry(theProgress, "OBJ export", aNbPEntities, aPatchStep);
+  System::log::Message_LazyProgressScope aPSentry(theProgress, "OBJ export", aNbPEntities, aPatchStep);
 
   bool isDone = true;
   for (XCAFPrs_DocumentExplorer aDocExplorer(theDocument,
@@ -196,7 +196,7 @@ bool RWObj_CafWriter::Perform(
   const bool isClosed = anObjFile.Close();
   if (isDone && !isClosed)
   {
-    Message::SendFail(TCollection_AsciiString("Failed to write OBJ file\n") + myFile);
+    System::log::Message::SendFail(TCollection_AsciiString("Failed to write OBJ file\n") + myFile);
     return false;
   }
   return isDone && !aPSentry.IsAborted();
@@ -229,7 +229,7 @@ void RWObj_CafWriter::addFaceInfo(const RWMesh_FaceIterator& theFace,
 
 bool RWObj_CafWriter::writeShape(RWObj_ObjWriterContext&        theWriter,
                                  RWObj_ObjMaterialMap&          theMatMgr,
-                                 Message_LazyProgressScope&     thePSentry,
+                                 System::log::Message_LazyProgressScope&     thePSentry,
                                  const TDF_Label&               theLabel,
                                  const TopLoc_Location&         theParentTrsf,
                                  const XCAFPrs_Style&           theParentStyle,
@@ -301,7 +301,7 @@ bool RWObj_CafWriter::writeShape(RWObj_ObjWriterContext&        theWriter,
 }
 
 bool RWObj_CafWriter::writePositions(RWObj_ObjWriterContext&    theWriter,
-                                     Message_LazyProgressScope& thePSentry,
+                                     System::log::Message_LazyProgressScope& thePSentry,
                                      const RWMesh_FaceIterator& theFace)
 {
   const int aNodeUpper = theFace.NodeUpper();
@@ -319,7 +319,7 @@ bool RWObj_CafWriter::writePositions(RWObj_ObjWriterContext&    theWriter,
 }
 
 bool RWObj_CafWriter::writeNormals(RWObj_ObjWriterContext&    theWriter,
-                                   Message_LazyProgressScope& thePSentry,
+                                   System::log::Message_LazyProgressScope& thePSentry,
                                    const RWMesh_FaceIterator& theFace)
 {
   const int aNodeUpper = theFace.NodeUpper();
@@ -338,7 +338,7 @@ bool RWObj_CafWriter::writeNormals(RWObj_ObjWriterContext&    theWriter,
 }
 
 bool RWObj_CafWriter::writeTextCoords(RWObj_ObjWriterContext&    theWriter,
-                                      Message_LazyProgressScope& thePSentry,
+                                      System::log::Message_LazyProgressScope& thePSentry,
                                       const RWMesh_FaceIterator& theFace)
 {
   const int aNodeUpper = theFace.NodeUpper();
@@ -355,7 +355,7 @@ bool RWObj_CafWriter::writeTextCoords(RWObj_ObjWriterContext&    theWriter,
 }
 
 bool RWObj_CafWriter::writeIndices(RWObj_ObjWriterContext&    theWriter,
-                                   Message_LazyProgressScope& thePSentry,
+                                   System::log::Message_LazyProgressScope& thePSentry,
                                    const RWMesh_FaceIterator& theFace)
 {
   const int anElemLower = theFace.ElemLower();

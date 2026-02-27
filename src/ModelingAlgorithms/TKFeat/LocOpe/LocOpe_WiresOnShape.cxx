@@ -249,10 +249,10 @@ void LocOpe_WiresOnShape::BindAll()
 
       gp_Pnt2d p2d =
         (!BAcurve2d.Curve().IsNull() ? BAcurve2d.Value(vtx_param)
-                                     : gp_Pnt2d(Precision::Infinite(), Precision::Infinite()));
+                                     : gp_Pnt2d(math::precision::Precision::Infinite(), math::precision::Precision::Infinite()));
 
       TopoDS_Edge Epro;
-      double      prm         = Precision::Infinite();
+      double      prm         = math::precision::Precision::Infinite();
       bool        isProjected = myMap.IsBound(vtx);
 
       if (isProjected)
@@ -282,8 +282,8 @@ void LocOpe_WiresOnShape::BindAll()
             double aF1, aL1;
             BRep_Tool::Range(Epro, fac, aF1, aL1);
             if (!BRep_Tool::Degenerated(Epro)
-                && (std::abs(prm - aF1) <= Precision::PConfusion()
-                    || std::abs(prm - aL1) <= Precision::PConfusion()))
+                && (std::abs(prm - aF1) <= math::precision::Precision::PConfusion()
+                    || std::abs(prm - aL1) <= math::precision::Precision::PConfusion()))
             {
               myMap.Bind(vtx, vtx2);
               theMap.Add(vtx);
@@ -430,19 +430,19 @@ bool Project(const TopoDS_Vertex& V,
       const TopoDS_Edge&      edg = TopoDS::Edge(exp.Current());
       double                  f, l;
       occ::handle<Geom_Curve> C        = BRep_Tool::Curve(edg, f, l);
-      double                  aCurDist = Precision::Infinite();
-      double                  aCurPar  = Precision::Infinite();
+      double                  aCurDist = math::precision::Precision::Infinite();
+      double                  aCurPar  = math::precision::Precision::Infinite();
       if (!C.IsNull())
       {
         aCurPar = Project(V, edg);
-        if (Precision::IsInfinite(aCurPar))
+        if (math::precision::Precision::IsInfinite(aCurPar))
           continue;
         gp_Pnt aCurPBound;
         C->D0(aCurPar, aCurPBound);
         aCurDist = aCurPBound.SquareDistance(toproj);
       }
 
-      else if (!Precision::IsInfinite(p2d.X()))
+      else if (!math::precision::Precision::IsInfinite(p2d.X()))
       {
 
         occ::handle<Geom2d_Curve> aC2d = BRep_Tool::CurveOnSurface(edg, F, f, l);
@@ -450,7 +450,7 @@ bool Project(const TopoDS_Vertex& V,
           continue;
 
         aCurPar = Project(V, p2d, edg, F);
-        if (Precision::IsInfinite(aCurPar))
+        if (math::precision::Precision::IsInfinite(aCurPar))
           continue;
         occ::handle<Geom2d_Curve> PC = BRep_Tool::CurveOnSurface(edg, F, f, l);
         gp_Pnt2d                  aPProj;
@@ -471,7 +471,7 @@ bool Project(const TopoDS_Vertex& V,
     if (theEdge.IsNull())
       return false;
   }
-  else if (Precision::IsInfinite(param))
+  else if (math::precision::Precision::IsInfinite(param))
   {
     double                  f, l;
     occ::handle<Geom_Curve> C = BRep_Tool::Curve(theEdge, f, l);
@@ -512,7 +512,7 @@ bool Project(const TopoDS_Vertex& V,
           ShapeAnalysis::AdjustToPeriod(aX2, adSurf.FirstUParameter(), adSurf.LastUParameter());
         aX2 += aShift;
         dumin = std::abs(aX2 - aX1);
-        if (dumin > dumax && (std::abs(dumin - adSurf.UPeriod()) < Precision::PConfusion()))
+        if (dumin > dumax && (std::abs(dumin - adSurf.UPeriod()) < math::precision::Precision::PConfusion()))
         {
           aX2   = aX1;
           dumin = 0.;
@@ -532,7 +532,7 @@ bool Project(const TopoDS_Vertex& V,
           ShapeAnalysis::AdjustToPeriod(aY2, adSurf.FirstVParameter(), adSurf.LastVParameter());
         aY2 += aShift;
         dvmin = std::abs(aY1 - aY2);
-        if (dvmin > dvmax && (std::abs(dvmin - adSurf.VPeriod()) < Precision::Confusion()))
+        if (dvmin > dvmax && (std::abs(dvmin - adSurf.VPeriod()) < math::precision::Precision::Confusion()))
         {
           aY2   = aY1;
           dvmin = 0.;
@@ -599,7 +599,7 @@ double Project(const TopoDS_Vertex& V, const TopoDS_Edge& theEdge)
   }
   proj.Init(toproj, C, f, l);
 
-  return (proj.NbPoints() > 0 ? proj.LowerDistanceParameter() : Precision::Infinite());
+  return (proj.NbPoints() > 0 ? proj.LowerDistanceParameter() : math::precision::Precision::Infinite());
 }
 
 double Project(const TopoDS_Vertex&,
@@ -618,7 +618,7 @@ double Project(const TopoDS_Vertex&,
 
   proj.Init(p2d, PC, f, l);
 
-  return proj.NbPoints() > 0 ? proj.LowerDistanceParameter() : Precision::Infinite();
+  return proj.NbPoints() > 0 ? proj.LowerDistanceParameter() : math::precision::Precision::Infinite();
 }
 
 void PutPCurve(const TopoDS_Edge& Edg, const TopoDS_Face& Fac)
@@ -651,9 +651,9 @@ void PutPCurve(const TopoDS_Edge& Edg, const TopoDS_Face& Fac)
     gp_Pnt2d p2d;
     aC2d->D0((f + l) * 0.5, p2d);
     bool IsIn = true;
-    if ((p2d.X() < Umin - Precision::PConfusion()) || (p2d.X() > Umax + Precision::PConfusion()))
+    if ((p2d.X() < Umin - math::precision::Precision::PConfusion()) || (p2d.X() > Umax + math::precision::Precision::PConfusion()))
       IsIn = false;
-    if ((p2d.Y() < Vmin - Precision::PConfusion()) || (p2d.Y() > Vmax + Precision::PConfusion()))
+    if ((p2d.Y() < Vmin - math::precision::Precision::PConfusion()) || (p2d.Y() > Vmax + math::precision::Precision::PConfusion()))
       IsIn = false;
 
     if (IsIn)
@@ -683,7 +683,7 @@ void PutPCurve(const TopoDS_Edge& Edg, const TopoDS_Face& Fac)
   if (!V2.IsNull())
     TolLast = BRep_Tool::Tolerance(V2);
 
-  constexpr double                     tol2d = Precision::Confusion();
+  constexpr double                     tol2d = math::precision::Precision::Confusion();
   occ::handle<Geom2d_Curve>            C2d;
   ShapeConstruct_ProjectCurveOnSurface aToolProj;
   aToolProj.Init(S, tol2d);
@@ -734,7 +734,7 @@ void PutPCurve(const TopoDS_Edge& Edg, const TopoDS_Face& Fac)
   if (S->IsUPeriodic())
   {
     double           up      = S->UPeriod();
-    constexpr double tolu    = Precision::PConfusion();
+    constexpr double tolu    = math::precision::Precision::PConfusion();
     int              nbtra   = 0;
     double           theUmin = std::min(pf.X(), pl.X());
     double           theUmax = std::max(pf.X(), pl.X());
@@ -765,7 +765,7 @@ void PutPCurve(const TopoDS_Edge& Edg, const TopoDS_Face& Fac)
   if (S->IsVPeriodic())
   {
     double           vp      = S->VPeriod();
-    constexpr double tolv    = Precision::PConfusion();
+    constexpr double tolv    = math::precision::Precision::PConfusion();
     int              nbtra   = 0;
     double           theVmin = std::min(pf.Y(), pl.Y());
     double           theVmax = std::max(pf.Y(), pl.Y());
@@ -889,7 +889,7 @@ void PutPCurves(const TopoDS_Edge& Efrom, const TopoDS_Edge& Eto, const TopoDS_S
       if (S->IsUPeriodic())
       {
         double           up      = S->UPeriod();
-        constexpr double tolu    = Precision::PConfusion();
+        constexpr double tolu    = math::precision::Precision::PConfusion();
         int              nbtra   = 0;
         double           theUmin = std::min(pf.X(), pl.X());
         double           theUmax = std::max(pf.X(), pl.X());
@@ -922,7 +922,7 @@ void PutPCurves(const TopoDS_Edge& Efrom, const TopoDS_Edge& Eto, const TopoDS_S
       if (S->IsVPeriodic())
       {
         double           vp      = S->VPeriod();
-        constexpr double tolv    = Precision::PConfusion();
+        constexpr double tolv    = math::precision::Precision::PConfusion();
         int              nbtra   = 0;
         double           theVmin = std::min(pf.Y(), pl.Y());
         double           theVmax = std::max(pf.Y(), pl.Y());
@@ -1129,7 +1129,7 @@ void FindInternalIntersections(
         Splits,
   bool& isOverlapped)
 {
-  constexpr double TolExt = Precision::PConfusion();
+  constexpr double TolExt = math::precision::Precision::PConfusion();
   int              i, j;
 
   BRepAdaptor_Surface          anAdSurf(theFace, false);
@@ -1157,9 +1157,9 @@ void FindInternalIntersections(
   const occ::handle<Geom_Curve>& theCurve = BRep_Tool::Curve(theEdge, thePar[0], thePar[1]);
   GeomAdaptor_Curve              theGAcurve(theCurve, thePar[0], thePar[1]);
   double aTolV2d[2]        = {theGAcurve.Resolution(aTolV[0]), theGAcurve.Resolution(aTolV[1])};
-  aTolV2d[0]               = std::max(aTolV2d[0], Precision::PConfusion());
-  aTolV2d[1]               = std::max(aTolV2d[1], Precision::PConfusion());
-  double          aDistMax = Precision::Confusion() * Precision::Confusion();
+  aTolV2d[0]               = std::max(aTolV2d[0], math::precision::Precision::PConfusion());
+  aTolV2d[1]               = std::max(aTolV2d[1], math::precision::Precision::PConfusion());
+  double          aDistMax = math::precision::Precision::Confusion() * math::precision::Precision::Confusion();
   TopExp_Explorer Explo(theFace, TopAbs_EDGE);
   for (; Explo.More(); Explo.Next())
   {
@@ -1253,7 +1253,7 @@ void FindInternalIntersections(
   {
     gp_Pnt Pnt1 = theCurve->Value(SplitPars(i));
     gp_Pnt Pnt2 = theCurve->Value(SplitPars(i + 1));
-    if (Pnt1.SquareDistance(Pnt2) <= Precision::Confusion() * Precision::Confusion())
+    if (Pnt1.SquareDistance(Pnt2) <= math::precision::Precision::Confusion() * math::precision::Precision::Confusion())
       SplitPars.Remove(i + 1);
     else
       i++;
@@ -1352,8 +1352,8 @@ bool LocOpe_WiresOnShape::Add(const NCollection_Sequence<TopoDS_Shape>& theEdges
                       anAdF.LastUParameter(),
                       anAdF.FirstVParameter(),
                       anAdF.LastVParameter(),
-                      Precision::Confusion(),
-                      Precision::Confusion());
+                      math::precision::Precision::Confusion(),
+                      math::precision::Precision::Confusion());
     anExtr.SetFlag(Extrema_ExtFlag_MIN);
 
     i  = 1;
@@ -1381,7 +1381,7 @@ bool LocOpe_WiresOnShape::Add(const NCollection_Sequence<TopoDS_Shape>& theEdges
       if (!anExtr.IsDone() || !anExtr.NbExt())
         continue;
       double aTolE = BRep_Tool::Tolerance(TopoDS::Edge(aCurE));
-      double aTol2 = (aTolE + Precision::Confusion()) * (aTolE + Precision::Confusion());
+      double aTol2 = (aTolE + math::precision::Precision::Confusion()) * (aTolE + math::precision::Precision::Confusion());
       int    n     = 1;
       for (; n <= anExtr.NbExt(); n++)
       {
@@ -1394,7 +1394,7 @@ bool LocOpe_WiresOnShape::Add(const NCollection_Sequence<TopoDS_Shape>& theEdges
 
         if (aCheckStateTool.IsNull())
         {
-          aCheckStateTool = new BRepTopAdaptor_FClass2d(aCurF, Precision::PConfusion());
+          aCheckStateTool = new BRepTopAdaptor_FClass2d(aCurF, math::precision::Precision::PConfusion());
         }
         if (aCheckStateTool->Perform(gp_Pnt2d(aU, aV)) == TopAbs_IN)
         {

@@ -153,8 +153,8 @@ void Geom_ConicalSurface::Bounds(double& U1, double& U2, double& V1, double& V2)
 
   U1 = 0.0;
   U2 = 2.0 * M_PI;
-  V1 = -Precision::Infinite();
-  V2 = Precision::Infinite();
+  V1 = -math::precision::Precision::Infinite();
+  V2 = math::precision::Precision::Infinite();
 }
 
 void Geom_ConicalSurface::Coefficients(double& A1,
@@ -268,7 +268,7 @@ void Geom_ConicalSurface::Transform(const Trsf& T)
 
 void Geom_ConicalSurface::TransformParameters(double&, double& V, const gp_Trsf& T) const
 {
-  if (!Precision::IsInfinite(V))
+  if (!math::precision::Precision::IsInfinite(V))
     V *= std::abs(T.ScaleFactor());
 }
 

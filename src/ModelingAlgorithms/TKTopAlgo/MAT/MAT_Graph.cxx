@@ -73,7 +73,7 @@ void MAT_Graph::Perform(const bool                             SemiInfinite,
     while (TheRoots->More())
     {
       CurrentArc = MakeArc(TheRoots->Current(), theBasicElts, theArcs, IndTabArcs);
-      Extremite  = new MAT_Node(0, CurrentArc, Precision::Infinite());
+      Extremite  = new MAT_Node(0, CurrentArc, math::precision::Precision::Infinite());
       Extremite->SetIndex(IndTabNodes);
       CurrentArc->SetSecondNode(Extremite);
       theNodes.Bind(IndTabNodes, Extremite);
@@ -396,7 +396,7 @@ static occ::handle<MAT_Arc> MakeArc(
                            TheBasicElts(aBisector->FirstEdge()->EdgeNumber()),
                            TheBasicElts(aBisector->SecondEdge()->EdgeNumber()));
   DistExt    = aBisector->DistIssuePoint();
-  if (DistExt == Precision::Infinite())
+  if (DistExt == math::precision::Precision::Infinite())
   {
     DistExt = 1.0;
 #ifdef OCCT_DEBUG_Graph

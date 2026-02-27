@@ -218,7 +218,7 @@ double IntTools_SurfaceRangeLocalizeData::GetUParamInFrame(const int theIndex) c
   int aFrmInd = theIndex + myUIndMin - 1;
 
   if (myUParams.IsNull() || aFrmInd > myUIndMax)
-    return Precision::Infinite();
+    return math::precision::Precision::Infinite();
 
   return myUParams->Value(aFrmInd);
 }
@@ -228,7 +228,7 @@ double IntTools_SurfaceRangeLocalizeData::GetVParamInFrame(const int theIndex) c
   int aFrmInd = theIndex + myVIndMin - 1;
 
   if (myVParams.IsNull() || aFrmInd > myVIndMax)
-    return Precision::Infinite();
+    return math::precision::Precision::Infinite();
 
   return myVParams->Value(aFrmInd);
 }

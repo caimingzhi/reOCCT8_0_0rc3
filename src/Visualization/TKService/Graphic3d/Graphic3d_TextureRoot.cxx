@@ -26,11 +26,11 @@ TCollection_AsciiString Graphic3d_TextureRoot::TexturesFolder()
   if (!IsDefined)
   {
     IsDefined = true;
-    OSD_Environment aTexDirEnv("CSF_MDTVTexturesDirectory");
+    System::os::OSD_Environment aTexDirEnv("CSF_MDTVTexturesDirectory");
     VarName = aTexDirEnv.Value();
     if (VarName.IsEmpty())
     {
-      OSD_Environment aCasRootEnv("CASROOT");
+      System::os::OSD_Environment aCasRootEnv("CASROOT");
       VarName = aCasRootEnv.Value();
       if (!VarName.IsEmpty())
       {
@@ -48,10 +48,10 @@ TCollection_AsciiString Graphic3d_TextureRoot::TexturesFolder()
       throw Standard_Failure("CSF_MDTVTexturesDirectory and CASROOT are undefined");
     }
 
-    const OSD_Path                aDirPath(VarName);
-    OSD_Directory                 aDir(aDirPath);
+    const System::os::OSD_Path                aDirPath(VarName);
+    System::os::OSD_Directory                 aDir(aDirPath);
     const TCollection_AsciiString aTexture = VarName + "/2d_MatraDatavision.rgb";
-    OSD_File                      aTextureFile(aTexture);
+    System::os::OSD_File                      aTextureFile(aTexture);
     if (!aDir.Exists() || !aTextureFile.Exists())
     {
 #ifdef OCCT_DEBUG
@@ -198,6 +198,6 @@ bool Graphic3d_TextureRoot::IsDone() const
     return !myPixMap->IsEmpty();
   }
 
-  OSD_File aTextureFile(myPath);
+  System::os::OSD_File aTextureFile(myPath);
   return aTextureFile.Exists();
 }

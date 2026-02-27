@@ -17,7 +17,7 @@ public:
   Standard_EXPORT BOPAlgo_Splitter(const occ::handle<NCollection_BaseAllocator>& theAllocator);
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 protected:
   Standard_EXPORT void CheckData() override;

@@ -698,7 +698,7 @@ void BRepFeat_MakePrism::PerformFromEnd(const TopoDS_Shape& Until)
       {
         S = occ::down_cast<Geom_RectangularTrimmedSurface>(S)->BasisSurface();
       }
-      BRepLib_MakeFace fac(S, Precision::Confusion());
+      BRepLib_MakeFace fac(S, math::precision::Precision::Confusion());
       mySFrom = fac.Face();
       Trf     = TransformShapeFU(0);
       FFrom   = TopoDS::Face(mySFrom);
@@ -991,8 +991,8 @@ int SensOfPrism(const occ::handle<Geom_Curve>& C, const TopoDS_Shape& Until)
   int sens = 1;
   if (ASI1.IsDone() && ASI1.NbPoints(1) >= 1)
   {
-    if (ASI1.Point(1, 1).Parameter() + Precision::Confusion() < 0.
-        && ASI1.Point(1, ASI1.NbPoints(1)).Parameter() + Precision::Confusion() < 0.)
+    if (ASI1.Point(1, 1).Parameter() + math::precision::Precision::Confusion() < 0.
+        && ASI1.Point(1, ASI1.NbPoints(1)).Parameter() + math::precision::Precision::Confusion() < 0.)
     {
       sens = -1;
     }
@@ -1076,8 +1076,8 @@ static bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
   occ::handle<Geom_Surface>  S1, S2;
   TopLoc_Location            loc1, loc2;
   occ::handle<Standard_Type> typS1, typS2;
-  constexpr double           tollin = Precision::Confusion();
-  constexpr double           tolang = Precision::Angular();
+  constexpr double           tollin = math::precision::Precision::Confusion();
+  constexpr double           tolang = math::precision::Precision::Angular();
 
   S1 = BRep_Tool::Surface(F1, loc1);
   S2 = BRep_Tool::Surface(F2, loc2);

@@ -98,7 +98,7 @@ namespace
 
     if (aStr)
     {
-      Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
+      System::log::Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
                           << ": ++ VRML Error: " << aStr << " in line " << theScene.GetLineError();
       return false;
     }
@@ -120,7 +120,7 @@ namespace
     else
     {
       aScaling = theNode->GlobalParameters.SystemUnit / theNode->GlobalParameters.LengthUnit;
-      Message::SendWarning()
+      System::log::Message::SendWarning()
         << "Warning in the DEVRML_Provider during " << theContext
         << ": The document has no information on Units. Using global parameter as initial Unit.";
     }
@@ -129,7 +129,7 @@ namespace
 
   static TCollection_AsciiString ExtractVrmlDirectory(const TCollection_AsciiString& thePath)
   {
-    OSD_Path                aPath(thePath.ToCString());
+    System::os::OSD_Path                aPath(thePath.ToCString());
     TCollection_AsciiString aVrmlDir(".");
     TCollection_AsciiString aDisk = aPath.Disk();
     TCollection_AsciiString aTrek = aPath.Trek();
@@ -175,7 +175,7 @@ namespace
 
       if (theShape.IsNull())
       {
-        Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
+        System::log::Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
                             << ": VRML scene processed successfully but no geometry was extracted";
         return false;
       }
@@ -183,7 +183,7 @@ namespace
     else
     {
 
-      Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
+      System::log::Message::SendFail() << "Error in the DEVRML_Provider during " << theContext
                           << ": VRML scene status is not OK but no specific error was reported";
       return false;
     }
@@ -202,7 +202,7 @@ DEVRML_Provider::DEVRML_Provider(const occ::handle<DE_ConfigurationNode>& theNod
 bool DEVRML_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Read(thePath, theDocument, theProgress);
@@ -211,7 +211,7 @@ bool DEVRML_Provider::Read(const TCollection_AsciiString&       thePath,
 bool DEVRML_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
@@ -219,7 +219,7 @@ bool DEVRML_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DEVRML_Provider::Read(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("reading the file ") + thePath;
   if (!DE_ValidationUtils::ValidateDocument(theDocument, aContext))
@@ -246,11 +246,11 @@ bool DEVRML_Provider::Read(const TCollection_AsciiString&       thePath,
   {
     if (aVrmlReader.ExtraStatus() != RWMesh_CafReaderStatusEx_Partial)
     {
-      Message::SendFail() << "Error in the DEVRML_Provider during reading the file '" << thePath
+      System::log::Message::SendFail() << "Error in the DEVRML_Provider during reading the file '" << thePath
                           << "'";
       return false;
     }
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning in the DEVRML_Provider during reading the file: file has been read paratially "
       << "(due to unexpected EOF, syntax error, memory limit) '" << thePath << "'";
   }
@@ -259,7 +259,7 @@ bool DEVRML_Provider::Read(const TCollection_AsciiString&       thePath,
 
 bool DEVRML_Provider::Write(const TCollection_AsciiString&       thePath,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theProgress;
   TCollection_AsciiString aContext = "writing the file ";
@@ -282,7 +282,7 @@ bool DEVRML_Provider::Write(const TCollection_AsciiString&       thePath,
   double aScaling = CalculateScalingFactor(theDocument, aNode, aContext);
   if (!aWriter.WriteDoc(theDocument, thePath.ToCString(), aScaling))
   {
-    Message::SendFail() << "Error in the DEVRML_Provider during wtiting the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEVRML_Provider during wtiting the file " << thePath
                         << "\t: File was not written";
     return false;
   }
@@ -293,7 +293,7 @@ bool DEVRML_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DEVRML_Provider::Read(const TCollection_AsciiString&      thePath,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Read(thePath, theShape, theProgress);
@@ -302,7 +302,7 @@ bool DEVRML_Provider::Read(const TCollection_AsciiString&      thePath,
 bool DEVRML_Provider::Write(const TCollection_AsciiString&      thePath,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Write(thePath, theShape, theProgress);
@@ -310,7 +310,7 @@ bool DEVRML_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DEVRML_Provider::Read(const TCollection_AsciiString& thePath,
                            TopoDS_Shape&                  theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   (void)theProgress;
   TCollection_AsciiString aContext = "reading the file ";
@@ -326,7 +326,7 @@ bool DEVRML_Provider::Read(const TCollection_AsciiString& thePath,
 
   if (!aFic.open(thePath.ToCString(), std::ios::in))
   {
-    Message::SendFail() << "Error in the DEVRML_Provider during reading the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEVRML_Provider during reading the file " << thePath
                         << "\t: cannot open file";
     return false;
   }
@@ -337,7 +337,7 @@ bool DEVRML_Provider::Read(const TCollection_AsciiString& thePath,
 
 bool DEVRML_Provider::Write(const TCollection_AsciiString& thePath,
                             const TopoDS_Shape&            theShape,
-                            const Message_ProgressRange&   theProgress)
+                            const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<TDocStd_Document>  aDoc    = new TDocStd_Document("BinXCAF");
   occ::handle<XCAFDoc_ShapeTool> aShTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());
@@ -348,7 +348,7 @@ bool DEVRML_Provider::Write(const TCollection_AsciiString& thePath,
 bool DEVRML_Provider::Read(ReadStreamList&                      theStreams,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Read(theStreams, theDocument, theProgress);
@@ -357,7 +357,7 @@ bool DEVRML_Provider::Read(ReadStreamList&                      theStreams,
 bool DEVRML_Provider::Write(WriteStreamList&                     theStreams,
                             const occ::handle<TDocStd_Document>& theDocument,
                             occ::handle<XSControl_WorkSession>&  theWS,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Write(theStreams, theDocument, theProgress);
@@ -366,7 +366,7 @@ bool DEVRML_Provider::Write(WriteStreamList&                     theStreams,
 bool DEVRML_Provider::Read(ReadStreamList&                     theStreams,
                            TopoDS_Shape&                       theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Read(theStreams, theShape, theProgress);
@@ -375,7 +375,7 @@ bool DEVRML_Provider::Read(ReadStreamList&                     theStreams,
 bool DEVRML_Provider::Write(WriteStreamList&                    theStreams,
                             const TopoDS_Shape&                 theShape,
                             occ::handle<XSControl_WorkSession>& theWS,
-                            const Message_ProgressRange&        theProgress)
+                            const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Write(theStreams, theShape, theProgress);
@@ -383,7 +383,7 @@ bool DEVRML_Provider::Write(WriteStreamList&                    theStreams,
 
 bool DEVRML_Provider::Read(ReadStreamList&                      theStreams,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = "reading stream";
   if (!DE_ValidationUtils::ValidateReadStreamList(theStreams, aContext))
@@ -411,7 +411,7 @@ bool DEVRML_Provider::Read(ReadStreamList&                      theStreams,
 
 bool DEVRML_Provider::Write(WriteStreamList&                     theStreams,
                             const occ::handle<TDocStd_Document>& theDocument,
-                            const Message_ProgressRange&         theProgress)
+                            const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theProgress;
   TCollection_AsciiString aContext = "writing stream";
@@ -443,7 +443,7 @@ bool DEVRML_Provider::Write(WriteStreamList&                     theStreams,
 
   if (!aWriter.WriteDoc(theDocument, aStream, aScaling))
   {
-    Message::SendFail() << "Error in the DEVRML_Provider during " << aContext
+    System::log::Message::SendFail() << "Error in the DEVRML_Provider during " << aContext
                         << ": WriteDoc operation failed";
     return false;
   }
@@ -453,7 +453,7 @@ bool DEVRML_Provider::Write(WriteStreamList&                     theStreams,
 
 bool DEVRML_Provider::Read(ReadStreamList&              theStreams,
                            TopoDS_Shape&                theShape,
-                           const Message_ProgressRange& theProgress)
+                           const System::log::Message_ProgressRange& theProgress)
 {
   (void)theProgress;
   TCollection_AsciiString aContext = "reading stream";
@@ -477,7 +477,7 @@ bool DEVRML_Provider::Read(ReadStreamList&              theStreams,
 
 bool DEVRML_Provider::Write(WriteStreamList&             theStreams,
                             const TopoDS_Shape&          theShape,
-                            const Message_ProgressRange& theProgress)
+                            const System::log::Message_ProgressRange& theProgress)
 {
   (void)theProgress;
   TCollection_AsciiString aContext = "writing stream";
@@ -502,7 +502,7 @@ bool DEVRML_Provider::Write(WriteStreamList&             theStreams,
 
   if (!aWriter.Write(theShape, aStream, 2))
   {
-    Message::SendFail() << "Error in the DEVRML_Provider during " << aContext
+    System::log::Message::SendFail() << "Error in the DEVRML_Provider during " << aContext
                         << ": Write operation failed";
     return false;
   }

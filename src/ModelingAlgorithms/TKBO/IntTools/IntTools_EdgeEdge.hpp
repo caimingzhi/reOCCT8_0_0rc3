@@ -153,7 +153,7 @@ inline IntTools_EdgeEdge::IntTools_EdgeEdge()
     : myTol1(0.),
       myTol2(0.),
       myTol(0.),
-      myFuzzyValue(Precision::Confusion()),
+      myFuzzyValue(math::precision::Precision::Confusion()),
       myRes1(0.),
       myRes2(0.),
       myResCoeff1(0.),
@@ -175,7 +175,7 @@ inline IntTools_EdgeEdge::IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
       myTol1(0.),
       myTol2(0.),
       myTol(0.),
-      myFuzzyValue(Precision::Confusion()),
+      myFuzzyValue(math::precision::Precision::Confusion()),
       myRes1(0.),
       myRes2(0.),
       myResCoeff1(0.),
@@ -201,7 +201,7 @@ inline IntTools_EdgeEdge::IntTools_EdgeEdge(const TopoDS_Edge& theEdge1,
       myTol1(0.),
       myTol2(0.),
       myTol(0.),
-      myFuzzyValue(Precision::Confusion()),
+      myFuzzyValue(math::precision::Precision::Confusion()),
       myRes1(0.),
       myRes2(0.),
       myResCoeff1(0.),
@@ -268,7 +268,7 @@ inline void IntTools_EdgeEdge::SetEdge2(const TopoDS_Edge& theEdge,
 
 inline void IntTools_EdgeEdge::SetFuzzyValue(const double theFuzz)
 {
-  myFuzzyValue = std::max(theFuzz, Precision::Confusion());
+  myFuzzyValue = std::max(theFuzz, math::precision::Precision::Confusion());
 }
 
 inline double IntTools_EdgeEdge::FuzzyValue() const

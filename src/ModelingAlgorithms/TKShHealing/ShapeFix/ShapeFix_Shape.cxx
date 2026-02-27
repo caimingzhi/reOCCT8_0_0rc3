@@ -56,7 +56,7 @@ void ShapeFix_Shape::Init(const TopoDS_Shape& shape)
   myResult = myShape;
 }
 
-bool ShapeFix_Shape::Perform(const Message_ProgressRange& theProgress)
+bool ShapeFix_Shape::Perform(const System::log::Message_ProgressRange& theProgress)
 {
   int                        savFixSmallAreaWireMode = 0;
   int                        savFixVertexTolMode     = myFixVertexTolMode;
@@ -95,7 +95,7 @@ bool ShapeFix_Shape::Perform(const Message_ProgressRange& theProgress)
 
   st = S.ShapeType();
 
-  Message_ProgressScope aPS(theProgress, "Fixing stage", 2);
+  System::log::Message_ProgressScope aPS(theProgress, "Fixing stage", 2);
 
   switch (st)
   {
@@ -108,7 +108,7 @@ bool ShapeFix_Shape::Perform(const Message_ProgressRange& theProgress)
       myFixVertexTolMode                   = false;
       int aShapesNb                        = S.NbChildren();
 
-      Message_ProgressScope aPSSubShape(aPS.Next(), "Fixing sub-shape", aShapesNb);
+      System::log::Message_ProgressScope aPSSubShape(aPS.Next(), "Fixing sub-shape", aShapesNb);
       for (TopoDS_Iterator anIter(S); anIter.More() && aPSSubShape.More(); anIter.Next())
       {
         myShape = anIter.Value();
@@ -245,7 +245,7 @@ bool ShapeFix_Shape::Perform(const Message_ProgressRange& theProgress)
 
 void ShapeFix_Shape::SameParameter(const TopoDS_Shape&          sh,
                                    const bool                   enforce,
-                                   const Message_ProgressRange& theProgress)
+                                   const System::log::Message_ProgressRange& theProgress)
 {
   ShapeFix::SameParameter(sh, enforce, 0.0, theProgress);
 }

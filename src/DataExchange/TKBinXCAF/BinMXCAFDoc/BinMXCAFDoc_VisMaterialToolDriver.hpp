@@ -7,7 +7,7 @@ class BinMXCAFDoc_VisMaterialToolDriver : public BinMDF_ADriver
   DEFINE_STANDARD_RTTIEXT(BinMXCAFDoc_VisMaterialToolDriver, BinMDF_ADriver)
 public:
   Standard_EXPORT BinMXCAFDoc_VisMaterialToolDriver(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

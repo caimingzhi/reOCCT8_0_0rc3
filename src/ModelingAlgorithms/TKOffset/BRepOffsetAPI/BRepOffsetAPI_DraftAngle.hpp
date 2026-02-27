@@ -50,7 +50,7 @@ public:
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& ModifiedFaces() const;
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void CorrectWires();
 

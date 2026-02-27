@@ -653,7 +653,7 @@ bool Geom_BSplineCurve::IsEqual(const occ::handle<Geom_BSplineCurve>& theOther,
 
   for (; i <= knots->Length(); i++)
   {
-    if (fabs(knots->Value(i) - theOther->Knot(i)) > Precision::Parametric(thePreci))
+    if (fabs(knots->Value(i) - theOther->Knot(i)) > math::precision::Precision::Parametric(thePreci))
       return false;
   }
 

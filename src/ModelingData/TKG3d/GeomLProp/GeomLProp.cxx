@@ -171,5 +171,5 @@ GeomAbs_Shape GeomLProp::Continuity(const occ::handle<Geom_Curve>& C1,
                                     const bool                     r1,
                                     const bool                     r2)
 {
-  return Continuity(C1, C2, u1, u2, r1, r2, Precision::Confusion(), Precision::Angular());
+  return Continuity(C1, C2, u1, u2, r1, r2, math::precision::Precision::Confusion(), math::precision::Precision::Angular());
 }

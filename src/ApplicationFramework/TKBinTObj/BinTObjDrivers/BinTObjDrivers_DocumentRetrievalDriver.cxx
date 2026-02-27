@@ -10,7 +10,7 @@ BinTObjDrivers_DocumentRetrievalDriver::BinTObjDrivers_DocumentRetrievalDriver()
   = default;
 
 occ::handle<BinMDF_ADriverTable> BinTObjDrivers_DocumentRetrievalDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMsgDrv)
+  const occ::handle<System::log::Message_Messenger>& theMsgDrv)
 {
 
   occ::handle<BinMDF_ADriverTable> aTable = BinLDrivers::AttributeDrivers(theMsgDrv);

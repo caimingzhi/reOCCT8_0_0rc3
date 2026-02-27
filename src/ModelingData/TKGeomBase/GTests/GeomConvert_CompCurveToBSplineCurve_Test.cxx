@@ -44,7 +44,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateClampedBSplines)
   occ::handle<Geom_BSplineCurve> aCurve2 = new Geom_BSplineCurve(aPoles2, aKnots1, aMults1, 3);
 
   GeomConvert_CompCurveToBSplineCurve aConcat(aCurve1);
-  const bool                          isAdded = aConcat.Add(aCurve2, Precision::Confusion());
+  const bool                          isAdded = aConcat.Add(aCurve2, math::precision::Precision::Confusion());
 
   EXPECT_TRUE(isAdded) << "Should successfully concatenate clamped B-splines";
 
@@ -54,8 +54,8 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateClampedBSplines)
   const gp_Pnt aStart = aResult->StartPoint();
   const gp_Pnt aEnd   = aResult->EndPoint();
 
-  EXPECT_NEAR(aStart.Distance(gp_Pnt(0., 0., 0.)), 0., Precision::Confusion());
-  EXPECT_NEAR(aEnd.Distance(gp_Pnt(6., 0., 0.)), 0., Precision::Confusion());
+  EXPECT_NEAR(aStart.Distance(gp_Pnt(0., 0., 0.)), 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aEnd.Distance(gp_Pnt(6., 0., 0.)), 0., math::precision::Precision::Confusion());
 }
 
 TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateTrimmedCircleArcs)
@@ -71,11 +71,11 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateTrimmedCircleArcs)
 
   const gp_Pnt aArc1End   = aArc1->EndPoint();
   const gp_Pnt aArc2Start = aArc2->StartPoint();
-  EXPECT_NEAR(aArc1End.Distance(aArc2Start), 0., Precision::Confusion())
+  EXPECT_NEAR(aArc1End.Distance(aArc2Start), 0., math::precision::Precision::Confusion())
     << "Arcs should share an endpoint";
 
   GeomConvert_CompCurveToBSplineCurve aConcat(aArc1);
-  const bool                          isAdded = aConcat.Add(aArc2, Precision::Confusion());
+  const bool                          isAdded = aConcat.Add(aArc2, math::precision::Precision::Confusion());
 
   EXPECT_TRUE(isAdded) << "Should successfully concatenate trimmed circle arcs";
 
@@ -85,8 +85,8 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateTrimmedCircleArcs)
   const gp_Pnt aStart = aResult->StartPoint();
   const gp_Pnt aEnd   = aResult->EndPoint();
 
-  EXPECT_NEAR(aStart.Distance(gp_Pnt(5., 0., 0.)), 0., Precision::Confusion());
-  EXPECT_NEAR(aEnd.Distance(gp_Pnt(-5., 0., 0.)), 0., Precision::Confusion());
+  EXPECT_NEAR(aStart.Distance(gp_Pnt(5., 0., 0.)), 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aEnd.Distance(gp_Pnt(-5., 0., 0.)), 0., math::precision::Precision::Confusion());
 }
 
 TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateWithReversal)
@@ -117,7 +117,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateWithReversal)
   occ::handle<Geom_BSplineCurve> aCurve2 = new Geom_BSplineCurve(aPoles2, aKnots, aMults, 3);
 
   GeomConvert_CompCurveToBSplineCurve aConcat(aCurve1);
-  const bool                          isAdded = aConcat.Add(aCurve2, Precision::Confusion());
+  const bool                          isAdded = aConcat.Add(aCurve2, math::precision::Precision::Confusion());
 
   EXPECT_TRUE(isAdded) << "Should successfully concatenate curves with reversal";
 
@@ -127,8 +127,8 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateWithReversal)
   const gp_Pnt aStart = aResult->StartPoint();
   const gp_Pnt aEnd   = aResult->EndPoint();
 
-  EXPECT_NEAR(aStart.Distance(gp_Pnt(0., 0., 0.)), 0., Precision::Confusion());
-  EXPECT_NEAR(aEnd.Distance(gp_Pnt(6., 0., 0.)), 0., Precision::Confusion());
+  EXPECT_NEAR(aStart.Distance(gp_Pnt(0., 0., 0.)), 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aEnd.Distance(gp_Pnt(6., 0., 0.)), 0., math::precision::Precision::Confusion());
 }
 
 TEST(GeomConvert_CompCurveToBSplineCurveTest, FailsForDisjointCurves)
@@ -159,7 +159,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, FailsForDisjointCurves)
   occ::handle<Geom_BSplineCurve> aCurve2 = new Geom_BSplineCurve(aPoles2, aKnots, aMults, 3);
 
   GeomConvert_CompCurveToBSplineCurve aConcat(aCurve1);
-  const bool                          isAdded = aConcat.Add(aCurve2, Precision::Confusion());
+  const bool                          isAdded = aConcat.Add(aCurve2, math::precision::Precision::Confusion());
 
   EXPECT_FALSE(isAdded) << "Should fail to concatenate disjoint curves";
 }
@@ -208,7 +208,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateNonClampedBSpline_Bug30
   occ::handle<Geom_BSplineCurve> aCurve2 = new Geom_BSplineCurve(aPoles2, aKnots2, aMults2, 3);
 
   GeomConvert_CompCurveToBSplineCurve aConcat(aCurve1);
-  const bool                          isAdded = aConcat.Add(aCurve2, Precision::Confusion());
+  const bool                          isAdded = aConcat.Add(aCurve2, math::precision::Precision::Confusion());
 
   EXPECT_TRUE(isAdded) << "Should concatenate using actual endpoints, not poles";
 
@@ -218,8 +218,8 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ConcatenateNonClampedBSpline_Bug30
   const gp_Pnt aStart = aResult->StartPoint();
   const gp_Pnt aEnd   = aResult->EndPoint();
 
-  EXPECT_NEAR(aStart.Distance(aCurve1->StartPoint()), 0., Precision::Confusion());
-  EXPECT_NEAR(aEnd.Distance(gp_Pnt(8., 0., 0.)), 0., Precision::Confusion());
+  EXPECT_NEAR(aStart.Distance(aCurve1->StartPoint()), 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aEnd.Distance(gp_Pnt(8., 0., 0.)), 0., math::precision::Precision::Confusion());
 }
 
 TEST(GeomConvert_CompCurveToBSplineCurveTest, PrependCurve)
@@ -250,7 +250,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, PrependCurve)
   occ::handle<Geom_BSplineCurve> aCurve2 = new Geom_BSplineCurve(aPoles2, aKnots, aMults, 3);
 
   GeomConvert_CompCurveToBSplineCurve aConcat(aCurve1);
-  const bool                          isAdded = aConcat.Add(aCurve2, Precision::Confusion());
+  const bool                          isAdded = aConcat.Add(aCurve2, math::precision::Precision::Confusion());
 
   EXPECT_TRUE(isAdded) << "Should successfully prepend curve";
 
@@ -260,8 +260,8 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, PrependCurve)
   const gp_Pnt aStart = aResult->StartPoint();
   const gp_Pnt aEnd   = aResult->EndPoint();
 
-  EXPECT_NEAR(aStart.Distance(gp_Pnt(0., 0., 0.)), 0., Precision::Confusion());
-  EXPECT_NEAR(aEnd.Distance(gp_Pnt(6., 0., 0.)), 0., Precision::Confusion());
+  EXPECT_NEAR(aStart.Distance(gp_Pnt(0., 0., 0.)), 0., math::precision::Precision::Confusion());
+  EXPECT_NEAR(aEnd.Distance(gp_Pnt(6., 0., 0.)), 0., math::precision::Precision::Confusion());
 }
 
 TEST(GeomConvert_CompCurveToBSplineCurveTest, EmptyInitialCurve)
@@ -285,7 +285,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, EmptyInitialCurve)
 
   occ::handle<Geom_BSplineCurve> aCurve = new Geom_BSplineCurve(aPoles, aKnots, aMults, 3);
 
-  const bool isAdded = aConcat.Add(aCurve, Precision::Confusion());
+  const bool isAdded = aConcat.Add(aCurve, math::precision::Precision::Confusion());
 
   EXPECT_TRUE(isAdded) << "Should successfully add to empty converter";
 
@@ -319,7 +319,7 @@ TEST(GeomConvert_CompCurveToBSplineCurveTest, ClearAndReuse)
   aConcat.Clear();
   EXPECT_TRUE(aConcat.BSplineCurve().IsNull()) << "Curve should be null after Clear()";
 
-  const bool isAdded = aConcat.Add(aCurve, Precision::Confusion());
+  const bool isAdded = aConcat.Add(aCurve, math::precision::Precision::Confusion());
   EXPECT_TRUE(isAdded) << "Should successfully add after Clear()";
   EXPECT_FALSE(aConcat.BSplineCurve().IsNull()) << "Curve should exist after re-adding";
 }

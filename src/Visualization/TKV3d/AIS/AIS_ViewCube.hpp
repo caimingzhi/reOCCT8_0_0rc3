@@ -60,7 +60,7 @@ public:
 
   void SetBoxFacetExtension(double theValue)
   {
-    if (std::abs(myBoxFacetExtension - theValue) > Precision::Confusion())
+    if (std::abs(myBoxFacetExtension - theValue) > math::precision::Precision::Confusion())
     {
       myBoxFacetExtension = theValue;
       SetToUpdate();
@@ -71,7 +71,7 @@ public:
 
   void SetAxesPadding(double theValue)
   {
-    if (std::abs(myAxesPadding - theValue) > Precision::Confusion())
+    if (std::abs(myAxesPadding - theValue) > math::precision::Precision::Confusion())
     {
       myAxesPadding = theValue;
       SetToUpdate();
@@ -82,7 +82,7 @@ public:
 
   void SetBoxEdgeGap(double theValue)
   {
-    if (std::abs(myBoxEdgeGap - theValue) > Precision::Confusion())
+    if (std::abs(myBoxEdgeGap - theValue) > math::precision::Precision::Confusion())
     {
       myBoxEdgeGap = theValue;
       SetToUpdate();
@@ -93,7 +93,7 @@ public:
 
   void SetBoxEdgeMinSize(double theValue)
   {
-    if (std::abs(myBoxEdgeMinSize - theValue) > Precision::Confusion())
+    if (std::abs(myBoxEdgeMinSize - theValue) > math::precision::Precision::Confusion())
     {
       myBoxEdgeMinSize = theValue;
       SetToUpdate();
@@ -104,7 +104,7 @@ public:
 
   void SetBoxCornerMinSize(double theValue)
   {
-    if (std::abs(myCornerMinSize - theValue) > Precision::Confusion())
+    if (std::abs(myCornerMinSize - theValue) > math::precision::Precision::Confusion())
     {
       myCornerMinSize = theValue;
       SetToUpdate();
@@ -119,7 +119,7 @@ public:
 
   void SetAxesRadius(const double theRadius)
   {
-    if (std::abs(myAxesRadius - theRadius) > Precision::Confusion())
+    if (std::abs(myAxesRadius - theRadius) > math::precision::Precision::Confusion())
     {
       myAxesRadius = theRadius;
       SetToUpdate();
@@ -130,7 +130,7 @@ public:
 
   void SetAxesConeRadius(double theRadius)
   {
-    if (std::abs(myAxesConeRadius - theRadius) > Precision::Confusion())
+    if (std::abs(myAxesConeRadius - theRadius) > math::precision::Precision::Confusion())
     {
       myAxesConeRadius = theRadius;
       SetToUpdate();
@@ -141,7 +141,7 @@ public:
 
   void SetAxesSphereRadius(double theRadius)
   {
-    if (std::abs(myAxesSphereRadius - theRadius) > Precision::Confusion())
+    if (std::abs(myAxesSphereRadius - theRadius) > math::precision::Precision::Confusion())
     {
       myAxesSphereRadius = theRadius;
       SetToUpdate();
@@ -211,9 +211,9 @@ public:
 
   void SetBoxTransparency(double theValue)
   {
-    if (std::abs(myDrawer->ShadingAspect()->Transparency() - theValue) > Precision::Confusion()
-        || std::abs(myBoxEdgeAspect->Transparency() - theValue) > Precision::Confusion()
-        || std::abs(myBoxCornerAspect->Transparency() - theValue) > Precision::Confusion())
+    if (std::abs(myDrawer->ShadingAspect()->Transparency() - theValue) > math::precision::Precision::Confusion()
+        || std::abs(myBoxEdgeAspect->Transparency() - theValue) > math::precision::Precision::Confusion()
+        || std::abs(myBoxCornerAspect->Transparency() - theValue) > math::precision::Precision::Confusion())
     {
       myDrawer->ShadingAspect()->SetTransparency(theValue);
       myBoxEdgeAspect->SetTransparency(theValue);
@@ -269,7 +269,7 @@ public:
 
   void SetFontHeight(double theValue)
   {
-    if (std::abs(myDrawer->TextAspect()->Height() - theValue) > Precision::Confusion())
+    if (std::abs(myDrawer->TextAspect()->Height() - theValue) > math::precision::Precision::Confusion())
     {
       myDrawer->TextAspect()->SetHeight(theValue);
       SetToUpdate();

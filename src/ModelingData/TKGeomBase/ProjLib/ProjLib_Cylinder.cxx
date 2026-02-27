@@ -49,7 +49,7 @@ static gp_Pnt2d EvalPnt2d(const gp_Pnt& P, const gp_Cylinder& Cy)
   double Z = OP.Dot(gp_Vec(Cy.Position().Direction()));
   double U;
 
-  if (std::abs(X) > Precision::PConfusion() || std::abs(Y) > Precision::PConfusion())
+  if (std::abs(X) > math::precision::Precision::PConfusion() || std::abs(Y) > math::precision::Precision::PConfusion())
   {
     U = std::atan2(Y, X);
   }
@@ -64,7 +64,7 @@ void ProjLib_Cylinder::Project(const gp_Lin& L)
 {
 
   if (L.Direction().XYZ().CrossSquareMagnitude(myCylinder.Position().Direction().XYZ())
-      > Precision::Angular() * Precision::Angular())
+      > math::precision::Precision::Angular() * math::precision::Precision::Angular())
     return;
 
   myType = GeomAbs_Line;
@@ -88,7 +88,7 @@ void ProjLib_Cylinder::Project(const gp_Circ& C)
   const gp_Ax3& aCylPos  = myCylinder.Position();
   const gp_Ax2& aCircPos = C.Position();
   if (aCylPos.Direction().XYZ().CrossSquareMagnitude(aCircPos.Direction().XYZ())
-      > Precision::Angular() * Precision::Angular())
+      > math::precision::Precision::Angular() * math::precision::Precision::Angular())
     return;
 
   myType = GeomAbs_Line;

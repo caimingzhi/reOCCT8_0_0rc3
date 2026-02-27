@@ -53,7 +53,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeAnalysis_Wire, Standard_Transient)
 ShapeAnalysis_Wire::ShapeAnalysis_Wire()
 {
   ClearStatuses();
-  myPrecision = ::Precision::Confusion();
+  myPrecision = math::precision::Precision::Confusion();
 }
 
 ShapeAnalysis_Wire::ShapeAnalysis_Wire(const TopoDS_Wire& wire,
@@ -135,7 +135,7 @@ void ShapeAnalysis_Wire::SetSurface(const occ::handle<Geom_Surface>& surface,
 {
   BRep_Builder B;
   TopoDS_Face  face;
-  B.MakeFace(face, surface, location, ::Precision::Confusion());
+  B.MakeFace(face, surface, location, math::precision::Precision::Confusion());
   SetFace(face);
 }
 
@@ -299,7 +299,7 @@ bool ShapeAnalysis_Wire::CheckSelfIntersection()
     {
       Bnd_Box2d           box;
       Geom2dAdaptor_Curve gac(c2d, cf, cl);
-      BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+      BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
       boxes(i) = box;
     }
   }
@@ -308,7 +308,7 @@ bool ShapeAnalysis_Wire::CheckSelfIntersection()
   for (int num1 = 1; num1 < nb - 1; num1++)
   {
     int fin = nb;
-    if (CheckClosed(Precision::Confusion()) && 1 == num1)
+    if (CheckClosed(math::precision::Precision::Confusion()) && 1 == num1)
       fin = nb - 1;
     for (int num2 = num1 + 2; num2 <= fin; num2++)
       if (!boxes(num1).IsOut(boxes(num2)))
@@ -722,7 +722,7 @@ bool ShapeAnalysis_Wire::CheckDegenerated(const int num, gp_Pnt2d& p2d1, gp_Pnt2
       gp_Pnt2d p12 = c2d->Value(lp);
       sae.PCurve(E3, myFace, c2d, fp, lp, true);
       gp_Pnt2d p31 = c2d->Value(fp);
-      if (fabs(p12.Distance(p31) - p21.Distance(p22)) > 2 * Precision::PConfusion())
+      if (fabs(p12.Distance(p31) - p21.Distance(p22)) > 2 * math::precision::Precision::PConfusion())
       {
 
         myStatus = ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);
@@ -920,7 +920,7 @@ bool ShapeAnalysis_Wire::CheckGap2d(const int num)
   myMin2d = myMax2d       = p1.Distance(p2);
   GeomAdaptor_Surface& SA = *mySurf->Adaptor3d();
   if (myMin2d > (std::max(SA.UResolution(myPrecision), SA.VResolution(myPrecision))
-                 + Precision::PConfusion()))
+                 + math::precision::Precision::PConfusion()))
     myStatus = ShapeExtend::EncodeStatus(ShapeExtend_DONE1);
   return LastCheckStatus(ShapeExtend_DONE);
 }
@@ -1004,7 +1004,7 @@ bool ShapeAnalysis_Wire::CheckSelfIntersectingEdge(
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL1);
     return false;
   }
-  if (std::abs(a - b) <= ::Precision::PConfusion())
+  if (std::abs(a - b) <= math::precision::Precision::PConfusion())
     return false;
 
   double tolint = 1.0e-10;
@@ -1104,9 +1104,9 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL3);
     return false;
   }
-  if (std::abs(a1 - b1) <= ::Precision::PConfusion() ||
+  if (std::abs(a1 - b1) <= math::precision::Precision::PConfusion() ||
 
-      std::abs(a2 - b2) <= ::Precision::PConfusion())
+      std::abs(a2 - b2) <= math::precision::Precision::PConfusion())
     return false;
 
   bool isForward1 = (edge1.Orientation() == TopAbs_FORWARD);
@@ -1164,8 +1164,8 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
     param1 = (num == 1 ? IP.ParamOnSecond() : IP.ParamOnFirst());
     param2 = (num == 1 ? IP.ParamOnFirst() : IP.ParamOnSecond());
 
-    if (a1 - param1 > ::Precision::PConfusion() || param1 - b1 > ::Precision::PConfusion()
-        || a2 - param2 > ::Precision::PConfusion() || param2 - b2 > ::Precision::PConfusion())
+    if (a1 - param1 > math::precision::Precision::PConfusion() || param1 - b1 > math::precision::Precision::PConfusion()
+        || a2 - param2 > math::precision::Precision::PConfusion() || param2 - b2 > math::precision::Precision::PConfusion())
       continue;
 
     gp_Pnt pi1 = GetPointOnEdge(edge1, mySurf, C1, param1);
@@ -1240,8 +1240,8 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
     return false;
   }
 
-  if (std::abs(a1 - b1) <= ::Precision::PConfusion()
-      || std::abs(a2 - b2) <= ::Precision::PConfusion())
+  if (std::abs(a1 - b1) <= math::precision::Precision::PConfusion()
+      || std::abs(a2 - b2) <= math::precision::Precision::PConfusion())
     return false;
 
   points2d.Clear();
@@ -1398,7 +1398,7 @@ bool ShapeAnalysis_Wire::CheckLacking(const int    num,
   myMax3d = tol * myMax2d / std::max(tol2d, gp::Resolution());
   myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE1);
 
-  if (myMax2d < Precision::PConfusion()
+  if (myMax2d < math::precision::Precision::PConfusion()
       || (v1.SquareMagnitude() > gp::Resolution() && std::abs(v12.Angle(v1)) > 0.9 * M_PI)
       || (v2.SquareMagnitude() > gp::Resolution() && std::abs(v12.Angle(v2)) > 0.9 * M_PI))
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
@@ -1628,7 +1628,7 @@ bool ShapeAnalysis_Wire::CheckSmallArea(const TopoDS_Wire& theWire)
       myStatus = ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);
       return false;
     }
-    if (Precision::IsInfinite(aF) || Precision::IsInfinite(aL))
+    if (math::precision::Precision::IsInfinite(aF) || math::precision::Precision::IsInfinite(aL))
     {
       continue;
     }
@@ -1795,7 +1795,7 @@ bool ShapeAnalysis_Wire::CheckLoop(
   if (!IsLoaded() || NbEdges() < 2)
     return false;
   double aSavPreci = Precision();
-  SetPrecision(Precision::Infinite());
+  SetPrecision(math::precision::Precision::Infinite());
   int i = 1;
 
   for (; i <= myWire->NbEdges(); i++)
@@ -1901,9 +1901,9 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
     return false;
   }
 
-  const double            aTol2   = theMaxWidth + 0.5 * Precision::Confusion();
-  const double            aTol3   = theMaxWidth + Precision::Confusion();
-  const double            aTol4   = theMaxWidth + 1.5 * Precision::Confusion();
+  const double            aTol2   = theMaxWidth + 0.5 * math::precision::Precision::Confusion();
+  const double            aTol3   = theMaxWidth + math::precision::Precision::Confusion();
+  const double            aTol4   = theMaxWidth + 1.5 * math::precision::Precision::Confusion();
   const double            aSqTol2 = aTol2 * aTol2;
   const double            aSqTol3 = aTol3 * aTol3;
   occ::handle<Geom_Curve> aCs[2];
@@ -1935,15 +1935,15 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
     for (int aEI = 0; aEI < 2; ++aEI)
     {
       GeomAdaptor_Curve aCA(aCs[aEI]);
-      if (GCPnts_AbscissaPoint::Length(aCA, aLs[aEI][0], aLs[aEI][1], 0.25 * Precision::Confusion())
-          < 0.5 * Precision::Confusion())
+      if (GCPnts_AbscissaPoint::Length(aCA, aLs[aEI][0], aLs[aEI][1], 0.25 * math::precision::Precision::Confusion())
+          < 0.5 * math::precision::Precision::Confusion())
       {
         return false;
       }
 
-      GCPnts_AbscissaPoint aAP(0.25 * Precision::Confusion(),
+      GCPnts_AbscissaPoint aAP(0.25 * math::precision::Precision::Confusion(),
                                aCA,
-                               0.5 * Precision::Confusion() * (1 - 2 * aVIs[aEI]),
+                               0.5 * math::precision::Precision::Confusion() * (1 - 2 * aVIs[aEI]),
                                aLs[aEI][aVIs[aEI]]);
       if (!aAP.IsDone())
       {
@@ -1955,7 +1955,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
       aPs[1 - aVIs[aEI]] = aCs[aEI]->Value(aAP.Parameter()).XYZ();
       aDs[aEI]           = aPs[1] - aPs[0];
       const double aDN   = aDs[aEI].Modulus();
-      if (aDN < 0.1 * Precision::Confusion())
+      if (aDN < 0.1 * math::precision::Precision::Confusion())
       {
         return false;
       }
@@ -1986,7 +1986,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
                           aLs[1 - aEI][0],
                           aLs[1 - aEI][1],
                           aPs[aEI],
-                          0.25 * Precision::Confusion(),
+                          0.25 * math::precision::Precision::Confusion(),
                           aParams2[aEI],
                           aPrjs[aEI]);
     if (aDists[aEI] <= aTol2)
@@ -2003,7 +2003,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
                                    aLs[1 - aEI][0],
                                    aLs[1 - aEI][1],
                                    aPs[aEI],
-                                   0.25 * Precision::Confusion(),
+                                   0.25 * math::precision::Precision::Confusion(),
                                    aParams2[aEI],
                                    aPrjs[aEI]);
       if (aDist <= aTol2)
@@ -2034,7 +2034,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
                   aLs[1 - aEI][0],
                   aLs[1 - aEI][1],
                   aP,
-                  0.25 * Precision::Confusion(),
+                  0.25 * math::precision::Precision::Confusion(),
                   aParam,
                   aPrj)
           > aTol4)
@@ -2069,12 +2069,12 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
   int          aResults[]   = {1, 1};
   for (int aEI = 0; aEI < 2; ++aEI)
   {
-    if (std::abs(aParams[aEI] - aLs[aEI][1 - aVIs[aEI]]) <= Precision::PConfusion())
+    if (std::abs(aParams[aEI] - aLs[aEI][1 - aVIs[aEI]]) <= math::precision::Precision::PConfusion())
     {
       aResults[aEI]    = 2;
       *aEParts[aEI][0] = aEs[aEI];
     }
-    else if (std::abs(aParams[aEI] - aLs[aEI][aVIs[aEI]]) <= Precision::PConfusion())
+    else if (std::abs(aParams[aEI] - aLs[aEI][aVIs[aEI]]) <= math::precision::Precision::PConfusion())
     {
       aResults[aEI] = 0;
     }
@@ -2091,7 +2091,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
     ShapeAnalysis_TransferParametersProj aSATPP(aFE, TopoDS_Face());
     aSATPP.SetMaxTolerance(theMaxTolerance);
     TopoDS_Vertex aSplitV;
-    BRep_Builder().MakeVertex(aSplitV, aCs[aEI]->Value(aParams[aEI]), Precision::Confusion());
+    BRep_Builder().MakeVertex(aSplitV, aCs[aEI]->Value(aParams[aEI]), math::precision::Precision::Confusion());
     TopoDS_Edge aEParts2[] = {
       ShapeBuild_Edge().CopyReplaceVertices(aFE,
                                             TopoDS_Vertex(),
@@ -2107,7 +2107,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
     aSATPP.TransferRange(aEParts2[1], aParams[aEI], aLs[aEI][1], false);
     GProp_GProps aLinProps;
     BRepGProp::LinearProperties(aEParts2[1 - aVIs[aEI]], aLinProps);
-    if (aLinProps.Mass() <= Precision::Confusion())
+    if (aLinProps.Mass() <= math::precision::Precision::Confusion())
     {
       aResults[aEI]    = 2;
       *aEParts[aEI][0] = aEs[aEI];
@@ -2115,7 +2115,7 @@ bool ShapeAnalysis_Wire::CheckTail(const TopoDS_Edge& theEdge1,
     else
     {
       BRepGProp::LinearProperties(aEParts2[aVIs[aEI]], aLinProps);
-      if (aLinProps.Mass() <= Precision::Confusion())
+      if (aLinProps.Mass() <= math::precision::Precision::Confusion())
       {
         aResults[aEI] = 0;
       }

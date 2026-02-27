@@ -15,8 +15,8 @@ static double Locate(const double                        Angfin,
 {
   double umin = Umin;
   double umax = Umax;
-  double Ptol = Precision::Angular();
-  double Utol = Precision::PConfusion();
+  double Ptol = math::precision::Precision::Angular();
+  double Utol = math::precision::Precision::PConfusion();
   while (std::abs(umax - umin) >= Utol)
   {
     double   ptest = (umax + umin) / 2.;

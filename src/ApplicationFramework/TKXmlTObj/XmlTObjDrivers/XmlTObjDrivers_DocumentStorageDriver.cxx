@@ -11,7 +11,7 @@ XmlTObjDrivers_DocumentStorageDriver::XmlTObjDrivers_DocumentStorageDriver(
 }
 
 occ::handle<XmlMDF_ADriverTable> XmlTObjDrivers_DocumentStorageDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMsgDrv)
+  const occ::handle<System::log::Message_Messenger>& theMsgDrv)
 {
 
   occ::handle<XmlMDF_ADriverTable> aTable = XmlLDrivers::AttributeDrivers(theMsgDrv);

@@ -75,7 +75,7 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
   const occ::handle<BRepTools_Modification>&                                M,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& context,
   BRepTools_Modifier&                                                       MD,
-  const Message_ProgressRange&                                              theProgress,
+  const System::log::Message_ProgressRange&                                              theProgress,
   const occ::handle<ShapeBuild_ReShape>&                                    aReShape)
 {
 
@@ -90,10 +90,10 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
 
     SF.Location(TopLoc_Location());
     int                   aShapeCount = SF.NbChildren();
-    Message_ProgressScope aPS(theProgress, "Applying Modifier For Solids", aShapeCount);
+    System::log::Message_ProgressScope aPS(theProgress, "Applying Modifier For Solids", aShapeCount);
     for (TopoDS_Iterator it(SF); it.More() && aPS.More(); it.Next())
     {
-      Message_ProgressRange aRange = aPS.Next();
+      System::log::Message_ProgressRange aRange = aPS.Next();
 
       TopoDS_Shape shape       = it.Value();
       TopoDS_Shape aShapeNoLoc = it.Value();
@@ -141,7 +141,7 @@ TopoDS_Shape ShapeCustom::ApplyModifier(
     return C;
   }
 
-  Message_ProgressScope aPS(theProgress, "Modify the Shape", 1);
+  System::log::Message_ProgressScope aPS(theProgress, "Modify the Shape", 1);
 
   MD.Init(SF);
   MD.Perform(M, aPS.Next());

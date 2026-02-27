@@ -177,13 +177,13 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
                                  const TopoDS_Face& face,
                                  bool&              iscutline) const
 {
-  if (std::abs(cut - pend) < 10. * Precision::PConfusion())
+  if (std::abs(cut - pend) < 10. * math::precision::Precision::PConfusion())
     return false;
   double aRange = std::abs(cut - pend);
   double a, b;
   BRep_Tool::Range(edge, a, b);
   iscutline = false;
-  if (aRange < 10. * Precision::PConfusion())
+  if (aRange < 10. * math::precision::Precision::PConfusion())
     return false;
 
   if (!BRep_Tool::SameParameter(edge))
@@ -200,18 +200,18 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
         {
           BRep_Builder B;
           B.Range(edge, std::min(pend, cut), std::max(pend, cut));
-          if (std::abs(pend - lp) < Precision::PConfusion())
+          if (std::abs(pend - lp) < math::precision::Precision::PConfusion())
           {
             double cut3d = (cut - fp) * (b - a) / (lp - fp);
-            if (cut3d <= Precision::PConfusion())
+            if (cut3d <= math::precision::Precision::PConfusion())
               return false;
             B.Range(edge, a + cut3d, b, true);
             iscutline = true;
           }
-          else if (std::abs(pend - fp) < Precision::PConfusion())
+          else if (std::abs(pend - fp) < math::precision::Precision::PConfusion())
           {
             double cut3d = (lp - cut) * (b - a) / (lp - fp);
-            if (cut3d <= Precision::PConfusion())
+            if (cut3d <= math::precision::Precision::PConfusion())
               return false;
             B.Range(edge, a, b - cut3d, true);
             iscutline = true;
@@ -222,9 +222,9 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
     return true;
   }
 
-  if (std::abs(std::abs(a - b) - aRange) < Precision::PConfusion())
+  if (std::abs(std::abs(a - b) - aRange) < math::precision::Precision::PConfusion())
     return false;
-  if (aRange < 10. * Precision::PConfusion())
+  if (aRange < 10. * math::precision::Precision::PConfusion())
     return false;
 
   occ::handle<Geom_Curve> c = BRep_Tool::Curve(edge, a, b);
@@ -235,7 +235,7 @@ bool ShapeFix_SplitTool::CutEdge(const TopoDS_Edge& edge,
 
   BRep_Builder B;
   if (!BRep_Tool::Degenerated(edge) && !c.IsNull()
-      && sac.ValidateRange(c, na, nb, Precision::PConfusion()) && (na != a || nb != b))
+      && sac.ValidateRange(c, na, nb, math::precision::Precision::PConfusion()) && (na != a || nb != b))
   {
     B.Range(edge, na, nb, true);
     ShapeAnalysis_Edge sae;

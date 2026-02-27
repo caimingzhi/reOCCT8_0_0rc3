@@ -53,7 +53,7 @@ public:
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferShape(
     const TopoDS_Shape&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferEdge(const TopoDS_Edge& myedge);
 
@@ -69,19 +69,19 @@ public:
 
   Standard_EXPORT occ::handle<IGESSolid_Shell> TransferShell(
     const TopoDS_Shell&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESSolid_ManifoldSolid> TransferSolid(
     const TopoDS_Solid&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferCompSolid(
     const TopoDS_CompSolid&      start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferCompound(
     const TopoDS_Compound&       start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
 private:
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myVertices;

@@ -46,7 +46,7 @@ public:
     }                                                                                              \
     DEFINE_STANDARD_RTTI_INLINE(theClass, theParent)                                               \
   };                                                                                               \
-  DEFINE_STANDARD_HANDLE(theClass, theParent)
+  DEFINE_STANDARD_HANDLECLASS(theClass, theParent, Standard_Transient)
 
 #define QA_NAME(theNum) QaClass##theNum##_50
 #define QA_HANDLE_NAME(theNum) Handle(QaClass##theNum##_50)
@@ -90,7 +90,7 @@ namespace QaNamespace
 
 namespace
 {
-  class QATimer : public OSD_Timer
+  class QATimer : public System::os::OSD_Timer
   {
   public:
     enum TimeFormat

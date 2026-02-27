@@ -91,9 +91,9 @@ static int getSysLogPriority(const Message_Gravity theGravity)
 }
 #endif
 
-IMPLEMENT_STANDARD_RTTIEXT(Message_PrinterSystemLog, Message_Printer)
+IMPLEMENT_STANDARD_RTTIEXT(System::log::Message_PrinterSystemLog, System::log::Message_Printer)
 
-Message_PrinterSystemLog::Message_PrinterSystemLog(
+System::log::Message_PrinterSystemLog::Message_PrinterSystemLog(
   const TCollection_AsciiString& theEventSourceName,
   const Message_Gravity          theTraceLevel)
     : myEventSourceName(theEventSourceName)
@@ -113,7 +113,7 @@ Message_PrinterSystemLog::Message_PrinterSystemLog(
 #endif
 }
 
-Message_PrinterSystemLog::~Message_PrinterSystemLog()
+System::log::Message_PrinterSystemLog::~Message_PrinterSystemLog()
 {
 #if defined(_WIN32)
   if (myEventSource != NULL)
@@ -131,7 +131,7 @@ Message_PrinterSystemLog::~Message_PrinterSystemLog()
 #endif
 }
 
-void Message_PrinterSystemLog::send(const TCollection_AsciiString& theString,
+void System::log::Message_PrinterSystemLog::send(const TCollection_AsciiString& theString,
                                     const Message_Gravity          theGravity) const
 {
   if (theGravity < myTraceLevel)

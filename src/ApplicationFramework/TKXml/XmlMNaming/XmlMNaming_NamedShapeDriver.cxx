@@ -37,7 +37,7 @@ IMPLEMENT_DOMSTRING(EvolSelectedString, "selected")
 IMPLEMENT_DOMSTRING(EvolReplaceString, "replace")
 
 XmlMNaming_NamedShapeDriver::XmlMNaming_NamedShapeDriver(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
     : XmlMDF_ADriver(theMessageDriver, nullptr),
       myShapeSet(false)
 {
@@ -270,7 +270,7 @@ static int doTranslate(const XmlMNaming_Shape1& thePShape,
 }
 
 void XmlMNaming_NamedShapeDriver::ReadShapeSection(const XmlObjMgt_Element&     theElement,
-                                                   const Message_ProgressRange& theRange)
+                                                   const System::log::Message_ProgressRange& theRange)
 {
   XmlObjMgt_Element anElement = XmlObjMgt::FindChildByName(theElement, ::ShapesString());
   if (anElement != nullptr)
@@ -292,7 +292,7 @@ void XmlMNaming_NamedShapeDriver::ReadShapeSection(const XmlObjMgt_Element&     
 
 void XmlMNaming_NamedShapeDriver::WriteShapeSection(XmlObjMgt_Element&    theElement,
                                                     TDocStd_FormatVersion theStorageFormatVersion,
-                                                    const Message_ProgressRange& theRange)
+                                                    const System::log::Message_ProgressRange& theRange)
 {
 
   XmlObjMgt_Document aDoc      = theElement.getOwnerDocument();
@@ -312,7 +312,7 @@ void XmlMNaming_NamedShapeDriver::WriteShapeSection(XmlObjMgt_Element&    theEle
 
     LDOM_OSStream aStream(16 * 1024);
 
-    Message_ProgressScope aPS(theRange, "Writing shape section", 2);
+    System::log::Message_ProgressScope aPS(theRange, "Writing shape section", 2);
     myShapeSet.Write(aStream, aPS.Next());
     if (!aPS.More())
       return;

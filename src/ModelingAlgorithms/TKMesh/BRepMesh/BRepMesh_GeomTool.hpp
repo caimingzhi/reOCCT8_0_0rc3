@@ -32,7 +32,7 @@ public:
                                     const double             theLinDeflection,
                                     const double             theAngDeflection,
                                     const int                theMinPointsNb = 2,
-                                    const double             theMinSize = Precision::Confusion());
+                                    const double             theMinSize = math::precision::Precision::Confusion());
 
   Standard_EXPORT BRepMesh_GeomTool(const occ::handle<BRepAdaptor_Surface>& theSurface,
                                     const GeomAbs_IsoType                   theIsoType,
@@ -42,7 +42,7 @@ public:
                                     const double                            theLinDeflection,
                                     const double                            theAngDeflection,
                                     const int                               theMinPointsNb = 2,
-                                    const double theMinSize = Precision::Confusion());
+                                    const double theMinSize = math::precision::Precision::Confusion());
 
   int AddPoint(const gp_Pnt& thePoint, const double theParam, const bool theIsReplace = true)
   {
@@ -90,7 +90,7 @@ public:
                                           const gp_Pnt& theMidPoint)
   {
 
-    if (theFirstPoint.SquareDistance(theLastPoint) > Precision::SquareConfusion())
+    if (theFirstPoint.SquareDistance(theLastPoint) > math::precision::Precision::SquareConfusion())
     {
       gp_Lin aLin(theFirstPoint, gp_Dir(gp_Vec(theFirstPoint, theLastPoint)));
       return aLin.SquareDistance(theMidPoint);

@@ -49,7 +49,7 @@ TEST_F(PLibHermitJacobiTest, BasisFunctionD0)
 
     for (int i = aBasisValue.Lower(); i <= aBasisValue.Upper(); i++)
     {
-      EXPECT_FALSE(Precision::IsInfinite(aBasisValue(i)))
+      EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisValue(i)))
         << "Basis value should be finite at index " << i << ", U=" << aU;
     }
   }
@@ -75,12 +75,12 @@ TEST_F(PLibHermitJacobiTest, BasisFunctionDerivatives)
 
   for (int i = aBasisValue.Lower(); i <= aBasisValue.Upper(); i++)
   {
-    EXPECT_FALSE(Precision::IsInfinite(aBasisValue(i))) << "Basis value should be finite at " << i;
-    EXPECT_FALSE(Precision::IsInfinite(aBasisD1(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisValue(i))) << "Basis value should be finite at " << i;
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisD1(i)))
       << "First derivative should be finite at " << i;
-    EXPECT_FALSE(Precision::IsInfinite(aBasisD2(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisD2(i)))
       << "Second derivative should be finite at " << i;
-    EXPECT_FALSE(Precision::IsInfinite(aBasisD3(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisD3(i)))
       << "Third derivative should be finite at " << i;
   }
 }
@@ -109,7 +109,7 @@ TEST_F(PLibHermitJacobiTest, CoefficientConversion)
 
   for (int i = aCoefficients.Lower(); i <= aCoefficients.Upper(); i++)
   {
-    EXPECT_FALSE(Precision::IsInfinite(aCoefficients(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aCoefficients(i)))
       << "Converted coefficient should be finite at index " << i;
   }
 }
@@ -139,7 +139,7 @@ TEST_F(PLibHermitJacobiTest, DegreeReduction)
   EXPECT_LE(aNewDegree, aMaxDegree) << "New degree should not exceed max degree";
   EXPECT_GE(aNewDegree, 0) << "New degree should be non-negative";
   EXPECT_GE(aMaxError, 0.0) << "Max error should be non-negative";
-  EXPECT_FALSE(Precision::IsInfinite(aMaxError)) << "Max error should be finite";
+  EXPECT_FALSE(math::precision::Precision::IsInfinite(aMaxError)) << "Max error should be finite";
 }
 
 TEST_F(PLibHermitJacobiTest, ErrorEstimation)
@@ -161,16 +161,16 @@ TEST_F(PLibHermitJacobiTest, ErrorEstimation)
     << "MaxError calculation failed";
 
   EXPECT_GE(aMaxErr, 0.0) << "Max error should be non-negative";
-  EXPECT_FALSE(Precision::IsInfinite(aMaxErr)) << "Max error should be finite";
+  EXPECT_FALSE(math::precision::Precision::IsInfinite(aMaxErr)) << "Max error should be finite";
 
   double aAvgErr = -1.0;
   EXPECT_NO_THROW({ aAvgErr = aHerm.AverageError(aDimension, aCoeff.ChangeValue(1), aNewDegree); })
     << "AverageError calculation failed";
 
   EXPECT_GE(aAvgErr, 0.0) << "Average error should be non-negative";
-  EXPECT_FALSE(Precision::IsInfinite(aAvgErr)) << "Average error should be finite";
+  EXPECT_FALSE(math::precision::Precision::IsInfinite(aAvgErr)) << "Average error should be finite";
 
-  EXPECT_LE(aAvgErr, aMaxErr + Precision::Confusion())
+  EXPECT_LE(aAvgErr, aMaxErr + math::precision::Precision::Confusion())
     << "Average error should not exceed max error significantly";
 }
 
@@ -189,7 +189,7 @@ TEST_F(PLibHermitJacobiTest, ExtremeParameterValues)
 
     for (int i = aBasisValue.Lower(); i <= aBasisValue.Upper(); i++)
     {
-      EXPECT_FALSE(Precision::IsInfinite(aBasisValue(i)))
+      EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisValue(i)))
         << "Basis value should be finite at extreme parameter U=" << aU;
     }
   }
@@ -213,9 +213,9 @@ TEST_F(PLibHermitJacobiTest, DerivativeConsistency)
 
   for (int i = aBasisValue1.Lower(); i <= aBasisValue1.Upper(); i++)
   {
-    EXPECT_NEAR(aBasisValue1(i), aBasisValue2(i), Precision::Confusion())
+    EXPECT_NEAR(aBasisValue1(i), aBasisValue2(i), math::precision::Precision::Confusion())
       << "Function values should be consistent between D1 and D2 calls at index " << i;
-    EXPECT_NEAR(aBasisD1_1(i), aBasisD1_2(i), Precision::Confusion())
+    EXPECT_NEAR(aBasisD1_1(i), aBasisD1_2(i), math::precision::Precision::Confusion())
       << "First derivatives should be consistent between D1 and D2 calls at index " << i;
   }
 }

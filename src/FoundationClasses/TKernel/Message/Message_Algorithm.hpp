@@ -212,14 +212,21 @@ private:
 #include <Message_Msg.hpp>
 #include <NCollection_Handle.hpp>
 
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TCollection_AsciiString;
 class TCollection_HAsciiString;
 class TCollection_ExtendedString;
 class TCollection_HExtendedString;
+namespace System { namespace log {
 class Message_Msg;
+}} // namespace System::log
+
 class TColStd_HPackedMapOfInteger;
 
+namespace System { namespace log {
 class Message_Algorithm : public Standard_Transient
 {
 
@@ -300,49 +307,51 @@ private:
   occ::handle<NCollection_HArray1<occ::handle<Standard_Transient>>>       myReportStrings;
   NCollection_Handle<NCollection_Array1<NCollection_Handle<Message_Msg>>> myReportMessages;
 };
+}} // namespace System::log
+
 
 #include <Message_Algorithm.hpp>
 #include <TCollection_HExtendedString.hpp>
 
-inline void Message_Algorithm::SetStatus(const Message_Status& theStat,
+inline void System::log::Message_Algorithm::SetStatus(const Message_Status& theStat,
                                          const char*           theStr,
                                          const bool            noRepetitions)
 {
   SetStatus(theStat, new TCollection_HExtendedString(theStr), noRepetitions);
 }
 
-inline void Message_Algorithm::SetStatus(const Message_Status&          theStat,
+inline void System::log::Message_Algorithm::SetStatus(const Message_Status&          theStat,
                                          const TCollection_AsciiString& theStr,
                                          const bool                     noRepetitions)
 {
   SetStatus(theStat, new TCollection_HExtendedString(theStr), noRepetitions);
 }
 
-inline void Message_Algorithm::SetStatus(const Message_Status&                        theStat,
+inline void System::log::Message_Algorithm::SetStatus(const Message_Status&                        theStat,
                                          const occ::handle<TCollection_HAsciiString>& theStr,
                                          const bool                                   noRepetitions)
 {
   SetStatus(theStat, new TCollection_HExtendedString(theStr), noRepetitions);
 }
 
-inline void Message_Algorithm::SetStatus(const Message_Status&             theStat,
+inline void System::log::Message_Algorithm::SetStatus(const Message_Status&             theStat,
                                          const TCollection_ExtendedString& theStr,
                                          const bool                        noRepetitions)
 {
   SetStatus(theStat, new TCollection_HExtendedString(theStr), noRepetitions);
 }
 
-inline const Message_ExecStatus& Message_Algorithm::GetStatus() const
+inline const Message_ExecStatus& System::log::Message_Algorithm::GetStatus() const
 {
   return myStatus;
 }
 
-inline Message_ExecStatus& Message_Algorithm::ChangeStatus()
+inline Message_ExecStatus& System::log::Message_Algorithm::ChangeStatus()
 {
   return myStatus;
 }
 
-inline occ::handle<Message_Messenger> Message_Algorithm::GetMessenger() const
+inline occ::handle<System::log::Message_Messenger> System::log::Message_Algorithm::GetMessenger() const
 {
   return myMessenger;
 }

@@ -43,12 +43,12 @@ class BOPTools_Parallel
 
     void SetContext(const opencascade::handle<TypeContext>& theContext)
     {
-      myContextMap.Bind(OSD_Thread::Current(), theContext);
+      myContextMap.Bind(System::os::OSD_Thread::Current(), theContext);
     }
 
     const opencascade::handle<TypeContext>& GetThreadContext() const
     {
-      const Standard_ThreadId aThreadID = OSD_Thread::Current();
+      const Standard_ThreadId aThreadID = System::os::OSD_Thread::Current();
       if (const opencascade::handle<TypeContext>* aContextPtr = myContextMap.Seek(aThreadID))
       {
         if (!aContextPtr->IsNull())
@@ -89,7 +89,7 @@ class BOPTools_Parallel
   {
   public:
     explicit ContextFunctor2(TypeSolverVector&               theVector,
-                             const OSD_ThreadPool::Launcher& thePoolLauncher)
+                             const System::os::OSD_ThreadPool::Launcher& thePoolLauncher)
         : mySolverVector(theVector),
           myContextArray(thePoolLauncher.LowerThreadIndex(), thePoolLauncher.UpperThreadIndex())
     {
@@ -127,7 +127,7 @@ public:
   static void Perform(bool theIsRunParallel, TypeSolverVector& theSolverVector)
   {
     Functor<TypeSolverVector> aFunctor(theSolverVector);
-    OSD_Parallel::For(0, theSolverVector.Length(), aFunctor, !theIsRunParallel);
+    System::os::OSD_Parallel::For(0, theSolverVector.Length(), aFunctor, !theIsRunParallel);
   }
 
   template <class TypeSolverVector, class TypeContext>
@@ -135,10 +135,10 @@ public:
                       TypeSolverVector&                 theSolverVector,
                       opencascade::handle<TypeContext>& theContext)
   {
-    if (OSD_Parallel::ToUseOcctThreads())
+    if (System::os::OSD_Parallel::ToUseOcctThreads())
     {
-      const occ::handle<OSD_ThreadPool>&             aThreadPool = OSD_ThreadPool::DefaultPool();
-      OSD_ThreadPool::Launcher                       aPoolLauncher(*aThreadPool,
+      const occ::handle<System::os::OSD_ThreadPool>&             aThreadPool = System::os::OSD_ThreadPool::DefaultPool();
+      System::os::OSD_ThreadPool::Launcher                       aPoolLauncher(*aThreadPool,
                                              theIsRunParallel ? theSolverVector.Length() : 0);
       ContextFunctor2<TypeSolverVector, TypeContext> aFunctor(theSolverVector, aPoolLauncher);
       aFunctor.SetContext(theContext);
@@ -148,7 +148,7 @@ public:
     {
       ContextFunctor<TypeSolverVector, TypeContext> aFunctor(theSolverVector);
       aFunctor.SetContext(theContext);
-      OSD_Parallel::For(0, theSolverVector.Length(), aFunctor, !theIsRunParallel);
+      System::os::OSD_Parallel::For(0, theSolverVector.Length(), aFunctor, !theIsRunParallel);
     }
   }
 };

@@ -22,44 +22,44 @@ static void DDocStd_StorageErrorMessage(Draw_Interpretor& theDI, const Storage_E
     case Storage_VSOk:
       break;
     case Storage_VSOpenError:
-      theDI << "Storage error: failed to open the stream";
+      theDI << "app::storage::Storage error: failed to open the stream";
       break;
     case Storage_VSModeError:
-      theDI << "Storage error: the stream is opened with a wrong mode for operation ";
+      theDI << "app::storage::Storage error: the stream is opened with a wrong mode for operation ";
       break;
     case Storage_VSCloseError:
-      theDI << "Storage error: failed to closing the stream";
+      theDI << "app::storage::Storage error: failed to closing the stream";
       break;
     case Storage_VSAlreadyOpen:
-      theDI << "Storage error: stream is already opened";
+      theDI << "app::storage::Storage error: stream is already opened";
       break;
     case Storage_VSNotOpen:
-      theDI << "Storage error: stream not opened";
+      theDI << "app::storage::Storage error: stream not opened";
       break;
     case Storage_VSSectionNotFound:
-      theDI << "Storage error: the section is not found";
+      theDI << "app::storage::Storage error: the section is not found";
       break;
     case Storage_VSWriteError:
-      theDI << "Storage error: error during writing";
+      theDI << "app::storage::Storage error: error during writing";
       break;
     case Storage_VSFormatError:
-      theDI << "Storage error: wrong format error occurred while reading";
+      theDI << "app::storage::Storage error: wrong format error occurred while reading";
       break;
     case Storage_VSUnknownType:
-      theDI << "Storage error: try to read an unknown type";
+      theDI << "app::storage::Storage error: try to read an unknown type";
       break;
     case Storage_VSTypeMismatch:
       theDI
-        << "Storage error: try to read a wrong primitive type (read a char while expecting a real)";
+        << "app::storage::Storage error: try to read a wrong primitive type (read a char while expecting a real)";
       break;
     case Storage_VSInternalError:
-      theDI << "Storage error: internal error";
+      theDI << "app::storage::Storage error: internal error";
       break;
     case Storage_VSExtCharParityError:
-      theDI << "Storage error: parity error";
+      theDI << "app::storage::Storage error: parity error";
       break;
     default:
-      theDI << "Storage error: unknown error code";
+      theDI << "app::storage::Storage error: unknown error code";
       break;
   }
 }
@@ -72,31 +72,31 @@ static int DDocStd_fsdwrite(Draw_Interpretor& theDI, int theArgNb, const char** 
     theDI << "        Arguments:\n";
     theDI << "        shapes   : list os shape names\n";
     theDI << "        filename : output file name\n";
-    theDI << "        Storage driver:\n";
-    theDI << "          gen : FSD_File driver (default)\n";
-    theDI << "          cmp : FSD_CmpFile driver\n";
-    theDI << "          bin : FSD_BinaryFile driver\n";
+    theDI << "        app::storage::Storage driver:\n";
+    theDI << "          gen : app::file::stream::FSD_File driver (default)\n";
+    theDI << "          cmp : app::file::stream::FSD_CmpFile driver\n";
+    theDI << "          bin : app::file::stream::FSD_BinaryFile driver\n";
     return 1;
   }
 
-  occ::handle<Storage_BaseDriver> aFileDriver(new FSD_File);
+  occ::handle<app::storage::Storage_BaseDriver> aFileDriver(new app::file::stream::FSD_File);
 
   bool hasStorageDriver = false;
   int  iArgN            = theArgNb - 1;
 
   if (strncmp(theArgs[iArgN], "gen", 3) == 0)
   {
-    aFileDriver      = new FSD_File;
+    aFileDriver      = new app::file::stream::FSD_File;
     hasStorageDriver = true;
   }
   else if (strncmp(theArgs[iArgN], "cmp", 3) == 0)
   {
-    aFileDriver      = new FSD_CmpFile;
+    aFileDriver      = new app::file::stream::FSD_CmpFile;
     hasStorageDriver = true;
   }
   else if (strncmp(theArgs[iArgN], "bin", 3) == 0)
   {
-    aFileDriver      = new FSD_BinaryFile;
+    aFileDriver      = new app::file::stream::FSD_BinaryFile;
     hasStorageDriver = true;
   }
 

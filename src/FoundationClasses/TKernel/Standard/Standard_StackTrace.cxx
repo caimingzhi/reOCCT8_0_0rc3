@@ -168,14 +168,14 @@ bool Standard::StackTrace(char*     theBuffer,
                                   theBufferSize)
          > 0;
 #elif defined(__ANDROID__)
-  Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
+  System::log::Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
   return false;
 #elif defined(__QNX__)
 
-  Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
+  System::log::Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
   return false;
 #elif defined(OCCT_UWP) || (defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE)
-  Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
+  System::log::Message::SendTrace("Standard::StackTrace() is not implemented for this platform");
   return false;
 #elif defined(_WIN32)
 
@@ -279,7 +279,7 @@ bool Standard::StackTrace(char*     theBuffer,
   aDbgHelp.SymCleanup(anHProcess);
   return true;
   #else
-  Message::SendTrace("Standard::StackTrace() is not implemented for this CPU architecture");
+  System::log::Message::SendTrace("Standard::StackTrace() is not implemented for this CPU architecture");
   return false;
   #endif
 #else

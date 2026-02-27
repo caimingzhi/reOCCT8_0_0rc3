@@ -24,12 +24,12 @@ public:
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>&  aDocument,
     const TCollection_ExtendedString& aFileName,
-    const Message_ProgressRange&      theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&      theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>& theDocument,
     Standard_OStream&                theOStream,
-    const Message_ProgressRange&     theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&     theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void SetFormat(const TCollection_ExtendedString& aformat);
 

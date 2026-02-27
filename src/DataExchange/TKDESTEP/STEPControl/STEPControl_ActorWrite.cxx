@@ -496,7 +496,7 @@ bool STEPControl_ActorWrite::Recognize(const occ::handle<Transfer_Finder>& start
 occ::handle<Transfer_Binder> STEPControl_ActorWrite::Transfer(
   const occ::handle<Transfer_Finder>&        start,
   const occ::handle<Transfer_FinderProcess>& FP,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   occ::handle<TransferBRep_ShapeMapper> mapper = occ::down_cast<TransferBRep_ShapeMapper>(start);
 
@@ -632,7 +632,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
   const StepData_Factors&                                     theLocalFactors,
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>&     shapeGroup,
   const bool                                                  isManifold,
-  const Message_ProgressRange&                                theProgress)
+  const System::log::Message_ProgressRange&                                theProgress)
 {
   STEPControl_StepModelType             mymode = Mode();
   occ::handle<TransferBRep_ShapeMapper> mapper = occ::down_cast<TransferBRep_ShapeMapper>(start);
@@ -666,7 +666,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
   if (IsAssembly(aStepModel, theShape))
     return TransferCompound(start, SDR0, FP, theLocalFactors, theProgress);
 
-  Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
 
   bool                         isNMMode = aStepModel->InternalParameters.WriteNonmanifold != 0;
   occ::handle<Transfer_Binder> aNMBinder;
@@ -766,7 +766,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
 
       aNMBinder = TransientResult(sdr);
 
-      Message_ProgressScope aPS(aPSRoot.Next(), nullptr, aNMItemsNb);
+      System::log::Message_ProgressScope aPS(aPSRoot.Next(), nullptr, aNMItemsNb);
       for (int i = 1; i <= aNMItemsNb && aPS.More(); i++)
       {
         occ::handle<TransferBRep_ShapeMapper> aMapper =
@@ -900,7 +900,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
 
   ItemSeq->Append(myContext.GetDefaultAxis());
   STEPControl_StepModelType trmode = mymode;
-  Message_ProgressScope     aPS(aPSRoot.Next(), nullptr, nbs);
+  System::log::Message_ProgressScope     aPS(aPSRoot.Next(), nullptr, nbs);
   for (int i = 1; i <= nbs && aPS.More(); i++)
   {
     TopoDS_Shape xShape = RepItemSeq->Value(i);
@@ -924,7 +924,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferShape(
       }
     }
 
-    Message_ProgressScope aPS1(aPS.Next(), nullptr, 2);
+    System::log::Message_ProgressScope aPS1(aPS.Next(), nullptr, 2);
 
     TopoDS_Shape aShape = xShape;
 
@@ -1434,7 +1434,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferCompound(
   const occ::handle<StepShape_ShapeDefinitionRepresentation>& SDR0,
   const occ::handle<Transfer_FinderProcess>&                  FP,
   const StepData_Factors&                                     theLocalFactors,
-  const Message_ProgressRange&                                theProgress)
+  const System::log::Message_ProgressRange&                                theProgress)
 {
   occ::handle<TransferBRep_ShapeMapper> mapper = occ::down_cast<TransferBRep_ShapeMapper>(start);
   occ::handle<Transfer_Binder>          binder;
@@ -1518,7 +1518,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferCompound(
     new NCollection_HSequence<occ::handle<Standard_Transient>>();
   ItemSeq->Append(myContext.GetDefaultAxis());
   myContext.NextLevel();
-  Message_ProgressScope aPS(theProgress, nullptr, nbs);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbs);
   for (i = 1; i <= nbs && aPS.More(); i++)
   {
     occ::handle<TransferBRep_ShapeMapper> subs =
@@ -1574,7 +1574,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferSubShape(
   const StepData_Factors&                                     theLocalFactors,
   const occ::handle<NCollection_HSequence<TopoDS_Shape>>&     shapeGroup,
   const bool                                                  isManifold,
-  const Message_ProgressRange&                                theProgress)
+  const System::log::Message_ProgressRange&                                theProgress)
 {
   occ::handle<TransferBRep_ShapeMapper> mapper = occ::down_cast<TransferBRep_ShapeMapper>(start);
   if (mapper.IsNull())
@@ -1631,7 +1631,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferSubShape(
 
   STEPConstruct_Assembly mkitem;
 
-  if (std::abs(aLoc.ScaleFactor() - 1.0) > Precision::Confusion())
+  if (std::abs(aLoc.ScaleFactor() - 1.0) > math::precision::Precision::Confusion())
   {
     if (aStepModel->InternalParameters.WriteScalingTrsf)
       FP->AddWarning(
@@ -1640,7 +1640,7 @@ occ::handle<Transfer_Binder> STEPControl_ActorWrite::TransferSubShape(
     else
       FP->AddWarning(start, "The shape has a scaling factor, skipped");
   }
-  if (std::abs(aLoc.ScaleFactor() - 1.0) < Precision::Confusion()
+  if (std::abs(aLoc.ScaleFactor() - 1.0) < math::precision::Precision::Confusion()
       || !aStepModel->InternalParameters.WriteScalingTrsf)
   {
 

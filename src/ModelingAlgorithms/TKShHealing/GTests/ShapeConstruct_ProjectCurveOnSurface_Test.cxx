@@ -35,7 +35,7 @@ protected:
   void SetUp() override
   {
     myProjector = new ShapeConstruct_ProjectCurveOnSurface();
-    myTolerance = Precision::Confusion();
+    myTolerance = math::precision::Precision::Confusion();
   }
 
   occ::handle<Geom_BSplineCurve> createPlanarBSpline()
@@ -401,7 +401,7 @@ TEST_F(ShapeConstruct_ProjectCurveOnSurfaceTest, InitWithGeomSurface_G1)
   occ::handle<Geom_Plane>        aPlane = new Geom_Plane(gp_Pln(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1)));
   occ::handle<Geom_TrimmedCurve> aLine = GC_MakeSegment(gp_Pnt(0, 0, 0), gp_Pnt(10, 10, 0)).Value();
 
-  myProjector->Init(aPlane, Precision::Confusion());
+  myProjector->Init(aPlane, math::precision::Precision::Confusion());
 
   occ::handle<Geom2d_Curve> aPCurve;
   const bool                aResult =
@@ -417,7 +417,7 @@ TEST_F(ShapeConstruct_ProjectCurveOnSurfaceTest, SetSurfaceAndPrecision_G2)
   occ::handle<Geom_TrimmedCurve> aLine = GC_MakeSegment(gp_Pnt(0, 0, 0), gp_Pnt(10, 10, 0)).Value();
 
   myProjector->SetSurface(aPlane);
-  myProjector->SetPrecision(Precision::Confusion());
+  myProjector->SetPrecision(math::precision::Precision::Confusion());
 
   occ::handle<Geom2d_Curve> aPCurve;
   const bool                aResult =
@@ -688,7 +688,7 @@ TEST_F(ShapeConstruct_ProjectCurveOnSurfaceTest, Bug27569_ManyKnotsBSpline_M1)
 
   occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(0, -15, 0), gp_Dir(0, 1, 0));
 
-  myProjector->Init(aPlane, Precision::Confusion());
+  myProjector->Init(aPlane, math::precision::Precision::Confusion());
 
   occ::handle<Geom2d_Curve> aPCurve;
   const bool                aResult = myProjector->Perform(aBSplineCurve,
@@ -806,7 +806,7 @@ TEST_F(ShapeConstruct_ProjectCurveOnSurfaceTest, Bug27569_HighMultiplicityBSplin
   {
 
     occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Pnt(70, 0, 30), gp_Dir(0, 1, 0));
-    myProjector->Init(aPlane, Precision::Confusion());
+    myProjector->Init(aPlane, math::precision::Precision::Confusion());
 
     occ::handle<Geom2d_Curve> aPCurve;
     const bool                aResult = myProjector->Perform(aBSplineCurve,
@@ -819,7 +819,7 @@ TEST_F(ShapeConstruct_ProjectCurveOnSurfaceTest, Bug27569_HighMultiplicityBSplin
     return;
   }
 
-  myProjector->Init(aBSplineSurface, Precision::Confusion());
+  myProjector->Init(aBSplineSurface, math::precision::Precision::Confusion());
 
   occ::handle<Geom2d_Curve> aPCurve;
   const bool                aResult = myProjector->Perform(aBSplineCurve,

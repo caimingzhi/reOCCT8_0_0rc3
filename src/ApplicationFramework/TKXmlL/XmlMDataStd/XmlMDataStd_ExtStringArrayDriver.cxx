@@ -32,7 +32,7 @@ static bool Contains(const occ::handle<TDataStd_ExtStringArray>& arr,
 }
 
 XmlMDataStd_ExtStringArrayDriver::XmlMDataStd_ExtStringArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

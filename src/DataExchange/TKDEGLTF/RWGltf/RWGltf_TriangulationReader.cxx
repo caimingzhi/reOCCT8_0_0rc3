@@ -88,7 +88,7 @@ RWGltf_TriangulationReader::RWGltf_TriangulationReader() = default;
 
 void RWGltf_TriangulationReader::reportError(const TCollection_AsciiString& theText) const
 {
-  Message::SendFail(TCollection_AsciiString("File '") + myFileName + "' defines invalid glTF!\n"
+  System::log::Message::SendFail(TCollection_AsciiString("File '") + myFileName + "' defines invalid glTF!\n"
                     + theText);
 }
 
@@ -135,10 +135,10 @@ bool RWGltf_TriangulationReader::readFileData(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
   const RWGltf_GltfPrimArrayData&                   theGltfData,
   const occ::handle<Poly_Triangulation>&            theDestMesh,
-  const occ::handle<OSD_FileSystem>&                theFileSystem) const
+  const occ::handle<System::os::OSD_FileSystem>&                theFileSystem) const
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem =
-    !theFileSystem.IsNull() ? theFileSystem : OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem =
+    !theFileSystem.IsNull() ? theFileSystem : System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream> aSharedStream =
     aFileSystem->OpenIStream(theGltfData.StreamUri,
                              std::ios::in | std::ios::binary,
@@ -200,11 +200,11 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theSourceGltfMesh,
   const RWGltf_GltfPrimArrayData&                   theGltfData,
   const occ::handle<Poly_Triangulation>&            theDestMesh,
-  const occ::handle<OSD_FileSystem>&                theFileSystem) const
+  const occ::handle<System::os::OSD_FileSystem>&                theFileSystem) const
 {
   const TCollection_AsciiString&     aName = theSourceGltfMesh->Id();
-  const occ::handle<OSD_FileSystem>& aFileSystem =
-    !theFileSystem.IsNull() ? theFileSystem : OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem =
+    !theFileSystem.IsNull() ? theFileSystem : System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream> aSharedStream =
     aFileSystem->OpenIStream(theGltfData.StreamUri,
                              std::ios::in | std::ios::binary,
@@ -301,7 +301,7 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout_Vec3)
         {
-          Message::SendTrace(TCollection_AsciiString()
+          System::log::Message::SendTrace(TCollection_AsciiString()
                              + "Vertex normals in unsupported format have been skipped while "
                                "reading glTF triangulation '"
                              + aName + "'");
@@ -342,7 +342,7 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
         if (aWrapCompType != RWGltf_GltfAccessorCompType_Float32
             || aWrapLayout != RWGltf_GltfAccessorLayout_Vec2)
         {
-          Message::SendTrace(TCollection_AsciiString()
+          System::log::Message::SendTrace(TCollection_AsciiString()
                              + "Vertex UV coordinates in unsupported format have been skipped "
                                "while reading glTF triangulation '"
                              + aName + "'");
@@ -400,14 +400,14 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
   {
     if (aNbDegenerate == aNbTris)
     {
-      Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
+      System::log::Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
                            + "' has been skipped (all elements are degenerative in)");
       return false;
     }
     theSourceGltfMesh->ChangeDegeneratedTriNb() += aNbDegenerate;
     if (myLoadingStatistic == nullptr && myToPrintDebugMessages)
     {
-      Message::SendTrace(
+      System::log::Message::SendTrace(
         TCollection_AsciiString() + aNbDegenerate
         + " degenerate triangles have been skipped while reading glTF triangulation '" + aName
         + "'");
@@ -428,7 +428,7 @@ bool RWGltf_TriangulationReader::readDracoBuffer(
 
 bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSource>& theSourceMesh,
                                       const occ::handle<Poly_Triangulation>&         theDestMesh,
-                                      const occ::handle<OSD_FileSystem>& theFileSystem) const
+                                      const occ::handle<System::os::OSD_FileSystem>& theFileSystem) const
 {
   const occ::handle<RWGltf_GltfLatePrimitiveArray> aSourceGltfMesh =
     occ::down_cast<RWGltf_GltfLatePrimitiveArray>(theSourceMesh);
@@ -447,7 +447,7 @@ bool RWGltf_TriangulationReader::load(const occ::handle<RWMesh_TriangulationSour
     const TCollection_AsciiString&  aName = aSourceGltfMesh->Id();
     if (!aData.StreamData.IsNull())
     {
-      Message::SendWarning(
+      System::log::Message::SendWarning(
         TCollection_AsciiString("Buffer '") + aName
         + "' contains stream data that cannot be loaded during deferred data loading.");
       continue;
@@ -541,7 +541,7 @@ bool RWGltf_TriangulationReader::ReadStream(
   if (aPrimMode != RWGltf_GltfPrimitiveMode_Triangles && aPrimMode != RWGltf_GltfPrimitiveMode_Lines
       && aPrimMode != RWGltf_GltfPrimitiveMode_Points)
   {
-    Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
+    System::log::Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
                          + "' skipped unsupported primitive array");
     return true;
   }
@@ -620,14 +620,14 @@ bool RWGltf_TriangulationReader::ReadStream(
         {
           if (aNbDegenerate == aCounter)
           {
-            Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
+            System::log::Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
                                  + "' has been skipped (all elements are degenerative in)");
             return false;
           }
           theSourceMesh->ChangeDegeneratedTriNb() += aNbDegenerate;
           if ((myLoadingStatistic == nullptr) && myToPrintDebugMessages)
           {
-            Message::SendTrace(
+            System::log::Message::SendTrace(
               TCollection_AsciiString() + aNbDegenerate
               + " degenerate triangles have been skipped while reading glTF triangulation '" + aName
               + "'");
@@ -691,14 +691,14 @@ bool RWGltf_TriangulationReader::ReadStream(
         {
           if (aNbDegenerate == aNbTris)
           {
-            Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
+            System::log::Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
                                  + "' has been skipped (all elements are degenerative in)");
             return false;
           }
           theSourceMesh->ChangeDegeneratedTriNb() += aNbDegenerate;
           if (myLoadingStatistic == nullptr && myToPrintDebugMessages)
           {
-            Message::SendTrace(
+            System::log::Message::SendTrace(
               TCollection_AsciiString() + aNbDegenerate
               + " degenerate triangles have been skipped while reading glTF triangulation '" + aName
               + "'");
@@ -762,14 +762,14 @@ bool RWGltf_TriangulationReader::ReadStream(
         {
           if (aNbDegenerate == aNbTris)
           {
-            Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
+            System::log::Message::SendWarning(TCollection_AsciiString("Buffer '") + aName
                                  + "' has been skipped (all elements are degenerative in)");
             return false;
           }
           theSourceMesh->ChangeDegeneratedTriNb() += aNbDegenerate;
           if (myLoadingStatistic == nullptr && myToPrintDebugMessages)
           {
-            Message::SendTrace(
+            System::log::Message::SendTrace(
               TCollection_AsciiString() + aNbDegenerate
               + " degenerate triangles have been skipped while reading glTF triangulation '" + aName
               + "'");

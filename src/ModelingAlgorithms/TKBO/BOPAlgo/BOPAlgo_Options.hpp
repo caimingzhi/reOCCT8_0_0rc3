@@ -5,7 +5,10 @@
 
 #include <NCollection_BaseAllocator.hpp>
 
+namespace System { namespace log {
 class Message_ProgressScope;
+}} // namespace System::log
+
 
 class BOPAlgo_Options
 {
@@ -23,12 +26,12 @@ public:
   virtual void Clear() { myReport->Clear(); }
 
 public:
-  void AddError(const occ::handle<Message_Alert>& theAlert)
+  void AddError(const occ::handle<System::log::Message_Alert>& theAlert)
   {
     myReport->AddAlert(Message_Fail, theAlert);
   }
 
-  void AddWarning(const occ::handle<Message_Alert>& theAlert)
+  void AddWarning(const occ::handle<System::log::Message_Alert>& theAlert)
   {
     myReport->AddAlert(Message_Warning, theAlert);
   }
@@ -47,7 +50,7 @@ public:
     return myReport->HasAlert(theType, Message_Warning);
   }
 
-  const occ::handle<Message_Report>& GetReport() const { return myReport; }
+  const occ::handle<System::log::Message_Report>& GetReport() const { return myReport; }
 
   Standard_EXPORT void DumpErrors(Standard_OStream& theOS) const;
 
@@ -75,11 +78,11 @@ public:
   bool UseOBB() const { return myUseOBB; }
 
 protected:
-  Standard_EXPORT bool UserBreak(const Message_ProgressScope& thePS);
+  Standard_EXPORT bool UserBreak(const System::log::Message_ProgressScope& thePS);
 
 protected:
   occ::handle<NCollection_BaseAllocator> myAllocator;
-  occ::handle<Message_Report>            myReport;
+  occ::handle<System::log::Message_Report>            myReport;
   bool                                   myRunParallel;
   double                                 myFuzzyValue;
   bool                                   myUseOBB;

@@ -103,7 +103,7 @@ int Extrema_FuncPSNorm::GetStateNumber()
     throw Standard_TypeMismatch();
 
   int              i = 1, nbSol = mySqDist.Length();
-  constexpr double tol2d = Precision::PConfusion() * Precision::PConfusion();
+  constexpr double tol2d = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
 
   for (; i <= nbSol; i++)
   {

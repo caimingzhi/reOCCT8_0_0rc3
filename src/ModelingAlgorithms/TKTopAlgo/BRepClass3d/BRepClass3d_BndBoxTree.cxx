@@ -107,9 +107,9 @@ bool BRepClass3d_BndBoxTreeSelectorLine::Accept(const int& theObj)
 
     Extrema_ExtPElC ExtPL(BRep_Tool::Pnt(V),
                           myL,
-                          Precision::Confusion(),
-                          -Precision::Infinite(),
-                          Precision::Infinite());
+                          math::precision::Precision::Confusion(),
+                          -math::precision::Precision::Infinite(),
+                          math::precision::Precision::Infinite());
     if (ExtPL.IsDone() && ExtPL.NbExt() > 0)
       if (ExtPL.SquareDistance(1) < VertTSq)
       {

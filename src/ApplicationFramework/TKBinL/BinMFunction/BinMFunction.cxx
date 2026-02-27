@@ -7,7 +7,7 @@
 #include <Message_Messenger.hpp>
 
 void BinMFunction::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
-                              const occ::handle<Message_Messenger>&   theMsgDriver)
+                              const occ::handle<System::log::Message_Messenger>&   theMsgDriver)
 {
   theDriverTable->AddDriver(new BinMFunction_FunctionDriver(theMsgDriver));
   theDriverTable->AddDriver(new BinMFunction_GraphNodeDriver(theMsgDriver));

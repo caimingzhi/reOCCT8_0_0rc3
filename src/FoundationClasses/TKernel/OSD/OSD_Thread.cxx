@@ -1,6 +1,6 @@
 #include <OSD_Thread.hpp>
 
-OSD_Thread::OSD_Thread()
+System::os::OSD_Thread::OSD_Thread()
     : myFunc(nullptr),
       myThread(OSD_PTHREAD_NULL),
       myThreadId(0),
@@ -8,7 +8,7 @@ OSD_Thread::OSD_Thread()
 {
 }
 
-OSD_Thread::OSD_Thread(const OSD_ThreadFunction& func)
+System::os::OSD_Thread::OSD_Thread(const OSD_ThreadFunction& func)
     : myFunc(func),
       myThread(OSD_PTHREAD_NULL),
       myThreadId(0),
@@ -16,7 +16,7 @@ OSD_Thread::OSD_Thread(const OSD_ThreadFunction& func)
 {
 }
 
-OSD_Thread::OSD_Thread(const OSD_Thread& other)
+System::os::OSD_Thread::OSD_Thread(const System::os::OSD_Thread& other)
     : myFunc(other.myFunc),
       myThread(OSD_PTHREAD_NULL),
       myThreadId(0)
@@ -24,7 +24,7 @@ OSD_Thread::OSD_Thread(const OSD_Thread& other)
   Assign(other);
 }
 
-void OSD_Thread::Assign(const OSD_Thread& other)
+void System::os::OSD_Thread::Assign(const System::os::OSD_Thread& other)
 {
 
   myFunc     = other.myFunc;
@@ -47,12 +47,12 @@ void OSD_Thread::Assign(const OSD_Thread& other)
   myThreadId = other.myThreadId;
 }
 
-OSD_Thread::~OSD_Thread()
+System::os::OSD_Thread::~OSD_Thread()
 {
   Detach();
 }
 
-void OSD_Thread::SetPriority(const int thePriority)
+void System::os::OSD_Thread::SetPriority(const int thePriority)
 {
   myPriority = thePriority;
 #ifdef _WIN32
@@ -61,7 +61,7 @@ void OSD_Thread::SetPriority(const int thePriority)
 #endif
 }
 
-void OSD_Thread::SetFunction(const OSD_ThreadFunction& func)
+void System::os::OSD_Thread::SetFunction(const OSD_ThreadFunction& func)
 {
 
   Detach();
@@ -86,7 +86,7 @@ static DWORD WINAPI WNTthread_func(LPVOID data)
 }
 #endif
 
-bool OSD_Thread::Run(void* const data,
+bool System::os::OSD_Thread::Run(void* const data,
 #ifdef _WIN32
                      const int WNTStackSize
 #else
@@ -132,7 +132,7 @@ bool OSD_Thread::Run(void* const data,
   return myThread != OSD_PTHREAD_NULL;
 }
 
-void OSD_Thread::Detach()
+void System::os::OSD_Thread::Detach()
 {
 #ifdef _WIN32
 
@@ -150,7 +150,7 @@ void OSD_Thread::Detach()
   myThreadId = 0;
 }
 
-bool OSD_Thread::Wait(void*& theResult)
+bool System::os::OSD_Thread::Wait(void*& theResult)
 {
 
   theResult = nullptr;
@@ -189,7 +189,7 @@ bool OSD_Thread::Wait(void*& theResult)
 #endif
 }
 
-bool OSD_Thread::Wait(const int theTimeMs, void*& theResult)
+bool System::os::OSD_Thread::Wait(const int theTimeMs, void*& theResult)
 {
 
   theResult = nullptr;
@@ -258,12 +258,12 @@ bool OSD_Thread::Wait(const int theTimeMs, void*& theResult)
 #endif
 }
 
-Standard_ThreadId OSD_Thread::GetId() const
+Standard_ThreadId System::os::OSD_Thread::GetId() const
 {
   return myThreadId;
 }
 
-Standard_ThreadId OSD_Thread::Current()
+Standard_ThreadId System::os::OSD_Thread::Current()
 {
 #ifdef _WIN32
   return GetCurrentThreadId();

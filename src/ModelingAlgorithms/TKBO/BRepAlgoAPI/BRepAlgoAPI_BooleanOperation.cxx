@@ -21,7 +21,7 @@ public:
         myIsDumpArgs(false),
         myIsDumpRes(false)
   {
-    OSD_Environment         env("CSF_DEBUG_BOP");
+    System::os::OSD_Environment         env("CSF_DEBUG_BOP");
     TCollection_AsciiString pathdump = env.Value();
     myIsDump                         = (!pathdump.IsEmpty());
     myPath                           = pathdump.ToCString();
@@ -82,7 +82,7 @@ BRepAlgoAPI_BooleanOperation::BRepAlgoAPI_BooleanOperation(const TopoDS_Shape&  
   myTools.Append(theS2);
 }
 
-void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
+void BRepAlgoAPI_BooleanOperation::Build(const System::log::Message_ProgressRange& theRange)
 {
 
   NotDone();
@@ -130,7 +130,7 @@ void BRepAlgoAPI_BooleanOperation::Build(const Message_ProgressRange& theRange)
       return;
   }
 
-  Message_ProgressScope aPS(theRange, aPSName, myIsIntersectionNeeded ? 100 : 30);
+  System::log::Message_ProgressScope aPS(theRange, aPSName, myIsIntersectionNeeded ? 100 : 30);
 
   if (myIsIntersectionNeeded)
   {
@@ -197,7 +197,7 @@ void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
   while (isExist)
   {
     aFileName = aPath + "BO_" + TCollection_AsciiString(aNumOper) + ".tcl";
-    OSD_File aScript(aFileName);
+    System::os::OSD_File aScript(aFileName);
     isExist = aScript.Exists();
     if (isExist)
       aNumOper++;

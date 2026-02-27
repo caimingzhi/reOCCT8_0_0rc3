@@ -12,7 +12,7 @@ public:
   ~BRepMesh_CustomDelaunayBaseMeshAlgo() override = default;
 
 protected:
-  void postProcessMesh(BRepMesh_Delaun& theMesher, const Message_ProgressRange& theRange) override
+  void postProcessMesh(BRepMesh_Delaun& theMesher, const System::log::Message_ProgressRange& theRange) override
   {
     const occ::handle<BRepMesh_DataStructureOfDelaun>& aStructure = this->getStructure();
     std::pair<int, int> aCellsCount = this->getCellsCount(aStructure->NbNodes());

@@ -62,28 +62,28 @@ public:
   Standard_EXPORT bool TransferOneRoot(
     const int                            num,
     const occ::handle<TDocStd_Document>& doc,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const occ::handle<TDocStd_Document>& doc,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const TCollection_AsciiString&       filename,
                                const occ::handle<TDocStd_Document>& doc,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const TCollection_AsciiString&       filename,
                                const occ::handle<TDocStd_Document>& doc,
                                const DESTEP_Parameters&             theParams,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const char*                          filename,
                                const occ::handle<TDocStd_Document>& doc,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const char*                          filename,
                                const occ::handle<TDocStd_Document>& doc,
                                const DESTEP_Parameters&             theParams,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT const NCollection_DataMap<TCollection_AsciiString,
                                             occ::handle<STEPCAFControl_ExternFile>>&
@@ -169,7 +169,7 @@ protected:
                                 const occ::handle<TDocStd_Document>& doc,
                                 NCollection_Sequence<TDF_Label>&     Lseq,
                                 const bool                           asOne = false,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT TDF_Label
     AddShape(const TopoDS_Shape&                                                S,
@@ -185,7 +185,7 @@ protected:
     const char*                          file,
     const char*                          fullpath,
     const occ::handle<TDocStd_Document>& doc,
-    const Message_ProgressRange&         theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool ReadColors(
     const occ::handle<XSControl_WorkSession>& WS,

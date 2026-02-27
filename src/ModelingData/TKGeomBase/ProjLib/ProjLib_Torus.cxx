@@ -36,7 +36,7 @@ static gp_Pnt2d EvalPnt2d(const gp_Vec& Ve, const gp_Torus& To)
   double Y = Ve.Dot(gp_Vec(To.Position().YDirection()));
   double U, V;
 
-  if (std::abs(X) > Precision::PConfusion() || std::abs(Y) > Precision::PConfusion())
+  if (std::abs(X) > math::precision::Precision::PConfusion() || std::abs(Y) > math::precision::Precision::PConfusion())
   {
     U = std::atan2(Y, X);
   }
@@ -61,8 +61,8 @@ void ProjLib_Torus::Project(const gp_Circ& C)
   gp_Vec Zt(myTorus.Position().Direction());
   gp_Vec OC(myTorus.Location(), C.Location());
 
-  if (OC.Magnitude() < Precision::Confusion()
-      || C.Position().Direction().IsParallel(myTorus.Position().Direction(), Precision::Angular()))
+  if (OC.Magnitude() < math::precision::Precision::Confusion()
+      || C.Position().Direction().IsParallel(myTorus.Position().Direction(), math::precision::Precision::Angular()))
   {
 
     gp_Pnt2d P1 = EvalPnt2d(Xc, myTorus);

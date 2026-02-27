@@ -139,7 +139,7 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
     return 0;
 
   occ::handle<Geom_Plane> Plane1 = new Geom_Plane(circ1Plane);
-  mkFace.Init(Plane1, false, Precision::Confusion());
+  mkFace.Init(Plane1, false, math::precision::Precision::Confusion());
 
   mkFace.Add(TopoDS::Wire(mkPipe2.FirstShape()));
   mkFace.Add(TopoDS::Wire(mkPipe1.FirstShape().Reversed()));
@@ -148,7 +148,7 @@ static int OCC332bug(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Face Face1 = mkFace.Face();
 
   occ::handle<Geom_Plane> Plane2 = new Geom_Plane(circ2Plane);
-  mkFace.Init(Plane2, false, Precision::Confusion());
+  mkFace.Init(Plane2, false, math::precision::Precision::Confusion());
 
   mkFace.Add(TopoDS::Wire(mkPipe2.LastShape()));
   mkFace.Add(TopoDS::Wire(mkPipe1.LastShape().Reversed()));
@@ -435,7 +435,7 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   occ::handle<Geom_Plane> Plane1 = new Geom_Plane(circ1Plane);
-  mkFace.Init(Plane1, false, Precision::Confusion());
+  mkFace.Init(Plane1, false, math::precision::Precision::Confusion());
   mkFace.Add(TopoDS::Wire(outerWire1_));
   mkFace.Add(TopoDS::Wire(Wire1_.Reversed()));
   if (!mkFace.IsDone())
@@ -443,7 +443,7 @@ static int OCC544(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Face Face1 = mkFace.Face();
 
   occ::handle<Geom_Plane> Plane2 = new Geom_Plane(circ2Plane);
-  mkFace.Init(Plane2, false, Precision::Confusion());
+  mkFace.Init(Plane2, false, math::precision::Precision::Confusion());
   mkFace.Add(TopoDS::Wire(outerWire2_));
   mkFace.Add(TopoDS::Wire(Wire2_.Reversed()));
   if (!mkFace.IsDone())
@@ -637,7 +637,7 @@ static int OCC817(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   }
 
-  constexpr double delt      = 5.0 * Precision::Confusion();
+  constexpr double delt      = 5.0 * math::precision::Precision::Confusion();
   double           mesh_delt = Draw::Atof(argv[2]);
   if (mesh_delt <= 0.0)
   {

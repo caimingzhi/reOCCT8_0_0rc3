@@ -30,7 +30,7 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
 {
   mySegments->Clear();
   mySplitParams->Clear();
-  constexpr double precision = Precision::PConfusion();
+  constexpr double precision = math::precision::Precision::PConfusion();
   double           First     = mySplitValues->Value(1);
   double           Last      = mySplitValues->Value(mySplitValues->Length());
   if (myCurve->IsKind(STANDARD_TYPE(Geom_TrimmedCurve)))
@@ -107,7 +107,7 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
 
       occ::handle<Geom_Curve> tcurve = new Geom_TrimmedCurve(myCurve, First, Last);
 
-      GeomConvert_ApproxCurve approx(tcurve, Precision::Approximation(), GeomAbs_C1, 100, 6);
+      GeomConvert_ApproxCurve approx(tcurve, math::precision::Precision::Approximation(), GeomAbs_C1, 100, 6);
       if (approx.HasResult())
         aBSpline = approx.Curve();
       else
@@ -187,7 +187,7 @@ void ShapeUpgrade_ConvertCurve3dToBezier::Compute()
 
 void ShapeUpgrade_ConvertCurve3dToBezier::Build(const bool)
 {
-  constexpr double prec = Precision::PConfusion();
+  constexpr double prec = math::precision::Precision::PConfusion();
   int              nb   = mySplitValues->Length();
   myResultingCurves     = new NCollection_HArray1<occ::handle<Geom_Curve>>(1, nb - 1);
   double prevPar        = 0.;

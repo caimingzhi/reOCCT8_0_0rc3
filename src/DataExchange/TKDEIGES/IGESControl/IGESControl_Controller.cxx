@@ -306,7 +306,7 @@ IFSelect_ReturnStatus IGESControl_Controller::TransferWriteShape(
   const occ::handle<Transfer_FinderProcess>&   FP,
   const occ::handle<Interface_InterfaceModel>& model,
   const int                                    modetrans,
-  const Message_ProgressRange&                 theProgress) const
+  const System::log::Message_ProgressRange&                 theProgress) const
 {
   return XSControl_Controller::TransferWriteShape(shape, FP, model, modetrans, theProgress);
 }

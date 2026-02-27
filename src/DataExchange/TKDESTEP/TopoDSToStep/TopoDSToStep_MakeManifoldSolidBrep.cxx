@@ -25,7 +25,7 @@ static std::pair<occ::handle<StepShape_ManifoldSolidBrep>, occ::handle<StepVisua
   MakeManifoldSolidBrep(const TopoDS_Shell&                        aShell,
                         const occ::handle<Transfer_FinderProcess>& FP,
                         const StepData_Factors&                    theLocalFactors,
-                        const Message_ProgressRange&               theProgress)
+                        const System::log::Message_ProgressRange&               theProgress)
 {
   occ::handle<StepShape_ManifoldSolidBrep> theManifoldSolidBrep;
   occ::handle<StepVisual_TessellatedItem>  aTessItem;
@@ -70,7 +70,7 @@ TopoDSToStep_MakeManifoldSolidBrep::TopoDSToStep_MakeManifoldSolidBrep(
   const TopoDS_Shell&                        aShell,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   std::pair<occ::handle<StepShape_ManifoldSolidBrep>, occ::handle<StepVisual_TessellatedItem>>
     aResult = MakeManifoldSolidBrep(aShell, FP, theLocalFactors, theProgress);
@@ -91,7 +91,7 @@ TopoDSToStep_MakeManifoldSolidBrep::TopoDSToStep_MakeManifoldSolidBrep(
   const TopoDS_Solid&                        aSolid,
   const occ::handle<Transfer_FinderProcess>& FP,
   const StepData_Factors&                    theLocalFactors,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   TopoDS_Shell aOuterShell = BRepClass3d::OuterShell(aSolid);
   if (!aOuterShell.IsNull())

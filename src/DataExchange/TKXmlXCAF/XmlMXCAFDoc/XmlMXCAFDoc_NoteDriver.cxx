@@ -8,7 +8,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_NoteDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(UserName, "user_name")
 IMPLEMENT_DOMSTRING(TimeStamp, "time_stamp")
 
-XmlMXCAFDoc_NoteDriver::XmlMXCAFDoc_NoteDriver(const occ::handle<Message_Messenger>& theMsgDriver,
+XmlMXCAFDoc_NoteDriver::XmlMXCAFDoc_NoteDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver,
                                                const char*                           theName)
     : XmlMDF_ADriver(theMsgDriver, theName)
 {

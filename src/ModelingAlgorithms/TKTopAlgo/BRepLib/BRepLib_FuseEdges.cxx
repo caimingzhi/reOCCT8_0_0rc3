@@ -133,7 +133,7 @@ static void MakeClosedCurve(occ::handle<Geom_Curve>& C, const gp_Pnt& PF, double
   int    fk = aBC->FirstUKnotIndex();
   int    lk = aBC->LastUKnotIndex();
   int    k;
-  double eps = Precision::Confusion();
+  double eps = math::precision::Precision::Confusion();
   eps *= eps;
   double porig = 2. * l;
   double dmin = 1.e100, pmin = f;
@@ -158,7 +158,7 @@ static void MakeClosedCurve(occ::handle<Geom_Curve>& C, const gp_Pnt& PF, double
   {
 
     GeomAdaptor_Curve   aGAC(aBC);
-    Extrema_LocateExtPC aPrj(PF, aGAC, pmin, Precision::PConfusion());
+    Extrema_LocateExtPC aPrj(PF, aGAC, pmin, math::precision::Precision::PConfusion());
     if (aPrj.IsDone())
     {
       porig = aPrj.Point().Parameter();
@@ -169,13 +169,13 @@ static void MakeClosedCurve(occ::handle<Geom_Curve>& C, const gp_Pnt& PF, double
     }
   }
 
-  aBC->SetOrigin(porig, Precision::PConfusion());
+  aBC->SetOrigin(porig, math::precision::Precision::PConfusion());
   f = aBC->FirstParameter();
   l = aBC->LastParameter();
   aBC->Segment(f, l);
   if (aCont > GeomAbs_C0 && aBC->Continuity() == GeomAbs_C0)
   {
-    BCSmoothing(aBC, 1, Precision::Confusion());
+    BCSmoothing(aBC, 1, math::precision::Precision::Confusion());
   }
   C = aBC;
   f = C->FirstParameter();
@@ -399,7 +399,7 @@ void BRepLib_FuseEdges::BuildListResultEdges()
           {
             occ::handle<Geom_Curve> aC = BRep_Tool::Curve(TopoDS::Edge(anEdgIter.Value()), f, l);
             aTC                        = new Geom_TrimmedCurve(aC, f, l);
-            if (!Concat.Add(aTC, Precision::Confusion()))
+            if (!Concat.Add(aTC, math::precision::Precision::Confusion()))
             {
 
               throw Standard_ConstructionError("FuseEdges : Concatenation failed");
@@ -420,12 +420,12 @@ void BRepLib_FuseEdges::BuildListResultEdges()
         l          = C->LastParameter();
         gp_Pnt aPf = C->Value(f);
         gp_Pnt aPl = C->Value(l);
-        if (aPf.Distance(aPl) > Precision::Confusion())
+        if (aPf.Distance(aPl) > math::precision::Precision::Confusion())
         {
           throw Standard_ConstructionError("FuseEdges : Curve must be closed");
         }
         gp_Pnt PF = BRep_Tool::Pnt(VF);
-        if (PF.Distance(aPf) > Precision::Confusion())
+        if (PF.Distance(aPf) > math::precision::Precision::Confusion())
         {
           MakeClosedCurve(C, PF, f, l);
         }
@@ -710,8 +710,8 @@ bool BRepLib_FuseEdges::SameSupport(const TopoDS_Edge& E1, const TopoDS_Edge& E2
     return false;
   }
 
-  constexpr double tollin = Precision::Confusion();
-  constexpr double tolang = Precision::Angular();
+  constexpr double tollin = math::precision::Precision::Confusion();
+  constexpr double tolang = math::precision::Precision::Angular();
   if (typC1 == STANDARD_TYPE(Geom_Line))
   {
     gp_Lin li1(occ::down_cast<Geom_Line>(C1)->Lin());
@@ -1001,7 +1001,7 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
             occ::handle<Geom2d_BoundedCurve> BC = occ::down_cast<Geom2d_BoundedCurve>(C);
             if (BC.IsNull())
               BC = new Geom2d_TrimmedCurve(C, first, last);
-            if (!Concat.Add(BC, Precision::PConfusion()))
+            if (!Concat.Add(BC, math::precision::Precision::PConfusion()))
 
               return false;
           }
@@ -1009,8 +1009,8 @@ bool BRepLib_FuseEdges::UpdatePCurve(const TopoDS_Edge&                    theOl
 
           double first = Curv2d->FirstParameter();
           double last  = Curv2d->LastParameter();
-          if (std::abs(first - ef) > Precision::PConfusion()
-              || std::abs(last - el) > Precision::PConfusion())
+          if (std::abs(first - ef) > math::precision::Precision::PConfusion()
+              || std::abs(last - el) > math::precision::Precision::PConfusion())
           {
             occ::handle<Geom2d_BSplineCurve> bc = occ::down_cast<Geom2d_BSplineCurve>(Curv2d);
             NCollection_Array1<double>       Knots(1, bc->NbKnots());

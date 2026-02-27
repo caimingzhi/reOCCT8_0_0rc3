@@ -22,17 +22,17 @@
 
 #ifdef OCCT_DEBUG_CHRONO
   #include <OSD_Timer.hpp>
-static OSD_Chronometer chr_total, chr_init, chr_approx;
+static System::os::OSD_Chronometer chr_total, chr_init, chr_approx;
 
 double t_total, t_init, t_approx;
 
-void InitChron(OSD_Chronometer& ch)
+void InitChron(System::os::OSD_Chronometer& ch)
 {
   ch.Reset();
   ch.Start();
 }
 
-void ResultChron(OSD_Chronometer& ch, double& time)
+void ResultChron(System::os::OSD_Chronometer& ch, double& time)
 {
   double tch;
   ch.Stop();
@@ -92,7 +92,7 @@ void Approx_CurvilinearParameter_EvalCurv::Evaluate(int*    Dimension,
 
   if (StartEnd[0] != StartEndSav[0] || StartEnd[1] != StartEndSav[1])
   {
-    fonct->Trim(StartEnd[0], StartEnd[1], Precision::Confusion());
+    fonct->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::Confusion());
     StartEndSav[0] = StartEnd[0];
     StartEndSav[1] = StartEnd[1];
   }
@@ -241,7 +241,7 @@ void Approx_CurvilinearParameter_EvalCurvOnSurf::Evaluate(int*    Dimension,
 
   if (StartEnd[0] != StartEndSav[0] || StartEnd[1] != StartEndSav[1])
   {
-    fonct->Trim(StartEnd[0], StartEnd[1], Precision::Confusion());
+    fonct->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::Confusion());
     StartEndSav[0] = StartEnd[0];
     StartEndSav[1] = StartEnd[1];
   }

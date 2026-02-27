@@ -13,7 +13,7 @@ public:
   typedef int Target;
 
   BRepExtrema_VertexInspector()
-      : myTol(Precision::SquareConfusion()),
+      : myTol(math::precision::Precision::SquareConfusion()),
         myIsNeedAdd(true)
   {
   }

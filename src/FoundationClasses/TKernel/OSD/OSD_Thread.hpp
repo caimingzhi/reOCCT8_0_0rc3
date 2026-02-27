@@ -23,6 +23,7 @@ typedef pthread_t OSD_PThread;
 #include <Standard_ThreadId.hpp>
 #include <Standard_Boolean.hpp>
 
+namespace System { namespace os {
 class OSD_Thread
 {
 public:
@@ -68,3 +69,5 @@ private:
   Standard_ThreadId  myThreadId;
   int                myPriority;
 };
+}} // namespace System::os
+

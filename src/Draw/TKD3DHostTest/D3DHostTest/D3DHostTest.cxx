@@ -11,7 +11,7 @@ void D3DHostTest::Factory(Draw_Interpretor&)
     new D3DHost_GraphicDriverFactory();
   Graphic3d_GraphicDriverFactory::RegisterFactory(aFactory);
 #ifdef DEB
-  theDI << "Draw Plugin : D3DHost commands are loaded.\n";
+  theDI << "Draw System::plugin::Plugin : D3DHost commands are loaded.\n";
 #endif
 }
 

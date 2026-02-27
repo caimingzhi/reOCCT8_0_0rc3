@@ -40,7 +40,7 @@ private:
 
 private:
   occ::handle<V3d_View> myView;
-  OSD_Thread            myThread;
+  System::os::OSD_Thread            myThread;
   std::mutex            myMutex;
   Standard_Condition    myWakeEvent;
   double                myTargetFps;

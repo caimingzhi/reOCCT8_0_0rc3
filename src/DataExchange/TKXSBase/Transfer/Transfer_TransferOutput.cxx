@@ -41,7 +41,7 @@ occ::handle<Transfer_TransientProcess> Transfer_TransferOutput::TransientProcess
 }
 
 void Transfer_TransferOutput::Transfer(const occ::handle<Standard_Transient>& obj,
-                                       const Message_ProgressRange&           theProgress)
+                                       const System::log::Message_ProgressRange&           theProgress)
 {
   if (themodel->Number(obj) == 0)
     throw Transfer_TransferFailure(
@@ -50,18 +50,18 @@ void Transfer_TransferOutput::Transfer(const occ::handle<Standard_Transient>& ob
   theproc->Transfer(obj, theProgress);
 }
 
-void Transfer_TransferOutput::TransferRoots(const Message_ProgressRange& theProgress)
+void Transfer_TransferOutput::TransferRoots(const System::log::Message_ProgressRange& theProgress)
 {
   TransferRoots(Interface_Protocol::Active(), theProgress);
 }
 
 void Transfer_TransferOutput::TransferRoots(const occ::handle<Interface_Protocol>& protocol,
-                                            const Message_ProgressRange&           theProgress)
+                                            const System::log::Message_ProgressRange&           theProgress)
 {
   theproc->SetRootManagement(false);
   Interface_ShareFlags     tool(themodel, protocol);
   Interface_EntityIterator list = tool.RootEntities();
-  Message_ProgressScope    aPS(theProgress, nullptr, list.NbEntities());
+  System::log::Message_ProgressScope    aPS(theProgress, nullptr, list.NbEntities());
   for (list.Start(); list.More() && aPS.More(); list.Next())
   {
     const occ::handle<Standard_Transient>& ent = list.Value();
@@ -72,13 +72,13 @@ void Transfer_TransferOutput::TransferRoots(const occ::handle<Interface_Protocol
 }
 
 void Transfer_TransferOutput::TransferRoots(const Interface_Graph&       G,
-                                            const Message_ProgressRange& theProgress)
+                                            const System::log::Message_ProgressRange& theProgress)
 {
   theproc->SetRootManagement(false);
   Interface_ShareFlags tool(G);
   theproc->SetModel(G.Model());
   Interface_EntityIterator list = tool.RootEntities();
-  Message_ProgressScope    aPS(theProgress, nullptr, list.NbEntities());
+  System::log::Message_ProgressScope    aPS(theProgress, nullptr, list.NbEntities());
   for (list.Start(); list.More() && aPS.More(); list.Next())
   {
     const occ::handle<Standard_Transient>& ent = list.Value();

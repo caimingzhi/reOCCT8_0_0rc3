@@ -24,7 +24,7 @@ public:
                          const Bnd_Box&        theBox1,
                          const Bnd_Box&        theBox2,
                          const double          theDstRef,
-                         const double          theDeflection = Precision::Confusion(),
+                         const double          theDeflection = math::precision::Precision::Confusion(),
                          const Extrema_ExtFlag theExtFlag    = Extrema_ExtFlag_MINMAX,
                          const Extrema_ExtAlgo theExtAlgo    = Extrema_ExtAlgo_Grad)
       : myDstRef(theDstRef),

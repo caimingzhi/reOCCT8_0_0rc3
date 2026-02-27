@@ -96,7 +96,7 @@ double BRep_Tool::Tolerance(const TopoDS_Face& F)
 {
   const BRep_TFace* TF   = static_cast<const BRep_TFace*>(F.TShape().get());
   double            p    = TF->Tolerance();
-  constexpr double  pMin = Precision::Confusion();
+  constexpr double  pMin = math::precision::Precision::Confusion();
   if (p > pMin)
     return p;
   else
@@ -657,7 +657,7 @@ double BRep_Tool::Tolerance(const TopoDS_Edge& E)
 {
   const BRep_TEdge* TE   = static_cast<const BRep_TEdge*>(E.TShape().get());
   double            p    = TE->Tolerance();
-  constexpr double  pMin = Precision::Confusion();
+  constexpr double  pMin = math::precision::Precision::Confusion();
   if (p > pMin)
     return p;
   else
@@ -1015,7 +1015,7 @@ double BRep_Tool::Tolerance(const TopoDS_Vertex& V)
   }
 
   double           p    = aTVert->Tolerance();
-  constexpr double pMin = Precision::Confusion();
+  constexpr double pMin = math::precision::Precision::Confusion();
   if (p > pMin)
     return p;
   else
@@ -1096,12 +1096,12 @@ bool BRep_Tool::Parameter(const TopoDS_Vertex& theV, const TopoDS_Edge& theE, do
           if (!C.IsNull())
           {
 
-            if (Precision::IsNegativeInfinite(f))
+            if (math::precision::Precision::IsNegativeInfinite(f))
             {
               theParam = pr->Parameter();
               return true;
             };
-            if (Precision::IsPositiveInfinite(l))
+            if (math::precision::Precision::IsPositiveInfinite(l))
             {
               theParam = pr->Parameter();
               return true;
@@ -1255,9 +1255,9 @@ double BRep_Tool::Parameter(const TopoDS_Vertex&             V,
         if (!C.IsNull())
         {
 
-          if (Precision::IsNegativeInfinite(f))
+          if (math::precision::Precision::IsNegativeInfinite(f))
             return res;
-          if (Precision::IsPositiveInfinite(l))
+          if (math::precision::Precision::IsPositiveInfinite(l))
             return res;
           gp_Pnt Pf  = C->Value(f).Transformed(L1.Transformation());
           gp_Pnt Pl  = C->Value(l).Transformed(L1.Transformation());

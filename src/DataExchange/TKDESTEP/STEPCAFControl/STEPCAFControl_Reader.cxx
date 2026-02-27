@@ -332,14 +332,14 @@ int STEPCAFControl_Reader::NbRootsForTransfer()
 
 bool STEPCAFControl_Reader::TransferOneRoot(const int                            num,
                                             const occ::handle<TDocStd_Document>& doc,
-                                            const Message_ProgressRange&         theProgress)
+                                            const System::log::Message_ProgressRange&         theProgress)
 {
   NCollection_Sequence<TDF_Label> Lseq;
   return Transfer(myReader, num, doc, Lseq, false, theProgress);
 }
 
 bool STEPCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
-                                     const Message_ProgressRange&         theProgress)
+                                     const System::log::Message_ProgressRange&         theProgress)
 {
   NCollection_Sequence<TDF_Label> Lseq;
   return Transfer(myReader, 0, doc, Lseq, false, theProgress);
@@ -347,7 +347,7 @@ bool STEPCAFControl_Reader::Transfer(const occ::handle<TDocStd_Document>& doc,
 
 bool STEPCAFControl_Reader::Perform(const char*                          filename,
                                     const occ::handle<TDocStd_Document>& doc,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (ReadFile(filename) != IFSelect_RetDone)
   {
@@ -359,7 +359,7 @@ bool STEPCAFControl_Reader::Perform(const char*                          filenam
 bool STEPCAFControl_Reader::Perform(const char*                          filename,
                                     const occ::handle<TDocStd_Document>& doc,
                                     const DESTEP_Parameters&             theParams,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (ReadFile(filename, theParams) != IFSelect_RetDone)
   {
@@ -370,7 +370,7 @@ bool STEPCAFControl_Reader::Perform(const char*                          filenam
 
 bool STEPCAFControl_Reader::Perform(const TCollection_AsciiString&       filename,
                                     const occ::handle<TDocStd_Document>& doc,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (ReadFile(filename.ToCString()) != IFSelect_RetDone)
   {
@@ -382,7 +382,7 @@ bool STEPCAFControl_Reader::Perform(const TCollection_AsciiString&       filenam
 bool STEPCAFControl_Reader::Perform(const TCollection_AsciiString&       filename,
                                     const occ::handle<TDocStd_Document>& doc,
                                     const DESTEP_Parameters&             theParams,
-                                    const Message_ProgressRange&         theProgress)
+                                    const System::log::Message_ProgressRange&         theProgress)
 {
   if (ReadFile(filename.ToCString(), theParams) != IFSelect_RetDone)
   {
@@ -453,7 +453,7 @@ bool STEPCAFControl_Reader::Transfer(STEPControl_Reader&                  reader
                                      const occ::handle<TDocStd_Document>& doc,
                                      NCollection_Sequence<TDF_Label>&     Lseq,
                                      const bool                           asOne,
-                                     const Message_ProgressRange&         theProgress)
+                                     const System::log::Message_ProgressRange&         theProgress)
 {
   reader.ClearShapes();
   occ::handle<StepData_StepModel> aModel = occ::down_cast<StepData_StepModel>(reader.Model());
@@ -465,7 +465,7 @@ bool STEPCAFControl_Reader::Transfer(STEPControl_Reader&                  reader
   if (num <= 0)
     return false;
 
-  Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
 
   if (nroot)
   {
@@ -475,7 +475,7 @@ bool STEPCAFControl_Reader::Transfer(STEPControl_Reader&                  reader
   }
   else
   {
-    Message_ProgressScope aPS(aPSRoot.Next(), nullptr, num);
+    System::log::Message_ProgressScope aPS(aPSRoot.Next(), nullptr, num);
     for (i = 1; i <= num && aPS.More(); i++)
       reader.TransferOneRoot(i, aPS.Next());
   }
@@ -543,7 +543,7 @@ bool STEPCAFControl_Reader::Transfer(STEPControl_Reader&                  reader
     }
   }
 
-  OSD_Path                mainfile(reader.WS()->LoadedFile());
+  System::os::OSD_Path                mainfile(reader.WS()->LoadedFile());
   TCollection_AsciiString aMainName;
   aMainName = mainfile.Name() + mainfile.Extension();
   mainfile.SetName("");
@@ -553,10 +553,10 @@ bool STEPCAFControl_Reader::Transfer(STEPControl_Reader&                  reader
 
   STEPConstruct_ExternRefs ExtRefs(reader.WS());
   ExtRefs.LoadExternRefs();
-  Message_ProgressScope aPSE(aPSRoot.Next(), nullptr, ExtRefs.NbExternRefs());
+  System::log::Message_ProgressScope aPSE(aPSRoot.Next(), nullptr, ExtRefs.NbExternRefs());
   for (i = 1; i <= ExtRefs.NbExternRefs() && aPSE.More(); i++)
   {
-    Message_ProgressRange aRange = aPSE.Next();
+    System::log::Message_ProgressRange aRange = aPSE.Next();
 
     occ::handle<TCollection_HAsciiString> format = ExtRefs.Format(i);
     if (!format.IsNull())
@@ -597,11 +597,11 @@ bool STEPCAFControl_Reader::Transfer(STEPControl_Reader&                  reader
       continue;
     }
 
-    TCollection_AsciiString fullname = OSD_Path::AbsolutePath(dpath, filename);
+    TCollection_AsciiString fullname = System::os::OSD_Path::AbsolutePath(dpath, filename);
     if (fullname.Length() <= 0)
       fullname = filename;
 
-    TCollection_AsciiString aMainFullName = OSD_Path::AbsolutePath(dpath, aMainName);
+    TCollection_AsciiString aMainFullName = System::os::OSD_Path::AbsolutePath(dpath, aMainName);
     if (TCollection_AsciiString::IsSameString(aMainFullName, fullname, false))
     {
       TP->AddWarning(ExtRefs.DocFile(i), "External reference file is the same main file");
@@ -787,7 +787,7 @@ occ::handle<STEPCAFControl_ExternFile> STEPCAFControl_Reader::ReadExternFile(
   const char*                          file,
   const char*                          fullname,
   const occ::handle<TDocStd_Document>& doc,
-  const Message_ProgressRange&         theProgress)
+  const System::log::Message_ProgressRange&         theProgress)
 {
 
   if (myFiles.IsBound(file))
@@ -2119,10 +2119,10 @@ bool readPMIPresentation(const occ::handle<Standard_Transient>&       thePresent
           const gp_Ax3 anAx3Orig = gp::XOY();
           const gp_Ax3 anAx3Targ(aLocation->Ax2());
           if (anAx3Targ.Location().SquareDistance(anAx3Orig.Location())
-                >= Precision::SquareConfusion()
-              || !anAx3Targ.Direction().IsEqual(anAx3Orig.Direction(), Precision::Angular())
-              || !anAx3Targ.XDirection().IsEqual(anAx3Orig.XDirection(), Precision::Angular())
-              || !anAx3Targ.YDirection().IsEqual(anAx3Orig.YDirection(), Precision::Angular()))
+                >= math::precision::Precision::SquareConfusion()
+              || !anAx3Targ.Direction().IsEqual(anAx3Orig.Direction(), math::precision::Precision::Angular())
+              || !anAx3Targ.XDirection().IsEqual(anAx3Orig.XDirection(), math::precision::Precision::Angular())
+              || !anAx3Targ.YDirection().IsEqual(anAx3Orig.YDirection(), math::precision::Precision::Angular()))
           {
             aTransf.SetTransformation(anAx3Targ, anAx3Orig);
           }
@@ -3694,7 +3694,7 @@ void convertAngleValue(const STEPConstruct_UnitContext& anUnitCtx, double& aVal)
 
   double aFact = anUnitCtx.PlaneAngleFactor() * 180 / M_PI;
 
-  if (fabs(1. - aFact) > Precision::Confusion())
+  if (fabs(1. - aFact) > math::precision::Precision::Confusion())
   {
     aVal = aVal * aFact;
   }

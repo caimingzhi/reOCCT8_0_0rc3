@@ -18,7 +18,7 @@ IMPLEMENT_DOMSTRING(IsDeltaOn, "delta")
 IMPLEMENT_DOMSTRING(AttributeIDString, "realarrattguid")
 
 XmlMDataStd_RealArrayDriver::XmlMDataStd_RealArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

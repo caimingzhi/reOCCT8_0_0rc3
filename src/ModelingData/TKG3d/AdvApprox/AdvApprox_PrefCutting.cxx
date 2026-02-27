@@ -10,7 +10,7 @@ AdvApprox_PrefCutting::AdvApprox_PrefCutting(const NCollection_Array1<double>& C
 bool AdvApprox_PrefCutting::Value(const double a, const double b, double& cuttingvalue) const
 {
 
-  constexpr double lgmin = 10 * Precision::PConfusion();
+  constexpr double lgmin = 10 * math::precision::Precision::PConfusion();
   int              i;
   double           cut, mil = (a + b) / 2, dist = std::abs((a - b) / 2);
   cut = mil;

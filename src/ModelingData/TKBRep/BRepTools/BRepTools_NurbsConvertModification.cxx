@@ -123,7 +123,7 @@ namespace
                              theParam,
                              theFirst,
                              theLast,
-                             Precision::PConfusion());
+                             math::precision::Precision::PConfusion());
     if (proj.IsDone())
     {
       double aDist2Min = proj.SquareDistance();
@@ -144,7 +144,7 @@ namespace
                            double&                          theParam)
   {
     Geom2dAdaptor_Curve   anAdaptor(theCurve2d);
-    Extrema_LocateExtPC2d aProj(theUV, anAdaptor, theParam, Precision::PConfusion());
+    Extrema_LocateExtPC2d aProj(theUV, anAdaptor, theParam, math::precision::Precision::PConfusion());
     if (aProj.IsDone())
     {
       double aDist2Min = aProj.SquareDistance();
@@ -161,7 +161,7 @@ namespace
       if (anExt.IsDone())
       {
         int    aMinInd    = 0;
-        double aMinSqDist = Precision::Infinite();
+        double aMinSqDist = math::precision::Precision::Infinite();
         for (int anIndex = 1; anIndex <= anExt.NbExt(); ++anIndex)
           if (anExt.SquareDistance(anIndex) < aMinSqDist)
           {
@@ -502,9 +502,9 @@ bool BRepTools_NurbsConvertModification::NewCurve2d(const TopoDS_Edge&         E
 
     if (!C2d->IsPeriodic())
     {
-      if (fc - f2d > Precision::PConfusion())
+      if (fc - f2d > math::precision::Precision::PConfusion())
         f2d = fc;
-      if (l2d - lc > Precision::PConfusion())
+      if (l2d - lc > math::precision::Precision::PConfusion())
         l2d = lc;
     }
 
@@ -633,7 +633,7 @@ bool BRepTools_NurbsConvertModification::NewCurve2d(const TopoDS_Edge&         E
       if (S->IsUPeriodic() || S->IsVPeriodic())
       {
 
-        double aMinDist = Precision::Infinite();
+        double aMinDist = math::precision::Precision::Infinite();
         if (S->IsUPeriodic())
         {
           aMinDist = std::min(0.5 * S->UPeriod(), aMinDist);

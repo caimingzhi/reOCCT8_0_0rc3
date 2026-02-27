@@ -269,7 +269,7 @@ bool STEPControl_ActorRead::Recognize(const occ::handle<Standard_Transient>& sta
 occ::handle<Transfer_Binder> STEPControl_ActorRead::Transfer(
   const occ::handle<Standard_Transient>&        start,
   const occ::handle<Transfer_TransientProcess>& TP,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
 
   StepData_Factors                aLocalFactors;
@@ -454,10 +454,10 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<Transfer_TransientProcess>&   TP,
   const StepData_Factors&                         theLocalFactors,
   const bool                                      theUseTrsf,
-  const Message_ProgressRange&                    theProgress)
+  const System::log::Message_ProgressRange&                    theProgress)
 
 {
-  Message_Messenger::StreamBuffer       sout = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer       sout = TP->Messenger()->SendInfo();
   occ::handle<TransferBRep_ShapeBinder> shbinder;
 
   TopoDS_Compound Cund;
@@ -517,7 +517,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   if (nbEnt <= 0)
     return shbinder;
 
-  Message_ProgressScope PS(theProgress, "Part", nbEnt);
+  System::log::Message_ProgressScope PS(theProgress, "Part", nbEnt);
   int                   nbComponents = 0;
 
   for (int nbNauo = 1; nbNauo <= listNAUO->Length() && PS.More(); nbNauo++)
@@ -531,7 +531,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
            << TP->Model()->Number(NAUO) << std::endl;
 #endif
     occ::handle<Transfer_Binder> binder;
-    Message_ProgressRange        aRange = PS.Next();
+    System::log::Message_ProgressRange        aRange = PS.Next();
     if (!TP->IsBound(NAUO))
       binder = TransferEntity(NAUO, TP, theLocalFactors, aRange);
     else
@@ -567,7 +567,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
     if (rep.IsNull())
       continue;
 
-    Message_ProgressScope aPS1(PS.Next(), nullptr, 2);
+    System::log::Message_ProgressScope aPS1(PS.Next(), nullptr, 2);
 
     bool isBound = true;
 
@@ -628,7 +628,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<StepRepr_NextAssemblyUsageOccurrence>& NAUO,
   const occ::handle<Transfer_TransientProcess>&            TP,
   const StepData_Factors&                                  theLocalFactors,
-  const Message_ProgressRange&                             theProgress)
+  const System::log::Message_ProgressRange&                             theProgress)
 {
   occ::handle<TransferBRep_ShapeBinder>    shbinder;
   occ::handle<StepBasic_ProductDefinition> PD;
@@ -692,7 +692,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
 
   if (IsDepend)
   {
-    Message_ProgressScope aPS(theProgress, nullptr, 2);
+    System::log::Message_ProgressScope aPS(theProgress, nullptr, 2);
 
     if (!PD.IsNull())
     {
@@ -735,7 +735,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const StepData_Factors&                           theLocalFactors,
   bool&                                             isBound,
   const bool                                        theUseTrsf,
-  const Message_ProgressRange&                      theProgress)
+  const System::log::Message_ProgressRange&                      theProgress)
 {
   NM_DETECTED = false;
   occ::handle<TransferBRep_ShapeBinder> shbinder;
@@ -745,7 +745,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   isBound                                   = false;
   int                             nb        = sr->NbItems();
   int                             nbTPitems = TP->NbMapped();
-  Message_Messenger::StreamBuffer sout      = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout      = TP->Messenger()->SendInfo();
 #ifdef TRANSLOG
   if (TP->TraceLevel() > 2)
     sout << " -- Actor : case  ShapeRepr. NbItems=" << nb << std::endl;
@@ -794,12 +794,12 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   myNMTool.SetActive(!isManifold && isNMMode);
 
   gp_Trsf               aTrsf;
-  Message_ProgressScope aPSRoot(theProgress, "Sub-assembly", isManifold ? 1 : 2);
-  Message_ProgressScope aPS(aPSRoot.Next(), "Transfer", nb);
+  System::log::Message_ProgressScope aPSRoot(theProgress, "Sub-assembly", isManifold ? 1 : 2);
+  System::log::Message_ProgressScope aPS(aPSRoot.Next(), "Transfer", nb);
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aCompoundedShapes;
   for (int i = 1; i <= nb && aPS.More(); i++)
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
 #ifdef TRANSLOG
     if (TP->TraceLevel() > 2)
       sout << " -- Actor, shape_representation.item n0. " << i << std::endl;
@@ -833,9 +833,9 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
           {
             const gp_Ax3 ax3Orig(gp_Pnt(0., 0., 0), gp_Dir(gp_Dir::D::Z), gp_Dir(gp_Dir::D::X));
             const gp_Ax3 ax3Targ(aTargAP->Ax2());
-            if (ax3Targ.Location().SquareDistance(ax3Orig.Location()) < Precision::SquareConfusion()
-                && ax3Targ.Direction().IsEqual(ax3Orig.Direction(), Precision::Angular())
-                && ax3Targ.XDirection().IsEqual(ax3Orig.XDirection(), Precision::Angular()))
+            if (ax3Targ.Location().SquareDistance(ax3Orig.Location()) < math::precision::Precision::SquareConfusion()
+                && ax3Targ.Direction().IsEqual(ax3Orig.Direction(), math::precision::Precision::Angular())
+                && ax3Targ.XDirection().IsEqual(ax3Orig.XDirection(), math::precision::Precision::Angular()))
             {
               continue;
             }
@@ -871,7 +871,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
 
   if (!isManifold)
   {
-    Message_ProgressScope aPS1(aPSRoot.Next(), "Process", 1);
+    System::log::Message_ProgressScope aPS1(aPSRoot.Next(), "Process", 1);
 
     XSAlgo_ShapeProcessor::ParameterMap aParameters = GetShapeFixParameters();
     XSAlgo_ShapeProcessor::SetParameter("FixShape.Tolerance3d", myPrecision, true, aParameters);
@@ -980,7 +980,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<StepShape_ContextDependentShapeRepresentation>& CDSR,
   const occ::handle<Transfer_TransientProcess>&                     TP,
   const StepData_Factors&                                           theLocalFactors,
-  const Message_ProgressRange&                                      theProgress)
+  const System::log::Message_ProgressRange&                                      theProgress)
 {
   occ::handle<TransferBRep_ShapeBinder> shbinder;
 
@@ -1032,7 +1032,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const StepData_Factors&                                      theLocalFactors,
   const int                                                    nbrep,
   const bool                                                   theUseTrsf,
-  const Message_ProgressRange&                                 theProgress)
+  const System::log::Message_ProgressRange&                                 theProgress)
 {
 
   occ::handle<TransferBRep_ShapeBinder> shbinder;
@@ -1049,10 +1049,10 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   gp_Trsf Trsf;
   bool    iatrsf = ComputeSRRWT(und, TP, Trsf, theLocalFactors);
 
-  Message_ProgressScope aPS(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, 2);
   for (int i = 1; i <= 2 && aPS.More(); i++)
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     if (nbrep && nbrep != i)
       continue;
     occ::handle<StepRepr_Representation> anitemt;
@@ -1137,7 +1137,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
           continue;
         occ::handle<Geom_Plane> aPlane = new Geom_Plane(gp_Ax3(anAxis->Ax2()));
         TopoDS_Face             aPlaneFace;
-        aB.MakeFace(aPlaneFace, aPlane, Precision::Confusion());
+        aB.MakeFace(aPlaneFace, aPlane, math::precision::Precision::Confusion());
         occ::handle<TransferBRep_ShapeBinder> axisbinder = new TransferBRep_ShapeBinder(aPlaneFace);
         theTP->Bind(aStepAxis, axisbinder);
         aB.Add(aComp, aPlaneFace);
@@ -1158,7 +1158,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<StepRepr_MechanicalDesignAndDraughtingRelationship>& theMDADR,
   const occ::handle<Transfer_TransientProcess>&                          theTP,
   const StepData_Factors&                                                theLocalFactors,
-  const Message_ProgressRange&                                           theProgress)
+  const System::log::Message_ProgressRange&                                           theProgress)
 {
   occ::handle<TransferBRep_ShapeBinder> aShBinder;
   if (theMDADR.IsNull())
@@ -1171,10 +1171,10 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   BRep_Builder                         aBuilder;
   aBuilder.MakeCompound(aComp);
 
-  Message_ProgressScope aPS(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, 2);
   for (int anIndex = 1; anIndex <= 2; anIndex++)
   {
-    Message_ProgressRange                aRange = aPS.Next();
+    System::log::Message_ProgressRange                aRange = aPS.Next();
     occ::handle<StepRepr_Representation> aRepr =
       (anIndex == 1) ? theMDADR->Rep1() : theMDADR->Rep2();
     if (aRepr.IsNull())
@@ -1266,9 +1266,9 @@ static bool IsNeedRepresentation(const occ::handle<StepRepr_ShapeAspect>&      s
 occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::OldWay(
   const occ::handle<Standard_Transient>&        start,
   const occ::handle<Transfer_TransientProcess>& TP,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
-  Message_Messenger::StreamBuffer       sout  = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer       sout  = TP->Messenger()->SendInfo();
   const Interface_Graph&                graph = TP->Graph();
   occ::handle<TransferBRep_ShapeBinder> shbinder;
   DeclareAndCast(StepShape_ShapeDefinitionRepresentation, sdr, start);
@@ -1285,7 +1285,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::OldWay(
     }
   }
 
-  Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
 
 #ifdef TRANSLOG
   if (TP->TraceLevel() > 2)
@@ -1293,7 +1293,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::OldWay(
 #endif
   occ::handle<Transfer_Binder> binder = TP->Find(rep);
   {
-    Message_ProgressRange aRange = aPSRoot.Next();
+    System::log::Message_ProgressRange aRange = aPSRoot.Next();
     if (binder.IsNull())
     {
       binder = TP->Transferring(rep, aRange);
@@ -1330,10 +1330,10 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::OldWay(
   int                        nbitem = 0;
   for (subs.Start(); subs.More(); subs.Next())
     nbitem++;
-  Message_ProgressScope PS(aPSRoot.Next(), "Sub", nbitem);
+  System::log::Message_ProgressScope PS(aPSRoot.Next(), "Sub", nbitem);
   for (subs.Start(); subs.More() && PS.More(); subs.Next())
   {
-    Message_ProgressRange                  aRange = PS.Next();
+    System::log::Message_ProgressRange                  aRange = PS.Next();
     const occ::handle<Standard_Transient>& anitem = subs.Value();
     if (anitem->DynamicType() != tCDSR && anitem->DynamicType() != tSRR)
       continue;
@@ -1372,16 +1372,16 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<Transfer_TransientProcess>&            TP,
   const StepData_Factors&                                  theLocalFactors,
   const bool                                               isManifold,
-  const Message_ProgressRange&                             theProgress)
+  const System::log::Message_ProgressRange&                             theProgress)
 {
-  Message_Messenger::StreamBuffer       sout = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer       sout = TP->Messenger()->SendInfo();
   occ::handle<TransferBRep_ShapeBinder> shbinder;
   bool                                  found = false;
   StepToTopoDS_Builder                  myShapeBuilder;
   TopoDS_Shape                          mappedShape;
   int                                   nbTPitems = TP->NbMapped();
 #ifdef TRANSLOG
-  OSD_Timer chrono;
+  System::os::OSD_Timer chrono;
   if (TP->TraceLevel() > 2)
     sout << "Begin transfer STEP -> CASCADE, Type " << start->DynamicType()->Name() << std::endl;
   chrono.Start();
@@ -1404,13 +1404,13 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   myShapeBuilder.SetPrecision(myPrecision);
   myShapeBuilder.SetMaxTol(myMaxTol);
 
-  Message_ProgressScope aPS(theProgress, "Transfer stage", isManifold ? 2 : 1);
+  System::log::Message_ProgressScope aPS(theProgress, "Transfer stage", isManifold ? 2 : 1);
   const bool aReadTessellatedWhenNoBRepOnly = (aStepModel->InternalParameters.ReadTessellated == 2);
   bool       aHasGeom                       = true;
   try
   {
     OCC_CATCH_SIGNALS
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     if (start->IsKind(STANDARD_TYPE(StepShape_FacetedBrep)))
     {
       myShapeBuilder.Init(GetCasted(StepShape_FacetedBrep, start), TP, aLocalFactors, aRange);
@@ -1548,14 +1548,14 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<StepRepr_MappedItem>&       mapit,
   const occ::handle<Transfer_TransientProcess>& TP,
   const StepData_Factors&                       theLocalFactors,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
   occ::handle<TransferBRep_ShapeBinder> shbinder;
 
   occ::handle<StepShape_ShapeRepresentation> maprep =
     occ::down_cast<StepShape_ShapeRepresentation>(mapit->MappingSource()->MappedRepresentation());
   bool                         isBound = false;
-  Message_ProgressScope        aPSRoot(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope        aPSRoot(theProgress, nullptr, 2);
   occ::handle<Transfer_Binder> binder = TP->Find(maprep);
   if (binder.IsNull())
     binder = TransferEntity(maprep, TP, theLocalFactors, isBound, false, theProgress);
@@ -1617,7 +1617,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
     int                    aSRRnum = 0;
     for (Interface_EntityIterator aSubsIt(aGraph.Sharings(maprep)); aSubsIt.More(); aSubsIt.Next())
       ++aSRRnum;
-    Message_ProgressScope aPS(aPSRoot.Next(), "Part", aSRRnum);
+    System::log::Message_ProgressScope aPS(aPSRoot.Next(), "Part", aSRRnum);
     TopoDS_Shape          aNewResult = TransferRelatedSRR(TP,
                                                  maprep,
                                                  false,
@@ -1645,7 +1645,7 @@ occ::handle<TransferBRep_ShapeBinder> STEPControl_ActorRead::TransferEntity(
   const occ::handle<StepShape_FaceSurface>&     fs,
   const occ::handle<Transfer_TransientProcess>& TP,
   const StepData_Factors&                       theLocalFactors,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
 
   occ::handle<TransferBRep_ShapeBinder> sb;
@@ -1720,12 +1720,12 @@ occ::handle<Transfer_Binder> STEPControl_ActorRead::TransferShape(
   const StepData_Factors&                       theLocalFactors,
   const bool                                    isManifold,
   const bool                                    theUseTrsf,
-  const Message_ProgressRange&                  theProgress)
+  const System::log::Message_ProgressRange&                  theProgress)
 {
   if (start.IsNull())
     return NullResult();
 
-  Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
 #ifdef TRANSLOG
 
   if (TP->TraceLevel() > 1)
@@ -2094,7 +2094,7 @@ TopoDS_Shape STEPControl_ActorRead::TransferRelatedSRR(
   const bool                                        theReadConstructiveGeomRR,
   const StepData_Factors&                           theLocalFactors,
   TopoDS_Compound&                                  theCund,
-  Message_ProgressScope&                            thePS)
+  System::log::Message_ProgressScope&                            thePS)
 {
   BRep_Builder           aBuilder;
   TopoDS_Shape           aResult;

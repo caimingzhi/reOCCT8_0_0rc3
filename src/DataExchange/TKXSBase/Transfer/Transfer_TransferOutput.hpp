@@ -30,18 +30,18 @@ public:
   Standard_EXPORT occ::handle<Transfer_TransientProcess> TransientProcess() const;
 
   Standard_EXPORT void Transfer(const occ::handle<Standard_Transient>& obj,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void TransferRoots(
     const occ::handle<Interface_Protocol>& protocol,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void TransferRoots(
     const Interface_Graph&       G,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void TransferRoots(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT Interface_EntityIterator ListForStatus(const bool normal,
                                                          const bool roots = true) const;

@@ -264,7 +264,7 @@ static bool FindCircle(const gp_Ax1& Ax, const gp_Pnt& Pt, gp_Circ& Ci)
   gp_Pnt prj(Ax.Location().XYZ().Added(prm * Dax.XYZ()));
   gp_Vec axx(prj, Pt);
   double Radius = axx.Magnitude();
-  if (Radius < Precision::Confusion())
+  if (Radius < math::precision::Precision::Confusion())
   {
     return false;
   }

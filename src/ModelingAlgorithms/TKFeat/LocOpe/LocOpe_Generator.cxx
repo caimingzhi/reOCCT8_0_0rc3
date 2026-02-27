@@ -614,7 +614,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
                     pf                     = C2d->Value(f);
                     pl                     = C2d->Value(l);
-                    constexpr double tttol = Precision::Angular();
+                    constexpr double tttol = math::precision::Precision::Angular();
                     while (std::min(pf.X(), pl.X()) >= Umaxc - tttol)
                     {
                       C2d->Translate(gp_Vec2d(-2. * M_PI, 0));
@@ -965,7 +965,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
 
                   pf                     = C2d->Value(f);
                   pl                     = C2d->Value(l);
-                  constexpr double tttol = Precision::Angular();
+                  constexpr double tttol = math::precision::Precision::Angular();
                   while (std::min(pf.X(), pl.X()) >= Umaxc - tttol)
                   {
                     C2d->Translate(gp_Vec2d(-2. * M_PI, 0));
@@ -1110,8 +1110,8 @@ bool ToFuse(const TopoDS_Face& F1, const TopoDS_Face& F2)
   occ::handle<Geom_Surface>  S1, S2;
   TopLoc_Location            loc1, loc2;
   occ::handle<Standard_Type> typS1, typS2;
-  constexpr double           tollin = Precision::Confusion();
-  constexpr double           tolang = Precision::Angular();
+  constexpr double           tollin = math::precision::Precision::Confusion();
+  constexpr double           tolang = math::precision::Precision::Angular();
 
   S1 = BRep_Tool::Surface(F1, loc1);
   S2 = BRep_Tool::Surface(F2, loc2);
@@ -1166,8 +1166,8 @@ bool ToFuse(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
   occ::handle<Geom_Curve>    C1, C2;
   TopLoc_Location            loc1, loc2;
   occ::handle<Standard_Type> typC1, typC2;
-  constexpr double           tollin = Precision::Confusion();
-  constexpr double           tolang = Precision::Angular();
+  constexpr double           tollin = math::precision::Precision::Confusion();
+  constexpr double           tolang = math::precision::Precision::Angular();
   double                     f, l;
 
   C1 = BRep_Tool::Curve(E1, loc1, f, l);

@@ -261,7 +261,7 @@ void VrmlData_ShapeConvert::Convert(const bool   theExtractFaces,
 
             occ::handle<VrmlData_Group> aTrans = new VrmlData_Group(myScene, nullptr, true);
             gp_Trsf                     aTrsf(aLoc);
-            if (fabs(myScale - 1.) > Precision::Confusion())
+            if (fabs(myScale - 1.) > math::precision::Precision::Confusion())
             {
               const gp_XYZ aTransl = aTrsf.TranslationPart() * myScale;
               aTrsf.SetTranslationPart(aTransl);
@@ -371,7 +371,7 @@ occ::handle<VrmlData_Geometry> VrmlData_ShapeConvert::triToIndexedFaceSet(
   Poly_Connect PC(theTri);
 
   TopLoc_Location                 aLoc;
-  constexpr double                aConf2   = Precision::SquareConfusion();
+  constexpr double                aConf2   = math::precision::Precision::SquareConfusion();
   const occ::handle<Geom_Surface> aSurface = BRep_Tool::Surface(theFace, aLoc);
   if (theTri->HasUVNodes() && !aSurface.IsNull())
   {
@@ -636,7 +636,7 @@ void VrmlData_ShapeConvert::addShape(const occ::handle<VrmlData_Group>&   thePar
 
         occ::handle<VrmlData_Group> aTrans = new VrmlData_Group(myScene, nullptr, true);
         gp_Trsf                     aTrsf(aLoc);
-        if (fabs(myScale - 1.) > Precision::Confusion())
+        if (fabs(myScale - 1.) > math::precision::Precision::Confusion())
         {
           const gp_XYZ aTransl = aTrsf.TranslationPart() * myScale;
           aTrsf.SetTranslationPart(aTransl);
@@ -671,7 +671,7 @@ void VrmlData_ShapeConvert::addInstance(const occ::handle<VrmlData_Group>&   the
 
     aTrans = new VrmlData_Group(myScene, nullptr, true);
     gp_Trsf aTrsf(aLoc);
-    if (fabs(myScale - 1.) > Precision::Confusion())
+    if (fabs(myScale - 1.) > math::precision::Precision::Confusion())
     {
       const gp_XYZ aTransl = aTrsf.TranslationPart() * myScale;
       aTrsf.SetTranslationPart(aTransl);
@@ -729,7 +729,7 @@ void VrmlData_ShapeConvert::addAssembly(const occ::handle<VrmlData_Group>&   the
     if (!aLoc.IsIdentity())
     {
       gp_Trsf aTrsf(aLoc);
-      if (fabs(myScale - 1.) > Precision::Confusion())
+      if (fabs(myScale - 1.) > math::precision::Precision::Confusion())
       {
         const gp_XYZ aTransl = aTrsf.TranslationPart() * myScale;
         aTrsf.SetTranslationPart(aTransl);

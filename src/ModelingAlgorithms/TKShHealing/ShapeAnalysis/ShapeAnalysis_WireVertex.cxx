@@ -16,7 +16,7 @@
 ShapeAnalysis_WireVertex::ShapeAnalysis_WireVertex()
 {
   myDone  = false;
-  myPreci = Precision::Confusion();
+  myPreci = math::precision::Precision::Confusion();
 }
 
 void ShapeAnalysis_WireVertex::Init(const TopoDS_Wire& wire, const double preci)

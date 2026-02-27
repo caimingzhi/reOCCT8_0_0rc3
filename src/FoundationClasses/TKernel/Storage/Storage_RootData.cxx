@@ -9,14 +9,14 @@
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DataMap.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Storage_RootData, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(app::storage::Storage_RootData, Standard_Transient)
 
-Storage_RootData::Storage_RootData()
+app::storage::Storage_RootData::Storage_RootData()
     : myErrorStatus(Storage_VSOk)
 {
 }
 
-bool Storage_RootData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
+bool app::storage::Storage_RootData::Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSRead && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -44,14 +44,14 @@ bool Storage_RootData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
       OCC_CATCH_SIGNALS
       theDriver->ReadRoot(aRootName, aRef, aTypeName);
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       myErrorStatus    = Storage_VSTypeMismatch;
       myErrorStatusExt = "ReadRoot";
       return false;
     }
 
-    occ::handle<Storage_Root> aRoot = new Storage_Root(aRootName, aRef, aTypeName);
+    occ::handle<app::storage::Storage_Root> aRoot = new app::storage::Storage_Root(aRootName, aRef, aTypeName);
     myObjects.Bind(aRootName, aRoot);
   }
 
@@ -65,21 +65,21 @@ bool Storage_RootData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
   return true;
 }
 
-int Storage_RootData::NumberOfRoots() const
+int app::storage::Storage_RootData::NumberOfRoots() const
 {
   return myObjects.Extent();
 }
 
-void Storage_RootData::AddRoot(const occ::handle<Storage_Root>& aRoot)
+void app::storage::Storage_RootData::AddRoot(const occ::handle<app::storage::Storage_Root>& aRoot)
 {
   myObjects.Bind(aRoot->Name(), aRoot);
 }
 
-occ::handle<NCollection_HSequence<occ::handle<Storage_Root>>> Storage_RootData::Roots() const
+occ::handle<NCollection_HSequence<occ::handle<app::storage::Storage_Root>>> app::storage::Storage_RootData::Roots() const
 {
-  occ::handle<NCollection_HSequence<occ::handle<Storage_Root>>> anObjectsSeq =
-    new NCollection_HSequence<occ::handle<Storage_Root>>;
-  NCollection_DataMap<TCollection_AsciiString, occ::handle<Storage_Root>>::Iterator it(myObjects);
+  occ::handle<NCollection_HSequence<occ::handle<app::storage::Storage_Root>>> anObjectsSeq =
+    new NCollection_HSequence<occ::handle<app::storage::Storage_Root>>;
+  NCollection_DataMap<TCollection_AsciiString, occ::handle<app::storage::Storage_Root>>::Iterator it(myObjects);
 
   for (; it.More(); it.Next())
   {
@@ -89,9 +89,9 @@ occ::handle<NCollection_HSequence<occ::handle<Storage_Root>>> Storage_RootData::
   return anObjectsSeq;
 }
 
-occ::handle<Storage_Root> Storage_RootData::Find(const TCollection_AsciiString& aName) const
+occ::handle<app::storage::Storage_Root> app::storage::Storage_RootData::Find(const TCollection_AsciiString& aName) const
 {
-  occ::handle<Storage_Root> p;
+  occ::handle<app::storage::Storage_Root> p;
 
   if (myObjects.IsBound(aName))
   {
@@ -101,12 +101,12 @@ occ::handle<Storage_Root> Storage_RootData::Find(const TCollection_AsciiString& 
   return p;
 }
 
-bool Storage_RootData::IsRoot(const TCollection_AsciiString& aName) const
+bool app::storage::Storage_RootData::IsRoot(const TCollection_AsciiString& aName) const
 {
   return myObjects.IsBound(aName);
 }
 
-void Storage_RootData::RemoveRoot(const TCollection_AsciiString& aName)
+void app::storage::Storage_RootData::RemoveRoot(const TCollection_AsciiString& aName)
 {
   if (myObjects.IsBound(aName))
   {
@@ -114,7 +114,7 @@ void Storage_RootData::RemoveRoot(const TCollection_AsciiString& aName)
   }
 }
 
-void Storage_RootData::UpdateRoot(const TCollection_AsciiString&          aName,
+void app::storage::Storage_RootData::UpdateRoot(const TCollection_AsciiString&          aName,
                                   const occ::handle<Standard_Persistent>& aPers)
 {
   if (myObjects.IsBound(aName))
@@ -127,28 +127,28 @@ void Storage_RootData::UpdateRoot(const TCollection_AsciiString&          aName,
   }
 }
 
-Storage_Error Storage_RootData::ErrorStatus() const
+Storage_Error app::storage::Storage_RootData::ErrorStatus() const
 {
   return myErrorStatus;
 }
 
-void Storage_RootData::SetErrorStatus(const Storage_Error anError)
+void app::storage::Storage_RootData::SetErrorStatus(const Storage_Error anError)
 {
   myErrorStatus = anError;
 }
 
-void Storage_RootData::ClearErrorStatus()
+void app::storage::Storage_RootData::ClearErrorStatus()
 {
   myErrorStatus = Storage_VSOk;
   myErrorStatusExt.Clear();
 }
 
-TCollection_AsciiString Storage_RootData::ErrorStatusExtension() const
+TCollection_AsciiString app::storage::Storage_RootData::ErrorStatusExtension() const
 {
   return myErrorStatusExt;
 }
 
-void Storage_RootData::SetErrorStatusExtension(const TCollection_AsciiString& anErrorExt)
+void app::storage::Storage_RootData::SetErrorStatusExtension(const TCollection_AsciiString& anErrorExt)
 {
   myErrorStatusExt = anErrorExt;
 }

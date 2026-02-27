@@ -46,7 +46,7 @@ static int mkface(Draw_Interpretor&, int n, const char** a)
   occ::handle<Geom_Surface> S = DrawTrSurf::GetSurface(a[2]);
   if (S.IsNull())
   {
-    Message::SendFail() << a[2] << " is not a surface";
+    System::log::Message::SendFail() << a[2] << " is not a surface";
     return 1;
   }
 
@@ -63,7 +63,7 @@ static int mkface(Draw_Interpretor&, int n, const char** a)
   if (n == 3)
   {
     if (mkface)
-      res = BRepBuilderAPI_MakeFace(S, Precision::Confusion());
+      res = BRepBuilderAPI_MakeFace(S, math::precision::Precision::Confusion());
     else
       res = BRepBuilderAPI_MakeShell(S, Segment);
   }
@@ -85,7 +85,7 @@ static int mkface(Draw_Interpretor&, int n, const char** a)
                                     Draw::Atof(a[4]),
                                     Draw::Atof(a[5]),
                                     Draw::Atof(a[6]),
-                                    Precision::Confusion());
+                                    math::precision::Precision::Confusion());
     else
       res = BRepBuilderAPI_MakeShell(S,
                                      Draw::Atof(a[3]),
@@ -263,7 +263,7 @@ static int pcurve(Draw_Interpretor&, int n, const char** a)
         fr                                  = aC->FirstParameter();
         lr                                  = aC->LastParameter();
       }
-      if (!IsPeriodic && ((fr - f > Precision::PConfusion()) || (l - lr > Precision::PConfusion())))
+      if (!IsPeriodic && ((fr - f > math::precision::Precision::PConfusion()) || (l - lr > math::precision::Precision::PConfusion())))
       {
         DrawTrSurf::Set(name, c);
       }
@@ -299,7 +299,7 @@ static int pcurve(Draw_Interpretor&, int n, const char** a)
 
     col = DBRep_ColorOrientation(SE.Orientation());
     DrawTrSurf_CurveColor(col);
-    if (!IsPeriodic && ((fr - f > Precision::PConfusion()) || (l - lr > Precision::PConfusion())))
+    if (!IsPeriodic && ((fr - f > math::precision::Precision::PConfusion()) || (l - lr > math::precision::Precision::PConfusion())))
     {
       DrawTrSurf::Set(a[1], c);
     }
@@ -333,7 +333,7 @@ static int sewing(Draw_Interpretor& theDi, int theArgc, const char** theArgv)
   bool   aFaceMode          = true;
   bool   aSetMinTol         = false;
   double aMinTol            = 0.;
-  double aMaxTol            = Precision::Infinite();
+  double aMaxTol            = math::precision::Precision::Infinite();
 
   for (int i = 2; i < theArgc; i++)
   {
@@ -433,10 +433,10 @@ static int sewing(Draw_Interpretor& theDi, int theArgc, const char** theArgv)
 
   if (!aSetMinTol)
     aMinTol = aTol * 1e-4;
-  if (aTol < Precision::Confusion())
-    aTol = Precision::Confusion();
-  if (aMinTol < Precision::Confusion())
-    aMinTol = Precision::Confusion();
+  if (aTol < math::precision::Precision::Confusion())
+    aTol = math::precision::Precision::Confusion();
+  if (aMinTol < math::precision::Precision::Confusion())
+    aMinTol = math::precision::Precision::Confusion();
   if (aMinTol > aTol)
   {
     theDi << "Error! min tolerance can't exceed working tolerance\n";
@@ -576,7 +576,7 @@ static int getedgeregul(Draw_Interpretor& di, int argc, const char** argv)
 {
   if (argc < 3)
   {
-    Message::SendFail()
+    System::log::Message::SendFail()
       << "Invalid number of arguments. Should be: checkedgeregularity edge face1 [face2]";
     return 1;
   }
@@ -586,7 +586,7 @@ static int getedgeregul(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Shape aFace2 = (argc > 3 ? DBRep::Get(argv[3], TopAbs_FACE) : aFace1);
   if (anEdge.IsNull() || aFace1.IsNull() || aFace2.IsNull())
   {
-    Message::SendFail()
+    System::log::Message::SendFail()
       << "Invalid number of arguments. Should be: getedgeregularity edge face1 [face2]";
     return 1;
   }

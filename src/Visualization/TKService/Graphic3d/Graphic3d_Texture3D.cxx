@@ -34,7 +34,7 @@ Graphic3d_Texture3D::~Graphic3d_Texture3D() = default;
 void Graphic3d_Texture3D::SetImage(const occ::handle<Image_PixMap>& thePixMap)
 {
   myPixMap = thePixMap;
-  myPath   = OSD_Path();
+  myPath   = System::os::OSD_Path();
 
   NCollection_Array1<TCollection_AsciiString> anArr;
   myPaths.Move(anArr);
@@ -56,7 +56,7 @@ occ::handle<Image_PixMap> Graphic3d_Texture3D::GetImage(
     occ::handle<Image_AlienPixMap> anImage    = new Image_AlienPixMap();
     if (!anImage->Load(aSlicePath))
     {
-      Message::SendFail() << "Graphic3d_Texture3D::GetImage() failed to load slice " << aSlice
+      System::log::Message::SendFail() << "Graphic3d_Texture3D::GetImage() failed to load slice " << aSlice
                           << " from '" << aSlicePath << "'";
       return occ::handle<Image_PixMap>();
     }
@@ -72,7 +72,7 @@ occ::handle<Image_PixMap> Graphic3d_Texture3D::GetImage(
             NCollection_Vec3<size_t>(anImage->SizeX(), anImage->SizeY(), aNbSlices),
             anImage->SizeRowBytes()))
       {
-        Message::SendFail() << "Graphic3d_Texture3D::GetImage() failed to allocate 3D image "
+        System::log::Message::SendFail() << "Graphic3d_Texture3D::GetImage() failed to allocate 3D image "
                             << (int)anImage->SizeX() << "x" << (int)anImage->SizeY() << "x"
                             << aNbSlices;
         return occ::handle<Image_PixMap>();
@@ -82,7 +82,7 @@ occ::handle<Image_PixMap> Graphic3d_Texture3D::GetImage(
         || anImage->SizeY() != anImage3D->SizeY()
         || anImage->SizeRowBytes() != anImage3D->SizeRowBytes())
     {
-      Message::SendFail() << "Graphic3d_Texture3D::GetImage() slice " << aSlice << " from '"
+      System::log::Message::SendFail() << "Graphic3d_Texture3D::GetImage() slice " << aSlice << " from '"
                           << aSlicePath << "' have different dimensions";
       return occ::handle<Image_PixMap>();
     }

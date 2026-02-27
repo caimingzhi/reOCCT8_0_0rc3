@@ -57,7 +57,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
   gp_Pnt2d pinterm;
   gp_Dir2d dircc;
   bool     SameCenter(false);
-  if (!OnCirc.Location().IsEqual(center1, Precision::Confusion()))
+  if (!OnCirc.Location().IsEqual(center1, math::precision::Precision::Confusion()))
   {
     dircc          = gp_Dir2d(OnCirc.Location().XY() - center1.XY());
     pinterm        = gp_Pnt2d(center1.XY() + (distcco - Ron) * dircc.XY());
@@ -213,7 +213,7 @@ GccAna_Circ2d2TanOn::GccAna_Circ2d2TanOn(const GccEnt_QualifiedCirc& Qualified1,
               for (int k = 1; k <= nbsol; k++)
               {
 
-                if (center1.IsEqual(Center, Precision::Confusion()))
+                if (center1.IsEqual(Center, math::precision::Precision::Confusion()))
                 {
                   continue;
                 }

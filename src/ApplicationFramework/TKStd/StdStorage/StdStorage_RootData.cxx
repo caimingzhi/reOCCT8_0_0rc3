@@ -15,7 +15,7 @@ StdStorage_RootData::StdStorage_RootData()
 {
 }
 
-bool StdStorage_RootData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
+bool StdStorage_RootData::Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSRead && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -43,7 +43,7 @@ bool StdStorage_RootData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
       OCC_CATCH_SIGNALS
       theDriver->ReadRoot(aRootName, aRef, aTypeName);
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       myErrorStatus    = Storage_VSTypeMismatch;
       myErrorStatusExt = "ReadRoot";
@@ -64,7 +64,7 @@ bool StdStorage_RootData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
   return true;
 }
 
-bool StdStorage_RootData::Write(const occ::handle<Storage_BaseDriver>& theDriver)
+bool StdStorage_RootData::Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSWrite && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -93,7 +93,7 @@ bool StdStorage_RootData::Write(const occ::handle<Storage_BaseDriver>& theDriver
       OCC_CATCH_SIGNALS
       theDriver->WriteRoot(aRoot->Name(), aRoot->Reference(), aRoot->Type());
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       myErrorStatus    = Storage_VSTypeMismatch;
       myErrorStatusExt = "ReadRoot";

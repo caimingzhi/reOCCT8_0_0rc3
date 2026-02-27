@@ -52,48 +52,48 @@ public:
   Standard_EXPORT bool Transfer(const occ::handle<TDocStd_Document>& theDoc,
                                 const STEPControl_StepModelType      theMode    = STEPControl_AsIs,
                                 const char*                          theIsMulti = nullptr,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const occ::handle<TDocStd_Document>& theDoc,
                                 const DESTEP_Parameters&             theParams,
                                 const STEPControl_StepModelType      theMode    = STEPControl_AsIs,
                                 const char*                          theIsMulti = nullptr,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const TDF_Label&                theLabel,
                                 const STEPControl_StepModelType theMode    = STEPControl_AsIs,
                                 const char*                     theIsMulti = nullptr,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const TDF_Label&                theLabel,
                                 const DESTEP_Parameters&        theParams,
                                 const STEPControl_StepModelType theMode    = STEPControl_AsIs,
                                 const char*                     theIsMulti = nullptr,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const NCollection_Sequence<TDF_Label>& theLabelSeq,
                                 const STEPControl_StepModelType        theMode = STEPControl_AsIs,
                                 const char*                            theIsMulti = nullptr,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const NCollection_Sequence<TDF_Label>& theLabelSeq,
                                 const DESTEP_Parameters&               theParams,
                                 const STEPControl_StepModelType        theMode = STEPControl_AsIs,
                                 const char*                            theIsMulti = nullptr,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const occ::handle<TDocStd_Document>& theDoc,
                                const TCollection_AsciiString&       theFileName,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const occ::handle<TDocStd_Document>& theDoc,
                                const char*                          theFileName,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Perform(const occ::handle<TDocStd_Document>& theDoc,
                                const char*                          theFileName,
                                const DESTEP_Parameters&             theParams,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   const NCollection_DataMap<TCollection_AsciiString, occ::handle<STEPCAFControl_ExternFile>>&
     ExternFiles() const
@@ -178,7 +178,7 @@ protected:
                 const STEPControl_StepModelType        theMode      = STEPControl_AsIs,
                 const char*                            theIsMulti   = nullptr,
                 const bool                             isExternFile = false,
-                const Message_ProgressRange&           theProgress  = Message_ProgressRange());
+                const System::log::Message_ProgressRange&           theProgress  = System::log::Message_ProgressRange());
 
   TopoDS_Shape transferExternFiles(
     const TDF_Label&                 theLabel,
@@ -186,7 +186,7 @@ protected:
     NCollection_Sequence<TDF_Label>& theLabelSeq,
     const StepData_Factors&          theLocalFactors = StepData_Factors(),
     const char*                      thePrefix       = "",
-    const Message_ProgressRange&     theProgress     = Message_ProgressRange());
+    const System::log::Message_ProgressRange&     theProgress     = System::log::Message_ProgressRange());
 
   bool writeExternRefs(const occ::handle<XSControl_WorkSession>& theWS,
                        const NCollection_Sequence<TDF_Label>&    theLabels) const;

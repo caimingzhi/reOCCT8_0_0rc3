@@ -297,7 +297,7 @@ void TopOpeBRep_FFDumper::DumpDSP(const TopOpeBRep_VPointInter& VP,
   std::cout << " " << G;
 
   const occ::handle<TopOpeBRepDS_HDataStructure>& HDS = myPFF->HDataStructure();
-  double                                          tol = Precision::Confusion();
+  double                                          tol = math::precision::Precision::Confusion();
   if (GK == TopOpeBRepDS_VERTEX)
     tol = BRep_Tool::Tolerance(TopoDS::Vertex(HDS->Shape(G)));
   else if (GK == TopOpeBRepDS_POINT)

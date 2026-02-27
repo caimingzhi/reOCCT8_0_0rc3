@@ -114,7 +114,7 @@ int Extrema_FuncExtCS::GetStateNumber()
   if (!myCinit || !mySinit)
     throw Standard_TypeMismatch();
 
-  constexpr double tol2d = Precision::SquarePConfusion();
+  constexpr double tol2d = math::precision::Precision::SquarePConfusion();
   int              i = 1, nbSol = mySqDist.Length();
   for (; i <= nbSol; i++)
   {

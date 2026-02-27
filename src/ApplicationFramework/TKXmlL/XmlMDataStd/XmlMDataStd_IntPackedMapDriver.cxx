@@ -19,7 +19,7 @@ IMPLEMENT_DOMSTRING(IntPackedMapSize, "mapsize")
 IMPLEMENT_DOMSTRING(IsDeltaOn, "delta")
 
 XmlMDataStd_IntPackedMapDriver::XmlMDataStd_IntPackedMapDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_IntPackedMap)->Name())
 {
 }

@@ -174,7 +174,7 @@ void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice)
     double     Limit = 50000.;
     double     delta = 400;
 
-    if (aCurve->LastParameter() == Precision::Infinite())
+    if (aCurve->LastParameter() == math::precision::Precision::Infinite())
     {
 
       if (type == STANDARD_TYPE(Geom2d_Parabola))
@@ -196,7 +196,7 @@ void DrawCurve(const occ::handle<Geom2d_Curve>& aCurve, const int Indice)
         double Val2  = std::log(Valu2 + std::sqrt(Valu2 * Valu2 + 1));
         delta        = (Val1 <= Val2 ? Val1 : Val2);
       }
-      if (aCurve->FirstParameter() == -Precision::Infinite())
+      if (aCurve->FirstParameter() == -math::precision::Precision::Infinite())
         CurveDraw = new Geom2d_TrimmedCurve(aCurve, -delta, delta);
       else
         CurveDraw = new Geom2d_TrimmedCurve(aCurve,

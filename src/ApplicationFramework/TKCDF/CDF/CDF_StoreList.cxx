@@ -72,7 +72,7 @@ occ::handle<CDM_Document> CDF_StoreList::Value() const
 
 PCDM_StoreStatus CDF_StoreList::Store(occ::handle<CDM_MetaData>&   aMetaData,
                                       TCollection_ExtendedString&  aStatusAssociatedText,
-                                      const Message_ProgressRange& theRange)
+                                      const System::log::Message_ProgressRange& theRange)
 {
   PCDM_StoreStatus                status = PCDM_SS_OK;
   occ::handle<CDF_MetaDataDriver> theMetaDataDriver =

@@ -34,7 +34,7 @@ extern char* vmsify PARAMS((char* name, int type));
     #define FAKE_DIR_ENTRY(dp) (dp->d_ino = 1)
   #endif
 
-OSD_FileIterator::OSD_FileIterator()
+System::os::OSD_FileIterator::OSD_FileIterator()
     : myFlag(false),
       myDescr(nullptr),
       myEntry(nullptr),
@@ -42,7 +42,7 @@ OSD_FileIterator::OSD_FileIterator()
 {
 }
 
-OSD_FileIterator::OSD_FileIterator(const OSD_Path& where, const TCollection_AsciiString& Mask)
+System::os::OSD_FileIterator::OSD_FileIterator(const System::os::OSD_Path& where, const TCollection_AsciiString& Mask)
     : myFlag(false),
       myDescr(nullptr),
       myEntry(nullptr),
@@ -51,9 +51,9 @@ OSD_FileIterator::OSD_FileIterator(const OSD_Path& where, const TCollection_Asci
   Initialize(where, Mask);
 }
 
-void OSD_FileIterator ::Destroy() {}
+void System::os::OSD_FileIterator ::Destroy() {}
 
-void OSD_FileIterator::Initialize(const OSD_Path& where, const TCollection_AsciiString& Mask)
+void System::os::OSD_FileIterator::Initialize(const System::os::OSD_Path& where, const TCollection_AsciiString& Mask)
 {
   myFlag = false;
   where.SystemName(myPlace);
@@ -68,7 +68,7 @@ void OSD_FileIterator::Initialize(const OSD_Path& where, const TCollection_Ascii
   myInit = 1;
 }
 
-bool OSD_FileIterator::More()
+bool System::os::OSD_FileIterator::More()
 {
   if (myInit)
   {
@@ -104,7 +104,7 @@ static int strcmp_joker(const char* Mask, const char* Name)
   return 0;
 }
 
-void OSD_FileIterator::Next()
+void System::os::OSD_FileIterator::Next()
 {
   int         again = 1;
   struct stat stat_buf;
@@ -143,9 +143,9 @@ void OSD_FileIterator::Next()
   } while (again);
 }
 
-OSD_File OSD_FileIterator::Values()
+System::os::OSD_File System::os::OSD_FileIterator::Values()
 {
-  OSD_Path                thisvalue;
+  System::os::OSD_Path                thisvalue;
   TCollection_AsciiString Name;
   TCollection_AsciiString Ext;
   int                     position;
@@ -168,22 +168,22 @@ OSD_File OSD_FileIterator::Values()
   return (TheIterator);
 }
 
-void OSD_FileIterator::Reset()
+void System::os::OSD_FileIterator::Reset()
 {
   myError.Reset();
 }
 
-bool OSD_FileIterator::Failed() const
+bool System::os::OSD_FileIterator::Failed() const
 {
   return (myError.Failed());
 }
 
-void OSD_FileIterator::Perror()
+void System::os::OSD_FileIterator::Perror()
 {
   myError.Perror();
 }
 
-int OSD_FileIterator::Error() const
+int System::os::OSD_FileIterator::Error() const
 {
   return (myError.Error());
 }
@@ -196,9 +196,9 @@ int OSD_FileIterator::Error() const
 
   #define _FD ((PWIN32_FIND_DATAW)myData)
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 
-OSD_FileIterator ::OSD_FileIterator(const OSD_Path& where, const TCollection_AsciiString& Mask)
+System::os::OSD_FileIterator ::OSD_FileIterator(const System::os::OSD_Path& where, const TCollection_AsciiString& Mask)
 {
 
   myFlag   = false;
@@ -213,7 +213,7 @@ OSD_FileIterator ::OSD_FileIterator(const OSD_Path& where, const TCollection_Asc
   myData = NULL;
 }
 
-void OSD_FileIterator ::Destroy()
+void System::os::OSD_FileIterator ::Destroy()
 {
 
   if (myData != NULL)
@@ -224,7 +224,7 @@ void OSD_FileIterator ::Destroy()
     FindClose((HANDLE)myHandle);
 }
 
-bool OSD_FileIterator ::More()
+bool System::os::OSD_FileIterator ::More()
 {
 
   if (myHandle == INVALID_HANDLE_VALUE)
@@ -265,7 +265,7 @@ bool OSD_FileIterator ::More()
   return myFlag;
 }
 
-void OSD_FileIterator ::Next()
+void System::os::OSD_FileIterator ::Next()
 {
 
   if (!myFirstCall || (_FD->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -288,40 +288,40 @@ void OSD_FileIterator ::Next()
   myFirstCall = false;
 }
 
-OSD_File OSD_FileIterator ::Values()
+System::os::OSD_File System::os::OSD_FileIterator ::Values()
 {
 
   TCollection_AsciiString aFileName(TCollection_ExtendedString((const char16_t*)_FD->cFileName));
-  TheIterator.SetPath(OSD_Path(aFileName));
+  TheIterator.SetPath(System::os::OSD_Path(aFileName));
 
   return TheIterator;
 }
 
-bool OSD_FileIterator ::Failed() const
+bool System::os::OSD_FileIterator ::Failed() const
 {
 
   return myError.Failed();
 }
 
-void OSD_FileIterator ::Reset()
+void System::os::OSD_FileIterator ::Reset()
 {
 
   myError.Reset();
 }
 
-void OSD_FileIterator ::Perror()
+void System::os::OSD_FileIterator ::Perror()
 {
 
   myError.Perror();
 }
 
-int OSD_FileIterator ::Error() const
+int System::os::OSD_FileIterator ::Error() const
 {
 
   return myError.Error();
 }
 
-OSD_FileIterator::OSD_FileIterator()
+System::os::OSD_FileIterator::OSD_FileIterator()
     : myFlag(false),
       myHandle(0),
       myData(0),
@@ -329,6 +329,6 @@ OSD_FileIterator::OSD_FileIterator()
 {
 }
 
-void OSD_FileIterator::Initialize(const OSD_Path&, const TCollection_AsciiString&) {}
+void System::os::OSD_FileIterator::Initialize(const System::os::OSD_Path&, const TCollection_AsciiString&) {}
 
 #endif

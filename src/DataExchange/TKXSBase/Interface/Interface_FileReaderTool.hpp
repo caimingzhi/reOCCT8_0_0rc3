@@ -11,7 +11,10 @@
 class Interface_Protocol;
 class Interface_FileReaderData;
 class Interface_InterfaceModel;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class Interface_Check;
 class Standard_Transient;
 class Interface_GeneralLib;
@@ -33,9 +36,9 @@ public:
 
   Standard_EXPORT occ::handle<Interface_InterfaceModel> Model() const;
 
-  Standard_EXPORT void SetMessenger(const occ::handle<Message_Messenger>& messenger);
+  Standard_EXPORT void SetMessenger(const occ::handle<System::log::Message_Messenger>& messenger);
 
-  Standard_EXPORT occ::handle<Message_Messenger> Messenger() const;
+  Standard_EXPORT occ::handle<System::log::Message_Messenger> Messenger() const;
 
   Standard_EXPORT void SetTraceLevel(const int tracelev);
 
@@ -84,7 +87,7 @@ private:
   occ::handle<Interface_Protocol>                                   theproto;
   occ::handle<Interface_FileReaderData>                             thereader;
   occ::handle<Interface_InterfaceModel>                             themodel;
-  occ::handle<Message_Messenger>                                    themessenger;
+  occ::handle<System::log::Message_Messenger>                                    themessenger;
   int                                                               thetrace;
   bool                                                              theerrhand;
   int                                                               thenbrep0;

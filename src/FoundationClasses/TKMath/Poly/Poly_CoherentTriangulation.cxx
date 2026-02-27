@@ -97,14 +97,14 @@ occ::handle<Poly_Triangulation> Poly_CoherentTriangulation::GetTriangulation() c
 
     vecNodeId.SetValue(i, ++aCount);
     const gp_XYZ aNormal = aNode.GetNormal();
-    if (aNormal.SquareModulus() > Precision::Confusion())
+    if (aNormal.SquareModulus() > math::precision::Precision::Confusion())
     {
       aResult->AddNormals();
       aResult->SetNormal(aCount, gp_Dir(aNormal));
     }
 
     aResult->SetNode(aCount, aNode);
-    if (aNode.GetU() * aNode.GetU() + aNode.GetV() * aNode.GetV() > Precision::Confusion())
+    if (aNode.GetU() * aNode.GetU() + aNode.GetV() * aNode.GetV() > math::precision::Precision::Confusion())
     {
       aResult->AddUVNodes();
       aResult->SetUVNode(aCount, gp_Pnt2d(aNode.GetU(), aNode.GetV()));

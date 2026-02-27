@@ -257,7 +257,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsCylinder(const double theTol, gp_Cyli
     return true;
   }
 
-  if (aParams(1) > Precision::Infinite())
+  if (aParams(1) > math::precision::Precision::Infinite())
   {
 
     return false;
@@ -303,7 +303,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsCone(const double theTol, gp_Cone& th
     return true;
   }
 
-  if (aParams(2) > Precision::Infinite())
+  if (aParams(2) > math::precision::Precision::Infinite())
   {
 
     return false;
@@ -348,7 +348,7 @@ bool ShapeAnalysis_CanonicalRecognition::IsSphere(const double theTol, gp_Sphere
     return true;
   }
 
-  if (aParams(1) > Precision::Infinite())
+  if (aParams(1) > math::precision::Precision::Infinite())
   {
 
     return false;
@@ -778,7 +778,7 @@ bool ShapeAnalysis_CanonicalRecognition::GetSurfaceByLS(const TopoDS_Wire&      
 
   FillSolverData(theTarget, thePos, theParams, aStartPoint, aFBnd, aLBnd, aRelDev);
 
-  constexpr double               aTol = Precision::Confusion();
+  constexpr double               aTol = math::precision::Precision::Confusion();
   math_MultipleVarFunction*      aPFunc;
   GeomConvert_FuncSphereLSDist   aFuncSph(aPoints);
   GeomConvert_FuncCylinderLSDist aFuncCyl(aPoints, thePos.Direction());
@@ -985,7 +985,7 @@ bool CompareConicParams(const GeomAbs_CurveType           theTarget,
   double anAngTol = theTol / (2. * M_PI);
   double aTol     = theTol;
   if (theTarget == GeomAbs_Line)
-    aTol = Precision::Infinite();
+    aTol = math::precision::Precision::Infinite();
 
   const gp_Ax1& aRef     = theRefPos.Axis();
   const gp_Ax1& anAx1    = thePos.Axis();
@@ -1066,7 +1066,7 @@ bool CompareSurfParams(const GeomAbs_SurfaceType         theTarget,
   double aTol     = theTol;
   if (theTarget == GeomAbs_Cylinder || theTarget == GeomAbs_Cone)
   {
-    aTol = Precision::Infinite();
+    aTol = math::precision::Precision::Infinite();
   }
 
   const gp_Ax1& aRef     = theRefPos.Axis();
@@ -1257,7 +1257,7 @@ void FillSolverData(const GeomAbs_SurfaceType         theTarget,
     theStartPoint(4) = theParams(1);
     theStartPoint(5) = theParams(2);
     double aDR       = theRelDev * theParams(2);
-    if (aDR < Precision::Confusion())
+    if (aDR < math::precision::Precision::Confusion())
     {
       aDR = 0.1;
     }

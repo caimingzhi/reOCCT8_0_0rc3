@@ -88,7 +88,7 @@ bool TObj_Model::Load(const TCollection_ExtendedString& theFile)
   else
   {
 
-    Messenger()->Send(Message_Msg("TObj_M_LoadDocument") << theFile, Message_Info);
+    Messenger()->Send(System::log::Message_Msg("TObj_M_LoadDocument") << theFile, Message_Info);
     aStatus = anApplication->LoadDocument(theFile, aDoc);
 
     if (aStatus)
@@ -111,7 +111,7 @@ bool TObj_Model::Load(const TCollection_ExtendedString& theFile)
         if (!aDoc.IsNull())
           CloseDocument(aDoc);
         myLabel.Nullify();
-        Messenger()->Send(Message_Msg("TObj_M_WrongFile") << theFile, Message_Alarm);
+        Messenger()->Send(System::log::Message_Msg("TObj_M_WrongFile") << theFile, Message_Alarm);
         aStatus = false;
       }
     }
@@ -137,10 +137,10 @@ bool TObj_Model::Load(const TCollection_ExtendedString& theFile)
 #ifdef OCCT_DEBUG
         TCollection_ExtendedString aString(anException.ExceptionType());
         aString = aString + ": " + anException.GetMessageString();
-        Messenger()->Send(Message_Msg("TObj_Appl_Exception") << aString);
+        Messenger()->Send(System::log::Message_Msg("TObj_Appl_Exception") << aString);
 #endif
         (void)anException;
-        Messenger()->Send(Message_Msg("TObj_M_WrongFile") << theFile, Message_Alarm);
+        Messenger()->Send(System::log::Message_Msg("TObj_M_WrongFile") << theFile, Message_Alarm);
       }
     }
     if (!isInitOk)
@@ -166,7 +166,7 @@ bool TObj_Model::Load(Standard_IStream& theIStream)
   TObj_Assistant::SetCurrentModel(me);
   TObj_Assistant::ClearTypeMap();
 
-  Messenger()->Send(Message_Msg("TObj_M_LoadDocument"), Message_Info);
+  Messenger()->Send(System::log::Message_Msg("TObj_M_LoadDocument"), Message_Info);
   aStatus = anApplication->LoadDocument(theIStream, aDoc);
   if (aStatus)
   {
@@ -186,7 +186,7 @@ bool TObj_Model::Load(Standard_IStream& theIStream)
       if (!aDoc.IsNull())
         CloseDocument(aDoc);
       myLabel.Nullify();
-      Messenger()->Send(Message_Msg("TObj_M_WrongFile"), Message_Alarm);
+      Messenger()->Send(System::log::Message_Msg("TObj_M_WrongFile"), Message_Alarm);
       aStatus = false;
     }
     isFileLoaded = isValid;
@@ -222,10 +222,10 @@ bool TObj_Model::Load(Standard_IStream& theIStream)
     {
 #ifdef OCCT_DEBUG
       TCollection_ExtendedString aString(anException.what());
-      Messenger()->Send(Message_Msg("TObj_Appl_Exception") << aString);
+      Messenger()->Send(System::log::Message_Msg("TObj_Appl_Exception") << aString);
 #endif
       (void)anException;
-      Messenger()->Send(Message_Msg("TObj_M_WrongFile"), Message_Alarm);
+      Messenger()->Send(System::log::Message_Msg("TObj_M_WrongFile"), Message_Alarm);
     }
     if (!isInitOk)
     {
@@ -276,7 +276,7 @@ bool TObj_Model::SaveAs(const TCollection_ExtendedString& theFile)
   FILE* aF = OSD_OpenFile(theFile, "w");
   if (aF == nullptr)
   {
-    Messenger()->Send(Message_Msg("TObj_M_NoWriteAccess") << theFile, Message_Alarm);
+    Messenger()->Send(System::log::Message_Msg("TObj_M_NoWriteAccess") << theFile, Message_Alarm);
     return false;
   }
   else
@@ -643,8 +643,8 @@ bool TObj_Model::checkDocumentEmpty(const TCollection_ExtendedString& theFile)
   if (theFile.IsEmpty())
     return true;
 
-  OSD_Path aPath(theFile);
-  OSD_File osdfile(aPath);
+  System::os::OSD_Path aPath(theFile);
+  System::os::OSD_File osdfile(aPath);
   if (!osdfile.Exists())
     return true;
 

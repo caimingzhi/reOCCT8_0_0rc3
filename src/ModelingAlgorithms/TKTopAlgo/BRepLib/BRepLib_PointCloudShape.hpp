@@ -13,7 +13,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT BRepLib_PointCloudShape(const TopoDS_Shape& theShape = TopoDS_Shape(),
-                                          const double        theTol   = Precision::Confusion());
+                                          const double        theTol   = math::precision::Precision::Confusion());
 
   Standard_EXPORT virtual ~BRepLib_PointCloudShape();
 

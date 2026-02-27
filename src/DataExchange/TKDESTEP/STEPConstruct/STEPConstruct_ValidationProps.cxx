@@ -456,7 +456,7 @@ occ::handle<StepBasic_ProductDefinition> STEPConstruct_ValidationProps::GetPropP
     if (SA.IsNull())
     {
 #ifdef OCCT_DEBUG
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << "Error: Cannot find target entity (SA) for geometric_validation_property ";
       Model()->PrintLabel(PD, sout);
       sout << std::endl;
@@ -487,7 +487,7 @@ occ::handle<StepBasic_ProductDefinition> STEPConstruct_ValidationProps::GetPropP
 #ifdef OCCT_DEBUG
   if (ProdDef.IsNull())
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "Error: Cannot find target entity (SDR) for geometric_validation_property ";
     Model()->PrintLabel(PD, sout);
     sout << std::endl;
@@ -527,7 +527,7 @@ TopoDS_Shape STEPConstruct_ValidationProps::GetPropShape(
 #ifdef OCCT_DEBUG
   if (S.IsNull())
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "Warning: Entity ";
     Model()->PrintLabel(ProdDef, sout);
     sout << " is not mapped to shape" << std::endl;

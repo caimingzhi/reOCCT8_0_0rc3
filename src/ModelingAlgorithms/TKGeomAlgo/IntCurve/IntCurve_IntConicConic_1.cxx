@@ -309,9 +309,9 @@ void ProjectOnLAndIntersectWithLDomain(const gp_Circ2d&       Circle,
   {
 
     double DomLinf =
-      (RefLineDomain.HasFirstPoint()) ? RefLineDomain.FirstParameter() : -Precision::Infinite();
+      (RefLineDomain.HasFirstPoint()) ? RefLineDomain.FirstParameter() : -math::precision::Precision::Infinite();
     double DomLsup =
-      (RefLineDomain.HasLastPoint()) ? RefLineDomain.LastParameter() : Precision::Infinite();
+      (RefLineDomain.HasLastPoint()) ? RefLineDomain.LastParameter() : math::precision::Precision::Infinite();
 
     Linf = LInterAndDomain.Binf;
     Lsup = LInterAndDomain.Bsup;
@@ -960,7 +960,7 @@ void IntCurve_IntConicConic::Perform(const gp_Circ2d&       Circle1,
 
 IntRes2d_Position FindPositionLL(double& Param, const IntRes2d_Domain& Domain)
 {
-  double            aDPar   = Precision::Infinite();
+  double            aDPar   = math::precision::Precision::Infinite();
   IntRes2d_Position aPos    = IntRes2d_Middle;
   double            aResPar = Param;
   if (Domain.HasFirstPoint())
@@ -991,8 +991,8 @@ static inline void getDomainParametrs(const IntRes2d_Domain& theDomain,
                                       double&                theTol1,
                                       double&                theTol2)
 {
-  theFirst = (theDomain.HasFirstPoint() ? theDomain.FirstParameter() : -Precision::Infinite());
-  theLast  = (theDomain.HasLastPoint() ? theDomain.LastParameter() : Precision::Infinite());
+  theFirst = (theDomain.HasFirstPoint() ? theDomain.FirstParameter() : -math::precision::Precision::Infinite());
+  theLast  = (theDomain.HasLastPoint() ? theDomain.LastParameter() : math::precision::Precision::Infinite());
   theTol1  = (theDomain.HasFirstPoint() ? theDomain.FirstTolerance() : 0.);
   theTol2  = (theDomain.HasLastPoint() ? theDomain.LastTolerance() : 0.);
 }
@@ -1121,8 +1121,8 @@ void IntCurve_IntConicConic::Perform(const gp_Lin2d&        L1,
   IntRes2d_IntersectionPoint PtSeg1, PtSeg2;
   double                     aHalfSinL1L2;
   double                     Tol = TolR;
-  if (Tol < Precision::PConfusion())
-    Tol = Precision::PConfusion();
+  if (Tol < math::precision::Precision::PConfusion())
+    Tol = math::precision::Precision::PConfusion();
 
   LineLineGeometricIntersection(L1, L2, Tol, U1, U2, aHalfSinL1L2, nbsol);
 
@@ -2344,9 +2344,9 @@ void ProjectOnLAndIntersectWithLDomain(const gp_Elips2d&      Ellipse,
   {
 
     double DomLinf =
-      (RefLineDomain.HasFirstPoint()) ? RefLineDomain.FirstParameter() : -Precision::Infinite();
+      (RefLineDomain.HasFirstPoint()) ? RefLineDomain.FirstParameter() : -math::precision::Precision::Infinite();
     double DomLsup =
-      (RefLineDomain.HasLastPoint()) ? RefLineDomain.LastParameter() : Precision::Infinite();
+      (RefLineDomain.HasLastPoint()) ? RefLineDomain.LastParameter() : math::precision::Precision::Infinite();
 
     Linf = LInterAndDomain.Binf;
     Lsup = LInterAndDomain.Bsup;

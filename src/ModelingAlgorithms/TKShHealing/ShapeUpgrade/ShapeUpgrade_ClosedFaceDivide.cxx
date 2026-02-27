@@ -53,8 +53,8 @@ bool ShapeUpgrade_ClosedFaceDivide::SplitSurface(const double)
   double Uf, Ul, Vf, Vl;
   ShapeAnalysis::GetFaceUVBounds(myFace, Uf, Ul, Vf, Vl);
 
-  if (::Precision::IsInfinite(Uf) || ::Precision::IsInfinite(Ul) || ::Precision::IsInfinite(Vf)
-      || ::Precision::IsInfinite(Vl))
+  if (math::precision::Precision::IsInfinite(Uf) || math::precision::Precision::IsInfinite(Ul) || math::precision::Precision::IsInfinite(Vf)
+      || math::precision::Precision::IsInfinite(Vl))
     return false;
 
   TopLoc_Location           L;

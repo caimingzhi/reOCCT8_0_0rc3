@@ -69,8 +69,8 @@ void Approx_CurveOnSurface_Eval::Evaluate(int*    Dimension,
 
   if (StartEnd[0] != StartEndSav[0] || StartEnd[1] != StartEndSav[1])
   {
-    fonct          = fonct->Trim(StartEnd[0], StartEnd[1], Precision::PConfusion());
-    fonct2d        = fonct2d->Trim(StartEnd[0], StartEnd[1], Precision::PConfusion());
+    fonct          = fonct->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::PConfusion());
+    fonct2d        = fonct2d->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::PConfusion());
     StartEndSav[0] = StartEnd[0];
     StartEndSav[1] = StartEnd[1];
   }
@@ -165,7 +165,7 @@ void Approx_CurveOnSurface_Eval3d::Evaluate(int*    Dimension,
 
   if (StartEnd[0] != StartEndSav[0] || StartEnd[1] != StartEndSav[1])
   {
-    fonct          = fonct->Trim(StartEnd[0], StartEnd[1], Precision::PConfusion());
+    fonct          = fonct->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::PConfusion());
     StartEndSav[0] = StartEnd[0];
     StartEndSav[1] = StartEnd[1];
   }
@@ -246,7 +246,7 @@ void Approx_CurveOnSurface_Eval2d::Evaluate(int*    Dimension,
 
   if (StartEnd[0] != StartEndSav[0] || StartEnd[1] != StartEndSav[1])
   {
-    fonct2d        = fonct2d->Trim(StartEnd[0], StartEnd[1], Precision::PConfusion());
+    fonct2d        = fonct2d->Trim(StartEnd[0], StartEnd[1], math::precision::Precision::PConfusion());
     StartEndSav[0] = StartEnd[0];
     StartEndSav[1] = StartEnd[1];
   }
@@ -350,7 +350,7 @@ void Approx_CurveOnSurface::Perform(const int           theMaxSegments,
   else if (aContinuity > GeomAbs_C2)
     aContinuity = GeomAbs_C2;
 
-  occ::handle<Adaptor2d_Curve2d> TrimmedC2D = myC2D->Trim(myFirst, myLast, Precision::PConfusion());
+  occ::handle<Adaptor2d_Curve2d> TrimmedC2D = myC2D->Trim(myFirst, myLast, math::precision::Precision::PConfusion());
 
   bool   isU, isForward;
   double aParam;
@@ -394,17 +394,17 @@ void Approx_CurveOnSurface::Perform(const int           theMaxSegments,
 
     if (mySurf->UContinuity() == GeomAbs_C0)
     {
-      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, true, Precision::Angular()))
+      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, true, math::precision::Precision::Angular()))
         TolU = std::min(1.e-3, 1.e3 * TolU);
-      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, true, Precision::Confusion()))
+      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, true, math::precision::Precision::Confusion()))
         TolU = std::min(1.e-3, 1.e2 * TolU);
     }
 
     if (mySurf->VContinuity() == GeomAbs_C0)
     {
-      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, false, Precision::Angular()))
+      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, false, math::precision::Precision::Angular()))
         TolV = std::min(1.e-3, 1.e3 * TolV);
-      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, false, Precision::Confusion()))
+      if (!Adaptor3d_HSurfaceTool::IsSurfG1(mySurf, false, math::precision::Precision::Confusion()))
         TolV = std::min(1.e-3, 1.e2 * TolV);
     }
 
@@ -560,7 +560,7 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
     aLoc2d = aBSpline2d->Pole(1);
 
     gp_Vec2d aVec2d(aBSpline2d->Pole(1), aBSpline2d->Pole(2));
-    if (aVec2d.SquareMagnitude() < Precision::Confusion())
+    if (aVec2d.SquareMagnitude() < math::precision::Precision::Confusion())
       return false;
     aDir2d = aVec2d;
 
@@ -575,7 +575,7 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
     aLoc2d = aBezier2d->Pole(1);
 
     gp_Vec2d aVec2d(aBezier2d->Pole(1), aBezier2d->Pole(2));
-    if (aVec2d.SquareMagnitude() < Precision::Confusion())
+    if (aVec2d.SquareMagnitude() < math::precision::Precision::Confusion())
       return false;
     aDir2d = aVec2d;
 
@@ -585,7 +585,7 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
   if (!isAppropriateType)
     return false;
 
-  if (aDir2d.IsParallel(gp::DX2d(), Precision::Angular()))
+  if (aDir2d.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
   {
 
     theIsU       = false;
@@ -593,7 +593,7 @@ bool Approx_CurveOnSurface::isIsoLine(const occ::handle<Adaptor2d_Curve2d>& theC
     theIsForward = aDir2d.Dot(gp::DX2d()) > 0.0;
     return true;
   }
-  else if (aDir2d.IsParallel(gp::DY2d(), Precision::Angular()))
+  else if (aDir2d.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
   {
 
     theIsU       = true;
@@ -638,9 +638,9 @@ bool Approx_CurveOnSurface::buildC3dOnIsoLine(const occ::handle<Adaptor2d_Curve2
     {
       return false;
     }
-    else if (Precision::IsInfinite(V1) || Precision::IsInfinite(V2))
+    else if (math::precision::Precision::IsInfinite(V1) || math::precision::Precision::IsInfinite(V2))
     {
-      if (std::abs(aV2Param - aV1Param) < Precision::PConfusion())
+      if (std::abs(aV2Param - aV1Param) < math::precision::Precision::PConfusion())
       {
         return false;
       }
@@ -651,7 +651,7 @@ bool Approx_CurveOnSurface::buildC3dOnIsoLine(const occ::handle<Adaptor2d_Curve2
     {
       aV1Param = std::max(aV1Param, V1);
       aV2Param = std::min(aV2Param, V2);
-      if (std::abs(aV2Param - aV1Param) < Precision::PConfusion())
+      if (std::abs(aV2Param - aV1Param) < math::precision::Precision::PConfusion())
       {
         return false;
       }
@@ -668,9 +668,9 @@ bool Approx_CurveOnSurface::buildC3dOnIsoLine(const occ::handle<Adaptor2d_Curve2
     {
       return false;
     }
-    else if (Precision::IsInfinite(U1) || Precision::IsInfinite(U2))
+    else if (math::precision::Precision::IsInfinite(U1) || math::precision::Precision::IsInfinite(U2))
     {
-      if (std::abs(aU2Param - aU1Param) < Precision::PConfusion())
+      if (std::abs(aU2Param - aU1Param) < math::precision::Precision::PConfusion())
       {
         return false;
       }
@@ -681,7 +681,7 @@ bool Approx_CurveOnSurface::buildC3dOnIsoLine(const occ::handle<Adaptor2d_Curve2
     {
       aU1Param = std::max(aU1Param, U1);
       aU2Param = std::min(aU2Param, U2);
-      if (std::abs(aU2Param - aU1Param) < Precision::PConfusion())
+      if (std::abs(aU2Param - aU1Param) < math::precision::Precision::PConfusion())
       {
         return false;
       }

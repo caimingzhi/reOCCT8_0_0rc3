@@ -216,7 +216,7 @@ static void FUN_VPgeometryfound(
   EPIfound = CPIfound = OOEPIfound = false;
   double par  = (rkErest == ShapeIndex) ? parErest : VP.EdgeParameter(ShapeIndex);
   double tole = FUN_tool_maxtol(edge);
-  double tolp = Precision::Parametric(tole);
+  double tolp = math::precision::Precision::Parametric(tole);
 
   const TopOpeBRepDS_DataStructure& BDS = HDS->DS();
   if (BDS.HasShape(edge))
@@ -261,7 +261,7 @@ static void FUN_VPgeometryfound(
       OOpar = VP.EdgeONParameter(OOShapeIndex);
 
     double tolOOe = FUN_tool_maxtol(OOedge);
-    double OOtolp = Precision::Parametric(tolOOe);
+    double OOtolp = math::precision::Precision::Parametric(tolOOe);
     if (BDS.HasShape(OOedge))
     {
       const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& OOEPIL =
@@ -465,7 +465,7 @@ Standard_EXPORT bool FUN_newtransEdge(const occ::handle<TopOpeBRepDS_HDataStruct
   TopOpeBRepDS_Transition Tr;
 #endif
 
-  double tola       = Precision::Angular() * 1.e+4;
+  double tola       = math::precision::Precision::Angular() * 1.e+4;
   bool   EtgOOF     = FUN_tool_EtgF(paredge, edge, uv, OOface, tola);
   bool   inERL      = FUN_INlos(edge, ERL);
   bool   isse       = HDS->DS().IsSectionEdge(edge);
@@ -1003,7 +1003,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
     VPonedge = ::FUN_onedge(PDS, edge);
   if (myLineINL)
   {
-    double tolang = Precision::Angular() * 1.e5;
+    double tolang = math::precision::Precision::Angular() * 1.e5;
 
     gp_Vec   tgE = FUN_tool_tggeomE(paredge, edge);
     gp_Pnt2d OOuv;
@@ -1160,7 +1160,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
 
     gp_Pnt2d OOuv = VP.SurfaceParameters(ShapeIndex);
 
-    double tola = Precision::Angular() * 1.e+2;
+    double tola = math::precision::Precision::Angular() * 1.e+2;
 
     bool EsdmEofF = myHDS->HasSameDomain(OOedge);
     if (EsdmEofF)
@@ -1294,7 +1294,7 @@ void TopOpeBRep_FacesFiller::ProcessVPonR(const TopOpeBRep_VPointInter&  VP,
 
   if (myLineINL)
   {
-    double   tola   = Precision::Angular() * 1.e+4;
+    double   tola   = math::precision::Precision::Angular() * 1.e+4;
     gp_Pnt2d uv     = VP.SurfaceParameters(OOShapeIndex);
     bool     EtgOOF = FUN_tool_EtgF(paredge, edge, uv, OOFace, tola);
     bool     inERL  = FUN_INlos(edge, myERL);

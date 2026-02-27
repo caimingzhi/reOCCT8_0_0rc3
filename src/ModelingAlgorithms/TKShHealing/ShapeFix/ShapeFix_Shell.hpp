@@ -25,7 +25,7 @@ public:
 
   Standard_EXPORT void Init(const TopoDS_Shell& shell);
 
-  Standard_EXPORT bool Perform(const Message_ProgressRange& theProgress = Message_ProgressRange());
+  Standard_EXPORT bool Perform(const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool FixFaceOrientation(const TopoDS_Shell& shell,
                                           const bool          isAccountMultiConex = true,

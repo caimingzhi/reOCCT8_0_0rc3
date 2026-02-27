@@ -141,7 +141,7 @@ public:
 
   double& ChangeImmediateFrameRateCpu() { return myFpsCpuImmediate; }
 
-  OSD_Timer& ChangeTimer(Graphic3d_FrameStatsTimer theTimer) { return myOsdTimers[theTimer]; }
+  System::os::OSD_Timer& ChangeTimer(Graphic3d_FrameStatsTimer theTimer) { return myOsdTimers[theTimer]; }
 
   size_t& ChangeCounterValue(Graphic3d_FrameStatsCounter theIndex) { return myCounters[theIndex]; }
 
@@ -152,6 +152,6 @@ public:
   double& operator[](Graphic3d_FrameStatsTimer theIndex) { return ChangeTimerValue(theIndex); }
 
 protected:
-  std::vector<OSD_Timer> myOsdTimers;
+  std::vector<System::os::OSD_Timer> myOsdTimers;
   std::vector<double>    myTimersPrev;
 };

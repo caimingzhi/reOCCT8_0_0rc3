@@ -16,7 +16,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT virtual void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) = 0;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) = 0;
 
 protected:
   Standard_EXPORT BOPAlgo_Algo();
@@ -45,13 +45,13 @@ public:
   Standard_EXPORT virtual void Perform() = 0;
 
 public:
-  void SetProgressRange(const Message_ProgressRange& theRange) { myProgressRange = theRange; }
+  void SetProgressRange(const System::log::Message_ProgressRange& theRange) { myProgressRange = theRange; }
 
 private:
-  void Perform(const Message_ProgressRange& = Message_ProgressRange()) override {};
+  void Perform(const System::log::Message_ProgressRange& = System::log::Message_ProgressRange()) override {};
 
 protected:
-  Message_ProgressRange myProgressRange;
+  System::log::Message_ProgressRange myProgressRange;
 };
 
 class BOPAlgo_PISteps

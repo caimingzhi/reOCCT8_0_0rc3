@@ -170,7 +170,7 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
           edge->Distance(atool.IntersectBisector(firstbisector, secondbisector, intersectionpoint));
           edge->IntersectionPoint(intersectionpoint);
 
-          if (edge->Distance() == Precision::Infinite())
+          if (edge->Distance() == math::precision::Precision::Infinite())
           {
             if (firstbisector->IndexNumber() >= beginbisector
                 || secondbisector->IndexNumber() >= beginbisector)
@@ -215,8 +215,8 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
           previousedge    = currentbisector->FirstEdge();
           theedgelist->Init(previousedge);
           previousedge->Distance(-1.);
-          previousedge->FirstBisector()->SecondParameter(Precision::Infinite());
-          previousedge->SecondBisector()->FirstParameter(Precision::Infinite());
+          previousedge->FirstBisector()->SecondParameter(math::precision::Precision::Infinite());
+          previousedge->SecondBisector()->FirstParameter(math::precision::Precision::Infinite());
 
           while (currentbisectorlist->More())
           {
@@ -232,8 +232,8 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
             atool.Dump(currentbisector->BisectorNumber(), 0);
 #endif
 
-            currentbisector->FirstParameter(Precision::Infinite());
-            currentbisector->SecondParameter(Precision::Infinite());
+            currentbisector->FirstParameter(math::precision::Precision::Infinite());
+            currentbisector->SecondParameter(math::precision::Precision::Infinite());
 
             atool.TrimBisector(currentbisector);
 
@@ -241,8 +241,8 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
             atool.Dump(currentbisector->BisectorNumber(), 1);
 #endif
             currentedge->Distance(-1.);
-            currentedge->FirstBisector()->SecondParameter(Precision::Infinite());
-            currentedge->SecondBisector()->FirstParameter(Precision::Infinite());
+            currentedge->FirstBisector()->SecondParameter(math::precision::Precision::Infinite());
+            currentedge->SecondBisector()->FirstParameter(math::precision::Precision::Infinite());
 
             previousedge = currentedge;
             currentbisectorlist->Next();
@@ -270,18 +270,18 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
     theedgelist->Next();
 
     currentbisector = theedgelist->Current()->FirstBisector();
-    if (currentbisector->FirstParameter() == Precision::Infinite()
-        && currentbisector->SecondParameter() == Precision::Infinite())
+    if (currentbisector->FirstParameter() == math::precision::Precision::Infinite()
+        && currentbisector->SecondParameter() == math::precision::Precision::Infinite())
     {
       parama[0] = -1;
       paramb[0] = -1;
     }
-    else if (currentbisector->FirstParameter() == Precision::Infinite())
+    else if (currentbisector->FirstParameter() == math::precision::Precision::Infinite())
     {
       parama[0] = -1;
       paramb[0] = 1;
     }
-    else if (currentbisector->SecondParameter() == Precision::Infinite())
+    else if (currentbisector->SecondParameter() == math::precision::Precision::Infinite())
     {
       paramb[0] = -1;
       parama[0] = 1;
@@ -315,18 +315,18 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
     for (i = 1; i < theedgelist->Number() - 1; i++)
     {
       currentbisector = theedgelist->Current()->SecondBisector();
-      if (currentbisector->FirstParameter() == Precision::Infinite()
-          && currentbisector->SecondParameter() == Precision::Infinite())
+      if (currentbisector->FirstParameter() == math::precision::Precision::Infinite()
+          && currentbisector->SecondParameter() == math::precision::Precision::Infinite())
       {
         parama[1] = -1;
         paramb[1] = -1;
       }
-      else if (currentbisector->FirstParameter() == Precision::Infinite())
+      else if (currentbisector->FirstParameter() == math::precision::Precision::Infinite())
       {
         parama[1] = -1;
         paramb[1] = 1;
       }
-      else if (currentbisector->SecondParameter() == Precision::Infinite())
+      else if (currentbisector->SecondParameter() == math::precision::Precision::Infinite())
       {
         paramb[1] = -1;
         parama[1] = 1;
@@ -496,8 +496,8 @@ void MAT2d_Mat2d::CreateMatOpen(MAT2d_Tool2d& atool)
       theedgelist->PreviousItem()->Distance(-1);
       theedgelist->Current()->Distance(-1);
 
-      theedgelist->PreviousItem()->FirstBisector()->SecondParameter(Precision::Infinite());
-      theedgelist->Current()->SecondBisector()->FirstParameter(Precision::Infinite());
+      theedgelist->PreviousItem()->FirstBisector()->SecondParameter(math::precision::Precision::Infinite());
+      theedgelist->Current()->SecondBisector()->FirstParameter(math::precision::Precision::Infinite());
     }
 
     if (NumberOfIte > NumberMaxOfIte)
@@ -772,7 +772,7 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
           edge->Distance(atool.IntersectBisector(firstbisector, secondbisector, intersectionpoint));
           edge->IntersectionPoint(intersectionpoint);
 
-          if (edge->Distance() == Precision::Infinite())
+          if (edge->Distance() == math::precision::Precision::Infinite())
           {
             if (firstbisector->IndexNumber() >= beginbisector
                 || secondbisector->IndexNumber() >= beginbisector)
@@ -817,8 +817,8 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
           previousedge    = currentbisector->FirstEdge();
           theedgelist->Init(previousedge);
           previousedge->Distance(-1.);
-          previousedge->FirstBisector()->SecondParameter(Precision::Infinite());
-          previousedge->SecondBisector()->FirstParameter(Precision::Infinite());
+          previousedge->FirstBisector()->SecondParameter(math::precision::Precision::Infinite());
+          previousedge->SecondBisector()->FirstParameter(math::precision::Precision::Infinite());
 
           while (currentbisectorlist->More())
           {
@@ -834,8 +834,8 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
             atool.Dump(currentbisector->BisectorNumber(), 0);
 #endif
 
-            currentbisector->FirstParameter(Precision::Infinite());
-            currentbisector->SecondParameter(Precision::Infinite());
+            currentbisector->FirstParameter(math::precision::Precision::Infinite());
+            currentbisector->SecondParameter(math::precision::Precision::Infinite());
 
             atool.TrimBisector(currentbisector);
 
@@ -843,8 +843,8 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
             atool.Dump(currentbisector->BisectorNumber(), 1);
 #endif
             currentedge->Distance(-1.);
-            currentedge->FirstBisector()->SecondParameter(Precision::Infinite());
-            currentedge->SecondBisector()->FirstParameter(Precision::Infinite());
+            currentedge->FirstBisector()->SecondParameter(math::precision::Precision::Infinite());
+            currentedge->SecondBisector()->FirstParameter(math::precision::Precision::Infinite());
 
             previousedge = currentedge;
             currentbisectorlist->Next();
@@ -871,18 +871,18 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
     theedgelist->First();
 
     currentbisector = theedgelist->Current()->FirstBisector();
-    if (currentbisector->FirstParameter() == Precision::Infinite()
-        && currentbisector->SecondParameter() == Precision::Infinite())
+    if (currentbisector->FirstParameter() == math::precision::Precision::Infinite()
+        && currentbisector->SecondParameter() == math::precision::Precision::Infinite())
     {
       parama[0] = -1;
       paramb[0] = -1;
     }
-    else if (currentbisector->FirstParameter() == Precision::Infinite())
+    else if (currentbisector->FirstParameter() == math::precision::Precision::Infinite())
     {
       parama[0] = -1;
       paramb[0] = 1;
     }
-    else if (currentbisector->SecondParameter() == Precision::Infinite())
+    else if (currentbisector->SecondParameter() == math::precision::Precision::Infinite())
     {
       paramb[0] = -1;
       parama[0] = 1;
@@ -916,18 +916,18 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
     for (i = 0; i < theedgelist->Number(); i++)
     {
       currentbisector = theedgelist->Current()->SecondBisector();
-      if (currentbisector->FirstParameter() == Precision::Infinite()
-          && currentbisector->SecondParameter() == Precision::Infinite())
+      if (currentbisector->FirstParameter() == math::precision::Precision::Infinite()
+          && currentbisector->SecondParameter() == math::precision::Precision::Infinite())
       {
         parama[1] = -1;
         paramb[1] = -1;
       }
-      else if (currentbisector->FirstParameter() == Precision::Infinite())
+      else if (currentbisector->FirstParameter() == math::precision::Precision::Infinite())
       {
         parama[1] = -1;
         paramb[1] = 1;
       }
-      else if (currentbisector->SecondParameter() == Precision::Infinite())
+      else if (currentbisector->SecondParameter() == math::precision::Precision::Infinite())
       {
         paramb[1] = -1;
         parama[1] = 1;
@@ -1101,8 +1101,8 @@ void MAT2d_Mat2d::CreateMat(MAT2d_Tool2d& atool)
       theedgelist->PreviousItem()->Distance(-1);
       theedgelist->Current()->Distance(-1);
 
-      theedgelist->PreviousItem()->FirstBisector()->SecondParameter(Precision::Infinite());
-      theedgelist->Current()->SecondBisector()->FirstParameter(Precision::Infinite());
+      theedgelist->PreviousItem()->FirstBisector()->SecondParameter(math::precision::Precision::Infinite());
+      theedgelist->Current()->SecondBisector()->FirstParameter(math::precision::Precision::Infinite());
     }
 
     if (NumberOfIte > NumberMaxOfIte)
@@ -1204,9 +1204,9 @@ void MAT2d_Mat2d::LoadBisectorsToRemove(int&                             noofbis
   lastbisectortoremove[0]  = lastbisectortoremove1;
   lastbisectortoremove[1]  = lastbisectortoremove2;
 
-  if (distance1 < Precision::Infinite() && distance2 == Precision::Infinite())
+  if (distance1 < math::precision::Precision::Infinite() && distance2 == math::precision::Precision::Infinite())
     index = 0;
-  else if (distance2 < Precision::Infinite() && distance1 == Precision::Infinite())
+  else if (distance2 < math::precision::Precision::Infinite() && distance1 == math::precision::Precision::Infinite())
     index = 1;
   else
     index = -1;
@@ -1258,8 +1258,8 @@ void MAT2d_Mat2d::Intersect(MAT2d_Tool2d&                    atool,
   occ::handle<MAT_Bisector> firstbisectortoremove[2];
   occ::handle<MAT_Bisector> lastbisectortoremove[2];
 
-  distance[0] = Precision::Infinite();
-  distance[1] = Precision::Infinite();
+  distance[0] = math::precision::Precision::Infinite();
+  distance[1] = math::precision::Precision::Infinite();
 
   for (bisectornumber = 0; bisectornumber < 2; bisectornumber++)
   {
@@ -1318,7 +1318,7 @@ void MAT2d_Mat2d::Intersect(MAT2d_Tool2d&                    atool,
         previousbisector->SecondParameter(saveparameter);
       }
 
-      if (distant < Precision::Infinite())
+      if (distant < math::precision::Precision::Infinite())
       {
         distance[bisectornumber]             = distant;
         lastbisectortoremove[bisectornumber] = lastbisector;

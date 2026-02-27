@@ -27,7 +27,7 @@ public:
     ObjectSentry& operator=(const ObjectSentry&) = delete;
   };
 
-  Standard_EXPORT StdObjMgt_WriteData(const occ::handle<Storage_BaseDriver>& theDriver);
+  Standard_EXPORT StdObjMgt_WriteData(const occ::handle<app::storage::Storage_BaseDriver>& theDriver);
 
   Standard_EXPORT void WritePersistentObject(
     const occ::handle<StdObjMgt_Persistent>& thePersistent);
@@ -62,7 +62,7 @@ public:
   StdObjMgt_WriteData& operator<<(const float& theValue) { return WriteValue(theValue); }
 
 private:
-  occ::handle<Storage_BaseDriver> myDriver;
+  occ::handle<app::storage::Storage_BaseDriver> myDriver;
 };
 
 Standard_EXPORT StdObjMgt_WriteData& operator<<(StdObjMgt_WriteData& theWriteData,

@@ -28,12 +28,12 @@ TEST(Bnd_B3dTest, ConstructorWithCenterAndHSize)
   gp_XYZ aMin = aBox.CornerMin();
   gp_XYZ aMax = aBox.CornerMax();
 
-  EXPECT_NEAR(aMin.X(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 11.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 13.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 19.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 11.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 13.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 19.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, Clear)
@@ -54,22 +54,22 @@ TEST(Bnd_B3dTest, AddPoint)
 
   gp_XYZ aMin = aBox.CornerMin();
   gp_XYZ aMax = aBox.CornerMax();
-  EXPECT_NEAR(aMin.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 3.0, math::precision::Precision::Confusion());
 
   aBox.Add(gp_XYZ(4.0, 5.0, 6.0));
   aMin = aBox.CornerMin();
   aMax = aBox.CornerMax();
-  EXPECT_NEAR(aMin.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 6.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 6.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, AddPnt)
@@ -79,9 +79,9 @@ TEST(Bnd_B3dTest, AddPnt)
 
   EXPECT_FALSE(aBox.IsVoid());
   gp_XYZ aMin = aBox.CornerMin();
-  EXPECT_NEAR(aMin.X(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, AddBox)
@@ -93,12 +93,12 @@ TEST(Bnd_B3dTest, AddBox)
 
   gp_XYZ aMin = aBox1.CornerMin();
   gp_XYZ aMax = aBox1.CornerMax();
-  EXPECT_NEAR(aMin.X(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 4.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 4.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, SquareExtent)
@@ -106,7 +106,7 @@ TEST(Bnd_B3dTest, SquareExtent)
   Bnd_B3d aBox(gp_XYZ(0.0, 0.0, 0.0), gp_XYZ(3.0, 4.0, 5.0));
   double  aSqExtent = aBox.SquareExtent();
 
-  EXPECT_NEAR(aSqExtent, 200.0, Precision::Confusion());
+  EXPECT_NEAR(aSqExtent, 200.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, Enlarge)
@@ -116,12 +116,12 @@ TEST(Bnd_B3dTest, Enlarge)
 
   gp_XYZ aMin = aBox.CornerMin();
   gp_XYZ aMax = aBox.CornerMax();
-  EXPECT_NEAR(aMin.X(), -1.5, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), -1.5, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), -1.5, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 1.5, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 1.5, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 1.5, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), -1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), -1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), -1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 1.5, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 1.5, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, Limit)
@@ -135,12 +135,12 @@ TEST(Bnd_B3dTest, Limit)
 
   gp_XYZ aMin = aBox1.CornerMin();
   gp_XYZ aMax = aBox1.CornerMax();
-  EXPECT_NEAR(aMin.X(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 5.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 5.0, math::precision::Precision::Confusion());
 
   Bnd_B3d aBox3(gp_XYZ(0.0, 0.0, 0.0), gp_XYZ(1.0, 1.0, 1.0));
   Bnd_B3d aBox4(gp_XYZ(10.0, 10.0, 10.0), gp_XYZ(1.0, 1.0, 1.0));
@@ -221,12 +221,12 @@ TEST(Bnd_B3dTest, Transformed)
   gp_XYZ aMin = aTransformedBox.CornerMin();
   gp_XYZ aMax = aTransformedBox.CornerMax();
 
-  EXPECT_NEAR(aMin.X(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 6.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 6.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3dTest, TransformedWithRotation)
@@ -256,12 +256,12 @@ TEST(Bnd_B3dTest, SetCenterAndHSize)
   gp_XYZ aMin = aBox.CornerMin();
   gp_XYZ aMax = aBox.CornerMax();
 
-  EXPECT_NEAR(aMin.X(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Y(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMin.Z(), 11.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.X(), 7.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Y(), 13.0, Precision::Confusion());
-  EXPECT_NEAR(aMax.Z(), 19.0, Precision::Confusion());
+  EXPECT_NEAR(aMin.X(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Y(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMin.Z(), 11.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.X(), 7.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Y(), 13.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMax.Z(), 19.0, math::precision::Precision::Confusion());
 }
 
 TEST(Bnd_B3fTest, FloatPrecision)

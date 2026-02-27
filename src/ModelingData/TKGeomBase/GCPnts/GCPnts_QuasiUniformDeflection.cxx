@@ -520,7 +520,7 @@ void GCPnts_QuasiUniformDeflection::initialize(const TheCurve&     theC,
   myParams.Clear();
   myPoints.Clear();
 
-  const double                anEPSILON = std::min(theC.Resolution(Precision::Confusion()), 1.e50);
+  const double                anEPSILON = std::min(theC.Resolution(math::precision::Precision::Confusion()), 1.e50);
   const GCPnts_DeflectionType aType     = GetDefType(theC);
   const double                aU1       = std::min(theU1, theU2);
   const double                aU2       = std::max(theU1, theU2);

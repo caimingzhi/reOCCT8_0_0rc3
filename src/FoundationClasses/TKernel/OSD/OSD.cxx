@@ -4,7 +4,7 @@
 
 #include <Standard_CString.hpp>
 
-bool OSD::RealToCString(const double aReal, Standard_PCharacter& aString)
+bool System::os::OSD::RealToCString(const double aReal, Standard_PCharacter& aString)
 {
   char *p, *q;
 
@@ -30,7 +30,7 @@ bool OSD::RealToCString(const double aReal, Standard_PCharacter& aString)
   return true;
 }
 
-bool OSD::CStringToReal(const char* aString, double& aReal)
+bool System::os::OSD::CStringToReal(const char* aString, double& aReal)
 {
   char* endptr;
   aReal = Strtod(aString, &endptr);
@@ -43,7 +43,7 @@ bool OSD::CStringToReal(const char* aString, double& aReal)
   #include <unistd.h>
 #endif
 
-void OSD::SecSleep(const int theSeconds)
+void System::os::OSD::SecSleep(const int theSeconds)
 {
 #ifdef _WIN32
   Sleep(theSeconds * 1000);
@@ -52,7 +52,7 @@ void OSD::SecSleep(const int theSeconds)
 #endif
 }
 
-void OSD::MilliSecSleep(const int theMilliseconds)
+void System::os::OSD::MilliSecSleep(const int theMilliseconds)
 {
 #ifdef _WIN32
   Sleep(theMilliseconds);

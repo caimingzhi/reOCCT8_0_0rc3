@@ -18,7 +18,7 @@ namespace
 
   void checkPointsEqual(const gp_Pnt& thePnt1,
                         const gp_Pnt& thePnt2,
-                        const double  theTolerance = Precision::Confusion())
+                        const double  theTolerance = math::precision::Precision::Confusion())
   {
     EXPECT_NEAR(thePnt1.X(), thePnt2.X(), theTolerance) << "X coordinates differ";
     EXPECT_NEAR(thePnt1.Y(), thePnt2.Y(), theTolerance) << "Y coordinates differ";
@@ -27,7 +27,7 @@ namespace
 
   void checkPoint2dEqual(const gp_Pnt2d& thePnt1,
                          const gp_Pnt2d& thePnt2,
-                         const double    theTolerance = Precision::Confusion())
+                         const double    theTolerance = math::precision::Precision::Confusion())
   {
     EXPECT_NEAR(thePnt1.X(), thePnt2.X(), theTolerance) << "X coordinates differ";
     EXPECT_NEAR(thePnt1.Y(), thePnt2.Y(), theTolerance) << "Y coordinates differ";
@@ -90,7 +90,7 @@ TEST_F(PLibTest, SetGetPoles3DWithWeights)
   for (int i = 1; i <= 2; i++)
   {
     checkPointsEqual(aPoles(i), aResultPoles(i));
-    EXPECT_NEAR(aWeights(i), aResultWeights(i), Precision::Confusion());
+    EXPECT_NEAR(aWeights(i), aResultWeights(i), math::precision::Precision::Confusion());
   }
 }
 
@@ -135,7 +135,7 @@ TEST_F(PLibTest, SetGetPoles2DWithWeights)
   for (int i = 1; i <= 2; i++)
   {
     checkPoint2dEqual(aPoles(i), aResultPoles(i));
-    EXPECT_NEAR(aWeights(i), aResultWeights(i), Precision::Confusion());
+    EXPECT_NEAR(aWeights(i), aResultWeights(i), math::precision::Precision::Confusion());
   }
 }
 
@@ -159,24 +159,24 @@ TEST_F(PLibTest, ZeroWeightsHandling)
 TEST_F(PLibTest, BinomialCoefficient_BasicValues)
 {
 
-  EXPECT_NEAR(PLib::Bin(0, 0), 1.0, Precision::Confusion()) << "C(0,0) should be 1";
+  EXPECT_NEAR(PLib::Bin(0, 0), 1.0, math::precision::Precision::Confusion()) << "C(0,0) should be 1";
 
-  EXPECT_NEAR(PLib::Bin(1, 0), 1.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(1, 1), 1.0, Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(1, 0), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(1, 1), 1.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(PLib::Bin(5, 0), 1.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(5, 1), 5.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(5, 2), 10.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(5, 3), 10.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(5, 4), 5.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(5, 5), 1.0, Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(5, 0), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(5, 1), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(5, 2), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(5, 3), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(5, 4), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(5, 5), 1.0, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(PLib::Bin(10, 0), 1.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(10, 1), 10.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(10, 2), 45.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(10, 3), 120.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(10, 4), 210.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(10, 5), 252.0, Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(10, 0), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(10, 1), 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(10, 2), 45.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(10, 3), 120.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(10, 4), 210.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(10, 5), 252.0, math::precision::Precision::Confusion());
 }
 
 TEST_F(PLibTest, BinomialCoefficient_Symmetry)
@@ -186,7 +186,7 @@ TEST_F(PLibTest, BinomialCoefficient_Symmetry)
   {
     for (int k = 0; k <= n; k++)
     {
-      EXPECT_NEAR(PLib::Bin(n, k), PLib::Bin(n, n - k), Precision::Confusion())
+      EXPECT_NEAR(PLib::Bin(n, k), PLib::Bin(n, n - k), math::precision::Precision::Confusion())
         << "Binomial coefficient symmetry failed for C(" << n << "," << k << ")";
     }
   }
@@ -201,7 +201,7 @@ TEST_F(PLibTest, BinomialCoefficient_Recurrence)
     {
       double expected = PLib::Bin(n - 1, k - 1) + PLib::Bin(n - 1, k);
       double actual   = PLib::Bin(n, k);
-      EXPECT_NEAR(actual, expected, Precision::Confusion())
+      EXPECT_NEAR(actual, expected, math::precision::Precision::Confusion())
         << "Pascal recurrence failed for C(" << n << "," << k << ")";
     }
   }
@@ -210,14 +210,14 @@ TEST_F(PLibTest, BinomialCoefficient_Recurrence)
 TEST_F(PLibTest, BinomialCoefficient_LargeValues)
 {
 
-  EXPECT_NEAR(PLib::Bin(20, 10), 184756.0, Precision::Confusion()) << "C(20,10)";
-  EXPECT_NEAR(PLib::Bin(15, 7), 6435.0, Precision::Confusion()) << "C(15,7)";
-  EXPECT_NEAR(PLib::Bin(25, 5), 53130.0, Precision::Confusion()) << "C(25,5)";
-  EXPECT_NEAR(PLib::Bin(25, 12), 5200300.0, Precision::Confusion()) << "C(25,12)";
+  EXPECT_NEAR(PLib::Bin(20, 10), 184756.0, math::precision::Precision::Confusion()) << "C(20,10)";
+  EXPECT_NEAR(PLib::Bin(15, 7), 6435.0, math::precision::Precision::Confusion()) << "C(15,7)";
+  EXPECT_NEAR(PLib::Bin(25, 5), 53130.0, math::precision::Precision::Confusion()) << "C(25,5)";
+  EXPECT_NEAR(PLib::Bin(25, 12), 5200300.0, math::precision::Precision::Confusion()) << "C(25,12)";
 
-  EXPECT_NEAR(PLib::Bin(25, 0), 1.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(25, 1), 25.0, Precision::Confusion());
-  EXPECT_NEAR(PLib::Bin(25, 25), 1.0, Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(25, 0), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(25, 1), 25.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(PLib::Bin(25, 25), 1.0, math::precision::Precision::Confusion());
 }
 
 TEST_F(PLibTest, BinomialCoefficient_EdgeColumns)
@@ -225,18 +225,18 @@ TEST_F(PLibTest, BinomialCoefficient_EdgeColumns)
 
   for (int n = 0; n <= 25; n++)
   {
-    EXPECT_NEAR(PLib::Bin(n, 0), 1.0, Precision::Confusion()) << "C(" << n << ",0) should be 1";
+    EXPECT_NEAR(PLib::Bin(n, 0), 1.0, math::precision::Precision::Confusion()) << "C(" << n << ",0) should be 1";
   }
 
   for (int n = 0; n <= 25; n++)
   {
-    EXPECT_NEAR(PLib::Bin(n, n), 1.0, Precision::Confusion())
+    EXPECT_NEAR(PLib::Bin(n, n), 1.0, math::precision::Precision::Confusion())
       << "C(" << n << "," << n << ") should be 1";
   }
 
   for (int n = 1; n <= 25; n++)
   {
-    EXPECT_NEAR(PLib::Bin(n, 1), double(n), Precision::Confusion())
+    EXPECT_NEAR(PLib::Bin(n, 1), double(n), math::precision::Precision::Confusion())
       << "C(" << n << ",1) should be " << n;
   }
 }
@@ -247,14 +247,14 @@ TEST_F(PLibTest, BinomialCoefficient_CompleteRows)
   const double row6[] = {1.0, 6.0, 15.0, 20.0, 15.0, 6.0, 1.0};
   for (int k = 0; k <= 6; k++)
   {
-    EXPECT_NEAR(PLib::Bin(6, k), row6[k], Precision::Confusion())
+    EXPECT_NEAR(PLib::Bin(6, k), row6[k], math::precision::Precision::Confusion())
       << "C(6," << k << ") verification failed";
   }
 
   const double row8[] = {1.0, 8.0, 28.0, 56.0, 70.0, 56.0, 28.0, 8.0, 1.0};
   for (int k = 0; k <= 8; k++)
   {
-    EXPECT_NEAR(PLib::Bin(8, k), row8[k], Precision::Confusion())
+    EXPECT_NEAR(PLib::Bin(8, k), row8[k], math::precision::Precision::Confusion())
       << "C(8," << k << ") verification failed";
   }
 }
@@ -272,7 +272,7 @@ TEST_F(PLibTest, BinomialCoefficient_SumProperty)
       sum += PLib::Bin(n, k);
     }
 
-    EXPECT_NEAR(sum, expected, Precision::Confusion())
+    EXPECT_NEAR(sum, expected, math::precision::Precision::Confusion())
       << "Sum property failed for n=" << n << " (sum should be 2^" << n << "=" << expected << ")";
   }
 }
@@ -297,7 +297,7 @@ TEST_F(PLibTest, EvalPolynomial)
                        aDimension,
                        aCoeffs.ChangeValue(1),
                        aResults.ChangeValue(1));
-  EXPECT_NEAR(aResults(1), 1.0, Precision::Confusion());
+  EXPECT_NEAR(aResults(1), 1.0, math::precision::Precision::Confusion());
 
   PLib::EvalPolynomial(1.0,
                        aDerivOrder,
@@ -305,7 +305,7 @@ TEST_F(PLibTest, EvalPolynomial)
                        aDimension,
                        aCoeffs.ChangeValue(1),
                        aResults.ChangeValue(1));
-  EXPECT_NEAR(aResults(1), 6.0, Precision::Confusion());
+  EXPECT_NEAR(aResults(1), 6.0, math::precision::Precision::Confusion());
 
   PLib::EvalPolynomial(2.0,
                        aDerivOrder,
@@ -313,7 +313,7 @@ TEST_F(PLibTest, EvalPolynomial)
                        aDimension,
                        aCoeffs.ChangeValue(1),
                        aResults.ChangeValue(1));
-  EXPECT_NEAR(aResults(1), 17.0, Precision::Confusion());
+  EXPECT_NEAR(aResults(1), 17.0, math::precision::Precision::Confusion());
 }
 
 TEST_F(PLibTest, EvalPolynomialWithDerivatives)
@@ -337,9 +337,9 @@ TEST_F(PLibTest, EvalPolynomialWithDerivatives)
                        aCoeffs.ChangeValue(1),
                        aResults.ChangeValue(1));
 
-  EXPECT_NEAR(aResults(1), 6.0, Precision::Confusion());
-  EXPECT_NEAR(aResults(2), 8.0, Precision::Confusion());
-  EXPECT_NEAR(aResults(3), 6.0, Precision::Confusion());
+  EXPECT_NEAR(aResults(1), 6.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aResults(2), 8.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aResults(3), 6.0, math::precision::Precision::Confusion());
 }
 
 TEST_F(PLibTest, ConstraintOrderConversion)
@@ -404,8 +404,8 @@ TEST_F(PLibTest, HermiteInterpolate)
                          aDimension,
                          aCoeffs.ChangeValue(0),
                          aResults.ChangeValue(1));
-    EXPECT_NEAR(aResults(1), 0.0, Precision::Confusion()) << "f(0) constraint not satisfied";
-    EXPECT_NEAR(aResults(2), 1.0, Precision::Confusion()) << "f'(0) constraint not satisfied";
+    EXPECT_NEAR(aResults(1), 0.0, math::precision::Precision::Confusion()) << "f(0) constraint not satisfied";
+    EXPECT_NEAR(aResults(2), 1.0, math::precision::Precision::Confusion()) << "f'(0) constraint not satisfied";
 
     PLib::EvalPolynomial(aLastParam,
                          1,
@@ -413,8 +413,8 @@ TEST_F(PLibTest, HermiteInterpolate)
                          aDimension,
                          aCoeffs.ChangeValue(0),
                          aResults.ChangeValue(1));
-    EXPECT_NEAR(aResults(1), 1.0, Precision::Confusion()) << "f(1) constraint not satisfied";
-    EXPECT_NEAR(aResults(2), 0.0, Precision::Confusion()) << "f'(1) constraint not satisfied";
+    EXPECT_NEAR(aResults(1), 1.0, math::precision::Precision::Confusion()) << "f(1) constraint not satisfied";
+    EXPECT_NEAR(aResults(2), 0.0, math::precision::Precision::Confusion()) << "f'(1) constraint not satisfied";
   }
 }
 

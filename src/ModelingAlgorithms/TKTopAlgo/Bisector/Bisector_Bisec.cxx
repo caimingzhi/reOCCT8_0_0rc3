@@ -127,7 +127,7 @@ void Bisector_Bisec::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       gp_Dir2d Fd(afirstvector);
       gp_Dir2d Sd(asecondvector);
 
-      if (Fd.Dot(Sd) < std::sqrt(2. * Precision::Angular()) - 1.)
+      if (Fd.Dot(Sd) < std::sqrt(2. * math::precision::Precision::Angular()) - 1.)
         IsLine = true;
     }
     if (IsLine)
@@ -136,7 +136,7 @@ void Bisector_Bisec::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
       gp_Dir2d N(-adirection * afirstvector.Y(), adirection * afirstvector.X());
       occ::handle<Geom2d_CartesianPoint> PG = new Geom2d_CartesianPoint(apoint);
       occ::handle<Geom2d_Line>           L  = new Geom2d_Line(apoint, N);
-      occ::handle<Geom2d_TrimmedCurve> BisL = new Geom2d_TrimmedCurve(L, 0, Precision::Infinite());
+      occ::handle<Geom2d_TrimmedCurve> BisL = new Geom2d_TrimmedCurve(L, 0, math::precision::Precision::Infinite());
       occ::handle<Bisector_BisecAna>   BisAna = new Bisector_BisecAna();
       BisAna->Init(BisL);
       UFirst = BisAna->ParameterOfStartPoint();
@@ -156,7 +156,7 @@ void Bisector_Bisec::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
         gp_Pnt2d aP2 = asecondcurve1->Value(asecondcurve1->FirstParameter());
         gp_Pnt2d aPm(.5 * (aP1.XY() + aP2.XY()));
         double   Nx, Ny;
-        if (aPm.Distance(apoint) > 10. * Precision::Confusion())
+        if (aPm.Distance(apoint) > 10. * math::precision::Precision::Confusion())
         {
           Nx = apoint.X() - aPm.X();
           Ny = apoint.Y() - aPm.Y();
@@ -181,7 +181,7 @@ void Bisector_Bisec::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
         occ::handle<Geom2d_CartesianPoint> PG = new Geom2d_CartesianPoint(apoint);
         occ::handle<Geom2d_Line>           L  = new Geom2d_Line(apoint, N);
         occ::handle<Geom2d_TrimmedCurve>   BisL =
-          new Geom2d_TrimmedCurve(L, 0, Precision::Infinite());
+          new Geom2d_TrimmedCurve(L, 0, math::precision::Precision::Infinite());
         occ::handle<Bisector_BisecAna> BisAna = new Bisector_BisecAna();
         BisAna->Init(BisL);
         UFirst = BisAna->ParameterOfStartPoint();
@@ -240,7 +240,7 @@ void Bisector_Bisec::Perform(const occ::handle<Geom2d_Curve>& afirstcurve,
   else
   {
     bool   IsLine = false;
-    double RC     = Precision::Infinite();
+    double RC     = math::precision::Precision::Infinite();
 
     if (oncurve)
     {
@@ -359,7 +359,7 @@ void Bisector_Bisec::Perform(const occ::handle<Geom2d_Point>& afirstpoint,
   {
 
     bool   IsLine = false;
-    double RC     = Precision::Infinite();
+    double RC     = math::precision::Precision::Infinite();
 
     if (oncurve)
     {
@@ -473,20 +473,20 @@ static void ReplaceByLineIfIsToSmall(occ::handle<Bisector_Curve>& Bis,
                                      double&                      ULast)
 
 {
-  if (std::abs(ULast - UFirst) > 2. * Precision::PConfusion() * 10.)
+  if (std::abs(ULast - UFirst) > 2. * math::precision::Precision::PConfusion() * 10.)
     return;
 
   gp_Pnt2d PF = Bis->Value(UFirst);
   gp_Pnt2d PL = Bis->Value(ULast);
 
-  if (PF.Distance(PL) > Precision::Confusion() * 10.)
+  if (PF.Distance(PL) > math::precision::Precision::Confusion() * 10.)
     return;
 
   gp_Vec2d T1 = Bis->DN(UFirst, 1);
 
   occ::handle<Geom2d_CartesianPoint> PG     = new Geom2d_CartesianPoint(PF);
   occ::handle<Geom2d_Line>           L      = new Geom2d_Line(PF, T1);
-  occ::handle<Geom2d_TrimmedCurve>   BisL   = new Geom2d_TrimmedCurve(L, 0, Precision::Infinite());
+  occ::handle<Geom2d_TrimmedCurve>   BisL   = new Geom2d_TrimmedCurve(L, 0, math::precision::Precision::Infinite());
   occ::handle<Bisector_BisecAna>     BisAna = new Bisector_BisecAna();
   BisAna->Init(BisL);
   UFirst = BisAna->ParameterOfStartPoint();
@@ -533,7 +533,7 @@ static bool IsMaxRC(const occ::handle<Geom2d_Curve>& C, double U, double& R)
     if (KL < KF)
     {
       if (KL == 0.0)
-        R = Precision::Infinite();
+        R = math::precision::Precision::Infinite();
       else
         R = 1 / KL;
       IsMax = true;
@@ -544,7 +544,7 @@ static bool IsMaxRC(const occ::handle<Geom2d_Curve>& C, double U, double& R)
     if (KF < KL)
     {
       if (KF == 0.0)
-        R = Precision::Infinite();
+        R = math::precision::Precision::Infinite();
       else
         R = 1 / KF;
       IsMax = true;

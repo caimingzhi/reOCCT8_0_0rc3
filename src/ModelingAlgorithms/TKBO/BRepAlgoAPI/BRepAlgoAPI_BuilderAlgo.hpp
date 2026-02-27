@@ -53,12 +53,12 @@ public:
 
 public:
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 public:
   Standard_EXPORT void SimplifyResult(const bool   theUnifyEdges = true,
                                       const bool   theUnifyFaces = true,
-                                      const double theAngularTol = Precision::Angular());
+                                      const double theAngularTol = math::precision::Precision::Angular());
 
 public:
   Standard_EXPORT const NCollection_List<TopoDS_Shape>& Modified(const TopoDS_Shape& theS) override;
@@ -94,9 +94,9 @@ protected:
 
 protected:
   Standard_EXPORT void IntersectShapes(const NCollection_List<TopoDS_Shape>& theArgs,
-                                       const Message_ProgressRange&          theRange);
+                                       const System::log::Message_ProgressRange&          theRange);
 
-  Standard_EXPORT void BuildResult(const Message_ProgressRange& theRange = Message_ProgressRange());
+  Standard_EXPORT void BuildResult(const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
 protected:
   Standard_EXPORT void Clear() override;

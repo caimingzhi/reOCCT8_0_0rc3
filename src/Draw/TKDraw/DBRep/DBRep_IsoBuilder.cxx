@@ -20,8 +20,8 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Face.hpp>
 
-static double IntersectorConfusion = Precision::PConfusion();
-static double IntersectorTangency  = Precision::PConfusion();
+static double IntersectorConfusion = math::precision::Precision::PConfusion();
+static double IntersectorTangency  = math::precision::Precision::PConfusion();
 static double HatcherConfusion2d   = 1.e-8;
 static double HatcherConfusion3d   = 1.e-8;
 
@@ -48,10 +48,10 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
   myVInd.Init(0);
 
   BRepTools::UVBounds(TopologicalFace, myUMin, myUMax, myVMin, myVMax);
-  bool InfiniteUMin = Precision::IsNegativeInfinite(myUMin);
-  bool InfiniteUMax = Precision::IsPositiveInfinite(myUMax);
-  bool InfiniteVMin = Precision::IsNegativeInfinite(myVMin);
-  bool InfiniteVMax = Precision::IsPositiveInfinite(myVMax);
+  bool InfiniteUMin = math::precision::Precision::IsNegativeInfinite(myUMin);
+  bool InfiniteUMax = math::precision::Precision::IsPositiveInfinite(myUMax);
+  bool InfiniteVMin = math::precision::Precision::IsNegativeInfinite(myVMin);
+  bool InfiniteVMax = math::precision::Precision::IsPositiveInfinite(myVMax);
   if (InfiniteUMin && InfiniteUMax)
   {
     myUMin = -Infinite;
@@ -104,8 +104,8 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
       return;
     }
 
-    if (std::abs(PCurve->FirstParameter() - U1) <= Precision::PConfusion()
-        && std::abs(PCurve->LastParameter() - U2) <= Precision::PConfusion())
+    if (std::abs(PCurve->FirstParameter() - U1) <= math::precision::Precision::PConfusion()
+        && std::abs(PCurve->LastParameter() - U2) <= math::precision::Precision::PConfusion())
     {
       anEdgePCurveMap.Add(TopologicalEdge, PCurve);
     }
@@ -116,10 +116,10 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
         occ::handle<Geom2d_TrimmedCurve> TrimPCurve = occ::down_cast<Geom2d_TrimmedCurve>(PCurve);
         if (!TrimPCurve.IsNull())
         {
-          if (TrimPCurve->BasisCurve()->FirstParameter() - U1 > Precision::PConfusion()
-              || TrimPCurve->BasisCurve()->FirstParameter() - U2 > Precision::PConfusion()
-              || U1 - TrimPCurve->BasisCurve()->LastParameter() > Precision::PConfusion()
-              || U2 - TrimPCurve->BasisCurve()->LastParameter() > Precision::PConfusion())
+          if (TrimPCurve->BasisCurve()->FirstParameter() - U1 > math::precision::Precision::PConfusion()
+              || TrimPCurve->BasisCurve()->FirstParameter() - U2 > math::precision::Precision::PConfusion()
+              || U1 - TrimPCurve->BasisCurve()->LastParameter() > math::precision::Precision::PConfusion()
+              || U2 - TrimPCurve->BasisCurve()->LastParameter() > math::precision::Precision::PConfusion())
           {
 #ifdef OCCT_DEBUG
             std::cout << "DBRep_IsoBuilder TrimPCurve : parameters out of range\n";
@@ -131,7 +131,7 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
         }
         else
         {
-          if (PCurve->FirstParameter() - U1 > Precision::PConfusion())
+          if (PCurve->FirstParameter() - U1 > math::precision::Precision::PConfusion())
           {
 #ifdef OCCT_DEBUG
             std::cout << "DBRep_IsoBuilder PCurve : parameters out of range\n";
@@ -139,7 +139,7 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
 #endif
             U1 = PCurve->FirstParameter();
           }
-          if (PCurve->FirstParameter() - U2 > Precision::PConfusion())
+          if (PCurve->FirstParameter() - U2 > math::precision::Precision::PConfusion())
           {
 #ifdef OCCT_DEBUG
             std::cout << "DBRep_IsoBuilder PCurve : parameters out of range\n";
@@ -147,7 +147,7 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
 #endif
             U2 = PCurve->FirstParameter();
           }
-          if (U1 - PCurve->LastParameter() > Precision::PConfusion())
+          if (U1 - PCurve->LastParameter() > math::precision::Precision::PConfusion())
           {
 #ifdef OCCT_DEBUG
             std::cout << "DBRep_IsoBuilder PCurve : parameters out of range\n";
@@ -155,7 +155,7 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
 #endif
             U1 = PCurve->LastParameter();
           }
-          if (U2 - PCurve->LastParameter() > Precision::PConfusion())
+          if (U2 - PCurve->LastParameter() > math::precision::Precision::PConfusion())
           {
 #ifdef OCCT_DEBUG
             std::cout << "DBRep_IsoBuilder PCurve : parameters out of range\n";
@@ -166,7 +166,7 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
         }
       }
 
-      if (std::abs(U1 - U2) <= Precision::PConfusion())
+      if (std::abs(U1 - U2) <= math::precision::Precision::PConfusion())
         continue;
       occ::handle<Geom2d_TrimmedCurve> TrimPCurve = new Geom2d_TrimmedCurve(PCurve, U1, U2);
       anEdgePCurveMap.Add(TopologicalEdge, TrimPCurve);
@@ -427,7 +427,7 @@ void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve&
       double aTolV2 = BRep_Tool::Tolerance(aCVOnPrev);
       gp_Pnt aPV    = BRep_Tool::Pnt(aCVOnPrev);
 
-      if (aTolV2 < Precision::Infinite())
+      if (aTolV2 < math::precision::Precision::Infinite())
       {
         aTolV2 *= aTolV2;
 
@@ -445,7 +445,7 @@ void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve&
       gp_Vec2d aV2d(aPrevP2d, aCurrP2d);
       double   aSegmLen = aV2d.Magnitude();
 
-      bool bAddSegment = (aSegmLen > Precision::PConfusion());
+      bool bAddSegment = (aSegmLen > math::precision::Precision::PConfusion());
 
       if (bAddSegment)
       {
@@ -461,8 +461,8 @@ void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve&
         Geom2dAdaptor_Curve aPrevGC(aPrevC2d, fp, lp), aCurrGC(aCurrC2d, fc, lc);
         Geom2dInt_GInter    anInter(aPrevGC,
                                  aCurrGC,
-                                 Precision::PConfusion(),
-                                 Precision::PConfusion());
+                                 math::precision::Precision::PConfusion(),
+                                 math::precision::Precision::PConfusion());
         if (anInter.IsDone() && !anInter.IsEmpty())
         {
 
@@ -529,7 +529,7 @@ void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve&
 
               gp_Pnt2d     aPInt = aPrevC2d->Value(aTPrevClosest);
               const gp_Pnt aPOnS = aBASurf.Value(aPInt.X(), aPInt.Y());
-              if (aTolV2 > Precision::Infinite() || aPOnS.SquareDistance(aPV) < aTolV2)
+              if (aTolV2 > math::precision::Precision::Infinite() || aPOnS.SquareDistance(aPV) < aTolV2)
               {
                 double f, l;
 
@@ -544,7 +544,7 @@ void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve&
                   l = aTPrevClosest;
                 }
 
-                if (l - f > Precision::PConfusion())
+                if (l - f > math::precision::Precision::PConfusion())
                   aPrevC2d = new Geom2d_TrimmedCurve(aPrevC2d, f, l);
 
                 if (std::abs(fc - aTCurr) < std::abs(lc - aTCurr))
@@ -558,7 +558,7 @@ void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve&
                   l = aTCurrClosest;
                 }
 
-                if (l - f > Precision::PConfusion())
+                if (l - f > math::precision::Precision::PConfusion())
                   aCurrC2d = new Geom2d_TrimmedCurve(aCurrC2d, f, l);
 
                 bAddSegment = false;

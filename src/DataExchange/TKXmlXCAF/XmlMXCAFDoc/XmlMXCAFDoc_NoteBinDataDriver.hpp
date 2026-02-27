@@ -6,7 +6,7 @@ class XmlMXCAFDoc_NoteBinDataDriver : public XmlMXCAFDoc_NoteDriver
 {
 public:
   Standard_EXPORT XmlMXCAFDoc_NoteBinDataDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

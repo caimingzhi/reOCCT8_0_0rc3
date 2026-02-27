@@ -5,10 +5,17 @@
 
 #include <Storage_CallBack.hpp>
 class Standard_Persistent;
+namespace app { namespace storage {
 class Storage_Schema;
-class Storage_BaseDriver;
+}} // namespace app::storage
 
-class Storage_DefaultCallBack : public Storage_CallBack
+namespace app { namespace storage {
+class Storage_BaseDriver;
+}} // namespace app::storage
+
+
+namespace app { namespace storage {
+class Storage_DefaultCallBack : public app::storage::Storage_CallBack
 {
 public:
   Standard_EXPORT Storage_DefaultCallBack();
@@ -28,3 +35,5 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(Storage_DefaultCallBack, Storage_CallBack)
 };
+}} // namespace app::storage
+

@@ -625,7 +625,7 @@ void Graphic3d_Camera::Frustum(gp_Pln& theLeft,
   gp_Vec anUp        = OrthogonalizedUp();
   gp_Vec aSide       = aProjection ^ anUp;
 
-  Standard_ASSERT_RAISE(!aProjection.IsParallel(anUp, Precision::Angular()),
+  Standard_ASSERT_RAISE(!aProjection.IsParallel(anUp, math::precision::Precision::Angular()),
                         "Can not derive SIDE = PROJ x UP - directions are parallel");
 
   theNear = gp_Pln(Eye().Translated(aProjection * ZNear()), aProjection);
@@ -1383,7 +1383,7 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
                                    const double                         theT,
                                    occ::handle<Graphic3d_Camera>&       theCamera)
 {
-  if (std::abs(theT - 1.0) < Precision::Confusion())
+  if (std::abs(theT - 1.0) < math::precision::Precision::Confusion())
   {
 
     theCamera->Copy(theEnd);
@@ -1391,7 +1391,7 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
   }
 
   theCamera->Copy(theStart);
-  if (std::abs(theT - 0.0) < Precision::Confusion())
+  if (std::abs(theT - 0.0) < math::precision::Precision::Confusion())
   {
     return;
   }
@@ -1449,7 +1449,7 @@ void Graphic3d_Camera::Interpolate(const occ::handle<Graphic3d_Camera>& theStart
     theCamera->SetEyeAndCenter(anEye, aCenter);
   }
 
-  if (std::abs(theStart->Scale() - theEnd->Scale()) > Precision::Confusion()
+  if (std::abs(theStart->Scale() - theEnd->Scale()) > math::precision::Precision::Confusion()
       && theStart->IsOrthographic())
   {
     const double aScale =

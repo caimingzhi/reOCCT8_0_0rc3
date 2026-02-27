@@ -143,9 +143,9 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
     BRepTools::UVBounds(FFx, EEx, EUMin, EUMax, EVMin, EVMax);
   }
 
-  bool EisoU = (fabs(EVMax - EVMin) < Precision::Confusion());
+  bool EisoU = (fabs(EVMax - EVMin) < math::precision::Precision::Confusion());
 
-  bool EisoV = (fabs(EUMax - EUMin) < Precision::Confusion());
+  bool EisoV = (fabs(EUMax - EUMin) < math::precision::Precision::Confusion());
 
   double ttu  = 1.e-2;
   double paru = fabs(ttu * (FUMax - FUMin));

@@ -16,7 +16,7 @@ StdStorage_HeaderData::StdStorage_HeaderData()
 {
 }
 
-bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDriver)
+bool StdStorage_HeaderData::Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSRead && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -46,13 +46,13 @@ bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDrive
                         myDataType,
                         myUserInfo);
   }
-  catch (Storage_StreamTypeMismatchError const&)
+  catch (app::storage::Storage_StreamTypeMismatchError const&)
   {
     myErrorStatus    = Storage_VSTypeMismatch;
     myErrorStatusExt = "ReadInfo";
     return false;
   }
-  catch (Storage_StreamExtCharParityError const&)
+  catch (app::storage::Storage_StreamExtCharParityError const&)
   {
     myErrorStatus    = Storage_VSExtCharParityError;
     myErrorStatusExt = "ReadInfo";
@@ -78,13 +78,13 @@ bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDrive
     OCC_CATCH_SIGNALS
     theDriver->ReadComment(myComments);
   }
-  catch (Storage_StreamTypeMismatchError const&)
+  catch (app::storage::Storage_StreamTypeMismatchError const&)
   {
     myErrorStatus    = Storage_VSTypeMismatch;
     myErrorStatusExt = "ReadComment";
     return false;
   }
-  catch (Storage_StreamExtCharParityError const&)
+  catch (app::storage::Storage_StreamExtCharParityError const&)
   {
     myErrorStatus    = Storage_VSExtCharParityError;
     myErrorStatusExt = "ReadComment";
@@ -101,7 +101,7 @@ bool StdStorage_HeaderData::Read(const occ::handle<Storage_BaseDriver>& theDrive
   return true;
 }
 
-bool StdStorage_HeaderData::Write(const occ::handle<Storage_BaseDriver>& theDriver)
+bool StdStorage_HeaderData::Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver)
 {
 
   if (theDriver->OpenMode() != Storage_VSWrite && theDriver->OpenMode() != Storage_VSReadWrite)
@@ -131,13 +131,13 @@ bool StdStorage_HeaderData::Write(const occ::handle<Storage_BaseDriver>& theDriv
                          myDataType,
                          myUserInfo);
   }
-  catch (Storage_StreamTypeMismatchError const&)
+  catch (app::storage::Storage_StreamTypeMismatchError const&)
   {
     myErrorStatus    = Storage_VSTypeMismatch;
     myErrorStatusExt = "WriteInfo";
     return false;
   }
-  catch (Storage_StreamExtCharParityError const&)
+  catch (app::storage::Storage_StreamExtCharParityError const&)
   {
     myErrorStatus    = Storage_VSExtCharParityError;
     myErrorStatusExt = "WriteInfo";
@@ -163,13 +163,13 @@ bool StdStorage_HeaderData::Write(const occ::handle<Storage_BaseDriver>& theDriv
     OCC_CATCH_SIGNALS
     theDriver->WriteComment(myComments);
   }
-  catch (Storage_StreamTypeMismatchError const&)
+  catch (app::storage::Storage_StreamTypeMismatchError const&)
   {
     myErrorStatus    = Storage_VSTypeMismatch;
     myErrorStatusExt = "WriteComment";
     return false;
   }
-  catch (Storage_StreamExtCharParityError const&)
+  catch (app::storage::Storage_StreamExtCharParityError const&)
   {
     myErrorStatus    = Storage_VSExtCharParityError;
     myErrorStatusExt = "WriteComment";

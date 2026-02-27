@@ -51,7 +51,7 @@ public:
 
   Standard_EXPORT bool SetPreviousVersion(const char16_t* aPreviousVersion);
 
-  Standard_EXPORT void Realize(const Message_ProgressRange& theRange = Message_ProgressRange());
+  Standard_EXPORT void Realize(const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT const char16_t* Path() const;
 

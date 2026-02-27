@@ -20,7 +20,7 @@ void LocOpe_CurveShapeIntersector::Init(const gp_Ax1& Axis, const TopoDS_Shape& 
   {
     return;
   }
-  double Tol = Precision::Confusion();
+  double Tol = math::precision::Precision::Confusion();
 
   BRepIntCurveSurface_Inter theInt;
   theInt.Init(S, gp_Lin(Axis), Tol);
@@ -36,7 +36,7 @@ void LocOpe_CurveShapeIntersector::Init(const gp_Circ& C, const TopoDS_Shape& S)
   {
     return;
   }
-  double Tol = Precision::Confusion();
+  double Tol = math::precision::Precision::Confusion();
 
   occ::handle<Geom_Circle> GC = new Geom_Circle(C);
   GeomAdaptor_Curve        AC(GC, 0., 2. * M_PI);
@@ -57,7 +57,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeAfter(const double        From,
   {
     throw StdFail_NotDone();
   }
-  double Eps = Precision::Confusion();
+  double Eps = math::precision::Precision::Confusion();
   double param, FMEPS = From - Eps;
   int    i, ifirst, nbpoints = myPoints.Length();
   for (ifirst = 1; ifirst <= nbpoints; ifirst++)
@@ -119,7 +119,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeBefore(const double        From,
   {
     throw StdFail_NotDone();
   }
-  double Eps = Precision::Confusion();
+  double Eps = math::precision::Precision::Confusion();
   double param, FPEPS = From + Eps;
   int    i, ifirst, nbpoints = myPoints.Length();
   for (ifirst = nbpoints; ifirst >= 1; ifirst--)
@@ -187,7 +187,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeAfter(const int           FromInd,
     return false;
   }
 
-  double Eps = Precision::Confusion();
+  double Eps = math::precision::Precision::Confusion();
   double param, FMEPS;
   int    i, ifirst;
   if (FromInd >= 1)
@@ -263,7 +263,7 @@ bool LocOpe_CurveShapeIntersector::LocalizeBefore(const int           FromInd,
     return false;
   }
 
-  double Eps = Precision::Confusion();
+  double Eps = math::precision::Precision::Confusion();
   double param, FPEPS;
   int    i, ifirst;
   if (FromInd <= nbpoints)

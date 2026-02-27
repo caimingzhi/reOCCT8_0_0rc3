@@ -178,7 +178,7 @@ bool Media_FormatContext::OpenInput(const TCollection_AsciiString& theInput)
   const int avErrCode = avformat_open_input(&myFormatCtx, theInput.ToCString(), nullptr, nullptr);
   if (avErrCode != 0)
   {
-    Message::SendFail(TCollection_AsciiString("FFmpeg: Couldn't open video file '") + theInput
+    System::log::Message::SendFail(TCollection_AsciiString("FFmpeg: Couldn't open video file '") + theInput
                       + "'\nError: " + FormatAVErrorDescription(avErrCode));
     Close();
     return false;
@@ -186,7 +186,7 @@ bool Media_FormatContext::OpenInput(const TCollection_AsciiString& theInput)
 
   if (avformat_find_stream_info(myFormatCtx, nullptr) < 0)
   {
-    Message::SendFail(TCollection_AsciiString("FFmpeg: Couldn't find stream information in '")
+    System::log::Message::SendFail(TCollection_AsciiString("FFmpeg: Couldn't find stream information in '")
                       + theInput + "'");
     Close();
     return false;
@@ -223,7 +223,7 @@ bool Media_FormatContext::OpenInput(const TCollection_AsciiString& theInput)
 
   return true;
 #else
-  Message::SendFail("Error: FFmpeg library is unavailable");
+  System::log::Message::SendFail("Error: FFmpeg library is unavailable");
   (void)theInput;
   return false;
 #endif
@@ -467,7 +467,7 @@ bool Media_FormatContext::SeekStream(unsigned int theStreamId,
     aStream.codecpar->codec_type == AVMEDIA_TYPE_VIDEO
       ? "Video"
       : (aStream.codecpar->codec_type == AVMEDIA_TYPE_AUDIO ? "Audio" : "");
-  Message::SendWarning(
+  System::log::Message::SendWarning(
     TCollection_AsciiString("Error while seeking ") + aStreamType + " stream to " + theSeekPts
     + " sec (" + (theSeekPts + StreamUnitsToSeconds(aStream, aStream.start_time)) + " sec)");
   return false;
@@ -496,7 +496,7 @@ bool Media_FormatContext::Seek(double theSeekPts, bool theToSeekBack)
     myFormatCtx->filename;
   #endif
 
-  Message::SendWarning(TCollection_AsciiString("Disaster! Seeking to ") + theSeekPts + " ["
+  System::log::Message::SendWarning(TCollection_AsciiString("Disaster! Seeking to ") + theSeekPts + " ["
                        + aFileName + "] has failed.");
   return false;
 #else

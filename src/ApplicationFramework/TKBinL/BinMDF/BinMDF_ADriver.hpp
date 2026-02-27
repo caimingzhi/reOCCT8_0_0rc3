@@ -5,7 +5,10 @@
 #include <Standard_Transient.hpp>
 #include <BinObjMgt_RRelocationTable.hpp>
 #include <NCollection_IndexedMap.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
@@ -28,17 +31,17 @@ public:
     BinObjMgt_Persistent&                                    aTarget,
     NCollection_IndexedMap<occ::handle<Standard_Transient>>& aRelocTable) const = 0;
 
-  const occ::handle<Message_Messenger>& MessageDriver() const { return myMessageDriver; }
+  const occ::handle<System::log::Message_Messenger>& MessageDriver() const { return myMessageDriver; }
 
   DEFINE_STANDARD_RTTIEXT(BinMDF_ADriver, Standard_Transient)
 
 protected:
-  Standard_EXPORT BinMDF_ADriver(const occ::handle<Message_Messenger>& theMsgDriver,
+  Standard_EXPORT BinMDF_ADriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver,
                                  const char*                           theName = nullptr);
 
   TCollection_AsciiString myTypeName;
 
-  occ::handle<Message_Messenger> myMessageDriver;
+  occ::handle<System::log::Message_Messenger> myMessageDriver;
 };
 
 #include <TDF_Attribute.hpp>

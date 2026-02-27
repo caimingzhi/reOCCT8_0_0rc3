@@ -319,7 +319,7 @@ bool TopOpeBRepBuild_PaveSet::HasEqualParameters()
         std::cout << "VertexSet : p1,p2  d " << p1 << "," << p2 << "  " << d << std::endl;
       }
 #endif
-      if (d < Precision::PConfusion())
+      if (d < math::precision::Precision::PConfusion())
       {
         myHasEqualParameters = true;
         myEqualParameters    = p1;
@@ -352,7 +352,7 @@ bool TopOpeBRepBuild_PaveSet::HasEqualParameters()
 #endif
         p1       = it1.Value()->Parameter();
         double d = std::abs(p1 - f);
-        if (d < Precision::PConfusion())
+        if (d < math::precision::Precision::PConfusion())
         {
           myHasEqualParameters = true;
           myEqualParameters    = f;

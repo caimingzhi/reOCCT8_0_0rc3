@@ -7,9 +7,12 @@
 class Standard_Transient;
 class Standard_GUID;
 
+namespace System { namespace plugin {
 class Plugin
 {
 public:
   Standard_EXPORT static occ::handle<Standard_Transient> Load(const Standard_GUID& aGUID,
                                                               const bool theVerbose = true);
 };
+}} // namespace System::plugin
+

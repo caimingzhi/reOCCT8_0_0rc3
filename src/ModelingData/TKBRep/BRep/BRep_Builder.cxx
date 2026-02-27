@@ -77,7 +77,7 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(lcr);
   occ::handle<BRep_CurveRepresentation>                             cr;
   occ::handle<BRep_GCurve>                                          GC;
-  double f = -Precision::Infinite(), l = Precision::Infinite();
+  double f = -math::precision::Precision::Infinite(), l = math::precision::Precision::Infinite();
 
   while (itcr.More())
   {
@@ -111,12 +111,12 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
     occ::handle<BRep_CurveOnSurface> COS   = new BRep_CurveOnSurface(C, S, L);
     double                           aFCur = 0.0, aLCur = 0.0;
     COS->Range(aFCur, aLCur);
-    if (!Precision::IsInfinite(f))
+    if (!math::precision::Precision::IsInfinite(f))
     {
       aFCur = f;
     }
 
-    if (!Precision::IsInfinite(l))
+    if (!math::precision::Precision::IsInfinite(l))
     {
       aLCur = l;
     }
@@ -136,7 +136,7 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(lcr);
   occ::handle<BRep_CurveRepresentation>                             cr;
   occ::handle<BRep_GCurve>                                          GC;
-  double f = -Precision::Infinite(), l = Precision::Infinite();
+  double f = -math::precision::Precision::Infinite(), l = math::precision::Precision::Infinite();
 
   while (itcr.More())
   {
@@ -170,12 +170,12 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
     occ::handle<BRep_CurveOnSurface> COS   = new BRep_CurveOnSurface(C, S, L);
     double                           aFCur = 0.0, aLCur = 0.0;
     COS->Range(aFCur, aLCur);
-    if (!Precision::IsInfinite(f))
+    if (!math::precision::Precision::IsInfinite(f))
     {
       aFCur = f;
     }
 
-    if (!Precision::IsInfinite(l))
+    if (!math::precision::Precision::IsInfinite(l))
     {
       aLCur = l;
     }
@@ -195,7 +195,7 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(lcr);
   occ::handle<BRep_CurveRepresentation>                             cr;
   occ::handle<BRep_GCurve>                                          GC;
-  double f = -Precision::Infinite(), l = Precision::Infinite();
+  double f = -math::precision::Precision::Infinite(), l = math::precision::Precision::Infinite();
 
   while (itcr.More())
   {
@@ -226,12 +226,12 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
       new BRep_CurveOnClosedSurface(C1, C2, S, L, GeomAbs_C0);
     double aFCur = 0.0, aLCur = 0.0;
     COS->Range(aFCur, aLCur);
-    if (!Precision::IsInfinite(f))
+    if (!math::precision::Precision::IsInfinite(f))
     {
       aFCur = f;
     }
 
-    if (!Precision::IsInfinite(l))
+    if (!math::precision::Precision::IsInfinite(l))
     {
       aLCur = l;
     }
@@ -252,7 +252,7 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(lcr);
   occ::handle<BRep_CurveRepresentation>                             cr;
   occ::handle<BRep_GCurve>                                          GC;
-  double f = -Precision::Infinite(), l = Precision::Infinite();
+  double f = -math::precision::Precision::Infinite(), l = math::precision::Precision::Infinite();
 
   while (itcr.More())
   {
@@ -283,12 +283,12 @@ static void UpdateCurves(NCollection_List<occ::handle<BRep_CurveRepresentation>>
       new BRep_CurveOnClosedSurface(C1, C2, S, L, GeomAbs_C0);
     double aFCur = 0.0, aLCur = 0.0;
     COS->Range(aFCur, aLCur);
-    if (!Precision::IsInfinite(f))
+    if (!math::precision::Precision::IsInfinite(f))
     {
       aFCur = f;
     }
 
-    if (!Precision::IsInfinite(l))
+    if (!math::precision::Precision::IsInfinite(l))
     {
       aLCur = l;
     }
@@ -1047,7 +1047,7 @@ void BRep_Builder::UpdateVertex(const TopoDS_Vertex& V,
                                 const TopoDS_Edge&   E,
                                 const double         Tol) const
 {
-  if (Precision::IsPositiveInfinite(Par) || Precision::IsNegativeInfinite(Par))
+  if (math::precision::Precision::IsPositiveInfinite(Par) || math::precision::Precision::IsNegativeInfinite(Par))
     throw Standard_DomainError("BRep_Builder::Infinite parameter");
 
   const occ::handle<BRep_TVertex>& TV = *((occ::handle<BRep_TVertex>*)&V.TShape());
@@ -1126,7 +1126,7 @@ void BRep_Builder::UpdateVertex(const TopoDS_Vertex&             V,
                                 const TopLoc_Location&           L,
                                 const double                     Tol) const
 {
-  if (Precision::IsPositiveInfinite(Par) || Precision::IsNegativeInfinite(Par))
+  if (math::precision::Precision::IsPositiveInfinite(Par) || math::precision::Precision::IsNegativeInfinite(Par))
     throw Standard_DomainError("BRep_Builder::Infinite parameter");
 
   TopLoc_Location l = L.Predivided(V.Location());

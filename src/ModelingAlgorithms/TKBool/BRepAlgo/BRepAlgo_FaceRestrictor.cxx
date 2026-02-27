@@ -50,7 +50,7 @@ static bool ChangePCurve(TopoDS_Edge& E, const occ::handle<Geom_Surface>& S, Top
 
   BRep_Tool::CurveOnSurface(E, C2, SE, LE, f, l, 1);
   if (!C2.IsNull())
-    BB.UpdateEdge(E, C2, S, L, Precision::Confusion());
+    BB.UpdateEdge(E, C2, S, L, math::precision::Precision::Confusion());
   return (C2.IsNull());
 }
 
@@ -70,7 +70,7 @@ static bool ProjCurve3d(TopoDS_Edge& E, const occ::handle<Geom_Surface>& S, TopL
   CT->Transform(LL.Transformation());
 
   occ::handle<Geom2d_Curve> C2 = GeomProjLib::Curve2d(CT, S);
-  BB.UpdateEdge(E, C2, S, L, Precision::Confusion());
+  BB.UpdateEdge(E, C2, S, L, math::precision::Precision::Confusion());
   return true;
 }
 
@@ -180,17 +180,17 @@ static bool IsInside(const TopoDS_Wire& wir, const TopoDS_Face& F, BRepTopAdapto
     occ::handle<Geom2d_Curve> C2d = BRep_Tool::CurveOnSurface(edg, F, f, l);
     double                    prm;
 
-    if (!Precision::IsNegativeInfinite(f) && !Precision::IsPositiveInfinite(l))
+    if (!math::precision::Precision::IsNegativeInfinite(f) && !math::precision::Precision::IsPositiveInfinite(l))
     {
       prm = (f + l) / 2.;
     }
     else
     {
-      if (Precision::IsNegativeInfinite(f) && Precision::IsPositiveInfinite(l))
+      if (math::precision::Precision::IsNegativeInfinite(f) && math::precision::Precision::IsPositiveInfinite(l))
       {
         prm = 0.;
       }
-      else if (Precision::IsNegativeInfinite(f))
+      else if (math::precision::Precision::IsNegativeInfinite(f))
       {
         prm = l - 1.;
       }
@@ -201,7 +201,7 @@ static bool IsInside(const TopoDS_Wire& wir, const TopoDS_Face& F, BRepTopAdapto
     }
 
     gp_Pnt2d                pt2d(C2d->Value(prm));
-    BRepTopAdaptor_FClass2d FClass2d(F, Precision::PConfusion());
+    BRepTopAdaptor_FClass2d FClass2d(F, math::precision::Precision::PConfusion());
     TopAbs_State            st2 = FClass2d.Perform(pt2d, false);
     return (st2 == TopAbs_IN);
   }
@@ -319,7 +319,7 @@ void BRepAlgo_FaceRestrictor::PerformWithCorrection()
 
     if (IsClosed(W))
     {
-      BRepTopAdaptor_FClass2d FClass2d(NF, Precision::PConfusion());
+      BRepTopAdaptor_FClass2d FClass2d(NF, math::precision::Precision::PConfusion());
       if (FClass2d.PerformInfinitePoint() != TopAbs_OUT)
       {
         W.Reverse();
@@ -340,7 +340,7 @@ void BRepAlgo_FaceRestrictor::PerformWithCorrection()
       NF.Orientation(TopAbs_FORWARD);
       B.Add(NF, W1);
 
-      BRepTopAdaptor_FClass2d FClass2d(NF, Precision::PConfusion());
+      BRepTopAdaptor_FClass2d FClass2d(NF, math::precision::Precision::PConfusion());
       while (it2.More())
       {
         const TopoDS_Wire& W2 = TopoDS::Wire(it2.Value());

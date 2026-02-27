@@ -54,8 +54,8 @@ public:
                                        const double                   theFirst,
                                        const double                   theLast,
                                        occ::handle<Geom2d_Curve>&     theC2D,
-                                       const double theTolFirst = Precision::Confusion(),
-                                       const double theTolLast  = Precision::Confusion());
+                                       const double theTolFirst = math::precision::Precision::Confusion(),
+                                       const double theTolLast  = math::precision::Precision::Confusion());
 
   DEFINE_STANDARD_RTTIEXT(ShapeConstruct_ProjectCurveOnSurface, Standard_Transient)
 

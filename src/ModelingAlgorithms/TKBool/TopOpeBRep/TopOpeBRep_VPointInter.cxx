@@ -201,7 +201,7 @@ bool TopOpeBRep_VPointInter::EqualpP(const TopOpeBRep_VPointInter& VP) const
 {
   double p1     = ParameterOnLine();
   double p2     = VP.ParameterOnLine();
-  bool   pequal = fabs(p1 - p2) < Precision::PConfusion();
+  bool   pequal = fabs(p1 - p2) < math::precision::Precision::PConfusion();
   gp_Pnt P1     = Value();
   gp_Pnt P2     = VP.Value();
   double Ptol1 = Tolerance(), Ptol2 = VP.Tolerance();

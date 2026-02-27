@@ -25,8 +25,8 @@ void IGESSolid_ToolFace::ReadOwnParams(const occ::handle<IGESSolid_Face>&       
                                        IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg197("XSTEP_197");
-  Message_Msg Msg198("XSTEP_198");
+  System::log::Message_Msg Msg197("XSTEP_197");
+  System::log::Message_Msg Msg198("XSTEP_198");
 
   bool                                                          outerLoopFlag;
   occ::handle<IGESData_IGESEntity>                              anent;
@@ -38,19 +38,19 @@ void IGESSolid_ToolFace::ReadOwnParams(const occ::handle<IGESSolid_Face>&       
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, tempSurface))
   {
-    Message_Msg Msg196("XSTEP_196");
+    System::log::Message_Msg Msg196("XSTEP_196");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg196.Arg(Msg216.Value());
         PR.SendFail(Msg196);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg196.Arg(Msg217.Value());
         PR.SendFail(Msg196);
         break;
@@ -82,26 +82,26 @@ void IGESSolid_ToolFace::ReadOwnParams(const occ::handle<IGESSolid_Face>&       
         tempLoops->SetValue(i, aloop);
       else
       {
-        Message_Msg Msg199("XSTEP_199");
+        System::log::Message_Msg Msg199("XSTEP_199");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg199.Arg(Msg216.Value());
             PR.SendFail(Msg199);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg199.Arg(Msg217.Value());
             PR.SendFail(Msg199);
             break;
           }
           case IGESData_TypeError:
           {
-            Message_Msg Msg218("IGES_218");
+            System::log::Message_Msg Msg218("IGES_218");
             Msg199.Arg(Msg218.Value());
             PR.SendFail(Msg199);
             break;
@@ -176,7 +176,7 @@ void IGESSolid_ToolFace::OwnCheck(const occ::handle<IGESSolid_Face>& ent,
 
   if (ent->NbLoops() <= 0)
   {
-    Message_Msg Msg197("XSTEP_197");
+    System::log::Message_Msg Msg197("XSTEP_197");
     ach->SendFail(Msg197);
   }
 }

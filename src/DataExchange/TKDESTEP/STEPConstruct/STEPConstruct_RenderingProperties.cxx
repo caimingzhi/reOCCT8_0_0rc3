@@ -450,16 +450,16 @@ void STEPConstruct_RenderingProperties::Init(const XCAFDoc_VisMaterialCommon& th
 
   const double aDiffMax = std::max(aDiffRed, std::max(aDiffGreen, aDiffBlue));
 
-  if (aDiffMax > Precision::Confusion())
+  if (aDiffMax > math::precision::Precision::Confusion())
   {
 
     double aAmbRed   = theMaterial.AmbientColor.Red();
     double aAmbGreen = theMaterial.AmbientColor.Green();
     double aAmbBlue  = theMaterial.AmbientColor.Blue();
 
-    const double aRed   = (aDiffRed > Precision::Confusion()) ? aAmbRed / aDiffRed : 0.0;
-    const double aGreen = (aDiffGreen > Precision::Confusion()) ? aAmbGreen / aDiffGreen : 0.0;
-    const double aBlue  = (aDiffBlue > Precision::Confusion()) ? aAmbBlue / aDiffBlue : 0.0;
+    const double aRed   = (aDiffRed > math::precision::Precision::Confusion()) ? aAmbRed / aDiffRed : 0.0;
+    const double aGreen = (aDiffGreen > math::precision::Precision::Confusion()) ? aAmbGreen / aDiffGreen : 0.0;
+    const double aBlue  = (aDiffBlue > math::precision::Precision::Confusion()) ? aAmbBlue / aDiffBlue : 0.0;
 
     const double aMin = std::min(aRed, std::min(aGreen, aBlue));
     const double aMax = std::max(aRed, std::max(aGreen, aBlue));
@@ -484,16 +484,16 @@ void STEPConstruct_RenderingProperties::Init(const XCAFDoc_VisMaterialCommon& th
   myDiffuseReflectance.first  = 1.0;
   myDiffuseReflectance.second = true;
 
-  if (aDiffMax > Precision::Confusion())
+  if (aDiffMax > math::precision::Precision::Confusion())
   {
 
     const double aSpecRed   = theMaterial.SpecularColor.Red();
     const double aSpecGreen = theMaterial.SpecularColor.Green();
     const double aSpecBlue  = theMaterial.SpecularColor.Blue();
 
-    const double aRed   = (aDiffRed > Precision::Confusion()) ? aSpecRed / aDiffRed : 0.0;
-    const double aGreen = (aDiffGreen > Precision::Confusion()) ? aSpecGreen / aDiffGreen : 0.0;
-    const double aBlue  = (aDiffBlue > Precision::Confusion()) ? aSpecBlue / aDiffBlue : 0.0;
+    const double aRed   = (aDiffRed > math::precision::Precision::Confusion()) ? aSpecRed / aDiffRed : 0.0;
+    const double aGreen = (aDiffGreen > math::precision::Precision::Confusion()) ? aSpecGreen / aDiffGreen : 0.0;
+    const double aBlue  = (aDiffBlue > math::precision::Precision::Confusion()) ? aSpecBlue / aDiffBlue : 0.0;
 
     const double aMin = std::min(aRed, std::min(aGreen, aBlue));
     const double aMax = std::max(aRed, std::max(aGreen, aBlue));

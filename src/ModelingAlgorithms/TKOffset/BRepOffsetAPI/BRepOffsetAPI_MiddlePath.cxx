@@ -118,7 +118,7 @@ static bool IsValidEdge(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace)
   TopoDS_Vertex V1, V2;
   TopExp::Vertices(theEdge, V1, V2);
 
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
   int              i;
 
   TopExp_Explorer Explo(theFace, TopAbs_EDGE);
@@ -206,7 +206,7 @@ BRepOffsetAPI_MiddlePath::BRepOffsetAPI_MiddlePath(const TopoDS_Shape& aShape,
   myClosedRing    = myStartWire.IsSame(myEndWire);
 }
 
-void BRepOffsetAPI_MiddlePath::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_MiddlePath::Build(const System::log::Message_ProgressRange&)
 {
   NCollection_List<TopoDS_Shape>::Iterator itl;
 

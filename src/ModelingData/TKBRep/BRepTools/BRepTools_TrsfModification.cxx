@@ -176,7 +176,7 @@ bool BRepTools_TrsfModification::NewPolygon(const TopoDS_Edge&           theE,
     if (!aCurve.IsNull())
     {
       double aReparametrization = aCurve->ParametricTransformation(aTrsf);
-      if (std::abs(aReparametrization - 1.0) > Precision::PConfusion())
+      if (std::abs(aReparametrization - 1.0) > math::precision::Precision::PConfusion())
       {
         NCollection_Array1<double>& aParams = theP->ChangeParameters();
         for (int anInd = aParams.Lower(); anInd <= aParams.Upper(); ++anInd)
@@ -314,17 +314,17 @@ bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
 
   if (!NewC->IsPeriodic())
   {
-    if (fc - f > Precision::PConfusion())
+    if (fc - f > math::precision::Precision::PConfusion())
       f = fc;
-    if (l - lc > Precision::PConfusion())
+    if (l - lc > math::precision::Precision::PConfusion())
       l = lc;
-    if (std::abs(l - f) < Precision::PConfusion())
+    if (std::abs(l - f) < math::precision::Precision::PConfusion())
     {
-      if (std::abs(f - fc) < Precision::PConfusion() && !Precision::IsInfinite(lc))
+      if (std::abs(f - fc) < math::precision::Precision::PConfusion() && !math::precision::Precision::IsInfinite(lc))
       {
         l = lc;
       }
-      else if (!Precision::IsInfinite(fc))
+      else if (!math::precision::Precision::IsInfinite(fc))
       {
         f = fc;
       }
@@ -358,7 +358,7 @@ bool BRepTools_TrsfModification::NewCurve2d(const TopoDS_Edge& E,
   double       aTolV;
   NewParameter(V1, EFOR, f, aTolV);
   NewParameter(V2, EFOR, l, aTolV);
-  GeomLib::SameRange(Precision::PConfusion(), NewC, newf, newl, f, l, C);
+  GeomLib::SameRange(math::precision::Precision::PConfusion(), NewC, newf, newl, f, l, C);
 
   return true;
 }

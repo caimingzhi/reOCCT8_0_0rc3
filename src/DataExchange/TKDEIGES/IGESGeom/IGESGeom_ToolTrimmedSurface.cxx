@@ -30,19 +30,19 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aSurface))
   {
-    Message_Msg Msg169("XSTEP_169");
+    System::log::Message_Msg Msg169("XSTEP_169");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg169.Arg(Msg216.Value());
         PR.SendFail(Msg169);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg169.Arg(Msg217.Value());
         PR.SendFail(Msg169);
         break;
@@ -54,7 +54,7 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
   }
   if (!PR.ReadInteger(PR.Current(), aFlag))
   {
-    Message_Msg Msg170("XSTEP_170");
+    System::log::Message_Msg Msg170("XSTEP_170");
     PR.SendFail(Msg170);
   }
 
@@ -62,7 +62,7 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
   {
     if (count < 0)
     {
-      Message_Msg Msg171("XSTEP_171");
+      System::log::Message_Msg Msg171("XSTEP_171");
       PR.SendFail(Msg171);
     }
     else if (count > 0)
@@ -70,7 +70,7 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
   }
   else
   {
-    Message_Msg Msg171("XSTEP_171");
+    System::log::Message_Msg Msg171("XSTEP_171");
     PR.SendFail(Msg171);
   }
 
@@ -81,26 +81,26 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
                      anOuter,
                      true))
   {
-    Message_Msg Msg172("XSTEP_172");
+    System::log::Message_Msg Msg172("XSTEP_172");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg172.Arg(Msg216.Value());
         PR.SendFail(Msg172);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg172.Arg(Msg217.Value());
         PR.SendFail(Msg172);
         break;
       }
       case IGESData_TypeError:
       {
-        Message_Msg Msg218("IGES_218");
+        System::log::Message_Msg Msg218("IGES_218");
         Msg172.Arg(Msg218.Value());
         PR.SendFail(Msg172);
         break;
@@ -122,26 +122,26 @@ void IGESGeom_ToolTrimmedSurface::ReadOwnParams(const occ::handle<IGESGeom_Trimm
         anInner->SetValue(I, tempEnt);
       else
       {
-        Message_Msg Msg173("XSTEP_173");
+        System::log::Message_Msg Msg173("XSTEP_173");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg173.Arg(Msg216.Value());
             PR.SendFail(Msg173);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg173.Arg(Msg217.Value());
             PR.SendFail(Msg173);
             break;
           }
           case IGESData_TypeError:
           {
-            Message_Msg Msg218("IGES_218");
+            System::log::Message_Msg Msg218("IGES_218");
             Msg173.Arg(Msg218.Value());
             PR.SendFail(Msg173);
             break;
@@ -232,7 +232,7 @@ void IGESGeom_ToolTrimmedSurface::OwnCheck(const occ::handle<IGESGeom_TrimmedSur
 
   if (ent->OuterBoundaryType() != 0 && ent->OuterBoundaryType() != 1)
   {
-    Message_Msg Msg172("XSTEP_172");
+    System::log::Message_Msg Msg172("XSTEP_172");
     ach->SendFail(Msg172);
   }
 }

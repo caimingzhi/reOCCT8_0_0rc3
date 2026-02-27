@@ -16,7 +16,7 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
   {
     thePluginName += "DrawPlugin";
 #ifdef OCCT_DEBUG
-    std::cout << "Plugin file name has not been specified. Defaults to "
+    std::cout << "System::plugin::Plugin file name has not been specified. Defaults to "
               << thePluginName.ToCString() << std::endl;
 #endif
   }
@@ -25,10 +25,10 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
 
   const TCollection_AsciiString aCSFVariable =
     TCollection_AsciiString("CSF_") + thePluginName + "Defaults";
-  thePluginDir = OSD_Environment(aCSFVariable).Value();
+  thePluginDir = System::os::OSD_Environment(aCSFVariable).Value();
   if (thePluginDir.IsEmpty())
   {
-    thePluginDir = OSD_Environment("DRAWHOME").Value();
+    thePluginDir = System::os::OSD_Environment("DRAWHOME").Value();
     if (!thePluginDir.IsEmpty())
     {
       aToSetCSFVariable = true;
@@ -36,7 +36,7 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
     else
     {
 
-      thePluginDir = OSD_Environment("CSF_OCCTResourcePath").Value();
+      thePluginDir = System::os::OSD_Environment("CSF_OCCTResourcePath").Value();
       if (!thePluginDir.IsEmpty())
       {
         thePluginDir += "/DrawResources";
@@ -44,7 +44,7 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
       }
       else
       {
-        Message::SendFail() << "Failed to load plugin: Neither " << aCSFVariable
+        System::log::Message::SendFail() << "Failed to load plugin: Neither " << aCSFVariable
                             << ", nor CSF_OCCTResourcePath variables have been set";
         return false;
       }
@@ -52,16 +52,16 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
   }
 
   const TCollection_AsciiString aPluginFileName = thePluginDir + "/" + thePluginName;
-  OSD_File                      aPluginFile(aPluginFileName);
+  System::os::OSD_File                      aPluginFile(aPluginFileName);
   if (!aPluginFile.Exists())
   {
-    Message::SendFail() << "Failed to load plugin: File " << aPluginFileName << " not found";
+    System::log::Message::SendFail() << "Failed to load plugin: File " << aPluginFileName << " not found";
     return false;
   }
 
   if (aToSetCSFVariable)
   {
-    OSD_Environment aCSFVarEnv(aCSFVariable, thePluginDir);
+    System::os::OSD_Environment aCSFVarEnv(aCSFVariable, thePluginDir);
     aCSFVarEnv.Build();
 #ifdef OCCT_DEBUG
     std::cout << "Variable " << aCSFVariable << " has not been explicitly defined. Set to "
@@ -69,7 +69,7 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
 #endif
     if (aCSFVarEnv.Failed())
     {
-      Message::SendFail() << "Failed to load plugin: Failed to initialize " << aCSFVariable
+      System::log::Message::SendFail() << "Failed to load plugin: Failed to initialize " << aCSFVariable
                           << " with " << thePluginDir;
       return false;
     }
@@ -79,7 +79,7 @@ static bool findPluginFile(TCollection_AsciiString& thePluginName,
 }
 
 static void resolveKeys(NCollection_IndexedMap<TCollection_AsciiString>& theMap,
-                        const occ::handle<Resource_Manager>&             theResMgr)
+                        const occ::handle<System::resource::Resource_Manager>&             theResMgr)
 {
   if (theResMgr.IsNull())
   {
@@ -120,7 +120,7 @@ static void resolveKeys(NCollection_IndexedMap<TCollection_AsciiString>& theMap,
     }
     else
     {
-      Message::SendFail() << "Pload : Resource = " << aResource << " is not found";
+      System::log::Message::SendFail() << "Pload : Resource = " << aResource << " is not found";
     }
 
     if (!aMap2.IsEmpty())
@@ -165,8 +165,8 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
     return 1;
   }
 
-  occ::handle<Resource_Manager> aResMgr =
-    new Resource_Manager(aPluginFileName.ToCString(), aPluginDir, aPluginDir2, false);
+  occ::handle<System::resource::Resource_Manager> aResMgr =
+    new System::resource::Resource_Manager(aPluginFileName.ToCString(), aPluginDir, aPluginDir2, false);
   resolveKeys(aMap, aResMgr);
 
   const int aMapExtent = aMap.Extent();
@@ -179,7 +179,7 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
     TCollection_AsciiString aValue;
     if (!aResMgr->Find(aResource, aValue))
     {
-      Message::SendWarning() << "Pload : Resource = " << aResource << " is not found";
+      System::log::Message::SendWarning() << "Pload : Resource = " << aResource << " is not found";
       continue;
     }
 
@@ -189,11 +189,11 @@ static int Pload(Draw_Interpretor& theDI, int theNbArgs, const char** theArgVec)
 
     Draw::Load(theDI, aResource, aPluginFileName, aPluginDir, aPluginDir2, false);
 
-    const TCollection_AsciiString aTclScriptDir = OSD_Environment("CSF_DrawPluginTclDir").Value();
+    const TCollection_AsciiString aTclScriptDir = System::os::OSD_Environment("CSF_DrawPluginTclDir").Value();
     const TCollection_AsciiString aTclScriptFileName = aTclScriptDir + "/" + aValue + ".tcl";
     const TCollection_AsciiString aTclScriptFileNameDefaults = aPluginDir + "/" + aValue + ".tcl";
-    OSD_File                      aTclScriptFile(aTclScriptFileName);
-    OSD_File                      aTclScriptFileDefaults(aTclScriptFileNameDefaults);
+    System::os::OSD_File                      aTclScriptFile(aTclScriptFileName);
+    System::os::OSD_File                      aTclScriptFileDefaults(aTclScriptFileNameDefaults);
     if (!aTclScriptDir.IsEmpty() && aTclScriptFile.Exists())
     {
 #ifdef OCCT_DEBUG
@@ -216,11 +216,11 @@ static int dtryload(Draw_Interpretor& di, int n, const char** argv)
 {
   if (n != 2)
   {
-    Message::SendFail() << "Error: specify path to library to be loaded";
+    System::log::Message::SendFail() << "Error: specify path to library to be loaded";
     return 1;
   }
 
-  OSD_SharedLibrary aLib(argv[1]);
+  System::os::OSD_SharedLibrary aLib(argv[1]);
   if (aLib.DlOpen(OSD_RTLD_NOW))
   {
     di << "Loading " << argv[1] << " successful";
@@ -240,7 +240,7 @@ void Draw::PloadCommands(Draw_Interpretor& theCommands)
     return;
   Done = true;
 
-  const char* g = "Draw Plugin";
+  const char* g = "Draw System::plugin::Plugin";
 
   theCommands.Add("pload",
                   "pload [-PluginFilename] [[Key1] [Key2] ...]: Loads Draw plugins ",

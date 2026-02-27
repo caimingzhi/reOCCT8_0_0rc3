@@ -375,12 +375,12 @@ namespace IntCurveSurface_InterUtils
     occ::handle<Adaptor3d_Curve> aBasisCurve = SurfaceTool::BasisCurve(surface);
     gp_Ax1                       aRevAx      = SurfaceTool::AxeOfRevolution(surface);
     gp_Vec                       aXVec       = aRevAx.Direction();
-    constexpr double             aTolAng     = Precision::Angular();
+    constexpr double             aTolAng     = math::precision::Precision::Angular();
 
     gp_Pnt O  = aRevAx.Location();
     double aU = 0.;
     gp_Pnt P  = aBasisCurve->Value(aU);
-    while (O.SquareDistance(P) <= Precision::PConfusion()
+    while (O.SquareDistance(P) <= math::precision::Precision::PConfusion()
            || aXVec.IsParallel(gp_Vec(O, P), aTolAng))
     {
       aU += 1.;
@@ -415,7 +415,7 @@ namespace IntCurveSurface_InterUtils
     if (aXVec.IsParallel(Line.Direction(), aTolAng))
     {
       P = Line.Location();
-      while (O.SquareDistance(P) <= Precision::PConfusion())
+      while (O.SquareDistance(P) <= math::precision::Precision::PConfusion())
       {
         aU += 1.;
         P = gp_Pnt(aU, aU + 1, aU + 2);
@@ -1203,7 +1203,7 @@ namespace IntCurveSurface_InterUtils
     if (NbStartPoints == 0)
       return;
 
-    double ptol = 10 * Precision::PConfusion();
+    double ptol = 10 * math::precision::Precision::PConfusion();
 
     bool Triok;
     do
@@ -1285,7 +1285,7 @@ namespace IntCurveSurface_InterUtils
     if (NbStartPoints == 0)
       return;
 
-    double ptol = 10 * Precision::PConfusion();
+    double ptol = 10 * math::precision::Precision::PConfusion();
     double su = 0, sv = 0, sw = 0;
 
     for (int i = 0; i < NbStartPoints; i++)
@@ -1938,7 +1938,7 @@ namespace IntCurveSurface_InterImpl
       }
       case GeomAbs_Cone:
       {
-        constexpr double correction = 1.E+5 * Precision::Angular();
+        constexpr double correction = 1.E+5 * math::precision::Precision::Angular();
         gp_Cone          cn         = SurfaceTool::Cone(theSurface);
         if (std::abs(cn.SemiAngle()) < M_PI / 2.0 - correction)
         {
@@ -1958,10 +1958,10 @@ namespace IntCurveSurface_InterImpl
       int nbsu = SurfaceTool::NbSamplesU(theSurface, theU1, theU2);
       int nbsv = SurfaceTool::NbSamplesV(theSurface, theV1, theV2);
 
-      bool U1inf = Precision::IsInfinite(theU1);
-      bool U2inf = Precision::IsInfinite(theU2);
-      bool V1inf = Precision::IsInfinite(theV1);
-      bool V2inf = Precision::IsInfinite(theV2);
+      bool U1inf = math::precision::Precision::IsInfinite(theU1);
+      bool U2inf = math::precision::Precision::IsInfinite(theU2);
+      bool V1inf = math::precision::Precision::IsInfinite(theV1);
+      bool V2inf = math::precision::Precision::IsInfinite(theV2);
 
       double U1new = theU1, U2new = theU2, V1new = theV1, V2new = theV2;
       bool   NoIntersection = false;

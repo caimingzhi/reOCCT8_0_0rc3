@@ -73,7 +73,7 @@ public:
     {
       throw Standard_NullObject();
     }
-    if (theUFirst > theULast + Precision::Confusion())
+    if (theUFirst > theULast + math::precision::Precision::Confusion())
     {
       throw Standard_ConstructionError();
     }

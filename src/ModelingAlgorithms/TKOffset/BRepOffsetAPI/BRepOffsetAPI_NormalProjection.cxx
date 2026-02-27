@@ -42,7 +42,7 @@ void BRepOffsetAPI_NormalProjection::Compute3d(const bool With3d)
   myNormalProjector.Compute3d(With3d);
 }
 
-void BRepOffsetAPI_NormalProjection::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_NormalProjection::Build(const System::log::Message_ProgressRange&)
 {
   myNormalProjector.Build();
   myShape = myNormalProjector.Projection();

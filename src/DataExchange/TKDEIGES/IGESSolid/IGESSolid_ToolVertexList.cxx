@@ -32,7 +32,7 @@ void IGESSolid_ToolVertexList::ReadOwnParams(const occ::handle<IGESSolid_VertexL
   if (sb && (nbitems > 0))
   {
 
-    Message_Msg Msg183("XSTEP_183");
+    System::log::Message_Msg Msg183("XSTEP_183");
 
     tempVertices = new NCollection_HArray1<gp_XYZ>(1, nbitems);
 
@@ -46,7 +46,7 @@ void IGESSolid_ToolVertexList::ReadOwnParams(const occ::handle<IGESSolid_VertexL
   }
   else
   {
-    Message_Msg Msg182("XSTEP_182");
+    System::log::Message_Msg Msg182("XSTEP_182");
     PR.SendFail(Msg182);
   }
 
@@ -114,7 +114,7 @@ void IGESSolid_ToolVertexList::OwnCheck(const occ::handle<IGESSolid_VertexList>&
 
   if (ent->NbVertices() <= 0)
   {
-    Message_Msg Msg182("XSTEP_182");
+    System::log::Message_Msg Msg182("XSTEP_182");
     ach->SendFail(Msg182);
   }
 }

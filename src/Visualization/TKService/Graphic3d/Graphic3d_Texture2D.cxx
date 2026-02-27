@@ -109,6 +109,6 @@ TCollection_AsciiString Graphic3d_Texture2D::TextureName(const int theRank)
 void Graphic3d_Texture2D::SetImage(const occ::handle<Image_PixMap>& thePixMap)
 {
   myPixMap = thePixMap;
-  myPath   = OSD_Path();
+  myPath   = System::os::OSD_Path();
   myName   = Graphic3d_NOT_2D_UNKNOWN;
 }

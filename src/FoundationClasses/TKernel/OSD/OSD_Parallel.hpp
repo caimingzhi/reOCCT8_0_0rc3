@@ -4,6 +4,7 @@
 #include <Standard_Type.hpp>
 #include <memory>
 
+namespace System { namespace os {
 class OSD_Parallel
 {
 private:
@@ -257,3 +258,5 @@ public:
     }
   }
 };
+}} // namespace System::os
+

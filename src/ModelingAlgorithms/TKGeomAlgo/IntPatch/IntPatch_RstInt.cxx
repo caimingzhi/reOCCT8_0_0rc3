@@ -81,7 +81,7 @@ static void Recadre(GeomAbs_SurfaceType                typeS1,
   }
 }
 
-const double Confusion = Precision::Confusion();
+const double Confusion = math::precision::Precision::Confusion();
 
 inline double Tol3d(const occ::handle<Adaptor3d_HVertex>&   vtx,
                     const occ::handle<Adaptor3d_TopolTool>& Domain,
@@ -385,9 +385,9 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
 
   occ::handle<IntPatch_WLine> wlin(occ::down_cast<IntPatch_WLine>(L));
   int                         Nbvtx   = 0;
-  double                      tolPLin = Surf->UResolution(Precision::Confusion());
-  tolPLin = std::max(tolPLin, Surf->VResolution(Precision::Confusion()));
-  tolPLin = std::min(tolPLin, Precision::Confusion());
+  double                      tolPLin = Surf->UResolution(math::precision::Precision::Confusion());
+  tolPLin = std::max(tolPLin, Surf->VResolution(math::precision::Precision::Confusion()));
+  tolPLin = std::min(tolPLin, math::precision::Precision::Confusion());
   IntPatch_PolyLine PLin(tolPLin);
 
   double PFirst, PLast;
@@ -469,9 +469,9 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
     double edgeTol = Tol3d(arc, Domain, Tol);
 
     IntPatch_HInterTool::Bounds(arc, PFirst, PLast);
-    if (Precision::IsNegativeInfinite(PFirst))
+    if (math::precision::Precision::IsNegativeInfinite(PFirst))
       PFirst = -myInfinite;
-    if (Precision::IsPositiveInfinite(PLast))
+    if (math::precision::Precision::IsPositiveInfinite(PLast))
       PLast = myInfinite;
 
     gp_Pnt2d p2dFirst, p2dLast;
@@ -480,11 +480,11 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
     {
       occ::handle<Adaptor3d_HVertex> vtx = Domain->Vertex();
       double                         prm = IntPatch_HInterTool::Parameter(vtx, arc);
-      if (std::abs(prm - PFirst) < Precision::PConfusion())
+      if (std::abs(prm - PFirst) < math::precision::Precision::PConfusion())
       {
         arc->D0(PFirst, p2dFirst);
       }
-      else if (std::abs(prm - PLast) < Precision::PConfusion())
+      else if (std::abs(prm - PLast) < math::precision::Precision::PConfusion())
       {
         arc->D0(PLast, p2dLast);
       }
@@ -638,7 +638,7 @@ void IntPatch_RstInt::PutVertexOnLine(const occ::handle<IntPatch_Line>&       L,
             OtherSurf->D0(U, V, anOldPnt);
             OtherSurf->D0(U2, V2, aNewPnt);
 
-            double aTolConf = std::max(Precision::Confusion(), edgeTol);
+            double aTolConf = std::max(math::precision::Precision::Confusion(), edgeTol);
 
             if (anOldPnt.SquareDistance(aNewPnt) < aTolConf * aTolConf)
             {

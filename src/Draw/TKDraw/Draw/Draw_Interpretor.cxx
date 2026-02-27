@@ -118,7 +118,7 @@ static int CommandCmd(ClientData theClientData, Tcl_Interp* interp, int argc, co
   {
     OCC_CATCH_SIGNALS
 
-    OSD::ControlBreak();
+    System::os::OSD::ControlBreak();
 
     int fres = aCallback->Invoke(di, argc, argv);
     if (fres != 0)
@@ -132,7 +132,7 @@ static int CommandCmd(ClientData theClientData, Tcl_Interp* interp, int argc, co
     const char* toExitOnCatch = Tcl_GetVar(interp, "Draw_ExitOnCatch", TCL_GLOBAL_ONLY);
     if (toExitOnCatch != nullptr && Draw::Atoi(toExitOnCatch))
     {
-      Message::SendFail() << "An exception was caught " << anException;
+      System::log::Message::SendFail() << "An exception was caught " << anException;
 #ifdef _WIN32
       Tcl_Exit(0);
 #else
@@ -150,7 +150,7 @@ static int CommandCmd(ClientData theClientData, Tcl_Interp* interp, int argc, co
     const char* toExitOnCatch = Tcl_GetVar(interp, "Draw_ExitOnCatch", TCL_GLOBAL_ONLY);
     if (toExitOnCatch != nullptr && Draw::Atoi(toExitOnCatch))
     {
-      Message::SendFail() << "An exception was caught " << theStdException.what() << " ["
+      System::log::Message::SendFail() << "An exception was caught " << theStdException.what() << " ["
                           << typeid(theStdException).name() << "]";
 #ifdef _WIN32
       Tcl_Exit(0);
@@ -170,7 +170,7 @@ static int CommandCmd(ClientData theClientData, Tcl_Interp* interp, int argc, co
     const char* toExitOnCatch = Tcl_GetVar(interp, "Draw_ExitOnCatch", TCL_GLOBAL_ONLY);
     if (toExitOnCatch != nullptr && Draw::Atoi(toExitOnCatch))
     {
-      Message::SendFail() << "UNKNOWN exception was caught ";
+      System::log::Message::SendFail() << "UNKNOWN exception was caught ";
 #ifdef _WIN32
       Tcl_Exit(0);
 #else
@@ -243,13 +243,13 @@ void Draw_Interpretor::Init()
 void Draw_Interpretor::SetToColorize(bool theToColorize)
 {
   myToColorize = theToColorize;
-  for (NCollection_Sequence<occ::handle<Message_Printer>>::Iterator aPrinterIter(
-         Message::DefaultMessenger()->Printers());
+  for (NCollection_Sequence<occ::handle<System::log::Message_Printer>>::Iterator aPrinterIter(
+         System::log::Message::DefaultMessenger()->Printers());
        aPrinterIter.More();
        aPrinterIter.Next())
   {
-    if (occ::handle<Message_PrinterOStream> aPrinter =
-          occ::down_cast<Message_PrinterOStream>(aPrinterIter.Value()))
+    if (occ::handle<System::log::Message_PrinterOStream> aPrinter =
+          occ::down_cast<System::log::Message_PrinterOStream>(aPrinterIter.Value()))
     {
       aPrinter->SetToColorize(theToColorize);
     }
@@ -278,7 +278,7 @@ void Draw_Interpretor::add(const char*                     theCommandName,
     return;
   }
 
-  OSD_Path aPath(theFileName);
+  System::os::OSD_Path aPath(theFileName);
   int      nbTrek = aPath.TrekLength();
   for (int i = 4; i < nbTrek; ++i)
   {

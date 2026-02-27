@@ -229,11 +229,11 @@ bool ShapeAnalysis_Edge::GetEndTangent2d(const TopoDS_Edge&               edge,
   }
   double dpnew = dparam;
 
-  if (dpnew > Precision::Confusion())
+  if (dpnew > math::precision::Precision::Confusion())
   {
     gp_Pnt2d ptmp;
     double   par1, par2, delta = (cl - cf) * dpnew;
-    if (std::abs(delta) < Precision::PConfusion())
+    if (std::abs(delta) < math::precision::Precision::PConfusion())
     {
       dpnew = 0.0;
     }
@@ -255,32 +255,32 @@ bool ShapeAnalysis_Edge::GetEndTangent2d(const TopoDS_Edge&               edge,
         c2d->D0(par2, ptmp);
         v = ptmp.XY() - pnt.XY();
       }
-      if (v.SquareMagnitude() < Precision::PConfusion() * Precision::PConfusion())
+      if (v.SquareMagnitude() < math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion())
       {
         dpnew = 0.0;
       }
     }
   }
 
-  if (dpnew <= Precision::Confusion())
+  if (dpnew <= math::precision::Precision::Confusion())
   {
 
     double par = (atend2 ? cl : cf);
     c2d->D1(par, pnt, v);
-    if (v.SquareMagnitude() < Precision::PConfusion() * Precision::PConfusion())
+    if (v.SquareMagnitude() < math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion())
     {
       gp_Vec2d d1;
       c2d->D2(par, pnt, d1, v);
-      if (v.SquareMagnitude() < Precision::PConfusion() * Precision::PConfusion())
+      if (v.SquareMagnitude() < math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion())
       {
         gp_Vec2d d2;
         c2d->D3(par, pnt, d1, d2, v);
-        if (v.SquareMagnitude() < Precision::PConfusion() * Precision::PConfusion())
+        if (v.SquareMagnitude() < math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion())
         {
           gp_Pnt2d p2;
           c2d->D0((atend2 ? cf : cl), p2);
           v = p2.XY() - pnt.XY();
-          if (v.SquareMagnitude() < Precision::PConfusion() * Precision::PConfusion())
+          if (v.SquareMagnitude() < math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion())
             return false;
         }
       }
@@ -702,14 +702,14 @@ static bool IsOverlapPartEdges(const TopoDS_Edge& theFirstEdge,
   {
 
     gp_Pnt aPoint;
-    if (aS <= Precision::Confusion())
+    if (aS <= math::precision::Precision::Confusion())
     {
       TopoDS_Vertex V1 = TopExp::FirstVertex(theFirstEdge, true);
       aPoint           = BRep_Tool::Pnt(V1);
     }
     else
     {
-      GCPnts_AbscissaPoint aAbsPoint(Precision::Confusion(),
+      GCPnts_AbscissaPoint aAbsPoint(math::precision::Precision::Confusion(),
                                      aAdCurve1,
                                      aS,
                                      aAdCurve1.FirstParameter());
@@ -720,7 +720,7 @@ static bool IsOverlapPartEdges(const TopoDS_Edge& theFirstEdge,
     }
     BRep_Builder  aB;
     TopoDS_Vertex aV;
-    aB.MakeVertex(aV, aPoint, Precision::Confusion());
+    aB.MakeVertex(aV, aPoint, math::precision::Precision::Confusion());
     aMinDist.LoadS2(aV);
     aMinDist.Perform();
     if (aMinDist.IsDone() && aMinDist.Value() >= theTolerance)
@@ -821,7 +821,7 @@ bool ShapeAnalysis_Edge::CheckPCurveRange(const double                     theFi
                                           const double                     theLast,
                                           const occ::handle<Geom2d_Curve>& thePC)
 {
-  constexpr double eps        = Precision::PConfusion();
+  constexpr double eps        = math::precision::Precision::PConfusion();
   bool             isValid    = true;
   bool             IsPeriodic = thePC->IsPeriodic();
   double           aPeriod    = RealLast();

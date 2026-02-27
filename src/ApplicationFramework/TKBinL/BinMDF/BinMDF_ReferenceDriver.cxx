@@ -7,7 +7,7 @@
 
 IMPLEMENT_STANDARD_RTTIEXT(BinMDF_ReferenceDriver, BinMDF_ADriver)
 
-BinMDF_ReferenceDriver::BinMDF_ReferenceDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+BinMDF_ReferenceDriver::BinMDF_ReferenceDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDF_Reference)->Name())
 {
 }

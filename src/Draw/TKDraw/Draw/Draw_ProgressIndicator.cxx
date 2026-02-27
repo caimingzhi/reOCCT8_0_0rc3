@@ -15,7 +15,7 @@
 
 #include <cstdio>
 #include <ctime>
-IMPLEMENT_STANDARD_RTTIEXT(Draw_ProgressIndicator, Message_ProgressIndicator)
+IMPLEMENT_STANDARD_RTTIEXT(Draw_ProgressIndicator, System::log::Message_ProgressIndicator)
 
 Draw_ProgressIndicator::Draw_ProgressIndicator(const Draw_Interpretor& di,
                                                double                  theUpdateThreshold)
@@ -28,7 +28,7 @@ Draw_ProgressIndicator::Draw_ProgressIndicator(const Draw_Interpretor& di,
       myUpdateThreshold(0.01 * theUpdateThreshold),
       myLastPosition(-1.),
       myStartTime(0),
-      myGuiThreadId(OSD_Thread::Current())
+      myGuiThreadId(System::os::OSD_Thread::Current())
 {
 }
 
@@ -39,7 +39,7 @@ Draw_ProgressIndicator::~Draw_ProgressIndicator()
 
 void Draw_ProgressIndicator::Reset()
 {
-  Message_ProgressIndicator::Reset();
+  System::log::Message_ProgressIndicator::Reset();
   if (myShown)
   {
 
@@ -53,7 +53,7 @@ void Draw_ProgressIndicator::Reset()
   myStartTime    = 0;
 }
 
-void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const bool force)
+void Draw_ProgressIndicator::Show(const System::log::Message_ProgressScope& theScope, const bool force)
 {
   if (!myGraphMode && !myTclMode && !myConsoleMode)
     return;
@@ -69,7 +69,7 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
   }
 
   double aPosition = GetPosition();
-  if (!force && (1. - aPosition) > Precision::Confusion()
+  if (!force && (1. - aPosition) > math::precision::Precision::Confusion()
       && std::abs(aPosition - myLastPosition) < myUpdateThreshold)
     return;
 
@@ -79,12 +79,12 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
   aText.setf(std::ios::fixed, std::ios::floatfield);
   aText.precision(0);
   aText << "Progress: " << 100. * GetPosition() << "%";
-  NCollection_List<const Message_ProgressScope*> aScopes;
-  for (const Message_ProgressScope* aPS = &theScope; aPS; aPS = aPS->Parent())
+  NCollection_List<const System::log::Message_ProgressScope*> aScopes;
+  for (const System::log::Message_ProgressScope* aPS = &theScope; aPS; aPS = aPS->Parent())
     aScopes.Prepend(aPS);
-  for (NCollection_List<const Message_ProgressScope*>::Iterator it(aScopes); it.More(); it.Next())
+  for (NCollection_List<const System::log::Message_ProgressScope*>::Iterator it(aScopes); it.More(); it.Next())
   {
-    const Message_ProgressScope* aPS = it.Value();
+    const System::log::Message_ProgressScope* aPS = it.Value();
     if (!aPS->Name())
       continue;
     aText << " " << aPS->Name() << ": ";
@@ -92,7 +92,7 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
     double aVal = aPS->Value();
     if (aPS->IsInfinite())
     {
-      if (Precision::IsInfinite(aVal))
+      if (math::precision::Precision::IsInfinite(aVal))
       {
         aText << "finished";
       }
@@ -107,7 +107,7 @@ void Draw_ProgressIndicator::Show(const Message_ProgressScope& theScope, const b
     }
   }
 
-  if (myGraphMode && myGuiThreadId == OSD_Thread::Current())
+  if (myGraphMode && myGuiThreadId == System::os::OSD_Thread::Current())
   {
 
     if (GetPosition() > 0.01)
@@ -174,9 +174,9 @@ bool Draw_ProgressIndicator::UserBreak()
 
     try
     {
-      OSD::ControlBreak();
+      System::os::OSD::ControlBreak();
     }
-    catch (const OSD_Exception_CTRL_BREAK&)
+    catch (const System::os::OSD_Exception_CTRL_BREAK&)
     {
       myBreak = true;
     }

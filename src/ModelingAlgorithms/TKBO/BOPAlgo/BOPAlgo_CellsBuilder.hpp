@@ -48,7 +48,7 @@ protected:
     const TopoDS_Shape& theS) override;
 
   Standard_EXPORT void PerformInternal1(const BOPAlgo_PaveFiller&    thePF,
-                                        const Message_ProgressRange& theRange) override;
+                                        const System::log::Message_ProgressRange& theRange) override;
 
   Standard_EXPORT void IndexParts();
 

@@ -14,7 +14,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_GenericExtStringDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "nameguid")
 
 XmlMDataStd_GenericExtStringDriver::XmlMDataStd_GenericExtStringDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

@@ -17,8 +17,8 @@ void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& the
     if (!theSurf->IsUClosed() && !theSurf->IsUPeriodic())
     {
 
-      if (!Precision::IsInfinite(theSurf->FirstUParameter())
-          && !Precision::IsInfinite(theSurf->LastUParameter()))
+      if (!math::precision::Precision::IsInfinite(theSurf->FirstUParameter())
+          && !math::precision::Precision::IsInfinite(theSurf->LastUParameter()))
       {
         theUEnlarge = true;
       }
@@ -27,8 +27,8 @@ void IntPolyh_Tools::IsEnlargePossible(const occ::handle<Adaptor3d_Surface>& the
     if (!theSurf->IsVClosed() && !theSurf->IsVPeriodic())
     {
 
-      if (!Precision::IsInfinite(theSurf->FirstVParameter())
-          && !Precision::IsInfinite(theSurf->LastVParameter()))
+      if (!math::precision::Precision::IsInfinite(theSurf->FirstVParameter())
+          && !math::precision::Precision::IsInfinite(theSurf->LastVParameter()))
       {
         theVEnlarge = true;
       }

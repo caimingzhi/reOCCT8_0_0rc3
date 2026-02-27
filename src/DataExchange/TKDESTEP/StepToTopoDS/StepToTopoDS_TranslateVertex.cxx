@@ -71,7 +71,7 @@ void StepToTopoDS_TranslateVertex::Init(const occ::handle<StepShape_Vertex>& aVe
     occ::handle<Geom_CartesianPoint> P2 = StepToGeom::MakeCartesianPoint(P1, theLocalFactors);
     BRep_Builder                     B;
     TopoDS_Vertex                    V;
-    B.MakeVertex(V, P2->Pnt(), Precision::Confusion());
+    B.MakeVertex(V, P2->Pnt(), math::precision::Precision::Confusion());
     aTool.Bind(aVertex, V);
 
     if (NMTool.IsActive())

@@ -1223,7 +1223,7 @@ bool Geom_BSplineSurface::IsUClosed() const
     return false;
   occ::handle<Geom_BSplineCurve> aBsF = occ::down_cast<Geom_BSplineCurve>(aCUF);
   occ::handle<Geom_BSplineCurve> aBsL = occ::down_cast<Geom_BSplineCurve>(aCUL);
-  return (!aBsF.IsNull() && !aBsL.IsNull() && aBsF->IsEqual(aBsL, Precision::Confusion()));
+  return (!aBsF.IsNull() && !aBsL.IsNull() && aBsF->IsEqual(aBsL, math::precision::Precision::Confusion()));
 }
 
 bool Geom_BSplineSurface::IsVClosed() const
@@ -1239,7 +1239,7 @@ bool Geom_BSplineSurface::IsVClosed() const
     return false;
   occ::handle<Geom_BSplineCurve> aBsF = occ::down_cast<Geom_BSplineCurve>(aCVF);
   occ::handle<Geom_BSplineCurve> aBsL = occ::down_cast<Geom_BSplineCurve>(aCVL);
-  return (!aBsF.IsNull() && !aBsL.IsNull() && aBsF->IsEqual(aBsL, Precision::Confusion()));
+  return (!aBsF.IsNull() && !aBsL.IsNull() && aBsF->IsEqual(aBsL, math::precision::Precision::Confusion()));
 }
 
 bool Geom_BSplineSurface::IsUPeriodic() const

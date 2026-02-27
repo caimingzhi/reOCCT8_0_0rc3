@@ -26,10 +26,10 @@ void Geom2dHatch_Intersector::Perform(const gp_Lin2d&            L,
 
   IntRes2d_Domain DE(C.Value(C.FirstParameter()),
                      C.FirstParameter(),
-                     Precision::PIntersection(),
+                     math::precision::Precision::PIntersection(),
                      C.Value(C.LastParameter()),
                      C.LastParameter(),
-                     Precision::PIntersection());
+                     math::precision::Precision::PIntersection());
 
   occ::handle<Geom2d_Line> GL = new Geom2d_Line(L);
   Geom2dAdaptor_Curve      CGA(GL);
@@ -39,8 +39,8 @@ void Geom2dHatch_Intersector::Perform(const gp_Lin2d&            L,
                          DL,
                          *((Geom2dAdaptor_Curve*)ptrpoureviterlesproblemesdeconst),
                          DE,
-                         Precision::PConfusion(),
-                         Precision::PIntersection());
+                         math::precision::Precision::PConfusion(),
+                         math::precision::Precision::PIntersection());
   this->SetValues(Inter);
 }
 
@@ -51,14 +51,14 @@ void Geom2dHatch_Intersector::LocalGeometry(const Geom2dAdaptor_Curve& E,
                                             double&                    C) const
 {
 
-  Geom2dLProp_CLProps2d Prop(E.Curve(), U, 2, Precision::PConfusion());
+  Geom2dLProp_CLProps2d Prop(E.Curve(), U, 2, math::precision::Precision::PConfusion());
 
   if (!Prop.IsTangentDefined())
     return;
 
   Prop.Tangent(Tang);
   C = Prop.Curvature();
-  if (C > Precision::PConfusion() && C < RealLast())
+  if (C > math::precision::Precision::PConfusion() && C < RealLast())
     Prop.Normal(Norm);
   else
     Norm.SetCoord(Tang.Y(), -Tang.X());

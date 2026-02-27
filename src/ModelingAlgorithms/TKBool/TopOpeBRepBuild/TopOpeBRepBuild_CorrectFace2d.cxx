@@ -345,7 +345,7 @@ int TopOpeBRepBuild_CorrectFace2d::ConnectWire(
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> anEdMap;
   gp_Pnt2d                                                      PF, PL, PA, PB, PA1, PB1;
   occ::handle<Geom2d_Curve>                                     aTrCF, aTrCR, aTrC;
-  double aD, aDTolerance = Precision::Confusion();
+  double aD, aDTolerance = math::precision::Precision::Confusion();
 
   NCollection_Sequence<TopoDS_Shape> aSeqEdges;
 
@@ -595,7 +595,7 @@ void TopOpeBRepBuild_CorrectFace2d::CheckList(const TopoDS_Face&              aF
                                               NCollection_List<TopoDS_Shape>& HeadList)
 {
   TopAbs_Orientation                       r1;
-  double                                   aDTolerance = Precision::Confusion();
+  double                                   aDTolerance = math::precision::Precision::Confusion();
   NCollection_Sequence<TopoDS_Shape>       aSeq;
   NCollection_List<TopoDS_Shape>::Iterator anIt(HeadList);
   for (; anIt.More(); anIt.Next())
@@ -739,7 +739,7 @@ void TopOpeBRepBuild_CorrectFace2d::BndBoxWire(const TopoDS_Wire& aWire, Bnd_Box
 
 void TopOpeBRepBuild_CorrectFace2d::MoveWire2d(TopoDS_Wire& aWire, const gp_Vec2d& aTrV)
 {
-  if (aTrV.Magnitude() < Precision::Confusion())
+  if (aTrV.Magnitude() < math::precision::Precision::Confusion())
     return;
 
   int                                                           i, aNbEdges;

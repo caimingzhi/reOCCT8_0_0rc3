@@ -39,7 +39,7 @@ public:
   Standard_EXPORT virtual void Prepare(
     const occ::handle<IntTools_Context>& theCtx        = occ::handle<IntTools_Context>(),
     const bool                           theCheckOBB   = false,
-    const double                         theFuzzyValue = Precision::Confusion());
+    const double                         theFuzzyValue = math::precision::Precision::Confusion());
 
   Standard_EXPORT void IntersectExt(const NCollection_Map<int>& theIndicies);
 
@@ -58,7 +58,7 @@ protected:
   Standard_EXPORT virtual void Intersect(
     const occ::handle<IntTools_Context>& theCtx        = occ::handle<IntTools_Context>(),
     const bool                           theCheckOBB   = false,
-    const double                         theFuzzyValue = Precision::Confusion());
+    const double                         theFuzzyValue = math::precision::Precision::Confusion());
 
 protected:
   occ::handle<NCollection_BaseAllocator> myAllocator;

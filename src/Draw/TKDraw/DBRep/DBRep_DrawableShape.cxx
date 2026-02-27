@@ -638,9 +638,9 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
 
       double f = C.FirstParameter();
       double l = C.LastParameter();
-      if (Precision::IsNegativeInfinite(f))
+      if (math::precision::Precision::IsNegativeInfinite(f))
       {
-        if (Precision::IsPositiveInfinite(l))
+        if (math::precision::Precision::IsPositiveInfinite(l))
         {
           f = -mySize;
           l = mySize;
@@ -650,12 +650,12 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
           f = l - mySize;
         }
       }
-      else if (Precision::IsPositiveInfinite(l))
+      else if (math::precision::Precision::IsPositiveInfinite(l))
       {
         l = f + mySize;
       }
 
-      occ::handle<Adaptor3d_Curve> HC       = C.Trim(f, l, Precision::Confusion());
+      occ::handle<Adaptor3d_Curve> HC       = C.Trim(f, l, math::precision::Precision::Confusion());
       GeomAbs_CurveType            CurvType = HC->GetType();
 
       int                        intrv, nbintv = HC->NbIntervals(GeomAbs_CN);
@@ -949,7 +949,7 @@ void DBRep_DrawableShape::Save(Standard_OStream& theStream) const
   BRepTools_ShapeSet aShapeSet(aBuilder);
   aShapeSet.Add(myShape);
   occ::handle<Draw_ProgressIndicator> aProgress = Draw::GetProgressBar();
-  aShapeSet.Write(theStream, Message_ProgressIndicator::Start(aProgress));
+  aShapeSet.Write(theStream, System::log::Message_ProgressIndicator::Start(aProgress));
   if (aProgress.IsNull() || !aProgress->UserBreak())
   {
     aShapeSet.Write(myShape, theStream);
@@ -962,7 +962,7 @@ occ::handle<Draw_Drawable3D> DBRep_DrawableShape::Restore(Standard_IStream& theS
   BRep_Builder                        aBuilder;
   BRepTools_ShapeSet                  aShapeSet(aBuilder);
   occ::handle<Draw_ProgressIndicator> aProgress = Draw::GetProgressBar();
-  aShapeSet.Read(theStream, Message_ProgressIndicator::Start(aProgress));
+  aShapeSet.Read(theStream, System::log::Message_ProgressIndicator::Start(aProgress));
   if (!aProgress.IsNull() && aProgress->UserBreak())
   {
     return occ::handle<Draw_Drawable3D>();

@@ -124,7 +124,7 @@ void ShapeAlgo_AlgoContainer::ApproxBSplineCurve(
   I1        = 1;
   for (int ipole = 1; ipole < NbPoles; ipole++)
   {
-    if (Poles(ipole).IsEqual(Poles(ipole + 1), Precision::Confusion()))
+    if (Poles(ipole).IsEqual(Poles(ipole + 1), math::precision::Precision::Confusion()))
     {
       if (jpole == 1)
       {
@@ -190,7 +190,7 @@ void ShapeAlgo_AlgoContainer::ApproxBSplineCurve(
         R->Add(POn2S);
       }
       GeomInt_WLApprox theapp3d;
-      constexpr double Tol = Precision::Approximation();
+      constexpr double Tol = math::precision::Precision::Approximation();
       theapp3d.SetParameters(Tol, Tol, 4, 8, 0, 30, true);
       occ::handle<IntPatch_WLine> WL        = new IntPatch_WLine(R, false);
       int                         indicemin = 1;
@@ -257,7 +257,7 @@ void ShapeAlgo_AlgoContainer::ApproxBSplineCurve(
   I1        = 1;
   for (int ipole = 1; ipole < NbPoles; ipole++)
   {
-    if (Poles(ipole).IsEqual(Poles(ipole + 1), Precision::PConfusion()))
+    if (Poles(ipole).IsEqual(Poles(ipole + 1), math::precision::Precision::PConfusion()))
     {
       if (jpole == 1)
       {
@@ -323,7 +323,7 @@ void ShapeAlgo_AlgoContainer::ApproxBSplineCurve(
         R->Add(POn2S);
       }
       GeomInt_WLApprox theapp3d;
-      constexpr double Tol = Precision::PApproximation();
+      constexpr double Tol = math::precision::Precision::PApproximation();
       theapp3d.SetParameters(Tol, Tol, 4, 8, 0, 30, true);
       occ::handle<IntPatch_WLine> WL        = new IntPatch_WLine(R, false);
       int                         indicemin = 1;
@@ -381,7 +381,7 @@ occ::handle<Geom_BSplineSurface> ShapeAlgo_AlgoContainer::ConvertSurfaceToBSplin
                                                  UL,
                                                  VF,
                                                  VL,
-                                                 Precision::Confusion(),
+                                                 math::precision::Precision::Confusion(),
                                                  GeomAbs_C1,
                                                  100,
                                                  Geom_BSplineSurface::MaxDegree());
@@ -436,7 +436,7 @@ bool ShapeAlgo_AlgoContainer::HomoWires(const TopoDS_Wire& wireIn1,
     crv2  = BRep_Tool::Curve(edge2, loc2, first2, last2);
     length2 += last2 - first2;
   }
-  double epsilon = Precision::PConfusion() * (length1 + length2);
+  double epsilon = math::precision::Precision::PConfusion() * (length1 + length2);
   if (nEdges1 == 1 && nEdges2 == 1)
   {
     wireOut1 = wireIn11;

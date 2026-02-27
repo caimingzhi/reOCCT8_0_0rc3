@@ -16,7 +16,8 @@ enum Message_ConsoleColor
 #include <Message_Printer.hpp>
 #include <Standard_OStream.hpp>
 
-class Message_PrinterOStream : public Message_Printer
+namespace System { namespace log {
+class Message_PrinterOStream : public System::log::Message_Printer
 {
   DEFINE_STANDARD_RTTIEXT(Message_PrinterOStream, Message_Printer)
 public:
@@ -50,3 +51,5 @@ private:
   bool  myIsFile;
   bool  myToColorize;
 };
+}} // namespace System::log
+

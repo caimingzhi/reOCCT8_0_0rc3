@@ -37,7 +37,7 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
                                 NCollection_Sequence<double>&     Seq)
 {
   int    ind1 = 1, ind2 = 1;
-  double Epspar = Precision::PConfusion() * 0.99;
+  double Epspar = math::precision::Precision::PConfusion() * 0.99;
 
   double v1, v2;
 
@@ -300,13 +300,13 @@ void BRepBlend_SurfRstEvolRad::GetBounds(math_Vector& InfBound, math_Vector& Sup
   SupBound(2) = surf->LastVParameter();
   SupBound(3) = cons.LastParameter();
 
-  if (!Precision::IsInfinite(InfBound(1)) && !Precision::IsInfinite(SupBound(1)))
+  if (!math::precision::Precision::IsInfinite(InfBound(1)) && !math::precision::Precision::IsInfinite(SupBound(1)))
   {
     double range = (SupBound(1) - InfBound(1));
     InfBound(1) -= range;
     SupBound(1) += range;
   }
-  if (!Precision::IsInfinite(InfBound(2)) && !Precision::IsInfinite(SupBound(2)))
+  if (!math::precision::Precision::IsInfinite(InfBound(2)) && !math::precision::Precision::IsInfinite(SupBound(2)))
   {
     double range = (SupBound(2) - InfBound(2));
     InfBound(2) -= range;
@@ -620,8 +620,8 @@ void BRepBlend_SurfRstEvolRad::Section(const double Param,
     C.SetPosition(gp_Ax2(Center, np, ns));
     Pfin = ElCLib::Parameter(C, ptrst);
   }
-  if (Pfin < Precision::PConfusion())
-    Pfin += Precision::PConfusion();
+  if (Pfin < math::precision::Precision::PConfusion())
+    Pfin += math::precision::Precision::PConfusion();
 }
 
 bool BRepBlend_SurfRstEvolRad::IsRational() const

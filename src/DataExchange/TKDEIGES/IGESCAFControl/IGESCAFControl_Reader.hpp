@@ -31,18 +31,18 @@ public:
   }
 
   Standard_EXPORT bool Transfer(const occ::handle<TDocStd_Document>& theDoc,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   bool Perform(const TCollection_AsciiString&       theFileName,
                const occ::handle<TDocStd_Document>& theDoc,
-               const Message_ProgressRange&         theProgress = Message_ProgressRange())
+               const System::log::Message_ProgressRange&         theProgress = System::log::Message_ProgressRange())
   {
     return Perform(theFileName.ToCString(), theDoc, theProgress);
   }
 
   Standard_EXPORT bool Perform(const char*                          theFileName,
                                const occ::handle<TDocStd_Document>& theDoc,
-                               const Message_ProgressRange& theProgress = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   void SetColorMode(const bool theMode) { myColorMode = theMode; }
 

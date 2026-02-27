@@ -35,7 +35,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentRetrievalDriver, PCDM_RetrievalDr
 #define MODIFICATION_COUNTER "MODIFICATION_COUNTER: "
 #define REFERENCE_COUNTER "REFERENCE_COUNTER: "
 
-static void take_time(const int, const char*, const occ::handle<Message_Messenger>&)
+static void take_time(const int, const char*, const occ::handle<System::log::Message_Messenger>&)
 #ifdef TAKE_TIMES
   ;
 #else
@@ -144,12 +144,12 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
                                                const occ::handle<CDM_Document>&      theNewDocument,
                                                const occ::handle<CDM_Application>&   theApplication,
                                                const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                               const Message_ProgressRange&          theRange)
+                                               const System::log::Message_ProgressRange&          theRange)
 {
   myReaderStatus = PCDM_RS_DriverFailure;
   myFileName     = theFileName;
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream> aFileStream = aFileSystem->OpenIStream(myFileName, std::ios::in);
 
   if (aFileStream.get() != nullptr && aFileStream->good())
@@ -169,13 +169,13 @@ void XmlLDrivers_DocumentRetrievalDriver::Read(const TCollection_ExtendedString&
 }
 
 void XmlLDrivers_DocumentRetrievalDriver::Read(Standard_IStream& theIStream,
-                                               const occ::handle<Storage_Data>&,
+                                               const occ::handle<app::storage::Storage_Data>&,
                                                const occ::handle<CDM_Document>&    theNewDocument,
                                                const occ::handle<CDM_Application>& theApplication,
                                                const occ::handle<PCDM_ReaderFilter>&,
-                                               const Message_ProgressRange& theRange)
+                                               const System::log::Message_ProgressRange& theRange)
 {
-  occ::handle<Message_Messenger> aMessageDriver = theApplication->MessageDriver();
+  occ::handle<System::log::Message_Messenger> aMessageDriver = theApplication->MessageDriver();
   ::take_time(~0, " +++++ Start RETRIEVE procedures ++++++", aMessageDriver);
 
   LDOMParser aParser;
@@ -199,9 +199,9 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
   const XmlObjMgt_Element&            theElement,
   const occ::handle<CDM_Document>&    theNewDocument,
   const occ::handle<CDM_Application>& theApplication,
-  const Message_ProgressRange&        theRange)
+  const System::log::Message_ProgressRange&        theRange)
 {
-  const occ::handle<Message_Messenger> aMsgDriver = theApplication->MessageDriver();
+  const occ::handle<System::log::Message_Messenger> aMsgDriver = theApplication->MessageDriver();
 
   TCollection_AsciiString    anAbsoluteDirectory = GetDirFromFile(myFileName);
   int                        aCurDocVersion      = TDocStd_FormatVersion_VERSION_2;
@@ -340,7 +340,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
               theFolder = f;
               theName   = n;
 #else
-              OSD_Path                   p = UTL::Path(f);
+              System::os::OSD_Path                   p = UTL::Path(f);
               char16_t                   chr;
               TCollection_ExtendedString dir, dirRet, name;
 
@@ -411,7 +411,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
       }
     }
   }
-  Message_ProgressScope aPS(theRange, "Reading document", 2);
+  System::log::Message_ProgressScope aPS(theRange, "Reading document", 2);
 
   if (myDrivers.IsNull())
     myDrivers = AttributeDrivers(aMsgDriver);
@@ -426,7 +426,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
     return;
   }
 
-  occ::handle<Storage_HeaderData> aHeaderData = new Storage_HeaderData();
+  occ::handle<app::storage::Storage_HeaderData> aHeaderData = new app::storage::Storage_HeaderData();
   aHeaderData->SetStorageVersion(aCurDocVersion);
   myRelocTable.Clear();
   myRelocTable.SetHeaderData(aHeaderData);
@@ -462,7 +462,7 @@ void XmlLDrivers_DocumentRetrievalDriver::ReadFromDomDocument(
 
 bool XmlLDrivers_DocumentRetrievalDriver::MakeDocument(const XmlObjMgt_Element&         theElement,
                                                        const occ::handle<CDM_Document>& theTDoc,
-                                                       const Message_ProgressRange&     theRange)
+                                                       const System::log::Message_ProgressRange&     theRange)
 {
   bool                          aResult = false;
   occ::handle<TDocStd_Document> TDOC    = occ::down_cast<TDocStd_Document>(theTDoc);
@@ -480,7 +480,7 @@ bool XmlLDrivers_DocumentRetrievalDriver::MakeDocument(const XmlObjMgt_Element& 
 }
 
 occ::handle<XmlMDF_ADriverTable> XmlLDrivers_DocumentRetrievalDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return XmlLDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -497,7 +497,7 @@ extern struct timeb tmbuf0;
 
 static void take_time(const int                             isReset,
                       const char*                           aHeader,
-                      const occ::handle<Message_Messenger>& aMessageDriver)
+                      const occ::handle<System::log::Message_Messenger>& aMessageDriver)
 {
   struct timeb tmbuf;
   ftime(&tmbuf);
@@ -518,8 +518,8 @@ static void take_time(const int                             isReset,
 
 occ::handle<XmlMDF_ADriver> XmlLDrivers_DocumentRetrievalDriver::ReadShapeSection(
   const XmlObjMgt_Element&,
-  const occ::handle<Message_Messenger>&,
-  const Message_ProgressRange&)
+  const occ::handle<System::log::Message_Messenger>&,
+  const System::log::Message_ProgressRange&)
 {
   occ::handle<XmlMDF_ADriver> aDriver;
 

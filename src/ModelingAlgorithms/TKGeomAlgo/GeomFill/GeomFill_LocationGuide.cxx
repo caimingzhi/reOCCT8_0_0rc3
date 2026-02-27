@@ -273,7 +273,7 @@ void GeomFill_LocationGuide::SetRotation(const double PrecAngle, double& LastAng
     Revol = new (Geom_SurfaceOfRevolution)(S, Ax);
 
     GeomAdaptor_Surface GArevol(Revol);
-    Extrema_ExtCS       DistMini(*myGuide, GArevol, Precision::Confusion(), Precision::Confusion());
+    Extrema_ExtCS       DistMini(*myGuide, GArevol, math::precision::Precision::Confusion(), math::precision::Precision::Confusion());
     Extrema_POnCurv     Pc;
     Extrema_POnSurf     Ps;
     double              theU = 0., theV = 0.;
@@ -761,7 +761,7 @@ int GeomFill_LocationGuide::NbIntervals(const GeomAbs_Shape S) const
   myTrimmed->Intervals(IntC, S);
   myLaw->Intervals(IntL, S);
 
-  GeomLib::FuseIntervals(IntC, IntL, Inter, Precision::PConfusion() * 0.99);
+  GeomLib::FuseIntervals(IntC, IntL, Inter, math::precision::Precision::PConfusion() * 0.99);
   return Inter.Length() - 1;
 }
 
@@ -788,7 +788,7 @@ void GeomFill_LocationGuide::Intervals(NCollection_Array1<double>& T, const Geom
   myTrimmed->Intervals(IntC, S);
   myLaw->Intervals(IntL, S);
 
-  GeomLib::FuseIntervals(IntC, IntL, Inter, Precision::PConfusion() * 0.99);
+  GeomLib::FuseIntervals(IntC, IntL, Inter, math::precision::Precision::PConfusion() * 0.99);
   for (int ii = 1; ii <= Inter.Length(); ii++)
     T(ii) = Inter(ii);
 }

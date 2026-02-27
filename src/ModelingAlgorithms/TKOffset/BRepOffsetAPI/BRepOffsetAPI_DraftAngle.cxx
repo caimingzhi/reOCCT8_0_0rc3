@@ -203,7 +203,7 @@ TopoDS_Shape BRepOffsetAPI_DraftAngle::ModifiedShape(const TopoDS_Shape& S) cons
   }
 }
 
-void BRepOffsetAPI_DraftAngle::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_DraftAngle::Build(const System::log::Message_ProgressRange&)
 {
   occ::down_cast<Draft_Modification>(myModification)->Perform();
   if (!occ::down_cast<Draft_Modification>(myModification)->IsDone())
@@ -457,7 +457,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     TopoDS_Face               theFace = TopoDS::Face(Fseq(j));
     TopLoc_Location           L;
     occ::handle<Geom_Surface> theSurf = BRep_Tool::Surface(theFace, L);
-    if (std::abs(par - FirstPar) <= Precision::Confusion())
+    if (std::abs(par - FirstPar) <= math::precision::Precision::Confusion())
     {
       BB.UpdateVertex(Vfirst, ParsSeam(i)(1), SeamEdge, BRep_Tool::Tolerance(Vfirst));
       EPmap(SeamEdge).Append(ParsSeam(i)(1));
@@ -476,7 +476,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       par = ParsNonSeam(i)(j);
       BB.Range(NewE, prevpar, par);
       SeamEdge = TopoDS::Edge(Seam(i)(j));
-      if (j == ParsNonSeam(i).Length() && std::abs(par - LastPar) <= Precision::Confusion())
+      if (j == ParsNonSeam(i).Length() && std::abs(par - LastPar) <= math::precision::Precision::Confusion())
       {
         NewV = Vlast;
         if (firstind == 2 && j == 2)
@@ -493,9 +493,9 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         BRepAdaptor_Curve bcur(NewE);
         gp_Pnt            Point = bcur.Value(par);
         NewV                    = BRepLib_MakeVertex(Point);
-        BB.UpdateVertex(NewV, par, NewE, 10. * Precision::Confusion());
+        BB.UpdateVertex(NewV, par, NewE, 10. * math::precision::Precision::Confusion());
       }
-      BB.UpdateVertex(NewV, ParsSeam(i)(j), SeamEdge, 10. * Precision::Confusion());
+      BB.UpdateVertex(NewV, ParsSeam(i)(j), SeamEdge, 10. * math::precision::Precision::Confusion());
       NewE.Orientation(TopAbs_FORWARD);
       BB.Add(NewE, PrevV.Oriented(TopAbs_FORWARD));
       BB.Add(NewE, NewV.Oriented(TopAbs_REVERSED));
@@ -513,7 +513,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     NewE                     = TopoDS::Edge(aLocalShape);
 
     par = LastPar;
-    if (std::abs(prevpar - par) > Precision::Confusion())
+    if (std::abs(prevpar - par) > math::precision::Precision::Confusion())
     {
       BB.Range(NewE, prevpar, par);
       NewE.Orientation(TopAbs_FORWARD);
@@ -572,7 +572,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       remove = false;
       for (i = 1; i < Seq.Length(); i++)
       {
-        if (std::abs(Seq(i) - Seq(i + 1)) <= Precision::Confusion())
+        if (std::abs(Seq(i) - Seq(i + 1)) <= math::precision::Precision::Confusion())
         {
           Seq.Remove(i + 1);
           SeqShape.Remove(i + 1);
@@ -609,7 +609,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     lpar = Seq(1);
     TopoDS_Edge NewE;
     int         firstind = 1;
-    if (std::abs(fpar - lpar) <= Precision::Confusion())
+    if (std::abs(fpar - lpar) <= math::precision::Precision::Confusion())
     {
       firstind = 2;
       fpar     = Seq(1);
@@ -662,7 +662,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
 
         for (j = 1; j <= Seq2.Length(); j++)
         {
-          if (std::abs(fpar - Seq2(j)) <= Precision::Confusion())
+          if (std::abs(fpar - Seq2(j)) <= math::precision::Precision::Confusion())
           {
             break;
           }
@@ -680,7 +680,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
     i    = Seq.Length();
     fpar = Seq(i);
     lpar = LastPar;
-    if (std::abs(fpar - lpar) <= Precision::Confusion())
+    if (std::abs(fpar - lpar) <= math::precision::Precision::Confusion())
       continue;
     TopoDS_Shape aLocalShape = anEdge.EmptyCopied();
     NewE                     = TopoDS::Edge(aLocalShape);
@@ -769,15 +769,15 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         Pmid = bc2d.Value((bc2d.FirstParameter() + bc2d.LastParameter()) / 2.);
         gp_Vec2d offset;
         bool     translate = false;
-        if (Pfirst.X() - 2. * M_PI > Precision::Confusion()
-            || Plast.X() - 2. * M_PI > Precision::Confusion()
-            || Pmid.X() - 2. * M_PI > Precision::Confusion())
+        if (Pfirst.X() - 2. * M_PI > math::precision::Precision::Confusion()
+            || Plast.X() - 2. * M_PI > math::precision::Precision::Confusion()
+            || Pmid.X() - 2. * M_PI > math::precision::Precision::Confusion())
         {
           offset.SetCoord(-2. * M_PI, 0);
           translate = true;
         }
-        if (Pfirst.X() < -Precision::Confusion() || Plast.X() < -Precision::Confusion()
-            || Pmid.X() < -Precision::Confusion())
+        if (Pfirst.X() < -math::precision::Precision::Confusion() || Plast.X() < -math::precision::Precision::Confusion()
+            || Pmid.X() < -math::precision::Precision::Confusion())
         {
           offset.SetCoord(2. * M_PI, 0);
           translate = true;

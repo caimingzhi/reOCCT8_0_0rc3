@@ -18,7 +18,7 @@ void BRepOffsetAPI_MakeThickSolid::MakeThickSolidByJoin(
   const bool                            SelfInter,
   const GeomAbs_JoinType                Join,
   const bool                            RemoveIntEdges,
-  const Message_ProgressRange&          theRange)
+  const System::log::Message_ProgressRange&          theRange)
 {
   NotDone();
   myLastUsedAlgo = OffsetAlgo_JOIN;
@@ -53,7 +53,7 @@ void BRepOffsetAPI_MakeThickSolid::MakeThickSolidBySimple(const TopoDS_Shape& th
   Done();
 }
 
-void BRepOffsetAPI_MakeThickSolid::Build(const Message_ProgressRange&) {}
+void BRepOffsetAPI_MakeThickSolid::Build(const System::log::Message_ProgressRange&) {}
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_MakeThickSolid::Modified(const TopoDS_Shape& F)
 {

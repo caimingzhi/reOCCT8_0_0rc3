@@ -29,7 +29,7 @@ void BRepLib_ToolTriangulatedShape::ComputeNormals(const TopoDS_Face&           
     return;
   }
 
-  constexpr double aTol = Precision::Confusion();
+  constexpr double aTol = math::precision::Precision::Confusion();
   int              aTri[3];
   gp_Dir           aNorm;
   theTris->AddNormals();

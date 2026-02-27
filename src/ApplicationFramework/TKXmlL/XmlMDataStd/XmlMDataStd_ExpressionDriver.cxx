@@ -12,7 +12,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_ExpressionDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(VariablesString, "variables")
 
 XmlMDataStd_ExpressionDriver::XmlMDataStd_ExpressionDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

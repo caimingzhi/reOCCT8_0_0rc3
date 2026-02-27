@@ -9,7 +9,10 @@
 #include <XmlObjMgt_RRelocationTable.hpp>
 #include <XmlObjMgt_SRelocationTable.hpp>
 #include <XmlObjMgt_Element.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 class TopTools_LocationSet;
@@ -17,7 +20,7 @@ class TopTools_LocationSet;
 class XmlMNaming_NamedShapeDriver : public XmlMDF_ADriver
 {
 public:
-  Standard_EXPORT XmlMNaming_NamedShapeDriver(const occ::handle<Message_Messenger>& aMessageDriver);
+  Standard_EXPORT XmlMNaming_NamedShapeDriver(const occ::handle<System::log::Message_Messenger>& aMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 
@@ -31,12 +34,12 @@ public:
 
   Standard_EXPORT void ReadShapeSection(
     const XmlObjMgt_Element&     anElement,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void WriteShapeSection(
     XmlObjMgt_Element&           anElement,
     TDocStd_FormatVersion        theStorageFormatVersion,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Clear();
 

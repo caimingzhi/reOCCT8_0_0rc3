@@ -129,7 +129,7 @@ void BOPAlgo_Builder::Prepare()
   myShape = aC;
 }
 
-void BOPAlgo_Builder::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::Perform(const System::log::Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
 
@@ -149,7 +149,7 @@ void BOPAlgo_Builder::Perform(const Message_ProgressRange& theRange)
 
   pPF->SetArguments(myArguments);
   pPF->SetRunParallel(myRunParallel);
-  Message_ProgressScope aPS(theRange, "Performing General Fuse operation", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Performing General Fuse operation", 10);
   pPF->SetFuzzyValue(myFuzzyValue);
   pPF->SetNonDestructive(myNonDestructive);
   pPF->SetGlue(myGlue);
@@ -162,7 +162,7 @@ void BOPAlgo_Builder::Perform(const Message_ProgressRange& theRange)
 }
 
 void BOPAlgo_Builder::PerformWithFiller(const BOPAlgo_PaveFiller&    theFiller,
-                                        const Message_ProgressRange& theRange)
+                                        const System::log::Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
   myEntryPoint     = 0;
@@ -174,7 +174,7 @@ void BOPAlgo_Builder::PerformWithFiller(const BOPAlgo_PaveFiller&    theFiller,
 }
 
 void BOPAlgo_Builder::PerformInternal(const BOPAlgo_PaveFiller&    theFiller,
-                                      const Message_ProgressRange& theRange)
+                                      const System::log::Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
 
@@ -265,7 +265,7 @@ void BOPAlgo_Builder::fillPISteps(BOPAlgo_PISteps& theSteps) const
 }
 
 void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
-                                       const Message_ProgressRange& theRange)
+                                       const System::log::Message_ProgressRange& theRange)
 {
   myPaveFiller     = (BOPAlgo_PaveFiller*)&theFiller;
   myDS             = myPaveFiller->PDS();
@@ -273,7 +273,7 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   myFuzzyValue     = myPaveFiller->FuzzyValue();
   myNonDestructive = myPaveFiller->NonDestructive();
 
-  Message_ProgressScope aPS(theRange, "Building the result of General Fuse operation", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Building the result of General Fuse operation", 100);
 
   CheckData();
   if (HasErrors())
@@ -395,7 +395,7 @@ void BOPAlgo_Builder::PerformInternal1(const BOPAlgo_PaveFiller&    theFiller,
   PostTreat(aPS.Next(aSteps.GetStep(PIOperation_PostTreat)));
 }
 
-void BOPAlgo_Builder::PostTreat(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::PostTreat(const System::log::Message_ProgressRange& theRange)
 {
   int                                                           i, aNbS;
   TopAbs_ShapeEnum                                              aType;
@@ -416,7 +416,7 @@ void BOPAlgo_Builder::PostTreat(const Message_ProgressRange& theRange)
     }
   }
 
-  Message_ProgressScope aPS(theRange, "Post treatment of result shape", 2);
+  System::log::Message_ProgressScope aPS(theRange, "Post treatment of result shape", 2);
   BOPTools_AlgoTools::CorrectTolerances(myShape, aMA, 0.05, myRunParallel);
   aPS.Next();
   BOPTools_AlgoTools::CorrectShapeTolerances(myShape, aMA, myRunParallel);
@@ -426,13 +426,13 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
                                const TopAbs_State                    theObjState,
                                const NCollection_List<TopoDS_Shape>& theTools,
                                const TopAbs_State                    theToolsState,
-                               const Message_ProgressRange&          theRange,
-                               occ::handle<Message_Report>           theReport)
+                               const System::log::Message_ProgressRange&          theRange,
+                               occ::handle<System::log::Message_Report>           theReport)
 {
   if (HasErrors())
     return;
 
-  occ::handle<Message_Report> aReport = theReport.IsNull() ? myReport : theReport;
+  occ::handle<System::log::Message_Report> aReport = theReport.IsNull() ? myReport : theReport;
 
   if (myArguments.IsEmpty() || myShape.IsNull())
   {
@@ -638,7 +638,7 @@ void BOPAlgo_Builder::BuildBOP(const NCollection_List<TopoDS_Shape>& theObjects,
     if (!aMFToAvoid.Contains(aRF))
       aResFaces.Append(aRF);
   }
-  Message_ProgressScope aPS(theRange, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 2);
   BRep_Builder          aBB;
 
   BOPAlgo_BuilderSolid aBS;

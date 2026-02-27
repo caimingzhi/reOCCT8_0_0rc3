@@ -118,8 +118,6 @@ inline Standard_OStream& operator<<(Standard_OStream&                 theStream,
   return theStream;
 }
 
-DEFINE_STANDARD_HANDLE(Standard_Type, Standard_Transient)
-
 namespace occ
 {
 

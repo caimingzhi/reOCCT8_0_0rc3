@@ -1100,7 +1100,7 @@ static int XGetProperties(Draw_Interpretor& theDI, int theArgc, const char** the
     }
     else
     {
-      Message::SendWarning() << "Warning: incorrect argument [" << theArgv[anInd] << "]"
+      System::log::Message::SendWarning() << "Warning: incorrect argument [" << theArgv[anInd] << "]"
                              << " is not a label";
     }
   }
@@ -1275,7 +1275,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
 {
   if (theArgNb < 4)
   {
-    Message::SendFail() << "Error: not enough arguments, see help " << theArgVec[0]
+    System::log::Message::SendFail() << "Error: not enough arguments, see help " << theArgVec[0]
                         << " for details";
     return 1;
   }
@@ -1284,7 +1284,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   DDocStd::GetDocument(theArgVec[1], aDoc);
   if (aDoc.IsNull())
   {
-    Message::SendFail() << "Error: " << theArgVec[1] << " is not a document";
+    System::log::Message::SendFail() << "Error: " << theArgVec[1] << " is not a document";
     return 1;
   }
 
@@ -1292,7 +1292,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   TDF_Tool::Label(aDoc->GetData(), theArgVec[2], aShapeLabel);
   if (aShapeLabel.IsNull())
   {
-    Message::SendFail() << "Error: no such Label: " << theArgVec[2];
+    System::log::Message::SendFail() << "Error: no such Label: " << theArgVec[2];
     return 1;
   }
 
@@ -1337,7 +1337,7 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown options '" << anArg
+      System::log::Message::SendFail() << "Syntax error: unknown options '" << anArg
                           << "', or incorrect option parameters";
       return 1;
     }
@@ -1351,19 +1351,19 @@ static int setLocation(Draw_Interpretor&, int theArgNb, const char** theArgVec)
   {
     if (aShapeLabel == aRefLabel)
     {
-      Message::SendInfo() << "New location was set";
+      System::log::Message::SendInfo() << "New location was set";
     }
     else
     {
       TCollection_AsciiString aLabelStr;
       TDF_Tool::Entry(aRefLabel, aLabelStr);
-      Message::SendInfo() << "Reference to the shape at label " << aLabelStr
+      System::log::Message::SendInfo() << "Reference to the shape at label " << aLabelStr
                           << " was created and location was set";
     }
   }
   else
   {
-    Message::SendFail() << "Error: an attempt to set the location to a shape to which there is a "
+    System::log::Message::SendFail() << "Error: an attempt to set the location to a shape to which there is a "
                            "reference, or to not a shape at all";
   }
 

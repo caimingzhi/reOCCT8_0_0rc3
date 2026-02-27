@@ -38,7 +38,7 @@ BRepMesh_IncrementalMesh::BRepMesh_IncrementalMesh(const TopoDS_Shape& theShape,
 
 BRepMesh_IncrementalMesh::BRepMesh_IncrementalMesh(const TopoDS_Shape&          theShape,
                                                    const IMeshTools_Parameters& theParameters,
-                                                   const Message_ProgressRange& theRange)
+                                                   const System::log::Message_ProgressRange& theRange)
     : myParameters(theParameters)
 {
   myShape = theShape;
@@ -47,14 +47,14 @@ BRepMesh_IncrementalMesh::BRepMesh_IncrementalMesh(const TopoDS_Shape&          
 
 BRepMesh_IncrementalMesh::~BRepMesh_IncrementalMesh() = default;
 
-void BRepMesh_IncrementalMesh::Perform(const Message_ProgressRange& theRange)
+void BRepMesh_IncrementalMesh::Perform(const System::log::Message_ProgressRange& theRange)
 {
   occ::handle<BRepMesh_Context> aContext = new BRepMesh_Context(myParameters.MeshAlgo);
   Perform(aContext, theRange);
 }
 
 void BRepMesh_IncrementalMesh::Perform(const occ::handle<IMeshTools_Context>& theContext,
-                                       const Message_ProgressRange&           theRange)
+                                       const System::log::Message_ProgressRange&           theRange)
 {
   initParameters();
 
@@ -62,7 +62,7 @@ void BRepMesh_IncrementalMesh::Perform(const occ::handle<IMeshTools_Context>& th
   theContext->ChangeParameters()            = myParameters;
   theContext->ChangeParameters().CleanModel = false;
 
-  Message_ProgressScope  aPS(theRange, "Perform incmesh", 10);
+  System::log::Message_ProgressScope  aPS(theRange, "Perform incmesh", 10);
   IMeshTools_MeshBuilder aIncMesh(theContext);
   aIncMesh.Perform(aPS.Next(9));
   if (!aPS.More())

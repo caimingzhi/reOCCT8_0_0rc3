@@ -35,7 +35,7 @@ void IGESGeom_ToolPlane::ReadOwnParams(const occ::handle<IGESGeom_Plane>&       
   if ((!PR.ReadReal(PR.Current(), A)) || (!PR.ReadReal(PR.Current(), B))
       || (!PR.ReadReal(PR.Current(), C)) || (!PR.ReadReal(PR.Current(), D)))
   {
-    Message_Msg Msg135("XSTEP_135");
+    System::log::Message_Msg Msg135("XSTEP_135");
     PR.SendFail(Msg135);
   }
 
@@ -43,19 +43,19 @@ void IGESGeom_ToolPlane::ReadOwnParams(const occ::handle<IGESGeom_Plane>&       
   {
     if (!PR.ReadEntity(IR, PR.Current(), aStatus, aCurve, true))
     {
-      Message_Msg Msg136("XSTEP_136");
+      System::log::Message_Msg Msg136("XSTEP_136");
       switch (aStatus)
       {
         case IGESData_ReferenceError:
         {
-          Message_Msg Msg216("IGES_216");
+          System::log::Message_Msg Msg216("IGES_216");
           Msg136.Arg(Msg216.Value());
           PR.SendFail(Msg136);
           break;
         }
         case IGESData_EntityError:
         {
-          Message_Msg Msg217("IGES_217");
+          System::log::Message_Msg Msg217("IGES_217");
           Msg136.Arg(Msg217.Value());
           PR.SendFail(Msg136);
           break;
@@ -69,13 +69,13 @@ void IGESGeom_ToolPlane::ReadOwnParams(const occ::handle<IGESGeom_Plane>&       
 
   if (PR.IsParamDefined(PR.CurrentNumber()))
   {
-    Message_Msg Msg139("XSTEP_139");
+    System::log::Message_Msg Msg139("XSTEP_139");
 
     PR.ReadXYZ(PR.CurrentList(1, 3), Msg139, attach);
 
     if (!PR.ReadReal(PR.Current(), aSize))
     {
-      Message_Msg Msg138("XSTEP_138");
+      System::log::Message_Msg Msg138("XSTEP_138");
       PR.SendFail(Msg138);
     }
   }
@@ -146,7 +146,7 @@ void IGESGeom_ToolPlane::OwnCheck(const occ::handle<IGESGeom_Plane>& ent,
 
   if (ent->FormNumber() < -1 || ent->FormNumber() > 1)
   {
-    Message_Msg Msg71("XSTEP_71");
+    System::log::Message_Msg Msg71("XSTEP_71");
     ach->SendFail(Msg71);
   }
 
@@ -154,7 +154,7 @@ void IGESGeom_ToolPlane::OwnCheck(const occ::handle<IGESGeom_Plane>& ent,
   bool unbounded2 = (ent->FormNumber() == 0);
   if ((unbounded1 && !unbounded2) || (!unbounded1 && unbounded2))
   {
-    Message_Msg Msg137("XSTEP_137");
+    System::log::Message_Msg Msg137("XSTEP_137");
     ach->SendFail(Msg137);
   }
 

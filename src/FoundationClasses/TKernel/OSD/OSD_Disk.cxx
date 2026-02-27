@@ -10,9 +10,9 @@
 #ifdef _WIN32
   #include <windows.h>
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 
-static TCollection_AsciiString _osd_wnt_set_disk_name(const OSD_Path& thePath)
+static TCollection_AsciiString _osd_wnt_set_disk_name(const System::os::OSD_Path& thePath)
 {
   {
     TCollection_AsciiString aDisk = thePath.Disk();
@@ -26,7 +26,7 @@ static TCollection_AsciiString _osd_wnt_set_disk_name(const OSD_Path& thePath)
   const int               j    = aDir.UsefullLength();
   if (j < 3 || aDir.Value(1) != '|' || aDir.Value(2) != '|')
   {
-    throw Standard_ProgramError("OSD_Disk: bad disk name");
+    throw Standard_ProgramError("System::os::OSD_Disk: bad disk name");
   }
 
   aDir.SetValue(1, '\\');
@@ -52,7 +52,7 @@ static TCollection_AsciiString _osd_wnt_set_disk_name(const OSD_Path& thePath)
   {
     if (thePath.Name().UsefullLength() == 0 && thePath.Extension().UsefullLength() == 0)
     {
-      throw Standard_ProgramError("OSD_Disk: bad disk name");
+      throw Standard_ProgramError("System::os::OSD_Disk: bad disk name");
     }
     else
     {
@@ -84,7 +84,7 @@ extern "C"
   #include <cerrno>
 #endif
 
-OSD_Disk::OSD_Disk()
+System::os::OSD_Disk::OSD_Disk()
 {
 #ifdef _WIN32
   const DWORD                 aBuffLen = GetCurrentDirectoryW(0, NULL);
@@ -100,7 +100,7 @@ OSD_Disk::OSD_Disk()
 #endif
 }
 
-OSD_Disk::OSD_Disk(const OSD_Path& theName)
+System::os::OSD_Disk::OSD_Disk(const System::os::OSD_Path& theName)
     : myDiskName(theName.Disk())
 {
 #ifdef _WIN32
@@ -108,32 +108,32 @@ OSD_Disk::OSD_Disk(const OSD_Path& theName)
 #endif
 }
 
-OSD_Disk::OSD_Disk(const char* theName)
+System::os::OSD_Disk::OSD_Disk(const char* theName)
     : myDiskName(theName)
 {
 #ifdef _WIN32
-  OSD_Path aPath(theName);
+  System::os::OSD_Path aPath(theName);
   myDiskName = _osd_wnt_set_disk_name(aPath);
 #endif
 }
 
-void OSD_Disk::SetName(const OSD_Path& theName)
+void System::os::OSD_Disk::SetName(const System::os::OSD_Path& theName)
 {
   myDiskName = theName.Disk();
 }
 
-OSD_Path OSD_Disk::Name() const
+System::os::OSD_Path System::os::OSD_Disk::Name() const
 {
 #ifdef _WIN32
   return myDiskName;
 #else
-  OSD_Path aPath;
+  System::os::OSD_Path aPath;
   aPath.SetDisk(myDiskName);
   return aPath;
 #endif
 }
 
-int OSD_Disk::DiskSize()
+int System::os::OSD_Disk::DiskSize()
 {
 #ifdef _WIN32
   ULARGE_INTEGER                   aNbFreeAvailableBytes, aNbTotalBytes, aNbTotalFreeBytes;
@@ -156,12 +156,12 @@ int OSD_Disk::DiskSize()
     unsigned long aBSize512 = aBuffer.f_frsize / 512;
     return int(aBuffer.f_blocks * aBSize512);
   }
-  myError.SetValue(errno, Iam, "OSD_Disk: statvfs failed.");
+  myError.SetValue(errno, Iam, "System::os::OSD_Disk: statvfs failed.");
   return 0;
 #endif
 }
 
-int OSD_Disk::DiskFree()
+int System::os::OSD_Disk::DiskFree()
 {
 #ifdef _WIN32
   ULARGE_INTEGER                   aNbFreeAvailableBytes, aNbTotalBytes, aNbTotalFreeBytes;
@@ -184,7 +184,7 @@ int OSD_Disk::DiskFree()
     unsigned long aBSize512 = aBuffer.f_frsize / 512;
     return int(aBuffer.f_bavail * aBSize512);
   }
-  myError.SetValue(errno, Iam, "OSD_Disk: statvfs failed.");
+  myError.SetValue(errno, Iam, "System::os::OSD_Disk: statvfs failed.");
   return 0;
 #endif
 }

@@ -23,13 +23,13 @@ public:
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferShell(
     const TopoDS_Shape&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferShell(
     const TopoDS_Shell&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferFace(
     const TopoDS_Face&           start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 };

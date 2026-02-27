@@ -494,7 +494,7 @@ static void rescaleDimensionRefLabels(const NCollection_Sequence<TDF_Label>&    
         {
           Standard_SStream aSS;
           aSS << "Dimension PMI " << theEntryDimension << " is not scaled.";
-          Message::SendWarning(aSS.str().c_str());
+          System::log::Message::SendWarning(aSS.str().c_str());
         }
         else
         {
@@ -648,20 +648,20 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
 {
   if (theLabel.IsNull())
   {
-    Message::SendFail("Null label.");
+    System::log::Message::SendFail("Null label.");
     return false;
   }
 
   if (std::abs(theScaleFactor) <= gp::Resolution())
   {
-    Message::SendFail("Scale factor is too small.");
+    System::log::Message::SendFail("Scale factor is too small.");
     return false;
   }
 
   occ::handle<XCAFDoc_ShapeTool> aShapeTool = XCAFDoc_DocumentTool::ShapeTool(theLabel);
   if (aShapeTool.IsNull())
   {
-    Message::SendFail("Couldn't find XCAFDoc_ShapeTool attribute.");
+    System::log::Message::SendFail("Couldn't find XCAFDoc_ShapeTool attribute.");
     return false;
   }
 
@@ -684,7 +684,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
       TDF_Tool::Entry(theLabel, anEntry);
       Standard_SStream aSS;
       aSS << "Label " << anEntry << " is not a root. Set ForceIfNotRoot true to rescale forcibly.";
-      Message::SendFail(aSS.str().c_str());
+      System::log::Message::SendFail(aSS.str().c_str());
       return false;
     }
   }
@@ -692,7 +692,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
   occ::handle<XCAFDoc_AssemblyGraph> aG = new XCAFDoc_AssemblyGraph(theLabel);
   if (aG.IsNull())
   {
-    Message::SendFail("Couldn't create assembly graph.");
+    System::log::Message::SendFail("Couldn't create assembly graph.");
     return false;
   }
 
@@ -725,7 +725,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
           TCollection_AsciiString anEntry;
           TDF_Tool::Entry(aLabel, anEntry);
           aSS << "Shape " << anEntry << " is not scaled!";
-          Message::SendFail(aSS.str().c_str());
+          System::log::Message::SendFail(aSS.str().c_str());
           anIsDone = false;
           return false;
         }
@@ -810,7 +810,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
         {
           Standard_SStream aSS;
           aSS << "Dimension PMI " << anEntryDimension << " is not scaled!";
-          Message::SendWarning(aSS.str().c_str());
+          System::log::Message::SendWarning(aSS.str().c_str());
           continue;
         }
 
@@ -846,7 +846,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
             Standard_SStream aSS;
             aSS << "Dimension PMI " << anEntryDimension
                 << " base shapes do not belong to the rescaled assembly!";
-            Message::SendWarning(aSS.str().c_str());
+            System::log::Message::SendWarning(aSS.str().c_str());
             continue;
           }
           bool                        aRescaleOtherValues = false;
@@ -858,7 +858,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
             {
               Standard_SStream aSS;
               aSS << "Dimension PMI " << anEntryDimension << " is not scaled.";
-              Message::SendWarning(aSS.str().c_str());
+              System::log::Message::SendWarning(aSS.str().c_str());
             }
             break;
             case XCAFDimTolObjects_DimensionType_Location_LinearDistance:
@@ -881,7 +881,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
             {
               Standard_SStream aSS;
               aSS << "Dimension PMI " << anEntryDimension << " is not scaled.";
-              Message::SendWarning(aSS.str().c_str());
+              System::log::Message::SendWarning(aSS.str().c_str());
             }
             break;
             case XCAFDimTolObjects_DimensionType_Size_CurveLength:
@@ -907,14 +907,14 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
             {
               Standard_SStream aSS;
               aSS << "Dimension PMI " << anEntryDimension << " is not scaled.";
-              Message::SendWarning(aSS.str().c_str());
+              System::log::Message::SendWarning(aSS.str().c_str());
             }
             break;
             default:
             {
               Standard_SStream aSS;
               aSS << "Dimension PMI of unsupported type " << anEntryDimension << " is not scaled.";
-              Message::SendWarning(aSS.str().c_str());
+              System::log::Message::SendWarning(aSS.str().c_str());
             }
           }
           rescaleDimensionRefLabels(aShapeLFirst, aBRepTrsf, aG, anEntryDimension);
@@ -939,7 +939,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
         {
           Standard_SStream aSS;
           aSS << "Dimension PMI values " << anEntryDimension << " are not scaled.";
-          Message::SendWarning(aSS.str().c_str());
+          System::log::Message::SendWarning(aSS.str().c_str());
         }
 
         aDimAttr->SetObject(aDimObj);
@@ -968,7 +968,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
 
           Standard_SStream aSS;
           aSS << "Datum PMI target length and width " << anEntryDatum << " are not scaled.";
-          Message::SendWarning(aSS.str().c_str());
+          System::log::Message::SendWarning(aSS.str().c_str());
         }
 
         if (aDatumObj->HasPointText())
@@ -1006,7 +1006,7 @@ bool XCAFDoc_Editor::RescaleGeometry(const TDF_Label& theLabel,
       {
         Standard_SStream aSS;
         aSS << "DimTol PMI " << anEntryDimTol << " is not scaled.";
-        Message::SendWarning(aSS.str().c_str());
+        System::log::Message::SendWarning(aSS.str().c_str());
       }
     }
   }

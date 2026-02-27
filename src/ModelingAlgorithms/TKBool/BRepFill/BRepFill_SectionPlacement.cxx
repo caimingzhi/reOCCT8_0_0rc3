@@ -106,7 +106,7 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
 
     if (anEdgeExplorer.More())
     {
-      constexpr double                    aPrecisionTolerance = Precision::Confusion();
+      constexpr double                    aPrecisionTolerance = math::precision::Precision::Confusion();
       GeomConvert_CompCurveToBSplineCurve aBSplineConverter(aTrimmedCurve);
       for (; anEdgeExplorer.More(); anEdgeExplorer.Next())
       {
@@ -143,10 +143,10 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
 
   GeomFill_SectionPlacement          aSectionPlacement(myLaw->Law(1), aSection);
   occ::handle<BRepAdaptor_CompCurve> aWireAdaptor = new BRepAdaptor_CompCurve(myLaw->Wire());
-  aSectionPlacement.Perform(aWireAdaptor, Precision::Confusion());
+  aSectionPlacement.Perform(aWireAdaptor, math::precision::Precision::Confusion());
 
   const double     aSectionParam   = aSectionPlacement.ParameterOnPath();
-  constexpr double aParamConfusion = Precision::PConfusion();
+  constexpr double aParamConfusion = math::precision::Precision::PConfusion();
 
   int aLawIndex1 = 0;
   int aLawIndex2 = 0;
@@ -203,11 +203,11 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
   aSectionPlacement.SetLocation(myLaw->Law(aLawIndex1));
   if (!anIsVertexOnLaw)
   {
-    aSectionPlacement.Perform(Precision::Confusion());
+    aSectionPlacement.Perform(math::precision::Precision::Confusion());
   }
   else
   {
-    aSectionPlacement.Perform(SearchParam(myLaw, aLawIndex1, aVertex), Precision::Confusion());
+    aSectionPlacement.Perform(SearchParam(myLaw, aLawIndex1, aVertex), math::precision::Precision::Confusion());
   }
 
   myTrsf       = aSectionPlacement.Transformation(WithContact, WithCorrection);
@@ -220,13 +220,13 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
     aSectionPlacement.SetLocation(myLaw->Law(aLawIndex2));
     if (!anIsVertexOnLaw)
     {
-      aSectionPlacement.Perform(Precision::Confusion());
+      aSectionPlacement.Perform(math::precision::Precision::Confusion());
     }
     else
     {
       if (aLawIndex1 == aLawIndex2)
         aVertex.Reverse();
-      aSectionPlacement.Perform(SearchParam(myLaw, aLawIndex2, aVertex), Precision::Confusion());
+      aSectionPlacement.Perform(SearchParam(myLaw, aLawIndex2, aVertex), math::precision::Precision::Confusion());
     }
     if (aSectionPlacement.Angle() > Angle)
     {

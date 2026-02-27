@@ -29,7 +29,7 @@ GeomFill_EvolvedSection::GeomFill_EvolvedSection(const occ::handle<Geom_Curve>& 
     if (myCurve->IsPeriodic())
     {
       int M = myCurve->Degree() / 2 + 1;
-      myCurve->RemoveKnot(1, M, Precision::Confusion());
+      myCurve->RemoveKnot(1, M, math::precision::Precision::Confusion());
     }
   }
 }
@@ -140,7 +140,7 @@ bool GeomFill_EvolvedSection::IsUPeriodic() const
 
 bool GeomFill_EvolvedSection::IsVPeriodic() const
 {
-  return (std::abs(myLaw->Value(First) - myLaw->Value(Last)) < Precision::Confusion());
+  return (std::abs(myLaw->Value(First) - myLaw->Value(Last)) < math::precision::Precision::Confusion());
 }
 
 int GeomFill_EvolvedSection::NbIntervals(const GeomAbs_Shape S) const
@@ -155,7 +155,7 @@ void GeomFill_EvolvedSection::Intervals(NCollection_Array1<double>& T, const Geo
 
 void GeomFill_EvolvedSection::SetInterval(const double F, const double L)
 {
-  TLaw = myLaw->Trim(F, L, Precision::PConfusion());
+  TLaw = myLaw->Trim(F, L, math::precision::Precision::PConfusion());
 }
 
 void GeomFill_EvolvedSection::GetInterval(double& F, double& L) const

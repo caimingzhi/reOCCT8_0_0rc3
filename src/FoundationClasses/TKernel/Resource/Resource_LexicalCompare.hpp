@@ -7,6 +7,7 @@
 #include <Standard_Boolean.hpp>
 class TCollection_AsciiString;
 
+namespace System { namespace resource {
 class Resource_LexicalCompare
 {
 public:
@@ -17,3 +18,5 @@ public:
   Standard_EXPORT bool IsLower(const TCollection_AsciiString& Left,
                                const TCollection_AsciiString& Right) const;
 };
+}} // namespace System::resource
+

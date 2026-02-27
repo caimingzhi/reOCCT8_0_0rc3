@@ -6,7 +6,10 @@
 #include <XmlDrivers_DocumentStorageDriver.hpp>
 class TCollection_ExtendedString;
 class XmlMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class XmlXCAFDrivers_DocumentStorageDriver : public XmlDrivers_DocumentStorageDriver
 {
@@ -16,7 +19,7 @@ public:
     const TCollection_ExtendedString& theCopyright);
 
   Standard_EXPORT occ::handle<XmlMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver) override;
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver) override;
 
   DEFINE_STANDARD_RTTIEXT(XmlXCAFDrivers_DocumentStorageDriver, XmlDrivers_DocumentStorageDriver)
 };

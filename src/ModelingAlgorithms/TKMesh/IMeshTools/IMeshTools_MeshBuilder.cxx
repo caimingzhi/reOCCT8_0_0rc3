@@ -2,7 +2,7 @@
 #include <IMeshData_Face.hpp>
 #include <OSD_Parallel.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_MeshBuilder, Message_Algorithm)
+IMPLEMENT_STANDARD_RTTIEXT(IMeshTools_MeshBuilder, System::log::Message_Algorithm)
 
 IMeshTools_MeshBuilder::IMeshTools_MeshBuilder() = default;
 
@@ -13,7 +13,7 @@ IMeshTools_MeshBuilder::IMeshTools_MeshBuilder(const occ::handle<IMeshTools_Cont
 
 IMeshTools_MeshBuilder::~IMeshTools_MeshBuilder() = default;
 
-void IMeshTools_MeshBuilder::Perform(const Message_ProgressRange& theRange)
+void IMeshTools_MeshBuilder::Perform(const System::log::Message_ProgressRange& theRange)
 {
   ClearStatus();
 
@@ -24,7 +24,7 @@ void IMeshTools_MeshBuilder::Perform(const Message_ProgressRange& theRange)
     return;
   }
 
-  Message_ProgressScope aPS(theRange, "Mesh Perform", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Mesh Perform", 10);
 
   if (aContext->BuildModel())
   {

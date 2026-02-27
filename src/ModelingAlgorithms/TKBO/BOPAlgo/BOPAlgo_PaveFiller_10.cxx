@@ -62,7 +62,7 @@ void BOPAlgo_PaveFiller::UpdateEdgeTolerance(const int nE, const double theTol)
   BRep_Builder().UpdateEdge(aE, theTol);
   Bnd_Box& aBoxE = aSIE.ChangeBox();
   BRepBndLib::Add(aE, aBoxE);
-  aBoxE.SetGap(aBoxE.GetGap() + Precision::Confusion());
+  aBoxE.SetGap(aBoxE.GetGap() + math::precision::Precision::Confusion());
 
   NCollection_List<int>::Iterator itLI(aLI);
   for (; itLI.More(); itLI.Next())
@@ -90,7 +90,7 @@ int BOPAlgo_PaveFiller::UpdateVertex(const int nV, const double aTolNew)
       BOPDS_ShapeInfo& aSIV  = myDS->ChangeShapeInfo(nVNew);
       Bnd_Box&         aBoxV = aSIV.ChangeBox();
       BRepBndLib::Add(aVSD, aBoxV);
-      aBoxV.SetGap(aBoxV.GetGap() + Precision::Confusion());
+      aBoxV.SetGap(aBoxV.GetGap() + math::precision::Precision::Confusion());
       myIncreasedSS.Add(nV);
     }
     return nVNew;
@@ -111,7 +111,7 @@ int BOPAlgo_PaveFiller::UpdateVertex(const int nV, const double aTolNew)
   BOPDS_ShapeInfo& aSIDS  = myDS->ChangeShapeInfo(nVNew);
   Bnd_Box&         aBoxDS = aSIDS.ChangeBox();
   BRepBndLib::Add(aVNew, aBoxDS);
-  aBoxDS.SetGap(aBoxDS.GetGap() + Precision::Confusion());
+  aBoxDS.SetGap(aBoxDS.GetGap() + math::precision::Precision::Confusion());
 
   myDS->AddShapeSD(nV, nVNew);
 
@@ -151,7 +151,7 @@ void BOPAlgo_PaveFiller::UpdateCommonBlocksWithSDVertices()
   NCollection_List<occ::handle<BOPDS_PaveBlock>>::Iterator aItPB;
   occ::handle<BOPDS_PaveBlock>                             aPB;
 
-  aTolV = Precision::Confusion();
+  aTolV = math::precision::Precision::Confusion();
 
   for (i = 0; i < aNbPBP; ++i)
   {

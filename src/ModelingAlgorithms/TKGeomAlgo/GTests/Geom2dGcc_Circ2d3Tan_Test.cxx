@@ -16,7 +16,7 @@
 class Geom2dGcc_Circ2d3TanTest : public ::testing::Test
 {
 protected:
-  void SetUp() override { myTolerance = Precision::Confusion(); }
+  void SetUp() override { myTolerance = math::precision::Precision::Confusion(); }
 
   double myTolerance;
 
@@ -132,7 +132,7 @@ TEST_F(Geom2dGcc_Circ2d3TanTest, ToleranceImpact_Analysis)
   Geom2dGcc_QualifiedCurve aQual2 = createQualifiedCircle(500.0, 1900.0, 400.0);
   Geom2dGcc_QualifiedCurve aQual3 = createQualifiedCircle(700.0, 1900.0, 200.0);
 
-  std::vector<double> aTestTolerances = {Precision::Confusion(), 1e-12, 1e-10, 1e-8};
+  std::vector<double> aTestTolerances = {math::precision::Precision::Confusion(), 1e-12, 1e-10, 1e-8};
 
   int aDefaultSolCount = 0;
 
@@ -144,7 +144,7 @@ TEST_F(Geom2dGcc_Circ2d3TanTest, ToleranceImpact_Analysis)
 
     int aNbSol = aSolver.NbSolutions();
 
-    if (aTol == Precision::Confusion())
+    if (aTol == math::precision::Precision::Confusion())
     {
       aDefaultSolCount = aNbSol;
       EXPECT_GE(aNbSol, 1) << "Should find at least 1 solution with default tolerance";

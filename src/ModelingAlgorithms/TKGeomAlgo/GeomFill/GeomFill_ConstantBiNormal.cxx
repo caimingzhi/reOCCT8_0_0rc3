@@ -62,7 +62,7 @@ bool GeomFill_ConstantBiNormal::D0(const double Param,
 
   frenet->D0(Param, Tangent, Normal, BiNormal);
   BiNormal = BN;
-  if (BiNormal.Crossed(Tangent).Magnitude() > Precision::Confusion())
+  if (BiNormal.Crossed(Tangent).Magnitude() > math::precision::Precision::Confusion())
   {
     Normal  = BiNormal.Crossed(Tangent).Normalized();
     Tangent = Normal.Crossed(BiNormal);
@@ -88,7 +88,7 @@ bool GeomFill_ConstantBiNormal::D1(const double Param,
   frenet->D1(Param, Tangent, DTangent, Normal, DNormal, BiNormal, DBiNormal);
   BiNormal  = BN;
   DBiNormal = gp_Vec(0, 0, 0);
-  if (BiNormal.Crossed(Tangent).Magnitude() > Precision::Confusion())
+  if (BiNormal.Crossed(Tangent).Magnitude() > math::precision::Precision::Confusion())
   {
     F       = BiNormal.Crossed(Tangent);
     DF      = BiNormal.Crossed(DTangent);
@@ -137,7 +137,7 @@ bool GeomFill_ConstantBiNormal::D2(const double Param,
   BiNormal   = BN;
   DBiNormal  = gp_Vec(0, 0, 0);
   D2BiNormal = gp_Vec(0, 0, 0);
-  if (BiNormal.Crossed(Tangent).Magnitude() > Precision::Confusion())
+  if (BiNormal.Crossed(Tangent).Magnitude() > math::precision::Precision::Confusion())
   {
     F        = BiNormal.Crossed(Tangent);
     DF       = BiNormal.Crossed(DTangent);
@@ -182,7 +182,7 @@ void GeomFill_ConstantBiNormal::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal,
 {
   frenet->GetAverageLaw(ATangent, ANormal, ABiNormal);
   ABiNormal = BN;
-  if (ABiNormal.Crossed(ATangent).Magnitude() > Precision::Confusion())
+  if (ABiNormal.Crossed(ATangent).Magnitude() > math::precision::Precision::Confusion())
   {
     ANormal  = ABiNormal.Crossed(ATangent).Normalized();
     ATangent = ANormal.Crossed(ABiNormal);
@@ -230,7 +230,7 @@ bool GeomFill_ConstantBiNormal::IsOnlyBy3dCurve() const
     {
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
-      return V.IsNormal(BN, Precision::Angular());
+      return V.IsNormal(BN, math::precision::Precision::Angular());
     }
     default:
       return false;
@@ -238,5 +238,5 @@ bool GeomFill_ConstantBiNormal::IsOnlyBy3dCurve() const
 
   gp_Vec V;
   V.SetXYZ(TheAxe.Direction().XYZ());
-  return V.IsParallel(BN, Precision::Angular());
+  return V.IsParallel(BN, math::precision::Precision::Angular());
 }

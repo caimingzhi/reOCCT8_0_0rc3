@@ -18,7 +18,7 @@ SelectMgr_BVHThreadPool::SelectMgr_BVHThreadPool(int theNbThreads)
   int aBVHThreadsNum = std::max(1, theNbThreads);
   myBVHThreads.Resize(1, aBVHThreadsNum, false);
 
-  bool toCatchFpe = OSD::ToCatchFloatingSignals();
+  bool toCatchFpe = System::os::OSD::ToCatchFloatingSignals();
 
   for (int i = myBVHThreads.Lower(); i <= myBVHThreads.Upper(); ++i)
   {
@@ -83,7 +83,7 @@ void SelectMgr_BVHThreadPool::AddEntity(const occ::handle<Select3D_SensitiveEnti
 
 void SelectMgr_BVHThreadPool::BVHThread::performThread()
 {
-  OSD::SetThreadLocalSignal(OSD::SignalMode(), myToCatchFpe);
+  System::os::OSD::SetThreadLocalSignal(System::os::OSD::SignalMode(), myToCatchFpe);
 
   for (;;)
   {
@@ -120,17 +120,17 @@ void SelectMgr_BVHThreadPool::BVHThread::performThread()
       {
         TCollection_AsciiString aMsg =
           TCollection_AsciiString(aFailure.ExceptionType()) + ": " + aFailure.what();
-        Message::DefaultMessenger()->SendFail(aMsg);
+        System::log::Message::DefaultMessenger()->SendFail(aMsg);
       }
       catch (std::exception& anStdException)
       {
         TCollection_AsciiString aMsg =
           TCollection_AsciiString(typeid(anStdException).name()) + ": " + anStdException.what();
-        Message::DefaultMessenger()->SendFail(aMsg);
+        System::log::Message::DefaultMessenger()->SendFail(aMsg);
       }
       catch (...)
       {
-        Message::DefaultMessenger()->SendFail("Error: Unknown exception");
+        System::log::Message::DefaultMessenger()->SendFail("Error: Unknown exception");
       }
     }
   }

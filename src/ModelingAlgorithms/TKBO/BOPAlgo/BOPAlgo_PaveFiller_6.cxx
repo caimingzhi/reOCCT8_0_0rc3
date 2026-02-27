@@ -164,7 +164,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -229,7 +229,7 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_FaceFace> BOPAlgo_VectorOfFaceFace;
 
-void BOPAlgo_PaveFiller::PerformFF(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformFF(const System::log::Message_ProgressRange& theRange)
 {
 
   myIterator->Initialize(TopAbs_FACE, TopAbs_FACE);
@@ -262,7 +262,7 @@ void BOPAlgo_PaveFiller::PerformFF(const Message_ProgressRange& theRange)
     return;
   }
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
 
   NCollection_Vector<BOPDS_InterfFF>& aFFs = myDS->InterfFF();
   aFFs.SetIncrement(iSize);
@@ -450,7 +450,7 @@ void BOPAlgo_PaveFiller::PerformFF(const Message_ProgressRange& theRange)
 
   int k, aNbFaceFace = aVFaceFace.Length();
   ;
-  Message_ProgressScope aPS(aPSOuter.Next(), "Performing Face-Face intersection", aNbFaceFace);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(), "Performing Face-Face intersection", aNbFaceFace);
   for (k = 0; k < aNbFaceFace; k++)
   {
     BOPAlgo_FaceFace& aFaceFace = aVFaceFace.ChangeValue(k);
@@ -562,9 +562,9 @@ static void UpdateSavedTolerance(const BOPDS_PDS&                  theDS,
   }
 }
 
-void BOPAlgo_PaveFiller::MakeBlocks(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::MakeBlocks(const System::log::Message_ProgressRange& theRange)
 {
-  Message_ProgressScope aPSOuter(theRange, nullptr, 4);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 4);
   if (myGlue != BOPAlgo_GlueOff)
   {
     return;
@@ -572,7 +572,7 @@ void BOPAlgo_PaveFiller::MakeBlocks(const Message_ProgressRange& theRange)
 
   NCollection_Vector<BOPDS_InterfFF>& aFFs  = myDS->InterfFF();
   int                                 aNbFF = aFFs.Length();
-  Message_ProgressScope               aPS(aPSOuter.Next(), "Building section edges", aNbFF);
+  System::log::Message_ProgressScope               aPS(aPSOuter.Next(), "Building section edges", aNbFF);
   if (!aNbFF)
   {
     return;
@@ -773,7 +773,7 @@ void BOPAlgo_PaveFiller::MakeBlocks(const Message_ProgressRange& theRange)
         aPB->Indices(nV1, nV2);
         aPB->Range(aT1, aT2);
 
-        if (fabs(aT1 - aT2) < Precision::PConfusion())
+        if (fabs(aT1 - aT2) < math::precision::Precision::PConfusion())
         {
           continue;
         }
@@ -933,7 +933,7 @@ void BOPAlgo_PaveFiller::MakeBlocks(const Message_ProgressRange& theRange)
       Bnd_Box&         aBoxDS = aSIDS.ChangeBox();
       aBoxDS                  = Bnd_Box();
       BRepBndLib::Add(aV, aBoxDS);
-      aBoxDS.SetGap(aBoxDS.GetGap() + Precision::Confusion());
+      aBoxDS.SetGap(aBoxDS.GetGap() + math::precision::Precision::Confusion());
 
       if (aDMVLV.IsBound(nV1))
         aDMVLV.UnBind(nV1);
@@ -1013,7 +1013,7 @@ void BOPAlgo_PaveFiller::PostTreatFF(
   const NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>>&          theMicroPB,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theVertsOnRejectedPB,
   const occ::handle<NCollection_BaseAllocator>&                        theAllocator,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
   int aNbS = theMSCPB.Extent();
   if (!aNbS)
@@ -1193,7 +1193,7 @@ void BOPAlgo_PaveFiller::PostTreatFF(
     }
   }
 
-  Message_ProgressScope aPS(theRange, "Intersection of section edges", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Intersection of section edges", 1);
 
   aPF.SetRunParallel(myRunParallel);
   aPF.SetArguments(aLS);
@@ -2006,7 +2006,7 @@ static void getBoundPaves(const BOPDS_DS* theDS, const BOPDS_Curve& theNC, int t
   gp_Pnt                aP[2];
   aIC.Bounds(aT[0], aT[1], aP[0], aP[1]);
   double aTol = std::max(theNC.Tolerance(), theNC.TangentialTolerance());
-  aTol += Precision::Confusion();
+  aTol += math::precision::Precision::Confusion();
   for (int j = 0; j < 2; ++j)
   {
     const BOPDS_ShapeInfo& aSIV  = theDS->ShapeInfo(theNV[j]);
@@ -2032,7 +2032,7 @@ void BOPAlgo_PaveFiller::PutBoundPaveOnCurve(const TopoDS_Face&     aF1,
   int aBndNV[2];
   getBoundPaves(myDS, aNC, aBndNV);
 
-  double aTolVnew = Precision::Confusion();
+  double aTolVnew = math::precision::Precision::Confusion();
   bool   isClosed = aP[1].IsEqual(aP[0], aTolVnew);
   if (isClosed && (aBndNV[0] > 0 || aBndNV[1] > 0))
     return;
@@ -2063,7 +2063,7 @@ void BOPAlgo_PaveFiller::PutBoundPaveOnCurve(const TopoDS_Face&     aF1,
 
       Bnd_Box& aBox = aSIVn.ChangeBox();
       BRepBndLib::Add(aVn, aBox);
-      aBox.SetGap(aBox.GetGap() + Precision::Confusion());
+      aBox.SetGap(aBox.GetGap() + math::precision::Precision::Confusion());
 
       int nVn = myDS->Append(aSIVn);
 
@@ -2220,7 +2220,7 @@ void BOPAlgo_PaveFiller::FilterPavesOnCurves(const NCollection_Vector<BOPDS_Curv
       if (pTol)
       {
         const TopoDS_Vertex& aV = *(TopoDS_Vertex*)&myDS->Shape(nV);
-        const double aRealTol   = std::max(*pTol, sqrt(aMaxDistKept) + Precision::Confusion());
+        const double aRealTol   = std::max(*pTol, sqrt(aMaxDistKept) + math::precision::Precision::Confusion());
         (*(occ::handle<BRep_TVertex>*)&aV.TShape())->Tolerance(aRealTol);
       }
     }
@@ -2726,7 +2726,7 @@ void BOPAlgo_PaveFiller::PutPaveOnCurve(const int                               
         BOPDS_ShapeInfo& aSIDS  = myDS->ChangeShapeInfo(nV);
         Bnd_Box&         aBoxDS = aSIDS.ChangeBox();
         BRepBndLib::Add(aV, aBoxDS);
-        aBoxDS.SetGap(aBoxDS.GetGap() + Precision::Confusion());
+        aBoxDS.SetGap(aBoxDS.GetGap() + math::precision::Precision::Confusion());
       }
     }
   }
@@ -3161,7 +3161,7 @@ void BOPAlgo_PaveFiller::PutClosingPaveOnCurve(BOPDS_Curve& aNC)
     double aTC = aPave.Parameter();
     for (int j = 0; j < 2; ++j)
     {
-      if (std::abs(aTC - aT[j]) < Precision::PConfusion())
+      if (std::abs(aTC - aT[j]) < math::precision::Precision::PConfusion())
       {
         nV   = aPave.Index();
         aTOp = (!j) ? aT[1] : aT[0];
@@ -3180,7 +3180,7 @@ void BOPAlgo_PaveFiller::PutClosingPaveOnCurve(BOPDS_Curve& aNC)
   gp_Pnt               aPV   = BRep_Tool::Pnt(aV);
 
   double aTolP = std::max(aNC.Tolerance(), aNC.TangentialTolerance());
-  aTolP += Precision::Confusion();
+  aTolP += math::precision::Precision::Confusion();
 
   const double aDistVP = aPV.Distance(aPOp);
   if (aDistVP > aTolV + aTolP)
@@ -3817,14 +3817,14 @@ void BOPAlgo_PaveFiller::CorrectToleranceOfSE()
   }
 }
 
-void BOPAlgo_PaveFiller::PutSEInOtherFaces(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PutSEInOtherFaces(const System::log::Message_ProgressRange& theRange)
 {
 
   NCollection_IndexedMap<occ::handle<BOPDS_PaveBlock>> aMPBScAll;
 
   NCollection_Vector<BOPDS_InterfFF>& aFFs  = myDS->InterfFF();
   const int                           aNbFF = aFFs.Length();
-  Message_ProgressScope               aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope               aPS(theRange, nullptr, 1);
   for (int i = 0; i < aNbFF; ++i)
   {
     const NCollection_Vector<BOPDS_Curve>& aVNC = aFFs(i).Curves();

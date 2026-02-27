@@ -66,7 +66,7 @@ void IVtkOCC_ShapeMesher::internalBuild()
     }
     catch (const Standard_Failure& anException)
     {
-      Message::SendFail(TCollection_AsciiString(
+      System::log::Message::SendFail(TCollection_AsciiString(
                           "Error: addWireFrameFaces() wireframe presentation builder has failed (")
                         + anException.what() + ")");
     }

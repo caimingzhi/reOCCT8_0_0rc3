@@ -116,7 +116,7 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
     if (!undent.IsNull())
       return true;
 
-    Message_Msg Msg27("XSTEP_27");
+    System::log::Message_Msg Msg27("XSTEP_27");
     Msg27.Arg(thecnum);
     ach->SendFail(Msg27);
     return false;
@@ -125,7 +125,7 @@ bool IGESData_IGESReaderTool::AnalyseRecord(const int                           
   if ((FP.ParamType() != Interface_ParamInteger) || (atoi(FP.CValue()) != ent->TypeNumber()))
   {
 
-    Message_Msg Msg28("XSTEP_28");
+    System::log::Message_Msg Msg28("XSTEP_28");
     Msg28.Arg(thecnum);
     ach->SendFail(Msg28);
     return false;
@@ -205,7 +205,7 @@ void IGESData_IGESReaderTool::ReadDir(const occ::handle<IGESData_IGESEntity>&   
     if (Lnf.IsNull())
     {
 
-      Message_Msg Msg29("XSTEP_29");
+      System::log::Message_Msg Msg29("XSTEP_29");
       Msg29.Arg(thecnum);
       Msg29.Arg(thectyp.Type());
       ach->SendWarning(Msg29);
@@ -225,7 +225,7 @@ void IGESData_IGESReaderTool::ReadDir(const occ::handle<IGESData_IGESEntity>&   
     if (Lvs.IsNull())
     {
 
-      Message_Msg Msg30("XSTEP_30");
+      System::log::Message_Msg Msg30("XSTEP_30");
       Msg30.Arg(thecnum);
       Msg30.Arg(thectyp.Type());
       ach->SendWarning(Msg30);
@@ -244,7 +244,7 @@ void IGESData_IGESReaderTool::ReadDir(const occ::handle<IGESData_IGESEntity>&   
     if (View.IsNull())
     {
 
-      Message_Msg Msg31("XSTEP_31");
+      System::log::Message_Msg Msg31("XSTEP_31");
       Msg31.Arg(thecnum);
       Msg31.Arg(thectyp.Type());
       ach->SendWarning(Msg31);
@@ -261,7 +261,7 @@ void IGESData_IGESReaderTool::ReadDir(const occ::handle<IGESData_IGESEntity>&   
     if (Transf.IsNull())
     {
 
-      Message_Msg Msg32("XSTEP_32");
+      System::log::Message_Msg Msg32("XSTEP_32");
       Msg32.Arg(thecnum);
       Msg32.Arg(thectyp.Type());
       ach->SendWarning(Msg32);
@@ -279,7 +279,7 @@ void IGESData_IGESReaderTool::ReadDir(const occ::handle<IGESData_IGESEntity>&   
     if (Lbd.IsNull())
     {
 
-      Message_Msg Msg33("XSTEP_33");
+      System::log::Message_Msg Msg33("XSTEP_33");
       Msg33.Arg(thecnum);
       Msg33.Arg(thectyp.Type());
       ach->SendWarning(Msg33);
@@ -299,7 +299,7 @@ void IGESData_IGESReaderTool::ReadDir(const occ::handle<IGESData_IGESEntity>&   
     if (Color.IsNull())
     {
 
-      Message_Msg Msg34("XSTEP_34");
+      System::log::Message_Msg Msg34("XSTEP_34");
       Msg34.Arg(thecnum);
       Msg34.Arg(thectyp.Type());
       ach->SendWarning(Msg34);
@@ -357,7 +357,7 @@ void IGESData_IGESReaderTool::ReadOwnParams(const occ::handle<IGESData_IGESEntit
   else if (ent.IsNull())
   {
 
-    Message_Msg Msg35("XSTEP_35");
+    System::log::Message_Msg Msg35("XSTEP_35");
     Msg35.Arg(thecnum);
     ach->SendFail(Msg35);
   }
@@ -369,7 +369,7 @@ void IGESData_IGESReaderTool::ReadOwnParams(const occ::handle<IGESData_IGESEntit
   else
   {
 
-    Message_Msg Msg36("XSTEP_36");
+    System::log::Message_Msg Msg36("XSTEP_36");
     Msg36.Arg(thecnum);
     ach->SendFail(Msg36);
   }
@@ -380,7 +380,7 @@ void IGESData_IGESReaderTool::ReadProps(const occ::handle<IGESData_IGESEntity>& 
                                         IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg38("XSTEP_38");
+  System::log::Message_Msg Msg38("XSTEP_38");
 
   occ::handle<Interface_Check> ach = new Interface_Check;
   Msg38.Arg(thecnum);
@@ -402,7 +402,7 @@ void IGESData_IGESReaderTool::ReadProps(const occ::handle<IGESData_IGESEntity>& 
     return;
   if (!PR.ReadInteger(ncur, nbprops))
   {
-    Message_Msg Msg221("XSTEP_221");
+    System::log::Message_Msg Msg221("XSTEP_221");
     PR.SendFail(Msg221);
     return;
   }
@@ -422,7 +422,7 @@ void IGESData_IGESReaderTool::ReadAssocs(const occ::handle<IGESData_IGESEntity>&
                                          IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg37("XSTEP_37");
+  System::log::Message_Msg Msg37("XSTEP_37");
 
   Msg37.Arg(thecnum);
   Msg37.Arg(thectyp.Type());
@@ -444,7 +444,7 @@ void IGESData_IGESReaderTool::ReadAssocs(const occ::handle<IGESData_IGESEntity>&
     return;
   if (!PR.ReadInteger(PR.Current(), nbassocs))
   {
-    Message_Msg Msg220("XSTEP_220");
+    System::log::Message_Msg Msg220("XSTEP_220");
     PR.SendFail(Msg220);
     return;
   }

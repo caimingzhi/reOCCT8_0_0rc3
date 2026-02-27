@@ -397,7 +397,7 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
     return !bRet;
   }
 
-  aPA = Precision::Angular();
+  aPA = math::precision::Precision::Angular();
 
   if (aST2 == GeomAbs_Plane)
   {
@@ -626,7 +626,7 @@ occ::handle<Geom_Circle> ChFi3d_CircularSpine(double&       WFirst,
 {
   gp_Circ            ccc;
   gp_Pln             Pl1(Pdeb, gp_Dir(Vdeb)), Pl2(Pfin, gp_Dir(Vfin));
-  IntAna_QuadQuadGeo LInt(Pl1, Pl2, Precision::Angular(), Precision::Confusion());
+  IntAna_QuadQuadGeo LInt(Pl1, Pl2, math::precision::Precision::Angular(), math::precision::Precision::Confusion());
   gp_Lin             li;
   if (LInt.IsDone())
   {
@@ -986,7 +986,7 @@ bool ChFi3d_IntTraces(const occ::handle<ChFiDS_SurfData>& fd1,
   double first, last, delta = 0.;
   first = fd1->Interference(jf1).FirstParameter();
   last  = fd1->Interference(jf1).LastParameter();
-  if ((last - first) < Precision::PConfusion())
+  if ((last - first) < math::precision::Precision::PConfusion())
     return false;
   if (enlarge)
     delta = std::min(0.1, 0.05 * (last - first));
@@ -1007,7 +1007,7 @@ bool ChFi3d_IntTraces(const occ::handle<ChFiDS_SurfData>& fd1,
 
   first = fd2->Interference(jf2).FirstParameter();
   last  = fd2->Interference(jf2).LastParameter();
-  if ((last - first) < Precision::PConfusion())
+  if ((last - first) < math::precision::Precision::PConfusion())
     return false;
   if (enlarge)
     delta = std::min(0.1, 0.05 * (last - first));
@@ -1032,11 +1032,11 @@ bool ChFi3d_IntTraces(const occ::handle<ChFiDS_SurfData>& fd1,
   gp_Pnt2d                   p2d;
   if (fd1->Interference(jf1).PCurveOnFace() == fd2->Interference(jf2).PCurveOnFace())
   {
-    Intersection.Perform(C1, Precision::PIntersection(), Precision::PIntersection());
+    Intersection.Perform(C1, math::precision::Precision::PIntersection(), math::precision::Precision::PIntersection());
   }
   else
   {
-    Intersection.Perform(C1, C2, Precision::PIntersection(), Precision::PIntersection());
+    Intersection.Perform(C1, C2, math::precision::Precision::PIntersection(), math::precision::Precision::PIntersection());
   }
   if (Intersection.IsDone())
   {
@@ -1172,13 +1172,13 @@ void ChFi3d_ReparamPcurv(const double Uf, const double Ul, occ::handle<Geom2d_Cu
   occ::handle<Geom2d_BSplineCurve> pc = occ::down_cast<Geom2d_BSplineCurve>(basis);
   if (pc.IsNull())
     return;
-  if (std::abs(upcf - pc->FirstParameter()) > Precision::PConfusion()
-      || std::abs(upcl - pc->LastParameter()) > Precision::PConfusion())
+  if (std::abs(upcf - pc->FirstParameter()) > math::precision::Precision::PConfusion()
+      || std::abs(upcl - pc->LastParameter()) > math::precision::Precision::PConfusion())
   {
     pc->Segment(upcf, upcl);
   }
-  if (std::abs(Uf - pc->FirstParameter()) > Precision::PConfusion()
-      || std::abs(Ul - pc->LastParameter()) > Precision::PConfusion())
+  if (std::abs(Uf - pc->FirstParameter()) > math::precision::Precision::PConfusion()
+      || std::abs(Ul - pc->LastParameter()) > math::precision::Precision::PConfusion())
   {
     NCollection_Array1<gp_Pnt2d> pol(1, pc->NbPoles());
     pc->Poles(pol);
@@ -1276,7 +1276,7 @@ bool ChFi3d_CheckSameParameter(const occ::handle<Adaptor3d_Curve>&   C3d,
     return false;
   }
   tolreached *= 2.;
-  tolreached = std::max(tolreached, Precision::Confusion());
+  tolreached = std::max(tolreached, math::precision::Precision::Confusion());
   return true;
 }
 
@@ -1350,7 +1350,7 @@ void ChFi3d_ComputePCurv(const gp_Pnt2d&            UV1,
                          const double               Parfin,
                          const bool                 reverse)
 {
-  const double tol = Precision::PConfusion();
+  const double tol = math::precision::Precision::PConfusion();
   gp_Pnt2d     p1, p2;
   if (!reverse)
   {
@@ -1714,7 +1714,7 @@ void ChFi3d_ComputeArete(const ChFiDS_CommonPoint&        P1,
       double    umin, umax, vmin, vmax;
       Surf->Bounds(umin, umax, vmin, vmax);
       bs.Update(umin, vmin, umax, vmax);
-      bs.SetGap(Precision::PConfusion());
+      bs.SetGap(math::precision::Precision::PConfusion());
       bool aIN = true;
       for (int ii = 1; ii <= 4 && aIN; ii++)
       {
@@ -1744,7 +1744,7 @@ void ChFi3d_ComputeArete(const ChFiDS_CommonPoint&        P1,
     hc->Load(C3d, Pardeb, Parfin);
     ChFi3d_ProjectPCurv(hc, hs, Pcurv, tol3d, tolreached);
     gp_Pnt2d p2d = Pcurv->Value(Pardeb);
-    if (!UV1.IsEqual(p2d, Precision::PConfusion()))
+    if (!UV1.IsEqual(p2d, math::precision::Precision::PConfusion()))
     {
       gp_Vec2d v2d(p2d, UV1);
       Pcurv->Translate(v2d);
@@ -2154,7 +2154,7 @@ void ChFi3d_FilDS(const int                         SolidIndex,
         if (!IcFil1)
           continue;
         double FiLen = std::abs(Fi.FirstParameter() - Fi.LastParameter());
-        if (FiLen > Precision::PConfusion())
+        if (FiLen > math::precision::Precision::PConfusion())
           continue;
         TopOpeBRepDS_Curve& cc = DStr.ChangeCurve(IcFil1);
         cc.ChangeCurve().Nullify();
@@ -2898,7 +2898,7 @@ void ChFi3d_StripeEdgeInter(const occ::handle<ChFiDS_Stripe>& theStripe1,
       Geom2dAdaptor_Curve aPCurve2(aFI2.PCurveOnFace(),
                                    aFI2.FirstParameter(),
                                    aFI2.LastParameter());
-      anIntersector.Perform(aPCurve1, aPCurve2, tol2d, Precision::PConfusion());
+      anIntersector.Perform(aPCurve1, aPCurve2, tol2d, math::precision::Precision::PConfusion());
       if (anIntersector.NbSegments() > 0 || anIntersector.NbPoints() > 0)
         throw StdFail_NotDone("StripeEdgeInter : fillets have too big radiuses");
     }
@@ -3007,7 +3007,7 @@ double ChFi3d_EvalTolReached(const occ::handle<Adaptor3d_Surface>& S1,
       distmax = d;
   }
   distmax = 1.5 * sqrt(distmax);
-  distmax = std::max(distmax, Precision::Confusion());
+  distmax = std::max(distmax, math::precision::Precision::Confusion());
   return distmax;
 }
 
@@ -3132,7 +3132,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       pl  = S2->Plane();
       cyl = S1->Cylinder();
     }
-    IntAna_QuadQuadGeo ImpKK(pl, cyl, Precision::Angular(), tol3d);
+    IntAna_QuadQuadGeo ImpKK(pl, cyl, math::precision::Precision::Angular(), tol3d);
     bool               isIntDone = ImpKK.IsDone();
 
     if (ImpKK.TypeInter() == IntAna_Ellipse)
@@ -3202,7 +3202,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
         }
       }
       if (!c1line)
-        ElCLib::AdjustPeriodic(0., 2 * M_PI, Precision::Angular(), Udeb, Ufin);
+        ElCLib::AdjustPeriodic(0., 2 * M_PI, math::precision::Precision::Angular(), Udeb, Ufin);
       occ::handle<GeomAdaptor_Curve> HC = new GeomAdaptor_Curve();
       HC->Load(C3d, Udeb, Ufin);
       ChFi3d_ProjectPCurv(HC, S1, Pc1, tol3d, tolr1);
@@ -3233,7 +3233,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
   }
   else if (S1->GetType() == GeomAbs_Plane && S2->GetType() == GeomAbs_Plane)
   {
-    IntAna_QuadQuadGeo LInt(S1->Plane(), S2->Plane(), Precision::Angular(), tol3d);
+    IntAna_QuadQuadGeo LInt(S1->Plane(), S2->Plane(), math::precision::Precision::Angular(), tol3d);
     if (LInt.IsDone())
     {
       gp_Lin L = LInt.Line(1);
@@ -3309,14 +3309,14 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
               bool failedF, failedL;
               failedF = failedL = false;
               proj.Init(pdeb1, C3d);
-              if (proj.NbPoints() == 0 && distrefdeb > Precision::Confusion())
+              if (proj.NbPoints() == 0 && distrefdeb > math::precision::Precision::Confusion())
                 proj.Perform(pdeb2);
               if (proj.NbPoints() == 0)
                 failedF = true;
               else
                 Uf = proj.LowerDistanceParameter();
               proj.Perform(pfin1);
-              if (proj.NbPoints() == 0 && distreffin > Precision::Confusion())
+              if (proj.NbPoints() == 0 && distreffin > math::precision::Precision::Confusion())
                 proj.Perform(pfin2);
               if (proj.NbPoints() == 0)
                 failedL = true;
@@ -3341,7 +3341,7 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
               }
               else
               {
-                if (std::abs(Uf - Ul) < Precision::PConfusion())
+                if (std::abs(Uf - Ul) < math::precision::Precision::PConfusion())
                   continue;
               }
               ptestdeb = C3d->Value(Uf);
@@ -3463,8 +3463,8 @@ bool ChFi3d_ComputeCurves(const occ::handle<Adaptor3d_Surface>& S1,
       gp_Pnt pntf(0.5 * (cofin1.Coord() + cofin2.Coord()));
 
       int    nbp  = L2S->NbPoints(), i;
-      double ddeb = Precision::Infinite();
-      double dfin = Precision::Infinite();
+      double ddeb = math::precision::Precision::Infinite();
+      double dfin = math::precision::Precision::Infinite();
       double dd;
       int    indd = 0, indf = 0;
       for (i = 1; i <= nbp; i++)

@@ -61,17 +61,17 @@ void Approx_ComputeCLine::Perform(const MultiLine& Line)
 {
   double UFirst, ULast;
   bool   Finish = false, begin = true, Ok = false;
-  double thetol3d = Precision::Confusion(), thetol2d = Precision::Confusion();
+  double thetol3d = math::precision::Precision::Confusion(), thetol2d = math::precision::Precision::Confusion();
   UFirst      = Line.FirstParameter();
   ULast       = Line.LastParameter();
   double TolU = 0.;
   if (myHangChecking)
   {
-    TolU = std::max((ULast - UFirst) * 1.e-03, Precision::Confusion());
+    TolU = std::max((ULast - UFirst) * 1.e-03, math::precision::Precision::Confusion());
   }
   else
   {
-    TolU = std::max((ULast - UFirst) * 1.e-05, Precision::PApproximation());
+    TolU = std::max((ULast - UFirst) * 1.e-05, math::precision::Precision::PApproximation());
   }
   double myfirstU      = UFirst;
   double mylastU       = ULast;

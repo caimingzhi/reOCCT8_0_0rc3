@@ -306,7 +306,7 @@ bool GeomFill_DraftTrihedron::IsOnlyBy3dCurve() const
     {
       gp_Vec V;
       V.SetXYZ(myCurve->Line().Direction().XYZ());
-      return V.IsParallel(B, Precision::Angular());
+      return V.IsParallel(B, math::precision::Precision::Angular());
     }
     default:
       return false;
@@ -314,5 +314,5 @@ bool GeomFill_DraftTrihedron::IsOnlyBy3dCurve() const
 
   gp_Vec V;
   V.SetXYZ(TheAxe.Direction().XYZ());
-  return V.IsParallel(B, Precision::Angular());
+  return V.IsParallel(B, math::precision::Precision::Angular());
 }

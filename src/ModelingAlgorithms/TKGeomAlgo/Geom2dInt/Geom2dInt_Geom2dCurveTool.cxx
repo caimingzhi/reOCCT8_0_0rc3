@@ -13,7 +13,7 @@ int Geom2dInt_Geom2dCurveTool::NbSamples(const Adaptor2d_Curve2d& C,
   if (typC == GeomAbs_BSplineCurve)
   {
     double t = C.LastParameter() - C.FirstParameter();
-    if (t > Precision::PConfusion())
+    if (t > math::precision::Precision::PConfusion())
     {
       double t1 = U1 - U0;
       if (t1 < 0.0)

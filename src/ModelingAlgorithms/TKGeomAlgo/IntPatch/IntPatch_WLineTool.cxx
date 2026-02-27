@@ -178,8 +178,8 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
     aPntOnF1.SetCoord(aX1, aY1);
     aPntOnF2.SetCoord(aX2, aY2);
 
-    TopAbs_State aState1 = theDom1->Classify(aPntOnF1, Precision::Confusion());
-    TopAbs_State aState2 = theDom2->Classify(aPntOnF2, Precision::Confusion());
+    TopAbs_State aState1 = theDom1->Classify(aPntOnF1, math::precision::Precision::Confusion());
+    TopAbs_State aState2 = theDom2->Classify(aPntOnF2, math::precision::Precision::Confusion());
 
     if (aState1 == TopAbs_OUT || aState2 == TopAbs_OUT)
     {
@@ -213,8 +213,8 @@ static occ::handle<IntPatch_WLine> DeleteOuterPoints(
     aPntOnF1.SetCoord(aX1, aY1);
     aPntOnF2.SetCoord(aX2, aY2);
 
-    TopAbs_State aState1 = theDom1->Classify(aPntOnF1, Precision::Confusion());
-    TopAbs_State aState2 = theDom2->Classify(aPntOnF2, Precision::Confusion());
+    TopAbs_State aState1 = theDom1->Classify(aPntOnF1, math::precision::Precision::Confusion());
+    TopAbs_State aState2 = theDom2->Classify(aPntOnF2, math::precision::Precision::Confusion());
 
     if (aState1 == TopAbs_OUT || aState2 == TopAbs_OUT)
     {
@@ -346,7 +346,7 @@ static occ::handle<IntPatch_WLine> DeleteByTube(const occ::handle<IntPatch_WLine
   gp_Vec   aBase3dVec(theWLine->Point(1).Value(), theWLine->Point(2).Value());
   double   aPrevStep = aBase3dVec.SquareMagnitude();
 
-  constexpr double aBaseTolerance = Precision::Approximation();
+  constexpr double aBaseTolerance = math::precision::Precision::Approximation();
   double           aResS1Tol =
     std::min(theS1->UResolution(aBaseTolerance), theS1->VResolution(aBaseTolerance));
   double aResS2Tol =
@@ -612,7 +612,7 @@ static void ExtendFirst(const occ::handle<IntPatch_WLine>& theWline,
   double aU1 = 0.0, aV1 = 0.0, aU2 = 0.0, aV2 = 0.0;
   theAddedPt.Parameters(aU1, aV1, aU2, aV2);
 
-  if (theAddedPt.IsSame(theWline->Point(1), Precision::Confusion()))
+  if (theAddedPt.IsSame(theWline->Point(1), math::precision::Precision::Confusion()))
   {
     theWline->Curve()->Value(1, theAddedPt);
     for (int i = 1; i <= theWline->NbVertex(); i++)
@@ -653,7 +653,7 @@ static void ExtendLast(const occ::handle<IntPatch_WLine>& theWline,
   theAddedPt.Parameters(aU1, aV1, aU2, aV2);
 
   const int aNbPnts = theWline->NbPnts();
-  if (theAddedPt.IsSame(theWline->Point(aNbPnts), Precision::Confusion()))
+  if (theAddedPt.IsSame(theWline->Point(aNbPnts), math::precision::Precision::Confusion()))
   {
     theWline->Curve()->Value(aNbPnts, theAddedPt);
   }
@@ -1300,8 +1300,8 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
     {
       const IntSurf_PntOn2S aPntCur = theSPnt.Value(aNPt).PntOn2S();
 
-      if (aPntCur.IsSame(aPntFWL1, Precision::Confusion())
-          || aPntCur.IsSame(aPntLWL1, Precision::Confusion()))
+      if (aPntCur.IsSame(aPntFWL1, math::precision::Precision::Confusion())
+          || aPntCur.IsSame(aPntLWL1, math::precision::Precision::Confusion()))
       {
         theSPnt.Remove(aNPt);
         aNPt--;
@@ -1334,7 +1334,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
       double aSqDistL = aPntFWL1.Value().SquareDistance(aPntLWL2.Value());
 
       const double aSqMinFDist = std::min(aSqDistF, aSqDistL);
-      if (aSqMinFDist < Precision::SquareConfusion())
+      if (aSqMinFDist < math::precision::Precision::SquareConfusion())
       {
         const bool             isFM = (aSqDistF < aSqDistL);
         const IntSurf_PntOn2S& aPt1 = aWLine1->Point(2);
@@ -1349,7 +1349,7 @@ void IntPatch_WLineTool::JoinWLines(NCollection_Sequence<occ::handle<IntPatch_Li
       aSqDistL = aPntLWL1.Value().SquareDistance(aPntLWL2.Value());
 
       const double aSqMinLDist = std::min(aSqDistF, aSqDistL);
-      if (aSqMinLDist < Precision::SquareConfusion())
+      if (aSqMinLDist < math::precision::Precision::SquareConfusion())
       {
         const bool             isFM = (aSqDistF < aSqDistL);
         const IntSurf_PntOn2S& aPt1 = aWLine1->Point(aNbPntsWL1 - 1);
@@ -1575,8 +1575,8 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
       const IntSurf_PntOn2S& aPntFWL2 = aWLine2->Point(1);
       const IntSurf_PntOn2S& aPntLWL2 = aWLine2->Point(aWLine2->NbPnts());
 
-      if (!(aPntFWL1.IsSame(aPntFWL2, theToler3D, Precision::PConfusion()))
-          && !(aPntFWL1.IsSame(aPntLWL2, theToler3D, Precision::PConfusion())))
+      if (!(aPntFWL1.IsSame(aPntFWL2, theToler3D, math::precision::Precision::PConfusion()))
+          && !(aPntFWL1.IsSame(aPntLWL2, theToler3D, math::precision::Precision::PConfusion())))
       {
         if (aPntFWL1.IsSame(aPntFWL2, theToler3D) || aPntFWL1.IsSame(aPntLWL2, theToler3D))
         {
@@ -1584,8 +1584,8 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
         }
       }
 
-      if (!(aPntLWL1.IsSame(aPntFWL2, theToler3D, Precision::PConfusion()))
-          && !(aPntLWL1.IsSame(aPntLWL2, theToler3D, Precision::PConfusion())))
+      if (!(aPntLWL1.IsSame(aPntFWL2, theToler3D, math::precision::Precision::PConfusion()))
+          && !(aPntLWL1.IsSame(aPntLWL2, theToler3D, math::precision::Precision::PConfusion())))
       {
         if (aPntLWL1.IsSame(aPntFWL2, theToler3D) || aPntLWL1.IsSame(aPntLWL2, theToler3D))
         {
@@ -1601,7 +1601,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
           const gp_Pnt& aPt = anItr.Value();
           if (!(aCheckResult & (IntPatchWT_DisFirstFirst | IntPatchWT_DisFirstLast)))
           {
-            if (aPt.SquareDistance(aPntFWL1.Value()) < Precision::Confusion())
+            if (aPt.SquareDistance(aPntFWL1.Value()) < math::precision::Precision::Confusion())
             {
               aCheckResult |= IntPatchWT_DisFirstFirst | IntPatchWT_DisFirstLast;
             }
@@ -1609,7 +1609,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
 
           if (!(aCheckResult & (IntPatchWT_DisLastFirst | IntPatchWT_DisLastLast)))
           {
-            if (aPt.SquareDistance(aPntLWL1.Value()) < Precision::Confusion())
+            if (aPt.SquareDistance(aPntLWL1.Value()) < math::precision::Precision::Confusion())
             {
               aCheckResult |= IntPatchWT_DisLastFirst | IntPatchWT_DisLastLast;
             }
@@ -1617,7 +1617,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
 
           if (!(aCheckResult & (IntPatchWT_DisFirstFirst | IntPatchWT_DisLastFirst)))
           {
-            if (aPt.SquareDistance(aPntFWL2.Value()) < Precision::Confusion())
+            if (aPt.SquareDistance(aPntFWL2.Value()) < math::precision::Precision::Confusion())
             {
               aCheckResult |= IntPatchWT_DisFirstFirst | IntPatchWT_DisLastFirst;
             }
@@ -1625,7 +1625,7 @@ void IntPatch_WLineTool::ExtendTwoWLines(NCollection_Sequence<occ::handle<IntPat
 
           if (!(aCheckResult & (IntPatchWT_DisFirstLast | IntPatchWT_DisLastLast)))
           {
-            if (aPt.SquareDistance(aPntLWL2.Value()) < Precision::Confusion())
+            if (aPt.SquareDistance(aPntLWL2.Value()) < math::precision::Precision::Confusion())
             {
               aCheckResult |= IntPatchWT_DisFirstLast | IntPatchWT_DisLastLast;
             }

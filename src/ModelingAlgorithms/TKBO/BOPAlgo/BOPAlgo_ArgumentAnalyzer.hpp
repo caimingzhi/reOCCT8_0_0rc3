@@ -49,7 +49,7 @@ public:
   bool& CurveOnSurfaceMode();
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT bool HasFaulty() const;
 
@@ -60,7 +60,7 @@ protected:
 
   Standard_EXPORT void TestTypes();
 
-  Standard_EXPORT void TestSelfInterferences(const Message_ProgressRange& theRange);
+  Standard_EXPORT void TestSelfInterferences(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT void TestSmallEdge();
 

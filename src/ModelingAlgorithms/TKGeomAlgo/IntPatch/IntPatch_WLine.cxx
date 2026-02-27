@@ -262,8 +262,8 @@ static bool CompareVerticesOnSurf(const IntPatch_Point& vtx1,
     vtx1.ParametersOnS2(u1, v1);
     vtx2.ParametersOnS2(u2, v2);
   }
-  tolU = Precision::PConfusion();
-  tolV = Precision::PConfusion();
+  tolU = math::precision::Precision::PConfusion();
+  tolV = math::precision::Precision::PConfusion();
   return (std::abs(u1 - u2) <= tolU && std::abs(v1 - v2) <= tolV);
 }
 
@@ -529,7 +529,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     }
   } while (!SortIsOK);
 
-  constexpr double dmini = Precision::SquareConfusion();
+  constexpr double dmini = math::precision::Precision::SquareConfusion();
   for (i = 2; (i <= nbponline) && (nbponline > 2); i++)
   {
     const IntSurf_PntOn2S& aPnt1 = curv->Value(i - 1);
@@ -863,7 +863,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     {
       const IntPatch_Point& V = svtx.Value(i);
 
-      if (CompareVertexAndPoint(V.Value(), curv->Value(1).Value(), Precision::Confusion()))
+      if (CompareVertexAndPoint(V.Value(), curv->Value(1).Value(), math::precision::Precision::Confusion()))
       {
         vtx = V;
         vtx.SetParameters(pu1, pv1, pu2, pv2);
@@ -891,7 +891,7 @@ void IntPatch_WLine::ComputeVertexParameters(const double RTol)
     {
       const IntPatch_Point& V = svtx.Value(i);
 
-      if (CompareVertexAndPoint(V.Value(), curv->Value(nbponline).Value(), Precision::Confusion()))
+      if (CompareVertexAndPoint(V.Value(), curv->Value(nbponline).Value(), math::precision::Precision::Confusion()))
       {
         vtx = V;
         vtx.SetParameters(pu1, pv1, pu2, pv2);

@@ -17,7 +17,7 @@ const TopoDS_Shell& BRepPrimAPI_MakeOneAxis::Shell()
   return ((BRepPrim_OneAxis*)OneAxis())->Shell();
 }
 
-void BRepPrimAPI_MakeOneAxis::Build(const Message_ProgressRange&)
+void BRepPrimAPI_MakeOneAxis::Build(const System::log::Message_ProgressRange&)
 {
   BRep_Builder B;
   B.MakeSolid(TopoDS::Solid(myShape));

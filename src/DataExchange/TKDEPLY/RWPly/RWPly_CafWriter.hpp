@@ -11,11 +11,17 @@
 
 #include <memory>
 
+namespace System { namespace log {
 class Message_ProgressRange;
+}} // namespace System::log
+
 class RWMesh_FaceIterator;
 class TDocStd_Document;
 
+namespace System { namespace log {
 class Message_LazyProgressScope;
+}} // namespace System::log
+
 class RWPly_PlyWriterContext;
 
 class RWPly_CafWriter : public Standard_Transient
@@ -78,12 +84,12 @@ public:
     const NCollection_Sequence<TDF_Label>&          theRootLabels,
     const NCollection_Map<TCollection_AsciiString>* theLabelFilter,
     const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-    const Message_ProgressRange& theProgress);
+    const System::log::Message_ProgressRange& theProgress);
 
   Standard_EXPORT virtual bool Perform(
     const occ::handle<TDocStd_Document>&                                                theDocument,
     const NCollection_IndexedDataMap<TCollection_AsciiString, TCollection_AsciiString>& theFileInfo,
-    const Message_ProgressRange& theProgress);
+    const System::log::Message_ProgressRange& theProgress);
 
 protected:
   Standard_EXPORT virtual bool toSkipFaceMesh(const RWMesh_FaceIterator& theFaceIter);
@@ -93,18 +99,18 @@ protected:
                                            int&                       theNbElems);
 
   Standard_EXPORT virtual bool writeShape(RWPly_PlyWriterContext&    theWriter,
-                                          Message_LazyProgressScope& thePSentry,
+                                          System::log::Message_LazyProgressScope& thePSentry,
                                           const int                  theWriteStep,
                                           const TDF_Label&           theLabel,
                                           const TopLoc_Location&     theParentTrsf,
                                           const XCAFPrs_Style&       theParentStyle);
 
   Standard_EXPORT virtual bool writeNodes(RWPly_PlyWriterContext&    theWriter,
-                                          Message_LazyProgressScope& thePSentry,
+                                          System::log::Message_LazyProgressScope& thePSentry,
                                           const RWMesh_FaceIterator& theFace);
 
   Standard_EXPORT virtual bool writeIndices(RWPly_PlyWriterContext&    theWriter,
-                                            Message_LazyProgressScope& thePSentry,
+                                            System::log::Message_LazyProgressScope& thePSentry,
                                             const RWMesh_FaceIterator& theFace);
 
 protected:

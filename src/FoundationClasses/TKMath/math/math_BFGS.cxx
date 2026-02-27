@@ -116,15 +116,15 @@ static bool ComputeMinMaxScale(const math_Vector& thePoint,
     if (std::abs(theDir(anIdx)) > RealSmall())
     {
 
-      const double aLScale = (aLeft + Precision::PConfusion()) / theDir(anIdx);
-      const double aRScale = (aRight - Precision::PConfusion()) / theDir(anIdx);
-      if (std::abs(aLeft) < Precision::PConfusion())
+      const double aLScale = (aLeft + math::precision::Precision::PConfusion()) / theDir(anIdx);
+      const double aRScale = (aRight - math::precision::Precision::PConfusion()) / theDir(anIdx);
+      if (std::abs(aLeft) < math::precision::Precision::PConfusion())
       {
 
         theMaxScale = std::min(theMaxScale, std::max(0., aRScale));
         theMinScale = std::max(theMinScale, std::min(0., aRScale));
       }
-      else if (std::abs(aRight) < Precision::PConfusion())
+      else if (std::abs(aRight) < math::precision::Precision::PConfusion())
       {
 
         theMaxScale = std::min(theMaxScale, std::max(0., aLScale));
@@ -143,7 +143,7 @@ static bool ComputeMinMaxScale(const math_Vector& thePoint,
     else
     {
 
-      if (aLeft > Precision::PConfusion() || aRight < -Precision::PConfusion())
+      if (aLeft > math::precision::Precision::PConfusion() || aRight < -math::precision::Precision::PConfusion())
       {
         return false;
       }
@@ -166,21 +166,21 @@ static bool MinimizeDirection(math_Vector&       P,
   if (!ComputeInitScale(F0, Dir, Gr, lambda))
     return false;
 
-  double aMinLambda = -Precision::Infinite();
-  double aMaxLambda = Precision::Infinite();
+  double aMinLambda = -math::precision::Precision::Infinite();
+  double aMaxLambda = math::precision::Precision::Infinite();
   if (isBounds)
   {
 
     if (!ComputeMinMaxScale(P, Dir, theLeft, theRight, aMinLambda, aMaxLambda))
       return false;
 
-    if (aMinLambda > -Precision::PConfusion() && aMaxLambda < Precision::PConfusion())
+    if (aMinLambda > -math::precision::Precision::PConfusion() && aMaxLambda < math::precision::Precision::PConfusion())
     {
 
       for (int anIdx = 1; anIdx <= theLeft.Upper(); anIdx++)
       {
-        if ((std::abs(P(anIdx) - theRight(anIdx)) < Precision::PConfusion() && Dir(anIdx) > 0.0)
-            || (std::abs(P(anIdx) - theLeft(anIdx)) < Precision::PConfusion() && Dir(anIdx) < 0.0))
+        if ((std::abs(P(anIdx) - theRight(anIdx)) < math::precision::Precision::PConfusion() && Dir(anIdx) > 0.0)
+            || (std::abs(P(anIdx) - theLeft(anIdx)) < math::precision::Precision::PConfusion() && Dir(anIdx) < 0.0))
         {
           Dir(anIdx) = 0.0;
         }

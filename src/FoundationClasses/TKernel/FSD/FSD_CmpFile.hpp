@@ -8,7 +8,8 @@
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
 
-class FSD_CmpFile : public FSD_File
+namespace app { namespace file { namespace stream {
+class FSD_CmpFile : public app::file::stream::FSD_File
 {
 public:
   DEFINE_STANDARD_RTTIEXT(FSD_CmpFile, FSD_File)
@@ -60,3 +61,5 @@ protected:
 
   Standard_EXPORT void ReadString(TCollection_AsciiString& buffer) override;
 };
+}}} // namespace app::file::stream
+

@@ -240,8 +240,8 @@ static void TempSameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
           first_time_in = false;
         }
 
-        if (std::abs(first - current_first) > Precision::PConfusion()
-            || std::abs(last - current_last) > Precision::PConfusion())
+        if (std::abs(first - current_first) > math::precision::Precision::PConfusion()
+            || std::abs(last - current_last) > math::precision::Precision::PConfusion())
         {
           double oldFirst = 0., oldLast = 0.;
           if (has_curve)
@@ -263,7 +263,7 @@ static void TempSameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
             if (Curve2dPtr->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
             {
 
-              constexpr double preci = Precision::PConfusion();
+              constexpr double preci = math::precision::Precision::PConfusion();
               if (std::abs(oldFirst) > preci || std::abs(oldLast - 1) > preci)
               {
                 occ::handle<Geom2d_BezierCurve> bezier =
@@ -292,7 +292,7 @@ static void TempSameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
             if (Curve2dPtr2->IsKind(STANDARD_TYPE(Geom2d_BezierCurve)))
             {
 
-              constexpr double preci = Precision::PConfusion();
+              constexpr double preci = math::precision::Precision::PConfusion();
               if (std::abs(oldFirst) > preci || std::abs(oldLast - 1) > preci)
               {
                 occ::handle<Geom2d_BezierCurve> bezier =
@@ -442,7 +442,7 @@ bool ShapeFix_Edge::FixAddCurve3d(const TopoDS_Edge& edge)
   if (BRep_Tool::Degenerated(edge) || EA.HasCurve3d(edge))
     return false;
   if (!BRep_Tool::SameRange(edge))
-    TempSameRange(edge, Precision::PConfusion());
+    TempSameRange(edge, math::precision::Precision::PConfusion());
 
   if (!ShapeBuild_Edge().BuildCurve3d(edge))
   {
@@ -577,7 +577,7 @@ bool ShapeFix_Edge::FixSameParameter(const TopoDS_Edge& edge,
   {
     BRep_Builder B;
     if (!BRep_Tool::SameRange(edge))
-      TempSameRange(edge, Precision::PConfusion());
+      TempSameRange(edge, math::precision::Precision::PConfusion());
     B.SameParameter(edge, true);
     return false;
   }
@@ -599,7 +599,7 @@ bool ShapeFix_Edge::FixSameParameter(const TopoDS_Edge& edge,
     {
       OCC_CATCH_SIGNALS
       if (!BRep_Tool::SameRange(edge))
-        TempSameRange(edge, Precision::PConfusion());
+        TempSameRange(edge, math::precision::Precision::PConfusion());
 
       if (!wasSP)
       {
@@ -610,7 +610,7 @@ bool ShapeFix_Edge::FixSameParameter(const TopoDS_Edge& edge,
         double aF, aL;
         BRep_Tool::Range(edge, aF, aL);
         B.Range(copyedge, aF, aL, true);
-        BRepLib::SameParameter(copyedge, (tolerance >= Precision::Confusion() ? tolerance : tol));
+        BRepLib::SameParameter(copyedge, (tolerance >= math::precision::Precision::Confusion() ? tolerance : tol));
         SP = BRep_Tool::SameParameter(copyedge);
         if (!SP)
           myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);

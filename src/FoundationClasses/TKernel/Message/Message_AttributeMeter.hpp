@@ -6,9 +6,13 @@
 
 #include <NCollection_IndexedDataMap.hpp>
 
+namespace System { namespace log {
 class Message_AlertExtended;
+}} // namespace System::log
 
-class Message_AttributeMeter : public Message_Attribute
+
+namespace System { namespace log {
+class Message_AttributeMeter : public System::log::Message_Attribute
 {
 public:
   static double UndefinedMetricValue() { return -1.0; }
@@ -52,3 +56,5 @@ private:
 
   NCollection_IndexedDataMap<Message_MetricType, StartToStopValue> myMetrics;
 };
+}} // namespace System::log
+

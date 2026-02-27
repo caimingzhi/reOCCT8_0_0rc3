@@ -36,12 +36,12 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
 
   if (!PR.ReadInteger(PR.Current(), aBoundaryType))
   {
-    Message_Msg Msg140("XSTEP_140");
+    System::log::Message_Msg Msg140("XSTEP_140");
     PR.SendFail(Msg140);
   }
   if (!PR.ReadInteger(PR.Current(), aPatchType))
   {
-    Message_Msg Msg278("XSTEP_278");
+    System::log::Message_Msg Msg278("XSTEP_278");
     PR.SendFail(Msg278);
   }
 
@@ -52,7 +52,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
   }
   else
   {
-    Message_Msg Msg141("XSTEP_141");
+    System::log::Message_Msg Msg141("XSTEP_141");
     PR.SendFail(Msg141);
   }
 
@@ -63,20 +63,20 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
   }
   else
   {
-    Message_Msg Msg142("XSTEP_142");
+    System::log::Message_Msg Msg142("XSTEP_142");
     PR.SendFail(Msg142);
   }
 
   if (!allUBreakPoints.IsNull())
   {
-    Message_Msg Msg143("XSTEP_143");
+    System::log::Message_Msg Msg143("XSTEP_143");
 
     PR.ReadReals(PR.CurrentList(allNbUSegments + 1), Msg143, allUBreakPoints);
   }
 
   if (!allVBreakPoints.IsNull())
   {
-    Message_Msg Msg144("XSTEP_144");
+    System::log::Message_Msg Msg144("XSTEP_144");
     PR.ReadReals(PR.CurrentList(allNbVSegments + 1), Msg144, allVBreakPoints);
   }
 
@@ -102,13 +102,13 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
   {
     bool st;
 
-    Message_Msg Msg145_X("XSTEP_145");
+    System::log::Message_Msg Msg145_X("XSTEP_145");
     Msg145_X.Arg("X");
 
-    Message_Msg Msg145_Y("XSTEP_145");
+    System::log::Message_Msg Msg145_Y("XSTEP_145");
     Msg145_Y.Arg("Y");
 
-    Message_Msg Msg145_Z("XSTEP_145");
+    System::log::Message_Msg Msg145_Z("XSTEP_145");
     Msg145_Z.Arg("Z");
 
     for (i = 1; i <= allNbUSegments; i++)
@@ -121,7 +121,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
           allXCoeffs->SetValue(i, j, Temp);
         else
         {
-          Message_Msg Msg147_X("XSTEP_147");
+          System::log::Message_Msg Msg147_X("XSTEP_147");
           Msg147_X.Arg("X");
           PR.SendFail(Msg147_X);
         }
@@ -131,7 +131,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
           allYCoeffs->SetValue(i, j, Temp);
         else
         {
-          Message_Msg Msg147_Y("XSTEP_147");
+          System::log::Message_Msg Msg147_Y("XSTEP_147");
           Msg147_Y.Arg("Y");
           PR.SendFail(Msg147_Y);
         }
@@ -141,7 +141,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
           allZCoeffs->SetValue(i, j, Temp);
         else if (i < allNbUSegments || j < allNbVSegments)
         {
-          Message_Msg Msg147_Z("XSTEP_147");
+          System::log::Message_Msg Msg147_Z("XSTEP_147");
           Msg147_Z.Arg("Z");
           PR.SendFail(Msg147_Z);
         }
@@ -155,7 +155,7 @@ void IGESGeom_ToolSplineSurface::ReadOwnParams(const occ::handle<IGESGeom_Spline
             double vl;
             if (!PR.ReadReal(PR.Current(), vl))
             {
-              Message_Msg Msg146("XSTEP_146");
+              System::log::Message_Msg Msg146("XSTEP_146");
               PR.SendFail(Msg146);
               break;
             }
@@ -310,7 +310,7 @@ void IGESGeom_ToolSplineSurface::OwnCheck(const occ::handle<IGESGeom_SplineSurfa
 
   if (ent->BoundaryType() < 1 || ent->BoundaryType() > 6)
   {
-    Message_Msg Msg140("XSTEP_140");
+    System::log::Message_Msg Msg140("XSTEP_140");
     ach->SendFail(Msg140);
   }
 }

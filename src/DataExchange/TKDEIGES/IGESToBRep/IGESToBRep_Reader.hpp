@@ -43,10 +43,10 @@ public:
 
   Standard_EXPORT void TransferRoots(
     const bool                   onlyvisible = true,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool Transfer(const int                    num,
-                                const Message_ProgressRange& theProgress = Message_ProgressRange());
+                                const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool IsDone() const;
 

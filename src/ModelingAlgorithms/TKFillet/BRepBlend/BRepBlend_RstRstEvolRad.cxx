@@ -40,7 +40,7 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
                                 NCollection_Sequence<double>&     Seq)
 {
   int    ind1 = 1, ind2 = 1;
-  double Epspar = Precision::PConfusion() * 0.99;
+  double Epspar = math::precision::Precision::PConfusion() * 0.99;
 
   double v1, v2;
 
@@ -549,8 +549,8 @@ void BRepBlend_RstRstEvolRad::Section(const double Param,
     C.SetPosition(gp_Ax2(Center, np, ns));
     Pfin = ElCLib::Parameter(C, ptrst2);
   }
-  if (Pfin < Precision::PConfusion())
-    Pfin += Precision::PConfusion();
+  if (Pfin < math::precision::Precision::PConfusion())
+    Pfin += math::precision::Precision::PConfusion();
 }
 
 bool BRepBlend_RstRstEvolRad::IsRational() const

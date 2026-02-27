@@ -20,7 +20,7 @@ public:
                                            const TopoDS_Shape& EndShape);
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 private:
   TopoDS_Shape                                             myInitialShape;

@@ -25,7 +25,7 @@ static void FusionneIntervalles(const NCollection_Array1<double>& I1,
                                 NCollection_Sequence<double>&     Seq)
 {
   int    ind1 = 1, ind2 = 1;
-  double Epspar = Precision::PConfusion() * 0.99;
+  double Epspar = math::precision::Precision::PConfusion() * 0.99;
 
   double v1, v2;
 
@@ -799,7 +799,7 @@ void BlendFunc_EvolRad::GetBounds(math_Vector& InfBound, math_Vector& SupBound) 
 
   for (int i = 1; i <= 4; i++)
   {
-    if (!Precision::IsInfinite(InfBound(i)) && !Precision::IsInfinite(SupBound(i)))
+    if (!math::precision::Precision::IsInfinite(InfBound(i)) && !math::precision::Precision::IsInfinite(SupBound(i)))
     {
       double range = (SupBound(i) - InfBound(i));
       InfBound(i) -= range;
@@ -1072,8 +1072,8 @@ void BlendFunc_EvolRad::Section(const double Param,
     C.SetPosition(gp_Ax2(Center, np, ns1));
     Pfin = ElCLib::Parameter(C, pts2);
   }
-  if (Pfin < Precision::PConfusion())
-    Pfin += Precision::PConfusion();
+  if (Pfin < math::precision::Precision::PConfusion())
+    Pfin += math::precision::Precision::PConfusion();
 }
 
 const gp_Pnt& BlendFunc_EvolRad::PointOnS1() const

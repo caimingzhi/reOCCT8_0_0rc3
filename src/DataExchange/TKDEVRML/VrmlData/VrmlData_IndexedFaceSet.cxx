@@ -50,7 +50,7 @@ VrmlData_ErrorStatus VrmlData_Faceted::readData(VrmlData_InBuffer& theBuffer)
     double anAngle;
     if (OK(aStatus, Scene().ReadReal(theBuffer, anAngle, false, false)))
     {
-      if (anAngle < -Precision::Confusion() * 0.001)
+      if (anAngle < -math::precision::Precision::Confusion() * 0.001)
         aStatus = VrmlData_IrrelevantNumber;
       else
         myCreaseAngle = anAngle;
@@ -115,7 +115,7 @@ const occ::handle<TopoDS_TShape>& VrmlData_IndexedFaceSet::TShape()
       gp_XYZ S   = aV1.Crossed(aV2);
       aSum += S;
     }
-    if (aSum.Modulus() < Precision::Confusion())
+    if (aSum.Modulus() < math::precision::Precision::Confusion())
     {
 
       continue;
@@ -375,7 +375,7 @@ VrmlData_ErrorStatus VrmlData_IndexedFaceSet::Write(const char* thePrefix) const
       aStatus = aScene.WriteLine("solid       FALSE");
     if (OK(aStatus) && !IsConvex())
       aStatus = aScene.WriteLine("convex      FALSE");
-    if (OK(aStatus) && CreaseAngle() > Precision::Confusion())
+    if (OK(aStatus) && CreaseAngle() > math::precision::Precision::Confusion())
     {
       char buf[64];
       Sprintf(buf, "%.9g", CreaseAngle());

@@ -229,7 +229,7 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
       }
       else
       {
-        firstp = -Precision::Infinite();
+        firstp = -math::precision::Precision::Infinite();
       }
       return firstp;
     }
@@ -262,7 +262,7 @@ static double LocalFirstParameter(const occ::handle<IntPatch_Line>& L)
           case IntPatch_Lin:
           case IntPatch_Parabola:
           case IntPatch_Hyperbola:
-            firstp = -Precision::Infinite();
+            firstp = -math::precision::Precision::Infinite();
             break;
 
           case IntPatch_Circle:
@@ -315,7 +315,7 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
       }
       else
       {
-        lastp = Precision::Infinite();
+        lastp = math::precision::Precision::Infinite();
       }
       return lastp;
     }
@@ -349,7 +349,7 @@ static double LocalLastParameter(const occ::handle<IntPatch_Line>& L)
           case IntPatch_Lin:
           case IntPatch_Parabola:
           case IntPatch_Hyperbola:
-            lastp = Precision::Infinite();
+            lastp = math::precision::Precision::Infinite();
             break;
 
           case IntPatch_Circle:
@@ -449,7 +449,7 @@ static int AppendSameVertexG(occ::handle<IntPatch_GLine>&       glig,
       {
         p1 = Vtxindex.ParameterOnLine();
         p2 = Vtxi.ParameterOnLine();
-        if (std::abs(p1 - p2) < Precision::PConfusion())
+        if (std::abs(p1 - p2) < math::precision::Precision::PConfusion())
         {
           aajouter = true;
         }
@@ -632,7 +632,7 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       wlig->SetFirstPoint(IndexFirstVertex);
       wlig->SetLastPoint(IndexLastVertex);
       wlig->SetPeriod(WLine->U1Period(), WLine->V1Period(), WLine->U2Period(), WLine->V2Period());
-      wlig->ComputeVertexParameters(Precision::Confusion());
+      wlig->ComputeVertexParameters(math::precision::Precision::Confusion());
       slin.Append(wlig);
 
       break;
@@ -676,7 +676,7 @@ static void AddLine(const occ::handle<IntPatch_Line>& L,
       }
       rlig->SetFirstPoint(IndexFirstVertex);
       rlig->SetLastPoint(IndexLastVertex);
-      rlig->ComputeVertexParameters(Precision::Confusion());
+      rlig->ComputeVertexParameters(math::precision::Precision::Confusion());
       slin.Append(rlig);
       break;
     }
@@ -1258,7 +1258,7 @@ void IntPatch_LineConstructor::Perform(
   int    i = 1, nbvtx;
   double firstp, lastp;
 
-  double Tol = Precision::PConfusion() * 100.;
+  double Tol = math::precision::Precision::PConfusion() * 100.;
 
   GeomAbs_SurfaceType typs1 = mySurf1->GetType();
   GeomAbs_SurfaceType typs2 = mySurf2->GetType();
@@ -1499,7 +1499,7 @@ void IntPatch_LineConstructor::Perform(
     {
       firstp = GLine->Vertex(i).ParameterOnLine();
       lastp  = GLine->Vertex(i + 1).ParameterOnLine();
-      if (std::abs(firstp - lastp) > Precision::PConfusion())
+      if (std::abs(firstp - lastp) > math::precision::Precision::PConfusion())
       {
         intrvtested = true;
         double pmid = (firstp + lastp) * 0.5;
@@ -1579,7 +1579,7 @@ void IntPatch_LineConstructor::Perform(
       }
       if (acadr >= cadrinf && acadr <= cadrsup)
       {
-        if (std::abs(firstp - lastp) > Precision::PConfusion())
+        if (std::abs(firstp - lastp) > math::precision::Precision::PConfusion())
         {
           intrvtested = true;
           double pmid = (firstp + lastp) * 0.5;
@@ -1662,7 +1662,7 @@ void IntPatch_LineConstructor::Perform(
       {
         double u0 = Vtx1.ParameterOnLine();
         double u1 = Vtx2.ParameterOnLine();
-        if (std::abs(u1 - u0) > Precision::PConfusion())
+        if (std::abs(u1 - u0) > math::precision::Precision::PConfusion())
         {
           double u = (999.0 * u0 + u1) * 0.001;
 
@@ -1744,7 +1744,7 @@ void IntPatch_LineConstructor::Perform(
       {
         double u0 = Vtx1.ParameterOnLine();
         double u1 = Vtx2.ParameterOnLine();
-        if (std::abs(u1 - u0) > Precision::PConfusion())
+        if (std::abs(u1 - u0) > math::precision::Precision::PConfusion())
         {
           double u = (999.0 * u0 + u1) * 0.001;
 

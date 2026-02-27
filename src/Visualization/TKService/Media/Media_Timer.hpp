@@ -31,7 +31,7 @@ public:
   Standard_EXPORT void Seek(const double theTime);
 
 protected:
-  OSD_Timer myTimer;
+  System::os::OSD_Timer myTimer;
   double    myTimerFrom;
   double    myTimerSpeed;
 };

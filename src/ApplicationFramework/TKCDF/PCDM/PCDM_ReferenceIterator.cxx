@@ -12,7 +12,7 @@ IMPLEMENT_STANDARD_RTTIEXT(PCDM_ReferenceIterator, Standard_Transient)
   #include <tchar.h>
 #endif
 
-PCDM_ReferenceIterator::PCDM_ReferenceIterator(const occ::handle<Message_Messenger>& theMsgDriver)
+PCDM_ReferenceIterator::PCDM_ReferenceIterator(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : myIterator(0)
 {
   myMessageDriver = theMsgDriver;
@@ -69,7 +69,7 @@ occ::handle<CDM_MetaData> PCDM_ReferenceIterator::MetaData(
   theFolder = f;
   theName   = n;
 #else
-  OSD_Path                   p = UTL::Path(f);
+  System::os::OSD_Path                   p = UTL::Path(f);
   char16_t                   chr;
   TCollection_ExtendedString dir, dirRet, name;
 

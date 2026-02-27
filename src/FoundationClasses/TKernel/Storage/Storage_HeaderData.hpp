@@ -9,8 +9,12 @@
 #include <TCollection_ExtendedString.hpp>
 #include <Storage_Error.hpp>
 #include <Standard_Transient.hpp>
+namespace app { namespace storage {
 class Storage_BaseDriver;
+}} // namespace app::storage
 
+
+namespace app { namespace storage {
 class Storage_HeaderData : public Standard_Transient
 {
 
@@ -93,3 +97,5 @@ private:
   Storage_Error                                    myErrorStatus;
   TCollection_AsciiString                          myErrorStatusExt;
 };
+}} // namespace app::storage
+

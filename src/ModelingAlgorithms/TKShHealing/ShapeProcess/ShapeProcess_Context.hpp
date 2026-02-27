@@ -8,8 +8,14 @@
 #include <NCollection_HSequence.hpp>
 #include <Standard_Integer.hpp>
 #include <Standard_Transient.hpp>
+namespace System { namespace resource {
 class Resource_Manager;
+}} // namespace System::resource
+
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TCollection_AsciiString;
 
 class ShapeProcess_Context : public Standard_Transient
@@ -22,9 +28,9 @@ public:
 
   Standard_EXPORT bool Init(const char* file, const char* scope = "");
 
-  Standard_EXPORT occ::handle<Resource_Manager> LoadResourceManager(const char* file);
+  Standard_EXPORT occ::handle<System::resource::Resource_Manager> LoadResourceManager(const char* file);
 
-  Standard_EXPORT const occ::handle<Resource_Manager>& ResourceManager() const;
+  Standard_EXPORT const occ::handle<System::resource::Resource_Manager>& ResourceManager() const;
 
   Standard_EXPORT void SetScope(const char* scope);
 
@@ -48,9 +54,9 @@ public:
 
   Standard_EXPORT const char* StringVal(const char* param, const char* def) const;
 
-  Standard_EXPORT void SetMessenger(const occ::handle<Message_Messenger>& messenger);
+  Standard_EXPORT void SetMessenger(const occ::handle<System::log::Message_Messenger>& messenger);
 
-  Standard_EXPORT occ::handle<Message_Messenger> Messenger() const;
+  Standard_EXPORT occ::handle<System::log::Message_Messenger> Messenger() const;
 
   Standard_EXPORT void SetTraceLevel(const int tracelev);
 
@@ -59,8 +65,8 @@ public:
   DEFINE_STANDARD_RTTIEXT(ShapeProcess_Context, Standard_Transient)
 
 private:
-  occ::handle<Resource_Manager>                                             myRC;
+  occ::handle<System::resource::Resource_Manager>                                             myRC;
   occ::handle<NCollection_HSequence<occ::handle<TCollection_HAsciiString>>> myScope;
-  occ::handle<Message_Messenger>                                            myMessenger;
+  occ::handle<System::log::Message_Messenger>                                            myMessenger;
   int                                                                       myTraceLev;
 };

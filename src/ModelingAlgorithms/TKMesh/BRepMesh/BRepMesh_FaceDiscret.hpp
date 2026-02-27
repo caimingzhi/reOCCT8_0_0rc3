@@ -17,10 +17,10 @@ public:
 protected:
   Standard_EXPORT bool performInternal(const occ::handle<IMeshData_Model>& theModel,
                                        const IMeshTools_Parameters&        theParameters,
-                                       const Message_ProgressRange&        theRange) override;
+                                       const System::log::Message_ProgressRange&        theRange) override;
 
 private:
-  void process(const int theFaceIndex, const Message_ProgressRange& theRange) const;
+  void process(const int theFaceIndex, const System::log::Message_ProgressRange& theRange) const;
 
 private:
   class FaceListFunctor;

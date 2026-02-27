@@ -83,8 +83,8 @@ namespace
 
       double anAngle = 0.0;
 
-      if ((myPrevControlVec.SquareMagnitude() > Precision::SquareConfusion())
-          && (myCurrControlVec.SquareMagnitude() > Precision::SquareConfusion()))
+      if ((myPrevControlVec.SquareMagnitude() > math::precision::Precision::SquareConfusion())
+          && (myCurrControlVec.SquareMagnitude() > math::precision::Precision::SquareConfusion()))
       {
         anAngle = myPrevControlVec.Angle(myCurrControlVec);
       }
@@ -233,7 +233,7 @@ namespace
     for (; aIntervalU <= theIntervals[0].Upper(); ++aIntervalU)
     {
       const double aParamU = theIntervals[0].Value(aIntervalU);
-      if (Precision::IsInfinite(aParamU))
+      if (math::precision::Precision::IsInfinite(aParamU))
         continue;
 
       int aIntervalV = theIntervals[1].Lower();
@@ -241,10 +241,10 @@ namespace
       {
         gp_Dir       aNorm;
         const double aParamV = theIntervals[1].Value(aIntervalV);
-        if (Precision::IsInfinite(aParamV))
+        if (math::precision::Precision::IsInfinite(aParamV))
           continue;
 
-        if (GeomLib::NormEstim(theSurf, gp_Pnt2d(aParamU, aParamV), Precision::Confusion(), aNorm)
+        if (GeomLib::NormEstim(theSurf, gp_Pnt2d(aParamU, aParamV), math::precision::Precision::Confusion(), aNorm)
             != 0)
         {
           return true;
@@ -492,7 +492,7 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::computeGrainAndFi
   const occ::handle<NCollection_IncAllocator>& theAllocator) const
 {
 
-  double aMinDiff = Precision::PConfusion();
+  double aMinDiff = math::precision::Precision::PConfusion();
   if (theDelta < 1.)
   {
     aMinDiff /= theDelta;

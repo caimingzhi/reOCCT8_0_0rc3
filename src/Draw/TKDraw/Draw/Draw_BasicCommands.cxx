@@ -51,7 +51,7 @@ static clock_t CPU_CURRENT;
 extern bool Draw_Batch;
 
 static clock_t   CPU_LIMIT;
-static OSD_Timer aTimer;
+static System::os::OSD_Timer aTimer;
 
 extern bool Draw_Chrono;
 
@@ -221,7 +221,7 @@ static int dlog(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2 && n != 3)
   {
-    Message::SendFail() << "Enable or disable logging: " << a[0] << " {on|off}\n"
+    System::log::Message::SendFail() << "Enable or disable logging: " << a[0] << " {on|off}\n"
                         << "Reset log: " << a[0] << " reset\n"
                         << "Get log content: " << a[0] << " get";
     return 1;
@@ -254,7 +254,7 @@ static int dlog(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    Message::SendFail() << "Unrecognized option(s): " << a[1];
+    System::log::Message::SendFail() << "Unrecognized option(s): " << a[1];
     return 1;
   }
   return 0;
@@ -264,7 +264,7 @@ static int decho(Draw_Interpretor& di, int n, const char** a)
 {
   if (n != 2)
   {
-    Message::SendFail() << "Enable or disable echoing: " << a[0] << " {on|off}";
+    System::log::Message::SendFail() << "Enable or disable echoing: " << a[0] << " {on|off}";
     return 1;
   }
 
@@ -278,7 +278,7 @@ static int decho(Draw_Interpretor& di, int n, const char** a)
   }
   else
   {
-    Message::SendFail() << "Unrecognized option: " << a[1];
+    System::log::Message::SendFail() << "Unrecognized option: " << a[1];
     return 1;
   }
   return 0;
@@ -288,9 +288,9 @@ static int dbreak(Draw_Interpretor& di, int, const char**)
 {
   try
   {
-    OSD::ControlBreak();
+    System::os::OSD::ControlBreak();
   }
-  catch (OSD_Exception_CTRL_BREAK const&)
+  catch (System::os::OSD_Exception_CTRL_BREAK const&)
   {
     di << "User pressed Control-Break";
     return 1;
@@ -491,7 +491,7 @@ static unsigned int __stdcall CpuFunc(void*)
   {
     Sleep(5);
     double anUserSeconds, aSystemSeconds;
-    OSD_Chronometer::GetProcessCPU(anUserSeconds, aSystemSeconds);
+    System::os::OSD_Chronometer::GetProcessCPU(anUserSeconds, aSystemSeconds);
     aCurrent      = clock_t(anUserSeconds + aSystemSeconds);
     anElapCurrent = clock_t(aTimer.ElapsedTime());
 
@@ -556,7 +556,7 @@ static clock_t GetCpuLimit(const char* theParam)
 {
   clock_t aValue = Draw::Atoi(theParam);
 
-  OSD_Environment         aEnv("CSF_CPULIMIT_FACTOR");
+  System::os::OSD_Environment         aEnv("CSF_CPULIMIT_FACTOR");
   TCollection_AsciiString aEnvStr = aEnv.Value();
   if (!aEnvStr.IsEmpty())
   {
@@ -581,7 +581,7 @@ static int cpulimit(Draw_Interpretor& di, int n, const char** a)
   {
     CPU_LIMIT = GetCpuLimit(a[1]);
     double anUserSeconds, aSystemSeconds;
-    OSD_Chronometer::GetProcessCPU(anUserSeconds, aSystemSeconds);
+    System::os::OSD_Chronometer::GetProcessCPU(anUserSeconds, aSystemSeconds);
     CPU_CURRENT = clock_t(anUserSeconds + aSystemSeconds);
     aTimer.Reset();
     aTimer.Start();
@@ -651,7 +651,7 @@ static int dlocale(Draw_Interpretor& di, int n, const char** argv)
       category = LC_TIME;
     else
     {
-      Message::SendFail() << "Error: cannot recognize argument " << cat << " as one of LC_ macros";
+      System::log::Message::SendFail() << "Error: cannot recognize argument " << cat << " as one of LC_ macros";
       return 1;
     }
   }
@@ -668,43 +668,43 @@ static int dmeminfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
 {
   if (theArgNb <= 1)
   {
-    OSD_MemInfo aMemInfo;
+    System::os::OSD_MemInfo aMemInfo;
     theDI << aMemInfo.ToString();
     return 0;
   }
 
-  NCollection_Map<OSD_MemInfo::Counter> aCounters;
+  NCollection_Map<System::os::OSD_MemInfo::Counter> aCounters;
   for (int anIter = 1; anIter < theArgNb; ++anIter)
   {
     TCollection_AsciiString anArg(theArgVec[anIter]);
     anArg.LowerCase();
     if (anArg == "virt" || anArg == "v")
     {
-      aCounters.Add(OSD_MemInfo::MemVirtual);
+      aCounters.Add(System::os::OSD_MemInfo::MemVirtual);
     }
     else if (anArg == "heap" || anArg == "h")
     {
-      aCounters.Add(OSD_MemInfo::MemHeapUsage);
+      aCounters.Add(System::os::OSD_MemInfo::MemHeapUsage);
     }
     else if (anArg == "wset" || anArg == "w")
     {
-      aCounters.Add(OSD_MemInfo::MemWorkingSet);
+      aCounters.Add(System::os::OSD_MemInfo::MemWorkingSet);
     }
     else if (anArg == "wsetpeak")
     {
-      aCounters.Add(OSD_MemInfo::MemWorkingSetPeak);
+      aCounters.Add(System::os::OSD_MemInfo::MemWorkingSetPeak);
     }
     else if (anArg == "swap")
     {
-      aCounters.Add(OSD_MemInfo::MemSwapUsage);
+      aCounters.Add(System::os::OSD_MemInfo::MemSwapUsage);
     }
     else if (anArg == "swappeak")
     {
-      aCounters.Add(OSD_MemInfo::MemSwapUsagePeak);
+      aCounters.Add(System::os::OSD_MemInfo::MemSwapUsagePeak);
     }
     else if (anArg == "private")
     {
-      aCounters.Add(OSD_MemInfo::MemPrivate);
+      aCounters.Add(System::os::OSD_MemInfo::MemPrivate);
     }
     else
     {
@@ -713,16 +713,16 @@ static int dmeminfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
     }
   }
 
-  OSD_MemInfo aMemInfo(false);
+  System::os::OSD_MemInfo aMemInfo(false);
   aMemInfo.SetActive(false);
-  for (NCollection_Map<OSD_MemInfo::Counter>::Iterator aCountersIt(aCounters); aCountersIt.More();
+  for (NCollection_Map<System::os::OSD_MemInfo::Counter>::Iterator aCountersIt(aCounters); aCountersIt.More();
        aCountersIt.Next())
   {
     aMemInfo.SetActive(aCountersIt.Value(), true);
   }
   aMemInfo.Update();
 
-  for (NCollection_Map<OSD_MemInfo::Counter>::Iterator aCountersIt(aCounters); aCountersIt.More();
+  for (NCollection_Map<System::os::OSD_MemInfo::Counter>::Iterator aCountersIt(aCounters); aCountersIt.More();
        aCountersIt.Next())
   {
     theDI << double(aMemInfo.Value(aCountersIt.Value())) << " ";
@@ -733,13 +733,13 @@ static int dmeminfo(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
 
 static int dparallel(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  const occ::handle<OSD_ThreadPool>& aDefPool = OSD_ThreadPool::DefaultPool();
+  const occ::handle<System::os::OSD_ThreadPool>& aDefPool = System::os::OSD_ThreadPool::DefaultPool();
   if (theArgNb <= 1)
   {
-    theDI << "NbLogicalProcessors: " << OSD_Parallel::NbLogicalProcessors() << "\n"
+    theDI << "NbLogicalProcessors: " << System::os::OSD_Parallel::NbLogicalProcessors() << "\n"
           << "NbThreads:           " << aDefPool->NbThreads() << "\n"
           << "NbDefThreads:        " << aDefPool->NbDefaultThreadsToLaunch() << "\n"
-          << "UseOcct:             " << (OSD_Parallel::ToUseOcctThreads() ? 1 : 0);
+          << "UseOcct:             " << (System::os::OSD_Parallel::ToUseOcctThreads() ? 1 : 0);
     return 0;
   }
 
@@ -759,7 +759,7 @@ static int dparallel(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
       const int aVal = Draw::Atoi(theArgVec[++anIter]);
       if (aVal <= 0 || aVal > aDefPool->NbThreads())
       {
-        Message::SendFail()
+        System::log::Message::SendFail()
           << "Syntax error: maximum number of threads to use should be <= of threads in the pool";
         return 1;
       }
@@ -769,8 +769,8 @@ static int dparallel(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
              && (anArg == "-useocct" || anArg == "-touseocct" || anArg == "-occt"))
     {
       const int aVal = Draw::Atoi(theArgVec[++anIter]);
-      OSD_Parallel::SetUseOcctThreads(aVal == 1);
-      if (OSD_Parallel::ToUseOcctThreads() != (aVal == 1))
+      System::os::OSD_Parallel::SetUseOcctThreads(aVal == 1);
+      if (System::os::OSD_Parallel::ToUseOcctThreads() != (aVal == 1))
       {
         std::cout << "Warning: unable to switch threads library - no options available\n";
       }
@@ -779,15 +779,15 @@ static int dparallel(Draw_Interpretor& theDI, int theArgNb, const char** theArgV
              && (anArg == "-usetbb" || anArg == "-tousetbb" || anArg == "-tbb"))
     {
       const int aVal = Draw::Atoi(theArgVec[++anIter]);
-      OSD_Parallel::SetUseOcctThreads(aVal == 0);
-      if (OSD_Parallel::ToUseOcctThreads() != (aVal == 0))
+      System::os::OSD_Parallel::SetUseOcctThreads(aVal == 0);
+      if (System::os::OSD_Parallel::ToUseOcctThreads() != (aVal == 0))
       {
         std::cout << "Warning: unable to switch threads library - no options available\n";
       }
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown argument '" << anArg << "'";
+      System::log::Message::SendFail() << "Syntax error: unknown argument '" << anArg << "'";
       return 1;
     }
   }
@@ -798,11 +798,11 @@ static int dperf(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
 
   int reset = (theArgNb > 1 ? theArgVec[1][0] != '0' && theArgVec[1][0] != '\0' : 0);
-  const TCollection_AsciiString anOutput = OSD_PerfMeter::PrintALL();
+  const TCollection_AsciiString anOutput = System::os::OSD_PerfMeter::PrintALL();
   theDI << anOutput;
   if (reset)
   {
-    OSD_PerfMeter::ResetALL();
+    System::os::OSD_PerfMeter::ResetALL();
   }
 
   return 0;
@@ -811,10 +811,10 @@ static int dperf(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
   OSD_SignalMode aMode     = OSD_SignalMode_Set;
-  bool           aSetFPE   = OSD::ToCatchFloatingSignals();
-  int            aStackLen = OSD::SignalStackTraceLength();
+  bool           aSetFPE   = System::os::OSD::ToCatchFloatingSignals();
+  int            aStackLen = System::os::OSD::SignalStackTraceLength();
 
-  OSD_Environment         aEnv("CSF_FPE");
+  System::os::OSD_Environment         aEnv("CSF_FPE");
   TCollection_AsciiString aEnvStr = aEnv.Value();
   if (!aEnvStr.IsEmpty())
   {
@@ -860,16 +860,16 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
     }
     else
     {
-      Message::SendFail() << "Syntax error: unknown argument '" << anArg << "'";
+      System::log::Message::SendFail() << "Syntax error: unknown argument '" << anArg << "'";
       return 1;
     }
   }
 
-  OSD::SetSignal(aMode, aSetFPE);
-  OSD::SetSignalStackTraceLength(aStackLen);
+  System::os::OSD::SetSignal(aMode, aSetFPE);
+  System::os::OSD::SetSignalStackTraceLength(aStackLen);
 
   const char* aModeStr = nullptr;
-  switch (OSD::SignalMode())
+  switch (System::os::OSD::SignalMode())
   {
     default:
     case OSD_SignalMode_AsIs:
@@ -886,7 +886,7 @@ static int dsetsignal(Draw_Interpretor& theDI, int theArgNb, const char** theArg
       break;
   }
   theDI << "Signal mode: " << aModeStr << "\n"
-        << "Catch FPE: " << (OSD::ToCatchFloatingSignals() ? "1" : "0") << "\n"
+        << "Catch FPE: " << (System::os::OSD::ToCatchFloatingSignals() ? "1" : "0") << "\n"
         << "Stack Trace Length: " << aStackLen << "\n";
   return 0;
 }
@@ -896,7 +896,7 @@ static int dtracelevel(Draw_Interpretor& theDI, int theArgNb, const char** theAr
   Message_Gravity aLevel = Message_Info;
   if (theArgNb < 1 || theArgNb > 2)
   {
-    Message::SendFail() << "Error: wrong number of arguments! See usage:";
+    System::log::Message::SendFail() << "Error: wrong number of arguments! See usage:";
     theDI.PrintHelp(theArgVec[0]);
     return 1;
   }
@@ -926,28 +926,28 @@ static int dtracelevel(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     }
     else
     {
-      Message::SendFail() << "Error: unknown gravity '" << theArgVec[1] << "'";
+      System::log::Message::SendFail() << "Error: unknown gravity '" << theArgVec[1] << "'";
       return 1;
     }
   }
 
-  occ::handle<Message_Messenger> aMessenger = Message::DefaultMessenger();
+  occ::handle<System::log::Message_Messenger> aMessenger = System::log::Message::DefaultMessenger();
   if (aMessenger.IsNull())
   {
-    Message::SendFail() << "Error: default messenger is unavailable";
+    System::log::Message::SendFail() << "Error: default messenger is unavailable";
     return 1;
   }
 
-  NCollection_Sequence<occ::handle<Message_Printer>>& aPrinters = aMessenger->ChangePrinters();
+  NCollection_Sequence<occ::handle<System::log::Message_Printer>>& aPrinters = aMessenger->ChangePrinters();
   if (aPrinters.Length() < 1)
   {
-    Message::SendFail() << "Error: no printers registered in default Messenger";
+    System::log::Message::SendFail() << "Error: no printers registered in default Messenger";
     return 0;
   }
 
   for (int aPrinterIter = 1; aPrinterIter <= aPrinters.Length(); ++aPrinterIter)
   {
-    occ::handle<Message_Printer>& aPrinter = aPrinters.ChangeValue(aPrinterIter);
+    occ::handle<System::log::Message_Printer>& aPrinter = aPrinters.ChangeValue(aPrinterIter);
     if (theArgNb == 1)
     {
       if (aPrinterIter == 1)
@@ -1069,12 +1069,12 @@ static int dputs(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
       }
       if (toIntense || aColor != Message_ConsoleColor_Default)
       {
-        Message_PrinterOStream::SetConsoleTextColor(aStream, aColor, toIntense);
+        System::log::Message_PrinterOStream::SetConsoleTextColor(aStream, aColor, toIntense);
       }
       *aStream << theArgVec[anArgIter];
       if (toIntense || aColor != Message_ConsoleColor_Default)
       {
-        Message_PrinterOStream::SetConsoleTextColor(aStream, Message_ConsoleColor_Default, false);
+        System::log::Message_PrinterOStream::SetConsoleTextColor(aStream, Message_ConsoleColor_Default, false);
       }
       if (!isNoNewline)
       {
@@ -1084,12 +1084,12 @@ static int dputs(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
     }
     else
     {
-      Message::SendFail() << "Syntax error at '" << anArg << "'";
+      System::log::Message::SendFail() << "Syntax error at '" << anArg << "'";
       return 1;
     }
   }
 
-  Message::SendFail() << "Syntax error: wrong number of arguments";
+  System::log::Message::SendFail() << "Syntax error: wrong number of arguments";
   return 1;
 }
 
@@ -1150,7 +1150,7 @@ void Draw::BasicCommands(Draw_Interpretor& theCommands)
   theCommands.Add("dsetsignal",
                   "dsetsignal [{asIs|set|unhandled|unset}=set] [{0|1|default=$CSF_FPE}]"
                   "\n\t\t:            [-strackTraceLength Length]"
-                  "\n\t\t: Sets OSD signal handler, with FPE option if argument is given."
+                  "\n\t\t: Sets System::os::OSD signal handler, with FPE option if argument is given."
                   "\n\t\t:  -strackTraceLength specifies length of stack trace to put into "
                   "exceptions redirected from signals.",
                   __FILE__,

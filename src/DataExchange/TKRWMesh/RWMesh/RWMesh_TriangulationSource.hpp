@@ -47,7 +47,7 @@ public:
 
 protected:
   Standard_EXPORT bool loadDeferredData(
-    const occ::handle<OSD_FileSystem>&     theFileSystem,
+    const occ::handle<System::os::OSD_FileSystem>&     theFileSystem,
     const occ::handle<Poly_Triangulation>& theDestTriangulation) const override;
 
 protected:

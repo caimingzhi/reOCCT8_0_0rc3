@@ -12,7 +12,7 @@ BRepAlgoAPI_Splitter::BRepAlgoAPI_Splitter(const BOPAlgo_PaveFiller& thePF)
 {
 }
 
-void BRepAlgoAPI_Splitter::Build(const Message_ProgressRange& theRange)
+void BRepAlgoAPI_Splitter::Build(const System::log::Message_ProgressRange& theRange)
 {
 
   NotDone();
@@ -25,7 +25,7 @@ void BRepAlgoAPI_Splitter::Build(const Message_ProgressRange& theRange)
     return;
   }
 
-  Message_ProgressScope aPS(theRange,
+  System::log::Message_ProgressScope aPS(theRange,
                             "Performing Split operation",
                             myIsIntersectionNeeded ? 100 : 30);
   if (myIsIntersectionNeeded)

@@ -62,12 +62,12 @@ TEST(BVH_TreeTest, MinMaxPoints)
 
   aTree.AddLeafNode(aMin, aMax, 0, 0);
 
-  EXPECT_NEAR(aTree.MinPoint(0).x(), 1.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MinPoint(0).y(), 2.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MinPoint(0).z(), 3.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MaxPoint(0).x(), 4.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MaxPoint(0).y(), 5.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MaxPoint(0).z(), 6.0, Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).x(), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).y(), 2.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).z(), 3.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MaxPoint(0).x(), 4.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MaxPoint(0).y(), 5.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MaxPoint(0).z(), 6.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_TreeTest, Clear)
@@ -218,8 +218,8 @@ TEST(BVH_TreeTest, Tree2D)
   aTree.AddLeafNode(aMin, aMax, 0, 5);
 
   EXPECT_EQ(aTree.Length(), 1);
-  EXPECT_NEAR(aTree.MinPoint(0).x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MinPoint(0).y(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).y(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_TreeTest, Tree4D)
@@ -232,8 +232,8 @@ TEST(BVH_TreeTest, Tree4D)
   aTree.AddLeafNode(aMin, aMax, 0, 5);
 
   EXPECT_EQ(aTree.Length(), 1);
-  EXPECT_NEAR(aTree.MinPoint(0).x(), 0.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MinPoint(0).w(), 0.0, Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).x(), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).w(), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_TreeTest, MultipleLeaves)
@@ -320,8 +320,8 @@ TEST(BVH_TreeTest, ModifyMinMaxPoints)
   aTree.MinPoint(0) = BVH_Vec3d(-1.0, -1.0, -1.0);
   aTree.MaxPoint(0) = BVH_Vec3d(2.0, 2.0, 2.0);
 
-  EXPECT_NEAR(aTree.MinPoint(0).x(), -1.0, Precision::Confusion());
-  EXPECT_NEAR(aTree.MaxPoint(0).x(), 2.0, Precision::Confusion());
+  EXPECT_NEAR(aTree.MinPoint(0).x(), -1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(aTree.MaxPoint(0).x(), 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(BVH_TreeTest, ChangeChild)

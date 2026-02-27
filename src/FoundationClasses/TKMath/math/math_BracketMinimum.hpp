@@ -79,8 +79,8 @@ inline math_BracketMinimum::math_BracketMinimum(const double A, const double B)
       FAx(0.),
       FBx(0.),
       FCx(0.),
-      myLeft(-Precision::Infinite()),
-      myRight(Precision::Infinite()),
+      myLeft(-math::precision::Precision::Infinite()),
+      myRight(math::precision::Precision::Infinite()),
       myIsLimited(false),
       myFA(false),
       myFB(false)

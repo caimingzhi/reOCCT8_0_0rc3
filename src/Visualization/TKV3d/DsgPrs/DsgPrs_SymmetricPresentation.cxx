@@ -93,7 +93,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   bool   Cross = false;
   gp_Vec Attch1_PjAttch1(AttachmentPoint1, PjAttachPnt1);
   gp_Vec v(P1, ProjOffsetPoint);
-  if (v.IsOpposite((Attch1_PjAttch1), Precision::Confusion()))
+  if (v.IsOpposite((Attch1_PjAttch1), math::precision::Precision::Confusion()))
   {
     Cross = true;
     gp_Pnt PntTempo;
@@ -367,7 +367,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   gp_Pnt ProjOffsetPoint = ElCLib::Value(ElCLib::Parameter(aAxis, OffsetPnt), aAxis);
   gp_Pnt ProjCenter1     = ElCLib::Value(ElCLib::Parameter(aAxis, Center1), aAxis);
   gp_Vec Vp(ProjCenter1, Center1);
-  if (Vp.Magnitude() <= Precision::Confusion())
+  if (Vp.Magnitude() <= math::precision::Precision::Confusion())
     Vp = gp_Vec(aAxis.Direction()) ^ aCircle1.Position().Direction();
 
   double Dt, R, h;
@@ -467,7 +467,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   double  ParamPAttach2 = ElCLib::Parameter(aCircle2, AttachmentPoint2);
 
   alpha = fabs(ParamP2 - ParamPAttach2);
-  if (alpha <= Precision::Confusion())
+  if (alpha <= math::precision::Precision::Confusion())
     alpha = 1.e-5;
   if (ParamP2 < ParamPAttach2)
   {
@@ -599,7 +599,7 @@ void DsgPrs_SymmetricPresentation::Add(const occ::handle<Prs3d_Presentation>& aP
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
-  if (AttachmentPoint1.IsEqual(AttachmentPoint2, Precision::Confusion()))
+  if (AttachmentPoint1.IsEqual(AttachmentPoint2, math::precision::Precision::Confusion()))
   {
 
     Quantity_Color                        aColor = LA->LineAspect()->Aspect()->Color();

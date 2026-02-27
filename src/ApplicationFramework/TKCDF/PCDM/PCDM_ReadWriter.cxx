@@ -23,7 +23,7 @@ static TCollection_ExtendedString TryXmlDriverType(const TCollection_AsciiString
 
 static TCollection_ExtendedString TryXmlDriverType(Standard_IStream& theIStream);
 
-void PCDM_ReadWriter::Open(const occ::handle<Storage_BaseDriver>& aDriver,
+void PCDM_ReadWriter::Open(const occ::handle<app::storage::Storage_BaseDriver>& aDriver,
                            const TCollection_ExtendedString&      aFileName,
                            const Storage_OpenMode                 aMode)
 {
@@ -59,7 +59,7 @@ occ::handle<PCDM_ReadWriter> PCDM_ReadWriter::Writer()
   return (new PCDM_ReadWriter_1);
 }
 
-void PCDM_ReadWriter::WriteFileFormat(const occ::handle<Storage_Data>& aData,
+void PCDM_ReadWriter::WriteFileFormat(const occ::handle<app::storage::Storage_Data>& aData,
                                       const occ::handle<CDM_Document>& aDocument)
 {
   TCollection_AsciiString ligne(FILE_FORMAT);
@@ -72,7 +72,7 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_Extende
 {
   TCollection_ExtendedString theFormat;
 
-  occ::handle<Storage_BaseDriver> theFileDriver;
+  occ::handle<app::storage::Storage_BaseDriver> theFileDriver;
 
   TCollection_AsciiString theFileName(aFileName);
   if (PCDM::FileDriverType(theFileName, theFileDriver) == PCDM_TOFD_Unknown)
@@ -85,7 +85,7 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_Extende
 
     Open(theFileDriver, aFileName, Storage_VSRead);
     theFileIsOpen = true;
-    Storage_HeaderData hd;
+    app::storage::Storage_HeaderData hd;
     hd.Read(theFileDriver);
     const NCollection_Sequence<TCollection_AsciiString>& refUserInfo = hd.UserInfo();
     bool                                                 found       = false;
@@ -99,7 +99,7 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_Extende
     }
     if (!found)
     {
-      Storage_TypeData td;
+      app::storage::Storage_TypeData td;
       td.Read(theFileDriver);
       theFormat = td.Types()->Value(1);
     }
@@ -117,11 +117,11 @@ TCollection_ExtendedString PCDM_ReadWriter::FileFormat(const TCollection_Extende
 }
 
 TCollection_ExtendedString PCDM_ReadWriter::FileFormat(Standard_IStream&          theIStream,
-                                                       occ::handle<Storage_Data>& theData)
+                                                       occ::handle<app::storage::Storage_Data>& theData)
 {
   TCollection_ExtendedString aFormat;
 
-  occ::handle<Storage_BaseDriver> aFileDriver;
+  occ::handle<app::storage::Storage_BaseDriver> aFileDriver;
   if (PCDM::FileDriverType(theIStream, aFileDriver) == PCDM_TOFD_XmlFile)
   {
     return ::TryXmlDriverType(theIStream);

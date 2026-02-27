@@ -108,7 +108,7 @@ const TopoDS_Shell& BRepPrimAPI_MakeBox::Shell()
   return TopoDS::Shell(myShape);
 }
 
-void BRepPrimAPI_MakeBox::Build(const Message_ProgressRange&)
+void BRepPrimAPI_MakeBox::Build(const System::log::Message_ProgressRange&)
 {
   Solid();
 }

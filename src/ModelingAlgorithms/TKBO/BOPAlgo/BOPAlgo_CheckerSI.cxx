@@ -47,7 +47,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -84,7 +84,7 @@ void BOPAlgo_CheckerSI::SetLevelOfCheck(const int theLevel)
   }
 }
 
-void BOPAlgo_CheckerSI::Init(const Message_ProgressRange&)
+void BOPAlgo_CheckerSI::Init(const System::log::Message_ProgressRange&)
 {
   Clear();
 
@@ -102,7 +102,7 @@ void BOPAlgo_CheckerSI::Init(const Message_ProgressRange&)
   myIterator = theIterSI;
 }
 
-void BOPAlgo_CheckerSI::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_CheckerSI::Perform(const System::log::Message_ProgressRange& theRange)
 {
   try
   {
@@ -114,7 +114,7 @@ void BOPAlgo_CheckerSI::Perform(const Message_ProgressRange& theRange)
       return;
     }
 
-    Message_ProgressScope aPS(theRange, "Checking shape on self-intersection", 10);
+    System::log::Message_ProgressScope aPS(theRange, "Checking shape on self-intersection", 10);
 
     BOPAlgo_PaveFiller::Perform(aPS.Next(8));
     if (UserBreak(aPS))
@@ -124,7 +124,7 @@ void BOPAlgo_CheckerSI::Perform(const Message_ProgressRange& theRange)
 
     CheckFaceSelfIntersection(aPS.Next());
 
-    Message_ProgressScope aPSZZ(aPS.Next(), nullptr, 4);
+    System::log::Message_ProgressScope aPSZZ(aPS.Next(), nullptr, 4);
 
     if (!HasErrors())
       PerformVZ(aPSZZ.Next());
@@ -337,7 +337,7 @@ void BOPAlgo_CheckerSI::PostTreat()
   }
 }
 
-void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& theRange)
+void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const System::log::Message_ProgressRange& theRange)
 {
   if (myLevelOfCheck < 5)
     return;
@@ -351,7 +351,7 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
 
   int aNbS = myDS->NbSourceShapes();
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
 
   for (int i = 0; i < aNbS; i++)
   {
@@ -371,7 +371,7 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
       gp_Torus aTorus       = BAsurf.Torus();
       double   aMajorRadius = aTorus.MajorRadius();
       double   aMinorRadius = aTorus.MinorRadius();
-      if (aMajorRadius > aMinorRadius + Precision::Confusion())
+      if (aMajorRadius > aMinorRadius + math::precision::Precision::Confusion())
         continue;
     }
 
@@ -386,7 +386,7 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const Message_ProgressRange& t
   }
 
   int                   aNbFace = aVFace.Length();
-  Message_ProgressScope aPSParallel(aPSOuter.Next(),
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(),
                                     "Checking surface on self-intersection",
                                     aNbFace);
   for (int iF = 0; iF < aNbFace; ++iF)

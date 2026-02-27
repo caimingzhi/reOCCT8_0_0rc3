@@ -94,7 +94,7 @@ occ::handle<NCollection_HSequence<double>> ShapeAnalysis_TransferParametersProj:
   occ::handle<NCollection_HSequence<double>> resKnots = new NCollection_HSequence<double>;
 
   int              len   = Knots->Length();
-  constexpr double preci = 2 * Precision::PConfusion();
+  constexpr double preci = 2 * math::precision::Precision::PConfusion();
 
   double first   = (To2d ? myAC3d.FirstParameter() : myFirst);
   double last    = (To2d ? myAC3d.LastParameter() : myLast);
@@ -211,7 +211,7 @@ static double CorrectParameter(const occ::handle<Geom2d_Curve>& crv, const doubl
     for (int j = bspline->FirstUKnotIndex(); j <= bspline->LastUKnotIndex(); j++)
     {
       double valknot = bspline->Knot(j);
-      if (std::abs(valknot - param) < Precision::PConfusion())
+      if (std::abs(valknot - param) < math::precision::Precision::PConfusion())
         return valknot;
     }
   }
@@ -237,7 +237,7 @@ void ShapeAnalysis_TransferParametersProj::TransferRange(TopoDS_Edge& newEdge,
   gp_Pnt           p1;
   gp_Pnt           p2;
   double           alpha = 0, beta = 1;
-  constexpr double preci = Precision::PConfusion();
+  constexpr double preci = math::precision::Precision::PConfusion();
   double           firstPar, lastPar;
   if (prevPar < currPar)
   {
@@ -252,15 +252,15 @@ void ShapeAnalysis_TransferParametersProj::TransferRange(TopoDS_Edge& newEdge,
   if (Is2d)
   {
     p1 = myAC3d.Value(firstPar).Transformed(myLocation);
-    if (Precision::IsInfinite(p1.X()) || Precision::IsInfinite(p1.Y())
-        || Precision::IsInfinite(p1.Z()))
+    if (math::precision::Precision::IsInfinite(p1.X()) || math::precision::Precision::IsInfinite(p1.Y())
+        || math::precision::Precision::IsInfinite(p1.Z()))
     {
       B.SameRange(newEdge, false);
       return;
     }
     p2 = myAC3d.Value(lastPar).Transformed(myLocation);
-    if (Precision::IsInfinite(p2.X()) || Precision::IsInfinite(p2.Y())
-        || Precision::IsInfinite(p2.Z()))
+    if (math::precision::Precision::IsInfinite(p2.X()) || math::precision::Precision::IsInfinite(p2.Y())
+        || math::precision::Precision::IsInfinite(p2.Z()))
     {
       B.SameRange(newEdge, false);
       return;
@@ -275,15 +275,15 @@ void ShapeAnalysis_TransferParametersProj::TransferRange(TopoDS_Edge& newEdge,
   else
   {
     p1 = myCurve->Value(firstPar);
-    if (Precision::IsInfinite(p1.X()) || Precision::IsInfinite(p1.Y())
-        || Precision::IsInfinite(p1.Z()))
+    if (math::precision::Precision::IsInfinite(p1.X()) || math::precision::Precision::IsInfinite(p1.Y())
+        || math::precision::Precision::IsInfinite(p1.Z()))
     {
       B.SameRange(newEdge, false);
       return;
     }
     p2 = myCurve->Value(lastPar);
-    if (Precision::IsInfinite(p2.X()) || Precision::IsInfinite(p2.Y())
-        || Precision::IsInfinite(p2.Z()))
+    if (math::precision::Precision::IsInfinite(p2.X()) || math::precision::Precision::IsInfinite(p2.Y())
+        || math::precision::Precision::IsInfinite(p2.Z()))
     {
       B.SameRange(newEdge, false);
       return;
@@ -391,9 +391,9 @@ void ShapeAnalysis_TransferParametersProj::TransferRange(TopoDS_Edge& newEdge,
       double dist1    = sac1.NextProject(linFirst, Ad1, ploc1, myPrecision, pproj, ppar1);
       double dist2    = sac1.NextProject(linLast, Ad1, ploc2, myPrecision, pproj, ppar2);
 
-      bool isFirstOnEnd = (ppar1 - first) / len < Precision::PConfusion();
-      bool isLastOnEnd  = (last - ppar2) / len < Precision::PConfusion();
-      bool useLinear    = std::abs(ppar1 - ppar2) < Precision::PConfusion();
+      bool isFirstOnEnd = (ppar1 - first) / len < math::precision::Precision::PConfusion();
+      bool isLastOnEnd  = (last - ppar2) / len < math::precision::Precision::PConfusion();
+      bool useLinear    = std::abs(ppar1 - ppar2) < math::precision::Precision::PConfusion();
       if (isFirstOnEnd && !localLinearFirst)
         localLinearFirst = true;
       if (isLastOnEnd && !localLinearLast)
@@ -546,11 +546,11 @@ TopoDS_Vertex ShapeAnalysis_TransferParametersProj::CopyNMVertex(const TopoDS_Ve
   double apar = aOldPar;
   double aTol = BRep_Tool::Tolerance(theV);
   if (!hasRepr
-      || (fabs(f1 - f2) > Precision::PConfusion() || fabs(l1 - l2) > Precision::PConfusion()))
+      || (fabs(f1 - f2) > math::precision::Precision::PConfusion() || fabs(l1 - l2) > math::precision::Precision::PConfusion()))
   {
     gp_Pnt              projP;
     ShapeAnalysis_Curve sae;
-    double              adist = sae.Project(C2, apv, Precision::Confusion(), projP, apar);
+    double              adist = sae.Project(C2, apv, math::precision::Precision::Confusion(), projP, apar);
     if (aTol < adist)
       aTol = adist;
   }
@@ -656,12 +656,12 @@ TopoDS_Vertex ShapeAnalysis_TransferParametersProj::CopyNMVertex(const TopoDS_Ve
   {
     occ::handle<Geom_Surface>          aS        = BRep_Tool::Surface(toFace);
     occ::handle<ShapeAnalysis_Surface> aSurfTool = new ShapeAnalysis_Surface(aS);
-    gp_Pnt2d                           aP2d = aSurfTool->ValueOfUV(apv, Precision::Confusion());
+    gp_Pnt2d                           aP2d = aSurfTool->ValueOfUV(apv, math::precision::Precision::Confusion());
     apar1                                   = aP2d.X();
     apar2                                   = aP2d.Y();
 
     if (aTol < aSurfTool->Gap())
-      aTol = aSurfTool->Gap() + 0.1 * Precision::Confusion();
+      aTol = aSurfTool->Gap() + 0.1 * math::precision::Precision::Confusion();
   }
 
   BRep_Builder aB;

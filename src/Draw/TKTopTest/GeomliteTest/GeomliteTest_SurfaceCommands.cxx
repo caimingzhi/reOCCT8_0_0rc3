@@ -577,7 +577,7 @@ static int tocanon(Draw_Interpretor& di, int n, const char** a)
     }
   }
 
-  double tol = Precision::Confusion();
+  double tol = math::precision::Precision::Confusion();
   if (n > 3)
   {
     tol = Draw::Atof(a[3]);
@@ -655,7 +655,7 @@ static int tobezier(Draw_Interpretor& di, int n, const char** a)
         U2 = Draw::Atof(a[4]);
         V1 = Draw::Atof(a[5]);
         V2 = Draw::Atof(a[6]);
-        GeomConvert_BSplineSurfaceToBezierSurface Conv(S, U1, U2, V1, V2, Precision::PConfusion());
+        GeomConvert_BSplineSurfaceToBezierSurface Conv(S, U1, U2, V1, V2, math::precision::Precision::PConfusion());
         NbU = Conv.NbUPatches();
         NbV = Conv.NbVPatches();
         di << NbU << " X " << NbV << " patches in the result\n";
@@ -693,7 +693,7 @@ static int tobezier(Draw_Interpretor& di, int n, const char** a)
         double U1, U2;
         U1 = Draw::Atof(a[3]);
         U2 = Draw::Atof(a[4]);
-        GeomConvert_BSplineCurveToBezierCurve Conv(C3d, U1, U2, Precision::PConfusion());
+        GeomConvert_BSplineCurveToBezierCurve Conv(C3d, U1, U2, math::precision::Precision::PConfusion());
         NbArc = Conv.NbArcs();
         di << NbArc << " arcs in the result\n";
         for (i = 1; i <= NbArc; i++)
@@ -724,7 +724,7 @@ static int tobezier(Draw_Interpretor& di, int n, const char** a)
       double U1, U2;
       U1 = Draw::Atof(a[3]);
       U2 = Draw::Atof(a[4]);
-      Geom2dConvert_BSplineCurveToBezierCurve Conv(C2d, U1, U2, Precision::PConfusion());
+      Geom2dConvert_BSplineCurveToBezierCurve Conv(C2d, U1, U2, math::precision::Precision::PConfusion());
       NbArc = Conv.NbArcs();
       di << NbArc << " arcs in the result\n";
       for (i = 1; i <= NbArc; i++)
@@ -757,7 +757,7 @@ static int convbz(Draw_Interpretor& di, int n, const char** a)
     return 1;
 
   int    ii, jj, kk = 0, NbU, NbV;
-  double Tol = Precision::Confusion();
+  double Tol = math::precision::Precision::Confusion();
 
   NbU = Draw::Atoi(a[2]);
   occ::handle<Geom_Curve> aCurve(occ::down_cast<Geom_Curve>(DrawTrSurf::Get(a[3])));
@@ -1242,11 +1242,11 @@ static int insertknot(Draw_Interpretor&, int n, const char** a)
 
   if (!strcasecmp(a[0], "insertuknot"))
   {
-    GBs->InsertUKnot(knot, mult, Precision::PConfusion());
+    GBs->InsertUKnot(knot, mult, math::precision::Precision::PConfusion());
   }
   else if (!strcasecmp(a[0], "insertvknot"))
   {
-    GBs->InsertVKnot(knot, mult, Precision::PConfusion());
+    GBs->InsertVKnot(knot, mult, math::precision::Precision::PConfusion());
   }
   else if (!strcasecmp(a[0], "remuknot"))
   {
@@ -1526,8 +1526,8 @@ static int segsur(Draw_Interpretor&, int n, const char** a)
     if (GBs.IsNull())
       return 1;
 
-    double aUTolerance = Precision::PConfusion();
-    double aVTolerance = Precision::PConfusion();
+    double aUTolerance = math::precision::Precision::PConfusion();
+    double aVTolerance = math::precision::Precision::PConfusion();
     if (n >= 7)
       aUTolerance = aVTolerance = Draw::Atof(a[6]);
     if (n == 8)
@@ -1553,7 +1553,7 @@ static int compBsplSur(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 2)
   {
-    Message::SendFail() << "Syntax error: Invalid number of parameters";
+    System::log::Message::SendFail() << "Syntax error: Invalid number of parameters";
     return 1;
   }
 
@@ -1561,7 +1561,7 @@ static int compBsplSur(Draw_Interpretor&, int n, const char** a)
   occ::handle<Geom_BSplineSurface> GBs2 = DrawTrSurf::GetBSplineSurface(a[2]);
   if (GBs1.IsNull() || GBs2.IsNull())
   {
-    Message::SendFail() << "Syntax error: Invalid surface";
+    System::log::Message::SendFail() << "Syntax error: Invalid surface";
     return 1;
   }
 
@@ -1591,7 +1591,7 @@ static int compBsplSur(Draw_Interpretor&, int n, const char** a)
       gp_Pnt aP1   = GBs1->Value(aU, aV);
       gp_Pnt aP2   = GBs2->Value(aU, aV);
       double aDist = aP1.SquareDistance(aP2);
-      if (aDist > Precision::SquareConfusion())
+      if (aDist > math::precision::Precision::SquareConfusion())
       {
         double aD = sqrt(aDist);
         std::cout << "Surfaces differ for U,V,Dist: " << aU << " " << aV << " " << aD << std::endl;

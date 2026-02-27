@@ -63,13 +63,13 @@ void Interface_Static::Standards()
 
   Interface_Static::SetIVal("write.surfacecurve.mode", 1);
 
-  if (!Message_MsgFile::HasMsg("XSTEP_1"))
+  if (!System::log::Message_MsgFile::HasMsg("XSTEP_1"))
   {
-    if (!Message_MsgFile::LoadFromEnv("CSF_XSMessage", "XSTEP"))
+    if (!System::log::Message_MsgFile::LoadFromEnv("CSF_XSMessage", "XSTEP"))
     {
-      Message_MsgFile::LoadFromString(XSMessage_XSTEP_us, sizeof(XSMessage_XSTEP_us) - 1);
+      System::log::Message_MsgFile::LoadFromString(XSMessage_XSTEP_us, sizeof(XSMessage_XSTEP_us) - 1);
     }
-    if (!Message_MsgFile::HasMsg("XSTEP_1"))
+    if (!System::log::Message_MsgFile::HasMsg("XSTEP_1"))
     {
       throw Standard_ProgramError(
         "Critical Error - message resources for Interface_Static are invalid or undefined!");

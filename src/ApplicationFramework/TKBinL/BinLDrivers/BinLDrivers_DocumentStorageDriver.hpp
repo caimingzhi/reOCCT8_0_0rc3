@@ -15,7 +15,10 @@
 #include <Standard_Type.hpp>
 #include <TDocStd_FormatVersion.hpp>
 class BinMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class CDM_Document;
 class TDF_Label;
 class TCollection_AsciiString;
@@ -31,15 +34,15 @@ public:
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>&  theDocument,
     const TCollection_ExtendedString& theFileName,
-    const Message_ProgressRange&      theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&      theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Write(
     const occ::handle<CDM_Document>& theDocument,
     Standard_OStream&                theOStream,
-    const Message_ProgressRange&     theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange&     theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT virtual occ::handle<BinMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& theMsgDriver);
+    const occ::handle<System::log::Message_Messenger>& theMsgDriver);
 
   Standard_EXPORT void AddSection(const TCollection_AsciiString& theName,
                                   const bool                     isPostRead = true);
@@ -53,7 +56,7 @@ protected:
     const TDF_Label&             theData,
     Standard_OStream&            theOS,
     const bool&                  theQuickPart,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual void WriteSection(const TCollection_AsciiString&,
                                             const occ::handle<CDM_Document>&,
@@ -63,9 +66,9 @@ protected:
     BinLDrivers_DocumentSection& theDocSection,
     Standard_OStream&            theOS,
     const TDocStd_FormatVersion  theDocVer,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
-  Standard_EXPORT virtual void EnableQuickPartWriting(const occ::handle<Message_Messenger>&,
+  Standard_EXPORT virtual void EnableQuickPartWriting(const occ::handle<System::log::Message_Messenger>&,
                                                       const bool)
   {
   }
@@ -74,7 +77,7 @@ protected:
 
   occ::handle<BinMDF_ADriverTable>                        myDrivers;
   NCollection_IndexedMap<occ::handle<Standard_Transient>> myRelocTable;
-  occ::handle<Message_Messenger>                          myMsgDriver;
+  occ::handle<System::log::Message_Messenger>                          myMsgDriver;
 
 private:
   Standard_EXPORT void FirstPass(const TDF_Label& theRoot);

@@ -7,7 +7,7 @@ class XmlTObjDrivers_ReferenceDriver : public XmlMDF_ADriver
 
 public:
   Standard_EXPORT XmlTObjDrivers_ReferenceDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

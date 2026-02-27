@@ -337,7 +337,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
       {
         if (OK(aStatus, Scene().ReadXYZ(theBuffer, aRotAxis, false, false)))
         {
-          if (aRotAxis.SquareModulus() < Precision::Confusion())
+          if (aRotAxis.SquareModulus() < math::precision::Precision::Confusion())
             aRotAxis.SetZ(1.0);
           aStatus = Scene().ReadReal(theBuffer, aRotAngle, false, false);
         }
@@ -449,8 +449,8 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
   if (OK(aStatus))
   {
 
-    if (aBoxSize.X() > -Precision::Confusion() && aBoxSize.Y() > -Precision::Confusion()
-        && aBoxSize.Z() > -Precision::Confusion())
+    if (aBoxSize.X() > -math::precision::Precision::Confusion() && aBoxSize.Y() > -math::precision::Precision::Confusion()
+        && aBoxSize.Z() > -math::precision::Precision::Confusion())
     {
       myBox.SetCenter(aBoxCenter);
       myBox.SetHSize(aBoxSize * 0.5);
@@ -465,7 +465,7 @@ VrmlData_ErrorStatus VrmlData_Group::Read(VrmlData_InBuffer& theBuffer)
       myTrsf.Multiply(tRot);
 
       const double aScaleDiff[2] = {aScale.X() - aScale.Y(), aScale.X() - aScale.Z()};
-      if (aScaleDiff[0] * aScaleDiff[0] + aScaleDiff[1] * aScaleDiff[1] < Precision::Confusion())
+      if (aScaleDiff[0] * aScaleDiff[0] + aScaleDiff[1] * aScaleDiff[1] < math::precision::Precision::Confusion())
       {
         gp_Trsf tScale;
         tScale.SetScale(gp::Origin(), (aScale.X() + aScale.Y() + aScale.Z()) / 3.);
@@ -535,7 +535,7 @@ VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
       {
         const gp_XYZ aBoxCorner[2] = {myBox.CornerMin(), myBox.CornerMax()};
 
-        if (aBoxCorner[0].X() < aBoxCorner[1].X() + Precision::Confusion())
+        if (aBoxCorner[0].X() < aBoxCorner[1].X() + math::precision::Precision::Confusion())
         {
           Sprintf(buf,
                   "bboxCenter  %.9g %.9g %.9g",
@@ -558,14 +558,14 @@ VrmlData_ErrorStatus VrmlData_Group::Write(const char* thePrefix) const
       {
 
         const double aScaleFactor = myTrsf.ScaleFactor();
-        if ((aScaleFactor - 1.) * (aScaleFactor - 1.) > 0.0001 * Precision::Confusion())
+        if ((aScaleFactor - 1.) * (aScaleFactor - 1.) > 0.0001 * math::precision::Precision::Confusion())
         {
           Sprintf(buf, "scale       %.12g %.12g %.12g", aScaleFactor, aScaleFactor, aScaleFactor);
           aStatus = aScene.WriteLine(buf);
         }
 
         const gp_XYZ& aTrans = myTrsf.TranslationPart();
-        if (aTrans.SquareModulus() > 0.0001 * Precision::Confusion())
+        if (aTrans.SquareModulus() > 0.0001 * math::precision::Precision::Confusion())
         {
           Sprintf(buf, "translation %.12g %.12g %.12g", aTrans.X(), aTrans.Y(), aTrans.Z());
           aStatus = aScene.WriteLine(buf);

@@ -10,21 +10,21 @@
 #include <TCollection_AsciiString.hpp>
 
 PCDM_TypeOfFileDriver PCDM::FileDriverType(const TCollection_AsciiString&   aFileName,
-                                           occ::handle<Storage_BaseDriver>& aBaseDriver)
+                                           occ::handle<app::storage::Storage_BaseDriver>& aBaseDriver)
 {
-  if (FSD_CmpFile::IsGoodFileType(aFileName) == Storage_VSOk)
+  if (app::file::stream::FSD_CmpFile::IsGoodFileType(aFileName) == Storage_VSOk)
   {
-    aBaseDriver = new FSD_CmpFile;
+    aBaseDriver = new app::file::stream::FSD_CmpFile;
     return PCDM_TOFD_CmpFile;
   }
-  else if (FSD_File::IsGoodFileType(aFileName) == Storage_VSOk)
+  else if (app::file::stream::FSD_File::IsGoodFileType(aFileName) == Storage_VSOk)
   {
-    aBaseDriver = new FSD_File;
+    aBaseDriver = new app::file::stream::FSD_File;
     return PCDM_TOFD_File;
   }
-  else if (FSD_BinaryFile::IsGoodFileType(aFileName) == Storage_VSOk)
+  else if (app::file::stream::FSD_BinaryFile::IsGoodFileType(aFileName) == Storage_VSOk)
   {
-    aBaseDriver = new FSD_BinaryFile;
+    aBaseDriver = new app::file::stream::FSD_BinaryFile;
     return PCDM_TOFD_File;
   }
   else
@@ -35,28 +35,28 @@ PCDM_TypeOfFileDriver PCDM::FileDriverType(const TCollection_AsciiString&   aFil
 }
 
 PCDM_TypeOfFileDriver PCDM::FileDriverType(Standard_IStream&                theIStream,
-                                           occ::handle<Storage_BaseDriver>& theBaseDriver)
+                                           occ::handle<app::storage::Storage_BaseDriver>& theBaseDriver)
 {
   TCollection_AsciiString aReadMagicNumber;
 
   if (theIStream.good())
   {
-    aReadMagicNumber = Storage_BaseDriver::ReadMagicNumber(theIStream);
+    aReadMagicNumber = app::storage::Storage_BaseDriver::ReadMagicNumber(theIStream);
   }
 
-  if (aReadMagicNumber == FSD_CmpFile::MagicNumber())
+  if (aReadMagicNumber == app::file::stream::FSD_CmpFile::MagicNumber())
   {
-    theBaseDriver = new FSD_CmpFile;
+    theBaseDriver = new app::file::stream::FSD_CmpFile;
     return PCDM_TOFD_CmpFile;
   }
-  else if (aReadMagicNumber == FSD_File::MagicNumber())
+  else if (aReadMagicNumber == app::file::stream::FSD_File::MagicNumber())
   {
-    theBaseDriver = new FSD_File;
+    theBaseDriver = new app::file::stream::FSD_File;
     return PCDM_TOFD_File;
   }
-  else if (aReadMagicNumber == FSD_BinaryFile::MagicNumber())
+  else if (aReadMagicNumber == app::file::stream::FSD_BinaryFile::MagicNumber())
   {
-    theBaseDriver = new FSD_BinaryFile;
+    theBaseDriver = new app::file::stream::FSD_BinaryFile;
     return PCDM_TOFD_File;
   }
   else if (aReadMagicNumber.Search("<?xml") != -1)

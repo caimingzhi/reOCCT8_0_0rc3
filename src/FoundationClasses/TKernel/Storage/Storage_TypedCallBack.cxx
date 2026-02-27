@@ -4,47 +4,47 @@
 #include <Storage_TypedCallBack.hpp>
 #include <TCollection_AsciiString.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Storage_TypedCallBack, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(app::storage::Storage_TypedCallBack, Standard_Transient)
 
-Storage_TypedCallBack::Storage_TypedCallBack()
+app::storage::Storage_TypedCallBack::Storage_TypedCallBack()
     : myIndex(0)
 {
 }
 
-Storage_TypedCallBack::Storage_TypedCallBack(const TCollection_AsciiString&       aTypeName,
-                                             const occ::handle<Storage_CallBack>& aCallBack)
+app::storage::Storage_TypedCallBack::Storage_TypedCallBack(const TCollection_AsciiString&       aTypeName,
+                                             const occ::handle<app::storage::Storage_CallBack>& aCallBack)
     : myIndex(0)
 {
   myType     = aTypeName;
   myCallBack = aCallBack;
 }
 
-void Storage_TypedCallBack::SetType(const TCollection_AsciiString& aType)
+void app::storage::Storage_TypedCallBack::SetType(const TCollection_AsciiString& aType)
 {
   myType = aType;
 }
 
-TCollection_AsciiString Storage_TypedCallBack::Type() const
+TCollection_AsciiString app::storage::Storage_TypedCallBack::Type() const
 {
   return myType;
 }
 
-void Storage_TypedCallBack::SetCallBack(const occ::handle<Storage_CallBack>& aCallBack)
+void app::storage::Storage_TypedCallBack::SetCallBack(const occ::handle<app::storage::Storage_CallBack>& aCallBack)
 {
   myCallBack = aCallBack;
 }
 
-occ::handle<Storage_CallBack> Storage_TypedCallBack::CallBack() const
+occ::handle<app::storage::Storage_CallBack> app::storage::Storage_TypedCallBack::CallBack() const
 {
   return myCallBack;
 }
 
-void Storage_TypedCallBack::SetIndex(const int anIndex)
+void app::storage::Storage_TypedCallBack::SetIndex(const int anIndex)
 {
   myIndex = anIndex;
 }
 
-int Storage_TypedCallBack::Index() const
+int app::storage::Storage_TypedCallBack::Index() const
 {
   return myIndex;
 }

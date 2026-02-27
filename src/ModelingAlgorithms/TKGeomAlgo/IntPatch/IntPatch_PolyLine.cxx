@@ -3,7 +3,7 @@
 #include <IntPatch_WLine.hpp>
 #include <Precision.hpp>
 
-#define INITDEFLE Precision::PConfusion() * 100.
+#define INITDEFLE math::precision::Precision::PConfusion() * 100.
 
 IntPatch_PolyLine::IntPatch_PolyLine()
     : IntPatch_Polygo(INITDEFLE),

@@ -716,11 +716,11 @@ bool GetOffset(const LocOpe_PntFace& PntInfo,
   FFA.D1(Up, Vp, PP, D1U, D1V);
   gp_Dir             NormF;
   CSLib_NormalStatus stat;
-  CSLib::Normal(D1U, D1V, Precision::Angular(), stat, NormF);
+  CSLib::Normal(D1U, D1V, math::precision::Precision::Angular(), stat, NormF);
   if (stat != CSLib_Defined)
     return false;
   double angle = Axis.Direction().Angle(NormF);
-  if (std::abs(M_PI / 2. - angle) < Precision::Angular())
+  if (std::abs(M_PI / 2. - angle) < math::precision::Precision::Angular())
     return false;
   outOff = Radius * std::abs(tan(angle));
   return true;

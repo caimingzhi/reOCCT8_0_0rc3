@@ -19,14 +19,14 @@ void IntSurf::MakeTransition(const gp_Vec&       TgFirst,
 
   double NTgSecond                = TgSecond.Magnitude();
   double NTgFirst                 = TgFirst.Magnitude();
-  double NTgSecondNTgFirstAngular = NTgSecond * NTgFirst * Precision::Angular();
+  double NTgSecondNTgFirstAngular = NTgSecond * NTgFirst * math::precision::Precision::Angular();
 
-  if (NTgFirst <= Precision::Confusion())
+  if (NTgFirst <= math::precision::Precision::Confusion())
   {
     TFirst.SetValue(true, IntSurf_Undecided);
     TSecond.SetValue(true, IntSurf_Undecided);
   }
-  else if ((NTgSecond <= Precision::Confusion()) || (pvect.Magnitude() <= NTgSecondNTgFirstAngular))
+  else if ((NTgSecond <= math::precision::Precision::Confusion()) || (pvect.Magnitude() <= NTgSecondNTgFirstAngular))
   {
     TFirst.SetValue(true, IntSurf_Unknown, TgFirst.Dot(TgSecond) < 0.0);
     TSecond.SetValue(true, IntSurf_Unknown, TgFirst.Dot(TgSecond) < 0.0);

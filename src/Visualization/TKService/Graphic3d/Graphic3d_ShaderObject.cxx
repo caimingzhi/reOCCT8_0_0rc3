@@ -27,13 +27,13 @@ occ::handle<Graphic3d_ShaderObject> Graphic3d_ShaderObject::CreateFromFile(
   occ::handle<Graphic3d_ShaderObject> aShader = new Graphic3d_ShaderObject(theType);
   aShader->myPath                             = thePath;
 
-  OSD_File aFile(thePath);
+  System::os::OSD_File aFile(thePath);
   if (!aFile.Exists())
   {
     return nullptr;
   }
 
-  aFile.Open(OSD_ReadOnly, OSD_Protection());
+  aFile.Open(OSD_ReadOnly, System::os::OSD_Protection());
   aFile.Read(aShader->mySource, (int)aFile.Size());
   aFile.Close();
 

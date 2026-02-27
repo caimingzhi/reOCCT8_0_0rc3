@@ -55,7 +55,7 @@ RWObj_ObjWriterContext::RWObj_ObjWriterContext(const TCollection_AsciiString& th
 {
   if (myFile == nullptr)
   {
-    Message::SendFail(TCollection_AsciiString("File cannot be created\n") + theName);
+    System::log::Message::SendFail(TCollection_AsciiString("File cannot be created\n") + theName);
     return;
   }
 }
@@ -65,7 +65,7 @@ RWObj_ObjWriterContext::~RWObj_ObjWriterContext()
   if (myFile != nullptr)
   {
     ::fclose(myFile);
-    Message::SendFail(TCollection_AsciiString("File cannot be written\n") + myName);
+    System::log::Message::SendFail(TCollection_AsciiString("File cannot be written\n") + myName);
   }
 }
 

@@ -23,5 +23,5 @@ TEST(gp_TrsfTest, OCC23361_TransformationComposition)
   gp_Pnt aP3 = aP1.Transformed(aT1);
   aP3.Transform(aT2);
 
-  EXPECT_TRUE(aP2.IsEqual(aP3, Precision::Confusion()));
+  EXPECT_TRUE(aP2.IsEqual(aP3, math::precision::Precision::Confusion()));
 }

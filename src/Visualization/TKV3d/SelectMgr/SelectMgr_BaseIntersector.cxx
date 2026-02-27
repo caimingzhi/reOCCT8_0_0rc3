@@ -222,7 +222,7 @@ bool SelectMgr_BaseIntersector::RayCircleIntersection(const double  theRadius,
 
     const double aK = aX1 * aX1 + anY1 * anY1;
     if ((theIsFilled && aK <= theRadius * theRadius)
-        || (!theIsFilled && std::abs(sqrt(aK) - theRadius) <= Precision::Confusion()))
+        || (!theIsFilled && std::abs(sqrt(aK) - theRadius) <= math::precision::Precision::Confusion()))
     {
       theTime = aTime;
       return true;

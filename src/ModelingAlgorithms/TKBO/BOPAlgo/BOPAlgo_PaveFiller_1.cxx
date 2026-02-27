@@ -23,14 +23,14 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-void BOPAlgo_PaveFiller::PerformVV(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformVV(const System::log::Message_ProgressRange& theRange)
 {
   int                                    n1, n2, iFlag, aSize;
   occ::handle<NCollection_BaseAllocator> aAllocator;
 
   myIterator->Initialize(TopAbs_VERTEX, TopAbs_VERTEX);
   aSize = myIterator->ExpectedLength();
-  Message_ProgressScope aPS(theRange, nullptr, 2.);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 2.);
   if (!aSize)
   {
     return;
@@ -43,7 +43,7 @@ void BOPAlgo_PaveFiller::PerformVV(const Message_ProgressRange& theRange)
   NCollection_IndexedDataMap<int, NCollection_List<int>> aMILI(100, aAllocator);
   NCollection_List<NCollection_List<int>>                aMBlocks(aAllocator);
 
-  Message_ProgressScope aPSLoop(aPS.Next(1.), "Performing Vertex-Vertex intersection", aSize);
+  System::log::Message_ProgressScope aPSLoop(aPS.Next(1.), "Performing Vertex-Vertex intersection", aSize);
   for (; myIterator->More(); myIterator->Next(), aPSLoop.Next())
   {
     if (UserBreak(aPS))
@@ -153,7 +153,7 @@ int BOPAlgo_PaveFiller::MakeSDVertices(const NCollection_List<int>& theVertIndic
   BOPDS_ShapeInfo& aSIDS = myDS->ChangeShapeInfo(nV);
   Bnd_Box&         aBox  = aSIDS.ChangeBox();
   aBox.Add(BRep_Tool::Pnt(aVn));
-  aBox.SetGap(BRep_Tool::Tolerance(aVn) + Precision::Confusion());
+  aBox.SetGap(BRep_Tool::Tolerance(aVn) + math::precision::Precision::Confusion());
 
   NCollection_Vector<BOPDS_InterfVV>& aVVs = myDS->InterfVV();
   if (theAddInterfs)

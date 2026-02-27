@@ -172,7 +172,7 @@ int MakePeriodic(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     if (theArgc > i + 1)
       aPeriod = Draw::Atof(theArgv[++i]);
 
-    if (aPeriod <= Precision::Confusion())
+    if (aPeriod <= math::precision::Precision::Confusion())
     {
       theDI << "Period for " << cDirName << " direction is not set\n";
       return 1;

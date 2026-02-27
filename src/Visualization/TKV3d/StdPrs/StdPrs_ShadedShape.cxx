@@ -122,7 +122,7 @@ namespace
     int                             aNbTriangles = 0;
     int                             aNbVertices  = 0;
 
-    constexpr double aPreci = Precision::SquareConfusion();
+    constexpr double aPreci = math::precision::Precision::SquareConfusion();
 
     TopExp_Explorer aFaceIt(theShape, TopAbs_FACE);
     for (; aFaceIt.More(); aFaceIt.Next())

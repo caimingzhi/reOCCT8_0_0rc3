@@ -25,7 +25,7 @@ void IGESBasic_ToolSubfigureDef::ReadOwnParams(const occ::handle<IGESBasic_Subfi
                                                IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg209("XSTEP_209");
+  System::log::Message_Msg Msg209("XSTEP_209");
 
   int                                   tempDepth;
   occ::handle<TCollection_HAsciiString> tempName;
@@ -35,18 +35,18 @@ void IGESBasic_ToolSubfigureDef::ReadOwnParams(const occ::handle<IGESBasic_Subfi
 
   if (!PR.ReadInteger(PR.Current(), tempDepth))
   {
-    Message_Msg Msg208("XSTEP_208");
+    System::log::Message_Msg Msg208("XSTEP_208");
     PR.SendFail(Msg208);
   }
   PR.ReadText(PR.Current(), Msg209, tempName);
   if (PR.ReadInteger(PR.Current(), nbval))
   {
-    Message_Msg Msg211("XSTEP_211");
+    System::log::Message_Msg Msg211("XSTEP_211");
     PR.ReadEnts(IR, PR.CurrentList(nbval), Msg211, EntArray);
   }
   else
   {
-    Message_Msg Msg210("XSTEP_210");
+    System::log::Message_Msg Msg210("XSTEP_210");
     PR.SendFail(Msg210);
   }
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);

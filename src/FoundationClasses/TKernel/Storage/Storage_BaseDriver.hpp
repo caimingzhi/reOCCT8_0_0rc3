@@ -9,6 +9,7 @@
 
 class TCollection_ExtendedString;
 
+namespace app { namespace storage {
 class Storage_BaseDriver : public Standard_Transient
 {
 public:
@@ -229,3 +230,5 @@ private:
   Storage_OpenMode        myOpenMode;
   TCollection_AsciiString myName;
 };
+}} // namespace app::storage
+

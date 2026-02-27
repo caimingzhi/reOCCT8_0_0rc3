@@ -18,7 +18,7 @@
 #include <TNaming_NamedShape.hpp>
 
 void BinMXCAFDoc::AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
-                             const occ::handle<Message_Messenger>&   theMsgDrv)
+                             const occ::handle<System::log::Message_Messenger>&   theMsgDrv)
 {
   theDriverTable->AddDriver(new BinMXCAFDoc_CentroidDriver(theMsgDrv));
   theDriverTable->AddDriver(new BinMXCAFDoc_ColorDriver(theMsgDrv));

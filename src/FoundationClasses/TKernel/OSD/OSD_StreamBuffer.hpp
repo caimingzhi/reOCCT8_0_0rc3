@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 
+namespace System { namespace os {
 template <typename T>
 class OSD_StreamBuffer : public T
 {
@@ -20,7 +21,9 @@ protected:
   std::string                     myUrl;
   std::shared_ptr<std::streambuf> myBuffer;
 };
+}} // namespace System::os
 
-typedef OSD_StreamBuffer<std::istream>  OSD_IStreamBuffer;
-typedef OSD_StreamBuffer<std::ostream>  OSD_OStreamBuffer;
-typedef OSD_StreamBuffer<std::iostream> OSD_IOStreamBuffer;
+
+typedef System::os::OSD_StreamBuffer<std::istream>  OSD_IStreamBuffer;
+typedef System::os::OSD_StreamBuffer<std::ostream>  OSD_OStreamBuffer;
+typedef System::os::OSD_StreamBuffer<std::iostream> OSD_IOStreamBuffer;

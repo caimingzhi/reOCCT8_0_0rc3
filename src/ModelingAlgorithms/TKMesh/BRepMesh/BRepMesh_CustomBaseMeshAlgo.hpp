@@ -16,7 +16,7 @@ public:
   DEFINE_STANDARD_RTTIEXT(BRepMesh_CustomBaseMeshAlgo, BRepMesh_ConstrainedBaseMeshAlgo)
 
 protected:
-  void generateMesh(const Message_ProgressRange& theRange) override
+  void generateMesh(const System::log::Message_ProgressRange& theRange) override
   {
     const occ::handle<BRepMesh_DataStructureOfDelaun>& aStructure = this->getStructure();
     const int                                          aNodesNb   = aStructure->NbNodes();

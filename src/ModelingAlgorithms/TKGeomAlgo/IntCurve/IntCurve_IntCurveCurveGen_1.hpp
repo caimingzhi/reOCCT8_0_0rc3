@@ -1,20 +1,20 @@
 #include <Precision.hpp>
 
 inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen()
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
 }
 
 inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen(const TheCurve& C,
                                                             const double    TolConf,
                                                             const double    Tol)
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
   Perform(C, TolConf, Tol);
 }
@@ -23,10 +23,10 @@ inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen(const TheCurve&     
                                                             const IntRes2d_Domain& D,
                                                             const double           TolConf,
                                                             const double           Tol)
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
   Perform(C, D, TolConf, Tol);
 }
@@ -35,10 +35,10 @@ inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen(const TheCurve& C1,
                                                             const TheCurve& C2,
                                                             const double    TolConf,
                                                             const double    Tol)
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
   Perform(C1, C2, TolConf, Tol);
 }
@@ -48,10 +48,10 @@ inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen(const TheCurve&     
                                                             const TheCurve&        C2,
                                                             const double           TolConf,
                                                             const double           Tol)
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
   Perform(C1, D1, C2, TolConf, Tol);
 }
@@ -61,10 +61,10 @@ inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen(const TheCurve&     
                                                             const IntRes2d_Domain& D2,
                                                             const double           TolConf,
                                                             const double           Tol)
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
   Perform(C1, C2, D2, TolConf, Tol);
 }
@@ -75,10 +75,10 @@ inline IntCurve_IntCurveCurveGen::IntCurve_IntCurveCurveGen(const TheCurve&     
                                                             const IntRes2d_Domain& D2,
                                                             const double           TolConf,
                                                             const double           Tol)
-    : param1inf(-Precision::Infinite()),
-      param1sup(Precision::Infinite()),
-      param2inf(-Precision::Infinite()),
-      param2sup(Precision::Infinite())
+    : param1inf(-math::precision::Precision::Infinite()),
+      param1sup(math::precision::Precision::Infinite()),
+      param2inf(-math::precision::Precision::Infinite()),
+      param2sup(math::precision::Precision::Infinite())
 {
   Perform(C1, D1, C2, D2, TolConf, Tol);
 }

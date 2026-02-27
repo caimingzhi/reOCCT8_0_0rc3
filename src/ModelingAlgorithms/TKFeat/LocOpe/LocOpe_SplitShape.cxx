@@ -130,7 +130,7 @@ void LocOpe_SplitShape::Add(const TopoDS_Vertex& V, const double P, const TopoDS
   {
     const TopoDS_Edge& edg = TopoDS::Edge(itl.Value());
     BRep_Tool::Range(edg, f, l);
-    if (P > f + Precision::PConfusion() && P < l - Precision::PConfusion())
+    if (P > f + math::precision::Precision::PConfusion() && P < l - math::precision::Precision::PConfusion())
     {
       break;
     }
@@ -583,7 +583,7 @@ bool LocOpe_SplitShape::AddClosedWire(const TopoDS_Wire& W, const TopoDS_Face& F
   newFace.Orientation(TopAbs_FORWARD);
   B.Add(newFace, W);
 
-  BRepTopAdaptor_FClass2d classif(newFace, Precision::PConfusion());
+  BRepTopAdaptor_FClass2d classif(newFace, math::precision::Precision::PConfusion());
   if (classif.PerformInfinitePoint() == TopAbs_IN)
   {
 
@@ -1292,7 +1292,7 @@ static bool IsInside(const TopoDS_Face& F, const TopoDS_Wire& W1, const TopoDS_W
   newFace.Orientation(TopAbs_FORWARD);
   B.Add(newFace, W2);
 
-  BRepTopAdaptor_FClass2d classif(newFace, Precision::PConfusion());
+  BRepTopAdaptor_FClass2d classif(newFace, math::precision::Precision::PConfusion());
   bool                    Reversed = false;
   if (classif.PerformInfinitePoint() == TopAbs_IN)
   {
@@ -1336,17 +1336,17 @@ static bool IsInside(const TopoDS_Face& F, const TopoDS_Wire& W)
 
     double                    f, l, prm;
     occ::handle<Geom2d_Curve> C2d = BRep_Tool::CurveOnSurface(edg, F, f, l);
-    if (!Precision::IsNegativeInfinite(f) && !Precision::IsPositiveInfinite(l))
+    if (!math::precision::Precision::IsNegativeInfinite(f) && !math::precision::Precision::IsPositiveInfinite(l))
     {
       prm = (f + l) / 2.;
     }
     else
     {
-      if (Precision::IsNegativeInfinite(f) && Precision::IsPositiveInfinite(l))
+      if (math::precision::Precision::IsNegativeInfinite(f) && math::precision::Precision::IsPositiveInfinite(l))
       {
         prm = 0.;
       }
-      else if (Precision::IsNegativeInfinite(f))
+      else if (math::precision::Precision::IsNegativeInfinite(f))
       {
         prm = l - 1.;
       }
@@ -1358,7 +1358,7 @@ static bool IsInside(const TopoDS_Face& F, const TopoDS_Wire& W)
 
     gp_Pnt2d pt2d(C2d->Value(prm));
 
-    BRepTopAdaptor_FClass2d classif(F, Precision::PConfusion());
+    BRepTopAdaptor_FClass2d classif(F, math::precision::Precision::PConfusion());
     TopAbs_State            stat = classif.Perform(pt2d);
 
     if (stat == TopAbs_OUT)

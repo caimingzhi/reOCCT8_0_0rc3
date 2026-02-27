@@ -440,8 +440,8 @@ void FindExactUVBounds(const TopoDS_Face& FF,
     vmax                 = aBAS.LastVParameter();
     bool     isUperiodic = aBAS.IsUPeriodic(), isVperiodic = aBAS.IsVPeriodic();
     double   aT1, aT2;
-    double   TolU = std::max(aBAS.UResolution(Tol), Precision::PConfusion());
-    double   TolV = std::max(aBAS.VResolution(Tol), Precision::PConfusion());
+    double   TolU = std::max(aBAS.UResolution(Tol), math::precision::Precision::PConfusion());
+    double   TolV = std::max(aBAS.VResolution(Tol), math::precision::Precision::PConfusion());
     int      Nu = 0, Nv = 0, NbEdges = 0;
     gp_Vec2d Du(1, 0), Dv(0, 1);
     gp_Pnt2d aP;
@@ -483,7 +483,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
       if (std::abs(u - umin) <= TolU || std::abs(u - umax) <= TolU)
       {
         double d = Dv * aV;
-        if (1. - std::abs(d) <= Precision::PConfusion())
+        if (1. - std::abs(d) <= math::precision::Precision::PConfusion())
         {
           Nu++;
           if (Nu > 2)
@@ -499,7 +499,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
       else if (std::abs(v - vmin) <= TolV || std::abs(v - vmax) <= TolV)
       {
         double d = Du * aV;
-        if (1. - std::abs(d) <= Precision::PConfusion())
+        if (1. - std::abs(d) <= math::precision::Precision::PConfusion())
         {
           Nv++;
           if (Nv > 2)
@@ -533,8 +533,8 @@ void FindExactUVBounds(const TopoDS_Face& FF,
   }
 
   double    aT1, aT2;
-  double    TolU  = std::max(aBAS.UResolution(Tol), Precision::PConfusion());
-  double    TolV  = std::max(aBAS.VResolution(Tol), Precision::PConfusion());
+  double    TolU  = std::max(aBAS.UResolution(Tol), math::precision::Precision::PConfusion());
+  double    TolV  = std::max(aBAS.VResolution(Tol), math::precision::Precision::PConfusion());
   double    TolUV = std::max(TolU, TolV);
   Bnd_Box2d aBox;
   ex.Init(F, TopAbs_EDGE);
@@ -686,8 +686,8 @@ void AdjustFaceBox(const BRepAdaptor_Surface& BS,
   FaceBox.Get(fxmin, fymin, fzmin, fxmax, fymax, fzmax);
   EdgeBox.Get(exmin, eymin, ezmin, exmax, eymax, ezmax);
 
-  double                  TolU = std::max(BS.UResolution(Tol), Precision::PConfusion());
-  double                  TolV = std::max(BS.VResolution(Tol), Precision::PConfusion());
+  double                  TolU = std::max(BS.UResolution(Tol), math::precision::Precision::PConfusion());
+  double                  TolV = std::max(BS.VResolution(Tol), math::precision::Precision::PConfusion());
   BRepTopAdaptor_FClass2d FClass(BS.Face(), std::max(TolU, TolV));
 
   bool isModified = false;

@@ -23,11 +23,11 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
                                               IGESData_ParamReader& PR) const
 {
 
-  Message_Msg Msg99("XSTEP_99");
-  Message_Msg Msg100("XSTEP_100");
-  Message_Msg Msg101("XSTEP_101");
-  Message_Msg Msg102("XSTEP_102");
-  Message_Msg Msg103("XSTEP_103");
+  System::log::Message_Msg Msg99("XSTEP_99");
+  System::log::Message_Msg Msg100("XSTEP_100");
+  System::log::Message_Msg Msg101("XSTEP_101");
+  System::log::Message_Msg Msg102("XSTEP_102");
+  System::log::Message_Msg Msg103("XSTEP_103");
 
   int                                      anIndex, aDegree;
   bool                                     aPlanar, aClosed, aPolynomial, aPeriodic;
@@ -41,7 +41,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
   {
     if (anIndex < 0)
     {
-      Message_Msg Msg97("XSTEP_97");
+      System::log::Message_Msg Msg97("XSTEP_97");
       PR.SendFail(Msg97);
       anIndex = 0;
     }
@@ -52,14 +52,14 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
   }
   else
   {
-    Message_Msg Msg97("XSTEP_97");
+    System::log::Message_Msg Msg97("XSTEP_97");
     PR.SendFail(Msg97);
   }
 
   if (!PR.ReadInteger(PR.Current(), aDegree))
   {
     aDegree = 0;
-    Message_Msg Msg98("XSTEP_98");
+    System::log::Message_Msg Msg98("XSTEP_98");
     PR.SendFail(Msg98);
   }
 
@@ -74,8 +74,8 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
 
   if (!allPoles.IsNull())
   {
-    Message_Msg Msg104("XSTEP_104");
-    Message_Msg Msg105("XSTEP_105");
+    System::log::Message_Msg Msg104("XSTEP_104");
+    System::log::Message_Msg Msg105("XSTEP_105");
     PR.ReadReals(PR.CurrentList(anIndex + 1), Msg104, allWeights, 0);
 
     for (int I = 0; I <= anIndex; I++)
@@ -89,12 +89,12 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
 
   if (!PR.ReadReal(PR.Current(), aUmin))
   {
-    Message_Msg Msg106("XSTEP_106");
+    System::log::Message_Msg Msg106("XSTEP_106");
     PR.SendFail(Msg106);
   }
   if (!PR.ReadReal(PR.Current(), aUmax))
   {
-    Message_Msg Msg107("XSTEP_107");
+    System::log::Message_Msg Msg107("XSTEP_107");
     PR.SendFail(Msg107);
   }
 
@@ -104,7 +104,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
     st = PR.ReadReal(PR.Current(), normX);
     if (!st)
     {
-      Message_Msg Msg108("XSTEP_108");
+      System::log::Message_Msg Msg108("XSTEP_108");
       PR.SendFail(Msg108);
     }
   }
@@ -116,7 +116,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
     st = PR.ReadReal(PR.Current(), normY);
     if (!st)
     {
-      Message_Msg Msg108("XSTEP_108");
+      System::log::Message_Msg Msg108("XSTEP_108");
       PR.SendFail(Msg108);
     }
   }
@@ -128,7 +128,7 @@ void IGESGeom_ToolBSplineCurve::ReadOwnParams(const occ::handle<IGESGeom_BSpline
     st = PR.ReadReal(PR.Current(), normZ);
     if (!st)
     {
-      Message_Msg Msg108("XSTEP_108");
+      System::log::Message_Msg Msg108("XSTEP_108");
       PR.SendFail(Msg108);
     }
   }
@@ -281,7 +281,7 @@ void IGESGeom_ToolBSplineCurve::OwnCheck(const occ::handle<IGESGeom_BSplineCurve
 
   if (!Flag)
   {
-    Message_Msg Msg104("XSTEP_104");
+    System::log::Message_Msg Msg104("XSTEP_104");
     ach->SendFail(Msg104);
   }
 
@@ -298,7 +298,7 @@ void IGESGeom_ToolBSplineCurve::OwnCheck(const occ::handle<IGESGeom_BSplineCurve
     double normod = aNorm.SquareModulus();
     if (normod < epsn)
     {
-      Message_Msg Msg109("XSTEP_109");
+      System::log::Message_Msg Msg109("XSTEP_109");
       ach->AddWarning(Msg109);
     }
   }

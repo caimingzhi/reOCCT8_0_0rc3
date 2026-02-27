@@ -88,7 +88,7 @@ void Bisector_BisecCC::Perform(const occ::handle<Geom2d_Curve>& Cu1,
   double           U, UC1, UC2, Dist, dU, USol;
   gp_Pnt2d         P;
   int              NbPnts    = 21;
-  constexpr double EpsMin    = 10 * Precision::Confusion();
+  constexpr double EpsMin    = 10 * math::precision::Precision::Confusion();
   bool             YaPoly    = true;
   bool             OriInPoly = false;
 
@@ -101,7 +101,7 @@ void Bisector_BisecCC::Perform(const occ::handle<Geom2d_Curve>& Cu1,
   }
 
   P = ValueByInt(U, UC1, UC2, Dist);
-  if (Dist < Precision::Confusion())
+  if (Dist < math::precision::Precision::Confusion())
   {
     gp_Pnt2d aP1   = curve1->Value(UC1);
     gp_Pnt2d aP2   = curve2->Value(UC2);
@@ -114,12 +114,12 @@ void Bisector_BisecCC::Perform(const occ::handle<Geom2d_Curve>& Cu1,
     }
   }
 
-  if (Dist < Precision::Infinite())
+  if (Dist < math::precision::Precision::Infinite())
   {
 
     myPolygon.Append(Bisector_PointOnBis(UC1, UC2, U, Dist, P));
     startIntervals.Append(U);
-    if (P.IsEqual(Origin, Precision::Confusion()))
+    if (P.IsEqual(Origin, math::precision::Precision::Confusion()))
     {
 
       OriInPoly = true;
@@ -133,7 +133,7 @@ void Bisector_BisecCC::Perform(const occ::handle<Geom2d_Curve>& Cu1,
     for (int i = 1; i <= NbPnts - 1; i++)
     {
       P = ValueByInt(U, UC1, UC2, Dist);
-      if (Dist < Precision::Infinite())
+      if (Dist < math::precision::Precision::Infinite())
       {
         USol = SearchBound(U - dU, U);
         P    = ValueByInt(USol, UC1, UC2, Dist);
@@ -164,9 +164,9 @@ void Bisector_BisecCC::Perform(const occ::handle<Geom2d_Curve>& Cu1,
     for (int i = 1; i <= NbPnts - 1; i++)
     {
       P = ValueByInt(U, UC1, UC2, Dist);
-      if (Dist < Precision::Infinite())
+      if (Dist < math::precision::Precision::Infinite())
       {
-        if (P.Distance(prevPnt) > Precision::Confusion())
+        if (P.Distance(prevPnt) > math::precision::Precision::Confusion())
           myPolygon.Append(Bisector_PointOnBis(UC1, UC2, U, Dist, P));
       }
       else
@@ -174,7 +174,7 @@ void Bisector_BisecCC::Perform(const occ::handle<Geom2d_Curve>& Cu1,
         USol = SearchBound(U - dU, U);
         P    = ValueByInt(USol, UC1, UC2, Dist);
         endIntervals.SetValue(1, USol);
-        if (P.Distance(prevPnt) > Precision::Confusion())
+        if (P.Distance(prevPnt) > math::precision::Precision::Confusion())
           myPolygon.Append(Bisector_PointOnBis(UC1, UC2, USol, Dist, P));
         break;
       }
@@ -513,7 +513,7 @@ gp_Pnt2d Bisector_BisecCC::ValueAndDist(const double U, double& U1, double& U2, 
   curve1->D1(U1, P1, T1);
   gp_Vec2d N1(T1.Y(), -T1.X());
 
-  if ((VMax - VMin) < Precision::PConfusion())
+  if ((VMax - VMin) < math::precision::Precision::PConfusion())
   {
     U2 = VInit;
   }
@@ -557,7 +557,7 @@ gp_Pnt2d Bisector_BisecCC::ValueAndDist(const double U, double& U1, double& U2, 
     double       N1P2P1     = N1.Dot(P2P1);
     const double anEps      = Epsilon(1);
 
-    if (P1.IsEqual(P2, Precision::Confusion()))
+    if (P1.IsEqual(P2, math::precision::Precision::Confusion()))
     {
       PBis = P1;
       Dist = 0.0;
@@ -576,7 +576,7 @@ gp_Pnt2d Bisector_BisecCC::ValueAndDist(const double U, double& U1, double& U2, 
   if (!Valid)
   {
 
-    double                        DMin = Precision::Infinite();
+    double                        DMin = math::precision::Precision::Infinite();
     gp_Pnt2d                      P;
     occ::handle<Bisector_BisecPC> BisPC = new Bisector_BisecPC(curve2, P1, sign2, VMin, VMax);
     occ::handle<Geom2d_Line>      NorLi = new Geom2d_Line(P1, N1);
@@ -584,13 +584,13 @@ gp_Pnt2d Bisector_BisecCC::ValueAndDist(const double U, double& U1, double& U2, 
     Geom2dAdaptor_Curve ABisPC(BisPC);
     Geom2dAdaptor_Curve ANorLi(NorLi);
 
-    Geom2dInt_GInter Intersect(ABisPC, ANorLi, Precision::Confusion(), Precision::Confusion());
+    Geom2dInt_GInter Intersect(ABisPC, ANorLi, math::precision::Precision::Confusion(), math::precision::Precision::Confusion());
 
     if (Intersect.IsDone() && !Intersect.IsEmpty())
     {
       for (int i = 1; i <= Intersect.NbPoints(); i++)
       {
-        if (Intersect.Point(i).ParamOnSecond() * sign1 < Precision::PConfusion())
+        if (Intersect.Point(i).ParamOnSecond() * sign1 < math::precision::Precision::PConfusion())
         {
           P = Intersect.Point(i).Value();
           if (P.SquareDistance(P1) < DMin)
@@ -617,7 +617,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
   curve1->D1(U1, P1, Tan1);
   gp_Vec2d N1(Tan1.Y(), -Tan1.X());
 
-  if (P1.Distance(curve2->Value(curve2->FirstParameter())) < Precision::Confusion())
+  if (P1.Distance(curve2->Value(curve2->FirstParameter())) < math::precision::Precision::Confusion())
   {
     U2 = curve2->FirstParameter();
     curve2->D1(U2, P2, Tan2);
@@ -626,13 +626,13 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
       Dist = 0.;
       return P1;
     }
-    if (!Tan1.IsParallel(Tan2, Precision::Angular()))
+    if (!Tan1.IsParallel(Tan2, math::precision::Precision::Angular()))
     {
       Dist = 0.;
       return P1;
     }
   }
-  if (P1.Distance(curve2->Value(curve2->LastParameter())) < Precision::Confusion())
+  if (P1.Distance(curve2->Value(curve2->LastParameter())) < math::precision::Precision::Confusion())
   {
     U2 = curve2->LastParameter();
     curve2->D1(U2, P2, Tan2);
@@ -641,7 +641,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
       Dist = 0.;
       return P1;
     }
-    if (!Tan1.IsParallel(Tan2, Precision::Angular()))
+    if (!Tan1.IsParallel(Tan2, math::precision::Precision::Angular()))
     {
       Dist = 0.;
       return P1;
@@ -649,7 +649,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
   }
 
   bool   YaSol = false;
-  double DMin  = Precision::Infinite();
+  double DMin  = math::precision::Precision::Infinite();
   double USol;
   double EpsMax = 1.E-6;
   double EpsX;
@@ -671,9 +671,9 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
     }
   }
 
-  if (std::abs(ULastOnC2 - UFirstOnC2) < Precision::PConfusion() / 100.)
+  if (std::abs(ULastOnC2 - UFirstOnC2) < math::precision::Precision::PConfusion() / 100.)
   {
-    Dist = Precision::Infinite();
+    Dist = math::precision::Precision::Infinite();
     return P1;
   }
 
@@ -714,7 +714,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
     gp_Vec2d PP1(P1.X() - PSol.X(), P1.Y() - PSol.Y());
     gp_Vec2d PP2(P2.X() - PSol.X(), P2.Y() - PSol.Y());
 
-    if (PP1.Dot(PP2) > (1. - Precision::Angular()) * Dist)
+    if (PP1.Dot(PP2) > (1. - math::precision::Precision::Angular()) * Dist)
     {
       YaSol = false;
     }
@@ -722,7 +722,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
     {
       if (!isConvex1)
       {
-        double K1 = Curvature(curve1, U1, Precision::Confusion());
+        double K1 = Curvature(curve1, U1, math::precision::Precision::Confusion());
         if (K1 != 0.)
         {
           if (Dist > 1 / (K1 * K1))
@@ -733,7 +733,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
       {
         if (!isConvex2)
         {
-          double K2 = Curvature(curve2, U2, Precision::Confusion());
+          double K2 = Curvature(curve2, U2, math::precision::Precision::Confusion());
           if (K2 != 0.)
           {
             if (Dist > 1 / (K2 * K2))
@@ -745,7 +745,7 @@ gp_Pnt2d Bisector_BisecCC::ValueByInt(const double U, double& U1, double& U2, do
   }
   if (!YaSol)
   {
-    Dist = Precision::Infinite();
+    Dist = math::precision::Precision::Infinite();
     PSol = P1;
   }
   return PSol;
@@ -999,7 +999,7 @@ gp_Pnt2d Bisector_BisecCC::Extension(const double U,
     P2 = curve2->Value(U2);
     curve1->D1(U1, P1, T1);
     Tang.SetCoord(2 * P.X() - P1.X() - P2.X(), 2 * P.Y() - P1.Y() - P2.Y());
-    if (Tang.Magnitude() < Precision::Confusion())
+    if (Tang.Magnitude() < math::precision::Precision::Confusion())
     {
       Tang = T1;
     }
@@ -1030,7 +1030,7 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
   CA->D1(UOnA, P1, Tan1);
   gp_Vec2d N1(Tan1.Y(), -Tan1.X());
 
-  if (P1.Distance(CB->Value(CB->FirstParameter())) < Precision::Confusion())
+  if (P1.Distance(CB->Value(CB->FirstParameter())) < math::precision::Precision::Confusion())
   {
     UOnB = CB->FirstParameter();
     CB->D1(UOnB, P2, Tan2);
@@ -1039,13 +1039,13 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
       Dist = 0.;
       return true;
     }
-    if (!Tan1.IsParallel(Tan2, Precision::Angular()))
+    if (!Tan1.IsParallel(Tan2, math::precision::Precision::Angular()))
     {
       Dist = 0.;
       return false;
     }
   }
-  if (P1.Distance(CB->Value(CB->LastParameter())) < Precision::Confusion())
+  if (P1.Distance(CB->Value(CB->LastParameter())) < math::precision::Precision::Confusion())
   {
     UOnB = CB->LastParameter();
     CB->D1(UOnB, P2, Tan2);
@@ -1054,14 +1054,14 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
       Dist = 0.;
       return true;
     }
-    if (!Tan1.IsParallel(Tan2, Precision::Angular()))
+    if (!Tan1.IsParallel(Tan2, math::precision::Precision::Angular()))
     {
       Dist = 0.;
       return false;
     }
   }
 
-  double DMin = Precision::Infinite();
+  double DMin = math::precision::Precision::Infinite();
   double UPC;
   bool   YaSol = false;
 
@@ -1069,7 +1069,7 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
 
   if (BisPC->IsEmpty())
   {
-    Dist = Precision::Infinite();
+    Dist = math::precision::Precision::Infinite();
     PSol = P1;
     return false;
   }
@@ -1079,13 +1079,13 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
   Geom2dAdaptor_Curve ABisPC(BisPC);
   Geom2dAdaptor_Curve ANorLi(NorLi);
 
-  Geom2dInt_GInter Intersect(ABisPC, ANorLi, Precision::Confusion(), Precision::Confusion());
+  Geom2dInt_GInter Intersect(ABisPC, ANorLi, math::precision::Precision::Confusion(), math::precision::Precision::Confusion());
 
   if (Intersect.IsDone() && !Intersect.IsEmpty())
   {
     for (int i = 1; i <= Intersect.NbPoints(); i++)
     {
-      if (Intersect.Point(i).ParamOnSecond() * SignA < Precision::PConfusion())
+      if (Intersect.Point(i).ParamOnSecond() * SignA < math::precision::Precision::PConfusion())
       {
         P = Intersect.Point(i).Value();
         if (P.SquareDistance(P1) < DMin)
@@ -1118,7 +1118,7 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
     gp_Dir2d PP1Unit(P1.X() - PSol.X(), P1.Y() - PSol.Y());
     gp_Dir2d PP2Unit(P2.X() - PSol.X(), P2.Y() - PSol.Y());
 
-    if (PP1Unit * PP2Unit > 1. - Precision::Angular())
+    if (PP1Unit * PP2Unit > 1. - math::precision::Precision::Angular())
     {
       YaSol = false;
     }
@@ -1127,7 +1127,7 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
       Dist = sqrt(Dist);
       if (!IsConvexA)
       {
-        double K1 = Curvature(CA, UOnA, Precision::Confusion());
+        double K1 = Curvature(CA, UOnA, math::precision::Precision::Confusion());
         if (K1 != 0.)
         {
           if (Dist > std::abs(1 / K1))
@@ -1138,7 +1138,7 @@ static bool PointByInt(const occ::handle<Geom2d_Curve>& CA,
       {
         if (!IsConvexB)
         {
-          double K2 = Curvature(CB, UOnB, Precision::Confusion());
+          double K2 = Curvature(CB, UOnB, math::precision::Precision::Confusion());
           if (K2 != 0.)
           {
             if (Dist > std::abs(1 / K2))
@@ -1214,11 +1214,11 @@ double Bisector_BisecCC::Parameter(const gp_Pnt2d& P) const
 {
   double UOnCurve;
 
-  if (P.IsEqual(Value(FirstParameter()), Precision::Confusion()))
+  if (P.IsEqual(Value(FirstParameter()), math::precision::Precision::Confusion()))
   {
     UOnCurve = FirstParameter();
   }
-  else if (P.IsEqual(Value(LastParameter()), Precision::Confusion()))
+  else if (P.IsEqual(Value(LastParameter()), math::precision::Precision::Confusion()))
   {
     UOnCurve = LastParameter();
   }
@@ -1338,21 +1338,21 @@ double Bisector_BisecCC::SearchBound(const double U1, const double U2) const
   double           UMid, Dist1, Dist2, DistMid, U11, U22;
   double           UC1, UC2;
   gp_Pnt2d         PBis, PBisPrec;
-  constexpr double TolPnt = Precision::Confusion();
-  constexpr double TolPar = Precision::PConfusion();
+  constexpr double TolPnt = math::precision::Precision::Confusion();
+  constexpr double TolPar = math::precision::Precision::PConfusion();
   U11                     = U1;
   U22                     = U2;
   PBisPrec                = ValueByInt(U11, UC1, UC2, Dist1);
   PBis                    = ValueByInt(U22, UC1, UC2, Dist2);
 
   while ((U22 - U11) > TolPar
-         || ((Dist1 < Precision::Infinite() && Dist2 < Precision::Infinite()
+         || ((Dist1 < math::precision::Precision::Infinite() && Dist2 < math::precision::Precision::Infinite()
               && !PBis.IsEqual(PBisPrec, TolPnt))))
   {
     PBisPrec = PBis;
     UMid     = 0.5 * (U22 + U11);
     PBis     = ValueByInt(UMid, UC1, UC2, DistMid);
-    if ((Dist1 < Precision::Infinite()) == (DistMid < Precision::Infinite()))
+    if ((Dist1 < math::precision::Precision::Infinite()) == (DistMid < math::precision::Precision::Infinite()))
     {
       U11   = UMid;
       Dist1 = DistMid;
@@ -1364,7 +1364,7 @@ double Bisector_BisecCC::SearchBound(const double U1, const double U2) const
     }
   }
   PBis = ValueByInt(U11, UC1, UC2, Dist1);
-  if (Dist1 < Precision::Infinite())
+  if (Dist1 < math::precision::Precision::Infinite())
   {
     UMid = U11;
   }
@@ -1385,13 +1385,13 @@ static bool ProjOnCurve(const gp_Pnt2d& P, const occ::handle<Geom2d_Curve>& C, d
   C->D1(C->FirstParameter(), PF, TF);
   C->D1(C->LastParameter(), PL, TL);
 
-  if (P.IsEqual(PF, Precision::Confusion()))
+  if (P.IsEqual(PF, math::precision::Precision::Confusion()))
   {
     theParam = C->FirstParameter();
     return true;
   }
 
-  if (P.IsEqual(PL, Precision::Confusion()))
+  if (P.IsEqual(PL, math::precision::Precision::Confusion()))
   {
     theParam = C->LastParameter();
     return true;
@@ -1400,14 +1400,14 @@ static bool ProjOnCurve(const gp_Pnt2d& P, const occ::handle<Geom2d_Curve>& C, d
   gp_Vec2d PPF(PF.X() - P.X(), PF.Y() - P.Y());
   TF.Normalize();
 
-  if (std::abs(PPF.Dot(TF)) < Precision::Confusion())
+  if (std::abs(PPF.Dot(TF)) < math::precision::Precision::Confusion())
   {
     theParam = C->FirstParameter();
     return true;
   }
   gp_Vec2d PPL(PL.X() - P.X(), PL.Y() - P.Y());
   TL.Normalize();
-  if (std::abs(PPL.Dot(TL)) < Precision::Confusion())
+  if (std::abs(PPL.Dot(TL)) < math::precision::Precision::Confusion())
   {
     theParam = C->LastParameter();
     return true;
@@ -1441,11 +1441,11 @@ static bool TestExtension(const occ::handle<Geom2d_Curve>& C1,
     C1->D1(C1->LastParameter(), P1, T1);
   }
   C2->D1(C2->FirstParameter(), P2, T2);
-  if (P1.IsEqual(P2, Precision::Confusion()))
+  if (P1.IsEqual(P2, math::precision::Precision::Confusion()))
   {
     T1.Normalize();
     T2.Normalize();
-    if (T1.Dot(T2) > 1.0 - Precision::Confusion())
+    if (T1.Dot(T2) > 1.0 - math::precision::Precision::Confusion())
     {
       Test = true;
     }
@@ -1453,10 +1453,10 @@ static bool TestExtension(const occ::handle<Geom2d_Curve>& C1,
   else
   {
     C2->D1(C2->LastParameter(), P2, T2);
-    if (P1.IsEqual(P2, Precision::Confusion()))
+    if (P1.IsEqual(P2, math::precision::Precision::Confusion()))
     {
       T2.Normalize();
-      if (T1.Dot(T2) > 1.0 - Precision::Confusion())
+      if (T1.Dot(T2) > 1.0 - math::precision::Precision::Confusion())
       {
         Test = true;
       }
@@ -1478,8 +1478,8 @@ void Bisector_BisecCC::ComputePointEnd()
   {
     U2 = curve2->FirstParameter();
   }
-  double K1 = Curvature(curve1, U1, Precision::Confusion());
-  double K2 = Curvature(curve2, U2, Precision::Confusion());
+  double K1 = Curvature(curve1, U1, math::precision::Precision::Confusion());
+  double K2 = Curvature(curve2, U2, math::precision::Precision::Confusion());
   if (!isConvex1 && !isConvex2)
   {
     if (K1 < K2)
@@ -1510,7 +1510,7 @@ void Bisector_BisecCC::ComputePointEnd()
   }
   else
   {
-    RC = Precision::Infinite();
+    RC = math::precision::Precision::Infinite();
   }
   pointEnd.SetCoord(PF.X() - sign1 * RC * TF.Y(), PF.Y() + sign1 * RC * TF.X());
 }

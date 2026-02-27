@@ -101,19 +101,19 @@ int IGESToBRep_Reader::LoadFile(const char* filename)
 {
   if (theProc.IsNull())
     theProc = new Transfer_TransientProcess;
-  occ::handle<Message_Messenger> TF = theProc->Messenger();
+  occ::handle<System::log::Message_Messenger> TF = theProc->Messenger();
 
-  Message_Msg msg2000("IGES_2000");
+  System::log::Message_Msg msg2000("IGES_2000");
   msg2000.Arg(filename);
   TF->Send(msg2000, Message_Info);
 
-  Message_Msg msg2005("IGES_2005");
+  System::log::Message_Msg msg2005("IGES_2005");
   msg2005.Arg(theProc->TraceLevel());
   TF->Send(msg2005, Message_Info);
 
   occ::handle<IGESData_IGESModel> model = new IGESData_IGESModel;
 
-  OSD_Timer c;
+  System::os::OSD_Timer c;
   c.Reset();
   c.Start();
   char* pfilename  = (char*)filename;
@@ -121,47 +121,47 @@ int IGESToBRep_Reader::LoadFile(const char* filename)
   if (StatusFile != 0)
   {
 
-    Message_Msg Msg2("XSTEP_2");
+    System::log::Message_Msg Msg2("XSTEP_2");
     TF->Send(Msg2, Message_Info);
 
     switch (errno)
     {
       case 2:
       {
-        Message_Msg Msg3("XSTEP_3");
+        System::log::Message_Msg Msg3("XSTEP_3");
         TF->Send(Msg3, Message_Info);
       }
       break;
       case 12:
       {
-        Message_Msg Msg4("XSTEP_4");
+        System::log::Message_Msg Msg4("XSTEP_4");
         TF->Send(Msg4, Message_Info);
       }
       break;
       case 13:
       {
-        Message_Msg Msg5("XSTEP_5");
+        System::log::Message_Msg Msg5("XSTEP_5");
         TF->Send(Msg5, Message_Info);
       }
       break;
       case 24:
       {
-        Message_Msg Msg6("XSTEP_6");
+        System::log::Message_Msg Msg6("XSTEP_6");
         TF->Send(Msg6, Message_Info);
       }
       break;
       default:
       {
-        Message_Msg Msg7("XSTEP_7");
+        System::log::Message_Msg Msg7("XSTEP_7");
         TF->Send(Msg7, Message_Info);
       }
       break;
     }
   }
 
-  Message_Msg Msg8("XSTEP_8");
-  Message_Msg Msg25("XSTEP_25");
-  Message_Msg Msg26("XSTEP_26");
+  System::log::Message_Msg Msg8("XSTEP_8");
+  System::log::Message_Msg Msg25("XSTEP_25");
+  System::log::Message_Msg Msg26("XSTEP_26");
 
   int nbWarn = 0, nbFail = 0;
 
@@ -241,7 +241,7 @@ bool IGESToBRep_Reader::Check(const bool withprint) const
   Interface_CheckIterator chl = cht.CompleteCheckList();
   if (withprint && !theProc.IsNull() && !theProc->Messenger().IsNull())
   {
-    Message_Messenger::StreamBuffer aBuffer = theProc->Messenger()->SendInfo();
+    System::log::Message_Messenger::StreamBuffer aBuffer = theProc->Messenger()->SendInfo();
     cht.Print(chl, aBuffer);
   }
   return chl.IsEmpty(true);
@@ -253,17 +253,17 @@ bool IGESToBRep_Reader::IsDone() const
 }
 
 void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
-                                      const Message_ProgressRange& theProgress)
+                                      const System::log::Message_ProgressRange& theProgress)
 {
   if (theModel.IsNull() || theProc.IsNull())
     return;
 
-  occ::handle<Message_Messenger> TF = theProc->Messenger();
+  occ::handle<System::log::Message_Messenger> TF = theProc->Messenger();
 
-  Message_Msg msg2030("IGES_2030");
+  System::log::Message_Msg msg2030("IGES_2030");
   TF->Send(msg2030, Message_Info);
-  Message_Msg msg2065("IGES_2065");
-  OSD_Timer   c;
+  System::log::Message_Msg msg2065("IGES_2065");
+  System::os::OSD_Timer   c;
   c.Reset();
   c.Start();
   theDone = false;
@@ -286,34 +286,34 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
   ShapeExtend_Explorer                  SBE;
 
   int         precisionMode = Interface_Static::IVal("read.precision.mode");
-  Message_Msg msg2035("IGES_2035");
+  System::log::Message_Msg msg2035("IGES_2035");
   msg2035.Arg(precisionMode);
   TF->Send(msg2035, Message_Info);
   if (precisionMode == 1)
   {
-    Message_Msg msg2040("IGES_2040");
+    System::log::Message_Msg msg2040("IGES_2040");
     msg2040.Arg(Interface_Static::RVal("read.precision.val"));
     TF->Send(msg2040, Message_Info);
   }
-  Message_Msg msg2045("IGES_2045");
+  System::log::Message_Msg msg2045("IGES_2045");
   msg2045.Arg(continuity);
   TF->Send(msg2045, Message_Info);
-  Message_Msg msg2050("IGES_2050");
+  System::log::Message_Msg msg2050("IGES_2050");
   msg2050.Arg(Interface_Static::IVal("read.surfacecurve.mode"));
   TF->Send(msg2050, Message_Info);
 
   Interface_Static::SetIVal("read.iges.onlyvisible", onlyvisible);
 
-  Message_ProgressScope PS(theProgress, "Root", nb);
+  System::log::Message_ProgressScope PS(theProgress, "Root", nb);
   for (int i = 1; i <= nb && PS.More(); i++)
   {
-    Message_ProgressRange            aRange = PS.Next();
+    System::log::Message_ProgressRange            aRange = PS.Next();
     occ::handle<IGESData_IGESEntity> ent    = theModel->Entity(i);
     if (SH.IsShared(ent) || !theActor->Recognize(ent))
       continue;
     if (level > 0)
     {
-      Message_Msg msg2070("IGES_2070");
+      System::log::Message_Msg msg2070("IGES_2070");
       msg2070.Arg(2 * i - 1);
       msg2070.Arg(ent->TypeNumber());
       TF->Send(msg2070, Message_Info);
@@ -331,13 +331,13 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
       }
       catch (Standard_Failure const&)
       {
-        Message_Msg msg1005("IGES_1005");
+        System::log::Message_Msg msg1005("IGES_1005");
         TF->Send(msg1005, Message_Info);
         continue;
       }
       if (shape.IsNull())
       {
-        Message_Msg msg2076("IGES_2076");
+        System::log::Message_Msg msg2076("IGES_2076");
         TF->Send(msg2076, Message_Info);
       }
       else
@@ -371,41 +371,41 @@ void IGESToBRep_Reader::TransferRoots(const bool                   onlyvisible,
   TF->Send(msg2065, Message_Info);
 }
 
-bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& theProgress)
+bool IGESToBRep_Reader::Transfer(const int num, const System::log::Message_ProgressRange& theProgress)
 {
-  occ::handle<Message_Messenger> TF = theProc->Messenger();
+  occ::handle<System::log::Message_Messenger> TF = theProc->Messenger();
   theDone                           = false;
   if (theModel.IsNull())
   {
-    Message_Msg msg2031("IGES_2031");
+    System::log::Message_Msg msg2031("IGES_2031");
     TF->Send(msg2031, Message_Info);
     return false;
   }
   if (num <= 0 || num > theModel->NbEntities())
   {
-    Message_Msg msg2032("IGES_2032");
+    System::log::Message_Msg msg2032("IGES_2032");
     msg2032.Arg(num);
     TF->Send(msg2032, Message_Info);
     return false;
   }
 
-  Message_Msg msg2030("IGES_2030");
+  System::log::Message_Msg msg2030("IGES_2030");
   TF->Send(msg2030, Message_Info);
-  Message_Msg msg2065("IGES_2065");
-  OSD_Timer   c;
+  System::log::Message_Msg msg2065("IGES_2065");
+  System::os::OSD_Timer   c;
   c.Reset();
   c.Start();
 
   occ::handle<IGESData_IGESEntity> ent = theModel->Entity(num);
 
-  Message_ProgressScope aPS(theProgress, "OneEnt", 2);
+  System::log::Message_ProgressScope aPS(theProgress, "OneEnt", 2);
 
   XSAlgo_ShapeProcessor::PrepareForTransfer();
   IGESToBRep_CurveAndSurface CAS;
   CAS.SetModel(theModel);
   double      eps;
   int         Ival = Interface_Static::IVal("read.precision.mode");
-  Message_Msg msg2035("IGES_2035");
+  System::log::Message_Msg msg2035("IGES_2035");
   msg2035.Arg(Ival);
   TF->Send(msg2035, Message_Info);
   if (Ival == 0)
@@ -414,18 +414,18 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
   {
 
     eps = Interface_Static::RVal("read.precision.val");
-    Message_Msg msg2040("IGES_2040");
+    System::log::Message_Msg msg2040("IGES_2040");
     msg2040.Arg(eps);
     TF->Send(msg2040, Message_Info);
   }
   Ival = Interface_Static::IVal("read.iges.bspline.approxd1.mode");
   CAS.SetModeApprox((Ival > 0));
-  Message_Msg msg2045("IGES_2045");
+  System::log::Message_Msg msg2045("IGES_2045");
   Ival = Interface_Static::IVal("read.iges.bspline.continuity");
   msg2045.Arg(Ival);
   TF->Send(msg2045, Message_Info);
   CAS.SetContinuity(Ival);
-  Message_Msg msg2050("IGES_2050");
+  System::log::Message_Msg msg2050("IGES_2050");
   Ival = Interface_Static::IVal("read.surfacecurve.mode");
   msg2050.Arg(Ival);
   TF->Send(msg2050, Message_Info);
@@ -448,7 +448,7 @@ bool IGESToBRep_Reader::Transfer(const int num, const Message_ProgressRange& the
     }
     catch (Standard_Failure const&)
     {
-      Message_Msg msg1015("IGES_1015");
+      System::log::Message_Msg msg1015("IGES_1015");
       TF->Send(msg1015, Message_Info);
       exceptionRaised = true;
     }

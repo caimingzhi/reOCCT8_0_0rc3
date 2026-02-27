@@ -15,7 +15,7 @@ bool BRepExtrema_Poly::Distance(const TopoDS_Shape& S1,
                                 gp_Pnt&             P2,
                                 double&             dist)
 {
-  dist = Precision::Infinite();
+  dist = math::precision::Precision::Infinite();
 
   TopLoc_Location                 L;
   occ::handle<Poly_Triangulation> Tr;

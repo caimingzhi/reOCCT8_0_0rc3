@@ -301,8 +301,8 @@ bool IntPatch_SpecialPoints::ProcessSphere(const IntSurf_PntOn2S& thePtIso,
 
   gp_Vec2d aV1;
 
-  if ((std::abs(theDUofPSurf.Z()) < Precision::PConfusion())
-      && (std::abs(theDVofPSurf.Z()) < Precision::PConfusion()))
+  if ((std::abs(theDUofPSurf.Z()) < math::precision::Precision::PConfusion())
+      && (std::abs(theDVofPSurf.Z()) < math::precision::Precision::PConfusion()))
   {
 
 #ifdef INTPATCH_ADDSPECIALPOINTS_DEBUG
@@ -358,7 +358,7 @@ bool IntPatch_SpecialPoints::ProcessCone(const IntSurf_PntOn2S& thePtIso,
 
   const gp_XYZ aTgPlaneZ(theDUofPSurf.Crossed(theDVofPSurf).XYZ());
   const double aSqModTg = aTgPlaneZ.SquareModulus();
-  if (aSqModTg < Precision::SquareConfusion())
+  if (aSqModTg < math::precision::Precision::SquareConfusion())
   {
     theIsIsoChoosen = true;
   }
@@ -391,7 +391,7 @@ bool IntPatch_SpecialPoints::ProcessCone(const IntSurf_PntOn2S& thePtIso,
 
       gp_Vec2d     aVecCS(aTgILine[anIdx].X(), aTgILine[anIdx].Y());
       const double aSqMod = aVecCS.SquareMagnitude();
-      if (aSqMod < Precision::SquareConfusion())
+      if (aSqMod < math::precision::Precision::SquareConfusion())
       {
         theIsIsoChoosen = true;
         break;
@@ -551,7 +551,7 @@ bool IntPatch_SpecialPoints::AddSingularPole(const occ::handle<Adaptor3d_Surface
   else
     theAddedPoint.SetValue(0.5 * (aP0.XYZ() + aPQuad.XYZ()), aUquad, aVquad, aU0, aV0);
 
-  const bool isSame = theAddedPoint.IsSame(theVertex.PntOn2S(), Precision::Confusion());
+  const bool isSame = theAddedPoint.IsSame(theVertex.PntOn2S(), math::precision::Precision::Confusion());
 
   gp_Pnt aPtemp;
   gp_Vec aVecDu, aVecDv;
@@ -632,7 +632,7 @@ bool IntPatch_SpecialPoints::ContinueAfterSpecialPoint(
   if (theSPType == IntPatch_SPntNone)
     return false;
 
-  if (theNewPoint.IsSame(theRefPt, Precision::Confusion(), theTol2D))
+  if (theNewPoint.IsSame(theRefPt, math::precision::Precision::Confusion(), theTol2D))
   {
     return false;
   }

@@ -247,12 +247,12 @@ static void EvalParameters(const TopoDS_Edge&               Edge,
     double   UBis = Bis->FirstParameter();
     gp_Pnt2d PBis = Bis->Value(UBis);
 
-    if (Precision::IsPositiveInfinite(std::abs(PBis.X()))
-        || Precision::IsPositiveInfinite(std::abs(PBis.Y())) || PBis.Distance(P2d) > Tol)
+    if (math::precision::Precision::IsPositiveInfinite(std::abs(PBis.X()))
+        || math::precision::Precision::IsPositiveInfinite(std::abs(PBis.Y())) || PBis.Distance(P2d) > Tol)
     {
 
       UBis = Bis->LastParameter();
-      if (UBis >= Precision::Infinite())
+      if (UBis >= math::precision::Precision::Infinite())
         return;
       PBis = Bis->Value(UBis);
       if (PBis.Distance(P2d) > Tol)
@@ -364,7 +364,7 @@ double BRepFill_TrimSurfaceTool::ProjOn(const gp_Pnt2d& Point, const TopoDS_Edge
   Geom2dAPI_ProjectPointOnCurve Projector(Point, C2d);
 #ifdef OCCT_DEBUG
   double Dist = Projector.LowerDistance();
-  if (Dist > Precision::Confusion())
+  if (Dist > math::precision::Precision::Confusion())
   {
     std::cout << " *** WARNING  TrimSurfaceTool:  *** " << std::endl;
     std::cout << "      --> the point is not on the edge" << std::endl;

@@ -24,6 +24,7 @@ enum OSD_OEMType
   OSD_AIX
 };
 
+namespace System { namespace os {
 class OSD_Host
 {
 public:
@@ -55,3 +56,5 @@ private:
   TCollection_AsciiString myName;
   OSD_Error               myError;
 };
+}} // namespace System::os
+

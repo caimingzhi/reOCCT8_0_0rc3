@@ -8,8 +8,12 @@
 #include <NCollection_Sequence.hpp>
 #include <NCollection_HSequence.hpp>
 
+namespace app { namespace storage {
 class Storage_CallBack;
+}} // namespace app::storage
 
+
+namespace app { namespace storage {
 class Storage_Schema : public Standard_Transient
 {
 
@@ -98,3 +102,5 @@ private:
   TCollection_AsciiString       myName;
   TCollection_AsciiString       myVersion;
 };
+}} // namespace app::storage
+

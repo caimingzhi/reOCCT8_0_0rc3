@@ -47,7 +47,7 @@ double SelectMgr_FrustumBuilder::SignedPlanePntDist(const NCollection_Vec3<doubl
                                                     const NCollection_Vec3<double>& thePnt) const
 {
   const double aNormLength     = LENGTH(theEq);
-  const double anInvNormLength = aNormLength < Precision::Confusion() ? 0.0 : 1.0 / aNormLength;
+  const double anInvNormLength = aNormLength < math::precision::Precision::Confusion() ? 0.0 : 1.0 / aNormLength;
   const double anA             = theEq.x() * anInvNormLength;
   const double aB              = theEq.y() * anInvNormLength;
   const double aC              = theEq.z() * anInvNormLength;

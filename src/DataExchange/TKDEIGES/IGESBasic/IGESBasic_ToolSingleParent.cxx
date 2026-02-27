@@ -26,7 +26,7 @@ void IGESBasic_ToolSingleParent::ReadOwnParams(const occ::handle<IGESBasic_Singl
                                                IGESData_ParamReader&                       PR) const
 {
 
-  Message_Msg Msg207("XSTEP_207");
+  System::log::Message_Msg Msg207("XSTEP_207");
 
   int                              tempNbParentEntities;
   occ::handle<IGESData_IGESEntity> tempParent;
@@ -37,32 +37,32 @@ void IGESBasic_ToolSingleParent::ReadOwnParams(const occ::handle<IGESBasic_Singl
 
   if (!PR.ReadInteger(PR.Current(), tempNbParentEntities))
   {
-    Message_Msg Msg204("XSTEP_204");
+    System::log::Message_Msg Msg204("XSTEP_204");
     PR.SendFail(Msg204);
   }
 
   if (!PR.ReadInteger(PR.Current(), nbval))
   {
-    Message_Msg Msg205("XSTEP_205");
+    System::log::Message_Msg Msg205("XSTEP_205");
     PR.SendFail(Msg205);
     nbval = -1;
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, tempParent))
   {
 
-    Message_Msg Msg206("XSTEP_206");
+    System::log::Message_Msg Msg206("XSTEP_206");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg206.Arg(Msg216.Value());
         PR.SendFail(Msg206);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg206.Arg(Msg217.Value());
         PR.SendFail(Msg206);
         break;
@@ -148,7 +148,7 @@ void IGESBasic_ToolSingleParent::OwnCheck(const occ::handle<IGESBasic_SinglePare
 
   if (ent->NbParentEntities() != 1)
   {
-    Message_Msg Msg204("XSTEP_204");
+    System::log::Message_Msg Msg204("XSTEP_204");
     ach->SendFail(Msg204);
   }
 }

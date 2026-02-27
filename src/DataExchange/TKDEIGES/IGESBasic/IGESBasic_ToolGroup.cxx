@@ -29,13 +29,13 @@ void IGESBasic_ToolGroup::ReadOwnParams(const occ::handle<IGESBasic_Group>&     
   occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> EntArray;
   if (PR.ReadInteger(PR.Current(), nbval))
   {
-    Message_Msg Msg203("XSTEP_203");
+    System::log::Message_Msg Msg203("XSTEP_203");
     Msg203.Arg(1);
     PR.ReadEnts(IR, PR.CurrentList(nbval), Msg203, EntArray);
   }
   else
   {
-    Message_Msg Msg202("XSTEP_202");
+    System::log::Message_Msg Msg202("XSTEP_202");
     Msg202.Arg(1);
     PR.SendFail(Msg202);
   }

@@ -8,13 +8,13 @@
 
 static const char* MAGICNUMBER = "CMPFILE";
 
-IMPLEMENT_STANDARD_RTTIEXT(FSD_CmpFile, FSD_File)
+IMPLEMENT_STANDARD_RTTIEXT(app::file::stream::FSD_CmpFile, app::file::stream::FSD_File)
 
-FSD_CmpFile::FSD_CmpFile() = default;
+app::file::stream::FSD_CmpFile::FSD_CmpFile() = default;
 
-Storage_Error FSD_CmpFile::IsGoodFileType(const TCollection_AsciiString& aName)
+Storage_Error app::file::stream::FSD_CmpFile::IsGoodFileType(const TCollection_AsciiString& aName)
 {
-  FSD_CmpFile   f;
+  app::file::stream::FSD_CmpFile   f;
   Storage_Error s;
 
   s = f.Open(aName, Storage_VSRead);
@@ -22,13 +22,13 @@ Storage_Error FSD_CmpFile::IsGoodFileType(const TCollection_AsciiString& aName)
   if (s == Storage_VSOk)
   {
     TCollection_AsciiString l;
-    size_t                  len = strlen(FSD_CmpFile::MagicNumber());
+    size_t                  len = strlen(app::file::stream::FSD_CmpFile::MagicNumber());
 
     f.ReadChar(l, len);
 
     f.Close();
 
-    if (strncmp(FSD_CmpFile::MagicNumber(), l.ToCString(), len) != 0)
+    if (strncmp(app::file::stream::FSD_CmpFile::MagicNumber(), l.ToCString(), len) != 0)
     {
       s = Storage_VSFormatError;
     }
@@ -37,7 +37,7 @@ Storage_Error FSD_CmpFile::IsGoodFileType(const TCollection_AsciiString& aName)
   return s;
 }
 
-Storage_Error FSD_CmpFile::Open(const TCollection_AsciiString& aName, const Storage_OpenMode aMode)
+Storage_Error app::file::stream::FSD_CmpFile::Open(const TCollection_AsciiString& aName, const Storage_OpenMode aMode)
 {
   Storage_Error result = Storage_VSOk;
   SetName(aName);
@@ -102,16 +102,16 @@ Storage_Error FSD_CmpFile::Open(const TCollection_AsciiString& aName, const Stor
   return result;
 }
 
-const char* FSD_CmpFile::MagicNumber()
+const char* app::file::stream::FSD_CmpFile::MagicNumber()
 {
   return MAGICNUMBER;
 }
 
-void FSD_CmpFile::ReadLine(TCollection_AsciiString& buffer)
+void app::file::stream::FSD_CmpFile::ReadLine(TCollection_AsciiString& buffer)
 {
   buffer.Clear();
   TCollection_AsciiString aBuf('\0');
-  FSD_File::ReadLine(aBuf);
+  app::file::stream::FSD_File::ReadLine(aBuf);
   for (int lv = aBuf.Length(); lv >= 1 && (aBuf.Value(lv) == '\r' || (aBuf.Value(lv) == '\n'));
        lv--)
   {
@@ -120,7 +120,7 @@ void FSD_CmpFile::ReadLine(TCollection_AsciiString& buffer)
   buffer = aBuf;
 }
 
-void FSD_CmpFile::WriteExtendedLine(const TCollection_ExtendedString& buffer)
+void app::file::stream::FSD_CmpFile::WriteExtendedLine(const TCollection_ExtendedString& buffer)
 {
   const char16_t* extBuffer;
   int             i;
@@ -135,7 +135,7 @@ void FSD_CmpFile::WriteExtendedLine(const TCollection_ExtendedString& buffer)
   myStream << "\n";
 }
 
-void FSD_CmpFile::ReadExtendedLine(TCollection_ExtendedString& buffer)
+void app::file::stream::FSD_CmpFile::ReadExtendedLine(TCollection_ExtendedString& buffer)
 {
   char16_t c;
   int      i;
@@ -151,11 +151,11 @@ void FSD_CmpFile::ReadExtendedLine(TCollection_ExtendedString& buffer)
   FlushEndOfLine();
 }
 
-void FSD_CmpFile::ReadString(TCollection_AsciiString& buffer)
+void app::file::stream::FSD_CmpFile::ReadString(TCollection_AsciiString& buffer)
 {
   buffer.Clear();
   TCollection_AsciiString aBuf('\0');
-  FSD_File::ReadString(aBuf);
+  app::file::stream::FSD_File::ReadString(aBuf);
   for (int lv = aBuf.Length(); lv >= 1 && (aBuf.Value(lv) == '\r' || (aBuf.Value(lv) == '\n'));
        lv--)
   {
@@ -164,7 +164,7 @@ void FSD_CmpFile::ReadString(TCollection_AsciiString& buffer)
   buffer = aBuf;
 }
 
-void FSD_CmpFile::Destroy()
+void app::file::stream::FSD_CmpFile::Destroy()
 {
   if (OpenMode() != Storage_VSNone)
   {
@@ -172,25 +172,25 @@ void FSD_CmpFile::Destroy()
   }
 }
 
-Storage_Error FSD_CmpFile::BeginWriteInfoSection()
+Storage_Error app::file::stream::FSD_CmpFile::BeginWriteInfoSection()
 {
-  myStream << FSD_CmpFile::MagicNumber() << '\n';
+  myStream << app::file::stream::FSD_CmpFile::MagicNumber() << '\n';
   myStream << "BEGIN_INFO_SECTION\n";
   if (myStream.bad())
-    throw Storage_StreamWriteError();
+    throw app::storage::Storage_StreamWriteError();
 
   return Storage_VSOk;
 }
 
-Storage_Error FSD_CmpFile::BeginReadInfoSection()
+Storage_Error app::file::stream::FSD_CmpFile::BeginReadInfoSection()
 {
   Storage_Error           s;
   TCollection_AsciiString l;
-  size_t                  len = strlen(FSD_CmpFile::MagicNumber());
+  size_t                  len = strlen(app::file::stream::FSD_CmpFile::MagicNumber());
 
   ReadChar(l, len);
 
-  if (strncmp(FSD_CmpFile::MagicNumber(), l.ToCString(), len) != 0)
+  if (strncmp(app::file::stream::FSD_CmpFile::MagicNumber(), l.ToCString(), len) != 0)
   {
     s = Storage_VSFormatError;
   }
@@ -202,38 +202,38 @@ Storage_Error FSD_CmpFile::BeginReadInfoSection()
   return s;
 }
 
-void FSD_CmpFile::WritePersistentObjectHeader(const int aRef, const int aType)
+void app::file::stream::FSD_CmpFile::WritePersistentObjectHeader(const int aRef, const int aType)
 {
   myStream << "\n#" << aRef << "%" << aType << " ";
   if (myStream.bad())
-    throw Storage_StreamWriteError();
+    throw app::storage::Storage_StreamWriteError();
 }
 
-void FSD_CmpFile::BeginWritePersistentObjectData()
+void app::file::stream::FSD_CmpFile::BeginWritePersistentObjectData()
 {
   if (myStream.bad())
-    throw Storage_StreamWriteError();
+    throw app::storage::Storage_StreamWriteError();
 }
 
-void FSD_CmpFile::BeginWriteObjectData()
+void app::file::stream::FSD_CmpFile::BeginWriteObjectData()
 {
   if (myStream.bad())
-    throw Storage_StreamWriteError();
+    throw app::storage::Storage_StreamWriteError();
 }
 
-void FSD_CmpFile::EndWriteObjectData()
+void app::file::stream::FSD_CmpFile::EndWriteObjectData()
 {
   if (myStream.bad())
-    throw Storage_StreamWriteError();
+    throw app::storage::Storage_StreamWriteError();
 }
 
-void FSD_CmpFile::EndWritePersistentObjectData()
+void app::file::stream::FSD_CmpFile::EndWritePersistentObjectData()
 {
   if (myStream.bad())
-    throw Storage_StreamWriteError();
+    throw app::storage::Storage_StreamWriteError();
 }
 
-void FSD_CmpFile::ReadPersistentObjectHeader(int& aRef, int& aType)
+void app::file::stream::FSD_CmpFile::ReadPersistentObjectHeader(int& aRef, int& aType)
 {
   char c = '\0';
 
@@ -243,13 +243,13 @@ void FSD_CmpFile::ReadPersistentObjectHeader(int& aRef, int& aType)
   {
     if (IsEnd() || (c != ' ') || (c == '\r') || (c == '\n'))
     {
-      throw Storage_StreamFormatError();
+      throw app::storage::Storage_StreamFormatError();
     }
     myStream.get(c);
   }
 
   if (!(myStream >> aRef))
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
 
   myStream.get(c);
 
@@ -257,22 +257,22 @@ void FSD_CmpFile::ReadPersistentObjectHeader(int& aRef, int& aType)
   {
     if (IsEnd() || (c != ' ') || (c == '\r') || (c == '\n'))
     {
-      throw Storage_StreamFormatError();
+      throw app::storage::Storage_StreamFormatError();
     }
     myStream.get(c);
   }
 
   if (!(myStream >> aType))
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
 }
 
-void FSD_CmpFile::BeginReadPersistentObjectData() {}
+void app::file::stream::FSD_CmpFile::BeginReadPersistentObjectData() {}
 
-void FSD_CmpFile::BeginReadObjectData() {}
+void app::file::stream::FSD_CmpFile::BeginReadObjectData() {}
 
-void FSD_CmpFile::EndReadObjectData() {}
+void app::file::stream::FSD_CmpFile::EndReadObjectData() {}
 
-void FSD_CmpFile::EndReadPersistentObjectData()
+void app::file::stream::FSD_CmpFile::EndReadPersistentObjectData()
 {
   char c = '\0';
 
@@ -281,7 +281,7 @@ void FSD_CmpFile::EndReadPersistentObjectData()
   {
     if (IsEnd() || (c != ' '))
     {
-      throw Storage_StreamFormatError();
+      throw app::storage::Storage_StreamFormatError();
     }
     myStream.get(c);
   }

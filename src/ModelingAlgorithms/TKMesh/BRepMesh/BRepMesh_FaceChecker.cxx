@@ -55,7 +55,7 @@ namespace
           Bnd_Box2d aBox;
           aBox.Add(aPnt1);
           aBox.Add(aPnt2);
-          aBox.Enlarge(Precision::Confusion());
+          aBox.Enlarge(math::precision::Precision::Confusion());
 
           aBndBoxTreeFiller.Add(aSegments->Size(), aBox);
           aSegments->Append(BRepMesh_FaceChecker::Segment(aDEdge, &aPnt1, &aPnt2));
@@ -102,7 +102,7 @@ namespace
       myBox.SetVoid();
       myBox.Add(*mySegment->Point1);
       myBox.Add(*mySegment->Point2);
-      myBox.Enlarge(Precision::Confusion());
+      myBox.Enlarge(math::precision::Precision::Confusion());
     }
 
     bool Reject(const Bnd_Box2d& theBox) const override { return myBox.IsOut(theBox); }
@@ -189,7 +189,7 @@ bool BRepMesh_FaceChecker::Perform()
   myIntersectingEdges = new IMeshData::MapOfIEdgePtr;
   collectSegments();
 
-  OSD_Parallel::For(0, myDFace->WiresNb(), *this, !isParallel());
+  System::os::OSD_Parallel::For(0, myDFace->WiresNb(), *this, !isParallel());
   collectResult();
 
   myWiresBndBoxTree.Nullify();
@@ -201,7 +201,7 @@ bool BRepMesh_FaceChecker::Perform()
 void BRepMesh_FaceChecker::collectSegments()
 {
   SegmentsFiller aSegmentsFiller(myDFace, myWiresSegments, myWiresBndBoxTree);
-  OSD_Parallel::For(0, myDFace->WiresNb(), aSegmentsFiller, !isParallel());
+  System::os::OSD_Parallel::For(0, myDFace->WiresNb(), aSegmentsFiller, !isParallel());
 
   myWiresIntersectingEdges = new ArrayOfMapOfIEdgePtr(0, myDFace->WiresNb() - 1);
 }

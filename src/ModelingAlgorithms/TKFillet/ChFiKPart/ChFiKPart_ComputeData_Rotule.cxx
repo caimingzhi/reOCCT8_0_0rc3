@@ -61,7 +61,7 @@ bool ChFiKPart_MakeRotule(TopOpeBRepDS_DataStructure&         DStr,
 
   double alpha = dpl1.Angle(dpl2);
 
-  IntAna_QuadQuadGeo LInt(pl1, pl2, Precision::Angular(), Precision::Confusion());
+  IntAna_QuadQuadGeo LInt(pl1, pl2, math::precision::Precision::Angular(), math::precision::Precision::Confusion());
   gp_Pnt             ptor, pcirc;
   if (LInt.IsDone())
   {

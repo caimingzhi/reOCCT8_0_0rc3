@@ -679,7 +679,7 @@ bool XSControl_TransferReader::Recognize(const occ::handle<Standard_Transient>& 
 
 int XSControl_TransferReader::TransferOne(const occ::handle<Standard_Transient>& ent,
                                           const bool                             rec,
-                                          const Message_ProgressRange&           theProgress)
+                                          const System::log::Message_ProgressRange&           theProgress)
 {
   if (myActor.IsNull() || myModel.IsNull())
     return 0;
@@ -690,7 +690,7 @@ int XSControl_TransferReader::TransferOne(const occ::handle<Standard_Transient>&
       return 0;
   }
 
-  Message_Messenger::StreamBuffer sout  = myTP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout  = myTP->Messenger()->SendInfo();
   int                             level = myTP->TraceLevel();
 
   Transfer_TransferOutput TP(myTP, myModel);
@@ -737,7 +737,7 @@ int XSControl_TransferReader::TransferOne(const occ::handle<Standard_Transient>&
 int XSControl_TransferReader::TransferList(
   const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
   const bool                                                                 rec,
-  const Message_ProgressRange&                                               theProgress)
+  const System::log::Message_ProgressRange&                                               theProgress)
 {
   if (myActor.IsNull() || myModel.IsNull())
     return 0;
@@ -760,7 +760,7 @@ int XSControl_TransferReader::TransferList(
 
   if (level > 0)
   {
-    Message_Messenger::StreamBuffer sout = myTP->Messenger()->SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = myTP->Messenger()->SendInfo();
     sout << "\n*******************************************************************\n";
     sout << "******           Transferring a list of " << Interface_MSG::Blanks(nb, 5)
          << " Entities       ******" << std::endl;
@@ -777,7 +777,7 @@ int XSControl_TransferReader::TransferList(
   int res = 0;
   nb      = list->Length();
   occ::handle<Standard_Transient> obj;
-  Message_ProgressScope           aPS(theProgress, nullptr, nb);
+  System::log::Message_ProgressScope           aPS(theProgress, nullptr, nb);
   for (i = 1; i <= nb && aPS.More(); i++)
   {
     obj = list->Value(i);
@@ -798,7 +798,7 @@ int XSControl_TransferReader::TransferList(
 }
 
 int XSControl_TransferReader::TransferRoots(const Interface_Graph&       G,
-                                            const Message_ProgressRange& theProgress)
+                                            const System::log::Message_ProgressRange& theProgress)
 {
   if (myModel != G.Model())
     return -1;
@@ -816,7 +816,7 @@ int XSControl_TransferReader::TransferRoots(const Interface_Graph&       G,
   {
     Interface_EntityIterator        roots = G.RootEntities();
     int                             nb    = roots.NbEntities();
-    Message_Messenger::StreamBuffer sout  = myTP->Messenger()->SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout  = myTP->Messenger()->SendInfo();
     sout << "\n*******************************************************************\n";
     sout << "******           Transferring the " << Interface_MSG::Blanks(nb, 5)
          << " Root Entities        ******" << std::endl;
@@ -1030,14 +1030,14 @@ static int BinderStatus(const occ::handle<Transfer_Binder>& binder, char* mess)
   return stat;
 }
 
-static void PrintPercent(const occ::handle<Message_Messenger>& sout,
+static void PrintPercent(const occ::handle<System::log::Message_Messenger>& sout,
                          const char*                           mess,
                          const int                             nb,
                          const int                             nl)
 {
   if (nb <= 0 || nl == 0)
     return;
-  Message_Messenger::StreamBuffer aSender = sout->SendInfo();
+  System::log::Message_Messenger::StreamBuffer aSender = sout->SendInfo();
   aSender << "******      " << mess << ": ";
   if (nb == nl)
     aSender << "100 %" << std::endl;
@@ -1061,7 +1061,7 @@ void XSControl_TransferReader::PrintStatsOnList(
   const int                                                                  what,
   const int                                                                  mode)
 {
-  Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
 
   char mess[250];
   if (TP.IsNull())

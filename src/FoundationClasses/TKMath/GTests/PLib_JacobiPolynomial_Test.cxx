@@ -120,7 +120,7 @@ TEST_F(PLibJacobiPolynomialTest, GaussIntegrationWeights)
   {
     for (int j = aWeights.LowerCol(); j <= aWeights.UpperCol(); j++)
     {
-      EXPECT_FALSE(Precision::IsInfinite(aWeights(i, j)))
+      EXPECT_FALSE(math::precision::Precision::IsInfinite(aWeights(i, j)))
         << "Weight should be finite at (" << i << "," << j << ")";
     }
   }
@@ -140,7 +140,7 @@ TEST_F(PLibJacobiPolynomialTest, MaxValue)
     for (int i = aTabMax.Lower(); i <= aTabMax.Upper(); i++)
     {
       EXPECT_GT(aTabMax(i), 0.0) << "Max value should be positive at index " << i;
-      EXPECT_FALSE(Precision::IsInfinite(aTabMax(i)))
+      EXPECT_FALSE(math::precision::Precision::IsInfinite(aTabMax(i)))
         << "Max value should be finite at index " << i;
     }
   }
@@ -162,7 +162,7 @@ TEST_F(PLibJacobiPolynomialTest, BasisFunctionD0)
 
     for (int i = aBasisValue.Lower(); i <= aBasisValue.Upper(); i++)
     {
-      EXPECT_FALSE(Precision::IsInfinite(aBasisValue(i)))
+      EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisValue(i)))
         << "Basis value should be finite at index " << i << ", U=" << aU;
     }
   }
@@ -187,12 +187,12 @@ TEST_F(PLibJacobiPolynomialTest, BasisFunctionDerivatives)
 
   for (int i = aBasisValue.Lower(); i <= aBasisValue.Upper(); i++)
   {
-    EXPECT_FALSE(Precision::IsInfinite(aBasisValue(i))) << "Basis value should be finite at " << i;
-    EXPECT_FALSE(Precision::IsInfinite(aBasisD1(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisValue(i))) << "Basis value should be finite at " << i;
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisD1(i)))
       << "First derivative should be finite at " << i;
-    EXPECT_FALSE(Precision::IsInfinite(aBasisD2(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisD2(i)))
       << "Second derivative should be finite at " << i;
-    EXPECT_FALSE(Precision::IsInfinite(aBasisD3(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisD3(i)))
       << "Third derivative should be finite at " << i;
   }
 }
@@ -220,7 +220,7 @@ TEST_F(PLibJacobiPolynomialTest, CoefficientConversion)
 
   for (int i = aCoefficients.Lower(); i <= aCoefficients.Upper(); i++)
   {
-    EXPECT_FALSE(Precision::IsInfinite(aCoefficients(i)))
+    EXPECT_FALSE(math::precision::Precision::IsInfinite(aCoefficients(i)))
       << "Converted coefficient should be finite at index " << i;
   }
 }
@@ -248,7 +248,7 @@ TEST_F(PLibJacobiPolynomialTest, DegreeReduction)
   EXPECT_LE(aNewDegree, aMaxDegree) << "New degree should not exceed max degree";
   EXPECT_GE(aNewDegree, 0) << "New degree should be non-negative";
   EXPECT_GE(aMaxError, 0.0) << "Max error should be non-negative";
-  EXPECT_FALSE(Precision::IsInfinite(aMaxError)) << "Max error should be finite";
+  EXPECT_FALSE(math::precision::Precision::IsInfinite(aMaxError)) << "Max error should be finite";
 }
 
 TEST_F(PLibJacobiPolynomialTest, ErrorEstimation)
@@ -268,14 +268,14 @@ TEST_F(PLibJacobiPolynomialTest, ErrorEstimation)
   double aMaxErr = aJac.MaxError(aDimension, aCoeff.ChangeValue(1), aNewDegree);
 
   EXPECT_GE(aMaxErr, 0.0) << "Max error should be non-negative";
-  EXPECT_FALSE(Precision::IsInfinite(aMaxErr)) << "Max error should be finite";
+  EXPECT_FALSE(math::precision::Precision::IsInfinite(aMaxErr)) << "Max error should be finite";
 
   double aAvgErr = aJac.AverageError(aDimension, aCoeff.ChangeValue(1), aNewDegree);
 
   EXPECT_GE(aAvgErr, 0.0) << "Average error should be non-negative";
-  EXPECT_FALSE(Precision::IsInfinite(aAvgErr)) << "Average error should be finite";
+  EXPECT_FALSE(math::precision::Precision::IsInfinite(aAvgErr)) << "Average error should be finite";
 
-  EXPECT_LE(aAvgErr, aMaxErr + Precision::Confusion())
+  EXPECT_LE(aAvgErr, aMaxErr + math::precision::Precision::Confusion())
     << "Average error should not exceed max error significantly";
 }
 
@@ -300,7 +300,7 @@ TEST_F(PLibJacobiPolynomialTest, StressTests)
 
     for (int i = aBasisValue.Lower(); i <= aBasisValue.Upper(); i++)
     {
-      EXPECT_FALSE(Precision::IsInfinite(aBasisValue(i))) << "Basis value should be finite";
+      EXPECT_FALSE(math::precision::Precision::IsInfinite(aBasisValue(i))) << "Basis value should be finite";
     }
   }
 }

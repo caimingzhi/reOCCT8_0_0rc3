@@ -107,7 +107,7 @@ static TopoDS_Wire WireFromList(NCollection_List<TopoDS_Shape>& Edges)
     }
     if (!itl.More())
     {
-      Message::SendWarning() << "Warning: WireFromList: can't find the next edge. The wire is not "
+      System::log::Message::SendWarning() << "Warning: WireFromList: can't find the next edge. The wire is not "
                                 "complete, some edges are lost.";
       break;
     }
@@ -543,13 +543,13 @@ void BRepFill_Filling::Build()
 
       gp_Pnt FirstPnt = BRep_Tool::Pnt(FirstVtx);
       Projector.Init(FirstPnt, CurSurface);
-      if (Projector.LowerDistance() > Precision::Confusion())
+      if (Projector.LowerDistance() > math::precision::Precision::Confusion())
         continue;
       Projector.LowerDistanceParameters(U1, V1);
 
       gp_Pnt LastPnt = BRep_Tool::Pnt(LastVtx);
       Projector.Init(LastPnt, CurSurface);
-      if (Projector.LowerDistance() > Precision::Confusion())
+      if (Projector.LowerDistance() > math::precision::Precision::Confusion())
         continue;
       Projector.LowerDistanceParameters(U2, V2);
 

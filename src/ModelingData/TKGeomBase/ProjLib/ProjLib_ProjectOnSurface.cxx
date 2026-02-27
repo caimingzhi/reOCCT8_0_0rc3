@@ -62,7 +62,7 @@ public:
     myNbPnt2d            = 0;
     double           U   = myCurve->FirstParameter();
     gp_Pnt           P   = myCurve->Value(U);
-    constexpr double Tol = Precision::PConfusion();
+    constexpr double Tol = math::precision::Precision::PConfusion();
     myExtPS              = new Extrema_ExtPS(P, *S, Tol, Tol);
   }
 
@@ -133,8 +133,8 @@ void ProjLib_ProjectOnSurface::Load(const occ::handle<Adaptor3d_Curve>& C, const
     Approx_FitAndDivide Fit(F,
                             Deg1,
                             Deg2,
-                            Precision::Approximation(),
-                            Precision::PApproximation(),
+                            math::precision::Precision::Approximation(),
+                            math::precision::Precision::PApproximation(),
                             true);
     int                 i;
     int                 NbCurves = Fit.NbMultiCurves();

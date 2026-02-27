@@ -212,7 +212,7 @@ static int geompipe(Draw_Interpretor&, int n, const char** a)
   aPipe.Perform(true);
   if (!aPipe.IsDone())
   {
-    Message::SendFail() << "GeomFill_Pipe cannot make a surface";
+    System::log::Message::SendFail() << "GeomFill_Pipe cannot make a surface";
     return 1;
   }
 
@@ -222,7 +222,7 @@ static int geompipe(Draw_Interpretor&, int n, const char** a)
   occ::handle<Geom_Surface> Sur = aPipe.Surface();
   TopoDS_Face               F;
   if (!Sur.IsNull())
-    F = BRepBuilderAPI_MakeFace(Sur, Precision::Confusion());
+    F = BRepBuilderAPI_MakeFace(Sur, math::precision::Precision::Confusion());
   DBRep::Set(a[1], F);
   return 0;
 }
@@ -790,7 +790,7 @@ static int addsweep(Draw_Interpretor& di, int n, const char** a)
         }
         thelaw = new (Law_Interpol)();
         thelaw->Set(ParAndRad,
-                    std::abs(ParAndRad(1).Y() - ParAndRad(L).Y()) < Precision::Confusion());
+                    std::abs(ParAndRad(1).Y() - ParAndRad(L).Y()) < math::precision::Precision::Confusion());
       }
     }
   }

@@ -497,8 +497,8 @@ void OpenGl_GraduatedTrihedron::Render(const occ::handle<OpenGl_Workspace>& theW
   {
     if (!myAxes[0].Line.IsInitialized() || !myAxes[1].Line.IsInitialized()
         || !myAxes[2].Line.IsInitialized()
-        || NCollection_Vec3<float>(anOldMin - myMin).Modulus() > Precision::Confusion()
-        || NCollection_Vec3<float>(anOldMax - myMax).Modulus() > Precision::Confusion())
+        || NCollection_Vec3<float>(anOldMin - myMin).Modulus() > math::precision::Precision::Confusion()
+        || NCollection_Vec3<float>(anOldMax - myMax).Modulus() > math::precision::Precision::Confusion())
     {
       myAxes[0].InitLine(aContext, NCollection_Vec3<float>(myMax.x() - myMin.x(), 0.0f, 0.0f));
       myAxes[1].InitLine(aContext, NCollection_Vec3<float>(0.0f, myMax.y() - myMin.y(), 0.0f));
@@ -671,7 +671,7 @@ void OpenGl_GraduatedTrihedron::Axis::InitArrow(const occ::handle<OpenGl_Context
   NCollection_Vec3<float> aLengthVec = -Direction * theLength;
 
   NCollection_Vec3<float> aRadial = NCollection_Vec3<float>::Cross(this->Direction, theNormal);
-  if (aRadial.Modulus() < (float)Precision::Confusion())
+  if (aRadial.Modulus() < (float)math::precision::Precision::Confusion())
   {
     return;
   }

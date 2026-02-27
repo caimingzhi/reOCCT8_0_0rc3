@@ -394,7 +394,7 @@ bool FixSameParameter(const TopoDS_Shape& theShape,
     for (i = 1; i <= aMapE.Extent(); i++)
     {
       const TopoDS_Shape& aE = aMapE(i);
-      BRepLib::SameParameter(aE, Precision::Confusion(), true);
+      BRepLib::SameParameter(aE, math::precision::Precision::Confusion(), true);
     }
 
     if (!aMapE.IsEmpty())

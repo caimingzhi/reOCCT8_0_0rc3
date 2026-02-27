@@ -30,13 +30,13 @@ static gp_Ax2 GetPosition(const GeomAdaptor_SurfaceOfRevolution& S)
     {
       gp_Lin L = C->Line();
       gp_Dir N = S.AxeOfRevolution().Direction();
-      if (N.IsParallel(L.Direction(), Precision::Angular()))
+      if (N.IsParallel(L.Direction(), math::precision::Precision::Angular()))
       {
         gp_Vec OO(L.Location(), S.AxeOfRevolution().Location());
         if (OO.Magnitude() <= gp::Resolution())
         {
           OO = gp_Vec(L.Location(), ElCLib::Value(100, L));
-          if (N.IsParallel(OO, Precision::Angular()))
+          if (N.IsParallel(OO, math::precision::Precision::Angular()))
             return gp_Ax2();
         }
         N ^= OO;
@@ -71,12 +71,12 @@ static bool HasSingularity(const GeomAdaptor_SurfaceOfRevolution& S)
 
   P = C->Value(C->FirstParameter());
 
-  if (L.SquareDistance(P) < Precision::SquareConfusion())
+  if (L.SquareDistance(P) < math::precision::Precision::SquareConfusion())
     return true;
 
   P = C->Value(C->LastParameter());
 
-  return L.SquareDistance(P) < Precision::SquareConfusion();
+  return L.SquareDistance(P) < math::precision::Precision::SquareConfusion();
 }
 
 static void PerformExtPElC(Extrema_ExtPElC&                    E,
@@ -87,10 +87,10 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
   switch (C->GetType())
   {
     case GeomAbs_Hyperbola:
-      E.Perform(P, C->Hyperbola(), Tol, -Precision::Infinite(), Precision::Infinite());
+      E.Perform(P, C->Hyperbola(), Tol, -math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
       return;
     case GeomAbs_Line:
-      E.Perform(P, C->Line(), Tol, -Precision::Infinite(), Precision::Infinite());
+      E.Perform(P, C->Line(), Tol, -math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
       return;
     case GeomAbs_Circle:
       E.Perform(P, C->Circle(), Tol, 0.0, 2.0 * M_PI);
@@ -99,7 +99,7 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
       E.Perform(P, C->Ellipse(), Tol, 0.0, 2.0 * M_PI);
       return;
     case GeomAbs_Parabola:
-      E.Perform(P, C->Parabola(), Tol, -Precision::Infinite(), Precision::Infinite());
+      E.Perform(P, C->Parabola(), Tol, -math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
       return;
     default:
       return;
@@ -126,7 +126,7 @@ static bool IsCaseAnalyticallyComputable(const GeomAbs_CurveType& theType,
   gp_Pln pl(theCurvePos.Location(), theCurvePos.Direction());
   gp_Pnt p1   = AxeOfRevolution.Location();
   double dist = 100., dist2 = dist * dist;
-  double aThreshold = Precision::Angular() * Precision::Angular() * dist2;
+  double aThreshold = math::precision::Precision::Angular() * math::precision::Precision::Angular() * dist2;
   gp_Pnt p2         = AxeOfRevolution.Location().XYZ() + dist * AxeOfRevolution.Direction().XYZ();
 
   return (pl.SquareDistance(p1) < aThreshold) && (pl.SquareDistance(p2) < aThreshold);
@@ -136,7 +136,7 @@ static bool IsOriginalPnt(const gp_Pnt& P, const Extrema_POnSurf* Points, const 
 {
   for (int i = 1; i <= NbPoints; i++)
   {
-    if (Points[i - 1].Value().IsEqual(P, Precision::Confusion()))
+    if (Points[i - 1].Value().IsEqual(P, math::precision::Precision::Confusion()))
     {
       return false;
     }
@@ -168,7 +168,7 @@ static bool IsExtremum(const double             U,
 Extrema_ExtPRevS::Extrema_ExtPRevS()
 {
   myvinf = myvsup            = 0.0;
-  mytolv                     = Precision::Confusion();
+  mytolv                     = math::precision::Precision::Confusion();
   myDone                     = false;
   myNbExt                    = 0;
   myIsAnalyticallyComputable = false;
@@ -270,7 +270,7 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
 
   double OPdir = gp_Vec(O, P).Dot(Dir);
   gp_Pnt Pp    = P.Translated(Dir.Multiplied(-OPdir));
-  if (O.IsEqual(Pp, Precision::Confusion()))
+  if (O.IsEqual(Pp, math::precision::Precision::Confusion()))
     return;
 
   double U, V;
@@ -284,7 +284,7 @@ void Extrema_ExtPRevS::Perform(const gp_Pnt& P)
   else
   {
     Ppp = Pp.Translated(Z.Multiplied(-OPpz));
-    if (O.IsEqual(Ppp, Precision::Confusion()))
+    if (O.IsEqual(Ppp, math::precision::Precision::Confusion()))
       U = M_PI / 2;
     else
     {

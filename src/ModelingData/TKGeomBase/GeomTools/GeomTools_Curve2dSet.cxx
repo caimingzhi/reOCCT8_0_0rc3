@@ -418,13 +418,13 @@ void GeomTools_Curve2dSet::Dump(Standard_OStream& OS) const
 }
 
 void GeomTools_Curve2dSet::Write(Standard_OStream&            OS,
-                                 const Message_ProgressRange& theProgress) const
+                                 const System::log::Message_ProgressRange& theProgress) const
 {
   std::streamsize prec = OS.precision(17);
 
   int i, nbsurf = myMap.Extent();
   OS << "Curve2ds " << nbsurf << "\n";
-  Message_ProgressScope aPS(theProgress, "2D Curves", nbsurf);
+  System::log::Message_ProgressScope aPS(theProgress, "2D Curves", nbsurf);
   for (i = 1; i <= nbsurf && aPS.More(); i++, aPS.Next())
   {
     PrintCurve2d(occ::down_cast<Geom2d_Curve>(myMap(i)), OS, true);
@@ -689,7 +689,7 @@ occ::handle<Geom2d_Curve> GeomTools_Curve2dSet::ReadCurve2d(Standard_IStream& IS
   return C;
 }
 
-void GeomTools_Curve2dSet::Read(Standard_IStream& IS, const Message_ProgressRange& theProgress)
+void GeomTools_Curve2dSet::Read(Standard_IStream& IS, const System::log::Message_ProgressRange& theProgress)
 {
   char buffer[255];
   IS >> buffer;
@@ -701,7 +701,7 @@ void GeomTools_Curve2dSet::Read(Standard_IStream& IS, const Message_ProgressRang
 
   int i, nbcurve;
   IS >> nbcurve;
-  Message_ProgressScope aPS(theProgress, "2D Curves", nbcurve);
+  System::log::Message_ProgressScope aPS(theProgress, "2D Curves", nbcurve);
   for (i = 1; i <= nbcurve && aPS.More(); i++, aPS.Next())
   {
     occ::handle<Geom2d_Curve> C = GeomTools_Curve2dSet::ReadCurve2d(IS);

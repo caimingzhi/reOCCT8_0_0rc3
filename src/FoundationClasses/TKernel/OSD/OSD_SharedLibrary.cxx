@@ -40,13 +40,13 @@ extern "C"
 
   #define BAD(X) ((X) == NULL)
 
-OSD_SharedLibrary::OSD_SharedLibrary()
+System::os::OSD_SharedLibrary::OSD_SharedLibrary()
     : myHandle(nullptr),
       myName(nullptr)
 {
 }
 
-OSD_SharedLibrary::OSD_SharedLibrary(const char* aName)
+System::os::OSD_SharedLibrary::OSD_SharedLibrary(const char* aName)
     : myHandle(nullptr)
 {
   if (aName != nullptr)
@@ -56,12 +56,12 @@ OSD_SharedLibrary::OSD_SharedLibrary(const char* aName)
   }
 }
 
-const char* OSD_SharedLibrary::Name() const
+const char* System::os::OSD_SharedLibrary::Name() const
 {
   return myName;
 }
 
-void OSD_SharedLibrary::SetName(const char* aName)
+void System::os::OSD_SharedLibrary::SetName(const char* aName)
 {
   if (aName != nullptr)
   {
@@ -70,7 +70,7 @@ void OSD_SharedLibrary::SetName(const char* aName)
   }
 }
 
-bool OSD_SharedLibrary::DlOpen(const OSD_LoadMode aMode)
+bool System::os::OSD_SharedLibrary::DlOpen(const OSD_LoadMode aMode)
 {
   if (aMode == OSD_RTLD_LAZY)
   {
@@ -84,7 +84,7 @@ bool OSD_SharedLibrary::DlOpen(const OSD_LoadMode aMode)
   return !BAD(myHandle);
 }
 
-OSD_Function OSD_SharedLibrary::DlSymb(const char* aName) const
+OSD_Function System::os::OSD_SharedLibrary::DlSymb(const char* aName) const
 {
   void (*fp)();
   fp = (void (*)())dlsym(myHandle, aName);
@@ -98,17 +98,17 @@ OSD_Function OSD_SharedLibrary::DlSymb(const char* aName) const
   }
 }
 
-void OSD_SharedLibrary::DlClose() const
+void System::os::OSD_SharedLibrary::DlClose() const
 {
   dlclose(myHandle);
 }
 
-const char* OSD_SharedLibrary::DlError() const
+const char* System::os::OSD_SharedLibrary::DlError() const
 {
   return (char*)dlerror();
 }
 
-void OSD_SharedLibrary::Destroy()
+void System::os::OSD_SharedLibrary::Destroy()
 {
   if (myName != nullptr)
   {
@@ -137,14 +137,14 @@ static DWORD lastDLLError;
 static wchar_t errMsg[1024];
 static char    errMsgA[1024];
 
-OSD_SharedLibrary ::OSD_SharedLibrary()
+System::os::OSD_SharedLibrary ::OSD_SharedLibrary()
 {
 
   myHandle = NULL;
   myName   = NULL;
 }
 
-OSD_SharedLibrary ::OSD_SharedLibrary(const char* aFilename)
+System::os::OSD_SharedLibrary ::OSD_SharedLibrary(const char* aFilename)
 {
 
   myHandle = NULL;
@@ -153,10 +153,10 @@ OSD_SharedLibrary ::OSD_SharedLibrary(const char* aFilename)
   SetName(aFilename);
 }
 
-void OSD_SharedLibrary ::SetName(const char* aName)
+void System::os::OSD_SharedLibrary ::SetName(const char* aName)
 {
 
-  OSD_Path                path(aName);
+  System::os::OSD_Path                path(aName);
   TCollection_AsciiString name(aName);
 
   if (myName != NULL)
@@ -179,13 +179,13 @@ void OSD_SharedLibrary ::SetName(const char* aName)
   #endif
 }
 
-const char* OSD_SharedLibrary ::Name() const
+const char* System::os::OSD_SharedLibrary ::Name() const
 {
 
   return myName;
 }
 
-bool OSD_SharedLibrary ::DlOpen(const OSD_LoadMode)
+bool System::os::OSD_SharedLibrary ::DlOpen(const OSD_LoadMode)
 {
 
   bool retVal = true;
@@ -209,7 +209,7 @@ bool OSD_SharedLibrary ::DlOpen(const OSD_LoadMode)
   return retVal;
 }
 
-OSD_Function OSD_SharedLibrary ::DlSymb(const char* Name) const
+OSD_Function System::os::OSD_SharedLibrary ::DlSymb(const char* Name) const
 {
 
   OSD_Function func = (OSD_Function)GetProcAddress((HMODULE)myHandle, Name);
@@ -221,13 +221,13 @@ OSD_Function OSD_SharedLibrary ::DlSymb(const char* Name) const
   return func;
 }
 
-void OSD_SharedLibrary ::DlClose() const
+void System::os::OSD_SharedLibrary ::DlClose() const
 {
 
   FreeLibrary((HMODULE)myHandle);
 }
 
-const char* OSD_SharedLibrary ::DlError() const
+const char* System::os::OSD_SharedLibrary ::DlError() const
 {
 
   FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ARGUMENT_ARRAY,
@@ -242,7 +242,7 @@ const char* OSD_SharedLibrary ::DlError() const
   return errMsgA;
 }
 
-void OSD_SharedLibrary ::Destroy()
+void System::os::OSD_SharedLibrary ::Destroy()
 {
 
   if (myName != NULL)

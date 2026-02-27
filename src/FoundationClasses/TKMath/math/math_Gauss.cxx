@@ -10,7 +10,7 @@
 
 math_Gauss::math_Gauss(const math_Matrix&           A,
                        const double                 MinPivot,
-                       const Message_ProgressRange& theProgress)
+                       const System::log::Message_ProgressRange& theProgress)
     : LU(1, A.RowNumber(), 1, A.ColNumber()),
       Index(1, A.RowNumber()),
       D(0.0),

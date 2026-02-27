@@ -53,13 +53,13 @@ void BRepAlgoAPI_BuilderAlgo::Clear()
     mySimplifierHistory.Nullify();
 }
 
-void BRepAlgoAPI_BuilderAlgo::Build(const Message_ProgressRange& theRange)
+void BRepAlgoAPI_BuilderAlgo::Build(const System::log::Message_ProgressRange& theRange)
 {
 
   NotDone();
 
   Clear();
-  Message_ProgressScope aPS(theRange, "Performing General Fuse operation", 100);
+  System::log::Message_ProgressScope aPS(theRange, "Performing General Fuse operation", 100);
 
   IntersectShapes(myArguments, aPS.Next(70));
   if (HasErrors())
@@ -73,7 +73,7 @@ void BRepAlgoAPI_BuilderAlgo::Build(const Message_ProgressRange& theRange)
 }
 
 void BRepAlgoAPI_BuilderAlgo::IntersectShapes(const NCollection_List<TopoDS_Shape>& theArgs,
-                                              const Message_ProgressRange&          theRange)
+                                              const System::log::Message_ProgressRange&          theRange)
 {
   if (!myIsIntersectionNeeded)
     return;
@@ -99,7 +99,7 @@ void BRepAlgoAPI_BuilderAlgo::IntersectShapes(const NCollection_List<TopoDS_Shap
   GetReport()->Merge(myDSFiller->GetReport());
 }
 
-void BRepAlgoAPI_BuilderAlgo::BuildResult(const Message_ProgressRange& theRange)
+void BRepAlgoAPI_BuilderAlgo::BuildResult(const System::log::Message_ProgressRange& theRange)
 {
 
   myBuilder->SetRunParallel(myRunParallel);

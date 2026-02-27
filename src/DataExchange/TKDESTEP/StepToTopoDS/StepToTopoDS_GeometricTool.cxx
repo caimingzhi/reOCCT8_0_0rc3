@@ -125,7 +125,7 @@ bool StepToTopoDS_GeometricTool::IsLikeSeam(const occ::handle<StepGeom_SurfaceCu
         double DeltaDirY = std::abs(line1->Dir()->Orientation()->DirectionRatiosValue(2)
                                     - line2->Dir()->Orientation()->DirectionRatiosValue(2));
 
-        double preci2d = Precision::PConfusion();
+        double preci2d = math::precision::Precision::PConfusion();
 
         if ((DeltaX < preci2d) || (DeltaY < preci2d))
           return ((DeltaDirX < preci2d) && (DeltaDirY < preci2d));
@@ -187,17 +187,17 @@ bool StepToTopoDS_GeometricTool::UpdateParam3d(const occ::handle<Geom_Curve>& th
   if (theCurve->IsPeriodic())
   {
 
-    ElCLib::AdjustPeriodic(cf, cl, Precision::PConfusion(), w1, w2);
+    ElCLib::AdjustPeriodic(cf, cl, math::precision::Precision::PConfusion(), w1, w2);
   }
   else if (theCurve->IsClosed())
   {
 
-    if (std::abs(w2 - cf) < Precision::PConfusion())
+    if (std::abs(w2 - cf) < math::precision::Precision::PConfusion())
     {
       w2 = cl;
     }
 
-    else if (std::abs(w1 - cl) < Precision::PConfusion())
+    else if (std::abs(w1 - cl) < math::precision::Precision::PConfusion())
     {
       w1 = cf;
     }
@@ -213,7 +213,7 @@ bool StepToTopoDS_GeometricTool::UpdateParam3d(const occ::handle<Geom_Curve>& th
       {
         w2 = cl;
       }
-      if (fabs(w2 - w1) < Precision::PConfusion())
+      if (fabs(w2 - w1) < math::precision::Precision::PConfusion())
       {
         w1 = cf;
         w2 = cl;
@@ -237,12 +237,12 @@ bool StepToTopoDS_GeometricTool::UpdateParam3d(const occ::handle<Geom_Curve>& th
     if (aBSpline->StartPoint().Distance(aBSpline->EndPoint()) <= preci)
     {
 
-      if (std::abs(w2 - cf) < Precision::PConfusion())
+      if (std::abs(w2 - cf) < math::precision::Precision::PConfusion())
       {
         w2 = cl;
       }
 
-      else if (std::abs(w1 - cl) < Precision::PConfusion())
+      else if (std::abs(w1 - cl) < math::precision::Precision::PConfusion())
       {
         w1 = cf;
       }
@@ -297,8 +297,8 @@ bool StepToTopoDS_GeometricTool::UpdateParam3d(const occ::handle<Geom_Curve>& th
 
     if (w1 == w2)
     {
-      w1 -= Precision::PConfusion();
-      w2 += Precision::PConfusion();
+      w1 -= math::precision::Precision::PConfusion();
+      w2 += math::precision::Precision::PConfusion();
     }
     return false;
   }

@@ -12,5 +12,5 @@ public:
   DEFINE_STANDARD_RTTIEXT(BRepMesh_DelaunayBaseMeshAlgo, BRepMesh_ConstrainedBaseMeshAlgo)
 
 protected:
-  Standard_EXPORT void generateMesh(const Message_ProgressRange& theRange) override;
+  Standard_EXPORT void generateMesh(const System::log::Message_ProgressRange& theRange) override;
 };

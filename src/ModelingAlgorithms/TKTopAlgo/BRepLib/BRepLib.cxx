@@ -61,7 +61,7 @@
 
 #include <algorithm>
 
-static double                  thePrecision = Precision::Confusion();
+static double                  thePrecision = math::precision::Precision::Confusion();
 static occ::handle<Geom_Plane> thePlane;
 
 static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
@@ -191,8 +191,8 @@ void BRepLib::SameRange(const TopoDS_Edge& AnEdge, const double Tolerance)
           first_time_in = false;
         }
 
-        if (std::abs(first - current_first) > Precision::Confusion()
-            || std::abs(last - current_last) > Precision::Confusion())
+        if (std::abs(first - current_first) > math::precision::Precision::Confusion()
+            || std::abs(last - current_last) > math::precision::Precision::Confusion())
         {
           if (has_curve)
           {
@@ -274,7 +274,7 @@ bool BRepLib::BuildCurve3d(const TopoDS_Edge&  AnEdge,
   if (!C.IsNull())
     return true;
 
-  if (!CheckSameRange(AnEdge, Precision::Confusion()))
+  if (!CheckSameRange(AnEdge, math::precision::Precision::Confusion()))
   {
     SameRange(AnEdge, Tolerance);
   }
@@ -972,10 +972,10 @@ static double ComputeTol(const occ::handle<Adaptor3d_Curve>&   c3d,
       }
     }
     gp_Pnt Pcons = surf->Value(Puv.X(), Puv.Y());
-    if (Precision::IsInfinite(Pcons.X()) || Precision::IsInfinite(Pcons.Y())
-        || Precision::IsInfinite(Pcons.Z()))
+    if (math::precision::Precision::IsInfinite(Pcons.X()) || math::precision::Precision::IsInfinite(Pcons.Y())
+        || math::precision::Precision::IsInfinite(Pcons.Z()))
     {
-      d2 = Precision::Infinite();
+      d2 = math::precision::Precision::Infinite();
       break;
     }
     double temp = Pc3d.SquareDistance(Pcons);
@@ -985,7 +985,7 @@ static double ComputeTol(const occ::handle<Adaptor3d_Curve>&   c3d,
     d2 = std::max(d2, temp);
   }
 
-  if (Precision::IsInfinite(d2))
+  if (math::precision::Precision::IsInfinite(d2))
   {
     return d2;
   }
@@ -1197,7 +1197,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
         PC[1] = GCurve->PCurve2();
       }
 
-      double TolSameRange = std::max(GAC.Resolution(theTolerance), Precision::PConfusion());
+      double TolSameRange = std::max(GAC.Resolution(theTolerance), math::precision::Precision::PConfusion());
       for (int i = 0; i < 2; i++)
       {
         occ::handle<Geom2d_Curve> curPC    = PC[i];
@@ -1226,7 +1226,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
           double UResol                            = GAS.UResolution(theTolerance);
           double VResol                            = GAS.VResolution(theTolerance);
           double TolConf2d                         = std::min(UResol, VResol);
-          TolConf2d                                = std::max(TolConf2d, Precision::PConfusion());
+          TolConf2d                                = std::max(TolConf2d, math::precision::Precision::PConfusion());
           occ::handle<Geom2d_BSplineCurve> bs2d    = GAC2d.BSpline();
           occ::handle<Geom2d_BSplineCurve> bs2dsov = bs2d;
           double   fC0 = bs2d->FirstParameter(), lC0 = bs2d->LastParameter();
@@ -1240,8 +1240,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
           {
             gp_Pnt2d NewOriginPoint;
             bs2d->D0(bs2d->FirstParameter(), NewOriginPoint);
-            if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > Precision::PConfusion()
-                || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > Precision::PConfusion())
+            if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > math::precision::Precision::PConfusion()
+                || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > math::precision::Precision::PConfusion())
             {
 
               NCollection_Array1<double> Knotbs2d(1, bs2d->NbKnots());
@@ -1250,8 +1250,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               for (int Index = 1; Index <= bs2d->NbKnots(); Index++)
               {
                 bs2d->D0(Knotbs2d(Index), NewOriginPoint);
-                if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > Precision::PConfusion()
-                    || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > Precision::PConfusion())
+                if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > math::precision::Precision::PConfusion()
+                    || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > math::precision::Precision::PConfusion())
                   continue;
 
                 bs2d->SetOrigin(Index);
@@ -1275,7 +1275,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               NCollection_Array1<gp_Pnt2d> poles(1, nbp);
               bs2d->Poles(poles);
               gp_Pnt2d p = poles(1), p1;
-              double   d = Precision::Infinite();
+              double   d = math::precision::Precision::Infinite();
               for (int ip = 2; ip <= nbp; ip++)
               {
                 p1 = poles(ip);
@@ -1292,8 +1292,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
               {
                 gp_Pnt2d NewOriginPoint;
                 bs2d->D0(bs2d->FirstParameter(), NewOriginPoint);
-                if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > Precision::PConfusion()
-                    || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > Precision::PConfusion())
+                if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > math::precision::Precision::PConfusion()
+                    || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > math::precision::Precision::PConfusion())
                 {
 
                   NCollection_Array1<double> Knotbs2d(1, bs2d->NbKnots());
@@ -1302,8 +1302,8 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
                   for (int Index = 1; Index <= bs2d->NbKnots(); Index++)
                   {
                     bs2d->D0(Knotbs2d(Index), NewOriginPoint);
-                    if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > Precision::PConfusion()
-                        || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > Precision::PConfusion())
+                    if (std::abs(OriginPoint.X() - NewOriginPoint.X()) > math::precision::Precision::PConfusion()
+                        || std::abs(OriginPoint.Y() - NewOriginPoint.Y()) > math::precision::Precision::PConfusion())
                       continue;
 
                     bs2d->SetOrigin(Index);
@@ -1513,7 +1513,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
     if (YaPCu)
     {
 
-      maxdist   = std::max(maxdist, Precision::Confusion());
+      maxdist   = std::max(maxdist, math::precision::Precision::Confusion());
       theNewTol = maxdist;
       aNTE->Modified(true);
       aNTE->Tolerance(maxdist);
@@ -1559,17 +1559,17 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
           case GeomAbs_Cylinder:
           case GeomAbs_Cone:
           {
-            tol = Precision::Confusion();
+            tol = math::precision::Precision::Confusion();
             break;
           }
           case GeomAbs_Sphere:
           case GeomAbs_Torus:
           {
-            tol = Precision::Confusion() * 2;
+            tol = math::precision::Precision::Confusion() * 2;
             break;
           }
           default:
-            tol = Precision::Confusion() * 4;
+            tol = math::precision::Precision::Confusion() * 4;
         }
         if (!aB.IsWhole())
         {
@@ -1823,7 +1823,7 @@ bool BRepLib::OrientClosedSolid(TopoDS_Solid& solid)
 {
 
   BRepClass3d_SolidClassifier where(solid);
-  where.PerformInfinitePoint(Precision::Confusion());
+  where.PerformInfinitePoint(math::precision::Precision::Confusion());
   if (where.State() == TopAbs_IN)
   {
     solid.Reverse();
@@ -1841,7 +1841,7 @@ public:
                     const gp_Trsf&                   theSurfaceTrsf,
                     const occ::handle<Geom2d_Curve>& theCurve2D,
                     const bool                       theReversed)
-      : mySurfaceProps(theSurface, 2, Precision::Confusion()),
+      : mySurfaceProps(theSurface, 2, math::precision::Precision::Confusion()),
         mySurfaceTrsf(theSurfaceTrsf),
         myCurve2d(theCurve2D),
         myIsReversed(theReversed)
@@ -1863,7 +1863,7 @@ public:
 
     gp_Vec2d anOrtho(-myCurveTangent.Y(), myCurveTangent.X());
     double   aLen = anOrtho.Magnitude();
-    if (aLen < Precision::Confusion())
+    if (aLen < math::precision::Precision::Confusion())
       return aDeriv;
     anOrtho /= aLen;
     if (myIsReversed)
@@ -2038,7 +2038,7 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
       {
 
         aHC2 = new BRepAdaptor_Curve(anEdgeInFace2, theFace2);
-        ext.Initialize(*aHC2, f, l, Precision::PConfusion());
+        ext.Initialize(*aHC2, f, l, math::precision::Precision::PConfusion());
       }
       ext.Perform(aSP1.Value(), u);
       if (ext.IsDone() && ext.IsMin())
@@ -2053,8 +2053,8 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
     if (isSmoothSuspect)
     {
       aCurCont = GeomAbs_G1;
-      if (std::abs(std::sqrt(aSqLen1) - std::sqrt(aSqLen2)) < Precision::Confusion()
-          && aDer1.Dot(aDer2) > Precision::SquareConfusion())
+      if (std::abs(std::sqrt(aSqLen1) - std::sqrt(aSqLen2)) < math::precision::Precision::Confusion()
+          && aDer1.Dot(aDer2) > math::precision::Precision::SquareConfusion())
         aCurCont = GeomAbs_C1;
     }
     else
@@ -2068,14 +2068,14 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
     for (int aStep = 0; aStep <= 1; ++aStep)
     {
       if (aCrvDir1[0].XYZ().CrossSquareMagnitude(aCrvDir2[aStep].XYZ())
-            <= Precision::SquareConfusion()
-          && std::abs(aCrvLen1[0] - aCrvLen2[aStep]) < Precision::Confusion()
+            <= math::precision::Precision::SquareConfusion()
+          && std::abs(aCrvLen1[0] - aCrvLen2[aStep]) < math::precision::Precision::Confusion()
           && aCrvDir1[1].XYZ().CrossSquareMagnitude(aCrvDir2[1 - aStep].XYZ())
-               <= Precision::SquareConfusion()
-          && std::abs(aCrvLen1[1] - aCrvLen2[1 - aStep]) < Precision::Confusion())
+               <= math::precision::Precision::SquareConfusion()
+          && std::abs(aCrvLen1[1] - aCrvLen2[1 - aStep]) < math::precision::Precision::Confusion())
       {
-        if (aCurCont == GeomAbs_C1 && aCrvDir1[0].Dot(aCrvDir2[aStep]) > Precision::Confusion()
-            && aCrvDir1[1].Dot(aCrvDir2[1 - aStep]) > Precision::Confusion())
+        if (aCurCont == GeomAbs_C1 && aCrvDir1[0].Dot(aCrvDir2[aStep]) > math::precision::Precision::Confusion()
+            && aCrvDir1[1].Dot(aCrvDir2[1 - aStep]) > math::precision::Precision::Confusion())
           aCurCont = GeomAbs_C2;
         else
           aCurCont = GeomAbs_G2;
@@ -2257,7 +2257,7 @@ bool BRepLib::EnsureNormalConsistency(const TopoDS_Shape& theShape,
     }
 
     aPT->AddNormals();
-    GeomLProp_SLProps aSLP(aSurf, 2, Precision::Confusion());
+    GeomLProp_SLProps aSLP(aSurf, 2, math::precision::Precision::Confusion());
     for (int i = 1; i <= aPT->NbNodes(); i++)
     {
       const gp_Pnt2d aP2d = aPT->UVNode(i);
@@ -2790,7 +2790,7 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
     if (theExtVMax)
       aFVMax = std::min(isVPeriodic ? aFVMin + aVPeriod : aSVMax, aFVMax + aVRes);
 
-    constexpr double anEps = Precision::PConfusion();
+    constexpr double anEps = math::precision::Precision::PConfusion();
     if (isUPeriodic && std::abs(aFUMax - aFUMin - anUPeriod) < anEps)
     {
       aFUMin = aSUMin;
@@ -2823,25 +2823,25 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
 
     bool isExtUMin = false, isExtUMax = false, isExtVMin = false, isExtVMax = false;
 
-    if (theExtUMin && !isUClosed && !Precision::IsInfinite(aSUMin))
+    if (theExtUMin && !isUClosed && !math::precision::Precision::IsInfinite(aSUMin))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, true, false);
       isExtUMin = true;
     }
 
-    if (theExtUMax && !isUClosed && !Precision::IsInfinite(aSUMax))
+    if (theExtUMax && !isUClosed && !math::precision::Precision::IsInfinite(aSUMax))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, true, true);
       isExtUMax = true;
     }
 
-    if (theExtVMin && !isVClosed && !Precision::IsInfinite(aSVMax))
+    if (theExtVMin && !isVClosed && !math::precision::Precision::IsInfinite(aSVMax))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, false, false);
       isExtVMin = true;
     }
 
-    if (theExtVMax && !isVClosed && !Precision::IsInfinite(aSVMax))
+    if (theExtVMax && !isVClosed && !math::precision::Precision::IsInfinite(aSVMax))
     {
       GeomLib::ExtendSurfByLength(aSB, theExtVal, 1, false, true);
       isExtVMax = true;

@@ -8,7 +8,10 @@
 #include <TDocStd_FormatVersion.hpp>
 
 class BinMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 
 class BinMDataStd
 {
@@ -16,7 +19,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT static void AddDrivers(const occ::handle<BinMDF_ADriverTable>& theDriverTable,
-                                         const occ::handle<Message_Messenger>&   aMsgDrv);
+                                         const occ::handle<System::log::Message_Messenger>&   aMsgDrv);
 
   template <class T>
   static void SetAttributeID(const BinObjMgt_Persistent& theSource,

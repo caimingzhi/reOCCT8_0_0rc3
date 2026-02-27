@@ -60,7 +60,7 @@ void StepData_StepReaderTool::Prepare(const bool optim)
     }
     catch (Standard_Failure const& anException)
     {
-      Message_Messenger::StreamBuffer sout = Message::SendInfo();
+      System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
       sout << " Exception Raised during Preparation :\n";
       sout << anException.what();
       sout << "\n Now, trying to continue, but with presomption of failure\n";
@@ -107,7 +107,7 @@ void StepData_StepReaderTool::PrepareHeader(const occ::handle<StepData_FileRecog
 
 void StepData_StepReaderTool::BeginRead(const occ::handle<Interface_InterfaceModel>& amodel)
 {
-  Message_Messenger::StreamBuffer sout = Message::SendTrace();
+  System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendTrace();
   DeclareAndCast(StepData_StepModel, model, amodel);
   DeclareAndCast(StepData_StepReaderData, stepdat, Data());
 

@@ -141,7 +141,7 @@ static TopAbs_ShapeEnum CharToShapeType(const char theCharType)
   return TopAbs_SHAPE;
 }
 
-BinMNaming_NamingDriver::BinMNaming_NamingDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+BinMNaming_NamingDriver::BinMNaming_NamingDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TNaming_Naming)->Name())
 {
 }

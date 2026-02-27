@@ -68,7 +68,7 @@ bool SelectMgr_BaseFrustum::IsBoundaryIntersectSphere(
       ((anIdx + 1) == theBoundaries.Upper()) ? theBoundaries.Lower() : (anIdx + 1);
     const gp_Pnt aPnt1 = theBoundaries.Value(anIdx);
     const gp_Pnt aPnt2 = theBoundaries.Value(aNextIdx);
-    if (aPnt1.Distance(aPnt2) < Precision::Confusion())
+    if (aPnt1.Distance(aPnt2) < math::precision::Precision::Confusion())
     {
       continue;
     }

@@ -105,7 +105,7 @@ BinTools_IStream::operator bool() const
 BinTools_IStream& BinTools_IStream::operator>>(double& theValue)
 {
   if (!myStream->read((char*)&theValue, sizeof(double)))
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
   myPosition += sizeof(double);
 #if DO_INVERSE
   theValue = InverseReal(theValue);
@@ -116,7 +116,7 @@ BinTools_IStream& BinTools_IStream::operator>>(double& theValue)
 BinTools_IStream& BinTools_IStream::operator>>(int& theValue)
 {
   if (!myStream->read((char*)&theValue, sizeof(int)))
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
   myPosition += sizeof(int);
 #if DO_INVERSE
   theValue = InverseInt(theValue);
@@ -130,7 +130,7 @@ BinTools_IStream& BinTools_IStream::operator>>(gp_Pnt& theValue)
   for (int aCoord = 1; aCoord <= 3; aCoord++)
   {
     if (!myStream->read((char*)&aValue, sizeof(double)))
-      throw Storage_StreamTypeMismatchError();
+      throw app::storage::Storage_StreamTypeMismatchError();
 #if DO_INVERSE
     aValue = InverseReal(aValue);
 #endif

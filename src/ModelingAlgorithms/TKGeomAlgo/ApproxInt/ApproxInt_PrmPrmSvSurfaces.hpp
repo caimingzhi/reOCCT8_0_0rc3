@@ -141,7 +141,7 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   TgTU = Tg.Dot(TU);
   TgTV = Tg.Dot(TV);
   DIS  = TUTU * TVTV - TUTV * TUTV;
-  if (fabs(DIS) < Precision::Angular())
+  if (fabs(DIS) < math::precision::Precision::Angular())
   {
     MyIsTangent       = false;
     MyHasBeenComputed = MyHasBeenComputedbis = false;
@@ -162,7 +162,7 @@ bool ApproxInt_PrmPrmSvSurfaces::Compute(double&   u1,
   TgTU = Tg.Dot(TU);
   TgTV = Tg.Dot(TV);
   DIS  = TUTU * TVTV - TUTV * TUTV;
-  if (fabs(DIS) < Precision::Angular())
+  if (fabs(DIS) < math::precision::Precision::Angular())
   {
     MyIsTangent       = false;
     MyHasBeenComputed = MyHasBeenComputedbis = false;

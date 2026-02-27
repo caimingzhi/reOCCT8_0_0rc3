@@ -103,9 +103,9 @@ TEST(MathSVDTest, IdentityMatrix)
   math_Vector aX(1, 3);
   aSVD.Solve(aB, aX);
 
-  EXPECT_NEAR(aX(1), aB(1), Precision::Confusion()) << "Identity matrix solution X(1)";
-  EXPECT_NEAR(aX(2), aB(2), Precision::Confusion()) << "Identity matrix solution X(2)";
-  EXPECT_NEAR(aX(3), aB(3), Precision::Confusion()) << "Identity matrix solution X(3)";
+  EXPECT_NEAR(aX(1), aB(1), math::precision::Precision::Confusion()) << "Identity matrix solution X(1)";
+  EXPECT_NEAR(aX(2), aB(2), math::precision::Precision::Confusion()) << "Identity matrix solution X(2)";
+  EXPECT_NEAR(aX(3), aB(3), math::precision::Precision::Confusion()) << "Identity matrix solution X(3)";
 }
 
 TEST(MathSVDTest, DiagonalMatrix)
@@ -133,9 +133,9 @@ TEST(MathSVDTest, DiagonalMatrix)
   math_Vector aX(1, 3);
   aSVD.Solve(aB, aX);
 
-  EXPECT_NEAR(aX(1), 4.0, Precision::Confusion()) << "Diagonal solution X(1) = 12/3";
-  EXPECT_NEAR(aX(2), 4.0, Precision::Confusion()) << "Diagonal solution X(2) = 20/5";
-  EXPECT_NEAR(aX(3), 4.0, Precision::Confusion()) << "Diagonal solution X(3) = 8/2";
+  EXPECT_NEAR(aX(1), 4.0, math::precision::Precision::Confusion()) << "Diagonal solution X(1) = 12/3";
+  EXPECT_NEAR(aX(2), 4.0, math::precision::Precision::Confusion()) << "Diagonal solution X(2) = 20/5";
+  EXPECT_NEAR(aX(3), 4.0, math::precision::Precision::Confusion()) << "Diagonal solution X(3) = 8/2";
 }
 
 TEST(MathSVDTest, OverdeterminedSystem)
@@ -383,9 +383,9 @@ TEST(MathSVDTest, DifferentMatrixBounds)
   math_Vector aX(3, 5);
   aSVD.Solve(aB, aX);
 
-  EXPECT_NEAR(aX(3), 5.0, Precision::Confusion()) << "Custom bounds solution X(3)";
-  EXPECT_NEAR(aX(4), 7.0, Precision::Confusion()) << "Custom bounds solution X(4)";
-  EXPECT_NEAR(aX(5), 9.0, Precision::Confusion()) << "Custom bounds solution X(5)";
+  EXPECT_NEAR(aX(3), 5.0, math::precision::Precision::Confusion()) << "Custom bounds solution X(3)";
+  EXPECT_NEAR(aX(4), 7.0, math::precision::Precision::Confusion()) << "Custom bounds solution X(4)";
+  EXPECT_NEAR(aX(5), 9.0, math::precision::Precision::Confusion()) << "Custom bounds solution X(5)";
 }
 
 TEST(MathSVDTest, LargerMatrix)

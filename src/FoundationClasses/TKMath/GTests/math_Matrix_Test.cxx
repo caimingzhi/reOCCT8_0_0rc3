@@ -14,7 +14,7 @@ namespace
 
   void checkMatricesEqual(const math_Matrix& theM1,
                           const math_Matrix& theM2,
-                          const double       theTolerance = Precision::Confusion())
+                          const double       theTolerance = math::precision::Precision::Confusion())
   {
     ASSERT_EQ(theM1.RowNumber(), theM2.RowNumber());
     ASSERT_EQ(theM1.ColNumber(), theM2.ColNumber());
@@ -265,15 +265,15 @@ TEST(MathMatrixTest, TransposeAndInverse)
 
   math_Matrix anIdentity = anInvertible.Multiplied(anInverse);
 
-  EXPECT_NEAR(anIdentity(1, 1), 1.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(2, 2), 1.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(3, 3), 1.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(1, 2), 0.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(1, 3), 0.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(2, 1), 0.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(2, 3), 0.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(3, 1), 0.0, Precision::Confusion());
-  EXPECT_NEAR(anIdentity(3, 2), 0.0, Precision::Confusion());
+  EXPECT_NEAR(anIdentity(1, 1), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(2, 2), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(3, 3), 1.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(1, 2), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(1, 3), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(2, 1), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(2, 3), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(3, 1), 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anIdentity(3, 2), 0.0, math::precision::Precision::Confusion());
 }
 
 TEST(MathMatrixTest, Determinant)
@@ -285,7 +285,7 @@ TEST(MathMatrixTest, Determinant)
   anIdentity(2, 2) = 1.0;
   anIdentity(3, 3) = 1.0;
 
-  EXPECT_NEAR(anIdentity.Determinant(), 1.0, Precision::Confusion());
+  EXPECT_NEAR(anIdentity.Determinant(), 1.0, math::precision::Precision::Confusion());
 
   math_Matrix aDiagonal(1, 3, 1, 3);
   aDiagonal.Init(0.0);
@@ -293,7 +293,7 @@ TEST(MathMatrixTest, Determinant)
   aDiagonal(2, 2) = 3.0;
   aDiagonal(3, 3) = 4.0;
 
-  EXPECT_NEAR(aDiagonal.Determinant(), 24.0, Precision::Confusion());
+  EXPECT_NEAR(aDiagonal.Determinant(), 24.0, math::precision::Precision::Confusion());
 
   math_Matrix aMatrix(1, 3, 1, 3);
   aMatrix(1, 1) = 3.0;
@@ -306,7 +306,7 @@ TEST(MathMatrixTest, Determinant)
   aMatrix(3, 2) = 1.0;
   aMatrix(3, 3) = 9.0;
 
-  EXPECT_NEAR(aMatrix.Determinant(), -185.0, Precision::Confusion());
+  EXPECT_NEAR(aMatrix.Determinant(), -185.0, math::precision::Precision::Confusion());
 }
 
 TEST(MathMatrixTest, RowAndColumnOperations)
@@ -465,17 +465,17 @@ TEST(MathMatrixTest, InPlaceMatrixMultiplication)
 
   aMatrix.Multiply(aMatrix);
 
-  EXPECT_NEAR(aMatrix(1, 1), aCorrectResult(1, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrix(1, 2), aCorrectResult(1, 2), Precision::Confusion());
-  EXPECT_NEAR(aMatrix(2, 1), aCorrectResult(2, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrix(2, 2), aCorrectResult(2, 2), Precision::Confusion());
+  EXPECT_NEAR(aMatrix(1, 1), aCorrectResult(1, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrix(1, 2), aCorrectResult(1, 2), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrix(2, 1), aCorrectResult(2, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrix(2, 2), aCorrectResult(2, 2), math::precision::Precision::Confusion());
 
   aMatrixCopy *= aMatrixCopy;
 
-  EXPECT_NEAR(aMatrixCopy(1, 1), aCorrectResult(1, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrixCopy(1, 2), aCorrectResult(1, 2), Precision::Confusion());
-  EXPECT_NEAR(aMatrixCopy(2, 1), aCorrectResult(2, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrixCopy(2, 2), aCorrectResult(2, 2), Precision::Confusion());
+  EXPECT_NEAR(aMatrixCopy(1, 1), aCorrectResult(1, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixCopy(1, 2), aCorrectResult(1, 2), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixCopy(2, 1), aCorrectResult(2, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixCopy(2, 2), aCorrectResult(2, 2), math::precision::Precision::Confusion());
 
   math_Matrix aMatrixA(1, 2, 1, 2);
   aMatrixA(1, 1) = 1.0;
@@ -501,17 +501,17 @@ TEST(MathMatrixTest, InPlaceMatrixMultiplication)
 
   aMatrixA.Multiply(aMatrixB);
 
-  EXPECT_NEAR(aMatrixA(1, 1), aExpectedAB(1, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrixA(1, 2), aExpectedAB(1, 2), Precision::Confusion());
-  EXPECT_NEAR(aMatrixA(2, 1), aExpectedAB(2, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrixA(2, 2), aExpectedAB(2, 2), Precision::Confusion());
+  EXPECT_NEAR(aMatrixA(1, 1), aExpectedAB(1, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixA(1, 2), aExpectedAB(1, 2), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixA(2, 1), aExpectedAB(2, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixA(2, 2), aExpectedAB(2, 2), math::precision::Precision::Confusion());
 
   aMatrixACopy *= aMatrixBCopy;
 
-  EXPECT_NEAR(aMatrixACopy(1, 1), aExpectedAB(1, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrixACopy(1, 2), aExpectedAB(1, 2), Precision::Confusion());
-  EXPECT_NEAR(aMatrixACopy(2, 1), aExpectedAB(2, 1), Precision::Confusion());
-  EXPECT_NEAR(aMatrixACopy(2, 2), aExpectedAB(2, 2), Precision::Confusion());
+  EXPECT_NEAR(aMatrixACopy(1, 1), aExpectedAB(1, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixACopy(1, 2), aExpectedAB(1, 2), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixACopy(2, 1), aExpectedAB(2, 1), math::precision::Precision::Confusion());
+  EXPECT_NEAR(aMatrixACopy(2, 2), aExpectedAB(2, 2), math::precision::Precision::Confusion());
 }
 
 TEST(MathMatrixTest, MoveSemantics)

@@ -95,9 +95,9 @@ bool SelectMgr_RectangularFrustum::segmentPlaneIntersection(
   double aD = thePlane.Dot(anU);
   double aN = -thePlane.Dot(aW);
 
-  if (std::abs(aD) < Precision::Confusion())
+  if (std::abs(aD) < math::precision::Precision::Confusion())
   {
-    if (std::abs(aN) < Precision::Angular())
+    if (std::abs(aN) < math::precision::Precision::Angular())
     {
       thePickResult.Invalidate();
       return false;
@@ -550,7 +550,7 @@ bool SelectMgr_RectangularFrustum::OverlapsPolygon(const NCollection_Array1<gp_P
       return false;
     }
 
-    if (aPolyNorm.Magnitude() <= Precision::Confusion())
+    if (aPolyNorm.Magnitude() <= math::precision::Precision::Confusion())
     {
 
       return OverlapsPoint(theArrayOfPnts.First(), theClipRange, thePickResult);
@@ -654,7 +654,7 @@ bool SelectMgr_RectangularFrustum::OverlapsTriangle(const gp_Pnt&               
     int          aNearestEdgeIdx2 = (aNearestEdgeIdx1 + 1) % 3;
     const gp_Vec aVec12(aPnts[aNearestEdgeIdx1], aPnts[aNearestEdgeIdx2]);
     if (aVec12.SquareMagnitude() > gp::Resolution()
-        && myViewRayDir.IsParallel(aVec12, Precision::Angular()))
+        && myViewRayDir.IsParallel(aVec12, math::precision::Precision::Angular()))
     {
       aNearestEdgeIdx2 = aNearestEdgeIdx1 == 0 ? 2 : aNearestEdgeIdx1 - 1;
     }
@@ -702,11 +702,11 @@ bool SelectMgr_RectangularFrustum::OverlapsCylinder(const double                
   }
 
   const gp_Pnt aPntOnCylinder = aLoc.XYZ() + aRayDir.XYZ() * aTimes[aResTime];
-  if (std::abs(aPntOnCylinder.Z()) < Precision::Confusion())
+  if (std::abs(aPntOnCylinder.Z()) < math::precision::Precision::Confusion())
   {
     thePickResult.SetSurfaceNormal(-gp::DZ().Transformed(theTrsf));
   }
-  else if (std::abs(aPntOnCylinder.Z() - theHeight) < Precision::Confusion())
+  else if (std::abs(aPntOnCylinder.Z() - theHeight) < math::precision::Precision::Confusion())
   {
     thePickResult.SetSurfaceNormal(gp::DZ().Transformed(theTrsf));
   }
@@ -756,7 +756,7 @@ bool SelectMgr_RectangularFrustum::OverlapsCircle(const double                  
   }
 
   const gp_Pnt aPntOnCircle = aLoc.XYZ() + aRayDir.XYZ() * aTime;
-  if (std::abs(aPntOnCircle.Z()) < Precision::Confusion())
+  if (std::abs(aPntOnCircle.Z()) < math::precision::Precision::Confusion())
   {
     thePickResult.SetSurfaceNormal(-gp::DZ().Transformed(theTrsf));
   }
@@ -829,7 +829,7 @@ bool SelectMgr_RectangularFrustum::isSegmentsIntersect(const gp_Pnt& thePnt1Seg1
                        thePnt2Seg2.X() - thePnt1Seg1.X(),
                        thePnt2Seg2.Y() - thePnt1Seg1.Y(),
                        thePnt2Seg2.Z() - thePnt1Seg1.Z());
-  if (std::abs(aMatPln.Determinant()) > Precision::Confusion())
+  if (std::abs(aMatPln.Determinant()) > math::precision::Precision::Confusion())
   {
     return false;
   }

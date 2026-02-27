@@ -59,7 +59,7 @@ bool Bisector_FunctionInter::Values(const double X, double& F, double& D)
   F  = F1 - F2;
   if (std::abs(F1) < gp::Resolution())
   {
-    DF1 = Precision::Infinite();
+    DF1 = math::precision::Precision::Infinite();
   }
   else
   {
@@ -67,7 +67,7 @@ bool Bisector_FunctionInter::Values(const double X, double& F, double& D)
   }
   if (std::abs(F2) < gp::Resolution())
   {
-    DF2 = Precision::Infinite();
+    DF2 = math::precision::Precision::Infinite();
   }
   else
   {

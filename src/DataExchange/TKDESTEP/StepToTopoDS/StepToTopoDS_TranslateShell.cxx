@@ -27,7 +27,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
                                        StepToTopoDS_Tool&                             aTool,
                                        StepToTopoDS_NMTool&                           NMTool,
                                        const StepData_Factors&      theLocalFactors,
-                                       const Message_ProgressRange& theProgress)
+                                       const System::log::Message_ProgressRange& theProgress)
 {
 
   if (CFS.IsNull())
@@ -50,7 +50,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepShape_ConnectedFace
     myTranFace.SetPrecision(Precision());
     myTranFace.SetMaxTol(MaxTol());
 
-    Message_ProgressScope PS(theProgress, "Face", NbFc);
+    System::log::Message_ProgressScope PS(theProgress, "Face", NbFc);
     for (int i = 1; i <= NbFc && PS.More(); i++, PS.Next())
     {
 #ifdef OCCT_DEBUG
@@ -97,7 +97,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepVisual_TessellatedS
                                        const bool              theReadTessellatedWhenNoBRepOnly,
                                        bool&                   theHasGeom,
                                        const StepData_Factors& theLocalFactors,
-                                       const Message_ProgressRange& theProgress)
+                                       const System::log::Message_ProgressRange& theProgress)
 {
   if (theTSh.IsNull())
     return;
@@ -106,7 +106,7 @@ void StepToTopoDS_TranslateShell::Init(const occ::handle<StepVisual_TessellatedS
   TopoDS_Shell aSh;
 
   int                   aNb = theTSh->NbItems();
-  Message_ProgressScope aPS(theProgress, "Face", theTSh->HasTopologicalLink() ? aNb + 1 : aNb);
+  System::log::Message_ProgressScope aPS(theProgress, "Face", theTSh->HasTopologicalLink() ? aNb + 1 : aNb);
 
   occ::handle<Transfer_TransientProcess> aTP = theTool.TransientProcess();
 

@@ -10,7 +10,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(XmlMDataStd_RealDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(AttributeIDString, "realattguid")
 
-XmlMDataStd_RealDriver::XmlMDataStd_RealDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMDataStd_RealDriver::XmlMDataStd_RealDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

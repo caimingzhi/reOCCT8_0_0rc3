@@ -3,7 +3,7 @@
 #include <TopoDS_Shape.hpp>
 #include <NCollection_List.hpp>
 
-void BRepFeat_Gluer::Build(const Message_ProgressRange&)
+void BRepFeat_Gluer::Build(const System::log::Message_ProgressRange&)
 {
   myGluer.Perform();
   if (myGluer.IsDone())

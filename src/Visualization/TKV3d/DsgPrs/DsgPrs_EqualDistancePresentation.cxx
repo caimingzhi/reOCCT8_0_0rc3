@@ -46,10 +46,10 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
   gp_Dir LineDir, OrtDir;
   gp_Vec LineVec, OrtVec;
 
-  if (Dist > Precision::Confusion())
+  if (Dist > math::precision::Precision::Confusion())
   {
     SmallDist = Dist * 0.05;
-    if (SmallDist <= Precision::Confusion())
+    if (SmallDist <= math::precision::Precision::Confusion())
       SmallDist = Dist;
     LineDir = gce_MakeDir(Middle12, Middle34);
     OrtDir  = Plane->Pln().Axis().Direction() ^ LineDir;
@@ -62,7 +62,7 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
   {
     gp_Vec Vec1(Middle, Point1);
 
-    if (Vec1.SquareMagnitude() > Precision::Confusion() * Precision::Confusion())
+    if (Vec1.SquareMagnitude() > math::precision::Precision::Confusion() * math::precision::Precision::Confusion())
     {
       double Angle  = gp_Vec(Middle, Point1).Angle(gp_Vec(Middle, Point3));
       gp_Pnt MidPnt = Point1.Rotated(Plane->Pln().Axis(), Angle * 0.5);
@@ -71,7 +71,7 @@ void DsgPrs_EqualDistancePresentation::Add(const occ::handle<Prs3d_Presentation>
 
       double Distance = Point1.Distance(Point2);
       SmallDist       = Distance * 0.05;
-      if (SmallDist <= Precision::Confusion())
+      if (SmallDist <= math::precision::Precision::Confusion())
         SmallDist = Distance;
 
       OrtVec  = gp_Vec(OrtDir) * SmallDist;
@@ -137,7 +137,7 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   aPresentation->CurrentGroup()->SetPrimitivesAspect(LA->LineAspect()->Aspect());
 
   double aPar11, aPar12, aPar21, aPar22;
-  if (aCirc1.Radius() > Precision::Confusion())
+  if (aCirc1.Radius() > math::precision::Precision::Confusion())
   {
     aPar11 = ElCLib::Parameter(aCirc1, aPoint1);
     aPar12 = ElCLib::Parameter(aCirc1, aPoint2);
@@ -147,7 +147,7 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
     aPar11 = M_PI;
     aPar12 = M_PI;
   }
-  if (aCirc2.Radius() > Precision::Confusion())
+  if (aCirc2.Radius() > math::precision::Precision::Confusion())
   {
     aPar21 = ElCLib::Parameter(aCirc2, aPoint3);
     aPar22 = ElCLib::Parameter(aCirc2, aPoint4);
@@ -167,7 +167,7 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   double aDelta, aCurPar;
   if (aPar12 < aPar11)
     aPar12 += 2. * M_PI;
-  if (std::abs(aPar12 - aPar11) > Precision::Confusion())
+  if (std::abs(aPar12 - aPar11) > math::precision::Precision::Confusion())
   {
     aNodeNb = int(std::max(std::abs(aPar12 - aPar11) * 50. / M_PI + 0.5, 4.));
     aDelta  = (aPar12 - aPar11) / aNodeNb;
@@ -181,7 +181,7 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   }
   if (aPar22 < aPar21)
     aPar22 += 2. * M_PI;
-  if (std::abs(aPar22 - aPar21) > Precision::Confusion())
+  if (std::abs(aPar22 - aPar21) > math::precision::Precision::Confusion())
   {
     aNodeNb = int(std::max(std::abs(aPar22 - aPar21) * 50. / M_PI + 0.5, 4.));
     aDelta  = (aPar22 - aPar21) / aNodeNb;
@@ -195,7 +195,7 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   }
 
   gp_Dir DirOfArrow;
-  if (aPoint4.Distance(aPoint2) > Precision::Confusion())
+  if (aPoint4.Distance(aPoint2) > math::precision::Precision::Confusion())
   {
     DirOfArrow.SetXYZ(aPoint4.XYZ() - aPoint2.XYZ());
   }
@@ -203,7 +203,7 @@ void DsgPrs_EqualDistancePresentation::AddIntervalBetweenTwoArcs(
   {
 
     gp_Pnt aCenter = aCirc1.Location();
-    if (aPoint4.Distance(aCenter) < Precision::Confusion())
+    if (aPoint4.Distance(aCenter) < math::precision::Precision::Confusion())
       return;
     DirOfArrow.SetXYZ(aPoint4.XYZ() - aCenter.XYZ());
   }

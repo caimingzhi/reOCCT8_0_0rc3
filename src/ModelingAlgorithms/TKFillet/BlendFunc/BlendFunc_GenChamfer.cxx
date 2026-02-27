@@ -50,7 +50,7 @@ void BlendFunc_GenChamfer::GetBounds(math_Vector& InfBound, math_Vector& SupBoun
 
   for (int i = 1; i <= 4; i++)
   {
-    if (!Precision::IsInfinite(InfBound(i)) && !Precision::IsInfinite(SupBound(i)))
+    if (!math::precision::Precision::IsInfinite(InfBound(i)) && !math::precision::Precision::IsInfinite(SupBound(i)))
     {
       const double range = (SupBound(i) - InfBound(i));
       InfBound(i) -= range;

@@ -26,7 +26,7 @@ static occ::handle<Interface_Check>& checkread()
 
 static void IGESFile_ReadHeader(const occ::handle<IGESData_IGESReaderData>& IR);
 static void IGESFile_ReadContent(const occ::handle<IGESData_IGESReaderData>& IR);
-void        IGESFile_Check(int mode, Message_Msg& amsg);
+void        IGESFile_Check(int mode, System::log::Message_Msg& amsg);
 
 static Interface_ParamType LesTypes[10];
 
@@ -53,8 +53,8 @@ int IGESFile_Read(char*                                       nomfic,
                   const bool                                  modefnes)
 {
 
-  Message_Msg Msg1  = Message_Msg("XSTEP_1");
-  Message_Msg Msg15 = Message_Msg("XSTEP_15");
+  System::log::Message_Msg Msg1  = System::log::Message_Msg("XSTEP_1");
+  System::log::Message_Msg Msg15 = System::log::Message_Msg("XSTEP_15");
 
   char* ficnom = nomfic;
   int   lesect[6];
@@ -92,7 +92,7 @@ int IGESFile_Read(char*                                       nomfic,
       catch (Standard_Failure const&)
       {
 
-        Message_Msg Msg11 = Message_Msg("XSTEP_11");
+        System::log::Message_Msg Msg11 = System::log::Message_Msg("XSTEP_11");
         IGESFile_Check(1, Msg11);
       }
     }
@@ -109,13 +109,13 @@ int IGESFile_Read(char*                                       nomfic,
 
         if (recupnp == 0)
         {
-          Message_Msg Msg13 = Message_Msg("XSTEP_13");
+          System::log::Message_Msg Msg13 = System::log::Message_Msg("XSTEP_13");
           Msg13.Arg(recupne);
           IGESFile_Check(1, Msg13);
         }
         else
         {
-          Message_Msg Msg14 = Message_Msg("XSTEP_14");
+          System::log::Message_Msg Msg14 = System::log::Message_Msg("XSTEP_14");
           Msg14.Arg(recupne);
           Msg14.Arg(recupnp);
           IGESFile_Check(1, Msg14);
@@ -233,7 +233,7 @@ void IGESFile_ReadContent(const occ::handle<IGESData_IGESReaderData>& IR)
   }
 }
 
-void IGESFile_Check(int mode, Message_Msg& amsg)
+void IGESFile_Check(int mode, System::log::Message_Msg& amsg)
 {
 
   switch (mode)
@@ -255,7 +255,7 @@ void IGESFile_Check(int mode, Message_Msg& amsg)
 void IGESFile_Check2(int mode, char* code, int num, char* str)
 {
 
-  Message_Msg amsg(code);
+  System::log::Message_Msg amsg(code);
   amsg.Arg(num);
   amsg.Arg(str);
 
@@ -278,7 +278,7 @@ void IGESFile_Check2(int mode, char* code, int num, char* str)
 void IGESFile_Check3(int mode, char* code)
 {
 
-  Message_Msg amsg(code);
+  System::log::Message_Msg amsg(code);
   switch (mode)
   {
     case 0:

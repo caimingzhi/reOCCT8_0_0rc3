@@ -87,7 +87,7 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
 {
   int              i, nbvtx;
   double           firstp, lastp;
-  constexpr double Tol = Precision::PConfusion() * 35.0;
+  constexpr double Tol = math::precision::Precision::PConfusion() * 35.0;
 
   const IntPatch_IType typl = L->ArcType();
   if (typl == IntPatch_Analytic)
@@ -298,7 +298,7 @@ void GeomInt_LineConstructor::Perform(const occ::handle<IntPatch_Line>& L)
     {
       firstp = GeomInt_LineTool::Vertex(L, i).ParameterOnLine();
       lastp  = GeomInt_LineTool::Vertex(L, i + 1).ParameterOnLine();
-      if (std::abs(firstp - lastp) > Precision::PConfusion())
+      if (std::abs(firstp - lastp) > math::precision::Precision::PConfusion())
       {
         intrvtested       = true;
         const double pmid = (firstp + lastp) * 0.5;
@@ -850,7 +850,7 @@ bool RejectMicroCircle(const occ::handle<IntPatch_GLine>& aGLine,
 void RejectDuplicates(NCollection_Array1<GeomInt_Vertex>& theVtxArr)
 {
 
-  constexpr double aTolPC = 1000. * Precision::PConfusion();
+  constexpr double aTolPC = 1000. * math::precision::Precision::PConfusion();
 
   for (int i = theVtxArr.Lower(); i <= theVtxArr.Upper() - 2; i++)
   {

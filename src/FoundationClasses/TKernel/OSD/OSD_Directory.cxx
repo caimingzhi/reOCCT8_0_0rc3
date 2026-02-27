@@ -16,7 +16,7 @@
     #include <tchar.h>
   #endif
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 #else
   #include <cerrno>
   #include <cstdio>
@@ -26,21 +26,21 @@ void _osd_wnt_set_error(OSD_Error&, int, ...);
 const OSD_WhoAmI Iam = OSD_WDirectory;
 #endif
 
-OSD_Directory::OSD_Directory() = default;
+System::os::OSD_Directory::OSD_Directory() = default;
 
-OSD_Directory::OSD_Directory(const OSD_Path& theName)
-    : OSD_FileNode(theName)
+System::os::OSD_Directory::OSD_Directory(const System::os::OSD_Path& theName)
+    : System::os::OSD_FileNode(theName)
 {
 }
 
-void OSD_Directory::Build(const OSD_Protection& theProtect)
+void System::os::OSD_Directory::Build(const System::os::OSD_Protection& theProtect)
 {
 #ifdef _WIN32
   TCollection_AsciiString aDirName;
   myPath.SystemName(aDirName);
   if (aDirName.IsEmpty())
   {
-    throw Standard_ProgramError("OSD_Directory::Build(): incorrect call - no directory name");
+    throw Standard_ProgramError("System::os::OSD_Directory::Build(): incorrect call - no directory name");
   }
 
   bool isOK = Exists();
@@ -57,10 +57,10 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
 
     else if (GetLastError() == ERROR_PATH_NOT_FOUND)
     {
-      OSD_Path aSupPath = myPath;
+      System::os::OSD_Path aSupPath = myPath;
       aSupPath.UpTrek();
       aSupPath.SetName(myPath.TrekValue(myPath.TrekLength()));
-      OSD_Directory aSupDir(aSupPath);
+      System::os::OSD_Directory aSupDir(aSupPath);
       aSupDir.Build(theProtect);
       if (aSupDir.Failed())
       {
@@ -92,10 +92,10 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
   int aStatus = mkdir(aBuffer.ToCString(), anInternalProt);
   if (aStatus == -1 && errno == ENOENT)
   {
-    OSD_Path aSupPath = myPath;
+    System::os::OSD_Path aSupPath = myPath;
     aSupPath.UpTrek();
     aSupPath.SetName(myPath.TrekValue(myPath.TrekLength()));
-    OSD_Directory aSupDir(aSupPath);
+    System::os::OSD_Directory aSupDir(aSupPath);
     aSupDir.Build(theProtect);
     if (aSupDir.Failed())
     {
@@ -107,37 +107,37 @@ void OSD_Directory::Build(const OSD_Protection& theProtect)
   if (aStatus == -1 && errno != EEXIST)
   {
     char anErrMsg[2048];
-    Sprintf(anErrMsg, "OSD_Directory::Build Directory \"%.2000s\"", aBuffer.ToCString());
+    Sprintf(anErrMsg, "System::os::OSD_Directory::Build Directory \"%.2000s\"", aBuffer.ToCString());
     myError.SetValue(errno, Iam, anErrMsg);
   }
 #endif
 }
 
-OSD_Directory OSD_Directory::BuildTemporary()
+System::os::OSD_Directory System::os::OSD_Directory::BuildTemporary()
 {
 #ifdef _WIN32
   wchar_t* aTmpNameW = _wtmpnam(NULL);
   if (aTmpNameW == NULL)
   {
-    return OSD_Directory();
+    return System::os::OSD_Directory();
   }
 
   TCollection_AsciiString aTmpName(aTmpNameW);
-  OSD_Path                aDirPath(aTmpName);
-  OSD_Directory           aDir;
+  System::os::OSD_Path                aDirPath(aTmpName);
+  System::os::OSD_Directory           aDir;
   aDir.SetPath(aDirPath);
-  aDir.Build(OSD_Protection());
+  aDir.Build(System::os::OSD_Protection());
   return aDir;
 #else
 
   char aTmpName[] = "/tmp/CSFXXXXXX";
   if (nullptr == mkdtemp(aTmpName))
   {
-    return OSD_Directory();
+    return System::os::OSD_Directory();
   }
 
   unlink(aTmpName);
-  OSD_Directory aDir;
+  System::os::OSD_Directory aDir;
   aDir.SetPath(TCollection_AsciiString(aTmpName));
   return aDir;
 #endif

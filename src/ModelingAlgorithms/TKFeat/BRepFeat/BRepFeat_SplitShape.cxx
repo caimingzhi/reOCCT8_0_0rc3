@@ -3,7 +3,7 @@
 #include <TopoDS_Shape.hpp>
 #include <TopExp_Explorer.hpp>
 
-void BRepFeat_SplitShape::Build(const Message_ProgressRange&)
+void BRepFeat_SplitShape::Build(const System::log::Message_ProgressRange&)
 {
   mySShape.Perform(myWOnShape);
   if (mySShape.IsDone())

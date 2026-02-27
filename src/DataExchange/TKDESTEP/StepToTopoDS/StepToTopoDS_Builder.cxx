@@ -80,7 +80,7 @@ static void ResetPreci(occ::handle<StepData_StepModel>& theStepModel,
   if (modetol)
   {
     ShapeFix_ShapeTolerance STU;
-    STU.LimitTolerance(S, Precision::Confusion(), maxtol);
+    STU.LimitTolerance(S, math::precision::Precision::Confusion(), maxtol);
   }
 }
 
@@ -93,9 +93,9 @@ StepToTopoDS_Builder::StepToTopoDS_Builder()
 void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ManifoldSolidBrep>& theManifoldSolid,
                                 const occ::handle<Transfer_TransientProcess>&   theTP,
                                 const StepData_Factors&                         theLocalFactors,
-                                const Message_ProgressRange&                    theProgress)
+                                const System::log::Message_ProgressRange&                    theProgress)
 {
-  Message_Messenger::StreamBuffer sout       = theTP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout       = theTP->Messenger()->SendInfo();
   occ::handle<StepData_StepModel> aStepModel = occ::down_cast<StepData_StepModel>(theTP->Model());
 
   StepToTopoDS_Tool                                                                       aTool;
@@ -148,9 +148,9 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ManifoldSolidBrep>& 
 void StepToTopoDS_Builder::Init(const occ::handle<StepShape_BrepWithVoids>&   theBRepWithVoids,
                                 const occ::handle<Transfer_TransientProcess>& theTP,
                                 const StepData_Factors&                       theLocalFactors,
-                                const Message_ProgressRange&                  theProgress)
+                                const System::log::Message_ProgressRange&                  theProgress)
 {
-  Message_Messenger::StreamBuffer sout = theTP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = theTP->Messenger()->SendInfo();
 
   StepToTopoDS_Tool                                                                       aTool;
   NCollection_DataMap<occ::handle<StepShape_TopologicalRepresentationItem>, TopoDS_Shape> aMap;
@@ -161,7 +161,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_BrepWithVoids>&   th
   BRep_Builder aBuilder;
   aBuilder.MakeSolid(aSolid);
 
-  Message_ProgressScope aPS(theProgress, "Shell", theBRepWithVoids->NbVoids() + 1);
+  System::log::Message_ProgressScope aPS(theProgress, "Shell", theBRepWithVoids->NbVoids() + 1);
 
   StepToTopoDS_TranslateShell aTranShell;
 
@@ -233,7 +233,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_BrepWithVoids>&   th
 void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrep>&     theFB,
                                 const occ::handle<Transfer_TransientProcess>& theTP,
                                 const StepData_Factors&                       theLocalFactors,
-                                const Message_ProgressRange&                  theProgress)
+                                const System::log::Message_ProgressRange&                  theProgress)
 {
 
   StepToTopoDS_Tool                                                                       aTool;
@@ -273,7 +273,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrep>&     th
 void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrepAndBrepWithVoids>& theFBABWV,
                                 const occ::handle<Transfer_TransientProcess>&             theTP,
                                 const StepData_Factors&      theLocalFactors,
-                                const Message_ProgressRange& theProgress)
+                                const System::log::Message_ProgressRange& theProgress)
 {
 
   StepToTopoDS_Tool                                                                       aTool;
@@ -284,7 +284,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrepAndBrepWi
   occ::handle<StepShape_ClosedShell> aCShell =
     occ::down_cast<StepShape_ClosedShell>(theFBABWV->Outer());
 
-  Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
+  System::log::Message_ProgressScope aPSRoot(theProgress, nullptr, 2);
 
   StepToTopoDS_TranslateShell aTranShell;
   aTranShell.SetPrecision(Precision());
@@ -305,7 +305,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_FacetedBrepAndBrepWi
   BRep_Builder aBuilder;
   aBuilder.MakeSolid(aSolid);
   aBuilder.Add(aSolid, aShape);
-  Message_ProgressScope aPS(aPSRoot.Next(), nullptr, theFBABWV->NbVoids());
+  System::log::Message_ProgressScope aPS(aPSRoot.Next(), nullptr, theFBABWV->NbVoids());
   for (NCollection_HArray1<occ::handle<StepShape_OrientedClosedShell>>::Iterator anIt(
          theFBABWV->Voids()->Array1());
        anIt.More() && aPS.More();
@@ -333,9 +333,9 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ShellBasedSurfaceMod
                                 const occ::handle<Transfer_TransientProcess>&        TP,
                                 StepToTopoDS_NMTool&                                 NMTool,
                                 const StepData_Factors&      theLocalFactors,
-                                const Message_ProgressRange& theProgress)
+                                const System::log::Message_ProgressRange& theProgress)
 {
-  Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
+  System::log::Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
 
   StepToTopoDS_Tool                                                                       myTool;
   NCollection_DataMap<occ::handle<StepShape_TopologicalRepresentationItem>, TopoDS_Shape> aMap;
@@ -357,10 +357,10 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_ShellBasedSurfaceMod
   myTranShell.SetPrecision(Precision());
   myTranShell.SetMaxTol(MaxTol());
 
-  Message_ProgressScope PS(theProgress, "Shell", Nb);
+  System::log::Message_ProgressScope PS(theProgress, "Shell", Nb);
   for (int i = 1; i <= Nb && PS.More(); i++)
   {
-    Message_ProgressRange aRange = PS.Next();
+    System::log::Message_ProgressRange aRange = PS.Next();
     aShell                       = aSBSM->SbsmBoundaryValue(i);
     aOpenShell                   = aShell.OpenShell();
     aClosedShell                 = aShell.ClosedShell();
@@ -594,7 +594,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_GeometricSet>&    GC
                                 const StepData_Factors&                       theLocalFactors,
                                 const occ::handle<Transfer_ActorOfTransientProcess>& RA,
                                 const bool                                           isManifold,
-                                const Message_ProgressRange&                         theProgress)
+                                const System::log::Message_ProgressRange&                         theProgress)
 {
 
   TopoDS_Compound S;
@@ -605,10 +605,10 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_GeometricSet>&    GC
   double                preci  = Precision();
   double                maxtol = MaxTol();
   int                   nbElem = GCS->NbElements();
-  Message_ProgressScope aPS(theProgress, nullptr, nbElem);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbElem);
   for (i = 1; i <= nbElem && aPS.More(); i++)
   {
-    Message_ProgressRange                  aRange = aPS.Next();
+    System::log::Message_ProgressRange                  aRange = aPS.Next();
     StepShape_GeometricSetSelect           aGSS   = GCS->ElementsValue(i);
     const occ::handle<Standard_Transient>& ent    = aGSS.Value();
 
@@ -664,7 +664,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepShape_GeometricSet>&    GC
         }
         catch (Standard_Failure const& anException)
         {
-          Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
+          System::log::Message_Messenger::StreamBuffer sout = TP->Messenger()->SendInfo();
           sout << "StepToTopoDS, GeometricSet, elem " << i << " of " << nbElem << ": exception ";
           sout << anException.what() << std::endl;
         }
@@ -767,7 +767,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepVisual_TessellatedSolid>& 
                                 const bool                   theReadTessellatedWhenNoBRepOnly,
                                 bool&                        theHasGeom,
                                 const StepData_Factors&      theLocalFactors,
-                                const Message_ProgressRange& theProgress)
+                                const System::log::Message_ProgressRange& theProgress)
 {
   StepToTopoDS_TranslateSolid aTranSolid;
   aTranSolid.SetPrecision(Precision());
@@ -805,7 +805,7 @@ void StepToTopoDS_Builder::Init(const occ::handle<StepVisual_TessellatedShell>& 
                                 const bool                   theReadTessellatedWhenNoBRepOnly,
                                 bool&                        theHasGeom,
                                 const StepData_Factors&      theLocalFactors,
-                                const Message_ProgressRange& theProgress)
+                                const System::log::Message_ProgressRange& theProgress)
 {
   StepToTopoDS_TranslateShell aTranShell;
   aTranShell.SetPrecision(Precision());

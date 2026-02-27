@@ -93,7 +93,7 @@ TopoDS_Vertex IGESToBRep_TopoCurve::TransferPoint(const occ::handle<IGESGeom_Poi
   TopoDS_Vertex V1;
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return V1;
@@ -108,7 +108,7 @@ TopoDS_Vertex IGESToBRep_TopoCurve::TransferPoint(const occ::handle<IGESGeom_Poi
     point = start->Value();
 
   point.Scale(gp_Pnt(0, 0, 0), GetUnitFactor());
-  B.MakeVertex(V1, point, Precision::Confusion());
+  B.MakeVertex(V1, point, math::precision::Precision::Confusion());
 
   if (GetModeTransfer() && start->HasTransf())
   {
@@ -133,7 +133,7 @@ TopoDS_Vertex IGESToBRep_TopoCurve::Transfer2dPoint(const occ::handle<IGESGeom_P
   TopoDS_Vertex V1;
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return V1;
@@ -147,7 +147,7 @@ TopoDS_Vertex IGESToBRep_TopoCurve::Transfer2dPoint(const occ::handle<IGESGeom_P
   else
     point = gp_Pnt(start->Value().X(), start->Value().Y(), 0.);
 
-  B.MakeVertex(V1, point, Precision::Confusion());
+  B.MakeVertex(V1, point, math::precision::Precision::Confusion());
   return V1;
 }
 
@@ -163,7 +163,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
@@ -184,7 +184,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
     if (i > 1 && IgesEnt == start->Curve(i - 1))
     {
 
-      Message_Msg Msg1045("IGES_1045");
+      System::log::Message_Msg Msg1045("IGES_1045");
 
       Msg1045.Arg(i);
       SendWarning(start, Msg1045);
@@ -193,7 +193,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
     }
     if (IgesEnt.IsNull())
     {
-      Message_Msg Msg1040("IGES_1040");
+      System::log::Message_Msg Msg1040("IGES_1040");
       Msg1040.Arg(i);
       SendFail(start, Msg1040);
       return res;
@@ -204,7 +204,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
             || IgesEnt->IsKind(STANDARD_TYPE(IGESGeom_CurveOnSurface))))
     {
 
-      Message_Msg Msg1040("IGES_1040");
+      System::log::Message_Msg Msg1040("IGES_1040");
       Msg1040.Arg(i);
       SendFail(start, Msg1040);
       return res;
@@ -236,7 +236,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
           if (revsewd)
           {
 
-            Message_Msg Msg1051("IGES_1051");
+            System::log::Message_Msg Msg1051("IGES_1051");
 
             Msg1051.Arg((is2d ? 2 : 3));
             Msg1051.Arg(i);
@@ -244,14 +244,14 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
           }
           if (revnextsewd)
           {
-            Message_Msg Msg1050("IGES_1050");
+            System::log::Message_Msg Msg1050("IGES_1050");
             Msg1050.Arg((is2d ? 2 : 3));
             Msg1050.Arg(i);
             SendWarning(start, Msg1050);
           }
           if (distmin > precision)
           {
-            Message_Msg Msg1055("IGES_1055");
+            System::log::Message_Msg Msg1055("IGES_1055");
             Msg1055.Arg((is2d ? 2 : 3));
             Msg1055.Arg(i);
             SendWarning(start, Msg1055);
@@ -259,7 +259,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurveGeneral(
         }
         else
         {
-          Message_Msg Msg1060("IGES_1060");
+          System::log::Message_Msg Msg1060("IGES_1060");
           Msg1060.Arg((is2d ? 2 : 3));
           Msg1060.Arg(i);
           SendFail(start, Msg1060);
@@ -303,7 +303,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCompositeCurve(
     }
     else
     {
-      Message_Msg Msg1035("IGES_1035");
+      System::log::Message_Msg Msg1035("IGES_1035");
       SendWarning(start, Msg1035);
     }
   }
@@ -330,7 +330,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
@@ -340,7 +340,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
   occ::handle<IGESData_IGESEntity> igesSurface = start->Surface();
   if (igesSurface.IsNull() || !IGESToBRep::IsTopoSurface(igesSurface))
   {
-    Message_Msg Msg131("XSTEP_131");
+    System::log::Message_Msg Msg131("XSTEP_131");
     SendFail(start, Msg131);
 
     return res;
@@ -380,7 +380,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
               TopoDS_Shape Sh = TransferTopoCurve(start->Curve3D());
               if (!Sh.IsNull())
               {
-                Message_Msg Msg1062("IGES_1062");
+                System::log::Message_Msg Msg1062("IGES_1062");
 
                 SendWarning(start, Msg1062);
                 res = Sh;
@@ -389,7 +389,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
           }
           else
           {
-            Message_Msg Msg1061("IGES_1061");
+            System::log::Message_Msg Msg1061("IGES_1061");
             Msg1061.Arg("CurveOnSurface");
             SendFail(start, Msg1061);
           }
@@ -406,7 +406,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
             TopoDS_Shape Sh = TransferTopoCurve(start->Curve3D());
             if (!Sh.IsNull())
             {
-              Message_Msg Msg1062("IGES_1062");
+              System::log::Message_Msg Msg1062("IGES_1062");
               SendWarning(start, Msg1062);
 
               res = Sh;
@@ -415,7 +415,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnSurface(
         }
         else
         {
-          Message_Msg Msg1061("IGES_1061");
+          System::log::Message_Msg Msg1061("IGES_1061");
           Msg1061.Arg("CurveOnSurface");
           SendFail(start, Msg1061);
         }
@@ -440,7 +440,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnFace(
   TopoDS_Shape res;
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
     return res;
   }
@@ -463,7 +463,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnFace(
   occ::handle<ShapeExtend_WireData> sewd = IB->WireData();
   if (sewd->NbEdges() == 0)
   {
-    Message_Msg Msg1095("IGES_1095");
+    System::log::Message_Msg Msg1095("IGES_1095");
     SendFail(start, Msg1095);
     return res;
   }
@@ -481,7 +481,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferCurveOnFace(
     }
     else
     {
-      Message_Msg Msg1035("IGES_1035");
+      System::log::Message_Msg Msg1035("IGES_1035");
       SendWarning(start, Msg1035);
     }
   }
@@ -501,14 +501,14 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
   }
   if (start->OffsetType() != 1)
   {
-    Message_Msg Msg1100("IGES_1100");
+    System::log::Message_Msg Msg1100("IGES_1100");
     SendFail(start, Msg1100);
 
     return res;
@@ -530,7 +530,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
     DeclareAndCast(IGESGeom_OffsetCurve, OffCrv, BaseCrv);
     if (OffCrv->OffsetType() != 1)
     {
-      Message_Msg Msg1100("IGES_1100");
+      System::log::Message_Msg Msg1100("IGES_1100");
       SendFail(start, Msg1100);
       return res;
     }
@@ -540,7 +540,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
 
   if (!IGESToBRep::IsTopoCurve(BaseCrv))
   {
-    Message_Msg Msg110("XSTEP_110");
+    System::log::Message_Msg Msg110("XSTEP_110");
     SendFail(start, Msg110);
     return res;
   }
@@ -553,7 +553,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
 
   if (Sh.IsNull() || ((Sh.ShapeType() != TopAbs_EDGE) && (Sh.ShapeType() != TopAbs_WIRE)))
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(BaseCrv);
     Msg1156.Arg("basis curve");
     Msg1156.Arg(label);
@@ -572,7 +572,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
     if (!ME.IsDone())
     {
 
-      Message_Msg Msg1005("IGES_1005");
+      System::log::Message_Msg Msg1005("IGES_1005");
       SendFail(start, Msg1005);
 
       return res;
@@ -603,7 +603,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
       {
         if (begin)
         {
-          Message_Msg Msg1105("IGES_1105");
+          System::log::Message_Msg Msg1105("IGES_1105");
           SendFail(start, Msg1105);
 
           return res;
@@ -615,7 +615,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
 
       if (!ME.IsDone())
       {
-        Message_Msg Msg1005("IGES_1005");
+        System::log::Message_Msg Msg1005("IGES_1005");
         SendFail(start, Msg1005);
 
         return res;
@@ -647,7 +647,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferOffsetCurve(
     }
     else
     {
-      Message_Msg Msg1035("IGES_1035");
+      System::log::Message_Msg Msg1035("IGES_1035");
       SendWarning(start, Msg1035);
     }
   }
@@ -665,7 +665,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dOffsetCurve(
   TopoDS_Shape res;
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
@@ -673,7 +673,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dOffsetCurve(
 
   if (start->OffsetType() != 1)
   {
-    Message_Msg Msg1100("IGES_1100");
+    System::log::Message_Msg Msg1100("IGES_1100");
     SendFail(start, Msg1100);
   }
 
@@ -689,7 +689,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dOffsetCurve(
     TopoDS_Shape Sh = TC.Transfer2dTopoCurve(BaseCrv, face, trans, uFact);
     if (Sh.IsNull() || ((Sh.ShapeType() != TopAbs_EDGE) && (Sh.ShapeType() != TopAbs_WIRE)))
     {
-      Message_Msg                           Msg1156("IGES_1156");
+      System::log::Message_Msg                           Msg1156("IGES_1156");
       occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(BaseCrv);
       Msg1156.Arg("2D basis curve");
       Msg1156.Arg(label);
@@ -712,7 +712,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dOffsetCurve(
                                  start->EndParameter());
       if (anEdge.IsNull())
       {
-        Message_Msg Msg1005("IGES_1005");
+        System::log::Message_Msg Msg1005("IGES_1005");
         SendFail(start, Msg1005);
         return res;
       }
@@ -738,7 +738,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dOffsetCurve(
                                    start->EndParameter());
         if (anotherEdge.IsNull())
         {
-          Message_Msg Msg1005("IGES_1005");
+          System::log::Message_Msg Msg1005("IGES_1005");
           SendFail(start, Msg1005);
           return res;
         }
@@ -761,7 +761,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoCurve(const occ::handle<IGESData_
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
@@ -812,7 +812,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dTopoCurve(
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
@@ -847,7 +847,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoBasicCurve(
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return myshape;
@@ -879,7 +879,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoBasicCurve(
   int nbcurves = NbCurves();
   if (nbcurves == 0)
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("Geom_Curve");
     Msg1156.Arg(label);
@@ -905,7 +905,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoBasicCurve(
         BRepBuilderAPI_MakeEdge ME(seqBS->Value(i));
         if (!ME.IsDone())
         {
-          Message_Msg Msg1005("IGES_1005");
+          System::log::Message_Msg Msg1005("IGES_1005");
           SendFail(start, Msg1005);
 
           return myshape;
@@ -923,9 +923,9 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoBasicCurve(
         mycurve                            = tmp->BasisCurve();
       }
       BRepBuilderAPI_MakeEdge ME(mycurve, a, b);
-      if (!ME.IsDone() || (Precision::IsInfinite(a) || Precision::IsInfinite(b)))
+      if (!ME.IsDone() || (math::precision::Precision::IsInfinite(a) || math::precision::Precision::IsInfinite(b)))
       {
-        Message_Msg Msg1005("IGES_1005");
+        System::log::Message_Msg Msg1005("IGES_1005");
         SendFail(start, Msg1005);
 
         return myshape;
@@ -956,7 +956,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoBasicCurve(
     }
     else
     {
-      Message_Msg Msg1035("IGES_1035");
+      System::log::Message_Msg Msg1035("IGES_1035");
       SendWarning(start, Msg1035);
     }
   }
@@ -964,7 +964,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferTopoBasicCurve(
   if (sewd->NbEdges() != 1)
   {
 
-    Message_Msg Msg1120("IGES_1120");
+    System::log::Message_Msg Msg1120("IGES_1120");
     SendWarning(start, Msg1120);
 
     return myshape;
@@ -990,7 +990,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dTopoBasicCurve(
 
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return edge;
@@ -1024,7 +1024,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dTopoBasicCurve(
   int nbcurves = NbCurves2d();
   if (nbcurves == 0)
   {
-    Message_Msg                           Msg1156("IGES_1156");
+    System::log::Message_Msg                           Msg1156("IGES_1156");
     occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(start);
     Msg1156.Arg("Geom2d_Curve");
     Msg1156.Arg(label);
@@ -1064,7 +1064,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dTopoBasicCurve(
 
         if (myedge.IsNull())
         {
-          Message_Msg Msg1005("IGES_1005");
+          System::log::Message_Msg Msg1005("IGES_1005");
           SendFail(start, Msg1005);
 
           return myshape;
@@ -1084,7 +1084,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dTopoBasicCurve(
 
       if (myedge.IsNull())
       {
-        Message_Msg Msg1005("IGES_1005");
+        System::log::Message_Msg Msg1005("IGES_1005");
         SendFail(start, Msg1005);
         return myshape;
       }
@@ -1102,7 +1102,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::Transfer2dTopoBasicCurve(
   if (sewd->NbEdges() != 1)
   {
 
-    Message_Msg Msg1120("IGES_1120");
+    System::log::Message_Msg Msg1120("IGES_1120");
     SendWarning(start, Msg1120);
 
     return myshape;
@@ -1119,7 +1119,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
   TopoDS_Shape res;
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
 
     return res;
@@ -1127,7 +1127,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
 
   if (start->BoundaryType() == 0)
   {
-    Message_Msg Msg1125("IGES_1125");
+    System::log::Message_Msg Msg1125("IGES_1125");
     SendFail(start, Msg1125);
 
     return res;
@@ -1136,7 +1136,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
   occ::handle<IGESData_IGESEntity> igesSurface = start->Surface();
   if (igesSurface.IsNull() || !IGESToBRep::IsTopoSurface(igesSurface))
   {
-    Message_Msg Msg124("XSTEP_124");
+    System::log::Message_Msg Msg124("XSTEP_124");
     SendFail(start, Msg124);
 
     return res;
@@ -1171,7 +1171,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
 
         if (nbfaces != 1)
         {
-          Message_Msg Msg1061("IGES_1061");
+          System::log::Message_Msg Msg1061("IGES_1061");
           SendFail(start, Msg1061);
 
           return res;
@@ -1180,7 +1180,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundary(const occ::handle<IGESGeom_B
       break;
       default:
       {
-        Message_Msg                           Msg1156("IGES_1156");
+        System::log::Message_Msg                           Msg1156("IGES_1156");
         occ::handle<TCollection_HAsciiString> label = GetModel()->StringLabel(igesSurface);
         Msg1156.Arg("basic surface");
         Msg1156.Arg(label);
@@ -1205,7 +1205,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundaryOnFace(
   TopoDS_Shape res;
   if (start.IsNull())
   {
-    Message_Msg Msg1005("IGES_1005");
+    System::log::Message_Msg Msg1005("IGES_1005");
     SendFail(start, Msg1005);
     return res;
   }
@@ -1226,7 +1226,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundaryOnFace(
     occ::handle<NCollection_HArray1<occ::handle<IGESData_IGESEntity>>> Curves2d;
     if (start->NbParameterCurves(i) == 0 && start->BoundaryType() == 1)
     {
-      Message_Msg Msg1135("IGES_1135");
+      System::log::Message_Msg Msg1135("IGES_1135");
       Msg1135.Arg(2);
       Msg1135.Arg(3);
       SendWarning(start, Msg1135);
@@ -1246,7 +1246,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundaryOnFace(
   occ::handle<ShapeExtend_WireData> sewd = IB->WireData();
   if (sewd->NbEdges() == 0)
   {
-    Message_Msg Msg1095("IGES_1095");
+    System::log::Message_Msg Msg1095("IGES_1095");
     SendFail(start, Msg1095);
     return res;
   }
@@ -1264,7 +1264,7 @@ TopoDS_Shape IGESToBRep_TopoCurve::TransferBoundaryOnFace(
     }
     else
     {
-      Message_Msg Msg1035("IGES_1035");
+      System::log::Message_Msg Msg1035("IGES_1035");
       SendWarning(start, Msg1035);
     }
   }

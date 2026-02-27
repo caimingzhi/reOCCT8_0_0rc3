@@ -25,5 +25,5 @@ protected:
   Standard_EXPORT void Intersect(
     const occ::handle<IntTools_Context>& theCtx        = occ::handle<IntTools_Context>(),
     const bool                           theCheckOBB   = false,
-    const double                         theFuzzyValue = Precision::Confusion()) override;
+    const double                         theFuzzyValue = math::precision::Precision::Confusion()) override;
 };

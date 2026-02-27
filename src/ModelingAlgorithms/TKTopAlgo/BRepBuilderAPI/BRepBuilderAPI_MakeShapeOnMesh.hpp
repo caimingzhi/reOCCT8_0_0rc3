@@ -14,7 +14,7 @@ public:
   }
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
 private:
   occ::handle<Poly_Triangulation> myMesh;

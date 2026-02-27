@@ -554,7 +554,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     Uf = Umin;
   else if (Uf > Umin)
   {
-    if (Precision::IsInfinite(Umin))
+    if (math::precision::Precision::IsInfinite(Umin))
       Uf -= 100;
     else
       Uf = Umin;
@@ -563,7 +563,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     Vf = Vmin;
   else if (Vf > Vmin)
   {
-    if (Precision::IsInfinite(Vmin))
+    if (math::precision::Precision::IsInfinite(Vmin))
       Vf -= 100;
     else
       Vf = Vmin;
@@ -572,7 +572,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     Ul = Umax;
   else if (Ul < Umax)
   {
-    if (Precision::IsInfinite(Umax))
+    if (math::precision::Precision::IsInfinite(Umax))
       Ul += 100;
     else
       Ul = Umax;
@@ -581,7 +581,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     Vl = Vmax;
   else if (Vl < Vmax)
   {
-    if (Precision::IsInfinite(Vmax))
+    if (math::precision::Precision::IsInfinite(Vmax))
       Vl += 100;
     else
       Vl = Vmax;
@@ -602,13 +602,13 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
     {
       double                        val  = Draw::Atof(argv[i]);
       NCollection_Sequence<double>& vals = (byV ? vval : uval);
-      if (vals.Length() > 0 && val - vals.Last() < Precision::PConfusion())
+      if (vals.Length() > 0 && val - vals.Last() < math::precision::Precision::PConfusion())
       {
         di << "Values should be sorted in increasing order; skipped\n";
         continue;
       }
-      if ((byV && (val < Vf + Precision::PConfusion() || val > Vl - Precision::PConfusion()))
-          || (!byV && (val < Uf + Precision::PConfusion() || val > Ul - Precision::PConfusion())))
+      if ((byV && (val < Vf + math::precision::Precision::PConfusion() || val > Vl - math::precision::Precision::PConfusion()))
+          || (!byV && (val < Uf + math::precision::Precision::PConfusion() || val > Ul - math::precision::Precision::PConfusion())))
       {
         di << "Values should be inside range of surface; skipped\n";
         continue;
@@ -680,7 +680,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
 
   ShapeFix_ComposeShell SUCS;
   TopLoc_Location       l;
-  SUCS.Init(Grid, l, face, Precision::Confusion());
+  SUCS.Init(Grid, l, face, math::precision::Precision::Confusion());
   occ::handle<ShapeBuild_ReShape> RS = new ShapeBuild_ReShape;
   SUCS.SetContext(RS);
   SUCS.Perform();
@@ -984,8 +984,8 @@ static int unifysamedom(Draw_Interpretor& di, int n, const char** a)
   bool                                                   anConBS         = false;
   bool                                                   isAllowInternal = false;
   bool                                                   isSafeInputMode = true;
-  double                                                 aLinTol         = Precision::Confusion();
-  double                                                 aAngTol         = Precision::Angular();
+  double                                                 aLinTol         = math::precision::Precision::Confusion();
+  double                                                 aAngTol         = math::precision::Precision::Angular();
   TopoDS_Shape                                           aKeepShape;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> aMapOfShapes;
 
@@ -1069,14 +1069,14 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
 {
   if (theArgc < 4)
   {
-    Message::SendFail() << "Error: wrong number of arguments. Type 'help " << theArgv[0] << "'";
+    System::log::Message::SendFail() << "Error: wrong number of arguments. Type 'help " << theArgv[0] << "'";
     return 1;
   }
 
   TopoDS_Shape aSource = DBRep::Get(theArgv[2]);
   if (aSource.IsNull())
   {
-    Message::SendFail() << "Error: source shape ('" << theArgv[2] << "') is null";
+    System::log::Message::SendFail() << "Error: source shape ('" << theArgv[2] << "') is null";
     return 1;
   }
 
@@ -1094,21 +1094,21 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
     {
       if (theArgc - i < 3)
       {
-        Message::SendFail() << "Error: not enough arguments for replacement";
+        System::log::Message::SendFail() << "Error: not enough arguments for replacement";
         return 1;
       }
 
       TopoDS_Shape aWhat = DBRep::Get(theArgv[++i]);
       if (aWhat.IsNull())
       {
-        Message::SendFail() << "Error: argument shape ('" << theArgv[i] << "') is null";
+        System::log::Message::SendFail() << "Error: argument shape ('" << theArgv[i] << "') is null";
         return 1;
       }
 
       TopoDS_Shape aWith = DBRep::Get(theArgv[++i]);
       if (aWith.IsNull())
       {
-        Message::SendFail() << "Error: replacement shape ('" << theArgv[i] << "') is null";
+        System::log::Message::SendFail() << "Error: replacement shape ('" << theArgv[i] << "') is null";
         return 1;
       }
 
@@ -1118,14 +1118,14 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
     {
       if (theArgc - i < 2)
       {
-        Message::SendFail() << "Error: not enough arguments for removal";
+        System::log::Message::SendFail() << "Error: not enough arguments for removal";
         return 1;
       }
 
       TopoDS_Shape aWhat = DBRep::Get(theArgv[++i]);
       if (aWhat.IsNull())
       {
-        Message::SendFail() << "Error: shape to remove ('" << theArgv[i] << "') is null";
+        System::log::Message::SendFail() << "Error: shape to remove ('" << theArgv[i] << "') is null";
         return 1;
       }
 
@@ -1135,7 +1135,7 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
     {
       if (theArgc - i < 2)
       {
-        Message::SendFail() << "Error: not enough arguments for level specification";
+        System::log::Message::SendFail() << "Error: not enough arguments for level specification";
         return 1;
       }
 
@@ -1162,13 +1162,13 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
         aShapeLevel = TopAbs_SHAPE;
       else
       {
-        Message::SendFail() << "Error: unknown shape type '" << theArgv[i] << "'";
+        System::log::Message::SendFail() << "Error: unknown shape type '" << theArgv[i] << "'";
         return 1;
       }
     }
     else
     {
-      Message::SendFail() << "Error: invalid syntax at " << anOpt;
+      System::log::Message::SendFail() << "Error: invalid syntax at " << anOpt;
       return 1;
     }
   }
@@ -1176,7 +1176,7 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
   TopoDS_Shape aResult = aReShaper->Apply(aSource, aShapeLevel);
   if (aResult.IsNull())
   {
-    Message::SendFail() << "Error: result shape is null";
+    System::log::Message::SendFail() << "Error: result shape is null";
     return 1;
   }
 

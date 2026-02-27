@@ -160,7 +160,7 @@ gp_Vec GeomFill_SnglrFunc::DN(const double U, const int N) const
 
 double GeomFill_SnglrFunc::Resolution(const double R3D) const
 {
-  return Precision::Parametric(R3D);
+  return math::precision::Precision::Parametric(R3D);
 }
 
 GeomAbs_CurveType GeomFill_SnglrFunc::GetType() const

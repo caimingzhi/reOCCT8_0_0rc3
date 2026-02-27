@@ -27,7 +27,7 @@ DEPLY_Provider::DEPLY_Provider(const occ::handle<DE_ConfigurationNode>& theNode)
 bool DEPLY_Provider::Write(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
                            occ::handle<XSControl_WorkSession>&  theWS,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   (void)theWS;
   return Write(thePath, theDocument, theProgress);
@@ -35,7 +35,7 @@ bool DEPLY_Provider::Write(const TCollection_AsciiString&       thePath,
 
 bool DEPLY_Provider::Write(const TCollection_AsciiString&       thePath,
                            const occ::handle<TDocStd_Document>& theDocument,
-                           const Message_ProgressRange&         theProgress)
+                           const System::log::Message_ProgressRange&         theProgress)
 {
   TCollection_AsciiString aContext = TCollection_AsciiString("writing the file ") + thePath;
   if (!DE_ValidationUtils::ValidateConfigurationNode(GetNode(),
@@ -72,7 +72,7 @@ bool DEPLY_Provider::Write(const TCollection_AsciiString&       thePath,
   else
   {
     aConverter.SetInputLengthUnit(aNode->GlobalParameters.SystemUnit / 1000.);
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning in the DEPLY_Provider during writing the file " << thePath
       << "\t: The document has no information on Units. Using global parameter as initial Unit.";
   }
@@ -88,7 +88,7 @@ bool DEPLY_Provider::Write(const TCollection_AsciiString&       thePath,
   aPlyCtx.SetFaceId(aNode->InternalParameters.WriteFaceId);
   if (!aPlyCtx.Perform(theDocument, aFileInfo, theProgress))
   {
-    Message::SendFail() << "Error in the DEPLY_Provider during writing the file " << thePath
+    System::log::Message::SendFail() << "Error in the DEPLY_Provider during writing the file " << thePath
                         << "\t: Cannot perform the document";
     return false;
   }
@@ -99,7 +99,7 @@ bool DEPLY_Provider::Write(const TCollection_AsciiString&       thePath,
 bool DEPLY_Provider::Write(const TCollection_AsciiString&      thePath,
                            const TopoDS_Shape&                 theShape,
                            occ::handle<XSControl_WorkSession>& theWS,
-                           const Message_ProgressRange&        theProgress)
+                           const System::log::Message_ProgressRange&        theProgress)
 {
   (void)theWS;
   return Write(thePath, theShape, theProgress);
@@ -107,7 +107,7 @@ bool DEPLY_Provider::Write(const TCollection_AsciiString&      thePath,
 
 bool DEPLY_Provider::Write(const TCollection_AsciiString& thePath,
                            const TopoDS_Shape&            theShape,
-                           const Message_ProgressRange&   theProgress)
+                           const System::log::Message_ProgressRange&   theProgress)
 {
   occ::handle<TDocStd_Document>  aDoc    = new TDocStd_Document("BinXCAF");
   occ::handle<XCAFDoc_ShapeTool> aShTool = XCAFDoc_DocumentTool::ShapeTool(aDoc->Main());

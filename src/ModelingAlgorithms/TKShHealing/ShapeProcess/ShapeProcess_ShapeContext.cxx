@@ -140,18 +140,18 @@ static void RecModif(
 
   if (!r.IsNull() && !myMsg.IsNull() && !msg.IsNull() && msg->MapShape().Extent() > 0)
   {
-    const NCollection_DataMap<TopoDS_Shape, NCollection_List<Message_Msg>, TopTools_ShapeMapHasher>&
+    const NCollection_DataMap<TopoDS_Shape, NCollection_List<System::log::Message_Msg>, TopTools_ShapeMapHasher>&
       msgmap = msg->MapShape();
     if (msgmap.IsBound(r))
     {
-      const NCollection_List<Message_Msg>& msglist = msgmap.Find(r);
-      for (NCollection_List<Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
+      const NCollection_List<System::log::Message_Msg>& msglist = msgmap.Find(r);
+      for (NCollection_List<System::log::Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
         myMsg->Send(S, iter.Value(), Message_Warning);
     }
     else if (msgmap.IsBound(S))
     {
-      const NCollection_List<Message_Msg>& msglist = msgmap.Find(S);
-      for (NCollection_List<Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
+      const NCollection_List<System::log::Message_Msg>& msglist = msgmap.Find(S);
+      for (NCollection_List<System::log::Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
         myMsg->Send(S, iter.Value(), Message_Warning);
     }
   }
@@ -212,7 +212,7 @@ static void RecModif(const TopoDS_Shape&                                        
   if (!r.IsNull() && !myMsg.IsNull() && !msg.IsNull() && msg->MapShape().Extent() > 0)
   {
     TopoDS_Shape cur, next = r;
-    const NCollection_DataMap<TopoDS_Shape, NCollection_List<Message_Msg>, TopTools_ShapeMapHasher>&
+    const NCollection_DataMap<TopoDS_Shape, NCollection_List<System::log::Message_Msg>, TopTools_ShapeMapHasher>&
       msgmap = msg->MapShape();
     if (msgmap.IsBound(S))
       next = S;
@@ -221,8 +221,8 @@ static void RecModif(const TopoDS_Shape&                                        
       cur = next;
       if (msgmap.IsBound(cur))
       {
-        const NCollection_List<Message_Msg>& msglist = msgmap.Find(cur);
-        for (NCollection_List<Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
+        const NCollection_List<System::log::Message_Msg>& msglist = msgmap.Find(cur);
+        for (NCollection_List<System::log::Message_Msg>::Iterator iter(msglist); iter.More(); iter.Next())
         {
           myMsg->Send(S, iter.Value(), Message_Warning);
         }
@@ -263,7 +263,7 @@ void ShapeProcess_ShapeContext::RecordModification(const occ::handle<ShapeBuild_
 }
 
 void ShapeProcess_ShapeContext::AddMessage(const TopoDS_Shape&   S,
-                                           const Message_Msg&    msg,
+                                           const System::log::Message_Msg&    msg,
                                            const Message_Gravity grv)
 {
   if (!myMsg.IsNull())
@@ -360,14 +360,14 @@ void ShapeProcess_ShapeContext::PrintStatistics() const
     }
   }
 
-  Message_Msg EPMSG100("PrResult.Print.MSG100");
+  System::log::Message_Msg EPMSG100("PrResult.Print.MSG100");
   Messenger()->Send(EPMSG100, Message_Info);
-  Message_Msg TPMSG50("PrResult.Print.MSG50");
+  System::log::Message_Msg TPMSG50("PrResult.Print.MSG50");
   Messenger()->Send(TPMSG50, Message_Info);
-  Message_Msg EPMSG110("PrResult.Print.MSG110");
+  System::log::Message_Msg EPMSG110("PrResult.Print.MSG110");
   EPMSG110.Arg(SS);
   Messenger()->Send(EPMSG110, Message_Info);
-  Message_Msg EPMSG150("PrResult.Print.MSG150");
+  System::log::Message_Msg EPMSG150("PrResult.Print.MSG150");
   EPMSG150.Arg(SN);
   Messenger()->Send(EPMSG150.Get(), Message_Info);
 
@@ -375,9 +375,9 @@ void ShapeProcess_ShapeContext::PrintStatistics() const
   EPMSG110.Set(tmp110.ToCString());
   EPMSG150.Set(tmp150.ToCString());
 
-  Message_Msg TPMSG55("PrResult.Print.MSG55");
+  System::log::Message_Msg TPMSG55("PrResult.Print.MSG55");
   Messenger()->Send(TPMSG55, Message_Info);
-  Message_Msg EPMSG115("PrResult.Print.MSG115");
+  System::log::Message_Msg EPMSG115("PrResult.Print.MSG115");
   EPMSG115.Arg(FF);
   Messenger()->Send(EPMSG115, Message_Info);
   EPMSG110.Arg(FS);
@@ -392,12 +392,12 @@ void ShapeProcess_ShapeContext::PrintStatistics() const
     SPR = 1. * (NbS - SN) / NbS;
   if (NbF > 0)
     FPR = 1. * (NbF - FN) / NbF;
-  Message_Msg PMSG200("PrResult.Print.MSG200");
+  System::log::Message_Msg PMSG200("PrResult.Print.MSG200");
   Messenger()->Send(PMSG200, Message_Info);
-  Message_Msg PMSG205("PrResult.Print.MSG205");
+  System::log::Message_Msg PMSG205("PrResult.Print.MSG205");
   PMSG205.Arg((int)(100. * SPR));
   Messenger()->Send(PMSG205, Message_Info);
-  Message_Msg PMSG210("PrResult.Print.MSG210");
+  System::log::Message_Msg PMSG210("PrResult.Print.MSG210");
   PMSG210.Arg((int)(100. * FPR));
   Messenger()->Send(PMSG210, Message_Info);
 }

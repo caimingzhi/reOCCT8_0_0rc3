@@ -28,7 +28,10 @@ class BRep_Builder;
 class Geom_Curve;
 class Geom2d_Curve;
 class Geom_Surface;
+namespace System { namespace os {
 class OSD_FileSystem;
+}} // namespace System::os
+
 
 class BRepTools
 {
@@ -96,7 +99,7 @@ public:
     const TopoDS_Shape&                theShape,
     const int                          theTriangulationIdx = -1,
     const bool                         theToSetAsActive    = false,
-    const occ::handle<OSD_FileSystem>& theFileSystem       = occ::handle<OSD_FileSystem>());
+    const occ::handle<System::os::OSD_FileSystem>& theFileSystem       = occ::handle<System::os::OSD_FileSystem>());
 
   Standard_EXPORT static bool UnloadTriangulation(const TopoDS_Shape& theShape,
                                                   const int           theTriangulationIdx = -1);
@@ -107,7 +110,7 @@ public:
 
   Standard_EXPORT static bool LoadAllTriangulations(
     const TopoDS_Shape&                theShape,
-    const occ::handle<OSD_FileSystem>& theFileSystem = occ::handle<OSD_FileSystem>());
+    const occ::handle<System::os::OSD_FileSystem>& theFileSystem = occ::handle<System::os::OSD_FileSystem>());
 
   Standard_EXPORT static bool UnloadAllTriangulations(const TopoDS_Shape& theShape);
 
@@ -132,7 +135,7 @@ public:
 
   static void Write(const TopoDS_Shape&          theShape,
                     Standard_OStream&            theStream,
-                    const Message_ProgressRange& theProgress = Message_ProgressRange())
+                    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange())
   {
     Write(theShape, theStream, true, false, TopTools_FormatVersion_CURRENT, theProgress);
   }
@@ -143,17 +146,17 @@ public:
     const bool                   theWithTriangles,
     const bool                   theWithNormals,
     const TopTools_FormatVersion theVersion,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT static void Read(
     TopoDS_Shape&                Sh,
     Standard_IStream&            S,
     const BRep_Builder&          B,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   static bool Write(const TopoDS_Shape&          theShape,
                     const char*                  theFile,
-                    const Message_ProgressRange& theProgress = Message_ProgressRange())
+                    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange())
   {
     return Write(theShape, theFile, true, false, TopTools_FormatVersion_CURRENT, theProgress);
   }
@@ -164,13 +167,13 @@ public:
     const bool                   theWithTriangles,
     const bool                   theWithNormals,
     const TopTools_FormatVersion theVersion,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT static bool Read(
     TopoDS_Shape&                Sh,
     const char*                  File,
     const BRep_Builder&          B,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT static double EvalAndUpdateTol(const TopoDS_Edge&               theE,
                                                  const occ::handle<Geom_Curve>&   theC3d,

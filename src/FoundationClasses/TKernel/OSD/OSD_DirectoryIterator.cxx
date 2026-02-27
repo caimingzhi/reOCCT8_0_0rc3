@@ -13,7 +13,7 @@
   #include <cstdio>
   #include <sys/stat.h>
 
-OSD_DirectoryIterator::OSD_DirectoryIterator()
+System::os::OSD_DirectoryIterator::OSD_DirectoryIterator()
     : myFlag(false),
       myDescr(nullptr),
       myEntry(nullptr),
@@ -21,7 +21,7 @@ OSD_DirectoryIterator::OSD_DirectoryIterator()
 {
 }
 
-OSD_DirectoryIterator::OSD_DirectoryIterator(const OSD_Path&                where,
+System::os::OSD_DirectoryIterator::OSD_DirectoryIterator(const System::os::OSD_Path&                where,
                                              const TCollection_AsciiString& Mask)
     : myFlag(false),
       myDescr(nullptr),
@@ -31,9 +31,9 @@ OSD_DirectoryIterator::OSD_DirectoryIterator(const OSD_Path&                wher
   Initialize(where, Mask);
 }
 
-void OSD_DirectoryIterator ::Destroy() {}
+void System::os::OSD_DirectoryIterator ::Destroy() {}
 
-void OSD_DirectoryIterator::Initialize(const OSD_Path& where, const TCollection_AsciiString& Mask)
+void System::os::OSD_DirectoryIterator::Initialize(const System::os::OSD_Path& where, const TCollection_AsciiString& Mask)
 {
 
   myFlag = false;
@@ -49,7 +49,7 @@ void OSD_DirectoryIterator::Initialize(const OSD_Path& where, const TCollection_
   myInit = 1;
 }
 
-bool OSD_DirectoryIterator::More()
+bool System::os::OSD_DirectoryIterator::More()
 {
   if (myInit)
   {
@@ -84,7 +84,7 @@ static int strcmp_joker(const char* Mask, const char* Name)
   return 0;
 }
 
-void OSD_DirectoryIterator::Next()
+void System::os::OSD_DirectoryIterator::Next()
 {
   int         again = 1;
   struct stat stat_buf;
@@ -119,9 +119,9 @@ void OSD_DirectoryIterator::Next()
   } while (again);
 }
 
-OSD_Directory OSD_DirectoryIterator::Values()
+System::os::OSD_Directory System::os::OSD_DirectoryIterator::Values()
 {
-  OSD_Path                thisvalue;
+  System::os::OSD_Path                thisvalue;
   TCollection_AsciiString Name;
   TCollection_AsciiString Ext;
   int                     position;
@@ -142,22 +142,22 @@ OSD_Directory OSD_DirectoryIterator::Values()
   return (TheIterator);
 }
 
-void OSD_DirectoryIterator::Reset()
+void System::os::OSD_DirectoryIterator::Reset()
 {
   myError.Reset();
 }
 
-bool OSD_DirectoryIterator::Failed() const
+bool System::os::OSD_DirectoryIterator::Failed() const
 {
   return (myError.Failed());
 }
 
-void OSD_DirectoryIterator::Perror()
+void System::os::OSD_DirectoryIterator::Perror()
 {
   myError.Perror();
 }
 
-int OSD_DirectoryIterator::Error() const
+int System::os::OSD_DirectoryIterator::Error() const
 {
   return (myError.Error());
 }
@@ -173,9 +173,9 @@ int OSD_DirectoryIterator::Error() const
 
   #define _FD ((PWIN32_FIND_DATAW)myData)
 
-void _osd_wnt_set_error(OSD_Error&, int, ...);
+void _osd_wnt_set_error(System::os::OSD_Error&, int, ...);
 
-OSD_DirectoryIterator ::OSD_DirectoryIterator(const OSD_Path&                where,
+System::os::OSD_DirectoryIterator ::OSD_DirectoryIterator(const System::os::OSD_Path&                where,
                                               const TCollection_AsciiString& Mask)
 {
 
@@ -191,7 +191,7 @@ OSD_DirectoryIterator ::OSD_DirectoryIterator(const OSD_Path&                whe
   myData = NULL;
 }
 
-void OSD_DirectoryIterator ::Destroy()
+void System::os::OSD_DirectoryIterator ::Destroy()
 {
 
   if (myData != NULL)
@@ -202,7 +202,7 @@ void OSD_DirectoryIterator ::Destroy()
     FindClose((HANDLE)myHandle);
 }
 
-bool OSD_DirectoryIterator ::More()
+bool System::os::OSD_DirectoryIterator ::More()
 {
 
   if (myHandle == INVALID_HANDLE_VALUE)
@@ -243,7 +243,7 @@ bool OSD_DirectoryIterator ::More()
   return myFlag;
 }
 
-void OSD_DirectoryIterator ::Next()
+void System::os::OSD_DirectoryIterator ::Next()
 {
 
   if (!myFirstCall || !(_FD->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -266,40 +266,40 @@ void OSD_DirectoryIterator ::Next()
   myFirstCall = false;
 }
 
-OSD_Directory OSD_DirectoryIterator ::Values()
+System::os::OSD_Directory System::os::OSD_DirectoryIterator ::Values()
 {
 
   TCollection_AsciiString aFileName(TCollection_ExtendedString((const char16_t*)_FD->cFileName));
-  TheIterator.SetPath(OSD_Path(aFileName));
+  TheIterator.SetPath(System::os::OSD_Path(aFileName));
 
   return TheIterator;
 }
 
-bool OSD_DirectoryIterator ::Failed() const
+bool System::os::OSD_DirectoryIterator ::Failed() const
 {
 
   return myError.Failed();
 }
 
-void OSD_DirectoryIterator ::Reset()
+void System::os::OSD_DirectoryIterator ::Reset()
 {
 
   myError.Reset();
 }
 
-void OSD_DirectoryIterator ::Perror()
+void System::os::OSD_DirectoryIterator ::Perror()
 {
 
   myError.Perror();
 }
 
-int OSD_DirectoryIterator ::Error() const
+int System::os::OSD_DirectoryIterator ::Error() const
 {
 
   return myError.Error();
 }
 
-OSD_DirectoryIterator::OSD_DirectoryIterator()
+System::os::OSD_DirectoryIterator::OSD_DirectoryIterator()
     : myFlag(false),
       myHandle(0),
       myData(0),
@@ -307,6 +307,6 @@ OSD_DirectoryIterator::OSD_DirectoryIterator()
 {
 }
 
-void OSD_DirectoryIterator::Initialize(const OSD_Path&, const TCollection_AsciiString&) {}
+void System::os::OSD_DirectoryIterator::Initialize(const System::os::OSD_Path&, const TCollection_AsciiString&) {}
 
 #endif

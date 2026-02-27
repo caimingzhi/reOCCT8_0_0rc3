@@ -11,7 +11,7 @@ IMPLEMENT_DOMSTRING(UnitString, "unit")
 IMPLEMENT_DOMSTRING(ConstString, "true")
 
 XmlMDataStd_VariableDriver::XmlMDataStd_VariableDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

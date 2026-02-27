@@ -88,12 +88,12 @@ GeomAbs_Shape Geom_Line::Continuity() const
 
 double Geom_Line::FirstParameter() const
 {
-  return -Precision::Infinite();
+  return -math::precision::Precision::Infinite();
 }
 
 double Geom_Line::LastParameter() const
 {
-  return Precision::Infinite();
+  return math::precision::Precision::Infinite();
 }
 
 gp_Lin Geom_Line::Lin() const
@@ -149,7 +149,7 @@ gp_Vec Geom_Line::DN(const double, const int N) const
 
 double Geom_Line::TransformedParameter(const double U, const gp_Trsf& T) const
 {
-  if (Precision::IsInfinite(U))
+  if (math::precision::Precision::IsInfinite(U))
     return U;
   return U * std::abs(T.ScaleFactor());
 }

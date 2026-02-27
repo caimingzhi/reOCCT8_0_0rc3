@@ -80,7 +80,7 @@ void Bisector_BisecPC::Perform(const occ::handle<Geom2d_Curve>& Cu,
 
   if (!isConvex)
   {
-    if (point.IsEqual(curve->Value(curve->FirstParameter()), Precision::Confusion()))
+    if (point.IsEqual(curve->Value(curve->FirstParameter()), math::precision::Precision::Confusion()))
     {
       extensionStart = true;
       double UFirst  = startIntervals.First() - P.Distance(pointStartBis);
@@ -88,7 +88,7 @@ void Bisector_BisecPC::Perform(const occ::handle<Geom2d_Curve>& Cu,
       endIntervals.InsertBefore(1, startIntervals.Value(2));
       bisInterval = 2;
     }
-    else if (point.IsEqual(curve->Value(curve->LastParameter()), Precision::Confusion()))
+    else if (point.IsEqual(curve->Value(curve->LastParameter()), math::precision::Precision::Confusion()))
     {
       extensionEnd = true;
       double ULast = endIntervals.Last() + P.Distance(pointEndBis);
@@ -248,7 +248,7 @@ void Bisector_BisecPC::Extension(const double U,
   V3.SetCoord(0., 0.);
   if (U < startIntervals.Value(bisInterval))
   {
-    if (pointStartBis.IsEqual(point, Precision::PConfusion()))
+    if (pointStartBis.IsEqual(point, math::precision::Precision::PConfusion()))
       P = pointStartBis;
     else
     {
@@ -260,7 +260,7 @@ void Bisector_BisecPC::Extension(const double U,
   }
   else if (U > endIntervals.Value(bisInterval))
   {
-    if (pointEndBis.IsEqual(point, Precision::PConfusion()))
+    if (pointEndBis.IsEqual(point, math::precision::Precision::PConfusion()))
       P = pointEndBis;
     else
     {
@@ -393,7 +393,7 @@ double Bisector_BisecPC::Distance(const double U) const
   double SquareMagPPC = aPPC.SquareMagnitude();
   double Prosca       = Nor.Dot(aPPC);
 
-  if (point.IsEqual(PC, Precision::Confusion()))
+  if (point.IsEqual(PC, math::precision::Precision::Confusion()))
   {
     if (isConvex)
     {
@@ -402,13 +402,13 @@ double Bisector_BisecPC::Distance(const double U) const
 
     else
     {
-      return Precision::Infinite();
+      return math::precision::Precision::Infinite();
     }
   }
 
-  if (std::abs(Prosca) < Precision::Confusion() || (Prosca * sign) > 0.)
+  if (std::abs(Prosca) < math::precision::Precision::Confusion() || (Prosca * sign) > 0.)
   {
-    return Precision::Infinite();
+    return math::precision::Precision::Infinite();
   }
   else
   {
@@ -418,12 +418,12 @@ double Bisector_BisecPC::Distance(const double U) const
 
     if (!isConvex)
     {
-      double K = Curvature(curve, UOnCurve, Precision::Confusion());
+      double K = Curvature(curve, UOnCurve, math::precision::Precision::Confusion());
       if (K != 0.)
       {
         if (Dist > 1 / (K * K))
         {
-          Dist = Precision::Infinite();
+          Dist = math::precision::Precision::Infinite();
         }
       }
     }
@@ -495,7 +495,7 @@ double Bisector_BisecPC::SearchBound(const double U1, const double U2) const
 {
   double           Dist1, DistMid, U11, U22;
   double           UMid     = 0.;
-  constexpr double Tol      = Precision::PConfusion();
+  constexpr double Tol      = math::precision::Precision::PConfusion();
   double           DistMax2 = distMax * distMax;
   U11                       = U1;
   U22                       = U2;
@@ -537,7 +537,7 @@ void Bisector_BisecPC::ComputeIntervals()
   U2       = curve->LastParameter();
   Dist1    = Distance(U1);
   Dist2    = Distance(U2);
-  DistProj = Precision::Infinite();
+  DistProj = math::precision::Precision::Infinite();
 
   Geom2dAPI_ProjectPointOnCurve Proj(point, curve, U1, U2);
   if (Proj.NbPoints() > 0)
@@ -626,7 +626,7 @@ bool Bisector_BisecPC::IsEmpty() const
 
 double Bisector_BisecPC::Parameter(const gp_Pnt2d& P) const
 {
-  constexpr double Tol = Precision::Confusion();
+  constexpr double Tol = math::precision::Precision::Confusion();
 
   if (P.IsEqual(pointStartBis, Tol))
   {

@@ -88,7 +88,7 @@ GeomPlate_BuildAveragePlane::GeomPlate_BuildAveragePlane(
   {
     BestVec              = Normals(1) + Normals(2);
     const double aSqMagn = BestVec.SquareMagnitude();
-    if (aSqMagn < Precision::SquareConfusion())
+    if (aSqMagn < math::precision::Precision::SquareConfusion())
     {
       const double aSq1 = Normals(1).SquareMagnitude(), aSq2 = Normals(2).SquareMagnitude();
 
@@ -132,7 +132,7 @@ GeomPlate_BuildAveragePlane::GeomPlate_BuildAveragePlane(
 
         const double aSqMagn = Vec.SquareMagnitude();
 
-        if (aSqMagn < Precision::SquareConfusion())
+        if (aSqMagn < math::precision::Precision::SquareConfusion())
         {
           continue;
         }

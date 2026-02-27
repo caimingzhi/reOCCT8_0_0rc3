@@ -25,7 +25,7 @@ RWObj_ObjMaterialMap::~RWObj_ObjMaterialMap()
 
   if (myIsFailed)
   {
-    Message::SendFail(TCollection_AsciiString("File cannot be written\n") + myFileName);
+    System::log::Message::SendFail(TCollection_AsciiString("File cannot be written\n") + myFileName);
   }
 }
 

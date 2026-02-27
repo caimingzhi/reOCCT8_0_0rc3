@@ -11,7 +11,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlTObjDrivers_IntSparseArrayDriver, XmlMDF_ADriver)
 #define ITEM_VALUE "itemValue_"
 
 XmlTObjDrivers_IntSparseArrayDriver::XmlTObjDrivers_IntSparseArrayDriver(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
     : XmlMDF_ADriver(theMessageDriver, nullptr)
 {
 }

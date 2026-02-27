@@ -63,7 +63,7 @@ GccAna_Circ2d2TanRad::GccAna_Circ2d2TanRad(const GccEnt_QualifiedCirc& Qualified
   {
     throw Standard_NegativeValue();
   }
-  else if (C(2).Location().IsEqual(C(1).Location(), Precision::Confusion()))
+  else if (C(2).Location().IsEqual(C(1).Location(), math::precision::Precision::Confusion()))
   {
     WellDone = true;
   }

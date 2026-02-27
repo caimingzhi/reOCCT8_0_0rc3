@@ -59,7 +59,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
-  if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
+  if (!AttachPoint.IsEqual(MidPoint, math::precision::Precision::Confusion()))
   {
     if (!first)
     {
@@ -87,7 +87,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
                                       const bool                             first)
 {
   double rad = AttachPoint.Distance(MidPoint) / 20.0;
-  if (rad <= Precision::Confusion())
+  if (rad <= math::precision::Precision::Confusion())
     rad = Point1.Distance(Point2) / 20.0;
 
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
@@ -130,7 +130,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
-  if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
+  if (!AttachPoint.IsEqual(MidPoint, math::precision::Precision::Confusion()))
   {
 
     aPrims = new Graphic3d_ArrayOfSegments(2);
@@ -151,7 +151,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
                                       const bool                             first)
 {
   double rad = AttachPoint.Distance(MidPoint) / 20.0;
-  if (rad <= Precision::Confusion())
+  if (rad <= math::precision::Precision::Confusion())
     rad = Point1.Distance(Point2) / 20.0;
 
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
@@ -203,7 +203,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
-  if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
+  if (!AttachPoint.IsEqual(MidPoint, math::precision::Precision::Confusion()))
   {
 
     aPrims = new Graphic3d_ArrayOfSegments(2);
@@ -226,7 +226,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
                                       const bool                             first)
 {
   double rad = AttachPoint.Distance(MidPoint) / 20.0;
-  if (rad <= Precision::Confusion())
+  if (rad <= math::precision::Precision::Confusion())
     rad = Point1.Distance(Point2) / 20.0;
 
   occ::handle<Prs3d_DimensionAspect> LA = aDrawer->DimensionAspect();
@@ -278,7 +278,7 @@ void DsgPrs_MidPointPresentation::Add(const occ::handle<Prs3d_Presentation>& aPr
     Prs3d_Text::Draw(aPresentation->CurrentGroup(), LA->TextAspect(), aText, Position);
   }
 
-  if (!AttachPoint.IsEqual(MidPoint, Precision::Confusion()))
+  if (!AttachPoint.IsEqual(MidPoint, math::precision::Precision::Confusion()))
   {
 
     aPrims = new Graphic3d_ArrayOfSegments(2);

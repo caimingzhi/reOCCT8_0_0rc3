@@ -71,7 +71,7 @@ public:
 
   Standard_EXPORT void Add(const occ::handle<GeomPlate_PointConstraint>& Cont);
 
-  Standard_EXPORT void Perform(const Message_ProgressRange& theProgress = Message_ProgressRange());
+  Standard_EXPORT void Perform(const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<GeomPlate_CurveConstraint> CurveConstraint(const int order) const;
 
@@ -119,7 +119,7 @@ private:
 
   Standard_EXPORT occ::handle<Adaptor2d_Curve2d> ProjectedCurve(occ::handle<Adaptor3d_Curve>& Curv);
 
-  Standard_EXPORT void ComputeSurfInit(const Message_ProgressRange& theProgress);
+  Standard_EXPORT void ComputeSurfInit(const System::log::Message_ProgressRange& theProgress);
 
   Standard_EXPORT void Intersect(
     occ::handle<NCollection_HArray1<NCollection_Sequence<double>>>& PntInter,

@@ -31,8 +31,8 @@ namespace Geom_OffsetSurfaceUtils
 
   inline bool IsInfiniteCoord(const gp_Vec& theVec)
   {
-    return Precision::IsInfinite(theVec.X()) || Precision::IsInfinite(theVec.Y())
-           || Precision::IsInfinite(theVec.Z());
+    return math::precision::Precision::IsInfinite(theVec.X()) || math::precision::Precision::IsInfinite(theVec.Y())
+           || math::precision::Precision::IsInfinite(theVec.Z());
   }
 
   inline bool IsSingular(const gp_Vec& theD1U,
@@ -304,13 +304,13 @@ namespace Geom_OffsetSurfaceUtils
       double aStep;
       if (isReplaceDV)
       {
-        aStep = Precision::Confusion() * theDU.Magnitude();
+        aStep = math::precision::Precision::Confusion() * theDU.Magnitude();
         if (aStep > theUMax - theUMin)
           aStep = (theUMax - theUMin) / 100.;
       }
       else
       {
-        aStep = Precision::Confusion() * theDV.Magnitude();
+        aStep = math::precision::Precision::Confusion() * theDV.Magnitude();
         if (aStep > theVMax - theVMin)
           aStep = (theVMax - theVMin) / 100.;
       }
@@ -380,7 +380,7 @@ namespace Geom_OffsetSurfaceUtils
 
     double aDU   = theU - theUStart;
     double aDV   = theV - theVStart;
-    double aStep = std::max(2. * std::sqrt(aDU * aDU + aDV * aDV), Precision::PConfusion());
+    double aStep = std::max(2. * std::sqrt(aDU * aDU + aDV * aDV), math::precision::Precision::PConfusion());
     if (aStep >= aDist)
     {
       return false;

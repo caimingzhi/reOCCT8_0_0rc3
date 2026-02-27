@@ -40,7 +40,7 @@ public:
 
   Standard_EXPORT bool TransferRoot(
     const int                    num         = 1,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT int NbRootsForTransfer() override;
 

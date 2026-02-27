@@ -219,7 +219,7 @@ Extrema_GGenExtCC<TheCurve1, TheCurveTool1, TheCurve2, TheCurveTool2, ThePOnC, T
   Extrema_GGenExtCC()
     : myIsFindSingleSolution(false),
       myParallel(false),
-      myCurveMinTol(Precision::PConfusion()),
+      myCurveMinTol(math::precision::Precision::PConfusion()),
       myLowBorder(1, 2),
       myUppBorder(1, 2),
       myDone(false)
@@ -238,7 +238,7 @@ Extrema_GGenExtCC<TheCurve1, TheCurveTool1, TheCurve2, TheCurveTool2, ThePOnC, T
   Extrema_GGenExtCC(const TheCurve1& theC1, const TheCurve2& theC2)
     : myIsFindSingleSolution(false),
       myParallel(false),
-      myCurveMinTol(Precision::PConfusion()),
+      myCurveMinTol(math::precision::Precision::PConfusion()),
       myLowBorder(1, 2),
       myUppBorder(1, 2),
       myDone(false)
@@ -267,7 +267,7 @@ Extrema_GGenExtCC<TheCurve1, TheCurveTool1, TheCurve2, TheCurveTool2, ThePOnC, T
                     const double     theVsup)
     : myIsFindSingleSolution(false),
       myParallel(false),
-      myCurveMinTol(Precision::PConfusion()),
+      myCurveMinTol(math::precision::Precision::PConfusion()),
       myLowBorder(1, 2),
       myUppBorder(1, 2),
       myDone(false)
@@ -398,8 +398,8 @@ void Extrema_GGenExtCC<TheCurve1,
   double       anL[2];
   int          indmax = -1, indmin = -1;
   const double mult = 20.;
-  if (!(Precision::IsInfinite(C1.FirstParameter()) || Precision::IsInfinite(C1.LastParameter())
-        || Precision::IsInfinite(C2.FirstParameter()) || Precision::IsInfinite(C2.LastParameter())))
+  if (!(math::precision::Precision::IsInfinite(C1.FirstParameter()) || math::precision::Precision::IsInfinite(C1.LastParameter())
+        || math::precision::Precision::IsInfinite(C2.FirstParameter()) || math::precision::Precision::IsInfinite(C2.LastParameter())))
   {
     anL[0] = GCPnts_AbscissaPoint::Length(C1);
     anL[1] = GCPnts_AbscissaPoint::Length(C2);
@@ -550,8 +550,8 @@ void Extrema_GGenExtCC<TheCurve1,
 
   const double aCellSize = std::max(std::max(anIntervals1->Last() - anIntervals1->First(),
                                              anIntervals2->Last() - anIntervals2->First())
-                                      * Precision::PConfusion() / (2.0 * M_SQRT2),
-                                    Precision::PConfusion());
+                                      * math::precision::Precision::PConfusion() / (2.0 * M_SQRT2),
+                                    math::precision::Precision::PConfusion());
   Extrema_GGenExtCC_PointsInspector                         anInspector(aCellSize);
   NCollection_CellFilter<Extrema_GGenExtCC_PointsInspector> aFilter(aCellSize);
   NCollection_Vector<gp_XY>                                 aPnts;
@@ -650,7 +650,7 @@ void Extrema_GGenExtCC<TheCurve1,
     aVec(2) = (aCurrent.Y() + aNext.Y()) * 0.5;
 
     aFunc.Value(aVec, aVal);
-    if (std::abs(aVal - aF) < Precision::Confusion())
+    if (std::abs(aVal - aF) < math::precision::Precision::Confusion())
     {
       if (bSaveSolution)
       {
@@ -703,7 +703,7 @@ void Extrema_GGenExtCC<TheCurve1,
         Extrema_GGenExtCC_ProjPOnC<TheCurve2, TheExtPC, ThePoint>(C1.Value(aT1[iT]), anExtPC2);
       double aDist2 =
         Extrema_GGenExtCC_ProjPOnC<TheCurve1, TheExtPC, ThePoint>(C2.Value(aT2[iT]), anExtPC1);
-      isParallel = (std::abs(std::min(aDist1, aDist2) - aF * aF) < Precision::Confusion());
+      isParallel = (std::abs(std::min(aDist1, aDist2) - aF * aF) < math::precision::Precision::Confusion());
     }
   }
 

@@ -68,7 +68,7 @@ void HLRTopoBRep_DSFiller::Insert(
       }
       else
       {
-        BRepTopAdaptor_Tool BRT(S1, Precision::PConfusion());
+        BRepTopAdaptor_Tool BRT(S1, math::precision::Precision::PConfusion());
         MST.Bind(S1, BRT);
         Domain  = BRT.GetTopolTool();
         Surface = BRT.GetSurface();
@@ -147,7 +147,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int,
           VL                    = MakeVertex(PL, tol, DS);
           const double parL     = PL.ParameterOnLine();
 
-          if ((parL - parF) > Precision::PConfusion())
+          if ((parL - parF) > math::precision::Precision::PConfusion())
           {
 
             occ::handle<Geom_Curve>   C;

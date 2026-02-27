@@ -86,7 +86,7 @@ static bool Is2DClosed(const TopoDS_Shape&              theShape,
     }
     TopoDS_Wire aWire = TopoDS::Wire(aWireExp.Current());
 
-    TopoDS_Face aTmpFace = BRepLib_MakeFace(theSurface, Precision::PConfusion());
+    TopoDS_Face aTmpFace = BRepLib_MakeFace(theSurface, math::precision::Precision::PConfusion());
 
     BRepTools_WireExplorer aWireExplorer(aWire, aTmpFace);
     if (!aWireExplorer.More())
@@ -146,20 +146,20 @@ namespace
     int aNbP = std::max(theDegree, 1);
 
     for (int i = 1;
-         (i < theKnots.Length()) && (theKnots(i) < (theParMax - Precision::PConfusion()));
+         (i < theKnots.Length()) && (theKnots(i) < (theParMax - math::precision::Precision::PConfusion()));
          ++i)
     {
-      if (theKnots(i + 1) < theParMin + Precision::PConfusion())
+      if (theKnots(i + 1) < theParMin + math::precision::Precision::PConfusion())
         continue;
 
       double aStep = (theKnots(i + 1) - theKnots(i)) / aNbP;
       for (int k = 1; k <= aNbP; ++k)
       {
         double aPar = theKnots(i) + k * aStep;
-        if (aPar > theParMax - Precision::PConfusion())
+        if (aPar > theParMax - math::precision::Precision::PConfusion())
           break;
 
-        if (aPar > aPrevPar + Precision::PConfusion())
+        if (aPar > aPrevPar + math::precision::Precision::PConfusion())
         {
           theParams.Append(aPar);
           aPrevPar = aPar;
@@ -486,7 +486,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
     if (S.ShapeType() == TopAbs_WIRE && S.Closed())
     {
       TopoDS_Wire  aW       = TopoDS::Wire(S);
-      TopoDS_Face  aTmpFace = BRepLib_MakeFace(mySurface, Precision::Confusion());
+      TopoDS_Face  aTmpFace = BRepLib_MakeFace(mySurface, math::precision::Precision::Confusion());
       BRep_Builder BB;
       BB.Add(aTmpFace, aW);
       BRepTopAdaptor_FClass2d FClass(aTmpFace, 0.);

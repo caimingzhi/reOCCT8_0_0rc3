@@ -24,7 +24,7 @@
 EM_JS(double, OSD_MemInfo_getModuleHeapLength, (), { return Module.HEAP8.length; });
 #endif
 
-OSD_MemInfo::OSD_MemInfo(const bool theImmediateUpdate)
+System::os::OSD_MemInfo::OSD_MemInfo(const bool theImmediateUpdate)
 {
   SetActive(true);
   if (theImmediateUpdate)
@@ -37,7 +37,7 @@ OSD_MemInfo::OSD_MemInfo(const bool theImmediateUpdate)
   }
 }
 
-void OSD_MemInfo::SetActive(const bool theActive)
+void System::os::OSD_MemInfo::SetActive(const bool theActive)
 {
   for (int anIter = 0; anIter < MemCounter_NB; ++anIter)
   {
@@ -45,7 +45,7 @@ void OSD_MemInfo::SetActive(const bool theActive)
   }
 }
 
-void OSD_MemInfo::Clear()
+void System::os::OSD_MemInfo::Clear()
 {
   for (int anIter = 0; anIter < MemCounter_NB; ++anIter)
   {
@@ -53,7 +53,7 @@ void OSD_MemInfo::Clear()
   }
 }
 
-void OSD_MemInfo::Update()
+void System::os::OSD_MemInfo::Update()
 {
   Clear();
 #ifndef OCCT_UWP
@@ -234,7 +234,7 @@ void OSD_MemInfo::Update()
 #endif
 }
 
-TCollection_AsciiString OSD_MemInfo::ToString() const
+TCollection_AsciiString System::os::OSD_MemInfo::ToString() const
 {
   TCollection_AsciiString anInfo;
   if (hasValue(MemPrivate))
@@ -275,7 +275,7 @@ TCollection_AsciiString OSD_MemInfo::ToString() const
   return anInfo;
 }
 
-size_t OSD_MemInfo::Value(const OSD_MemInfo::Counter theCounter) const
+size_t System::os::OSD_MemInfo::Value(const System::os::OSD_MemInfo::Counter theCounter) const
 {
   if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
   {
@@ -284,7 +284,7 @@ size_t OSD_MemInfo::Value(const OSD_MemInfo::Counter theCounter) const
   return myCounters[theCounter];
 }
 
-size_t OSD_MemInfo::ValueMiB(const OSD_MemInfo::Counter theCounter) const
+size_t System::os::OSD_MemInfo::ValueMiB(const System::os::OSD_MemInfo::Counter theCounter) const
 {
   if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
   {
@@ -294,7 +294,7 @@ size_t OSD_MemInfo::ValueMiB(const OSD_MemInfo::Counter theCounter) const
                                                 : (myCounters[theCounter] / (1024 * 1024));
 }
 
-double OSD_MemInfo::ValuePreciseMiB(const OSD_MemInfo::Counter theCounter) const
+double System::os::OSD_MemInfo::ValuePreciseMiB(const System::os::OSD_MemInfo::Counter theCounter) const
 {
   if (theCounter < 0 || theCounter >= MemCounter_NB || !IsActive(theCounter))
   {
@@ -305,8 +305,8 @@ double OSD_MemInfo::ValuePreciseMiB(const OSD_MemInfo::Counter theCounter) const
            : ((double)myCounters[theCounter] / (1024.0 * 1024.0));
 }
 
-TCollection_AsciiString OSD_MemInfo::PrintInfo()
+TCollection_AsciiString System::os::OSD_MemInfo::PrintInfo()
 {
-  OSD_MemInfo anInfo;
+  System::os::OSD_MemInfo anInfo;
   return anInfo.ToString();
 }

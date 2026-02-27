@@ -17,9 +17,9 @@ class MoniTool_Timer : public Standard_Transient
 public:
   MoniTool_Timer();
 
-  const OSD_Timer& Timer() const;
+  const System::os::OSD_Timer& Timer() const;
 
-  OSD_Timer& Timer();
+  System::os::OSD_Timer& Timer();
 
   void Start();
 
@@ -68,7 +68,7 @@ private:
 
   Standard_EXPORT void AmendStop();
 
-  OSD_Timer                   myTimer;
+  System::os::OSD_Timer                   myTimer;
   int                         myCount;
   int                         myNesting;
   double                      myAmend;
@@ -83,12 +83,12 @@ inline MoniTool_Timer::MoniTool_Timer()
 {
 }
 
-inline OSD_Timer& MoniTool_Timer::Timer()
+inline System::os::OSD_Timer& MoniTool_Timer::Timer()
 {
   return myTimer;
 }
 
-inline const OSD_Timer& MoniTool_Timer::Timer() const
+inline const System::os::OSD_Timer& MoniTool_Timer::Timer() const
 {
   return myTimer;
 }

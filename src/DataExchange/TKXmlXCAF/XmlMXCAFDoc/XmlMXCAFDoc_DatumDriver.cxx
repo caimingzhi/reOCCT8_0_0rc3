@@ -12,7 +12,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMXCAFDoc_DatumDriver, XmlMDF_ADriver)
 IMPLEMENT_DOMSTRING(DescrIndexString, "descr")
 IMPLEMENT_DOMSTRING(IdIndexString, "ident")
 
-XmlMXCAFDoc_DatumDriver::XmlMXCAFDoc_DatumDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMXCAFDoc_DatumDriver::XmlMXCAFDoc_DatumDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Datum")
 {
 }

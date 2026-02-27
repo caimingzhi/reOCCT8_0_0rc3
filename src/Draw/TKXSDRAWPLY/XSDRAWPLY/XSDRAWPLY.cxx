@@ -34,8 +34,8 @@ static int WritePly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   TCollection_AsciiString          aShapeName, aFileName;
 
   double aDist     = 0.0;
-  double aDens     = Precision::Infinite();
-  double aTol      = Precision::Confusion();
+  double aDens     = math::precision::Precision::Infinite();
+  double aTol      = math::precision::Precision::Confusion();
   bool   hasColors = true, hasNormals = true, hasTexCoords = false, hasPartId = true,
        hasFaceId = false;
   bool isPntSet = false, isDensityPoints = false;
@@ -85,7 +85,7 @@ static int WritePly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
         theDI << "Syntax error: -distance value should be >= 0.0";
         return 1;
       }
-      aDist = std::max(aDist, Precision::Confusion());
+      aDist = std::max(aDist, math::precision::Precision::Confusion());
     }
     else if ((anArg == "-dens" || anArg == "-density") && anArgIter + 1 < theNbArgs
              && Draw::ParseReal(theArgVec[anArgIter + 1], aDens))
@@ -104,9 +104,9 @@ static int WritePly(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
     {
       ++anArgIter;
       isPntSet = true;
-      if (aTol < Precision::Confusion())
+      if (aTol < math::precision::Precision::Confusion())
       {
-        theDI << "Syntax error: -tol value should be >= " << Precision::Confusion();
+        theDI << "Syntax error: -tol value should be >= " << math::precision::Precision::Confusion();
         return 1;
       }
     }
@@ -323,7 +323,7 @@ Generate point cloud out of the shape and write it into PLY file.
  -pointCloud write point cloud instead without triangulation indices
  -distance   sets distance from shape into the range [0, Value];
  -density    sets density of points to generate randomly on surface;
- -tolerance  sets tolerance; default value is Precision::Confusion();
+ -tolerance  sets tolerance; default value is math::precision::Precision::Confusion();
 )",
             __FILE__,
             WritePly,

@@ -133,12 +133,12 @@ static bool CheckSense(const NCollection_Sequence<occ::handle<Geom_Curve>>& Seq1
     beta3 = gp_Vec(Pos, P1).AngleWithRef(gp_Vec(Pos, P2), AxeRef.Direction());
 
     bool ok      = true,
-         pasnul1 = (std::abs(alpha1) > Precision::Confusion())
-                   && (std::abs(beta1) > Precision::Confusion()),
-         pasnul2 = (std::abs(alpha2) > Precision::Confusion())
-                   && (std::abs(beta2) > Precision::Confusion()),
-         pasnul3 = (std::abs(alpha3) > Precision::Confusion())
-                   && (std::abs(beta3) > Precision::Confusion());
+         pasnul1 = (std::abs(alpha1) > math::precision::Precision::Confusion())
+                   && (std::abs(beta1) > math::precision::Precision::Confusion()),
+         pasnul2 = (std::abs(alpha2) > math::precision::Precision::Confusion())
+                   && (std::abs(beta2) > math::precision::Precision::Confusion()),
+         pasnul3 = (std::abs(alpha3) > math::precision::Precision::Confusion())
+                   && (std::abs(beta3) > math::precision::Precision::Confusion());
     if (pasnul1 && pasnul2 && pasnul3)
     {
       if (alpha1 * beta1 > 0.0)
@@ -308,7 +308,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>&      Path,
   TheLoc->SetCurve(myAdpPath);
 
   GeomFill_SectionPlacement Place(TheLoc, FirstSect);
-  Place.Perform(Precision::Confusion());
+  Place.Perform(math::precision::Precision::Confusion());
 
   mySec = new (GeomFill_UniformSection)(Place.Section(false),
                                         myAdpPath->FirstParameter(),
@@ -415,7 +415,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
       myLoc = new (GeomFill_CurveAndTrihedron)(TLaw);
       myLoc->SetCurve(myAdpPath);
       GeomFill_SectionPlacement Place(myLoc, FirstSect);
-      Place.Perform(Precision::Confusion());
+      Place.Perform(math::precision::Precision::Confusion());
       double ponsec = Place.ParameterOnSection();
 
       double            Eps = 1.e-9;
@@ -455,7 +455,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
     myLoc = new (GeomFill_CurveAndTrihedron)(TLaw);
     myLoc->SetCurve(myAdpPath);
     GeomFill_SectionPlacement Place(myLoc, FirstSect);
-    Place.Perform(Precision::Confusion());
+    Place.Perform(math::precision::Precision::Confusion());
     param = Place.ParameterOnPath();
     Sect  = Place.Section(false);
 
@@ -475,7 +475,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom2d_Curve>& Path,
   myLoc = new (GeomFill_CurveAndTrihedron)(TLaw);
   myLoc->SetCurve(myAdpPath);
   GeomFill_SectionPlacement Place(myLoc, FirstSect);
-  Place.Perform(myAdpPath, Precision::Confusion());
+  Place.Perform(myAdpPath, math::precision::Precision::Confusion());
   Sect = Place.Section(false);
 
   mySec =
@@ -497,7 +497,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
   myLoc = new (GeomFill_CurveAndTrihedron)(TLaw);
   myLoc->SetCurve(myAdpPath);
   GeomFill_SectionPlacement Place(myLoc, FirstSect);
-  Place.Perform(Precision::Confusion());
+  Place.Perform(math::precision::Precision::Confusion());
   Sect = Place.Section(false);
 
   mySec = new (GeomFill_UniformSection)(Sect, Path->FirstParameter(), Path->LastParameter());
@@ -525,7 +525,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>&                       Pa
     for (i = 1; i <= NSections.Length(); i++)
     {
       GeomFill_SectionPlacement Place(myLoc, NSections(i));
-      Place.Perform(Precision::Confusion());
+      Place.Perform(math::precision::Precision::Confusion());
       SeqP.Append(Place.ParameterOnPath());
       SeqC.Append(Place.Section(false));
     }
@@ -553,7 +553,7 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>&                       Pa
     }
     for (i = 1; i < NSections.Length(); i++)
     {
-      if (std::abs(SeqP.Value(i + 1) - SeqP.Value(i)) < Precision::PConfusion())
+      if (std::abs(SeqP.Value(i + 1) - SeqP.Value(i)) < math::precision::Precision::PConfusion())
       {
         throw Standard_ConstructionError("GeomFill_Pipe::Init with NSections : invalid parameters");
       }
@@ -595,10 +595,10 @@ void GeomFill_Pipe::Init(const occ::handle<Geom_Curve>& Path,
     SeqP.Clear();
 
     GeomFill_SectionPlacement Pl1(myLoc, FirstSect);
-    Pl1.Perform(first, Precision::Confusion());
+    Pl1.Perform(first, math::precision::Precision::Confusion());
     SeqC.Append(Pl1.Section(false));
     GeomFill_SectionPlacement Pl2(myLoc, LastSect);
-    Pl2.Perform(first, Precision::Confusion());
+    Pl2.Perform(first, math::precision::Precision::Confusion());
     SeqC.Append(Pl2.Section(false));
 
     SeqP.Append(first);
@@ -755,7 +755,7 @@ bool GeomFill_Pipe::KPartT4()
     gp_Dir D0 = A0.Direction();
     gp_Dir D1 = A1.Direction();
     gp_Dir D2 = A2.Direction();
-    if (!D0.IsEqual(D1, Precision::Angular()) || !D1.IsEqual(D2, Precision::Angular()))
+    if (!D0.IsEqual(D1, math::precision::Precision::Angular()) || !D1.IsEqual(D2, math::precision::Precision::Angular()))
     {
       return Ok;
     }
@@ -763,7 +763,7 @@ bool GeomFill_Pipe::KPartT4()
     double L0 = myAdpPath->LastParameter() - myAdpPath->FirstParameter();
     double L1 = myAdpFirstSect->LastParameter() - myAdpFirstSect->FirstParameter();
     double L2 = myAdpLastSect->LastParameter() - myAdpLastSect->FirstParameter();
-    if (std::abs(L1 - L0) > Precision::Confusion() || std::abs(L2 - L0) > Precision::Confusion())
+    if (std::abs(L1 - L0) > math::precision::Precision::Confusion() || std::abs(L2 - L0) > math::precision::Precision::Confusion())
     {
       return Ok;
     }
@@ -773,8 +773,8 @@ bool GeomFill_Pipe::KPartT4()
     gp_Pnt P2 = myAdpLastSect->Value(myAdpLastSect->FirstParameter());
     gp_Dir V1(gp_Vec(P0, P1));
     gp_Dir V2(gp_Vec(P0, P2));
-    if (std::abs(V1.Dot(D0)) > Precision::Confusion()
-        || std::abs(V2.Dot(D0)) > Precision::Confusion())
+    if (std::abs(V1.Dot(D0)) > math::precision::Precision::Confusion()
+        || std::abs(V2.Dot(D0)) > math::precision::Precision::Confusion())
       return Ok;
 
     gp_Dir X(V1), Y(V2), ZRef;
@@ -805,8 +805,8 @@ bool GeomFill_Pipe::KPartT4()
     double Alp1 = myAdpFirstSect->FirstParameter() - myAdpFirstSect->LastParameter();
     double Alp2 = myAdpLastSect->FirstParameter() - myAdpLastSect->LastParameter();
 
-    if (std::abs(Alp0 - Alp1) > Precision::Angular()
-        || std::abs(Alp0 - Alp2) > Precision::Angular())
+    if (std::abs(Alp0 - Alp1) > math::precision::Precision::Angular()
+        || std::abs(Alp0 - Alp2) > math::precision::Precision::Angular())
       return Ok;
 
     gp_Ax2 A0 = myAdpPath->Circle().Position();
@@ -819,20 +819,20 @@ bool GeomFill_Pipe::KPartT4()
     gp_Pnt P1 = myAdpFirstSect->Value(myAdpFirstSect->FirstParameter());
     gp_Pnt P2 = myAdpLastSect->Value(myAdpLastSect->FirstParameter());
 
-    if (!D0.IsEqual(D1, Precision::Angular()) || !D1.IsEqual(D2, Precision::Angular()))
+    if (!D0.IsEqual(D1, math::precision::Precision::Angular()) || !D1.IsEqual(D2, math::precision::Precision::Angular()))
       return Ok;
 
     gp_Lin L(A0.Axis());
-    if (!L.Contains(A1.Location(), Precision::Confusion())
-        || !L.Contains(A2.Location(), Precision::Confusion()))
+    if (!L.Contains(A1.Location(), math::precision::Precision::Confusion())
+        || !L.Contains(A2.Location(), math::precision::Precision::Confusion()))
       return Ok;
 
     gp_Dir  V1(gp_Vec(P0, P1));
     gp_Dir  V2(gp_Vec(P0, P2));
     gp_Circ Ci   = myAdpPath->Circle();
     gp_Vec  YRef = ElCLib::CircleDN(myAdpPath->FirstParameter(), A0, Ci.Radius(), 1);
-    if (std::abs(V1.Dot(YRef)) > Precision::Confusion()
-        || std::abs(V2.Dot(YRef)) > Precision::Confusion())
+    if (std::abs(V1.Dot(YRef)) > math::precision::Precision::Confusion()
+        || std::abs(V2.Dot(YRef)) > math::precision::Precision::Confusion())
       return Ok;
 
     gp_Torus T(A0, Ci.Radius(), myRadius);
@@ -895,8 +895,8 @@ void GeomFill_Pipe::ApproxSurf(const bool WithParameters)
 
   occ::handle<GeomFill_Line> Line = new GeomFill_Line(Section.NbSections());
   int                        NbIt = 0;
-  constexpr double           T3d  = Precision::Approximation();
-  constexpr double           T2d  = Precision::PApproximation();
+  constexpr double           T3d  = math::precision::Precision::Approximation();
+  constexpr double           T2d  = math::precision::Precision::PApproximation();
   GeomFill_AppSweep          App(4, 8, T3d, T2d, NbIt, WithParameters);
 
   App.Perform(Line, Section, 30);

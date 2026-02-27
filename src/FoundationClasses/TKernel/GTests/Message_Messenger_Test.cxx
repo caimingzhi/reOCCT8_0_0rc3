@@ -12,7 +12,7 @@
 namespace
 {
 
-  class TestMessagePrinter : public Message_Printer
+  class TestMessagePrinter : public System::log::Message_Printer
   {
   public:
     TestMessagePrinter(std::ostringstream& theStream)
@@ -39,16 +39,16 @@ TEST(Message_Messenger_Test, OCC31189_StreamBufferMessageOrdering)
 
   std::ostringstream                    anOutput;
   occ::handle<TestMessagePrinter>       aPrinter = new TestMessagePrinter(anOutput);
-  const occ::handle<Message_Messenger>& aMsgMgr  = ::Message::DefaultMessenger();
+  const occ::handle<System::log::Message_Messenger>& aMsgMgr  = ::Message::DefaultMessenger();
 
-  NCollection_Sequence<occ::handle<Message_Printer>> anOriginalPrinters;
+  NCollection_Sequence<occ::handle<System::log::Message_Printer>> anOriginalPrinters;
   anOriginalPrinters.Append(aMsgMgr->ChangePrinters());
 
   aMsgMgr->ChangePrinters().Clear();
   aMsgMgr->AddPrinter(aPrinter);
 
   {
-    Message_Messenger::StreamBuffer aSender = ::Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer aSender = ::Message::SendInfo();
 
     aSender << "Sender message 1: start ...";
     aMsgMgr->Send("Direct message 1");
@@ -92,15 +92,15 @@ TEST(Message_Messenger_Test, StreamBufferBasicUsage)
 
   std::ostringstream                    anOutput;
   occ::handle<TestMessagePrinter>       aPrinter = new TestMessagePrinter(anOutput);
-  const occ::handle<Message_Messenger>& aMsgMgr  = Message::DefaultMessenger();
+  const occ::handle<System::log::Message_Messenger>& aMsgMgr  = System::log::Message::DefaultMessenger();
 
-  NCollection_Sequence<occ::handle<Message_Printer>> anOriginalPrinters;
+  NCollection_Sequence<occ::handle<System::log::Message_Printer>> anOriginalPrinters;
   anOriginalPrinters.Append(aMsgMgr->ChangePrinters());
 
   aMsgMgr->ChangePrinters().Clear();
   aMsgMgr->AddPrinter(aPrinter);
   {
-    Message_Messenger::StreamBuffer aBuffer = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer aBuffer = System::log::Message::SendInfo();
     aBuffer << "Test message" << std::endl;
   }
 

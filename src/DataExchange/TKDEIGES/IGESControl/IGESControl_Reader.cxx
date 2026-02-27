@@ -94,7 +94,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
 {
   int nbWarn = 0, nbFail = 0, nbEntities = 0, nbRoots = 0, nbResults = 0;
   const occ::handle<Transfer_TransientProcess>& TP    = WS()->TransferReader()->TransientProcess();
-  occ::handle<Message_Messenger>                TF    = TP->Messenger();
+  occ::handle<System::log::Message_Messenger>                TF    = TP->Messenger();
   const occ::handle<Interface_InterfaceModel>&  model = TP->Model();
   if (!model.IsNull())
   {
@@ -190,28 +190,28 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
       nbWarn += nw;
       nbFail += nf;
     }
-    Message_Msg msg3000("IGES_3000");
+    System::log::Message_Msg msg3000("IGES_3000");
     TF->Send(msg3000, Message_Info);
 
     switch (mode)
     {
       case IFSelect_GeneralInfo:
       {
-        Message_Msg msg3005("IGES_3005");
+        System::log::Message_Msg msg3005("IGES_3005");
         TF->Send(msg3005, Message_Info);
-        Message_Msg msg3010("IGES_3010");
+        System::log::Message_Msg msg3010("IGES_3010");
         msg3010.Arg(nbEntities);
         TF->Send(msg3010, Message_Info);
-        Message_Msg msg3011("IGES_3011");
+        System::log::Message_Msg msg3011("IGES_3011");
         msg3011.Arg(nbRoots);
         TF->Send(msg3011, Message_Info);
-        Message_Msg msg3015("IGES_3015");
+        System::log::Message_Msg msg3015("IGES_3015");
         msg3015.Arg(nbResults);
         TF->Send(msg3015, Message_Info);
-        Message_Msg msg3020("IGES_3020");
+        System::log::Message_Msg msg3020("IGES_3020");
         msg3020.Arg(nbWarn);
         TF->Send(msg3020, Message_Info);
-        Message_Msg msg3025("IGES_3025");
+        System::log::Message_Msg msg3025("IGES_3025");
         msg3025.Arg(nbFail);
         TF->Send(msg3025, Message_Info);
         break;
@@ -219,7 +219,7 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
       case IFSelect_CountByItem:
       case IFSelect_ListByItem:
       {
-        Message_Msg msg3030("IGES_3030");
+        System::log::Message_Msg msg3030("IGES_3030");
         TF->Send(msg3030, Message_Info);
         NCollection_DataMap<TCollection_AsciiString, int>::Iterator aMapCountIter(aMapCount);
         NCollection_DataMap<TCollection_AsciiString,
@@ -228,13 +228,13 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
         for (; aMapCountIter.More() && aMapListIter.More();
              aMapCountIter.Next(), aMapListIter.Next())
         {
-          Message_Messenger::StreamBuffer aSender = TF->SendInfo();
+          System::log::Message_Messenger::StreamBuffer aSender = TF->SendInfo();
           aSender << aMapCountIter.Value() << aMapCountIter.Key() << std::endl;
           if (mode == IFSelect_ListByItem)
           {
             const occ::handle<NCollection_HSequence<int>>& entityList = aMapListIter.Value();
             int                                            length     = entityList->Length();
-            Message_Msg                                    msg3035("IGES_3035");
+            System::log::Message_Msg                                    msg3035("IGES_3035");
             TF->Send(msg3035, Message_Info);
             char line[80];
             Sprintf(line, "\t\t\t");
@@ -259,15 +259,15 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
       }
       case IFSelect_ResultCount:
       {
-        Message_Msg msg3040("IGES_3040");
+        System::log::Message_Msg msg3040("IGES_3040");
         TF->Send(msg3040, Message_Info);
-        Message_Msg msg3011("IGES_3011");
+        System::log::Message_Msg msg3011("IGES_3011");
         msg3011.Arg(nbRoots);
         TF->Send(msg3011, Message_Info);
-        Message_Msg msg3015("IGES_3015");
+        System::log::Message_Msg msg3015("IGES_3015");
         msg3015.Arg(nbResults);
         TF->Send(msg3015, Message_Info);
-        Message_Msg msg3045("IGES_3045");
+        System::log::Message_Msg msg3045("IGES_3045");
         TF->Send(msg3045, Message_Info);
 
         NCollection_DataMap<TCollection_AsciiString, int>::Iterator aMapIter(aMapCountResult);
@@ -279,15 +279,15 @@ void IGESControl_Reader::PrintTransferInfo(const IFSelect_PrintFail  failsonly,
       }
       case IFSelect_Mapping:
       {
-        Message_Msg msg3040("IGES_3050");
+        System::log::Message_Msg msg3040("IGES_3050");
         TF->Send(msg3040, Message_Info);
-        Message_Msg msg3011("IGES_3011");
+        System::log::Message_Msg msg3011("IGES_3011");
         msg3011.Arg(nbRoots);
         TF->Send(msg3011, Message_Info);
-        Message_Msg msg3015("IGES_3015");
+        System::log::Message_Msg msg3015("IGES_3015");
         msg3015.Arg(nbResults);
         TF->Send(msg3015, Message_Info);
-        Message_Msg msg3045("IGES_3055");
+        System::log::Message_Msg msg3045("IGES_3055");
         TF->Send(msg3045, Message_Info);
 
         if (nbRoots != nbResults)

@@ -142,7 +142,7 @@ namespace
   {
     if (theValue.IsNumber() && !theValue.IsInt() && !theValue.IsDouble())
     {
-      Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
+      System::log::Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
                              << theValueName << "\" - "
                              << "Unsupported integer type. It will be skipped.";
       return true;
@@ -186,7 +186,7 @@ namespace
     if (theValue.Size() == 0)
     {
 
-      Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
+      System::log::Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
                           << "\" - "
                           << "Empty array is detected. Storing as empty string.";
       getResult()->SetString(theValueName.c_str(), "");
@@ -221,7 +221,7 @@ namespace
     else if (theValue[0].IsString())
     {
 
-      Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
+      System::log::Message::SendInfo() << "Extras owner \"" << myParentID << "\", Value \"" << theValueName
                           << "\" - "
                           << "Array of strings is detected. Storing as string with separators.";
       std::string       anArrayString;
@@ -234,7 +234,7 @@ namespace
       return true;
     }
 
-    Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
+    System::log::Message::SendWarning() << "Warning: Extras owner \"" << myParentID << "\", Value \""
                            << theValueName << "\" - "
                            << "Array of unsupported type is detected. It will be skipped.";
     return true;
@@ -343,7 +343,7 @@ void RWGltf_GltfJsonParser::GltfElementMap::Init(const TCollection_AsciiString& 
       const TCollection_AsciiString aKey(aChildIter->name.GetString());
       if (!myChildren.Bind(aKey, &aChildIter->value))
       {
-        Message::SendWarning(TCollection_AsciiString("Invalid glTF syntax - key '") + aKey
+        System::log::Message::SendWarning(TCollection_AsciiString("Invalid glTF syntax - key '") + aKey
                              + "' is already defined in '" + theRootName + "'.");
       }
     }
@@ -498,9 +498,9 @@ bool RWGltf_GltfJsonParser::parseTransformationComponents(
       }
     }
 
-    if (std::abs(aScaleVec.x() - aScaleVec.y()) > Precision::Confusion()
-        || std::abs(aScaleVec.y() - aScaleVec.z()) > Precision::Confusion()
-        || std::abs(aScaleVec.x() - aScaleVec.z()) > Precision::Confusion())
+    if (std::abs(aScaleVec.x() - aScaleVec.y()) > math::precision::Precision::Confusion()
+        || std::abs(aScaleVec.y() - aScaleVec.z()) > math::precision::Precision::Confusion()
+        || std::abs(aScaleVec.x() - aScaleVec.z()) > math::precision::Precision::Confusion())
     {
       NCollection_Mat4<double> aMat4;
       aTrsf.GetMat4(aMat4);
@@ -537,9 +537,9 @@ bool RWGltf_GltfJsonParser::parseTransformationComponents(
         theScale    = gp_XYZ(aScaleVec.x(), aScaleVec.y(), aScaleVec.z());
       }
 
-      Message::SendWarning(aWarnMessage);
+      System::log::Message::SendWarning(aWarnMessage);
     }
-    else if (std::abs(aScaleVec.x() - 1.0) > Precision::Confusion())
+    else if (std::abs(aScaleVec.x() - 1.0) > math::precision::Precision::Confusion())
     {
       aTrsf.SetScaleFactor(aScaleVec.x());
     }
@@ -557,7 +557,7 @@ bool RWGltf_GltfJsonParser::parseTransformationComponents(
 void RWGltf_GltfJsonParser::reportGltfSyntaxProblem(const TCollection_AsciiString& theMsg,
                                                     Message_Gravity                theGravity) const
 {
-  Message::Send(myErrorPrefix + theMsg, theGravity);
+  System::log::Message::Send(myErrorPrefix + theMsg, theGravity);
 }
 
 RWGltf_GltfJsonParser::RWGltf_GltfJsonParser(NCollection_Sequence<TopoDS_Shape>& theRootShapes)
@@ -586,7 +586,7 @@ void RWGltf_GltfJsonParser::SetFilePath(const TCollection_AsciiString& theFilePa
   myFilePath = theFilePath;
 
   TCollection_AsciiString aFileName;
-  OSD_Path::FolderAndFileFromPath(theFilePath, myFolder, aFileName);
+  System::os::OSD_Path::FolderAndFileFromPath(theFilePath, myFolder, aFileName);
 }
 
 #ifdef HAVE_RAPIDJSON
@@ -816,7 +816,7 @@ void RWGltf_GltfJsonParser::gltfBindMaterial(
         anAlphaMode = Graphic3d_AlphaMode_Opaque;
         if (aMatXde.BaseColor.Alpha() < 1.0f)
         {
-          Message::SendWarning(
+          System::log::Message::SendWarning(
             "glTF reader - material with non-zero Transparency specifies Opaque AlphaMode");
         }
         break;
@@ -1169,16 +1169,16 @@ bool RWGltf_GltfJsonParser::gltfParseTexture(occ::handle<Image_Texture>& theText
         const char*  aBase64Data = aDataIter + 8;
         const size_t aBase64Len  = size_t(aBase64End - aBase64Data);
 
-        occ::handle<NCollection_Buffer> aData = FSD_Base64::Decode(aBase64Data, aBase64Len);
+        occ::handle<NCollection_Buffer> aData = app::file::stream::FSD_Base64::Decode(aBase64Data, aBase64Len);
         if (aData.IsNull())
         {
-          Message::SendFail("Fail to allocate memory.");
+          System::log::Message::SendFail("Fail to allocate memory.");
         }
         theTexture = new Image_Texture(aData, myFilePath + "@" + getKeyString(*aSrcVal));
         return true;
       }
     }
-    Message::SendWarning("glTF reader - embedded image has been skipped");
+    System::log::Message::SendWarning("glTF reader - embedded image has been skipped");
     return false;
   }
 
@@ -1285,10 +1285,10 @@ bool RWGltf_GltfJsonParser::gltfParseTextureInBufferView(
     occ::handle<NCollection_Buffer> aBaseBuffer;
     if (!myDecodedBuffers.Find(aBufferId, aBaseBuffer))
     {
-      aBaseBuffer = FSD_Base64::Decode(anUriData + 37, anUriVal->GetStringLength() - 37);
+      aBaseBuffer = app::file::stream::FSD_Base64::Decode(anUriData + 37, anUriVal->GetStringLength() - 37);
       if (aBaseBuffer.IsNull())
       {
-        Message::SendFail("Fail to allocate memory.");
+        System::log::Message::SendFail("Fail to allocate memory.");
       }
       myDecodedBuffers.Bind(aBufferId, aBaseBuffer);
     }
@@ -1310,7 +1310,7 @@ bool RWGltf_GltfJsonParser::gltfParseTextureInBufferView(
   bool                          isFileExist = false;
   if (!myProbedFiles.Find(aPath, isFileExist))
   {
-    isFileExist = OSD_File(aPath).Exists();
+    isFileExist = System::os::OSD_File(aPath).Exists();
     myProbedFiles.Bind(aPath, isFileExist);
   }
   if (!isFileExist)
@@ -1327,12 +1327,12 @@ bool RWGltf_GltfJsonParser::gltfParseTextureInBufferView(
   return true;
 }
 
-bool RWGltf_GltfJsonParser::gltfParseScene(const Message_ProgressRange& theProgress)
+bool RWGltf_GltfJsonParser::gltfParseScene(const System::log::Message_ProgressRange& theProgress)
 {
   const RWGltf_JsonValue* aScenes = myGltfRoots[RWGltf_GltfRootElement_Scenes].Root();
   if (myToLoadAllScenes && !myIsGltf1 && aScenes->IsArray() && aScenes->Size() > 1)
   {
-    Message_ProgressScope aPS(theProgress, "Parsing scenes", aScenes->Size());
+    System::log::Message_ProgressScope aPS(theProgress, "Parsing scenes", aScenes->Size());
     for (rapidjson::Value::ConstValueIterator aSceneIter = aScenes->Begin();
          aSceneIter != aScenes->End();
          ++aSceneIter)
@@ -1341,7 +1341,7 @@ bool RWGltf_GltfJsonParser::gltfParseScene(const Message_ProgressRange& theProgr
       {
         return false;
       }
-      Message_ProgressRange   aRange      = aPS.Next();
+      System::log::Message_ProgressRange   aRange      = aPS.Next();
       const RWGltf_JsonValue* aSceneNodes = findObjectMember(*aSceneIter, "nodes");
       if (aSceneNodes == nullptr || !aSceneNodes->IsArray())
       {
@@ -1389,7 +1389,7 @@ bool RWGltf_GltfJsonParser::gltfParseScene(const Message_ProgressRange& theProgr
 
 bool RWGltf_GltfJsonParser::gltfParseSceneNodes(NCollection_Sequence<TopoDS_Shape>& theShapeSeq,
                                                 const RWGltf_JsonValue&             theSceneNodes,
-                                                const Message_ProgressRange&        theProgress)
+                                                const System::log::Message_ProgressRange&        theProgress)
 {
   if (!theSceneNodes.IsArray())
   {
@@ -1397,7 +1397,7 @@ bool RWGltf_GltfJsonParser::gltfParseSceneNodes(NCollection_Sequence<TopoDS_Shap
     return false;
   }
 
-  Message_ProgressScope aPS(theProgress, "Reading scene nodes", theSceneNodes.Size());
+  System::log::Message_ProgressScope aPS(theProgress, "Reading scene nodes", theSceneNodes.Size());
   for (rapidjson::Value::ConstValueIterator aSceneNodeIter = theSceneNodes.Begin();
        aSceneNodeIter != theSceneNodes.End() && aPS.More();
        ++aSceneNodeIter)
@@ -1436,7 +1436,7 @@ bool RWGltf_GltfJsonParser::gltfParseSceneNodes(NCollection_Sequence<TopoDS_Shap
 bool RWGltf_GltfJsonParser::gltfParseSceneNode(TopoDS_Shape&                  theNodeShape,
                                                const TCollection_AsciiString& theSceneNodeId,
                                                const RWGltf_JsonValue&        theSceneNode,
-                                               const Message_ProgressRange&   theProgress)
+                                               const System::log::Message_ProgressRange&   theProgress)
 {
   if (findNodeShape(theNodeShape, theSceneNodeId))
   {
@@ -1678,7 +1678,7 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
   if (aMode != RWGltf_GltfPrimitiveMode_Triangles && aMode != RWGltf_GltfPrimitiveMode_Lines
       && aMode != RWGltf_GltfPrimitiveMode_Points)
   {
-    Message::SendWarning(TCollection_AsciiString() + "Primitive array within Mesh '" + theMeshId
+    System::log::Message::SendWarning(TCollection_AsciiString() + "Primitive array within Mesh '" + theMeshId
                          + "' skipped due to unsupported mode");
     return true;
   }
@@ -1822,7 +1822,7 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
   {
     if (aMode != RWGltf_GltfPrimitiveMode_Triangles)
     {
-      Message::SendWarning("Deferred loading is available only for triangulations. Other elements "
+      System::log::Message::SendWarning("Deferred loading is available only for triangulations. Other elements "
                            "will be loaded immediately.");
       fillMeshData(aMeshData);
     }
@@ -1838,7 +1838,7 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
         for (int aNodeIdx = 1; aNodeIdx <= aMeshData->NbNodes(); ++aNodeIdx)
         {
           TopoDS_Vertex aVertex;
-          aBuilder.MakeVertex(aVertex, aMeshData->Node(aNodeIdx), Precision::Confusion());
+          aBuilder.MakeVertex(aVertex, aMeshData->Node(aNodeIdx), math::precision::Precision::Confusion());
           aBuilder.Add(aVertices, aVertex);
         }
         aShape = aVertices;
@@ -1871,7 +1871,7 @@ bool RWGltf_GltfJsonParser::gltfParsePrimArray(TopoDS_Shape&                  th
       }
       default:
       {
-        Message::SendFail("Unsupported primitive mode.");
+        System::log::Message::SendFail("Unsupported primitive mode.");
         return false;
         break;
       }
@@ -2175,10 +2175,10 @@ bool RWGltf_GltfJsonParser::gltfParseBuffer(
     if (!myDecodedBuffers.Find(theName, aData.StreamData))
     {
 
-      aData.StreamData = FSD_Base64::Decode(anUriData + 37, anUriVal->GetStringLength() - 37);
+      aData.StreamData = app::file::stream::FSD_Base64::Decode(anUriData + 37, anUriVal->GetStringLength() - 37);
       if (aData.StreamData.IsNull())
       {
-        Message::SendFail("Fail to allocate memory.");
+        System::log::Message::SendFail("Fail to allocate memory.");
       }
       myDecodedBuffers.Bind(theName, aData.StreamData);
     }
@@ -2197,7 +2197,7 @@ bool RWGltf_GltfJsonParser::gltfParseBuffer(
     bool                    isFileExist = false;
     if (!myProbedFiles.Find(aPath, isFileExist))
     {
-      isFileExist = OSD_File(aPath).Exists();
+      isFileExist = System::os::OSD_File(aPath).Exists();
       myProbedFiles.Bind(aPath, isFileExist);
     }
     if (!isFileExist)
@@ -2238,7 +2238,7 @@ void RWGltf_GltfJsonParser::bindNamedShape(TopoDS_Shape&                        
   {
 
     gp_XYZ aScale = myShapeScaleMap->Find(theShape);
-    if ((aScale - theScale).Modulus() > Precision::Confusion())
+    if ((aScale - theScale).Modulus() > math::precision::Precision::Confusion())
     {
 
       BRepBuilderAPI_Copy aCopy;
@@ -2361,7 +2361,7 @@ void RWGltf_GltfJsonParser::bindNamedShape(TopoDS_Shape&                        
 bool RWGltf_GltfJsonParser::fillMeshData(
   const occ::handle<RWGltf_GltfLatePrimitiveArray>& theMeshData) const
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   for (NCollection_Sequence<RWGltf_GltfPrimArrayData>::Iterator aDataIter(theMeshData->Data());
        aDataIter.More();
        aDataIter.Next())
@@ -2400,9 +2400,9 @@ bool RWGltf_GltfJsonParser::fillMeshData(
 }
 #endif
 
-bool RWGltf_GltfJsonParser::Parse(const Message_ProgressRange& theProgress)
+bool RWGltf_GltfJsonParser::Parse(const System::log::Message_ProgressRange& theProgress)
 {
-  Message_ProgressScope aPS(theProgress, "Parsing glTF", 1);
+  System::log::Message_ProgressScope aPS(theProgress, "Parsing glTF", 1);
 #ifdef HAVE_RAPIDJSON
   {
     if (!gltfParseRoots())
@@ -2419,7 +2419,7 @@ bool RWGltf_GltfJsonParser::Parse(const Message_ProgressRange& theProgress)
   }
   return aPS.More();
 #else
-  Message::SendFail("Error: glTF reader is unavailable - OCCT has been built without RapidJSON "
+  System::log::Message::SendFail("Error: glTF reader is unavailable - OCCT has been built without RapidJSON "
                     "support [HAVE_RAPIDJSON undefined]");
   return false;
 #endif

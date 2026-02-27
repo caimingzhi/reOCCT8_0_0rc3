@@ -47,7 +47,7 @@ public:
   AxeOperator(const gp_Ax1& A1,
               const gp_Ax1& A2,
               const double  theEpsDistance = 1.e-14,
-              const double  theEpsAxesPara = Precision::Angular());
+              const double  theEpsAxesPara = math::precision::Precision::Angular());
 
   void Distance(double& dist, double& Param1, double& Param2);
 
@@ -227,7 +227,7 @@ double EstimDist(const gp_Cone& theCon1, const gp_Cone& theCon2)
 
   gce_MakePln aMkPln(aPA1, aPA2, aP3);
   if (!aMkPln.IsDone())
-    return Precision::Infinite();
+    return math::precision::Precision::Infinite();
 
   const gp_Pln& aPln = aMkPln.Value();
 
@@ -252,7 +252,7 @@ double EstimDist(const gp_Cone& theCon1, const gp_Cone& theCon2)
   occ::handle<Geom2d_Line> L21 = new Geom2d_Line(Lines2[1]);
 #endif
 
-  double                   aMinDist[2] = {Precision::Infinite(), Precision::Infinite()};
+  double                   aMinDist[2] = {math::precision::Precision::Infinite(), math::precision::Precision::Infinite()};
   int                      i, j, k;
   IntAna2d_AnaIntersection anInter;
   for (i = 0; i < 2; ++i)
@@ -302,11 +302,11 @@ IntAna_QuadQuadGeo::IntAna_QuadQuadGeo()
 void IntAna_QuadQuadGeo::InitTolerances()
 {
   myEPSILON_DISTANCE                = 1.0e-14;
-  myEPSILON_ANGLE_CONE              = Precision::Angular();
-  myEPSILON_MINI_CIRCLE_RADIUS      = 0.01 * Precision::Confusion();
+  myEPSILON_ANGLE_CONE              = math::precision::Precision::Angular();
+  myEPSILON_MINI_CIRCLE_RADIUS      = 0.01 * math::precision::Precision::Confusion();
   myEPSILON_CYLINDER_DELTA_RADIUS   = 1.0e-13;
-  myEPSILON_CYLINDER_DELTA_DISTANCE = Precision::Confusion();
-  myEPSILON_AXES_PARA               = Precision::Angular();
+  myEPSILON_CYLINDER_DELTA_DISTANCE = math::precision::Precision::Confusion();
+  myEPSILON_AXES_PARA               = math::precision::Precision::Angular();
 }
 
 IntAna_QuadQuadGeo::IntAna_QuadQuadGeo(const gp_Pln& P1,
@@ -1598,7 +1598,7 @@ void IntAna_QuadQuadGeo::Perform(const gp_Cone& Con1, const gp_Cone& Con2, const
 
     gp_Dir aD2(aD1.Crossed(aGen.Direction()));
 
-    if (aD1.IsParallel(aGen2.Direction(), Precision::Angular()))
+    if (aD1.IsParallel(aGen2.Direction(), math::precision::Precision::Angular()))
     {
       aN = aD1.Crossed(aD2);
     }

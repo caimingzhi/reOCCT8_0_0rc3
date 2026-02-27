@@ -12,7 +12,7 @@ IMPLEMENT_DOMSTRING(MIMEtype, "mime_type")
 IMPLEMENT_DOMSTRING(Size, "size")
 
 XmlMXCAFDoc_NoteBinDataDriver::XmlMXCAFDoc_NoteBinDataDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMXCAFDoc_NoteDriver(theMsgDriver, STANDARD_TYPE(XCAFDoc_NoteBinData)->Name())
 {
 }

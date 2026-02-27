@@ -44,7 +44,7 @@ void IGESDimen_ToolDimensionUnits::ReadOwnParams(const occ::handle<IGESDimen_Dim
   PR.ReadText(PR.Current(), "Format String", tempFormatString);
   PR.ReadInteger(PR.Current(), "Fraction Flag", tempFracFlag);
 
-  PR.ReadInteger(PR.Current(), "Precision", tempPrecision);
+  PR.ReadInteger(PR.Current(), "math::precision::Precision", tempPrecision);
 
   DirChecker(ent).CheckTypeAndForm(PR.CCheck(), ent);
   ent->Init(tempNbProps,
@@ -154,7 +154,7 @@ void IGESDimen_ToolDimensionUnits::OwnDump(const occ::handle<IGESDimen_Dimension
   S << "\n"
     << "Fraction Flag   : " << ent->FractionFlag();
   if (ent->FractionFlag() == 0)
-    S << " Decimal  , Precision   : ";
+    S << " Decimal  , math::precision::Precision   : ";
   else
     S << " Fraction , Denominator : ";
   S << ent->PrecisionOrDenominator() << std::endl;

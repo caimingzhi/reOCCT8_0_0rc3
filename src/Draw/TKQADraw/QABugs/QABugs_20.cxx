@@ -2015,7 +2015,7 @@ static int OCC26930(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
   occ::handle<Geom2d_Curve> aPCurve;
 
   ShapeConstruct_ProjectCurveOnSurface aProj;
-  aProj.Init(aSurface, Precision::Confusion());
+  aProj.Init(aSurface, math::precision::Precision::Confusion());
   {
     try
     {
@@ -2065,8 +2065,8 @@ static int OCC27466(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
     return 1;
   BRepAdaptor_Surface aSurf(aFace);
 
-  constexpr double aTolU = Precision::PConfusion();
-  constexpr double aTolV = Precision::PConfusion();
+  constexpr double aTolU = math::precision::Precision::PConfusion();
+  constexpr double aTolV = math::precision::Precision::PConfusion();
 
   Extrema_GenLocateExtPS anExtrema(aSurf, aTolU, aTolV);
   anExtrema.Perform(aPnt, aUV.X(), aUV.Y(), true);
@@ -2278,7 +2278,7 @@ static int OCC26270(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
       occ::handle<Geom_BSplineSurface> aRes = aBSurface.BSplineSurface();
       if (!aRes.IsNull())
       {
-        BRepBuilderAPI_MakeFace b_face1(aRes, Precision::Confusion());
+        BRepBuilderAPI_MakeFace b_face1(aRes, math::precision::Precision::Confusion());
         const TopoDS_Face&      bsp_face1 = b_face1.Face();
         DBRep::Set(theArgVal[2], bsp_face1);
       }
@@ -2412,7 +2412,7 @@ static int OCC27884(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
 
   BRepClass_FaceClassifier aClassifier;
 
-  OSD_Timer timer;
+  System::os::OSD_Timer timer;
   timer.Start();
   for (int i = 1; i <= 100; i++)
   {
@@ -2518,35 +2518,35 @@ static int OCC28389(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   gp_Pnt aPP(Draw::Atof(argv[8]), Draw::Atof(argv[9]), Draw::Atof(argv[10]));
-  if (aPP.Distance(anObj->ProjectionPoint()) > Precision::Confusion())
+  if (aPP.Distance(anObj->ProjectionPoint()) > math::precision::Precision::Confusion())
   {
     di << "Error: Wrong projection point";
     return 1;
   }
 
   gp_Dir aVD(Draw::Atof(argv[11]), Draw::Atof(argv[12]), Draw::Atof(argv[13]));
-  if (!aVD.IsEqual(anObj->ViewDirection(), Precision::Angular()))
+  if (!aVD.IsEqual(anObj->ViewDirection(), math::precision::Precision::Angular()))
   {
     di << "Error: Wrong view direction";
     return 1;
   }
 
   gp_Dir aUD(Draw::Atof(argv[14]), Draw::Atof(argv[15]), Draw::Atof(argv[16]));
-  if (!aUD.IsEqual(anObj->UpDirection(), Precision::Angular()))
+  if (!aUD.IsEqual(anObj->UpDirection(), math::precision::Precision::Angular()))
   {
     di << "Error: Wrong up direction";
     return 1;
   }
 
-  if (fabs(anObj->ZoomFactor() - Draw::Atof(argv[17])) > Precision::Confusion())
+  if (fabs(anObj->ZoomFactor() - Draw::Atof(argv[17])) > math::precision::Precision::Confusion())
   {
     di << "Error: Wrong zoom factor";
     return 1;
   }
 
-  if (fabs(anObj->WindowHorizontalSize() - Draw::Atof(argv[18])) > Precision::Confusion())
+  if (fabs(anObj->WindowHorizontalSize() - Draw::Atof(argv[18])) > math::precision::Precision::Confusion())
     isOK = false;
-  if (fabs(anObj->WindowVerticalSize() - Draw::Atof(argv[19])) > Precision::Confusion())
+  if (fabs(anObj->WindowVerticalSize() - Draw::Atof(argv[19])) > math::precision::Precision::Confusion())
     isOK = false;
   if (!isOK)
   {
@@ -2595,12 +2595,12 @@ static int OCC28594(Draw_Interpretor& di, int argc, const char** argv)
   (*tangent_flags)(5)                                  = false;
   (*tangent_flags)(6)                                  = true;
 
-  Geom2dAPI_Interpolate interp_2d_with_scale(points_2d, false, Precision::Confusion());
+  Geom2dAPI_Interpolate interp_2d_with_scale(points_2d, false, math::precision::Precision::Confusion());
   interp_2d_with_scale.Load(tangent_2d, tangent_flags);
   interp_2d_with_scale.Perform();
   occ::handle<Geom2d_BSplineCurve> curve_2d_with_scale = interp_2d_with_scale.Curve();
 
-  Geom2dAPI_Interpolate interp_2d_without_scale(points_2d, false, Precision::Confusion());
+  Geom2dAPI_Interpolate interp_2d_without_scale(points_2d, false, math::precision::Precision::Confusion());
   interp_2d_without_scale.Load(tangent_2d, tangent_flags, false);
   interp_2d_without_scale.Perform();
   occ::handle<Geom2d_BSplineCurve> curve_2d_without_scale = interp_2d_without_scale.Curve();
@@ -2745,8 +2745,8 @@ void AllocDummyArr(Draw_Interpretor& theDI, int theN1, int theN2)
 {
   NCollection_Array1<T> aMapArr1(0, theN1), aMapArr2(0, theN2);
 
-  OSD_MemInfo aMemTool;
-  size_t      aMem0 = aMemTool.Value(OSD_MemInfo::MemHeapUsage);
+  System::os::OSD_MemInfo aMemTool;
+  size_t      aMem0 = aMemTool.Value(System::os::OSD_MemInfo::MemHeapUsage);
 
   for (int i = 1; i < theN1; i++)
     aMapArr1(i) = aMapArr1(i - 1);
@@ -2754,7 +2754,7 @@ void AllocDummyArr(Draw_Interpretor& theDI, int theN1, int theN2)
     aMapArr2(i) = aMapArr2(0);
 
   aMemTool.Update();
-  size_t aMem1 = aMemTool.Value(OSD_MemInfo::MemHeapUsage);
+  size_t aMem1 = aMemTool.Value(System::os::OSD_MemInfo::MemHeapUsage);
 
   theDI << "Heap usage before copy = " << (int)aMem0 << ", after = " << (int)aMem1 << "\n";
 
@@ -2884,7 +2884,7 @@ static int OCC29807(Draw_Interpretor& theDI, int theNArg, const char** theArgV)
   const gp_Pnt aP1 = anAS1->Value(aU1, aV1);
   const gp_Pnt aP2 = anAS2->Value(aU2, aV2);
 
-  if (aP1.SquareDistance(aP2) > Precision::SquareConfusion())
+  if (aP1.SquareDistance(aP2) > math::precision::Precision::SquareConfusion())
   {
     theDI << "Error. True intersection point must be specified. "
              "Please check parameters: u1 v1 u2 v2.\n";
@@ -2912,7 +2912,7 @@ static int OCC29311(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   int          aNbIter = Draw::Atoi(theArgv[3]);
 
   Bnd_OBB   anOBB;
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
   for (int aN = aNbIter; aN > 0; --aN)
   {
@@ -3166,14 +3166,14 @@ static int OCC29195(Draw_Interpretor&, int theArgC, const char** theArgV)
     return 0;
   }
   int aNbFiles  = (theArgC - off - 1) / 5;
-  int nbThreads = OSD_Parallel::NbLogicalProcessors();
+  int nbThreads = System::os::OSD_Parallel::NbLogicalProcessors();
   if (aNbFiles < nbThreads)
   {
     nbThreads = aNbFiles;
   }
 
   Args*       args    = new Args[nbThreads];
-  OSD_Thread* threads = new OSD_Thread[nbThreads];
+  System::os::OSD_Thread* threads = new System::os::OSD_Thread[nbThreads];
   while (iThread < nbThreads)
   {
     if (iThread < aNbFiles)
@@ -3200,14 +3200,14 @@ static int OCC29195(Draw_Interpretor&, int theArgC, const char** theArgV)
   bool finished = false;
   while (!finished)
   {
-    OSD::MilliSecSleep(100);
+    System::os::OSD::MilliSecSleep(100);
     finished = true;
     for (iThread = 0; iThread < nbThreads && finished; iThread++)
     {
       finished = args[iThread].finished;
     }
   }
-  OSD_Environment anEnv("Result29195");
+  System::os::OSD_Environment anEnv("Result29195");
   for (iThread = 0; iThread < nbThreads; iThread++)
   {
     if (*(args[iThread].res) == -1)
@@ -3398,7 +3398,7 @@ static int OCC30747(Draw_Interpretor& theDI, int theArgc, const char** theArgV)
     {
       aLTrim = new Geom2d_TrimmedCurve(aCirc, anId * aDelta, (anId + 1) * aDelta);
     }
-    aRes.Add(aLTrim, Precision::PConfusion());
+    aRes.Add(aLTrim, math::precision::Precision::PConfusion());
   }
 
   if (!aRes.BSplineCurve()->IsClosed())
@@ -3723,13 +3723,13 @@ static int OCC31320(Draw_Interpretor& di, int argc, const char** argv)
 
 namespace
 {
-  class QABugs_XdeLoader : public OSD_Thread
+  class QABugs_XdeLoader : public System::os::OSD_Thread
   {
   public:
     QABugs_XdeLoader(const occ::handle<TDocStd_Application>& theXdeApp,
                      const occ::handle<TDocStd_Document>&    theXdeDoc,
                      const TCollection_AsciiString&          theFilePath)
-        : OSD_Thread(performThread),
+        : System::os::OSD_Thread(performThread),
           myXdeApp(theXdeApp),
           myXdeDoc(theXdeDoc),
           myFilePath(theFilePath)
@@ -3743,17 +3743,17 @@ namespace
       const PCDM_ReaderStatus       aReaderStatus = myXdeApp->Open(myFilePath, aNewDoc);
       if (aReaderStatus != PCDM_RS_OK)
       {
-        Message::SendFail("Error occurred while reading the file");
+        System::log::Message::SendFail("Error occurred while reading the file");
         return;
       }
       myXdeDoc = aNewDoc;
-      Message::SendInfo() << "Info: document has been opened";
+      System::log::Message::SendInfo() << "Info: document has been opened";
     }
 
     static void* performThread(void* theData)
     {
       QABugs_XdeLoader* aLoader = (QABugs_XdeLoader*)theData;
-      OSD::SetThreadLocalSignal(OSD_SignalMode_Set, false);
+      System::os::OSD::SetThreadLocalSignal(OSD_SignalMode_Set, false);
       try
       {
         OCC_CATCH_SIGNALS
@@ -3761,7 +3761,7 @@ namespace
       }
       catch (Standard_Failure const& theExcep)
       {
-        Message::SendFail() << "Error: unexpected exception " << theExcep;
+        System::log::Message::SendFail() << "Error: unexpected exception " << theExcep;
         return nullptr;
       }
       return nullptr;
@@ -3849,7 +3849,7 @@ static int OCC33657_1(Draw_Interpretor&, int, const char**)
 {
   STEPCAFControl_Controller::Init();
 
-  OSD_Parallel::For(0,
+  System::os::OSD_Parallel::For(0,
                     1000,
                     [](int)
                     {
@@ -3872,7 +3872,7 @@ static int OCC33657_2(Draw_Interpretor& theDI, int theArgC, const char** theArgV
 
   STEPCAFControl_Controller::Init();
 
-  OSD_Parallel::For(0,
+  System::os::OSD_Parallel::For(0,
                     100,
                     [&](int)
                     {
@@ -3889,7 +3889,7 @@ static int OCC33657_3(Draw_Interpretor&, int, const char**)
   STEPCAFControl_Controller::Init();
   const TopoDS_Shape aShape = BRepPrimAPI_MakeBox(10.0, 20.0, 30.0).Shape();
 
-  OSD_Parallel::For(
+  System::os::OSD_Parallel::For(
     0,
     100,
     [&](int)
@@ -3923,7 +3923,7 @@ static int OCC33657_4(Draw_Interpretor& theDI, int theArgC, const char** theArgV
 
   std::atomic_bool anErrorOccurred(false);
 
-  OSD_Parallel::For(
+  System::os::OSD_Parallel::For(
     0,
     100,
     [&](int)
@@ -4019,7 +4019,7 @@ static int QACheckBends(Draw_Interpretor& theDI, int theNArg, const char** theAr
   }
 
   double U1 = aCurve->FirstParameter(), U2 = aCurve->LastParameter();
-  if (Precision::IsInfinite(U1) || Precision::IsInfinite(U2))
+  if (math::precision::Precision::IsInfinite(U1) || math::precision::Precision::IsInfinite(U2))
   {
     theDI << "Infinite interval  : " << U1 << "  " << U2 << "\n";
     return 0;
@@ -4075,7 +4075,7 @@ static int OCC26441(Draw_Interpretor& theDi, int theNbArgs, const char** theArgV
     return 1;
   }
 
-  double anEps = Precision::Confusion();
+  double anEps = math::precision::Precision::Confusion();
   if (theNbArgs > 3)
   {
     anEps = Draw::Atof(theArgVec[3]);

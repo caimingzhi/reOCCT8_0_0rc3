@@ -125,7 +125,7 @@ CDF_StoreSetNameStatus CDF_Store::SetName(const char16_t* aName)
   return SetName(theName);
 }
 
-void CDF_Store::Realize(const Message_ProgressRange& theRange)
+void CDF_Store::Realize(const System::log::Message_ProgressRange& theRange)
 {
   Standard_ProgramError_Raise_if(!myList->IsConsistent(), "information are missing");
   occ::handle<CDM_MetaData> m;

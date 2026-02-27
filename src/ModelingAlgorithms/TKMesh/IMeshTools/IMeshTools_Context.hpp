@@ -33,7 +33,7 @@ public:
       return false;
     }
 
-    return myEdgeDiscret->Perform(myModel, myParameters, Message_ProgressRange());
+    return myEdgeDiscret->Perform(myModel, myParameters, System::log::Message_ProgressRange());
   }
 
   virtual bool HealModel()
@@ -45,7 +45,7 @@ public:
 
     return myModelHealer.IsNull()
              ? true
-             : myModelHealer->Perform(myModel, myParameters, Message_ProgressRange());
+             : myModelHealer->Perform(myModel, myParameters, System::log::Message_ProgressRange());
   }
 
   virtual bool PreProcessModel()
@@ -57,10 +57,10 @@ public:
 
     return myPreProcessor.IsNull()
              ? true
-             : myPreProcessor->Perform(myModel, myParameters, Message_ProgressRange());
+             : myPreProcessor->Perform(myModel, myParameters, System::log::Message_ProgressRange());
   }
 
-  virtual bool DiscretizeFaces(const Message_ProgressRange& theRange)
+  virtual bool DiscretizeFaces(const System::log::Message_ProgressRange& theRange)
   {
     if (myModel.IsNull() || myFaceDiscret.IsNull())
     {
@@ -79,7 +79,7 @@ public:
 
     return myPostProcessor.IsNull()
              ? true
-             : myPostProcessor->Perform(myModel, myParameters, Message_ProgressRange());
+             : myPostProcessor->Perform(myModel, myParameters, System::log::Message_ProgressRange());
   }
 
   virtual void Clean()

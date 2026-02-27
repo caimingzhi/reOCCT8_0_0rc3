@@ -30,7 +30,7 @@ public:
   ~Graphic3d_CubeMapSeparate() override = default;
 
 protected:
-  OSD_Path                  myPaths[6];
+  System::os::OSD_Path                  myPaths[6];
   occ::handle<Image_PixMap> myImages[6];
 
   size_t       mySize;

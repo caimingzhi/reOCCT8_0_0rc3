@@ -16,7 +16,7 @@ IMPLEMENT_DOMSTRING(IsDeltaOn, "delta")
 IMPLEMENT_DOMSTRING(AttributeIDString, "intarrattguid")
 
 XmlMDataStd_IntegerArrayDriver::XmlMDataStd_IntegerArrayDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

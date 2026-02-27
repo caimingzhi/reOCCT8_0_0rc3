@@ -283,13 +283,13 @@ void BRepFill_TrimShellCorner::Perform()
     aMaxTol = std::max(aMaxTol, BRep_Tool::Tolerance(TopoDS::Vertex(anExp.Current())));
   }
 
-  double                         aFuzzy = 4. * Precision::Confusion();
+  double                         aFuzzy = 4. * math::precision::Precision::Confusion();
   BOPAlgo_PaveFiller             aPF;
   NCollection_List<TopoDS_Shape> aLS;
   aLS.Append(myShape1);
   aLS.Append(myShape2);
   aPF.SetArguments(aLS);
-  if (aMaxTol < 1.005 * Precision::Confusion())
+  if (aMaxTol < 1.005 * math::precision::Precision::Confusion())
   {
     aFuzzy = std::max(aPF.FuzzyValue(), aFuzzy);
     aPF.SetFuzzyValue(aFuzzy);
@@ -1334,7 +1334,7 @@ bool FindCommonVertex(const BOPDS_PDS& theDS,
         aBC2.D1(theParamOnE2, aPt, aDirOnE2);
         aIntersectPointCrossDir = aDirOnE1.Crossed(aDirOnE2);
 
-        if (aIntersectPointCrossDir.Dot(theCrossDirection) > Precision::SquareConfusion())
+        if (aIntersectPointCrossDir.Dot(theCrossDirection) > math::precision::Precision::SquareConfusion())
         {
           bvertexfound = true;
           break;
@@ -1542,8 +1542,8 @@ bool CheckAndOrientEdges(const NCollection_List<TopoDS_Shape>& theOrderedList,
   TopExp::Vertices(aEPrev, Vf, Vl);
   BRepAdaptor_Surface aBAS(theFace, false);
 
-  double aTolerance1 = (Vf.IsNull()) ? Precision::Confusion() : BRep_Tool::Tolerance(Vf);
-  double aTolerance2 = (Vl.IsNull()) ? Precision::Confusion() : BRep_Tool::Tolerance(Vl);
+  double aTolerance1 = (Vf.IsNull()) ? math::precision::Precision::Confusion() : BRep_Tool::Tolerance(Vf);
+  double aTolerance2 = (Vl.IsNull()) ? math::precision::Precision::Confusion() : BRep_Tool::Tolerance(Vl);
   double utol        = aBAS.UResolution(aTolerance1);
   double vtol        = aBAS.VResolution(aTolerance1);
   aTolerance1        = (utol > vtol) ? utol : vtol;
@@ -1598,8 +1598,8 @@ bool CheckAndOrientEdges(const NCollection_List<TopoDS_Shape>& theOrderedList,
     theOrientedList.Append(aE.Oriented(anOri));
     aEPrev = TopoDS::Edge(theOrientedList.Last());
 
-    aTolerance1 = (aV21.IsNull()) ? Precision::Confusion() : BRep_Tool::Tolerance(aV21);
-    aTolerance2 = (aV22.IsNull()) ? Precision::Confusion() : BRep_Tool::Tolerance(aV22);
+    aTolerance1 = (aV21.IsNull()) ? math::precision::Precision::Confusion() : BRep_Tool::Tolerance(aV21);
+    aTolerance2 = (aV22.IsNull()) ? math::precision::Precision::Confusion() : BRep_Tool::Tolerance(aV22);
     utol        = aBAS.UResolution(aTolerance1);
     vtol        = aBAS.VResolution(aTolerance1);
     aTolerance1 = (utol > vtol) ? utol : vtol;
@@ -2371,8 +2371,8 @@ bool FilterSectionEdges(const NCollection_Vector<BOPDS_Curve>& theBCurves,
           {
             const IntTools_Range& aRange = anIntersector.Result().Value(r);
 
-            if (((aRange.First() - f) < Precision::PConfusion())
-                && ((l - aRange.Last()) < Precision::PConfusion()))
+            if (((aRange.First() - f) < math::precision::Precision::PConfusion())
+                && ((l - aRange.Last()) < math::precision::Precision::PConfusion()))
             {
               bAddEdge = true;
               break;

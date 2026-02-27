@@ -90,7 +90,7 @@ protected:
                                 bool                                theIsImmediateOnly) = 0;
 
 protected:
-  OSD_Timer myFpsTimer;
+  System::os::OSD_Timer myFpsTimer;
   double    myFrameStartTime;
   double    myFrameDuration;
   double    myUpdateInterval;

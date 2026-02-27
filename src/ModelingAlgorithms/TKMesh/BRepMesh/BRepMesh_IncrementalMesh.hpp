@@ -20,13 +20,13 @@ public:
   Standard_EXPORT BRepMesh_IncrementalMesh(
     const TopoDS_Shape&          theShape,
     const IMeshTools_Parameters& theParameters,
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void Perform(const occ::handle<IMeshTools_Context>& theContext,
-                               const Message_ProgressRange& theRange = Message_ProgressRange());
+                               const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
 public:
   const IMeshTools_Parameters& Parameters() const { return myParameters; }
@@ -40,30 +40,30 @@ public:
 private:
   void initParameters()
   {
-    if (myParameters.Deflection < Precision::Confusion())
+    if (myParameters.Deflection < math::precision::Precision::Confusion())
     {
       throw Standard_NumericError(
         "BRepMesh_IncrementalMesh::initParameters : invalid parameter value");
     }
-    if (myParameters.DeflectionInterior < Precision::Confusion())
+    if (myParameters.DeflectionInterior < math::precision::Precision::Confusion())
     {
       myParameters.DeflectionInterior = myParameters.Deflection;
     }
 
-    if (myParameters.MinSize < Precision::Confusion())
+    if (myParameters.MinSize < math::precision::Precision::Confusion())
     {
       myParameters.MinSize =
         (std::max)(IMeshTools_Parameters::RelMinSize()
                      * (std::min)(myParameters.Deflection, myParameters.DeflectionInterior),
-                   Precision::Confusion());
+                   math::precision::Precision::Confusion());
     }
 
-    if (myParameters.Angle < Precision::Angular())
+    if (myParameters.Angle < math::precision::Precision::Angular())
     {
       throw Standard_NumericError(
         "BRepMesh_IncrementalMesh::initParameters : invalid parameter value");
     }
-    if (myParameters.AngleInterior < Precision::Angular())
+    if (myParameters.AngleInterior < math::precision::Precision::Angular())
     {
       myParameters.AngleInterior = 2.0 * myParameters.Angle;
     }

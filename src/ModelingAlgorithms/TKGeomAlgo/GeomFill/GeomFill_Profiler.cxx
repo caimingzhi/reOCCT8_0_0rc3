@@ -106,7 +106,7 @@ void GeomFill_Profiler::AddCurve(const occ::handle<Geom_Curve>& Curve)
     theCurve = occ::down_cast<Geom_TrimmedCurve>(theCurve)->BasisCurve();
   if (theCurve->IsKind(STANDARD_TYPE(Geom_Conic)))
   {
-    GeomConvert_ApproxCurve appr(Curve, Precision::Confusion(), GeomAbs_C1, 16, 14);
+    GeomConvert_ApproxCurve appr(Curve, math::precision::Precision::Confusion(), GeomAbs_C1, 16, 14);
     if (appr.HasResult())
       C = appr.Curve();
   }

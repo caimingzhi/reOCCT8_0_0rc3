@@ -170,7 +170,7 @@ static void CompParam(const Geom2dAdaptor_Curve&       Carc,
 
   gp_Pnt2d point   = Carc.Value(prefarc);
   double   distini = point.Distance(Ctg->Value(preftg));
-  if (distini <= Precision::PConfusion())
+  if (distini <= math::precision::Precision::PConfusion())
   {
     parc  = prefarc;
     ptg   = preftg;
@@ -187,10 +187,10 @@ static void CompParam(const Geom2dAdaptor_Curve&       Carc,
     int                        nbpt, nbseg;
     Intersection.Perform(Geom2dAdaptor_Curve(Ctg),
                          Carc,
-                         Precision::PIntersection(),
-                         Precision::PIntersection());
+                         math::precision::Precision::PIntersection(),
+                         math::precision::Precision::PIntersection());
 
-    double dist = Precision::Infinite(), p1, p2;
+    double dist = math::precision::Precision::Infinite(), p1, p2;
     if (Intersection.IsDone())
     {
       if (!Intersection.IsEmpty())
@@ -286,14 +286,14 @@ static void UpdateLine(occ::handle<BRepBlend_Line>& Line, const bool isfirst)
     {
       BRepBlend_Extremity BE;
       BP.ParametersOnS1(U, V);
-      BE.SetValue(BP.PointOnS1(), U, V, Precision::Confusion());
+      BE.SetValue(BP.PointOnS1(), U, V, math::precision::Precision::Confusion());
       Line->SetStartPoints(BE, Line->StartPointOnSecond());
     }
     if (Line->StartPointOnSecond().ParameterOnGuide() < tguide)
     {
       BRepBlend_Extremity BE;
       BP.ParametersOnS2(U, V);
-      BE.SetValue(BP.PointOnS2(), U, V, Precision::Confusion());
+      BE.SetValue(BP.PointOnS2(), U, V, math::precision::Precision::Confusion());
       Line->SetStartPoints(Line->StartPointOnFirst(), BE);
     }
   }
@@ -305,14 +305,14 @@ static void UpdateLine(occ::handle<BRepBlend_Line>& Line, const bool isfirst)
     {
       BRepBlend_Extremity BE;
       BP.ParametersOnS1(U, V);
-      BE.SetValue(BP.PointOnS1(), U, V, Precision::Confusion());
+      BE.SetValue(BP.PointOnS1(), U, V, math::precision::Precision::Confusion());
       Line->SetEndPoints(BE, Line->EndPointOnSecond());
     }
     if (Line->EndPointOnSecond().ParameterOnGuide() > tguide)
     {
       BRepBlend_Extremity BE;
       BP.ParametersOnS2(U, V);
-      BE.SetValue(BP.PointOnS2(), U, V, Precision::Confusion());
+      BE.SetValue(BP.PointOnS2(), U, V, math::precision::Precision::Confusion());
       Line->SetEndPoints(Line->EndPointOnFirst(), BE);
     }
   }
@@ -559,7 +559,7 @@ bool ChFi3d_Builder::StoreData(occ::handle<ChFiDS_SurfData>&         Data,
 
   occ::handle<Geom_BoundedSurface> aBndSurf = Surf;
   bool                             ext1 = false, ext2 = false;
-  double                           eps = std::max(tolget3d, 2. * Precision::Confusion());
+  double                           eps = std::max(tolget3d, 2. * math::precision::Precision::Confusion());
   if (length1 > eps)
   {
     gp_Pnt P11, P21;

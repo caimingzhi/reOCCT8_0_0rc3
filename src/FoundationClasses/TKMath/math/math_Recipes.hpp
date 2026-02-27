@@ -21,7 +21,7 @@ Standard_EXPORT int LU_Decompose(
   math_IntegerVector&          indx,
   double&                      d,
   double                       TINY        = 1.0e-20,
-  const Message_ProgressRange& theProgress = Message_ProgressRange());
+  const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
 Standard_EXPORT int LU_Decompose(
   math_Matrix&                 a,
@@ -29,7 +29,7 @@ Standard_EXPORT int LU_Decompose(
   double&                      d,
   math_Vector&                 vv,
   double                       TINY        = 1.0e-30,
-  const Message_ProgressRange& theProgress = Message_ProgressRange());
+  const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
 Standard_EXPORT void LU_Solve(const math_Matrix& a, const math_IntegerVector& indx, math_Vector& b);
 

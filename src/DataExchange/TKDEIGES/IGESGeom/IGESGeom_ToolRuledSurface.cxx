@@ -26,19 +26,19 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aCurve))
   {
-    Message_Msg Msg148("XSTEP_148");
+    System::log::Message_Msg Msg148("XSTEP_148");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg148.Arg(Msg216.Value());
         PR.SendFail(Msg148);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg148.Arg(Msg217.Value());
         PR.SendFail(Msg148);
         break;
@@ -50,19 +50,19 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, anotherCurve))
   {
-    Message_Msg Msg149("XSTEP_149");
+    System::log::Message_Msg Msg149("XSTEP_149");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg149.Arg(Msg216.Value());
         PR.SendFail(Msg149);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg149.Arg(Msg217.Value());
         PR.SendFail(Msg149);
         break;
@@ -74,12 +74,12 @@ void IGESGeom_ToolRuledSurface::ReadOwnParams(const occ::handle<IGESGeom_RuledSu
   }
   if (!PR.ReadInteger(PR.Current(), aDirFlag))
   {
-    Message_Msg Msg150("XSTEP_150");
+    System::log::Message_Msg Msg150("XSTEP_150");
     PR.SendFail(Msg150);
   }
   if (!PR.ReadInteger(PR.Current(), aDevFlag))
   {
-    Message_Msg Msg151("XSTEP_151");
+    System::log::Message_Msg Msg151("XSTEP_151");
     PR.SendFail(Msg151);
   }
 

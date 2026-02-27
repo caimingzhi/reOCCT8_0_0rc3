@@ -56,7 +56,7 @@ Standard_IStream& BinTools::GetReal(Standard_IStream& theIS, double& theValue)
 {
   if (!theIS.read((char*)&theValue, sizeof(double)))
   {
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
   }
 #ifdef DO_INVERSE
   theValue = InverseReal(theValue);
@@ -68,7 +68,7 @@ Standard_IStream& BinTools::GetShortReal(Standard_IStream& theIS, float& theValu
 {
   if (!theIS.read((char*)&theValue, sizeof(float)))
   {
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
   }
 #ifdef DO_INVERSE
   theValue = InverseShortReal(theValue);
@@ -79,7 +79,7 @@ Standard_IStream& BinTools::GetShortReal(Standard_IStream& theIS, float& theValu
 Standard_IStream& BinTools::GetInteger(Standard_IStream& IS, int& aValue)
 {
   if (!IS.read((char*)&aValue, sizeof(int)))
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
 #ifdef DO_INVERSE
   aValue = InverseInt(aValue);
 #endif
@@ -89,7 +89,7 @@ Standard_IStream& BinTools::GetInteger(Standard_IStream& IS, int& aValue)
 Standard_IStream& BinTools::GetExtChar(Standard_IStream& IS, char16_t& theValue)
 {
   if (!IS.read((char*)&theValue, sizeof(char16_t)))
-    throw Storage_StreamTypeMismatchError();
+    throw app::storage::Storage_StreamTypeMismatchError();
 #ifdef DO_INVERSE
   theValue = InverseExtChar(theValue);
 #endif
@@ -107,7 +107,7 @@ void BinTools::Write(const TopoDS_Shape&          theShape,
                      const bool                   theWithTriangles,
                      const bool                   theWithNormals,
                      const BinTools_FormatVersion theVersion,
-                     const Message_ProgressRange& theRange)
+                     const System::log::Message_ProgressRange& theRange)
 {
   BinTools_ShapeSet aShapeSet;
   aShapeSet.SetWithTriangles(theWithTriangles);
@@ -120,7 +120,7 @@ void BinTools::Write(const TopoDS_Shape&          theShape,
 
 void BinTools::Read(TopoDS_Shape&                theShape,
                     Standard_IStream&            theStream,
-                    const Message_ProgressRange& theRange)
+                    const System::log::Message_ProgressRange& theRange)
 {
   BinTools_ShapeSet aShapeSet;
   aShapeSet.SetWithTriangles(true);
@@ -133,9 +133,9 @@ bool BinTools::Write(const TopoDS_Shape&          theShape,
                      const bool                   theWithTriangles,
                      const bool                   theWithNormals,
                      const BinTools_FormatVersion theVersion,
-                     const Message_ProgressRange& theRange)
+                     const System::log::Message_ProgressRange& theRange)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aStream =
     aFileSystem->OpenOStream(theFile, std::ios::out | std::ios::binary);
   aStream->precision(15);
@@ -149,9 +149,9 @@ bool BinTools::Write(const TopoDS_Shape&          theShape,
 
 bool BinTools::Read(TopoDS_Shape&                theShape,
                     const char*                  theFile,
-                    const Message_ProgressRange& theRange)
+                    const System::log::Message_ProgressRange& theRange)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aStream =
     aFileSystem->OpenIStream(theFile, std::ios::in | std::ios::binary);
   if (aStream.get() == nullptr)

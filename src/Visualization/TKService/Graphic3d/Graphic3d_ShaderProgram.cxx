@@ -24,11 +24,11 @@ const TCollection_AsciiString& Graphic3d_ShaderProgram::ShadersFolder()
   if (!THE_IS_DEFINED)
   {
     THE_IS_DEFINED = true;
-    OSD_Environment aDirEnv("CSF_ShadersDirectory");
+    System::os::OSD_Environment aDirEnv("CSF_ShadersDirectory");
     THE_SHADERS_FOLDER = aDirEnv.Value();
     if (THE_SHADERS_FOLDER.IsEmpty())
     {
-      OSD_Environment aCasRootEnv("CASROOT");
+      System::os::OSD_Environment aCasRootEnv("CASROOT");
       THE_SHADERS_FOLDER = aCasRootEnv.Value();
       if (!THE_SHADERS_FOLDER.IsEmpty())
       {
@@ -41,10 +41,10 @@ const TCollection_AsciiString& Graphic3d_ShaderProgram::ShadersFolder()
       return THE_SHADERS_FOLDER;
     }
 
-    const OSD_Path                aDirPath(THE_SHADERS_FOLDER);
-    OSD_Directory                 aDir(aDirPath);
+    const System::os::OSD_Path                aDirPath(THE_SHADERS_FOLDER);
+    System::os::OSD_Directory                 aDir(aDirPath);
     const TCollection_AsciiString aProgram = THE_SHADERS_FOLDER + "/Declarations.glsl";
-    OSD_File                      aProgramFile(aProgram);
+    System::os::OSD_File                      aProgramFile(aProgram);
     if (!aDir.Exists() || !aProgramFile.Exists())
     {
       std::cerr << "Standard GLSL programs are not found in: " << THE_SHADERS_FOLDER.ToCString()

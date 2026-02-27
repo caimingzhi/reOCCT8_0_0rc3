@@ -18,7 +18,7 @@ const occ::handle<Standard_Transient>& BinTObjDrivers::Factory(const Standard_GU
   if (aGUID == BinStorageDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "BinTObjDrivers : Storage Plugin" << std::endl;
+    std::cout << "BinTObjDrivers : app::storage::Storage System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_sd = new BinTObjDrivers_DocumentStorageDriver;
     return model_sd;
@@ -27,7 +27,7 @@ const occ::handle<Standard_Transient>& BinTObjDrivers::Factory(const Standard_GU
   if (aGUID == BinRetrievalDriver)
   {
 #ifdef OCCT_DEBUG
-    std::cout << "BinTObjDrivers : Retrieval Plugin" << std::endl;
+    std::cout << "BinTObjDrivers : Retrieval System::plugin::Plugin" << std::endl;
 #endif
     static occ::handle<Standard_Transient> model_rd = new BinTObjDrivers_DocumentRetrievalDriver;
     return model_rd;
@@ -46,7 +46,7 @@ void BinTObjDrivers::DefineFormat(const occ::handle<TDocStd_Application>& theApp
 }
 
 void BinTObjDrivers::AddDrivers(const occ::handle<BinMDF_ADriverTable>& aDriverTable,
-                                const occ::handle<Message_Messenger>&   aMsgDrv)
+                                const occ::handle<System::log::Message_Messenger>&   aMsgDrv)
 {
   aDriverTable->AddDriver(new BinTObjDrivers_ModelDriver(aMsgDrv));
   aDriverTable->AddDriver(new BinTObjDrivers_ObjectDriver(aMsgDrv));

@@ -34,7 +34,7 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlLDrivers_DocumentStorageDriver, PCDM_StorageDriver
 
 #define FAILSTR "Failed to write xsi:schemaLocation : "
 
-static void take_time(const int, const char*, const occ::handle<Message_Messenger>&)
+static void take_time(const int, const char*, const occ::handle<System::log::Message_Messenger>&)
 #ifdef TAKE_TIMES
   ;
 #else
@@ -59,11 +59,11 @@ void XmlLDrivers_DocumentStorageDriver::AddNamespace(const TCollection_AsciiStri
 
 void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  theDocument,
                                               const TCollection_ExtendedString& theFileName,
-                                              const Message_ProgressRange&      theRange)
+                                              const System::log::Message_ProgressRange&      theRange)
 {
   myFileName = theFileName;
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aFileStream =
     aFileSystem->OpenOStream(theFileName, std::ios::out | std::ios::binary);
   if (aFileStream.get() != nullptr && aFileStream->good())
@@ -85,9 +85,9 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>&  
 
 void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& theDocument,
                                               Standard_OStream&                theOStream,
-                                              const Message_ProgressRange&     theRange)
+                                              const System::log::Message_ProgressRange&     theRange)
 {
-  occ::handle<Message_Messenger> aMessageDriver = theDocument->Application()->MessageDriver();
+  occ::handle<System::log::Message_Messenger> aMessageDriver = theDocument->Application()->MessageDriver();
   ::take_time(~0, " +++++ Start STORAGE procedures ++++++", aMessageDriver);
 
   XmlObjMgt_Document aDOMDoc = XmlObjMgt_Document::createDocument("document");
@@ -123,10 +123,10 @@ void XmlLDrivers_DocumentStorageDriver::Write(const occ::handle<CDM_Document>& t
 bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   const occ::handle<CDM_Document>& theDocument,
   XmlObjMgt_Element&               theElement,
-  const Message_ProgressRange&     theRange)
+  const System::log::Message_ProgressRange&     theRange)
 {
   SetIsError(false);
-  occ::handle<Message_Messenger> aMessageDriver = theDocument->Application()->MessageDriver();
+  occ::handle<System::log::Message_Messenger> aMessageDriver = theDocument->Application()->MessageDriver();
 
   int                i;
   XmlObjMgt_Document aDOMDoc = theElement.getOwnerDocument();
@@ -146,12 +146,12 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   TCollection_AsciiString anHTTP            = "http://www.opencascade.org/OCAF/XML";
   bool                    aToSetCSFVariable = false;
   const char*             aCSFVariable[2]   = {"CSF_XmlOcafResource", "CASROOT"};
-  OSD_Environment         anEnv(aCSFVariable[0]);
+  System::os::OSD_Environment         anEnv(aCSFVariable[0]);
   TCollection_AsciiString aResourceDir = anEnv.Value();
   if (aResourceDir.IsEmpty())
   {
 
-    OSD_Environment anEnv2(aCSFVariable[1]);
+    System::os::OSD_Environment anEnv2(aCSFVariable[1]);
     aResourceDir = anEnv2.Value();
     if (!aResourceDir.IsEmpty())
     {
@@ -171,12 +171,12 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   {
     TCollection_AsciiString aResourceFileName = aResourceDir + "/XmlOcaf.xsd";
 
-    OSD_File aResourceFile(aResourceFileName);
+    System::os::OSD_File aResourceFile(aResourceFileName);
     if (aResourceFile.Exists())
     {
       if (aToSetCSFVariable)
       {
-        OSD_Environment aCSFVarEnv(aCSFVariable[0], aResourceDir);
+        System::os::OSD_Environment aCSFVarEnv(aCSFVariable[0], aResourceDir);
         aCSFVarEnv.Build();
 #ifdef OCCT_DEBUGXML
         TCollection_ExtendedString aWarn1 = "Variable ";
@@ -233,7 +233,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   if (myCopyright.Length() > 0)
     aUserInfo.Append(TCollection_AsciiString(myCopyright, '?'));
 
-  occ::handle<Storage_Data> theData = new Storage_Data;
+  occ::handle<app::storage::Storage_Data> theData = new app::storage::Storage_Data;
 
   PCDM_ReadWriter::Writer()->WriteReferenceCounter(theData, theDocument);
   PCDM_ReadWriter::Writer()->WriteReferences(theData, theDocument, myFileName);
@@ -244,7 +244,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
   for (i = 1; i <= aRefs.Length(); i++)
     aUserInfo.Append(aRefs.Value(i));
 
-  occ::handle<Storage_HeaderData> aHeaderData = theData->HeaderData();
+  occ::handle<app::storage::Storage_HeaderData> aHeaderData = theData->HeaderData();
   aHeaderData->SetStorageVersion(aFormatVersion);
   myRelocTable.Clear();
   myRelocTable.SetHeaderData(aHeaderData);
@@ -269,7 +269,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
     aCommentsElem.appendChild(aCItem);
     XmlObjMgt::SetExtendedString(aCItem, aComments(i));
   }
-  Message_ProgressScope aPS(theRange, "Writing", 2);
+  System::log::Message_ProgressScope aPS(theRange, "Writing", 2);
 
   int anObjNb = 0;
   {
@@ -318,7 +318,7 @@ bool XmlLDrivers_DocumentStorageDriver::WriteToDomDocument(
 
 int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Document>& theTDoc,
                                                     XmlObjMgt_Element&               theElement,
-                                                    const Message_ProgressRange&     theRange)
+                                                    const System::log::Message_ProgressRange&     theRange)
 {
   TCollection_ExtendedString    aMessage;
   occ::handle<TDocStd_Document> TDOC = occ::down_cast<TDocStd_Document>(theTDoc);
@@ -328,10 +328,10 @@ int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Docume
     occ::handle<TDF_Data> aTDF = TDOC->GetData();
 
     occ::handle<CDM_Application>   anApplication = theTDoc->Application();
-    occ::handle<Message_Messenger> aMessageDriver;
+    occ::handle<System::log::Message_Messenger> aMessageDriver;
     if (anApplication.IsNull())
     {
-      aMessageDriver = Message::DefaultMessenger();
+      aMessageDriver = System::log::Message::DefaultMessenger();
       aMessageDriver->ChangePrinters().Clear();
     }
     else
@@ -353,7 +353,7 @@ int XmlLDrivers_DocumentStorageDriver::MakeDocument(const occ::handle<CDM_Docume
 }
 
 occ::handle<XmlMDF_ADriverTable> XmlLDrivers_DocumentStorageDriver::AttributeDrivers(
-  const occ::handle<Message_Messenger>& theMessageDriver)
+  const occ::handle<System::log::Message_Messenger>& theMessageDriver)
 {
   return XmlLDrivers::AttributeDrivers(theMessageDriver);
 }
@@ -370,7 +370,7 @@ struct timeb tmbuf0;
 
 static void take_time(const int                             isReset,
                       const char*                           aHeader,
-                      const occ::handle<Message_Messenger>& aMessageDriver)
+                      const occ::handle<System::log::Message_Messenger>& aMessageDriver)
 {
   struct timeb tmbuf;
   ftime(&tmbuf);
@@ -391,7 +391,7 @@ static void take_time(const int                             isReset,
 
 bool XmlLDrivers_DocumentStorageDriver::WriteShapeSection(XmlObjMgt_Element&,
                                                           const TDocStd_FormatVersion,
-                                                          const Message_ProgressRange&)
+                                                          const System::log::Message_ProgressRange&)
 {
 
   return false;

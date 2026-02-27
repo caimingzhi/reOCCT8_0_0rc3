@@ -221,7 +221,7 @@ namespace BVH
 
         if (aList.Size() > 0)
         {
-          OSD_Parallel::ForEach(aList.begin(),
+          System::os::OSD_Parallel::ForEach(aList.begin(),
                                 aList.end(),
                                 UpdateBoundTask<T, N>(myIsParallel),
                                 !myIsParallel);

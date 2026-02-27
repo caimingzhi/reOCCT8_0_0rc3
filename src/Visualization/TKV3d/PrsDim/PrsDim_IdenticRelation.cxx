@@ -148,7 +148,7 @@ static bool ComputeAttach(const gp_Circ& thecirc,
 {
   gp_Pnt curpos = aPosition;
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   gp_Pnt           aCenter = thecirc.Location();
   if (aCenter.Distance(curpos) <= confusion)
   {
@@ -205,7 +205,7 @@ static bool ComputeAttach(const gp_Elips& theEll,
 {
   gp_Pnt curpos = aPosition;
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   gp_Pnt           aCenter = theEll.Location();
   if (aCenter.Distance(curpos) <= confusion)
   {
@@ -327,7 +327,7 @@ void PrsDim_IdenticRelation::ComputeSelection(const occ::handle<SelectMgr_Select
   occ::handle<Select3D_SensitiveSegment> seg;
 
   gp_Pnt           attach;
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
 
   if (myFAttach.IsEqual(mySAttach, confusion))
   {
@@ -391,7 +391,7 @@ void PrsDim_IdenticRelation::ComputeSelection(const occ::handle<SelectMgr_Select
 
         gp_Vec v1(myFAttach, mySAttach);
         gp_Vec v2(myFAttach, myPosition);
-        if (v1.IsParallel(v2, Precision::Angular()))
+        if (v1.IsParallel(v2, math::precision::Precision::Angular()))
         {
           attach = mySAttach;
         }
@@ -626,7 +626,7 @@ void PrsDim_IdenticRelation::ComputeTwoLinesPresentation(
       double           dist    = thelin->Lin().Distance(curpos);
       gp_Pnt           proj    = ElCLib::Value(pcurpos, thelin->Lin());
       gp_Vec           trans;
-      constexpr double confusion(Precision::Confusion());
+      constexpr double confusion(math::precision::Precision::Confusion());
       if (dist >= confusion)
       {
         trans = gp_Vec(proj, curpos);
@@ -664,7 +664,7 @@ void PrsDim_IdenticRelation::ComputeTwoCirclesPresentation(
   const gp_Pnt&                          firstp2,
   const gp_Pnt&                          lastp2)
 {
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
 
   bool circ1complete = (firstp1.IsEqual(lastp1, confusion));
   bool circ2complete = (firstp2.IsEqual(lastp2, confusion));
@@ -922,7 +922,7 @@ void PrsDim_IdenticRelation::ComputeNotAutoCircPresentation(const occ::handle<Ge
 
   occ::handle<Geom_Circle> cirNotAuto = new Geom_Circle(thecirc->Circ());
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   if (myCenter.Distance(curpos) <= confusion)
   {
     gp_Vec vprec(myCenter, myFAttach);
@@ -977,7 +977,7 @@ void PrsDim_IdenticRelation::ComputeTwoEllipsesPresentation(
   const gp_Pnt&                          firstp2,
   const gp_Pnt&                          lastp2)
 {
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
 
   bool circ1complete = (firstp1.IsEqual(lastp1, confusion));
   bool circ2complete = (firstp2.IsEqual(lastp2, confusion));
@@ -1237,7 +1237,7 @@ void PrsDim_IdenticRelation::ComputeNotAutoElipsPresentation(
 
   gp_Elips anEll = theEll->Elips();
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   if (myCenter.Distance(curpos) <= confusion)
   {
     gp_Vec vprec(myCenter, myFAttach);
@@ -1316,7 +1316,7 @@ void PrsDim_IdenticRelation::ComputeTwoVerticesPresentation(
   {
 
     double symbsize = ComputeSegSize();
-    if (symbsize <= Precision::Confusion())
+    if (symbsize <= math::precision::Precision::Confusion())
       symbsize = 1.;
     symbsize *= 5;
 
@@ -1345,7 +1345,7 @@ void PrsDim_IdenticRelation::ComputeTwoVerticesPresentation(
       else
         return;
 
-      if (dF.IsParallel(dS, Precision::Angular()))
+      if (dF.IsParallel(dS, math::precision::Precision::Angular()))
       {
         myDir = dF.Crossed(myPlane->Pln().Axis().Direction());
       }
@@ -1435,7 +1435,7 @@ bool PrsDim_IdenticRelation::ComputeDirection(const TopoDS_Wire&   aWire,
     else
       return false;
 
-    if (!d1.IsParallel(d2, Precision::Angular()))
+    if (!d1.IsParallel(d2, math::precision::Precision::Angular()))
       dF.SetXYZ((d1.XYZ() + d2.XYZ()) / 2);
     else
     {
@@ -1475,7 +1475,7 @@ gp_Dir PrsDim_IdenticRelation::ComputeLineDirection(const occ::handle<Geom_Line>
 {
   gp_Dir dir;
   dir = lin->Lin().Direction();
-  if (!myFAttach.IsEqual(firstP, Precision::Confusion()))
+  if (!myFAttach.IsEqual(firstP, math::precision::Precision::Confusion()))
     dir.Reverse();
   return dir;
 }

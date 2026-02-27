@@ -69,7 +69,7 @@ void STEPControl_Writer::UnsetTolerance()
 IFSelect_ReturnStatus STEPControl_Writer::Transfer(const TopoDS_Shape&             sh,
                                                    const STEPControl_StepModelType mode,
                                                    const bool                      compgraph,
-                                                   const Message_ProgressRange&    theProgress)
+                                                   const System::log::Message_ProgressRange&    theProgress)
 {
   occ::handle<StepData_StepModel> aStepModel =
     occ::down_cast<StepData_StepModel>(thesession->Model());
@@ -84,7 +84,7 @@ IFSelect_ReturnStatus STEPControl_Writer::Transfer(const TopoDS_Shape&          
                                                    const STEPControl_StepModelType mode,
                                                    const DESTEP_Parameters&        theParams,
                                                    const bool                      compgraph,
-                                                   const Message_ProgressRange&    theProgress)
+                                                   const System::log::Message_ProgressRange&    theProgress)
 {
   int mws = -1;
   switch (mode)

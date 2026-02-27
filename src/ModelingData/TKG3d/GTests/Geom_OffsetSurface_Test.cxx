@@ -119,9 +119,9 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Plane_ReturnsTranslatedPlane)
 
   gp_Pnt anOrigLoc  = aPlane->Location();
   gp_Pnt anEquivLoc = anEquivPlane->Location();
-  EXPECT_NEAR(anEquivLoc.Z() - anOrigLoc.Z(), anOffset, Precision::Confusion());
-  EXPECT_NEAR(anEquivLoc.X(), anOrigLoc.X(), Precision::Confusion());
-  EXPECT_NEAR(anEquivLoc.Y(), anOrigLoc.Y(), Precision::Confusion());
+  EXPECT_NEAR(anEquivLoc.Z() - anOrigLoc.Z(), anOffset, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anEquivLoc.X(), anOrigLoc.X(), math::precision::Precision::Confusion());
+  EXPECT_NEAR(anEquivLoc.Y(), anOrigLoc.Y(), math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_PositiveOffset_ReturnsLargerCylinder)
@@ -140,7 +140,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_PositiveOffset_ReturnsLarger
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
 
-  EXPECT_NEAR(anEquivCyl->Radius(), 13.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivCyl->Radius(), 13.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeOffset_ReturnsSmallerCylinder)
@@ -158,7 +158,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeOffset_ReturnsSmalle
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
 
-  EXPECT_NEAR(anEquivCyl->Radius(), 7.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivCyl->Radius(), 7.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeRadiusFlip_ReturnsFlippedCylinder)
@@ -177,7 +177,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cylinder_NegativeRadiusFlip_ReturnsFl
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
 
-  EXPECT_NEAR(anEquivCyl->Radius(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivCyl->Radius(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_PositiveOffset_ReturnsLargerSphere)
@@ -194,9 +194,9 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_PositiveOffset_ReturnsLargerSp
   occ::handle<Geom_SphericalSurface> anEquivSphere = occ::down_cast<Geom_SphericalSurface>(anEquiv);
   ASSERT_FALSE(anEquivSphere.IsNull());
 
-  EXPECT_NEAR(anEquivSphere->Radius(), 15.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivSphere->Radius(), 15.0, math::precision::Precision::Confusion());
 
-  EXPECT_TRUE(anEquivSphere->Location().IsEqual(aSphere->Location(), Precision::Confusion()));
+  EXPECT_TRUE(anEquivSphere->Location().IsEqual(aSphere->Location(), math::precision::Precision::Confusion()));
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_NegativeRadiusFlip_ReturnsFlippedSphere)
@@ -213,7 +213,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Sphere_NegativeRadiusFlip_ReturnsFlip
   occ::handle<Geom_SphericalSurface> anEquivSphere = occ::down_cast<Geom_SphericalSurface>(anEquiv);
   ASSERT_FALSE(anEquivSphere.IsNull());
 
-  EXPECT_NEAR(anEquivSphere->Radius(), 3.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivSphere->Radius(), 3.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Cone_PositiveOffset_ReturnsOffsetCone)
@@ -232,10 +232,10 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Cone_PositiveOffset_ReturnsOffsetCone
   occ::handle<Geom_ConicalSurface> anEquivCone = occ::down_cast<Geom_ConicalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCone.IsNull());
 
-  EXPECT_NEAR(anEquivCone->SemiAngle(), aSemiAngle, Precision::Confusion());
+  EXPECT_NEAR(anEquivCone->SemiAngle(), aSemiAngle, math::precision::Precision::Confusion());
 
   const double anExpectedRadius = aRefRadius + anOffset * std::cos(aSemiAngle);
-  EXPECT_NEAR(anEquivCone->RefRadius(), anExpectedRadius, Precision::Confusion());
+  EXPECT_NEAR(anEquivCone->RefRadius(), anExpectedRadius, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Torus_PositiveOffset_ReturnsLargerTorus)
@@ -255,9 +255,9 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Torus_PositiveOffset_ReturnsLargerTor
   occ::handle<Geom_ToroidalSurface> anEquivTorus = occ::down_cast<Geom_ToroidalSurface>(anEquiv);
   ASSERT_FALSE(anEquivTorus.IsNull());
 
-  EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, Precision::Confusion());
+  EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, math::precision::Precision::Confusion());
 
-  EXPECT_NEAR(anEquivTorus->MinorRadius(), aMinorRadius + anOffset, Precision::Confusion());
+  EXPECT_NEAR(anEquivTorus->MinorRadius(), aMinorRadius + anOffset, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Torus_NegativeOffset_ReturnsSmallerTorus)
@@ -277,8 +277,8 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Torus_NegativeOffset_ReturnsSmallerTo
   occ::handle<Geom_ToroidalSurface> anEquivTorus = occ::down_cast<Geom_ToroidalSurface>(anEquiv);
   ASSERT_FALSE(anEquivTorus.IsNull());
 
-  EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, Precision::Confusion());
-  EXPECT_NEAR(anEquivTorus->MinorRadius(), aMinorRadius - 2.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anEquivTorus->MinorRadius(), aMinorRadius - 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, Torus_NegativeMinorRadiusFlip_ReturnsFlippedTorus)
@@ -298,8 +298,8 @@ TEST(Geom_OffsetSurface_EquivalentSurface, Torus_NegativeMinorRadiusFlip_Returns
   occ::handle<Geom_ToroidalSurface> anEquivTorus = occ::down_cast<Geom_ToroidalSurface>(anEquiv);
   ASSERT_FALSE(anEquivTorus.IsNull());
 
-  EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, Precision::Confusion());
-  EXPECT_NEAR(anEquivTorus->MinorRadius(), 2.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivTorus->MajorRadius(), aMajorRadius, math::precision::Precision::Confusion());
+  EXPECT_NEAR(anEquivTorus->MinorRadius(), 2.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, ZeroOffset_ReturnsBasisSurface)
@@ -317,7 +317,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, ZeroOffset_ReturnsBasisSurface)
   occ::handle<Geom_CylindricalSurface> anEquivCyl =
     occ::down_cast<Geom_CylindricalSurface>(anEquiv);
   ASSERT_FALSE(anEquivCyl.IsNull());
-  EXPECT_NEAR(anEquivCyl->Radius(), 10.0, Precision::Confusion());
+  EXPECT_NEAR(anEquivCyl->Radius(), 10.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, TrimmedPlane_ReturnsTrimmedTranslatedPlane)
@@ -340,10 +340,10 @@ TEST(Geom_OffsetSurface_EquivalentSurface, TrimmedPlane_ReturnsTrimmedTranslated
 
   double U1, U2, V1, V2;
   anEquivTrimmed->Bounds(U1, U2, V1, V2);
-  EXPECT_NEAR(U1, 0.0, Precision::Confusion());
-  EXPECT_NEAR(U2, 10.0, Precision::Confusion());
-  EXPECT_NEAR(V1, 0.0, Precision::Confusion());
-  EXPECT_NEAR(V2, 5.0, Precision::Confusion());
+  EXPECT_NEAR(U1, 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(U2, 10.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(V1, 0.0, math::precision::Precision::Confusion());
+  EXPECT_NEAR(V2, 5.0, math::precision::Precision::Confusion());
 }
 
 TEST(Geom_OffsetSurface_EquivalentSurface, DegenerateCylinder_ReturnsNull)
@@ -352,7 +352,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, DegenerateCylinder_ReturnsNull)
   gp_Ax3                               anAxis(gp_Pnt(0, 0, 0), gp_Dir(0, 0, 1));
   occ::handle<Geom_CylindricalSurface> aCyl = new Geom_CylindricalSurface(anAxis, 1.0);
 
-  const double                    anOffset     = -1.0 + 0.5 * Precision::Confusion();
+  const double                    anOffset     = -1.0 + 0.5 * math::precision::Precision::Confusion();
   occ::handle<Geom_OffsetSurface> anOffsetSurf = new Geom_OffsetSurface(aCyl, anOffset);
 
   occ::handle<Geom_Surface> anEquiv = anOffsetSurf->Surface();
@@ -378,7 +378,7 @@ TEST(Geom_OffsetSurface_EquivalentSurface, EquivalentSurface_EvaluationConsisten
     {
       gp_Pnt anOffsetPnt = anOffsetSurf->Value(u, v);
       gp_Pnt anEquivPnt  = anEquiv->Value(u, v);
-      EXPECT_TRUE(anOffsetPnt.IsEqual(anEquivPnt, Precision::Confusion()))
+      EXPECT_TRUE(anOffsetPnt.IsEqual(anEquivPnt, math::precision::Precision::Confusion()))
         << "Mismatch at u=" << u << ", v=" << v;
     }
   }

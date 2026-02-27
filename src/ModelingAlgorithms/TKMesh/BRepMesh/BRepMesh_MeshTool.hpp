@@ -135,7 +135,7 @@ private:
     {
       const BRepMesh_Vertex& aVertex = myStructure->GetNode(thePoint);
       const double aDist = (aVertex.Coord() - aLocation).SquareModulus() - (aRadius * aRadius);
-      return (aDist < Precision::SquareConfusion());
+      return (aDist < math::precision::Precision::SquareConfusion());
     }
 
     return false;

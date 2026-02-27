@@ -180,15 +180,15 @@ void Units_UnitsDictionary::Creates()
       strrightadjust(name);
 
       double M = 0., L = 0., T = 0., I = 0., t = 0., N = 0., J = 0., P = 0., S = 0.;
-      OSD::CStringToReal(MM, M);
-      OSD::CStringToReal(LL, L);
-      OSD::CStringToReal(TT, T);
-      OSD::CStringToReal(II, I);
-      OSD::CStringToReal(tt, t);
-      OSD::CStringToReal(NN, N);
-      OSD::CStringToReal(JJ, J);
-      OSD::CStringToReal(PP, P);
-      OSD::CStringToReal(SS, S);
+      System::os::OSD::CStringToReal(MM, M);
+      System::os::OSD::CStringToReal(LL, L);
+      System::os::OSD::CStringToReal(TT, T);
+      System::os::OSD::CStringToReal(II, I);
+      System::os::OSD::CStringToReal(tt, t);
+      System::os::OSD::CStringToReal(NN, N);
+      System::os::OSD::CStringToReal(JJ, J);
+      System::os::OSD::CStringToReal(PP, P);
+      System::os::OSD::CStringToReal(SS, S);
 
       occ::handle<Units_Dimensions> dimensions = new Units_Dimensions(M, L, T, I, t, N, J, P, S);
 
@@ -272,10 +272,10 @@ void Units_UnitsDictionary::Creates()
       {
         if (ismove)
         {
-          OSD::CStringToReal(&convert[charnumber], move);
+          System::os::OSD::CStringToReal(&convert[charnumber], move);
         }
         else
-          OSD::CStringToReal(convert, coeff);
+          System::os::OSD::CStringToReal(convert, coeff);
       }
       else
       {

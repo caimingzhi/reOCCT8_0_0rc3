@@ -269,7 +269,7 @@ void GCPnts_TangentialDeflection::EvaluateDu(const TheCurve& theC,
   gp_Vec T, N;
   D2(theC, theU, theP, T, N);
   double           Lt   = T.Magnitude();
-  constexpr double LTol = Precision::Confusion();
+  constexpr double LTol = math::precision::Precision::Confusion();
   if (Lt > LTol && N.Magnitude() > LTol)
   {
     double Lc = N.CrossMagnitude(T);
@@ -348,7 +348,7 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
                                              const double    theMinLen)
 {
   Standard_ConstructionError_Raise_if(
-    theCurvatureDeflection < Precision::Confusion() || theAngularDeflection < Precision::Angular(),
+    theCurvatureDeflection < math::precision::Precision::Confusion() || theAngularDeflection < math::precision::Precision::Angular(),
     "GCPnts_TangentialDeflection::Initialize - Zero Deflection") myParameters.Clear();
   myPoints.Clear();
   if (theFirstParameter < theLastParameter)
@@ -365,7 +365,7 @@ void GCPnts_TangentialDeflection::initialize(const TheCurve& theC,
   myAngularDeflection   = theAngularDeflection;
   myCurvatureDeflection = theCurvatureDeflection;
   myMinNbPnts           = std::max(theMinimumOfPoints, 2);
-  myMinLen              = std::max(theMinLen, Precision::Confusion());
+  myMinLen              = std::max(theMinLen, math::precision::Precision::Confusion());
 
   switch (theC.GetType())
   {
@@ -409,7 +409,7 @@ int GCPnts_TangentialDeflection::AddPoint(const gp_Pnt& thePnt,
                                           const double  theParam,
                                           const bool    theIsReplace)
 {
-  constexpr double tol   = Precision::PConfusion();
+  constexpr double tol   = math::precision::Precision::PConfusion();
   int              index = -1;
   const int        nb    = myParameters.Length();
   for (int i = 1; index == -1 && i <= nb; i++)
@@ -447,7 +447,7 @@ double GCPnts_TangentialDeflection::ArcAngularStep(const double theRadius,
 {
   Standard_ConstructionError_Raise_if(theRadius < 0.0, "Negative radius");
 
-  constexpr double aPrecision = Precision::Confusion();
+  constexpr double aPrecision = math::precision::Precision::Confusion();
 
   double Du = 0.0, aMinSizeAng = 0.0;
   if (theRadius > aPrecision)
@@ -471,7 +471,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
   double Du, Dusave, MiddleU, L1, L2;
 
   double           U1   = myFirstu;
-  constexpr double LTol = Precision::Confusion();
+  constexpr double LTol = math::precision::Precision::Confusion();
   double           ATol = 1.e-2 * myAngularDeflection;
   if (ATol > 1.e-2)
   {
@@ -736,7 +736,7 @@ void GCPnts_TangentialDeflection::PerformCurve(const TheCurve& theC)
       {
         if (Coef >= 1.5)
         {
-          if (!aPrevPoint.IsEqual(myPoints.Last(), Precision::Confusion()))
+          if (!aPrevPoint.IsEqual(myPoints.Last(), math::precision::Precision::Confusion()))
           {
             myParameters.Append(U1);
             myPoints.Append(aPrevPoint);

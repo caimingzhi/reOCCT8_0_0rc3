@@ -42,11 +42,11 @@ public:
 
   BOPTools_ConnexityBlock& ConnexityBlock() { return *myPCB; }
 
-  void SetProgressRange(const Message_ProgressRange& theRange) { myProgressRange = theRange; }
+  void SetProgressRange(const System::log::Message_ProgressRange& theRange) { myProgressRange = theRange; }
 
   void Perform()
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (!aPS.More())
     {
       return;
@@ -56,7 +56,7 @@ public:
 
 protected:
   BOPTools_ConnexityBlock* myPCB;
-  Message_ProgressRange    myProgressRange;
+  System::log::Message_ProgressRange    myProgressRange;
 };
 
 typedef NCollection_Vector<BOPAlgo_CBK> BOPAlgo_VectorOfCBK;
@@ -94,10 +94,10 @@ const NCollection_List<TopoDS_Shape>& BOPAlgo_ShellSplitter::Shells() const
   return myShells;
 }
 
-void BOPAlgo_ShellSplitter::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_ShellSplitter::Perform(const System::log::Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
-  Message_ProgressScope aPS(theRange, "Building shells", 1);
+  System::log::Message_ProgressScope aPS(theRange, "Building shells", 1);
 
   BOPTools_AlgoTools::MakeConnexityBlocks(myStartShapes, TopAbs_EDGE, TopAbs_FACE, myLCB);
   if (UserBreak(aPS))
@@ -538,7 +538,7 @@ void RefineShell(TopoDS_Shell&                                              theS
   }
 }
 
-void BOPAlgo_ShellSplitter::MakeShells(const Message_ProgressRange& theRange)
+void BOPAlgo_ShellSplitter::MakeShells(const System::log::Message_ProgressRange& theRange)
 {
   bool                                                bIsRegular;
   int                                                 aNbVCBK, k;
@@ -546,7 +546,7 @@ void BOPAlgo_ShellSplitter::MakeShells(const Message_ProgressRange& theRange)
   NCollection_List<TopoDS_Shape>::Iterator            aIt;
   BOPAlgo_VectorOfCBK                                 aVCBK;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 1);
   myShells.Clear();
 
   aItCB.Initialize(myLCB);
@@ -575,7 +575,7 @@ void BOPAlgo_ShellSplitter::MakeShells(const Message_ProgressRange& theRange)
   }
 
   aNbVCBK = aVCBK.Length();
-  Message_ProgressScope aPSParallel(aPSOuter.Next(), nullptr, aNbVCBK);
+  System::log::Message_ProgressScope aPSParallel(aPSOuter.Next(), nullptr, aNbVCBK);
   for (int iS = 0; iS < aNbVCBK; ++iS)
   {
     aVCBK.ChangeValue(iS).SetProgressRange(aPSParallel.Next());

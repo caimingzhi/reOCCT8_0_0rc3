@@ -7,9 +7,12 @@
 #if !defined No_Exception && !defined No_OSD_Exception_STACK_OVERFLOW
   #define OSD_Exception_STACK_OVERFLOW_Raise_if(CONDITION, MESSAGE)                                \
     if (CONDITION)                                                                                 \
-      throw OSD_Exception_STACK_OVERFLOW(MESSAGE);
+      throw System::os::OSD_Exception_STACK_OVERFLOW(MESSAGE);
 #else
   #define OSD_Exception_STACK_OVERFLOW_Raise_if(CONDITION, MESSAGE)
 #endif
 
-DEFINE_STANDARD_EXCEPTION(OSD_Exception_STACK_OVERFLOW, OSD_Exception)
+namespace System { namespace os {
+DEFINE_STANDARD_EXCEPTION(OSD_Exception_STACK_OVERFLOW, System::os::OSD_Exception)
+}} // namespace System::os
+

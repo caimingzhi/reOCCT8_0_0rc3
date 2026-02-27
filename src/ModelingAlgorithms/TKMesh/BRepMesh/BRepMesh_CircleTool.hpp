@@ -24,7 +24,7 @@ public:
   Standard_EXPORT BRepMesh_CircleTool(const int                                    theReservedSize,
                                       const occ::handle<NCollection_IncAllocator>& theAllocator);
 
-  void Init(const int) { myTolerance = Precision::PConfusion(); }
+  void Init(const int) { myTolerance = math::precision::Precision::PConfusion(); }
 
   void SetCellSize(const double theSize) { myCellFilter.Reset(theSize, myAllocator); }
 

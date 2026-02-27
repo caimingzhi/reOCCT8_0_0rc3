@@ -12,7 +12,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMDataStd_ReferenceListDriver, BinMDF_ADriver)
 
 BinMDataStd_ReferenceListDriver::BinMDataStd_ReferenceListDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TDataStd_ReferenceList)->Name())
 {
 }

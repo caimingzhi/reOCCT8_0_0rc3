@@ -37,7 +37,7 @@ bool ChFiKPart_Sphere(TopOpeBRepDS_DataStructure&           DStr,
                       const gp_Pnt2d& P2S2)
 {
 
-  double ptol = Precision::Confusion();
+  double ptol = math::precision::Precision::Confusion();
   gp_Pnt p1, p2, p3;
   gp_Vec v1, v2;
   S1->D1(PS1.X(), PS1.Y(), p1, v1, v2);

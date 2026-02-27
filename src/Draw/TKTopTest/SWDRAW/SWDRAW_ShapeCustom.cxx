@@ -101,7 +101,7 @@ static int ckeckKnots(const NCollection_Array1<double>& theKnots, double theFirs
     if (!aNum)
     {
       double aDF = theKnots(i) - theFirst;
-      if (fabs(aDF) <= Precision::PConfusion() || aDF > Precision::PConfusion())
+      if (fabs(aDF) <= math::precision::Precision::PConfusion() || aDF > math::precision::Precision::PConfusion())
       {
         aNum++;
         continue;
@@ -110,7 +110,7 @@ static int ckeckKnots(const NCollection_Array1<double>& theKnots, double theFirs
     else
     {
       double aDL = theKnots(i) - theLast;
-      if (fabs(aDL) <= Precision::PConfusion() || aDL > Precision::PConfusion())
+      if (fabs(aDL) <= math::precision::Precision::PConfusion() || aDL > math::precision::Precision::PConfusion())
         break;
       aNum++;
     }

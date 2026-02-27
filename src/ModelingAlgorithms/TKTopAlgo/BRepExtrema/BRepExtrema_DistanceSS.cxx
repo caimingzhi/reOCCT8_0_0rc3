@@ -42,7 +42,7 @@ static bool TRI_SOLUTION(const NCollection_Sequence<BRepExtrema_SolutionElem>& S
        anIt++)
   {
     const double dst = anIt->Point().Distance(Pt);
-    if (dst <= Precision::Confusion())
+    if (dst <= math::precision::Precision::Confusion())
     {
       return false;
     }
@@ -85,8 +85,8 @@ static void TRIM_INFINIT_EDGE(const TopoDS_Edge& S1,
   occ::handle<Geom_Curve> pCurv1 = BRep_Tool::Curve(S1, aFirst1, aLast1);
   occ::handle<Geom_Curve> pCurv2 = BRep_Tool::Curve(S2, aFirst2, aLast2);
 
-  if (Precision::IsInfinite(aFirst1) && Precision::IsInfinite(aLast1)
-      && Precision::IsInfinite(aFirst2) && Precision::IsInfinite(aLast2))
+  if (math::precision::Precision::IsInfinite(aFirst1) && math::precision::Precision::IsInfinite(aLast1)
+      && math::precision::Precision::IsInfinite(aFirst2) && math::precision::Precision::IsInfinite(aLast2))
     return;
 
   double Umin = 0., Umax = 0.;
@@ -94,31 +94,31 @@ static void TRIM_INFINIT_EDGE(const TopoDS_Edge& S1,
   bUmin = bUmax = false;
 
   occ::handle<Geom_Curve> pCurv;
-  if (!pCurv1.IsNull() && (Precision::IsInfinite(aFirst1) || Precision::IsInfinite(aLast1)))
+  if (!pCurv1.IsNull() && (math::precision::Precision::IsInfinite(aFirst1) || math::precision::Precision::IsInfinite(aLast1)))
   {
     pCurv    = pCurv1;
     bIsTrim1 = true;
-    if (!Precision::IsInfinite(aFirst1))
+    if (!math::precision::Precision::IsInfinite(aFirst1))
     {
       bUmin = true;
       Umin  = aFirst1;
     }
-    else if (!Precision::IsInfinite(aLast1))
+    else if (!math::precision::Precision::IsInfinite(aLast1))
     {
       bUmax = true;
       Umax  = aLast1;
     }
   }
-  else if (!pCurv2.IsNull() && (Precision::IsInfinite(aFirst2) || Precision::IsInfinite(aLast2)))
+  else if (!pCurv2.IsNull() && (math::precision::Precision::IsInfinite(aFirst2) || math::precision::Precision::IsInfinite(aLast2)))
   {
     pCurv    = pCurv2;
     bIsTrim2 = true;
-    if (!Precision::IsInfinite(aFirst2))
+    if (!math::precision::Precision::IsInfinite(aFirst2))
     {
       bUmin = true;
       Umin  = aFirst2;
     }
-    else if (!Precision::IsInfinite(aLast2))
+    else if (!math::precision::Precision::IsInfinite(aLast2))
     {
       bUmax = true;
       Umax  = aLast2;
@@ -177,7 +177,7 @@ static void TRIM_INFINIT_EDGE(const TopoDS_Edge& S1,
         Umax = aU;
     }
 
-    double tol = Precision::Confusion();
+    double tol = math::precision::Precision::Confusion();
     if (bIsTrim1)
       tol = BRep_Tool::Tolerance(S1);
     else if (bIsTrim2)
@@ -242,7 +242,7 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
   if (bRestrict)
   {
     pSurf->Bounds(U1, U2, V1, V2);
-    if (Precision::IsInfinite(U1))
+    if (math::precision::Precision::IsInfinite(U1))
       bIsTrim = true;
     else
     {
@@ -250,7 +250,7 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
       bUmin = true;
     }
 
-    if (Precision::IsInfinite(U2))
+    if (math::precision::Precision::IsInfinite(U2))
       bIsTrim = true;
     else
     {
@@ -258,7 +258,7 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
       bUmax = true;
     }
 
-    if (Precision::IsInfinite(V1))
+    if (math::precision::Precision::IsInfinite(V1))
       bIsTrim = true;
     else
     {
@@ -266,7 +266,7 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
       bVmin = true;
     }
 
-    if (Precision::IsInfinite(V2))
+    if (math::precision::Precision::IsInfinite(V2))
       bIsTrim = true;
     else
     {
@@ -277,8 +277,8 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
   else
   {
     BRepTools::UVBounds(aF, U1, U2, V1, V2);
-    if (Precision::IsInfinite(U1) && Precision::IsInfinite(U2) && Precision::IsInfinite(V1)
-        && Precision::IsInfinite(V2))
+    if (math::precision::Precision::IsInfinite(U1) && math::precision::Precision::IsInfinite(U2) && math::precision::Precision::IsInfinite(V1)
+        && math::precision::Precision::IsInfinite(V2))
       bIsTrim = true;
   }
 
@@ -374,7 +374,7 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
 
     occ::handle<Geom_Surface> result =
       new Geom_RectangularTrimmedSurface(pSurf, Umin, Umax, Vmin, Vmax);
-    aResFace = BRepBuilderAPI_MakeFace(result, Precision::Confusion());
+    aResFace = BRepBuilderAPI_MakeFace(result, math::precision::Precision::Confusion());
 
     bIsInfinit = true;
   }
@@ -416,7 +416,7 @@ static void PERFORM_C0(const TopoDS_Edge&                              S1,
 
     if (pCurv->Continuity() == GeomAbs_C0)
     {
-      constexpr double epsP = Precision::PConfusion();
+      constexpr double epsP = math::precision::Precision::PConfusion();
 
       GeomAdaptor_Curve aAdaptorCurve(pCurv, aFirst, aLast);
       const int         nbIntervals = aAdaptorCurve.NbIntervals(GeomAbs_C1);
@@ -704,7 +704,7 @@ void BRepExtrema_DistanceSS::Perform(
     if ((Dstmin < myDstRef - myEps) || (fabs(Dstmin - myDstRef) < myEps))
     {
       gp_Pnt           Pt, P1 = BRep_Tool::Pnt(theS1);
-      constexpr double epsP = Precision::PConfusion();
+      constexpr double epsP = math::precision::Precision::PConfusion();
 
       for (i = 1; i <= NbExtrema; i++)
       {
@@ -815,7 +815,7 @@ void BRepExtrema_DistanceSS::Perform(
     if ((Dstmin < myDstRef - myEps) || (fabs(Dstmin - myDstRef) < myEps))
     {
       gp_Pnt           Pt1, Pt2;
-      constexpr double epsP = Precision::PConfusion();
+      constexpr double epsP = math::precision::Precision::PConfusion();
 
       for (i = 1; i <= NbExtrema; i++)
       {
@@ -905,7 +905,7 @@ void BRepExtrema_DistanceSS::Perform(
       const double tol = BRep_Tool::Tolerance(theS2);
 
       gp_Pnt           Pt1, Pt2;
-      constexpr double epsP = Precision::PConfusion();
+      constexpr double epsP = math::precision::Precision::PConfusion();
 
       for (i = 1; i <= NbExtrema; i++)
       {

@@ -80,11 +80,11 @@ TDF_Label XCAFDoc_ClippingPlaneTool::AddClippingPlane(
     GetClippingPlane(aClippingPlanes.Value(i), aPlane, aName, aCapping);
     if (!aName.IsEqual(theName))
       continue;
-    if (aPlane.Axis().Angle(thePlane.Axis()) > Precision::Angular())
+    if (aPlane.Axis().Angle(thePlane.Axis()) > math::precision::Precision::Angular())
       continue;
-    if (aPlane.XAxis().Angle(thePlane.XAxis()) > Precision::Angular())
+    if (aPlane.XAxis().Angle(thePlane.XAxis()) > math::precision::Precision::Angular())
       continue;
-    if (aPlane.YAxis().Angle(thePlane.YAxis()) > Precision::Angular())
+    if (aPlane.YAxis().Angle(thePlane.YAxis()) > math::precision::Precision::Angular())
       continue;
     return aClippingPlanes.Value(i);
   }

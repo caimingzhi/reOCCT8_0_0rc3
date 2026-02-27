@@ -46,7 +46,7 @@ static void AddSpecialPoints(const IntAna_Quadric& theQuad,
     ElSLib::Parameters(theGpObj, aPt, aU, aV);
     const gp_Pnt aPProj(ElSLib::Value(aU, aV, theGpObj));
 
-    if (aPt.SquareDistance(aPProj) > Precision::SquareConfusion())
+    if (aPt.SquareDistance(aPProj) > math::precision::Precision::SquareConfusion())
     {
 
       continue;

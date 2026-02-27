@@ -51,7 +51,7 @@ public:
 protected:
   Standard_EXPORT bool performMesh(std::istream&                  theStream,
                                    const TCollection_AsciiString& theFile,
-                                   const Message_ProgressRange&   theProgress,
+                                   const System::log::Message_ProgressRange&   theProgress,
                                    const bool                     theToProbe) override;
 
   Standard_EXPORT void fillDocument() override;
@@ -67,7 +67,7 @@ protected:
 
   Standard_EXPORT virtual bool readLateData(NCollection_Vector<TopoDS_Face>& theFaces,
                                             const TCollection_AsciiString&   theFile,
-                                            const Message_ProgressRange&     theProgress);
+                                            const System::log::Message_ProgressRange&     theProgress);
 
   Standard_EXPORT void updateLateDataReader(
     NCollection_Vector<TopoDS_Face>&               theFaces,

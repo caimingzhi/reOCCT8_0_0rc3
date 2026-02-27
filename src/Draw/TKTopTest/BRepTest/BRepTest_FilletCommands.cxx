@@ -339,7 +339,7 @@ int boptopoblend(Draw_Interpretor& di, int narg, const char** a)
   printtolblend(di);
   if (narg < 5)
   {
-    Message::SendFail() << "Use <command name> result shape1 shape2 radius [-d]";
+    System::log::Message::SendFail() << "Use <command name> result shape1 shape2 radius [-d]";
     return 1;
   }
 
@@ -348,7 +348,7 @@ int boptopoblend(Draw_Interpretor& di, int narg, const char** a)
   TopoDS_Shape S2   = DBRep::Get(a[3]);
   if (S1.IsNull() || S2.IsNull())
   {
-    Message::SendFail() << " Null shapes are not allowed";
+    System::log::Message::SendFail() << " Null shapes are not allowed";
     return 1;
   }
   double Rad     = Draw::Atof(a[4]);
@@ -364,7 +364,7 @@ int boptopoblend(Draw_Interpretor& di, int narg, const char** a)
 
   BOPAlgo_PaveFiller                  theDSFiller;
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
-  Message_ProgressScope               aPS(aProgress->Start(), nullptr, 10);
+  System::log::Message_ProgressScope               aPS(aProgress->Start(), nullptr, 10);
   NCollection_List<TopoDS_Shape>      aLS;
   aLS.Append(S1);
   aLS.Append(S2);
@@ -373,7 +373,7 @@ int boptopoblend(Draw_Interpretor& di, int narg, const char** a)
   theDSFiller.Perform(aPS.Next(8));
   if (theDSFiller.HasErrors())
   {
-    Message::SendFail() << "Check types of the arguments, please";
+    System::log::Message::SendFail() << "Check types of the arguments, please";
     return 1;
   }
 
@@ -386,7 +386,7 @@ int boptopoblend(Draw_Interpretor& di, int narg, const char** a)
   bool anIsDone = pBuilder->IsDone();
   if (!anIsDone)
   {
-    Message::SendFail() << "boolean operation not done HasErrors()=" << pBuilder->HasErrors();
+    System::log::Message::SendFail() << "boolean operation not done HasErrors()=" << pBuilder->HasErrors();
     return 1;
   }
 

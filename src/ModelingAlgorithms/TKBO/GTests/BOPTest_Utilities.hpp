@@ -476,7 +476,7 @@ public:
       }
     }
 
-    if (aFirstSet && !aCurrentPt.IsEqual(aFirstPt, Precision::Confusion()))
+    if (aFirstSet && !aCurrentPt.IsEqual(aFirstPt, math::precision::Precision::Confusion()))
     {
 
       gp_Pnt aPt1 = ElSLib::Value(aCurrentPt.X(), aCurrentPt.Y(), aWorkingPlane);

@@ -101,7 +101,7 @@ IFSelect_ReturnStatus STEPControl_Reader::ReadFile(const char* filename)
   }
   catch (Standard_Failure const& anException)
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "    ****    Interruption ReadFile par Exception :   ****\n";
     sout << anException.what();
     sout << "\n    Abandon" << std::endl;
@@ -143,7 +143,7 @@ IFSelect_ReturnStatus STEPControl_Reader::ReadFile(const char*              file
   }
   catch (Standard_Failure const& anException)
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "    ****    Interruption ReadFile par Exception :   ****\n";
     sout << anException.what();
     sout << "\n    Abandon" << std::endl;
@@ -184,7 +184,7 @@ IFSelect_ReturnStatus STEPControl_Reader::ReadStream(const char* theName, std::i
   }
   catch (Standard_Failure const& anException)
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "    ****    Interruption ReadFile par Exception :   ****\n";
     sout << anException.what();
     sout << "\n    Abandon" << std::endl;
@@ -227,7 +227,7 @@ IFSelect_ReturnStatus STEPControl_Reader::ReadStream(const char*              th
   }
   catch (Standard_Failure const& anException)
   {
-    Message_Messenger::StreamBuffer sout = Message::SendInfo();
+    System::log::Message_Messenger::StreamBuffer sout = System::log::Message::SendInfo();
     sout << "    ****    Interruption ReadFile par Exception :   ****\n";
     sout << anException.what();
     sout << "\n    Abandon" << std::endl;
@@ -241,7 +241,7 @@ IFSelect_ReturnStatus STEPControl_Reader::ReadStream(const char*              th
   return status;
 }
 
-bool STEPControl_Reader::TransferRoot(const int num, const Message_ProgressRange& theProgress)
+bool STEPControl_Reader::TransferRoot(const int num, const System::log::Message_ProgressRange& theProgress)
 {
   return TransferOneRoot(num, theProgress);
 }

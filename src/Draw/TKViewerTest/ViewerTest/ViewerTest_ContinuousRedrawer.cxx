@@ -83,7 +83,7 @@ void ViewerTest_ContinuousRedrawer::Pause()
 void ViewerTest_ContinuousRedrawer::doThreadLoop()
 {
   occ::handle<Aspect_DisplayConnection> aDisp = new Aspect_DisplayConnection();
-  OSD_Timer                             aTimer;
+  System::os::OSD_Timer                             aTimer;
   aTimer.Start();
   double       aTimeOld   = 0.0;
   const double aTargetDur = myTargetFps > 0.0 ? 1.0 / myTargetFps : -1.0;
@@ -121,6 +121,6 @@ void ViewerTest_ContinuousRedrawer::doThreadLoop()
       myView->Window()->InvalidateContent(aDisp);
     }
 
-    OSD::MilliSecSleep(1);
+    System::os::OSD::MilliSecSleep(1);
   }
 }

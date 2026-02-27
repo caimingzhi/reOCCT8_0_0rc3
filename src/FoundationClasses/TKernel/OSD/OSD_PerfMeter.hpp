@@ -3,6 +3,7 @@
 #include <Standard_Macro.hpp>
 #include <TCollection_AsciiString.hpp>
 
+namespace System { namespace os {
 class OSD_PerfMeter
 {
 public:
@@ -32,3 +33,5 @@ public:
 private:
   TCollection_AsciiString myMeterName;
 };
+}} // namespace System::os
+

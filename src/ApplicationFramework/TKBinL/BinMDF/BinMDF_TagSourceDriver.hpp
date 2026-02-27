@@ -6,7 +6,10 @@
 #include <BinObjMgt_RRelocationTable.hpp>
 #include <Standard_Transient.hpp>
 #include <NCollection_IndexedMap.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class BinObjMgt_Persistent;
 
@@ -14,7 +17,7 @@ class BinMDF_TagSourceDriver : public BinMDF_ADriver
 {
 
 public:
-  Standard_EXPORT BinMDF_TagSourceDriver(const occ::handle<Message_Messenger>& theMessageDriver);
+  Standard_EXPORT BinMDF_TagSourceDriver(const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

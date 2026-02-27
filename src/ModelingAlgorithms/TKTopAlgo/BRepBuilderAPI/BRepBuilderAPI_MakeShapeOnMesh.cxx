@@ -51,7 +51,7 @@ namespace std
   };
 } // namespace std
 
-void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange)
+void BRepBuilderAPI_MakeShapeOnMesh::Build(const System::log::Message_ProgressRange& theRange)
 {
 
   if (myMesh.IsNull() || myMesh->NbNodes() == 0 || myMesh->NbTriangles() == 0)
@@ -60,7 +60,7 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
   const int aNbNodes     = myMesh->NbNodes();
   const int aNbTriangles = myMesh->NbTriangles();
 
-  Message_ProgressScope aPS(theRange,
+  System::log::Message_ProgressScope aPS(theRange,
                             "Per-facet shape construction",
                             double(aNbNodes + 2 * aNbTriangles));
 
@@ -178,7 +178,7 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const Message_ProgressRange& theRange
     const gp_Dir      aD1 = aC1.Line().Direction();
     const gp_Dir      aD2 = aC2.Line().Direction();
     gp_XYZ            aN  = aD1.XYZ().Crossed(aD2.XYZ());
-    if (aN.SquareModulus() < Precision::SquareConfusion())
+    if (aN.SquareModulus() < math::precision::Precision::SquareConfusion())
       continue;
     if (aTEdge1.Orientation() == TopAbs_REVERSED)
       aN.Reverse();

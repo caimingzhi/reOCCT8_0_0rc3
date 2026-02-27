@@ -182,7 +182,7 @@ static IFSelect_ReturnStatus TransferFinder(
   const occ::handle<Transfer_FinderProcess>&        theFP,
   const occ::handle<Interface_InterfaceModel>&      theModel,
   const int                                         theModeTrans,
-  const Message_ProgressRange&                      theProgress)
+  const System::log::Message_ProgressRange&                      theProgress)
 {
   if (theActor.IsNull())
     return IFSelect_RetError;
@@ -218,7 +218,7 @@ IFSelect_ReturnStatus XSControl_Controller::TransferWriteTransient(
   const occ::handle<Transfer_FinderProcess>&   theFP,
   const occ::handle<Interface_InterfaceModel>& theModel,
   const int                                    theModeTrans,
-  const Message_ProgressRange&                 theProgress) const
+  const System::log::Message_ProgressRange&                 theProgress) const
 {
   if (theObj.IsNull())
     return IFSelect_RetVoid;
@@ -243,7 +243,7 @@ IFSelect_ReturnStatus XSControl_Controller::TransferWriteShape(
   const occ::handle<Transfer_FinderProcess>&   FP,
   const occ::handle<Interface_InterfaceModel>& model,
   const int                                    modetrans,
-  const Message_ProgressRange&                 theProgress) const
+  const System::log::Message_ProgressRange&                 theProgress) const
 {
   if (shape.IsNull())
     return IFSelect_RetVoid;

@@ -14,17 +14,17 @@ static bool printerType(const TCollection_AsciiString& theTypeName,
 {
   if (theTypeName == "ostream")
   {
-    theType = STANDARD_TYPE(Message_PrinterOStream);
+    theType = STANDARD_TYPE(System::log::Message_PrinterOStream);
     return true;
   }
   else if (theTypeName == "systemlog")
   {
-    theType = STANDARD_TYPE(Message_PrinterSystemLog);
+    theType = STANDARD_TYPE(System::log::Message_PrinterSystemLog);
     return true;
   }
   else if (theTypeName == "report")
   {
-    theType = STANDARD_TYPE(Message_PrinterToReport);
+    theType = STANDARD_TYPE(System::log::Message_PrinterToReport);
     return true;
   }
   else if (theTypeName == "draw")
@@ -36,22 +36,22 @@ static bool printerType(const TCollection_AsciiString& theTypeName,
   return false;
 }
 
-static occ::handle<Message_Printer> createPrinter(const occ::handle<Standard_Type>& theType,
+static occ::handle<System::log::Message_Printer> createPrinter(const occ::handle<Standard_Type>& theType,
                                                   Draw_Interpretor&                 theDI)
 {
   const TCollection_AsciiString aTypeName(theType->Name());
-  if (aTypeName == STANDARD_TYPE(Message_PrinterOStream)->Name())
+  if (aTypeName == STANDARD_TYPE(System::log::Message_PrinterOStream)->Name())
   {
-    return new Message_PrinterOStream();
+    return new System::log::Message_PrinterOStream();
   }
-  else if (aTypeName == STANDARD_TYPE(Message_PrinterSystemLog)->Name())
+  else if (aTypeName == STANDARD_TYPE(System::log::Message_PrinterSystemLog)->Name())
   {
-    return new Message_PrinterSystemLog("draw_messages");
+    return new System::log::Message_PrinterSystemLog("draw_messages");
   }
-  else if (aTypeName == STANDARD_TYPE(Message_PrinterToReport)->Name())
+  else if (aTypeName == STANDARD_TYPE(System::log::Message_PrinterToReport)->Name())
   {
-    occ::handle<Message_PrinterToReport> aMessagePrinter = new Message_PrinterToReport();
-    const occ::handle<Message_Report>&   aReport         = Message::DefaultReport(true);
+    occ::handle<System::log::Message_PrinterToReport> aMessagePrinter = new System::log::Message_PrinterToReport();
+    const occ::handle<System::log::Message_Report>&   aReport         = System::log::Message::DefaultReport(true);
     aMessagePrinter->SetReport(aReport);
     return aMessagePrinter;
   }
@@ -59,7 +59,7 @@ static occ::handle<Message_Printer> createPrinter(const occ::handle<Standard_Typ
   {
     return new Draw_Printer(theDI);
   }
-  return occ::handle<Message_Printer>();
+  return occ::handle<System::log::Message_Printer>();
 }
 
 static int SendMessage(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
@@ -70,7 +70,7 @@ static int SendMessage(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     return 1;
   }
 
-  const occ::handle<Message_Messenger>& aMessenger = Message::DefaultMessenger();
+  const occ::handle<System::log::Message_Messenger>& aMessenger = System::log::Message::DefaultMessenger();
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -83,7 +83,7 @@ static int SendMessage(Draw_Interpretor& theDI, int theArgNb, const char** theAr
 
 static int PrintMessenger(Draw_Interpretor& theDI, int, const char**)
 {
-  const occ::handle<Message_Messenger>& aMessenger = Message::DefaultMessenger();
+  const occ::handle<System::log::Message_Messenger>& aMessenger = System::log::Message::DefaultMessenger();
 
   Standard_SStream aSStream;
   aMessenger->DumpJson(aSStream);
@@ -103,7 +103,7 @@ static int SetMessagePrinter(Draw_Interpretor& theDI, int theArgNb, const char**
 
   bool                                      toAddPrinter = true;
   NCollection_List<TCollection_AsciiString> aPrinterTypes;
-  const occ::handle<Message_Messenger>&     aMessenger = Message::DefaultMessenger();
+  const occ::handle<System::log::Message_Messenger>&     aMessenger = System::log::Message::DefaultMessenger();
   for (int anArgIter = 1; anArgIter < theArgNb; ++anArgIter)
   {
     TCollection_AsciiString anArg(theArgVec[anArgIter]);
@@ -140,11 +140,11 @@ static int SetMessagePrinter(Draw_Interpretor& theDI, int theArgNb, const char**
 
     if (toAddPrinter)
     {
-      occ::handle<Message_Printer> aPrinter = createPrinter(aPrinterType, theDI);
+      occ::handle<System::log::Message_Printer> aPrinter = createPrinter(aPrinterType, theDI);
       aMessenger->AddPrinter(aPrinter);
-      if (!occ::down_cast<Message_PrinterToReport>(aPrinter).IsNull())
+      if (!occ::down_cast<System::log::Message_PrinterToReport>(aPrinter).IsNull())
       {
-        Message::DefaultReport(false)->UpdateActiveInMessenger();
+        System::log::Message::DefaultReport(false)->UpdateActiveInMessenger();
       }
     }
     else
@@ -163,7 +163,7 @@ static int ClearReport(Draw_Interpretor& theDI, int theArgNb, const char**)
     return 1;
   }
 
-  const occ::handle<Message_Report>& aReport = Message::DefaultReport(false);
+  const occ::handle<System::log::Message_Report>& aReport = System::log::Message::DefaultReport(false);
   if (aReport.IsNull())
   {
     theDI << "Error: report is no created";
@@ -182,7 +182,7 @@ static int SetReportMetric(Draw_Interpretor& theDI, int theArgNb, const char** t
     return 1;
   }
 
-  const occ::handle<Message_Report>& aReport = Message::DefaultReport(true);
+  const occ::handle<System::log::Message_Report>& aReport = System::log::Message::DefaultReport(true);
   if (aReport.IsNull())
   {
     return 1;
@@ -205,7 +205,7 @@ static int SetReportMetric(Draw_Interpretor& theDI, int theArgNb, const char** t
 
 static int CollectMetricMessages(Draw_Interpretor& theDI, int theArgNb, const char** theArgVec)
 {
-  static Handle(NCollection_Shared<Message_Level>) MyLevel;
+  static Handle(NCollection_Shared<System::log::Message_Level>) MyLevel;
 
   if (theArgNb < 1)
   {
@@ -233,7 +233,7 @@ static int CollectMetricMessages(Draw_Interpretor& theDI, int theArgNb, const ch
       theDI << "Error: collecting already activated";
       return 1;
     }
-    MyLevel = new NCollection_Shared<Message_Level>("Level");
+    MyLevel = new NCollection_Shared<System::log::Message_Level>("Level");
   }
   else
   {
@@ -256,7 +256,7 @@ static int PrintReport(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     return 1;
   }
 
-  const occ::handle<Message_Report>& aReport = Message::DefaultReport(false);
+  const occ::handle<System::log::Message_Report>& aReport = System::log::Message::DefaultReport(false);
   if (aReport.IsNull())
   {
     theDI << "Error: report is no created";
@@ -269,7 +269,7 @@ static int PrintReport(Draw_Interpretor& theDI, int theArgNb, const char** theAr
     anArgCase.LowerCase();
     if (anArgCase == "-messenger")
     {
-      aReport->SendMessages(Message::DefaultMessenger());
+      aReport->SendMessages(System::log::Message::DefaultMessenger());
     }
     else if (anArgCase == "-dump" || anArgCase == "-print")
     {
@@ -295,7 +295,7 @@ void Draw::MessageCommands(Draw_Interpretor& theCommands)
     return;
   Done = true;
 
-  const char* group = "DRAW Message Commands";
+  const char* group = "DRAW System::log::Message Commands";
 
   theCommands.Add("PrintMessenger",
                   "PrintMessenger"

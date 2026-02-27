@@ -15,7 +15,7 @@ BRepMesh_BaseMeshAlgo::~BRepMesh_BaseMeshAlgo() = default;
 
 void BRepMesh_BaseMeshAlgo::Perform(const IMeshData::IFaceHandle& theDFace,
                                     const IMeshTools_Parameters&  theParameters,
-                                    const Message_ProgressRange&  theRange)
+                                    const System::log::Message_ProgressRange&  theRange)
 {
   try
   {
@@ -167,7 +167,7 @@ TopAbs_Orientation BRepMesh_BaseMeshAlgo::fixSeamEdgeOrientation(
         std::min(aPnt1_1.SquareDistance(aPnt1_2), aPnt1_1.SquareDistance(aPnt2_2));
       const double aSqDist2 =
         std::min(aPnt2_1.SquareDistance(aPnt1_2), aPnt2_1.SquareDistance(aPnt2_2));
-      if (aSqDist1 < Precision::SquareConfusion() && aSqDist2 < Precision::SquareConfusion())
+      if (aSqDist1 < math::precision::Precision::SquareConfusion() && aSqDist2 < math::precision::Precision::SquareConfusion())
       {
         return TopAbs_INTERNAL;
       }

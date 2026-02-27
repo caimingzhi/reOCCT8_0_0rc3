@@ -81,7 +81,7 @@ static bool FUN_keepEinterference
     occ::handle<TopOpeBRepDS_CurvePointInterference> aCPI =
       occ::down_cast<TopOpeBRepDS_CurvePointInterference>(I);
 
-    double eps = Precision::PConfusion();
+    double eps = math::precision::Precision::PConfusion();
     double par = aCPI->Parameter();
     double f, l;
     BRep_Tool::Range(TopoDS::Edge(E), f, l);

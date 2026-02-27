@@ -64,22 +64,22 @@ public:
 
   Standard_EXPORT bool TransferOneRoot(
     const int                    num         = 1,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool TransferOne(
     const int                    num,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT bool TransferEntity(
     const occ::handle<Standard_Transient>& start,
-    const Message_ProgressRange&           theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT int TransferList(
     const occ::handle<NCollection_HSequence<occ::handle<Standard_Transient>>>& list,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT int TransferRoots(
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void ClearShapes();
 

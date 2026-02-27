@@ -16,7 +16,7 @@ static inline void AddPointIntoLine(occ::handle<IntSurf_LineOn2S>& theLine,
 {
   if (theLine->NbPoints() > 0)
   {
-    if (thePoint.IsSame(theLine->Value(theLine->NbPoints()), Precision::Confusion()))
+    if (thePoint.IsSame(theLine->Value(theLine->NbPoints()), math::precision::Precision::Confusion()))
       return;
 
     IntPatch_SpecialPoints::AdjustPointAndVertex(theLine->Value(theLine->NbPoints()),
@@ -116,7 +116,7 @@ IntPatch_ALineToWLine::IntPatch_ALineToWLine(const occ::handle<Adaptor3d_Surface
       myNbPointsInWline(theNbPoints),
       myTolOpenDomain(1.e-9),
       myTolTransition(1.e-8),
-      myTol3D(Precision::Confusion())
+      myTol3D(math::precision::Precision::Confusion())
 {
   const GeomAbs_SurfaceType aTyps1 = theS1->GetType();
   const GeomAbs_SurfaceType aTyps2 = theS2->GetType();
@@ -348,8 +348,8 @@ void IntPatch_ALineToWLine::MakeWLine(
     }
   }
 
-  const double aTol    = 2.0 * myTol3D + Precision::Confusion();
-  const double aPrmTol = std::max(1.0e-4 * (theLPar - theFPar), Precision::PConfusion());
+  const double aTol    = 2.0 * myTol3D + math::precision::Precision::Confusion();
+  const double aPrmTol = std::max(1.0e-4 * (theLPar - theFPar), math::precision::Precision::PConfusion());
 
   IntPatch_SpecPntType aPrePointExist = IntPatch_SPntNone;
 
@@ -479,7 +479,7 @@ void IntPatch_ALineToWLine::MakeWLine(
             if ((aParam - aPrevParam) < aPrmTol)
             {
               const gp_Pnt aPnt3d(theALine->Value(aParam));
-              if (aPOn2S.Value().SquareDistance(aPnt3d) < Precision::SquareConfusion())
+              if (aPOn2S.Value().SquareDistance(aPnt3d) < math::precision::Precision::SquareConfusion())
               {
 
                 continue;
@@ -496,7 +496,7 @@ void IntPatch_ALineToWLine::MakeWLine(
           myQuad2.Parameters(aPnt3d, u2, v2);
           aRPT.SetValue(aPnt3d, u1, v1, u2, v2);
 
-          if (aPOn2S.IsSame(aPrevLPoint, std::max(Precision::Approximation(), aTol)))
+          if (aPOn2S.IsSame(aPrevLPoint, std::max(math::precision::Precision::Approximation(), aTol)))
           {
 
             if (aSingularSurfaceID == 1)
@@ -628,7 +628,7 @@ void IntPatch_ALineToWLine::MakeWLine(
         for (int i = aVertexNumber + 1; i <= aVertexParams.Upper(); i++)
         {
           const double aParam = aVertexParams(i);
-          if ((aParam - aVertexParams(aVertexNumber)) > Precision::PConfusion())
+          if ((aParam - aVertexParams(aVertexNumber)) > math::precision::Precision::PConfusion())
           {
             const double aPrm = 0.5 * (aParam + aVertexParams(aVertexNumber));
             const gp_Pnt aPnt3d(theALine->Value(aPrm));
@@ -708,7 +708,7 @@ void IntPatch_ALineToWLine::MakeWLine(
             aLVtx.SetValue(aVertP2S);
             aLVtx.SetTolerance(aVertToler);
             double aParam = aLVtx.ParameterOnLine();
-            if (std::abs(aParam - theLPar) <= Precision::PConfusion())
+            if (std::abs(aParam - theLPar) <= math::precision::Precision::PConfusion())
               aLVtx.SetParameter(-1);
             else
               aLVtx.SetParameter(aNewVertexParam);
@@ -866,7 +866,7 @@ bool IntPatch_ALineToWLine::StepComputing(const occ::handle<IntPatch_ALine>& the
                                           const double                       theMaxDeflection,
                                           double&                            theStep) const
 {
-  if (theTgMagnitude < Precision::Confusion())
+  if (theTgMagnitude < math::precision::Precision::Confusion())
     return false;
 
   const double anEps = myTol3D;
@@ -917,7 +917,7 @@ bool IntPatch_ALineToWLine::StepComputing(const occ::handle<IntPatch_ALine>& the
     }
 
     theStep = 0.5 * (aMinStep + aMaxStep);
-  } while (((aMaxStep - aMinStep) > Precision::PConfusion()) && (aNbIter <= aNbIterMax));
+  } while (((aMaxStep - aMinStep) > math::precision::Precision::PConfusion()) && (aNbIter <= aNbIterMax));
 
   return aNbIter <= aNbIterMax;
 }

@@ -34,9 +34,9 @@ bool DE_ConfigurationNode::Load(const TCollection_AsciiString& theResourcePath)
 
 bool DE_ConfigurationNode::Save(const TCollection_AsciiString& theResourcePath) const
 {
-  OSD_Path       aPath = theResourcePath;
-  OSD_File       aFile(aPath);
-  OSD_Protection aProt;
+  System::os::OSD_Path       aPath = theResourcePath;
+  System::os::OSD_File       aFile(aPath);
+  System::os::OSD_Protection aProt;
   {
     try
     {
@@ -45,13 +45,13 @@ bool DE_ConfigurationNode::Save(const TCollection_AsciiString& theResourcePath) 
     }
     catch (Standard_Failure const&)
     {
-      Message::SendFail() << "Error: Configuration writing process was stopped. Can't build file.";
+      System::log::Message::SendFail() << "Error: Configuration writing process was stopped. Can't build file.";
       return false;
     }
   }
   if (aFile.Failed())
   {
-    Message::SendFail() << "Error: Configuration writing process was stopped. Can't build file.";
+    System::log::Message::SendFail() << "Error: Configuration writing process was stopped. Can't build file.";
     return false;
   }
   TCollection_AsciiString aResConfiguration = Save();

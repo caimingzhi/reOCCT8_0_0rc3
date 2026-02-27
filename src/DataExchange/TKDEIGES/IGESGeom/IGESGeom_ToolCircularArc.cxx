@@ -25,16 +25,16 @@ void IGESGeom_ToolCircularArc::ReadOwnParams(const occ::handle<IGESGeom_Circular
                                              IGESData_ParamReader& PR) const
 {
 
-  Message_Msg Msg76("XSTEP_76");
-  Message_Msg Msg77("XSTEP_77");
-  Message_Msg Msg78("XSTEP_78");
+  System::log::Message_Msg Msg76("XSTEP_76");
+  System::log::Message_Msg Msg77("XSTEP_77");
+  System::log::Message_Msg Msg78("XSTEP_78");
 
   double aZT;
   gp_XY  aCenter, aStart, anEnd;
 
   if (!PR.ReadReal(PR.Current(), aZT))
   {
-    Message_Msg Msg75("XSTEP_75");
+    System::log::Message_Msg Msg75("XSTEP_75");
     PR.SendFail(Msg75);
   }
   PR.ReadXY(PR.CurrentList(1, 2), Msg76, aCenter);

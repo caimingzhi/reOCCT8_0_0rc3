@@ -169,7 +169,7 @@ int bfillds(Draw_Interpretor& di, int n, const char** a)
   aPF.SetGlue(aGlue);
   aPF.SetUseOBB(BOPTest_Objects::UseOBB());
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
@@ -252,7 +252,7 @@ int bbuild(Draw_Interpretor& di, int n, const char** a)
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
 
   aBuilder.PerformWithFiller(aPF, aProgress->Start());
@@ -375,7 +375,7 @@ int bbop(Draw_Interpretor& di, int n, const char** a)
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
 
   pBuilder->PerformWithFiller(aPF, aProgress->Start());
@@ -443,7 +443,7 @@ int bsplit(Draw_Interpretor& di, int n, const char** a)
   pSplitter->SetCheckInverted(BOPTest_Objects::CheckInverted());
   pSplitter->SetToFillHistory(BRepTest_Objects::IsHistoryNeeded());
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
 
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
@@ -608,7 +608,7 @@ int buildbop(Draw_Interpretor& di, int n, const char** a)
     return 1;
   }
 
-  occ::handle<Message_Report>         aReport   = new Message_Report;
+  occ::handle<System::log::Message_Report>         aReport   = new System::log::Message_Report;
   occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
 
   pBuilder->BuildBOP(aLObjects, aLTools, anOp, aProgress->Start(), aReport);

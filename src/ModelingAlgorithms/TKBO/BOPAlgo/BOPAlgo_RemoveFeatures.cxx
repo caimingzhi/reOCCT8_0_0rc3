@@ -138,7 +138,7 @@ void BOPAlgo_RemoveFeatures::fillPIConstants(const double theWhole, BOPAlgo_PISt
   theSteps.SetStep(PIOperation_SimplifyResult, 0.1 * theWhole);
 }
 
-void BOPAlgo_RemoveFeatures::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_RemoveFeatures::Perform(const System::log::Message_ProgressRange& theRange)
 {
   try
   {
@@ -150,7 +150,7 @@ void BOPAlgo_RemoveFeatures::Perform(const Message_ProgressRange& theRange)
     CheckData();
     if (HasErrors())
       return;
-    Message_ProgressScope aPS(theRange, "Removing features", 100);
+    System::log::Message_ProgressScope aPS(theRange, "Removing features", 100);
     BOPAlgo_PISteps       aSteps(PIOperation_Last);
     analyzeProgress(100., aSteps);
 
@@ -255,15 +255,15 @@ void BOPAlgo_RemoveFeatures::CheckData()
   }
 }
 
-void BOPAlgo_RemoveFeatures::PrepareFeatures(const Message_ProgressRange& theRange)
+void BOPAlgo_RemoveFeatures::PrepareFeatures(const System::log::Message_ProgressRange& theRange)
 {
 
   TopExp::MapShapes(myInputShape, myInputsMap);
 
   NCollection_List<TopoDS_Shape>           aFacesToRemove;
   NCollection_List<TopoDS_Shape>::Iterator aIt(myFacesToRemove);
-  Message_ProgressScope                    aPSOuter(theRange, "Preparing features", 2);
-  Message_ProgressScope                    aPS(aPSOuter.Next(),
+  System::log::Message_ProgressScope                    aPSOuter(theRange, "Preparing features", 2);
+  System::log::Message_ProgressScope                    aPS(aPSOuter.Next(),
                             "Preparing the faces to remove",
                             myFacesToRemove.Size());
   for (; aIt.More(); aIt.Next(), aPS.Next())
@@ -333,7 +333,7 @@ public:
 
   const occ::handle<BRepTools_History>& History() { return myHistory; }
 
-  void SetRange(const Message_ProgressRange& theRange) { myRange = theRange; }
+  void SetRange(const System::log::Message_ProgressRange& theRange) { myRange = theRange; }
 
 public:
   void Perform()
@@ -342,7 +342,7 @@ public:
 
     try
     {
-      Message_ProgressScope aPS(myRange, nullptr, 3);
+      System::log::Message_ProgressScope aPS(myRange, nullptr, 3);
 
       myHistory = new BRepTools_History();
 
@@ -399,16 +399,16 @@ public:
 private:
   void FindAdjacentFaces(
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMFAdjacent,
-    const Message_ProgressRange&                                   theRange)
+    const System::log::Message_ProgressRange&                                   theRange)
   {
 
     TopoDS_Iterator aIt(myFeature);
     for (; aIt.More(); aIt.Next())
       myFeatureFacesMap.Add(aIt.Value());
-    Message_ProgressScope aPSOuter(theRange, nullptr, 2);
+    System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 2);
 
     aIt.Initialize(myFeature);
-    Message_ProgressScope aPSF(aPSOuter.Next(), "Looking for adjacent faces", 1, true);
+    System::log::Message_ProgressScope aPSF(aPSOuter.Next(), "Looking for adjacent faces", 1, true);
     for (; aIt.More(); aIt.Next(), aPSF.Next())
     {
       if (!aPSF.More())
@@ -443,7 +443,7 @@ private:
     }
 
     const int             aNbFA = theMFAdjacent.Extent();
-    Message_ProgressScope aPSS(aPSOuter.Next(), "Looking for adjacent solids", aNbFA);
+    System::log::Message_ProgressScope aPSS(aPSOuter.Next(), "Looking for adjacent solids", aNbFA);
     for (int i = 1; i <= aNbFA; ++i, aPSS.Next())
     {
       if (!aPSS.More())
@@ -478,7 +478,7 @@ private:
     const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theMFAdjacent,
     NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&
                                  theFaceExtFaceMap,
-    const Message_ProgressRange& theRange)
+    const System::log::Message_ProgressRange& theRange)
   {
 
     Bnd_Box aFeatureBox;
@@ -487,7 +487,7 @@ private:
     const double anExtLength = sqrt(aFeatureBox.SquareExtent());
 
     const int             aNbFA = theMFAdjacent.Extent();
-    Message_ProgressScope aPS(theRange, "Extending adjacent faces", aNbFA);
+    System::log::Message_ProgressScope aPS(theRange, "Extending adjacent faces", aNbFA);
     for (int i = 1; i <= aNbFA && aPS.More(); ++i, aPS.Next())
     {
       const TopoDS_Face& aF = TopoDS::Face(theMFAdjacent(i));
@@ -502,7 +502,7 @@ private:
   void TrimExtendedFaces(
     const NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>&
                                  theFaceExtFaceMap,
-    const Message_ProgressRange& theRange)
+    const System::log::Message_ProgressRange& theRange)
   {
 
     BOPAlgo_Builder aGFInter;
@@ -514,7 +514,7 @@ private:
     aGFInter.SetRunParallel(myRunParallel);
 
     TopoDS_Shape          anIntResult;
-    Message_ProgressScope aPSOuter(theRange, nullptr, (aGFInter.Arguments().Extent() > 1) ? 2 : 1);
+    System::log::Message_ProgressScope aPSOuter(theRange, nullptr, (aGFInter.Arguments().Extent() > 1) ? 2 : 1);
     if (aGFInter.Arguments().Extent() > 1)
     {
       aGFInter.Perform(aPSOuter.Next());
@@ -537,7 +537,7 @@ private:
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aFeatureEdgesMap;
     TopExp::MapShapes(myFeature, TopAbs_EDGE, aFeatureEdgesMap);
 
-    Message_ProgressScope aPS(aPSOuter.Next(), "Trimming faces", aNbF);
+    System::log::Message_ProgressScope aPS(aPSOuter.Next(), "Trimming faces", aNbF);
     for (int i = 1; i <= aNbF && aPS.More(); ++i, aPS.Next())
     {
       const TopoDS_Face& aFOriginal = TopoDS::Face(theFaceExtFaceMap.FindKey(i));
@@ -722,7 +722,7 @@ private:
     myEFMap;
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>*
                         myFSMap;
-  Message_ProgressRange myRange;
+  System::log::Message_ProgressRange myRange;
 
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>        myFeatureFacesMap;
   bool                                                          myHasAdjacentFaces;
@@ -734,10 +734,10 @@ private:
 
 typedef NCollection_Vector<FillGap> VectorOfFillGap;
 
-void BOPAlgo_RemoveFeatures::RemoveFeatures(const Message_ProgressRange& theRange)
+void BOPAlgo_RemoveFeatures::RemoveFeatures(const System::log::Message_ProgressRange& theRange)
 {
 
-  Message_ProgressScope aPSOuter(theRange, "Removing features", 2);
+  System::log::Message_ProgressScope aPSOuter(theRange, "Removing features", 2);
 
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     anEFMap;
@@ -761,7 +761,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeatures(const Message_ProgressRange& theRang
   }
 
   const int             aNbF = aVFG.Length();
-  Message_ProgressScope aPS(aPSOuter.Next(), "Filling gaps", aNbF);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(), "Filling gaps", aNbF);
   for (int i = 0; i < aNbF; ++i)
   {
     FillGap& aFG = aVFG.ChangeValue(i);
@@ -777,7 +777,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeatures(const Message_ProgressRange& theRang
   if (myHistory.IsNull())
     myHistory = new BRepTools_History();
 
-  Message_ProgressScope aPSLoop(aPSOuter.Next(), "Removing features one by one", aNbF);
+  System::log::Message_ProgressScope aPSLoop(aPSOuter.Next(), "Removing features one by one", aNbF);
   for (int i = 0; i < aNbF; ++i)
   {
     if (UserBreak(aPSLoop))
@@ -809,7 +809,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeature(
                                    TopTools_ShapeMapHasher>&           theAdjFaces,
   const occ::handle<BRepTools_History>&                                theAdjFacesHistory,
   const bool                                                           theSolidsHistoryNeeded,
-  const Message_ProgressRange&                                         theRange)
+  const System::log::Message_ProgressRange&                                         theRange)
 {
   bool      bFuseShapes = true;
   const int aNbAF       = theAdjFaces.Extent();
@@ -825,7 +825,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeature(
     bFuseShapes = false;
   }
 
-  Message_ProgressScope aPS(theRange, nullptr, 100);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 100);
 
   BRep_Builder aBB;
 
@@ -1025,7 +1025,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeature(
   myShape = aCRes;
 }
 
-void BOPAlgo_RemoveFeatures::UpdateHistory(const Message_ProgressRange& theRange)
+void BOPAlgo_RemoveFeatures::UpdateHistory(const System::log::Message_ProgressRange& theRange)
 {
   if (!HasHistory())
     return;
@@ -1036,7 +1036,7 @@ void BOPAlgo_RemoveFeatures::UpdateHistory(const Message_ProgressRange& theRange
   BRepTools_History aHistory;
 
   const int             aNbS = myInputsMap.Extent();
-  Message_ProgressScope aPS(theRange, "Updating history", aNbS);
+  System::log::Message_ProgressScope aPS(theRange, "Updating history", aNbS);
   for (int i = 1; i <= aNbS; ++i, aPS.Next())
   {
     const TopoDS_Shape& aS = myInputsMap(i);
@@ -1069,11 +1069,11 @@ void BOPAlgo_RemoveFeatures::UpdateHistory(const Message_ProgressRange& theRange
   myHistory->Merge(aHistory);
 }
 
-void BOPAlgo_RemoveFeatures::SimplifyResult(const Message_ProgressRange& theRange)
+void BOPAlgo_RemoveFeatures::SimplifyResult(const System::log::Message_ProgressRange& theRange)
 {
   if (myShape.IsSame(myInputShape))
     return;
-  Message_ProgressScope        aPSOuter(theRange, "Simplifyingthe result", 2);
+  System::log::Message_ProgressScope        aPSOuter(theRange, "Simplifyingthe result", 2);
   ShapeUpgrade_UnifySameDomain aSDTool;
   aSDTool.Initialize(myShape, true, true);
 
@@ -1083,7 +1083,7 @@ void BOPAlgo_RemoveFeatures::SimplifyResult(const Message_ProgressRange& theRang
     TopExp::MapShapes(myShape, myMapShape);
 
   const int             aNbS = myInputsMap.Extent();
-  Message_ProgressScope aPS(aPSOuter.Next(), nullptr, aNbS);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(), nullptr, aNbS);
   for (int i = 1; i <= aNbS; ++i, aPS.Next())
   {
     if (UserBreak(aPS))

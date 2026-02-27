@@ -176,7 +176,7 @@ int LU_Decompose(math_Matrix&                 a,
                  double&                      d,
                  math_Vector&                 vv,
                  double                       TINY,
-                 const Message_ProgressRange& theProgress)
+                 const System::log::Message_ProgressRange& theProgress)
 {
 
   int    i, imax = 0, j, k;
@@ -185,7 +185,7 @@ int LU_Decompose(math_Matrix&                 a,
   int n = a.RowNumber();
   d     = 1.0;
 
-  Message_ProgressScope aPS(theProgress, "math_Gauss LU_Decompose", n);
+  System::log::Message_ProgressScope aPS(theProgress, "math_Gauss LU_Decompose", n);
 
   for (i = 1; i <= n; i++)
   {
@@ -260,7 +260,7 @@ int LU_Decompose(math_Matrix&                 a,
                  math_IntegerVector&          indx,
                  double&                      d,
                  double                       TINY,
-                 const Message_ProgressRange& theProgress)
+                 const System::log::Message_ProgressRange& theProgress)
 {
 
   math_Vector vv(1, a.RowNumber());

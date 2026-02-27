@@ -40,7 +40,7 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
 
       diagonal = std::sqrt((Xmax - Xmin) * (Xmax - Xmin) + (Ymax - Ymin) * (Ymax - Ymin)
                            + (Zmax - Zmin) * (Zmax - Zmin));
-      diagonal = std::max(diagonal, Precision::Confusion());
+      diagonal = std::max(diagonal, math::precision::Precision::Confusion());
       theRequestedDeflection = aDrawer->DeviationCoefficient() * diagonal;
     }
     else

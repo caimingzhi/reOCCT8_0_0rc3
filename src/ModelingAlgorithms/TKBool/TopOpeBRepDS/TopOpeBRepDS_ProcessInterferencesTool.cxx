@@ -399,7 +399,7 @@ Standard_EXPORT void FUN_reducedoublons
             {
 
               double tolE    = FUN_tool_maxtol(E);
-              double t       = Precision::Parametric(tolE);
+              double t       = math::precision::Precision::Parametric(tolE);
               double t1      = EVI1->Parameter();
               double t2      = EVI2->Parameter();
               double dd      = t1 - t2;

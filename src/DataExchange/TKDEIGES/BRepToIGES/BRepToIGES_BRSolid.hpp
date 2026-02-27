@@ -22,17 +22,17 @@ public:
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferSolid(
     const TopoDS_Shape&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferSolid(
     const TopoDS_Solid&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferCompSolid(
     const TopoDS_CompSolid&      start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT occ::handle<IGESData_IGESEntity> TransferCompound(
     const TopoDS_Compound&       start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 };

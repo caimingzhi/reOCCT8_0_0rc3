@@ -459,7 +459,7 @@ void OpenGl_LayerList::UpdateCulling(const occ::handle<OpenGl_Workspace>& theWor
                                      const bool                           theToDrawImmediate)
 {
   const occ::handle<OpenGl_FrameStats>& aStats = theWorkspace->GetGlContext()->FrameStats();
-  OSD_Timer& aTimer = aStats->ActiveDataFrame().ChangeTimer(Graphic3d_FrameStatsTimer_CpuCulling);
+  System::os::OSD_Timer& aTimer = aStats->ActiveDataFrame().ChangeTimer(Graphic3d_FrameStatsTimer_CpuCulling);
   aTimer.Start();
 
   const int                    aViewId   = theWorkspace->View()->Identification();

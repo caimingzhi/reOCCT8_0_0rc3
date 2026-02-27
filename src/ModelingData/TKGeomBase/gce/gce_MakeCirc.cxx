@@ -65,7 +65,7 @@ gce_MakeCirc::gce_MakeCirc(const gp_Pnt& P1, const gp_Pnt& P2, const gp_Pnt& P3)
   dir = VDir2.Crossed(Dir3);
   gp_Lin L2(gp_Pnt((P3.XYZ() + P2.XYZ()) / 2.), dir);
 
-  constexpr double Tol = Precision::PConfusion();
+  constexpr double Tol = math::precision::Precision::PConfusion();
   Extrema_ExtElC   distmin(L1, L2, Tol);
 
   if (!distmin.IsDone())

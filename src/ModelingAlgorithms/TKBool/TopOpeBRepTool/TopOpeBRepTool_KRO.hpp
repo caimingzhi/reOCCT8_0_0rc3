@@ -5,7 +5,7 @@
   #include <TCollection_AsciiString.hpp>
   #include <Standard_OStream.hpp>
 
-class TOPKRO : public OSD_Chronometer
+class TOPKRO : public System::os::OSD_Chronometer
 {
 public:
   TOPKRO(const TCollection_AsciiString& n)
@@ -19,12 +19,12 @@ public:
   virtual void Start()
   {
     mystart = 1;
-    OSD_Chronometer::Start();
+    System::os::OSD_Chronometer::Start();
   }
 
   virtual void Stop()
   {
-    OSD_Chronometer::Stop();
+    System::os::OSD_Chronometer::Stop();
     mystop = 1;
   }
 

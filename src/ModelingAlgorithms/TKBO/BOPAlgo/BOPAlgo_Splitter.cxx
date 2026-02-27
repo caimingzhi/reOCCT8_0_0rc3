@@ -27,7 +27,7 @@ void BOPAlgo_Splitter::CheckData()
   CheckFiller();
 }
 
-void BOPAlgo_Splitter::Perform(const Message_ProgressRange& theRange)
+void BOPAlgo_Splitter::Perform(const System::log::Message_ProgressRange& theRange)
 {
   GetReport()->Clear();
 
@@ -63,7 +63,7 @@ void BOPAlgo_Splitter::Perform(const Message_ProgressRange& theRange)
   pPF->SetGlue(myGlue);
   pPF->SetUseOBB(myUseOBB);
 
-  Message_ProgressScope aPS(theRange, "Performing Split operation", 10);
+  System::log::Message_ProgressScope aPS(theRange, "Performing Split operation", 10);
   pPF->Perform(aPS.Next(9));
 
   myEntryPoint = 1;

@@ -31,13 +31,13 @@ void IGESBasic_ToolGroupWithoutBackP::ReadOwnParams(
 
   if (PR.ReadInteger(PR.Current(), nbval))
   {
-    Message_Msg Msg203("XSTEP_203");
+    System::log::Message_Msg Msg203("XSTEP_203");
     Msg203.Arg(7);
     PR.ReadEnts(IR, PR.CurrentList(nbval), Msg203, EntArray);
   }
   else
   {
-    Message_Msg Msg202("XSTEP_202");
+    System::log::Message_Msg Msg202("XSTEP_202");
     Msg202.Arg(7);
     PR.SendFail(Msg202);
   }

@@ -26,10 +26,10 @@ void BRepExtrema_ExtPF::Initialize(const TopoDS_Face&    TheFace,
   if (mySurf.GetType() == GeomAbs_OtherSurface)
     return;
 
-  double Tol = std::min(BRep_Tool::Tolerance(TheFace), Precision::Confusion());
+  double Tol = std::min(BRep_Tool::Tolerance(TheFace), math::precision::Precision::Confusion());
   double aTolU, aTolV;
-  aTolU = std::max(mySurf.UResolution(Tol), Precision::PConfusion());
-  aTolV = std::max(mySurf.VResolution(Tol), Precision::PConfusion());
+  aTolU = std::max(mySurf.UResolution(Tol), math::precision::Precision::PConfusion());
+  aTolV = std::max(mySurf.VResolution(Tol), math::precision::Precision::PConfusion());
   double U1, U2, V1, V2;
   BRepTools::UVBounds(TheFace, U1, U2, V1, V2);
   myExtPS.SetFlag(TheFlag);

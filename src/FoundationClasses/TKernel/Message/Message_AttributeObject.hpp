@@ -4,7 +4,8 @@
 #include <TCollection_AsciiString.hpp>
 #include <NCollection_DefineAlloc.hpp>
 
-class Message_AttributeObject : public Message_Attribute
+namespace System { namespace log {
+class Message_AttributeObject : public System::log::Message_Attribute
 {
   DEFINE_STANDARD_RTTIEXT(Message_AttributeObject, Message_Attribute)
 public:
@@ -21,3 +22,5 @@ public:
 private:
   occ::handle<Standard_Transient> myObject;
 };
+}} // namespace System::log
+

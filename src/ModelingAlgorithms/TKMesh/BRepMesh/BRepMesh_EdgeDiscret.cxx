@@ -49,7 +49,7 @@ occ::handle<IMeshTools_CurveTessellator> BRepMesh_EdgeDiscret::CreateEdgeTessell
 
 bool BRepMesh_EdgeDiscret::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                            const IMeshTools_Parameters&        theParameters,
-                                           const Message_ProgressRange&        theRange)
+                                           const System::log::Message_ProgressRange&        theRange)
 {
   (void)theRange;
   myModel      = theModel;
@@ -60,7 +60,7 @@ bool BRepMesh_EdgeDiscret::performInternal(const occ::handle<IMeshData_Model>& t
     return false;
   }
 
-  OSD_Parallel::For(0, myModel->EdgesNb(), *this, !myParameters.InParallel);
+  System::os::OSD_Parallel::For(0, myModel->EdgesNb(), *this, !myParameters.InParallel);
 
   myModel.Nullify();
   return true;

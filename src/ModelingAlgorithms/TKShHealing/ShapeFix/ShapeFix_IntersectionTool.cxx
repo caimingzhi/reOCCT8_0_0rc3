@@ -161,13 +161,13 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
                                         const TopoDS_Face& face,
                                         bool&              iscutline) const
 {
-  if (std::abs(cut - pend) < 10. * Precision::PConfusion())
+  if (std::abs(cut - pend) < 10. * math::precision::Precision::PConfusion())
     return false;
   double aRange = std::abs(cut - pend);
   double a, b;
   BRep_Tool::Range(edge, a, b);
 
-  if (aRange < 10. * Precision::PConfusion())
+  if (aRange < 10. * math::precision::Precision::PConfusion())
     return false;
 
   if (!BRep_Tool::SameParameter(edge))
@@ -184,13 +184,13 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
         {
           BRep_Builder B;
           B.Range(edge, std::min(pend, cut), std::max(pend, cut));
-          if (std::abs(pend - lp) < Precision::PConfusion())
+          if (std::abs(pend - lp) < math::precision::Precision::PConfusion())
           {
             double cut3d = (cut - fp) * (b - a) / (lp - fp);
             B.Range(edge, a + cut3d, b, true);
             iscutline = true;
           }
-          else if (std::abs(pend - fp) < Precision::PConfusion())
+          else if (std::abs(pend - fp) < math::precision::Precision::PConfusion())
           {
             double cut3d = (lp - cut) * (b - a) / (lp - fp);
             B.Range(edge, a, b - cut3d, true);
@@ -204,9 +204,9 @@ bool ShapeFix_IntersectionTool::CutEdge(const TopoDS_Edge& edge,
     return false;
   }
 
-  if (std::abs(std::abs(a - b) - aRange) < Precision::PConfusion())
+  if (std::abs(std::abs(a - b) - aRange) < math::precision::Precision::PConfusion())
     return false;
-  if (aRange < 10. * Precision::PConfusion())
+  if (aRange < 10. * math::precision::Precision::PConfusion())
     return false;
 
   BRep_Builder B;
@@ -267,7 +267,7 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
     }
     else
       gac.Load(c2d, cf, cl);
-    BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+    BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
     boxes.Bind(newE1, box);
   }
   if (sae.PCurve(newE2, S, L, c2d, cf, cl, false))
@@ -283,7 +283,7 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
     }
     else
       gac.Load(c2d, cf, cl);
-    BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+    BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
     boxes.Bind(newE2, box);
   }
 
@@ -378,7 +378,7 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
     }
     else
       gac.Load(c2d, cf, cl);
-    BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+    BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
     boxes.Bind(newE1, box);
   }
   if (sae.PCurve(newE2, S, L, c2d, cf, cl, false))
@@ -394,7 +394,7 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
     }
     else
       gac.Load(c2d, cf, cl);
-    BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+    BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
     boxes.Bind(newE2, box);
   }
 
@@ -732,7 +732,7 @@ static Bnd_Box2d CreateBoxes2d(
       }
       else
         gac.Load(c2d, cf, cl);
-      BndLib_Add2dCurve::Add(gac, ::Precision::Confusion(), box);
+      BndLib_Add2dCurve::Add(gac, math::precision::Precision::Confusion(), box);
       boxes.Bind(E, box);
       aTotalBox.Add(box);
     }
@@ -940,7 +940,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               if (ModifE1)
                 NbCut++;
 
-              ModifE1 = ModifE1 || distmin < Precision::Confusion();
+              ModifE1 = ModifE1 || distmin < math::precision::Precision::Confusion();
             }
 
             bool          ModifE2 = false;
@@ -973,7 +973,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
               if (ModifE2)
                 NbCut++;
 
-              ModifE2 = ModifE2 || distmin < Precision::Confusion();
+              ModifE2 = ModifE2 || distmin < math::precision::Precision::Confusion();
             }
             if (ModifE1 && !ModifE2)
             {
@@ -996,7 +996,7 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
             if (!ModifE1 && !ModifE2)
             {
               gp_Pnt P0((pi1.X() + pi2.X()) / 2, (pi1.Y() + pi2.Y()) / 2, (pi1.Z() + pi2.Z()) / 2);
-              tolV = std::max((pi1.Distance(pi2) / 2) * 1.00001, Precision::Confusion());
+              tolV = std::max((pi1.Distance(pi2) / 2) * 1.00001, math::precision::Precision::Confusion());
               B.MakeVertex(V, P0, tolV);
               MaxTolVert        = std::max(MaxTolVert, tolV);
               bool isEdgeSplit2 = SplitEdge1(sewd, face, num2, param2, V, tolV, boxes);
@@ -1266,9 +1266,9 @@ bool ShapeFix_IntersectionTool::FixSelfIntersectWire(occ::handle<ShapeExtend_Wir
                            (Pnt12.Y() + Pnt22.Y()) / 2,
                            (Pnt12.Z() + Pnt22.Z()) / 2);
                 double tolV1 = std::max(Pnt11.Distance(P01), Pnt21.Distance(P01));
-                tolV1        = std::max(tolV1, Precision::Confusion()) * 1.00001;
+                tolV1        = std::max(tolV1, math::precision::Precision::Confusion()) * 1.00001;
                 double tolV2 = std::max(Pnt12.Distance(P02), Pnt22.Distance(P02));
-                tolV2        = std::max(tolV2, Precision::Confusion()) * 1.00001;
+                tolV2        = std::max(tolV2, math::precision::Precision::Confusion()) * 1.00001;
                 if (tolV1 > MaxTolVert || tolV2 > MaxTolVert)
                   continue;
                 TopoDS_Vertex NewV1, NewV2;
@@ -1645,7 +1645,7 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                           (pi1.Z() + pi2.Z()) / 2);
                 BRep_Builder  B;
                 TopoDS_Vertex V;
-                double tolV = std::max((pi1.Distance(pi2) / 2) * 1.00001, Precision::Confusion());
+                double tolV = std::max((pi1.Distance(pi2) / 2) * 1.00001, math::precision::Precision::Confusion());
                 B.MakeVertex(V, P0, tolV);
                 MaxTolVert        = std::max(MaxTolVert, tolV);
                 bool isSplitEdge2 = SplitEdge1(sewd2, face, num2, param2, V, tolV, boxes2);
@@ -1874,9 +1874,9 @@ bool ShapeFix_IntersectionTool::FixIntersectingWires(TopoDS_Face& face) const
                                (Pnt12.Y() + Pnt22.Y()) / 2,
                                (Pnt12.Z() + Pnt22.Z()) / 2);
                     double tolV1 = std::max(Pnt11.Distance(P01), Pnt21.Distance(P01));
-                    tolV1        = std::max(tolV1, Precision::Confusion()) * 1.00001;
+                    tolV1        = std::max(tolV1, math::precision::Precision::Confusion()) * 1.00001;
                     double tolV2 = std::max(Pnt12.Distance(P02), Pnt22.Distance(P02));
-                    tolV2        = std::max(tolV2, Precision::Confusion()) * 1.00001;
+                    tolV2        = std::max(tolV2, math::precision::Precision::Confusion()) * 1.00001;
                     if (tolV1 > MaxTolVert || tolV2 > MaxTolVert)
                       continue;
 

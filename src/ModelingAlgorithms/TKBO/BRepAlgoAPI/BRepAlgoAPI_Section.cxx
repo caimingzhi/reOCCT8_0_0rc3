@@ -151,7 +151,7 @@ void BRepAlgoAPI_Section::SetAttributes()
   myDSFiller->SetSectionAttribute(theSecAttr);
 }
 
-void BRepAlgoAPI_Section::Build(const Message_ProgressRange& theRange)
+void BRepAlgoAPI_Section::Build(const System::log::Message_ProgressRange& theRange)
 {
   BRepAlgoAPI_BooleanOperation::Build(theRange);
 }
@@ -255,7 +255,7 @@ TopoDS_Shape MakeShape(const occ::handle<Geom_Surface>& S)
   GeomAbs_Shape c = S->Continuity();
   if (c >= GeomAbs_C2)
   {
-    return BRepBuilderAPI_MakeFace(S, Precision::Confusion());
+    return BRepBuilderAPI_MakeFace(S, math::precision::Precision::Confusion());
   }
   return BRepBuilderAPI_MakeShell(S);
 }

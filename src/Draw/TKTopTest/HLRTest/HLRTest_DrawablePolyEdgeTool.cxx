@@ -27,7 +27,7 @@ HLRTest_DrawablePolyEdgeTool::HLRTest_DrawablePolyEdgeTool(const occ::handle<HLR
       myDebug(Debug),
       myHideMode(true)
 {
-  OSD_Chronometer ChronHide;
+  System::os::OSD_Chronometer ChronHide;
   if (myDebug)
   {
     ChronHide.Reset();

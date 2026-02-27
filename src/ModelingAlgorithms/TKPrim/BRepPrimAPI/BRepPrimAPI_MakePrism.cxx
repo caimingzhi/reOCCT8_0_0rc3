@@ -35,7 +35,7 @@ const BRepSweep_Prism& BRepPrimAPI_MakePrism::Prism() const
   return myPrism;
 }
 
-void BRepPrimAPI_MakePrism::Build(const Message_ProgressRange&)
+void BRepPrimAPI_MakePrism::Build(const System::log::Message_ProgressRange&)
 {
   myShape = myPrism.Shape();
   Done();

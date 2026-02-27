@@ -33,7 +33,7 @@ namespace Geom_RevolutionUtils
     gp_XYZ aCQ = theCurvePt.XYZ() - theAxis.Location().XYZ();
     theD1U     = gp_Vec(theAxis.Direction().XYZ().Crossed(aCQ));
 
-    if (theD1U.SquareMagnitude() < Precision::SquareConfusion())
+    if (theD1U.SquareMagnitude() < math::precision::Precision::SquareConfusion())
     {
       theD1U.SetCoord(0.0, 0.0, 0.0);
     }
@@ -64,7 +64,7 @@ namespace Geom_RevolutionUtils
     const gp_XYZ& aDir = theAxis.Direction().XYZ();
     theD1U             = gp_Vec(aDir.Crossed(aCQ));
 
-    if (theD1U.SquareMagnitude() < Precision::SquareConfusion())
+    if (theD1U.SquareMagnitude() < math::precision::Precision::SquareConfusion())
     {
       theD1U.SetCoord(0.0, 0.0, 0.0);
     }
@@ -106,7 +106,7 @@ namespace Geom_RevolutionUtils
     const gp_XYZ& aDir = theAxis.Direction().XYZ();
     theD1U             = gp_Vec(aDir.Crossed(aCQ));
 
-    if (theD1U.SquareMagnitude() < Precision::SquareConfusion())
+    if (theD1U.SquareMagnitude() < math::precision::Precision::SquareConfusion())
     {
       theD1U.SetCoord(0.0, 0.0, 0.0);
     }

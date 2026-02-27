@@ -104,7 +104,7 @@ static int QATestExtremaSS(Draw_Interpretor& theInterpretor, int theArgNb, const
   const int aNbPoints = aList.Length();
   theInterpretor << "Number of sampled points: " << aNbPoints << "\n";
 
-  OSD_Timer aTimer;
+  System::os::OSD_Timer aTimer;
   aTimer.Start();
 
   BRepExtrema_DistShapeShape aTool;

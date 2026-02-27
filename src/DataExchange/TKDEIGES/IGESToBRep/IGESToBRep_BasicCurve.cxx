@@ -68,7 +68,7 @@ static bool checkBSplineCurve(IGESToBRep_BasicCurve*                    theCurve
     }
     if (aMaxValue - aMinValue > 1000)
     {
-      Message_Msg msg1374("IGES_1374");
+      System::log::Message_Msg msg1374("IGES_1374");
       theCurve->SendWarning(theBSplineCurve, msg1374);
     }
   }
@@ -78,7 +78,7 @@ static bool checkBSplineCurve(IGESToBRep_BasicCurve*                    theCurve
   for (int i = CKnots.Lower(); i < CKnots.Upper(); i++)
     if (CKnots.Value(i + 1) < CKnots.Value(i))
     {
-      Message_Msg msg1373("IGES_1373");
+      System::log::Message_Msg msg1373("IGES_1373");
       theCurve->SendFail(theBSplineCurve, msg1373);
       aResult = false;
     }
@@ -116,7 +116,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBasicCurve(
   occ::handle<Geom_Curve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -182,7 +182,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dBasicCurve(
   occ::handle<Geom2d_Curve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -243,14 +243,14 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferConicArc(
   occ::handle<Geom_Curve> res;
   if (st.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(st, msg1005);
     return res;
   }
 
   if (!st->ComputedFormNumber())
   {
-    Message_Msg msg1155("IGES_1155");
+    System::log::Message_Msg msg1155("IGES_1155");
     SendFail(st, msg1155);
 
     return res;
@@ -287,7 +287,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferConicArc(
   if (st->IsFromEllipse())
   {
 
-    constexpr double eps2 = Precision::PConfusion() * Precision::PConfusion();
+    constexpr double eps2 = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
     if ((std::abs(a - c) <= eps2) && (std::abs(b) < eps2))
     {
 
@@ -300,11 +300,11 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferConicArc(
 
         t1 = ElCLib::Parameter(circ, startPoint);
         t2 = ElCLib::Parameter(circ, endPoint);
-        if (t1 > t2 && (t1 - t2) > Precision::Confusion())
+        if (t1 > t2 && (t1 - t2) > math::precision::Precision::Confusion())
           t2 += 2. * M_PI;
-        if (std::abs(t1 - t2) <= Precision::Confusion())
+        if (std::abs(t1 - t2) <= math::precision::Precision::Confusion())
         {
-          Message_Msg msg1160("IGES_1160");
+          System::log::Message_Msg msg1160("IGES_1160");
           SendWarning(st, msg1160);
         }
         else
@@ -328,9 +328,9 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferConicArc(
 
     t1 = ElCLib::Parameter(parab, startPoint);
     t2 = ElCLib::Parameter(parab, endPoint);
-    if (std::abs(t1 - t2) <= Precision::Confusion())
+    if (std::abs(t1 - t2) <= math::precision::Precision::Confusion())
     {
-      Message_Msg msg1160("IGES_1160");
+      System::log::Message_Msg msg1160("IGES_1160");
       SendWarning(st, msg1160);
     }
     else
@@ -350,11 +350,11 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferConicArc(
 
       t1 = ElCLib::Parameter(elips, startPoint);
       t2 = ElCLib::Parameter(elips, endPoint);
-      if (t2 < t1 && (t1 - t2) > Precision::Confusion())
+      if (t2 < t1 && (t1 - t2) > math::precision::Precision::Confusion())
         t2 += 2. * M_PI;
-      if (std::abs(t1 - t2) <= Precision::Confusion())
+      if (std::abs(t1 - t2) <= math::precision::Precision::Confusion())
       {
-        Message_Msg msg1160("IGES_1160");
+        System::log::Message_Msg msg1160("IGES_1160");
         SendWarning(st, msg1160);
       }
       else
@@ -371,9 +371,9 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferConicArc(
 
     res = new Geom_Hyperbola(frame, majorRadius, minorRadius);
 
-    if (std::abs(t1 - t2) <= Precision::PConfusion())
+    if (std::abs(t1 - t2) <= math::precision::Precision::PConfusion())
     {
-      Message_Msg msg1160("IGES_1160");
+      System::log::Message_Msg msg1160("IGES_1160");
       SendWarning(st, msg1160);
     }
     else if (t1 > t2)
@@ -391,14 +391,14 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dConicArc(
   occ::handle<Geom2d_Curve> res;
   if (st.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(st, msg1005);
     return res;
   }
 
   if (!st->ComputedFormNumber())
   {
-    Message_Msg msg1155("IGES_1155");
+    System::log::Message_Msg msg1155("IGES_1155");
     SendFail(st, msg1155);
     return res;
   }
@@ -441,7 +441,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dConicArc(
   if (st->IsFromEllipse())
   {
 
-    constexpr double eps2 = Precision::PConfusion() * Precision::PConfusion();
+    constexpr double eps2 = math::precision::Precision::PConfusion() * math::precision::Precision::PConfusion();
     if ((std::abs(a - c) <= eps2) && (std::abs(b) < eps2))
     {
 
@@ -458,11 +458,11 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dConicArc(
         t1 = ElCLib::Parameter(circ, startPoint);
         t2 = ElCLib::Parameter(circ, endPoint);
 
-        if (t2 < t1 && (t1 - t2) > Precision::PConfusion())
+        if (t2 < t1 && (t1 - t2) > math::precision::Precision::PConfusion())
           t2 += 2. * M_PI;
-        if (std::abs(t1 - t2) <= Precision::PConfusion())
+        if (std::abs(t1 - t2) <= math::precision::Precision::PConfusion())
         {
-          Message_Msg msg1160("IGES_1160");
+          System::log::Message_Msg msg1160("IGES_1160");
           SendWarning(st, msg1160);
         }
         else
@@ -489,9 +489,9 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dConicArc(
 
     t1 = ElCLib::Parameter(parab, startPoint);
     t2 = ElCLib::Parameter(parab, endPoint);
-    if (std::abs(t1 - t2) <= Precision::PConfusion())
+    if (std::abs(t1 - t2) <= math::precision::Precision::PConfusion())
     {
-      Message_Msg msg1160("IGES_1160");
+      System::log::Message_Msg msg1160("IGES_1160");
       SendWarning(st, msg1160);
     }
     else if (t1 > t2)
@@ -516,11 +516,11 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dConicArc(
 
       t1 = ElCLib::Parameter(elips, startPoint);
       t2 = ElCLib::Parameter(elips, endPoint);
-      if (t2 < t1 && (t1 - t2) > Precision::PConfusion())
+      if (t2 < t1 && (t1 - t2) > math::precision::Precision::PConfusion())
         t2 += 2. * M_PI;
-      if (std::abs(t1 - t2) <= Precision::PConfusion())
+      if (std::abs(t1 - t2) <= math::precision::Precision::PConfusion())
       {
-        Message_Msg msg1160("IGES_1160");
+        System::log::Message_Msg msg1160("IGES_1160");
         SendWarning(st, msg1160);
       }
       else
@@ -540,9 +540,9 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dConicArc(
     t1 = ElCLib::Parameter(hpr, startPoint);
     t2 = ElCLib::Parameter(hpr, endPoint);
 
-    if (std::abs(t1 - t2) <= Precision::PConfusion())
+    if (std::abs(t1 - t2) <= math::precision::Precision::PConfusion())
     {
-      Message_Msg msg1160("IGES_1160");
+      System::log::Message_Msg msg1160("IGES_1160");
       SendWarning(st, msg1160);
     }
     else if (t1 > t2)
@@ -560,7 +560,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferCircularArc(
   occ::handle<Geom_Curve> res;
   if (st.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(st, msg1005);
     return res;
   }
@@ -609,7 +609,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferCircularArc(
 
   if (st->IsClosed() && t1 >= GetEpsGeom())
     t2 = t1 + 2. * M_PI;
-  if (!st->IsClosed() && fabs(t1 - t2) <= Precision::PConfusion())
+  if (!st->IsClosed() && fabs(t1 - t2) <= math::precision::Precision::PConfusion())
   {
 
     t2 = t1 + startPoint.Distance(endPoint) / st->Radius();
@@ -630,7 +630,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dCircularArc(
   occ::handle<Geom2d_Curve> res;
   if (st.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(st, msg1005);
     return res;
   }
@@ -642,7 +642,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dCircularArc(
   if (!st->TransformedAxis().IsParallel(st->Axis(), GetEpsilon()))
   {
     SetModeTransfer(true);
-    Message_Msg msg1165("IGES_1165");
+    System::log::Message_Msg msg1165("IGES_1165");
 
     SendWarning(st, msg1165);
   }
@@ -684,7 +684,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dCircularArc(
 
   if (st->IsClosed() && t1 >= GetEpsGeom())
     t2 = t1 + 2. * M_PI;
-  if (!st->IsClosed() && fabs(t1 - t2) <= Precision::PConfusion())
+  if (!st->IsClosed() && fabs(t1 - t2) <= math::precision::Precision::PConfusion())
   {
 
     t2 = t1 + startPoint.Distance(endPoint) / st->Radius();
@@ -704,7 +704,7 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferSplineCurve(
   occ::handle<Geom_BSplineCurve> resconv;
   if (st.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(st, msg1005);
     return resconv;
   }
@@ -718,28 +718,28 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferSplineCurve(
   {
     case 5:
     {
-      Message_Msg msg246("XSTEP_246");
+      System::log::Message_Msg msg246("XSTEP_246");
       SendFail(st, msg246);
 
       return resconv;
     }
     case 4:
     {
-      Message_Msg msg1170("IGES_1170");
+      System::log::Message_Msg msg1170("IGES_1170");
       SendFail(st, msg1170);
 
       return resconv;
     }
     case 3:
     {
-      Message_Msg msg1175("IGES_1175");
+      System::log::Message_Msg msg1175("IGES_1175");
       SendFail(st, msg1175);
 
       return resconv;
     }
     case 2:
     {
-      Message_Msg msg1180("IGES_1180");
+      System::log::Message_Msg msg1180("IGES_1180");
       SendFail(st, msg1180);
 
       return resconv;
@@ -749,7 +749,7 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferSplineCurve(
   }
 
   IGESConvGeom::IncreaseCurveContinuity(resconv,
-                                        std::min(Precision::Confusion(), epsgeom),
+                                        std::min(math::precision::Precision::Confusion(), epsgeom),
                                         GetContinuity());
   return resconv;
 }
@@ -760,13 +760,13 @@ occ::handle<Geom2d_BSplineCurve> IGESToBRep_BasicCurve::Transfer2dSplineCurve(
   occ::handle<Geom2d_BSplineCurve> res;
   if (st.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(st, msg1005);
     return res;
   }
 
   double epsGeom = GetEpsGeom();
-  SetEpsGeom(Precision::PConfusion());
+  SetEpsGeom(math::precision::Precision::PConfusion());
   occ::handle<Geom_BSplineCurve> res3d = TransferSplineCurve(st);
   SetEpsGeom(epsGeom);
   if (res3d.IsNull())
@@ -798,7 +798,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
 
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -807,7 +807,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
 
   if (Degree <= 0 || Degree > Geom_BSplineCurve::MaxDegree())
   {
-    Message_Msg msg1190("IGES_1190");
+    System::log::Message_Msg msg1190("IGES_1190");
     SendFail(start, msg1190);
 
     return res;
@@ -818,7 +818,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
 
   if (NbPoles < 2)
   {
-    Message_Msg msg1195("IGES_1195");
+    System::log::Message_Msg msg1195("IGES_1195");
     SendFail(start, msg1195);
 
     return res;
@@ -869,7 +869,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
     int maxMult = (i == 1 || i == KnotIndex ? Degree + 1 : Degree);
     if (aMult > maxMult)
     {
-      Message_Msg msg1200("IGES_1200");
+      System::log::Message_Msg msg1200("IGES_1200");
       const char* vide("");
       msg1200.Arg(vide);
       msg1200.Arg(vide);
@@ -922,7 +922,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
 
   if (!(SumOfMult == newNbPoles + Degree + 1))
   {
-    Message_Msg msg1210("IGES_1210");
+    System::log::Message_Msg msg1210("IGES_1210");
     const char* vide("");
     msg1210.Arg(vide);
     msg1210.Arg(vide);
@@ -947,9 +947,9 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
         std::abs(start->Weight(i) - WeightReference) <= Epsilon(WeightReference) && polynomial;
 
       double weight = start->Weight(i);
-      if (weight < Precision::PConfusion())
+      if (weight < math::precision::Precision::PConfusion())
       {
-        Message_Msg msg1215("IGES_1215");
+        System::log::Message_Msg msg1215("IGES_1215");
         SendFail(start, msg1215);
 
         return res;
@@ -958,7 +958,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
     }
     if (polynomial)
     {
-      Message_Msg msg1220("IGES_1220");
+      System::log::Message_Msg msg1220("IGES_1220");
       msg1220.Arg("curve");
       SendWarning(start, msg1220);
     }
@@ -1012,13 +1012,13 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferBSplineCurve(
   double Ufin  = start->UMax();
 
   occ::handle<Geom_BSplineCurve> BSplineRes2 = BSplineRes;
-  if (((Udeb - First) > -Precision::PConfusion() && (Last - Ufin) > -Precision::PConfusion())
+  if (((Udeb - First) > -math::precision::Precision::PConfusion() && (Last - Ufin) > -math::precision::Precision::PConfusion())
       && Udeb <= Ufin)
   {
     try
     {
       OCC_CATCH_SIGNALS
-      if (std::abs(Ufin - Udeb) > Precision::PConfusion())
+      if (std::abs(Ufin - Udeb) > math::precision::Precision::PConfusion())
         BSplineRes->Segment(Udeb, Ufin);
       res = BSplineRes;
     }
@@ -1040,7 +1040,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dBSplineCurve(
   occ::handle<Geom2d_Curve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -1124,7 +1124,7 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferLine(const occ::handle<IG
   occ::handle<Geom_Curve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -1142,21 +1142,21 @@ occ::handle<Geom_Curve> IGESToBRep_BasicCurve::TransferLine(const occ::handle<IG
     Pe = start->EndPoint();
   }
 
-  if (!Ps.IsEqual(Pe, Precision::Confusion()))
+  if (!Ps.IsEqual(Pe, math::precision::Precision::Confusion()))
   {
     gp_Lin                 line(Ps, gp_Dir(gp_Vec(Ps, Pe)));
     double                 t1    = ElCLib::Parameter(line, Ps);
     double                 t2    = ElCLib::Parameter(line, Pe);
     occ::handle<Geom_Line> Gline = new Geom_Line(line);
-    if (Precision::IsNegativeInfinite(t1))
-      t1 = -Precision::Infinite();
-    if (Precision::IsPositiveInfinite(t2))
-      t2 = Precision::Infinite();
+    if (math::precision::Precision::IsNegativeInfinite(t1))
+      t1 = -math::precision::Precision::Infinite();
+    if (math::precision::Precision::IsPositiveInfinite(t2))
+      t2 = math::precision::Precision::Infinite();
     res = new Geom_TrimmedCurve(Gline, t1, t2);
   }
   else
   {
-    Message_Msg msg1225("IGES_1225");
+    System::log::Message_Msg msg1225("IGES_1225");
     SendFail(start, msg1225);
   }
 
@@ -1169,7 +1169,7 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dLine(
   occ::handle<Geom2d_Curve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -1187,22 +1187,22 @@ occ::handle<Geom2d_Curve> IGESToBRep_BasicCurve::Transfer2dLine(
     end.SetCoord(start->EndPoint().X(), start->EndPoint().Y());
   }
 
-  if (!beg.IsEqual(end, Precision::PConfusion()))
+  if (!beg.IsEqual(end, math::precision::Precision::PConfusion()))
   {
     gp_Lin2d                 line2d(beg, gp_Dir2d(gp_Vec2d(beg, end)));
     double                   t1      = ElCLib::Parameter(line2d, beg);
     double                   t2      = ElCLib::Parameter(line2d, end);
     occ::handle<Geom2d_Line> Gline2d = new Geom2d_Line(line2d);
-    if (Precision::IsNegativeInfinite(t1))
-      t1 = -Precision::Infinite();
-    if (Precision::IsPositiveInfinite(t2))
-      t2 = Precision::Infinite();
+    if (math::precision::Precision::IsNegativeInfinite(t1))
+      t1 = -math::precision::Precision::Infinite();
+    if (math::precision::Precision::IsPositiveInfinite(t2))
+      t2 = math::precision::Precision::Infinite();
     res = new Geom2d_TrimmedCurve(Gline2d, t1, t2);
   }
 
   else
   {
-    Message_Msg msg1225("IGES_1225");
+    System::log::Message_Msg msg1225("IGES_1225");
     SendFail(start, msg1225);
   }
   return res;
@@ -1215,7 +1215,7 @@ occ::handle<Geom_Transformation> IGESToBRep_BasicCurve::TransferTransformation(
   occ::handle<Geom_Transformation> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -1225,7 +1225,7 @@ occ::handle<Geom_Transformation> IGESToBRep_BasicCurve::TransferTransformation(
     res = new Geom_Transformation(resultat);
   else
   {
-    Message_Msg msg1036("IGES_1036");
+    System::log::Message_Msg msg1036("IGES_1036");
     SendFail(start, msg1036);
   }
   return res;
@@ -1238,7 +1238,7 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferCopiousData(
   occ::handle<Geom_BSplineCurve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -1246,14 +1246,14 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferCopiousData(
   int FormNb = start->FormNumber();
   if (FormNb != 11 && FormNb != 12 && FormNb != 63)
   {
-    Message_Msg msg1240("IGES_1240");
+    System::log::Message_Msg msg1240("IGES_1240");
     SendWarning(start, msg1240);
   }
 
   int NbPoints = start->NbPoints();
   if (NbPoints < 2)
   {
-    Message_Msg msg1195("IGES_1195");
+    System::log::Message_Msg msg1195("IGES_1195");
     SendFail(start, msg1195);
     return res;
   }
@@ -1288,7 +1288,7 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferCopiousData(
 
   if (NbPoints == 1)
   {
-    Message_Msg msg1235("IGES_1235");
+    System::log::Message_Msg msg1235("IGES_1235");
     SendFail(start, msg1235);
 
     return res;
@@ -1321,7 +1321,7 @@ occ::handle<Geom_BSplineCurve> IGESToBRep_BasicCurve::TransferCopiousData(
   res = new Geom_BSplineCurve(Pole, Knot, Mult, Degree);
 
   IGESConvGeom::IncreaseCurveContinuity(res,
-                                        std::max(GetEpsGeom() / 10., Precision::Confusion()),
+                                        std::max(GetEpsGeom() / 10., math::precision::Precision::Confusion()),
                                         GetContinuity());
   return res;
 }
@@ -1332,7 +1332,7 @@ occ::handle<Geom2d_BSplineCurve> IGESToBRep_BasicCurve::Transfer2dCopiousData(
   occ::handle<Geom2d_BSplineCurve> res;
   if (start.IsNull())
   {
-    Message_Msg msg1005("IGES_1005");
+    System::log::Message_Msg msg1005("IGES_1005");
     SendFail(start, msg1005);
     return res;
   }
@@ -1340,14 +1340,14 @@ occ::handle<Geom2d_BSplineCurve> IGESToBRep_BasicCurve::Transfer2dCopiousData(
   int FormNb = start->FormNumber();
   if (FormNb != 11 && FormNb != 12 && FormNb != 63)
   {
-    Message_Msg msg1240("IGES_1240");
+    System::log::Message_Msg msg1240("IGES_1240");
     SendWarning(start, msg1240);
   }
 
   int NbPoints = start->NbPoints();
   if (NbPoints < 2)
   {
-    Message_Msg msg1195("IGES_1195");
+    System::log::Message_Msg msg1195("IGES_1195");
     SendFail(start, msg1195);
     return res;
   }
@@ -1379,7 +1379,7 @@ occ::handle<Geom2d_BSplineCurve> IGESToBRep_BasicCurve::Transfer2dCopiousData(
 
   if (NbPoints == 1)
   {
-    Message_Msg msg1235("IGES_1235");
+    System::log::Message_Msg msg1235("IGES_1235");
     SendFail(start, msg1235);
 
     return res;
@@ -1415,7 +1415,7 @@ occ::handle<Geom2d_BSplineCurve> IGESToBRep_BasicCurve::Transfer2dCopiousData(
   double anUVResolution = GetUVResolution();
 
   IGESConvGeom::IncreaseCurveContinuity(res,
-                                        std::max(Precision::Confusion(), epsGeom * anUVResolution),
+                                        std::max(math::precision::Precision::Confusion(), epsGeom * anUVResolution),
                                         GetContinuity());
   return res;
 }

@@ -22,13 +22,13 @@ namespace
                                                               "MemHeapUsage"};
 }
 
-const occ::handle<Message_Messenger>& Message::DefaultMessenger()
+const occ::handle<System::log::Message_Messenger>& System::log::Message::DefaultMessenger()
 {
-  static occ::handle<Message_Messenger> aMessenger = new Message_Messenger;
+  static occ::handle<System::log::Message_Messenger> aMessenger = new System::log::Message_Messenger;
   return aMessenger;
 }
 
-TCollection_AsciiString Message::FillTime(const int hour, const int minute, const double second)
+TCollection_AsciiString System::log::Message::FillTime(const int hour, const int minute, const double second)
 {
   char t[30];
   if (hour > 0)
@@ -40,22 +40,22 @@ TCollection_AsciiString Message::FillTime(const int hour, const int minute, cons
   return TCollection_AsciiString(t);
 }
 
-const occ::handle<Message_Report>& Message::DefaultReport(const bool theToCreate)
+const occ::handle<System::log::Message_Report>& System::log::Message::DefaultReport(const bool theToCreate)
 {
-  static occ::handle<Message_Report> MyReport;
+  static occ::handle<System::log::Message_Report> MyReport;
   if (MyReport.IsNull() && theToCreate)
   {
-    MyReport = new Message_Report();
+    MyReport = new System::log::Message_Report();
   }
   return MyReport;
 }
 
-const char* Message::MetricToString(const Message_MetricType theType)
+const char* System::log::Message::MetricToString(const Message_MetricType theType)
 {
   return Message_Table_PrintMetricTypeEnum[theType];
 }
 
-bool Message::MetricFromString(const char* theString, Message_MetricType& theGravity)
+bool System::log::Message::MetricFromString(const char* theString, Message_MetricType& theGravity)
 {
   TCollection_AsciiString aName(theString);
   for (int aMetricIter = 0; aMetricIter <= Message_MetricType_MemHeapUsage; ++aMetricIter)
@@ -70,30 +70,30 @@ bool Message::MetricFromString(const char* theString, Message_MetricType& theGra
   return false;
 }
 
-bool Message::ToOSDMetric(const Message_MetricType theMetric, OSD_MemInfo::Counter& theMemInfo)
+bool System::log::Message::ToOSDMetric(const Message_MetricType theMetric, System::os::OSD_MemInfo::Counter& theMemInfo)
 {
   switch (theMetric)
   {
     case Message_MetricType_MemPrivate:
-      theMemInfo = OSD_MemInfo::MemPrivate;
+      theMemInfo = System::os::OSD_MemInfo::MemPrivate;
       break;
     case Message_MetricType_MemVirtual:
-      theMemInfo = OSD_MemInfo::MemVirtual;
+      theMemInfo = System::os::OSD_MemInfo::MemVirtual;
       break;
     case Message_MetricType_MemWorkingSet:
-      theMemInfo = OSD_MemInfo::MemWorkingSet;
+      theMemInfo = System::os::OSD_MemInfo::MemWorkingSet;
       break;
     case Message_MetricType_MemWorkingSetPeak:
-      theMemInfo = OSD_MemInfo::MemWorkingSetPeak;
+      theMemInfo = System::os::OSD_MemInfo::MemWorkingSetPeak;
       break;
     case Message_MetricType_MemSwapUsage:
-      theMemInfo = OSD_MemInfo::MemSwapUsage;
+      theMemInfo = System::os::OSD_MemInfo::MemSwapUsage;
       break;
     case Message_MetricType_MemSwapUsagePeak:
-      theMemInfo = OSD_MemInfo::MemSwapUsagePeak;
+      theMemInfo = System::os::OSD_MemInfo::MemSwapUsagePeak;
       break;
     case Message_MetricType_MemHeapUsage:
-      theMemInfo = OSD_MemInfo::MemHeapUsage;
+      theMemInfo = System::os::OSD_MemInfo::MemHeapUsage;
       break;
     default:
       return false;
@@ -101,29 +101,29 @@ bool Message::ToOSDMetric(const Message_MetricType theMetric, OSD_MemInfo::Count
   return true;
 }
 
-bool Message::ToMessageMetric(const OSD_MemInfo::Counter theMemInfo, Message_MetricType& theMetric)
+bool System::log::Message::ToMessageMetric(const System::os::OSD_MemInfo::Counter theMemInfo, Message_MetricType& theMetric)
 {
   switch (theMemInfo)
   {
-    case OSD_MemInfo::MemPrivate:
+    case System::os::OSD_MemInfo::MemPrivate:
       theMetric = Message_MetricType_MemPrivate;
       break;
-    case OSD_MemInfo::MemVirtual:
+    case System::os::OSD_MemInfo::MemVirtual:
       theMetric = Message_MetricType_MemVirtual;
       break;
-    case OSD_MemInfo::MemWorkingSet:
+    case System::os::OSD_MemInfo::MemWorkingSet:
       theMetric = Message_MetricType_MemWorkingSet;
       break;
-    case OSD_MemInfo::MemWorkingSetPeak:
+    case System::os::OSD_MemInfo::MemWorkingSetPeak:
       theMetric = Message_MetricType_MemWorkingSetPeak;
       break;
-    case OSD_MemInfo::MemSwapUsage:
+    case System::os::OSD_MemInfo::MemSwapUsage:
       theMetric = Message_MetricType_MemSwapUsage;
       break;
-    case OSD_MemInfo::MemSwapUsagePeak:
+    case System::os::OSD_MemInfo::MemSwapUsagePeak:
       theMetric = Message_MetricType_MemSwapUsagePeak;
       break;
-    case OSD_MemInfo::MemHeapUsage:
+    case System::os::OSD_MemInfo::MemHeapUsage:
       theMetric = Message_MetricType_MemHeapUsage;
       break;
     default:

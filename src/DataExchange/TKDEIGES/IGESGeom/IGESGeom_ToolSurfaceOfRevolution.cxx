@@ -29,26 +29,26 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
 
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, STANDARD_TYPE(IGESGeom_Line), anAxis))
   {
-    Message_Msg Msg152("XSTEP_152");
+    System::log::Message_Msg Msg152("XSTEP_152");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg152.Arg(Msg216.Value());
         PR.SendFail(Msg152);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg152.Arg(Msg217.Value());
         PR.SendFail(Msg152);
         break;
       }
       case IGESData_TypeError:
       {
-        Message_Msg Msg218("IGES_218");
+        System::log::Message_Msg Msg218("IGES_218");
         Msg152.Arg(Msg218.Value());
         PR.SendFail(Msg152);
         break;
@@ -60,19 +60,19 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, aGeneratrix))
   {
-    Message_Msg Msg153("XSTEP_153");
+    System::log::Message_Msg Msg153("XSTEP_153");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg153.Arg(Msg216.Value());
         PR.SendFail(Msg153);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg153.Arg(Msg217.Value());
         PR.SendFail(Msg153);
         break;
@@ -84,12 +84,12 @@ void IGESGeom_ToolSurfaceOfRevolution::ReadOwnParams(
   }
   if (!PR.ReadReal(PR.Current(), aStartAngle))
   {
-    Message_Msg Msg154("XSTEP_154");
+    System::log::Message_Msg Msg154("XSTEP_154");
     PR.SendFail(Msg154);
   }
   if (!PR.ReadReal(PR.Current(), anEndAngle))
   {
-    Message_Msg Msg155("XSTEP_155");
+    System::log::Message_Msg Msg155("XSTEP_155");
     PR.SendFail(Msg155);
   }
 

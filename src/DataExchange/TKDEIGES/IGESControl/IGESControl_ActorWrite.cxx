@@ -46,7 +46,7 @@ bool IGESControl_ActorWrite::Recognize(const occ::handle<Transfer_Finder>& start
 occ::handle<Transfer_Binder> IGESControl_ActorWrite::Transfer(
   const occ::handle<Transfer_Finder>&        start,
   const occ::handle<Transfer_FinderProcess>& FP,
-  const Message_ProgressRange&               theProgress)
+  const System::log::Message_ProgressRange&               theProgress)
 {
   XSAlgo_ShapeProcessor::PrepareForTransfer();
 

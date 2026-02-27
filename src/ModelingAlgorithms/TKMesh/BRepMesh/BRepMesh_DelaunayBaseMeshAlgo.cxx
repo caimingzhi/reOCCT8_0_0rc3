@@ -8,7 +8,7 @@ BRepMesh_DelaunayBaseMeshAlgo::BRepMesh_DelaunayBaseMeshAlgo() = default;
 
 BRepMesh_DelaunayBaseMeshAlgo::~BRepMesh_DelaunayBaseMeshAlgo() = default;
 
-void BRepMesh_DelaunayBaseMeshAlgo::generateMesh(const Message_ProgressRange& theRange)
+void BRepMesh_DelaunayBaseMeshAlgo::generateMesh(const System::log::Message_ProgressRange& theRange)
 {
   const occ::handle<BRepMesh_DataStructureOfDelaun>& aStructure = getStructure();
   const occ::handle<VectorOfPnt>&                    aNodesMap  = getNodesMap();

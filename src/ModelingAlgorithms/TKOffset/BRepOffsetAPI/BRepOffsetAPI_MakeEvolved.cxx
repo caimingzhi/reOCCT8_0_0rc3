@@ -50,7 +50,7 @@ BRepOffsetAPI_MakeEvolved::BRepOffsetAPI_MakeEvolved(const TopoDS_Shape&    Spin
     if (!AxeProf)
     {
       bool POS;
-      BRepFill::Axe(Spine, Profil, Axis, POS, std::max(Tol, Precision::Confusion()));
+      BRepFill::Axe(Spine, Profil, Axis, POS, std::max(Tol, math::precision::Precision::Confusion()));
       if (ProfOnSpine && !POS)
         return;
     }
@@ -77,7 +77,7 @@ const BRepFill_Evolved& BRepOffsetAPI_MakeEvolved::Evolved() const
   return myEvolved;
 }
 
-void BRepOffsetAPI_MakeEvolved::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_MakeEvolved::Build(const System::log::Message_ProgressRange&)
 {
   if (myEvolved.IsDone())
   {

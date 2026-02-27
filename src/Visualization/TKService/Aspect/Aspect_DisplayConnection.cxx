@@ -19,7 +19,7 @@ Aspect_DisplayConnection::Aspect_DisplayConnection()
   myDefVisualInfo = nullptr;
   myDefFBConfig   = nullptr;
   myIsOwnDisplay  = false;
-  OSD_Environment anEnv("DISPLAY");
+  System::os::OSD_Environment anEnv("DISPLAY");
   myDisplayName = anEnv.Value();
   Init(nullptr);
 #endif

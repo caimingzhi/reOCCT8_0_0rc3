@@ -2,8 +2,12 @@
 
 #include <Standard_TypeDef.hpp>
 
+namespace System { namespace log {
 class Message_ProgressScope;
+}} // namespace System::log
 
+
+namespace System { namespace log {
 class Message_ProgressRange
 {
 public:
@@ -63,20 +67,22 @@ private:
 
   friend class Message_ProgressScope;
 };
+}} // namespace System::log
+
 
 #include <Message_ProgressIndicator.hpp>
 
-inline bool Message_ProgressRange::IsActive() const
+inline bool System::log::Message_ProgressRange::IsActive() const
 {
   return !myWasUsed && myParentScope && myParentScope->myProgress;
 }
 
-inline bool Message_ProgressRange::UserBreak() const
+inline bool System::log::Message_ProgressRange::UserBreak() const
 {
   return myParentScope && myParentScope->myProgress && myParentScope->myProgress->UserBreak();
 }
 
-inline void Message_ProgressRange::Close()
+inline void System::log::Message_ProgressRange::Close()
 {
   if (!IsActive())
     return;

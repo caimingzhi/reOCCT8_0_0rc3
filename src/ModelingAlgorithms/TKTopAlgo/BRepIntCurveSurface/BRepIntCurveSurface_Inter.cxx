@@ -67,7 +67,7 @@ void BRepIntCurveSurface_Inter::Init(const GeomAdaptor_Curve& theCurve)
   double aFirst = theCurve.FirstParameter();
   double aLast  = theCurve.LastParameter();
   myCurve       = new GeomAdaptor_Curve(theCurve);
-  if (!Precision::IsInfinite(aFirst) && !Precision::IsInfinite(aLast))
+  if (!math::precision::Precision::IsInfinite(aFirst) && !math::precision::Precision::IsInfinite(aLast))
   {
     BndLib_Add3dCurve::Add(*myCurve, 0., myCurveBox);
   }

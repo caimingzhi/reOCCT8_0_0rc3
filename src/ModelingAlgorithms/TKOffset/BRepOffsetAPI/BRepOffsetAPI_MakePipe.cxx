@@ -30,7 +30,7 @@ const BRepFill_Pipe& BRepOffsetAPI_MakePipe::Pipe() const
   return myPipe;
 }
 
-void BRepOffsetAPI_MakePipe::Build(const Message_ProgressRange&)
+void BRepOffsetAPI_MakePipe::Build(const System::log::Message_ProgressRange&)
 {
   myShape = myPipe.Shape();
 

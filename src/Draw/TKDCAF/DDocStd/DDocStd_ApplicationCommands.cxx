@@ -146,7 +146,7 @@ static int DDocStd_Open(Draw_Interpretor& di, int nb, const char** a)
     occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
     if (anUseStream)
     {
-      const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+      const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
       std::shared_ptr<std::istream>      aFileStream =
         aFileSystem->OpenIStream(path, std::ios::in | std::ios::binary);
 
@@ -265,7 +265,7 @@ static int DDocStd_SaveAs(Draw_Interpretor& di, int nb, const char** a)
     occ::handle<Draw_ProgressIndicator> aProgress = new Draw_ProgressIndicator(di, 1);
     if (anUseStream)
     {
-      const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+      const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
       std::shared_ptr<std::ostream>      aFileStream =
         aFileSystem->OpenOStream(path, std::ios::out | std::ios::binary);
       theStatus = A->SaveAs(D, *aFileStream, aProgress->Start());
@@ -432,7 +432,7 @@ static int DDocStd_OSDPath(Draw_Interpretor& di, int nb, const char** a)
 {
   if (nb == 2)
   {
-    OSD_Path path(a[1]);
+    System::os::OSD_Path path(a[1]);
     di << "Node      : " << path.Node().ToCString() << "\n";
     di << "UserName  : " << path.UserName().ToCString() << "\n";
     di << "Password  : " << path.Password().ToCString() << "\n";

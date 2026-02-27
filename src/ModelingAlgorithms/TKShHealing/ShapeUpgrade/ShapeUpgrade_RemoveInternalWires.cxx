@@ -120,7 +120,7 @@ void ShapeUpgrade_RemoveInternalWires::removeSmallWire(const TopoDS_Shape& theFa
     if (!theWire.IsNull() && !theWire.IsSame(aW))
       continue;
     double anArea = ShapeAnalysis::ContourArea(aW);
-    if (anArea < myMinArea - Precision::Confusion())
+    if (anArea < myMinArea - math::precision::Precision::Confusion())
     {
       Context()->Remove(aW);
       myRemoveWires.Append(aW);

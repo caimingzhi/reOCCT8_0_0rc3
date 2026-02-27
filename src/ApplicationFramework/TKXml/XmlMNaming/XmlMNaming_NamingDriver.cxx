@@ -47,7 +47,7 @@ IMPLEMENT_DOMSTRING(ShEdgeString, "edge")
 IMPLEMENT_DOMSTRING(ShVertexString, "vertex")
 IMPLEMENT_DOMSTRING(ShShapeString, "shape")
 
-XmlMNaming_NamingDriver::XmlMNaming_NamingDriver(const occ::handle<Message_Messenger>& theMsgDriver)
+XmlMNaming_NamingDriver::XmlMNaming_NamingDriver(const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

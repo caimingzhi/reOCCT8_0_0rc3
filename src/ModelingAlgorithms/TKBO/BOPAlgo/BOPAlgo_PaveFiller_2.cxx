@@ -70,7 +70,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -101,12 +101,12 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_VertexEdge> BOPAlgo_VectorOfVertexEdge;
 
-void BOPAlgo_PaveFiller::PerformVE(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformVE(const System::log::Message_ProgressRange& theRange)
 {
   FillShrunkData(TopAbs_VERTEX, TopAbs_EDGE);
 
   myIterator->Initialize(TopAbs_VERTEX, TopAbs_EDGE);
-  Message_ProgressScope aPS(theRange, nullptr, 1);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 1);
 
   int iSize = myIterator->ExpectedLength();
   if (!iSize)
@@ -169,7 +169,7 @@ void BOPAlgo_PaveFiller::PerformVE(const Message_ProgressRange& theRange)
 
 void BOPAlgo_PaveFiller::IntersectVE(
   const NCollection_IndexedDataMap<occ::handle<BOPDS_PaveBlock>, NCollection_List<int>>& theVEPairs,
-  const Message_ProgressRange&                                                           theRange,
+  const System::log::Message_ProgressRange&                                                           theRange,
   const bool theAddInterfs)
 {
   int i, aNbVE = theVEPairs.Extent();
@@ -188,7 +188,7 @@ void BOPAlgo_PaveFiller::IntersectVE(
 
   NCollection_DataMap<BOPDS_Pair, NCollection_List<int>> aDMVSD;
 
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
   for (i = 1; i <= aNbVE; ++i)
   {
     if (UserBreak(aPSOuter))
@@ -245,7 +245,7 @@ void BOPAlgo_PaveFiller::IntersectVE(
 
   aNbVE = aVVE.Length();
 
-  Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Vertex-Edge intersection", aNbVE);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Vertex-Edge intersection", aNbVE);
   for (i = 0; i < aNbVE; i++)
   {
     BOPAlgo_VertexEdge& aVESolver = aVVE.ChangeValue(i);

@@ -107,10 +107,10 @@ static gp_Pnt BaryCenter(const gp_Pln& aPlane,
                          const double  aVMax)
 {
   double aU, aV;
-  bool   isU1Inf = Precision::IsInfinite(aUMin);
-  bool   isU2Inf = Precision::IsInfinite(aUMax);
-  bool   isV1Inf = Precision::IsInfinite(aVMin);
-  bool   isV2Inf = Precision::IsInfinite(aVMax);
+  bool   isU1Inf = math::precision::Precision::IsInfinite(aUMin);
+  bool   isU2Inf = math::precision::Precision::IsInfinite(aUMax);
+  bool   isV1Inf = math::precision::Precision::IsInfinite(aVMin);
+  bool   isV2Inf = math::precision::Precision::IsInfinite(aVMax);
 
   if (isU1Inf && isU2Inf)
     aU = 0;
@@ -218,8 +218,8 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
 {
   GeomAbs_SurfaceType Type = S.GetType();
 
-  if (Precision::IsInfinite(VMin) || Precision::IsInfinite(VMax) || Precision::IsInfinite(UMin)
-      || Precision::IsInfinite(UMax))
+  if (math::precision::Precision::IsInfinite(VMin) || math::precision::Precision::IsInfinite(VMax) || math::precision::Precision::IsInfinite(UMin)
+      || math::precision::Precision::IsInfinite(UMax))
   {
 
     switch (Type)
@@ -267,9 +267,9 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
     }
     case GeomAbs_Sphere:
     {
-      if (std::abs(UMin) < Precision::Angular() && std::abs(UMax - 2. * M_PI) < Precision::Angular()
-          && std::abs(VMin + M_PI / 2.) < Precision::Angular()
-          && std::abs(VMax - M_PI / 2.) < Precision::Angular())
+      if (std::abs(UMin) < math::precision::Precision::Angular() && std::abs(UMax - 2. * M_PI) < math::precision::Precision::Angular()
+          && std::abs(VMin + M_PI / 2.) < math::precision::Precision::Angular()
+          && std::abs(VMax - M_PI / 2.) < math::precision::Precision::Angular())
         BndLib::Add(S.Sphere(), Tol, B);
       else
         BndLib::Add(S.Sphere(), UMin, UMax, VMin, VMax, Tol, B);
@@ -287,7 +287,7 @@ void BndLib_AddSurface::Add(const Adaptor3d_Surface& S,
     case GeomAbs_BSplineSurface:
     {
       bool   isUseConvexHullAlgorithm = true;
-      double PTol                     = Precision::Parametric(Precision::Confusion());
+      double PTol                     = math::precision::Precision::Parametric(math::precision::Precision::Confusion());
 
       double anUMinParam = UMin, anUMaxParam = UMax, aVMinParam = VMin, aVMaxParam = VMax;
       occ::handle<Geom_BSplineSurface> aBS;
@@ -457,8 +457,8 @@ void BndLib_AddSurface::AddOptimal(const Adaptor3d_Surface& S,
 {
   GeomAbs_SurfaceType Type = S.GetType();
 
-  if (Precision::IsInfinite(VMin) || Precision::IsInfinite(VMax) || Precision::IsInfinite(UMin)
-      || Precision::IsInfinite(UMax))
+  if (math::precision::Precision::IsInfinite(VMin) || math::precision::Precision::IsInfinite(VMax) || math::precision::Precision::IsInfinite(UMin)
+      || math::precision::Precision::IsInfinite(UMax))
   {
     switch (Type)
     {
@@ -620,7 +620,7 @@ void BndLib_AddSurface::AddGenSurf(const Adaptor3d_Surface& S,
     }
   }
 
-  double eps = std::max(Tol, Precision::Confusion());
+  double eps = std::max(Tol, math::precision::Precision::Confusion());
   for (k = 0; k < 3; ++k)
   {
     double d = DeflMax[k];

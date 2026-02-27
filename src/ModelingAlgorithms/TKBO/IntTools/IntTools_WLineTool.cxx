@@ -370,7 +370,7 @@ static bool FindPoint(const gp_Pnt2d& theFirstPoint,
     RefineVector(anormvec);
     double adot1 = anormvec.Dot(anOtherVecNormal);
 
-    if (fabs(adot1) < Precision::Angular())
+    if (fabs(adot1) < math::precision::Precision::Angular())
       continue;
     double adist  = 0.;
     bool   bIsOut = false;
@@ -400,7 +400,7 @@ static bool FindPoint(const gp_Pnt2d& theFirstPoint,
       aDotX    = aVec.Dot(acurvec);
       anAngleX = aVec.Angle(acurvec);
 
-      if (aDotX > 0. && fabs(anAngleX) < Precision::PConfusion())
+      if (aDotX > 0. && fabs(anAngleX) < math::precision::Precision::PConfusion())
       {
         if ((i % 2) == 0)
         {
@@ -464,7 +464,7 @@ bool IntTools_WLineTool::DecompositionOfWLine(
   NCollection_List<int>                     aListOfPointIndex;
 
   nblines                = 0;
-  aTol                   = Precision::Confusion();
+  aTol                   = math::precision::Precision::Confusion();
   aTol                   = 0.5 * aTol;
   bIsPrevPointOnBoundary = false;
   bIsPointOnBoundary     = false;
@@ -738,7 +738,7 @@ bool IntTools_WLineTool::DecompositionOfWLine(
             double   anewU = (bIsUBoundary) ? anotherPar : U;
             double   anewV = (bIsUBoundary) ? V : anotherPar;
 
-            if (((adist1 - adist2) > Precision::PConfusion()) && (adist2 < (aPeriod / 4.)))
+            if (((adist1 - adist2) > math::precision::Precision::PConfusion()) && (adist2 < (aPeriod / 4.)))
             {
               bCheckAngle1 = true;
               aNewVec      = gp_Vec2d(gp_Pnt2d(nU1, nV1), gp_Pnt2d(anewU, anewV));

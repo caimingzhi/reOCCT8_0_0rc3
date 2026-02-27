@@ -244,7 +244,7 @@ GeomLib_CheckCurveOnSurface::GeomLib_CheckCurveOnSurface()
     : myErrorStatus(0),
       myMaxDistance(RealLast()),
       myMaxParameter(0.),
-      myTolRange(Precision::PConfusion()),
+      myTolRange(math::precision::Precision::PConfusion()),
       myIsParallel(false)
 {
 }
@@ -267,7 +267,7 @@ void GeomLib_CheckCurveOnSurface::Init()
   myErrorStatus  = 0;
   myMaxDistance  = RealLast();
   myMaxParameter = 0.0;
-  myTolRange     = Precision::PConfusion();
+  myTolRange     = math::precision::Precision::PConfusion();
 }
 
 void GeomLib_CheckCurveOnSurface::Init(const occ::handle<Adaptor3d_Curve>& theCurve,
@@ -326,7 +326,7 @@ void GeomLib_CheckCurveOnSurface::Perform(
 
     const int aNbThreads =
       myIsParallel
-        ? std::min(anIntervals.Size(), OSD_ThreadPool::DefaultPool()->NbDefaultThreadsToLaunch())
+        ? std::min(anIntervals.Size(), System::os::OSD_ThreadPool::DefaultPool()->NbDefaultThreadsToLaunch())
         : 1;
     Array1OfHCurve aCurveArray(0, aNbThreads - 1);
     Array1OfHCurve aCurveOnSurfaceArray(0, aNbThreads - 1);
@@ -345,8 +345,8 @@ void GeomLib_CheckCurveOnSurface::Perform(
                                             aNbParticles);
     if (aNbThreads > 1)
     {
-      const occ::handle<OSD_ThreadPool>& aThreadPool = OSD_ThreadPool::DefaultPool();
-      OSD_ThreadPool::Launcher           aLauncher(*aThreadPool, aNbThreads);
+      const occ::handle<System::os::OSD_ThreadPool>& aThreadPool = System::os::OSD_ThreadPool::DefaultPool();
+      System::os::OSD_ThreadPool::Launcher           aLauncher(*aThreadPool, aNbThreads);
       aLauncher.Perform(anIntervals.Lower(), anIntervals.Upper(), aComp);
     }
     else
@@ -511,7 +511,7 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
       const double aVal3D = anArrKnots3D->Value(anIndex3D), aVal2D = anArrKnots2D->Value(anIndex2D);
       const double aDelta = aVal3D - aVal2D;
 
-      if (aDelta < Precision::PConfusion())
+      if (aDelta < math::precision::Precision::PConfusion())
       {
         if ((aVal3D > theFirst) && (aVal3D < theLast))
         {
@@ -523,7 +523,7 @@ int FillSubIntervals(const occ::handle<Adaptor3d_Curve>&   theCurve3d,
 
         anIndex3D++;
 
-        if (-aDelta < Precision::PConfusion())
+        if (-aDelta < math::precision::Precision::PConfusion())
         {
           anIndex2D++;
         }
@@ -578,7 +578,7 @@ bool PSO_Perform(GeomLib_CheckCurveOnSurface_TargetFunc& theFunction,
                  math_Vector&                            theOutputParam)
 {
   const double aDeltaParam = theParSup(1) - theParInf(1);
-  if (aDeltaParam < Precision::PConfusion())
+  if (aDeltaParam < math::precision::Precision::PConfusion())
     return false;
 
   math_Vector aStepPar(1, 1);

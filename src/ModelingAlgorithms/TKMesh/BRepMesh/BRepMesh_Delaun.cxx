@@ -24,8 +24,8 @@ const double AngDeviation1Deg  = M_PI / 180.;
 const double AngDeviation90Deg = 90 * AngDeviation1Deg;
 const double Angle2PI          = 2 * M_PI;
 
-const double Precision  = Precision::PConfusion();
-const double Precision2 = Precision * Precision;
+const double math::precision::Precision  = math::precision::Precision::PConfusion();
+const double Precision2 = math::precision::Precision * math::precision::Precision;
 
 namespace
 {
@@ -62,7 +62,7 @@ namespace
   {
     theBox.Add(thePnt1);
     theBox.Add(thePnt2);
-    theBox.Enlarge(Precision);
+    theBox.Enlarge(math::precision::Precision);
   }
 
   class StackOfFrames
@@ -199,7 +199,7 @@ void BRepMesh_Delaun::InitCirclesTool(const int theCellsCountU, const int theCel
   {
     aBox.Add(gp_Pnt2d(GetVertex(aNodeIt).Coord()));
   }
-  aBox.Enlarge(Precision);
+  aBox.Enlarge(math::precision::Precision);
 
   initCirclesTool(aBox, theCellsCountU, theCellsCountV);
 
@@ -259,7 +259,7 @@ void BRepMesh_Delaun::perform(IMeshData::VectorOfInteger& theVertexIndices,
     aBox.Add(gp_Pnt2d(GetVertex(theVertexIndices(anIndex)).Coord()));
   }
 
-  aBox.Enlarge(Precision);
+  aBox.Enlarge(math::precision::Precision);
 
   initCirclesTool(aBox, theCellsCountU, theCellsCountV);
   superMesh(aBox);
@@ -350,7 +350,7 @@ void BRepMesh_Delaun::compute(IMeshData::VectorOfInteger& theVertexIndexes)
     int anVertexIdx = theVertexIndexes.Lower();
     createTriangles(theVertexIndexes(anVertexIdx), aLoopEdges);
 
-    createTrianglesOnNewVertices(theVertexIndexes, Message_ProgressRange());
+    createTrianglesOnNewVertices(theVertexIndexes, System::log::Message_ProgressRange());
   }
 
   RemoveAuxElements();
@@ -414,7 +414,7 @@ void BRepMesh_Delaun::createTriangles(const int                       theVertexI
 
     gp_XY  anEdgeDir(aLastVertex.Coord() - aFirstVertex.Coord());
     double anEdgeLen = anEdgeDir.Modulus();
-    if (anEdgeLen < Precision)
+    if (anEdgeLen < math::precision::Precision)
       continue;
 
     anEdgeDir.SetCoord(anEdgeDir.X() / anEdgeLen, anEdgeDir.Y() / anEdgeLen);
@@ -424,7 +424,7 @@ void BRepMesh_Delaun::createTriangles(const int                       theVertexI
 
     double aDist12 = aFirstLinkDir ^ anEdgeDir;
     double aDist23 = anEdgeDir ^ aLastLinkDir;
-    if (std::abs(aDist12) < Precision || std::abs(aDist23) < Precision)
+    if (std::abs(aDist12) < math::precision::Precision || std::abs(aDist23) < math::precision::Precision)
     {
       continue;
     }
@@ -496,7 +496,7 @@ void BRepMesh_Delaun::createTriangles(const int                       theVertexI
 }
 
 void BRepMesh_Delaun::createTrianglesOnNewVertices(IMeshData::VectorOfInteger&  theVertexIndexes,
-                                                   const Message_ProgressRange& theRange)
+                                                   const System::log::Message_ProgressRange& theRange)
 {
   occ::handle<NCollection_IncAllocator> aAllocator =
     new NCollection_IncAllocator(IMeshData::MEMORY_BLOCK_SIZE_HUGE);
@@ -509,7 +509,7 @@ void BRepMesh_Delaun::createTrianglesOnNewVertices(IMeshData::VectorOfInteger&  
 
   int                   anIndex = theVertexIndexes.Lower();
   int                   anUpper = theVertexIndexes.Upper();
-  Message_ProgressScope aPS(theRange, "Create triangles on new vertices", anUpper);
+  System::log::Message_ProgressScope aPS(theRange, "Create triangles on new vertices", anUpper);
   for (; anIndex <= anUpper; ++anIndex, aPS.Next())
   {
     if (!aPS.More())
@@ -1045,7 +1045,7 @@ int BRepMesh_Delaun::findNextPolygonLink(const int&                             
     bool isCheckPointOnEdge = true;
     if (isFrontier)
     {
-      if (std::abs(std::abs(anAngle) - M_PI) < Precision::Angular())
+      if (std::abs(std::abs(anAngle) - M_PI) < math::precision::Precision::Angular())
       {
 
         isCheckPointOnEdge = false;
@@ -1353,7 +1353,7 @@ bool BRepMesh_Delaun::isVertexInsidePolygon(
     aPrevVertexDir = aCurVertexDir;
   }
 
-  return std::abs(std::abs(aTotalAng) - Angle2PI) <= Precision::Angular();
+  return std::abs(std::abs(aTotalAng) - Angle2PI) <= math::precision::Precision::Angular();
 }
 
 void BRepMesh_Delaun::killTrianglesOnIntersectingLinks(
@@ -1585,7 +1585,7 @@ void BRepMesh_Delaun::meshPolygon(IMeshData::SequenceOfInteger&   thePolygon,
 
           gp_Vec2d aVec1(aRefPoint, aNextPnts[0]);
           gp_Vec2d aVec2(aRefPoint, aNextPnts[1]);
-          if (std::abs(aVec1 ^ aVec2) < Precision)
+          if (std::abs(aVec1 ^ aVec2) < math::precision::Precision)
           {
             isFirstChopping = true;
             break;
@@ -1777,7 +1777,7 @@ void BRepMesh_Delaun::decomposeSimplePolygon(IMeshData::SequenceOfInteger& thePo
   gp_Vec2d aRefEdgeDir(aRefVertices[0], aRefVertices[1]);
 
   double aRefEdgeLen = aRefEdgeDir.Magnitude();
-  if (aRefEdgeLen < Precision)
+  if (aRefEdgeLen < math::precision::Precision)
   {
     thePolygon.Clear();
     thePolyBoxes.Clear();
@@ -1807,7 +1807,7 @@ void BRepMesh_Delaun::decomposeSimplePolygon(IMeshData::SequenceOfInteger& thePo
     double aDist     = aRefEdgeDir ^ aDistanceDir;
     double aAngle    = std::abs(aRefEdgeDir.Angle(aDistanceDir));
     double anAbsDist = std::abs(aDist);
-    if (anAbsDist < Precision || aDist < 0.)
+    if (anAbsDist < math::precision::Precision || aDist < 0.)
       continue;
 
     if ((anAbsDist >= aMinDist) && (aAngle <= aOptAngle || aAngle > AngDeviation90Deg))
@@ -2007,7 +2007,7 @@ void BRepMesh_Delaun::RemoveVertex(const BRepMesh_Vertex& theVertex)
 }
 
 void BRepMesh_Delaun::AddVertices(IMeshData::VectorOfInteger&  theVertices,
-                                  const Message_ProgressRange& theRange)
+                                  const System::log::Message_ProgressRange& theRange)
 {
   ComparatorOfIndexedVertexOfDelaun aCmp(myMeshData);
   std::make_heap(theVertices.begin(), theVertices.end(), aCmp);
@@ -2226,7 +2226,7 @@ const char* BRepMesh_DumpPoly(void* thePolygon, void* theMeshHandlePtr, const ch
         aPnt[i]            = gp_Pnt(aNode.X(), aNode.Y(), 0.);
       }
 
-      if (aPnt[0].SquareDistance(aPnt[1]) < Precision::SquareConfusion())
+      if (aPnt[0].SquareDistance(aPnt[1]) < math::precision::Precision::SquareConfusion())
         continue;
 
       aBuilder.Add(aMesh, BRepBuilderAPI_MakeEdge(aPnt[0], aPnt[1]));

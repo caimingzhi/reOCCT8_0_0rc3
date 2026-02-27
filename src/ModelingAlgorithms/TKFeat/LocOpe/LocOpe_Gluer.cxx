@@ -327,8 +327,8 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
   gp_Vec          d1u, d1v, n1, n2;
 
   GeomAdaptor_Surface GAS(Sb);
-  const double        TolU = GAS.UResolution(Precision::Confusion());
-  const double        TolV = GAS.VResolution(Precision::Confusion());
+  const double        TolU = GAS.UResolution(math::precision::Precision::Confusion());
+  const double        TolV = GAS.VResolution(math::precision::Precision::Confusion());
   Extrema_ExtPS       anExtPS;
   anExtPS.Initialize(GAS,
                      GAS.FirstUParameter(),
@@ -343,16 +343,16 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
   {
     const TopoDS_Edge&        edg = TopoDS::Edge(exp.Current());
     occ::handle<Geom2d_Curve> C2d = BRep_Tool::CurveOnSurface(edg, Fn, f, l);
-    if (Precision::IsNegativeInfinite(f) && Precision::IsPositiveInfinite(l))
+    if (math::precision::Precision::IsNegativeInfinite(f) && math::precision::Precision::IsPositiveInfinite(l))
     {
       f = -100.;
       l = 100.;
     }
-    else if (Precision::IsNegativeInfinite(f))
+    else if (math::precision::Precision::IsNegativeInfinite(f))
     {
       f = l - 200.;
     }
-    else if (Precision::IsPositiveInfinite(l))
+    else if (math::precision::Precision::IsPositiveInfinite(l))
     {
       l = f + 200.;
     }
@@ -362,7 +362,7 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
       C2d->D0(f + (i - 1) * deltau, ptvtx);
       Sn->D1(ptvtx.X(), ptvtx.Y(), pvt, d1u, d1v);
       n1 = d1u.Crossed(d1v);
-      if (n1.Magnitude() > Precision::Confusion())
+      if (n1.Magnitude() > math::precision::Precision::Confusion())
       {
         n1.Normalize();
         if (Fn.Orientation() == TopAbs_REVERSED)
@@ -389,7 +389,7 @@ static TopAbs_Orientation GetOrientation(const TopoDS_Face& Fn, const TopoDS_Fac
             anExtPS.Point(jmin).Parameter(uu, vv);
             Sb->D1(uu, vv, pvt, d1u, d1v);
             n2 = d1u.Crossed(d1v);
-            if (n2.Magnitude() > Precision::Confusion())
+            if (n2.Magnitude() > math::precision::Precision::Confusion())
             {
               n2.Normalize();
               if (Fb.Orientation() == TopAbs_REVERSED)

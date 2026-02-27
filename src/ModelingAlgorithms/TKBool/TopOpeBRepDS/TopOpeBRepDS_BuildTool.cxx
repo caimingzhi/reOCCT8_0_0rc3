@@ -57,7 +57,7 @@ bool FUN_UisoLineOnSphe(const TopoDS_Shape& F, const occ::handle<Geom2d_Curve>& 
   {
     occ::handle<Geom2d_Line> L = occ::down_cast<Geom2d_Line>(LLL);
     const gp_Dir2d&          d = L->Direction();
-    isisoU                     = (std::abs(d.X()) < Precision::Parametric(Precision::Confusion()));
+    isisoU                     = (std::abs(d.X()) < math::precision::Precision::Parametric(math::precision::Precision::Confusion()));
   }
   return isisoU;
 }
@@ -484,7 +484,7 @@ bool FUN_makeUisoLineOnSphe(const TopoDS_Face&               F,
     return false;
   if (!FUN_getUV(surf, C3D, par3dsup, usup, vsup))
     return false;
-  double tol = Precision::Parametric(tol3d);
+  double tol = math::precision::Precision::Parametric(tol3d);
   if (std::abs(uinf - usup) > tol)
     return false;
 
@@ -526,8 +526,8 @@ void TopOpeBRepDS_BuildTool::ComputePCurves(const TopOpeBRepDS_Curve& C,
   occ::handle<Geom2d_Curve> PC1new, PC2new;
   if (C3D.IsNull())
   {
-    double tolreached2d1 = Precision::Confusion(), tolreached2d2 = Precision::Confusion(),
-           tol = Precision::Confusion();
+    double tolreached2d1 = math::precision::Precision::Confusion(), tolreached2d2 = math::precision::Precision::Confusion(),
+           tol = math::precision::Precision::Confusion();
     if (comppc1)
       PC1new = TopOpeBRepTool_CurveTool::MakePCurveOnFace(F1, C3D, tolreached2d1);
     if (comppc2)
@@ -566,7 +566,7 @@ void TopOpeBRepDS_BuildTool::ComputePCurves(const TopOpeBRepDS_Curve& C,
     }
     parmin = f;
     parmax = l;
-    ElCLib::AdjustPeriodic(f, f + period, Precision::PConfusion(), parmin, parmax);
+    ElCLib::AdjustPeriodic(f, f + period, math::precision::Precision::PConfusion(), parmin, parmax);
     if (compc3d)
       C3Dnew = new Geom_TrimmedCurve(C3D, parmin, parmax);
   }
@@ -798,7 +798,7 @@ void TopOpeBRepDS_BuildTool::UpdateEdge(const TopoDS_Shape& Ein, TopoDS_Shape& E
     double f2n = f2, l2n = l2;
     if (l2n <= f2n)
     {
-      ElCLib::AdjustPeriodic(f1, l1, Precision::PConfusion(), f2n, l2n);
+      ElCLib::AdjustPeriodic(f1, l1, math::precision::Precision::PConfusion(), f2n, l2n);
       Range(Eou, f2n, l2n);
     }
   }
@@ -916,16 +916,16 @@ Standard_EXPORT void TopOpeBRepDS_SetThePCurve(const BRep_Builder&              
     OC = BRep_Tool::CurveOnSurface(E, F, f, l);
 
   if (OC.IsNull())
-    B.UpdateEdge(E, C, F, Precision::Confusion());
+    B.UpdateEdge(E, C, F, math::precision::Precision::Confusion());
   else
   {
     bool degen = BRep_Tool::Degenerated(E);
     if (!degen)
     {
       if (O == TopAbs_REVERSED)
-        B.UpdateEdge(E, OC, C, F, Precision::Confusion());
+        B.UpdateEdge(E, OC, C, F, math::precision::Precision::Confusion());
       else
-        B.UpdateEdge(E, C, OC, F, Precision::Confusion());
+        B.UpdateEdge(E, C, OC, F, math::precision::Precision::Confusion());
     }
   }
 }
@@ -987,7 +987,7 @@ void TopOpeBRepDS_BuildTool::PCurve(TopoDS_Shape&                    F,
 
     if (!C.IsNull())
     {
-      bool                     deca     = (std::abs(Cf - CDSmin) > Precision::PConfusion());
+      bool                     deca     = (std::abs(Cf - CDSmin) > math::precision::Precision::PConfusion());
       occ::handle<Geom2d_Line> line2d   = occ::down_cast<Geom2d_Line>(PCT);
       bool                     isline2d = !line2d.IsNull();
       bool                     tran     = (rangedef && deca && C->IsPeriodic() && isline2d);
@@ -999,12 +999,12 @@ void TopOpeBRepDS_BuildTool::PCurve(TopoDS_Shape&                    F,
         bool                            isVperio = Surf->IsVPeriodic();
         gp_Dir2d                        dir2d    = line2d->Direction();
         double                          delta;
-        if (isUperio && dir2d.IsParallel(gp::DX2d(), Precision::Angular()))
+        if (isUperio && dir2d.IsParallel(gp::DX2d(), math::precision::Precision::Angular()))
         {
           delta = (CDSmin - Cf) * dir2d.X();
           PCT->Translate(gp_Vec2d(delta, 0.));
         }
-        else if (isVperio && dir2d.IsParallel(gp::DY2d(), Precision::Angular()))
+        else if (isVperio && dir2d.IsParallel(gp::DY2d(), math::precision::Precision::Angular()))
         {
           delta = (CDSmin - Cf) * dir2d.Y();
           PCT->Translate(gp_Vec2d(0., delta));

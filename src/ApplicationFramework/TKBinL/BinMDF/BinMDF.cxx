@@ -5,7 +5,7 @@
 #include <Message_Messenger.hpp>
 
 void BinMDF::AddDrivers(const occ::handle<BinMDF_ADriverTable>& aDriverTable,
-                        const occ::handle<Message_Messenger>&   aMsgDrv)
+                        const occ::handle<System::log::Message_Messenger>&   aMsgDrv)
 {
   aDriverTable->AddDriver(new BinMDF_ReferenceDriver(aMsgDrv));
   aDriverTable->AddDriver(new BinMDF_TagSourceDriver(aMsgDrv));

@@ -16,7 +16,7 @@ public:
 
   bool IsDone() const { return myIsDone; }
 
-  virtual void Perform(const Message_ProgressRange& theRange = Message_ProgressRange()) = 0;
+  virtual void Perform(const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) = 0;
 
   DEFINE_STANDARD_RTTIEXT(BRepMesh_DiscretRoot, Standard_Transient)
 

@@ -257,7 +257,7 @@ void IntPatch_GLine::AddVertex(const IntPatch_Point& Pnt)
           par -= M_PI + M_PI;
         if (par < pf)
         {
-          constexpr double PrecisionPConfusion(Precision::PConfusion() * 1000.0);
+          constexpr double PrecisionPConfusion(math::precision::Precision::PConfusion() * 1000.0);
           if ((pf - par) > PrecisionPConfusion)
           {
             return;
@@ -291,7 +291,7 @@ void IntPatch_GLine::ComputeVertexParameters(const double)
 
   int nbvtx = NbVertex();
 
-  constexpr double PrecisionPConfusion(Precision::PConfusion() * 1000.0);
+  constexpr double PrecisionPConfusion(math::precision::Precision::PConfusion() * 1000.0);
 
   do
   {

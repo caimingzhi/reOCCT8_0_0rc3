@@ -21,8 +21,8 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_FixSmallSolid, ShapeFix_Root)
 
 ShapeFix_FixSmallSolid::ShapeFix_FixSmallSolid()
     : myFixMode(0),
-      myVolumeThreshold(Precision::Infinite()),
-      myWidthFactorThreshold(Precision::Infinite())
+      myVolumeThreshold(math::precision::Precision::Infinite()),
+      myWidthFactorThreshold(math::precision::Precision::Infinite())
 {
 }
 
@@ -33,12 +33,12 @@ void ShapeFix_FixSmallSolid::SetFixMode(const int theMode)
 
 void ShapeFix_FixSmallSolid::SetVolumeThreshold(const double theThreshold)
 {
-  myVolumeThreshold = theThreshold >= 0.0 ? theThreshold : Precision::Infinite();
+  myVolumeThreshold = theThreshold >= 0.0 ? theThreshold : math::precision::Precision::Infinite();
 }
 
 void ShapeFix_FixSmallSolid::SetWidthFactorThreshold(const double theThreshold)
 {
-  myWidthFactorThreshold = theThreshold >= 0.0 ? theThreshold : Precision::Infinite();
+  myWidthFactorThreshold = theThreshold >= 0.0 ? theThreshold : math::precision::Precision::Infinite();
 }
 
 static bool IsValidInput(const TopoDS_Shape& theShape)
@@ -71,7 +71,7 @@ TopoDS_Shape ShapeFix_FixSmallSolid::Remove(const TopoDS_Shape&                 
     if (IsSmall(aSolid))
     {
       theContext->Remove(aSolid);
-      SendWarning(aSolid, Message_Msg("ShapeFix.FixSmallSolid.MSG0"));
+      SendWarning(aSolid, System::log::Message_Msg("ShapeFix.FixSmallSolid.MSG0"));
     }
   }
 
@@ -353,7 +353,7 @@ TopoDS_Shape ShapeFix_FixSmallSolid::Merge(const TopoDS_Shape&                  
         AddToMap(aShellsToAdd, aNonSmallSolidShell, aNotAdjacentShells);
 
         theContext->Remove(aSmallSolid);
-        SendWarning(aSmallSolid, Message_Msg("ShapeFix.FixSmallSolid.MSG1"));
+        SendWarning(aSmallSolid, System::log::Message_Msg("ShapeFix.FixSmallSolid.MSG1"));
 
         aSmallSolids.Remove(aSmallIter);
       }
@@ -392,8 +392,8 @@ TopoDS_Shape ShapeFix_FixSmallSolid::Merge(const TopoDS_Shape&                  
 
 bool ShapeFix_FixSmallSolid::IsThresholdsSet() const
 {
-  return (IsUsedVolumeThreshold() && myVolumeThreshold < Precision::Infinite())
-         || (IsUsedWidthFactorThreshold() && myWidthFactorThreshold < Precision::Infinite());
+  return (IsUsedVolumeThreshold() && myVolumeThreshold < math::precision::Precision::Infinite())
+         || (IsUsedWidthFactorThreshold() && myWidthFactorThreshold < math::precision::Precision::Infinite());
 }
 
 bool ShapeFix_FixSmallSolid::IsSmall(const TopoDS_Shape& theSolid) const
@@ -403,7 +403,7 @@ bool ShapeFix_FixSmallSolid::IsSmall(const TopoDS_Shape& theSolid) const
   if (IsUsedVolumeThreshold() && aVolume > myVolumeThreshold)
     return false;
 
-  if (IsUsedWidthFactorThreshold() && myWidthFactorThreshold < Precision::Infinite())
+  if (IsUsedWidthFactorThreshold() && myWidthFactorThreshold < math::precision::Precision::Infinite())
   {
     double anArea = ShapeArea(theSolid);
     if (aVolume > myWidthFactorThreshold * anArea * 0.5)

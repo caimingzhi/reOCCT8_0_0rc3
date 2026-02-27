@@ -14,7 +14,7 @@
 IMPLEMENT_STANDARD_RTTIEXT(BinMFunction_GraphNodeDriver, BinMDF_ADriver)
 
 BinMFunction_GraphNodeDriver::BinMFunction_GraphNodeDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : BinMDF_ADriver(theMsgDriver, STANDARD_TYPE(TFunction_GraphNode)->Name())
 {
 }

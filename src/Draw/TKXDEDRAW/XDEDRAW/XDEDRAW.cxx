@@ -148,7 +148,7 @@ static int saveDoc(Draw_Interpretor& di, int argc, const char** argv)
   }
   else if (!D->IsSaved())
   {
-    std::cout << "Storage error: this document has never been saved\n";
+    std::cout << "app::storage::Storage error: this document has never been saved\n";
     return 1;
   }
   else
@@ -161,28 +161,28 @@ static int saveDoc(Draw_Interpretor& di, int argc, const char** argv)
     case PCDM_SS_OK:
       break;
     case PCDM_SS_DriverFailure:
-      di << "Storage error: driver failure\n";
+      di << "app::storage::Storage error: driver failure\n";
       break;
     case PCDM_SS_WriteFailure:
-      di << "Storage error: write failure\n";
+      di << "app::storage::Storage error: write failure\n";
       break;
     case PCDM_SS_Failure:
-      di << "Storage error: general failure\n";
+      di << "app::storage::Storage error: general failure\n";
       break;
     case PCDM_SS_Doc_IsNull:
-      di << "Storage error: document is NULL\n";
+      di << "app::storage::Storage error: document is NULL\n";
       break;
     case PCDM_SS_No_Obj:
-      di << "Storage error: no object\n";
+      di << "app::storage::Storage error: no object\n";
       break;
     case PCDM_SS_Info_Section_Error:
-      di << "Storage error: section error\n";
+      di << "app::storage::Storage error: section error\n";
       break;
     case PCDM_SS_UserBreak:
-      di << "Storage error: user break\n";
+      di << "app::storage::Storage error: user break\n";
       break;
     case PCDM_SS_UnrecognizedFormat:
-      di << "Storage error: unrecognized document storage format " << D->StorageFormat() << "\n";
+      di << "app::storage::Storage error: unrecognized document storage format " << D->StorageFormat() << "\n";
       break;
   }
 
@@ -1853,7 +1853,7 @@ void XDEDRAW::Factory(Draw_Interpretor& theDI)
   XDEDRAW::Init(theDI);
 
 #ifdef OCCT_DEBUG
-  theDI << "Draw Plugin : All TKXDEDRAW commands are loaded\n";
+  theDI << "Draw System::plugin::Plugin : All TKXDEDRAW commands are loaded\n";
 #endif
 }
 

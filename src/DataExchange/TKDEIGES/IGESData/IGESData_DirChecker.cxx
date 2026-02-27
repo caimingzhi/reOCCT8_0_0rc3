@@ -146,7 +146,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
     if (ent->TypeNumber() != thetype)
     {
-      Message_Msg Msg58("XSTEP_58");
+      System::log::Message_Msg Msg58("XSTEP_58");
       ach->SendFail(Msg58);
     }
 
@@ -154,7 +154,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
     {
       if (ent->FormNumber() < theform1 || ent->FormNumber() > theform2)
       {
-        Message_Msg Msg71("XSTEP_71");
+        System::log::Message_Msg Msg71("XSTEP_71");
         ach->SendFail(Msg71);
       }
     }
@@ -162,7 +162,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
   if (thestructure == IGESData_DefReference && !ent->HasStructure())
   {
-    Message_Msg Msg59("XSTEP_59");
+    System::log::Message_Msg Msg59("XSTEP_59");
     ach->SendFail(Msg59);
   }
 
@@ -175,17 +175,17 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
     if (df == IGESData_ErrorVal || df == IGESData_ErrorRef)
     {
-      Message_Msg Msg60("XSTEP_60");
+      System::log::Message_Msg Msg60("XSTEP_60");
       ach->SendFail(Msg60);
     }
     else if (thelinefont == IGESData_DefValue && df != IGESData_DefValue)
     {
-      Message_Msg Msg60("XSTEP_60");
+      System::log::Message_Msg Msg60("XSTEP_60");
       ach->SendWarning(Msg60);
     }
 
     int         dlw = ent->LineWeightNumber();
-    Message_Msg Msg69("XSTEP_69");
+    System::log::Message_Msg Msg69("XSTEP_69");
 
     if (thelineweig == IGESData_DefValue && dlw == 0)
     {
@@ -211,7 +211,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
   if (st < 0 || st > 1)
   {
-    Message_Msg Msg65("XSTEP_65");
+    System::log::Message_Msg Msg65("XSTEP_65");
     ach->SendFail(Msg65);
   }
 
@@ -219,7 +219,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
   if (st < 0 || st > 3)
   {
-    Message_Msg Msg66("XSTEP_66");
+    System::log::Message_Msg Msg66("XSTEP_66");
     ach->SendFail(Msg66);
   }
 
@@ -227,7 +227,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
   if (st < 0 || st > 5)
   {
-    Message_Msg Msg67("XSTEP_67");
+    System::log::Message_Msg Msg67("XSTEP_67");
     ach->SendFail(Msg67);
   }
 
@@ -235,7 +235,7 @@ void IGESData_DirChecker::Check(occ::handle<Interface_Check>&           ach,
 
   if (st < 0 || st > 2)
   {
-    Message_Msg Msg68("XSTEP_68");
+    System::log::Message_Msg Msg68("XSTEP_68");
     ach->SendFail(Msg68);
   }
 }
@@ -248,14 +248,14 @@ void IGESData_DirChecker::CheckTypeAndForm(occ::handle<Interface_Check>&        
   {
     if (ent->TypeNumber() != thetype)
     {
-      Message_Msg Msg58("XSTEP_58");
+      System::log::Message_Msg Msg58("XSTEP_58");
       ach->SendWarning(Msg58);
     }
 
     if (theform1 <= theform2)
       if (ent->FormNumber() < theform1 || ent->FormNumber() > theform2)
       {
-        Message_Msg Msg71("XSTEP_71");
+        System::log::Message_Msg Msg71("XSTEP_71");
         ach->SendWarning(Msg71);
       }
   }

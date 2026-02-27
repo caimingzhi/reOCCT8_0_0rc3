@@ -3,9 +3,9 @@
 #include <Message_Printer.hpp>
 #include <Draw_Interpretor.hpp>
 
-class Draw_Printer : public Message_Printer
+class Draw_Printer : public System::log::Message_Printer
 {
-  DEFINE_STANDARD_RTTIEXT(Draw_Printer, Message_Printer)
+  DEFINE_STANDARD_RTTIEXT(Draw_Printer, System::log::Message_Printer)
 public:
   Standard_EXPORT Draw_Printer(Draw_Interpretor& theTcl);
 

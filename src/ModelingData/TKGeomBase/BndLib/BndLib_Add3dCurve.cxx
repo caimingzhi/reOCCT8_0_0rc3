@@ -83,7 +83,7 @@ static double FillBox(Bnd_Box&               B,
   C.D0(first, P1);
   B.Add(P1);
   double p = first, dp = last - first, tol = 0.;
-  if (std::abs(dp) > Precision::PConfusion())
+  if (std::abs(dp) > math::precision::Precision::PConfusion())
   {
     int i;
     dp /= 2 * N;
@@ -162,8 +162,8 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
     case GeomAbs_BSplineCurve:
     {
       occ::handle<Geom_BSplineCurve> Bs = C.BSpline();
-      if (std::abs(Bs->FirstParameter() - U1) > Precision::Parametric(Tol)
-          || std::abs(Bs->LastParameter() - U2) > Precision::Parametric(Tol))
+      if (std::abs(Bs->FirstParameter() - U1) > math::precision::Precision::Parametric(Tol)
+          || std::abs(Bs->LastParameter() - U2) > math::precision::Precision::Parametric(Tol))
       {
 
         occ::handle<Geom_Geometry>     G = Bs->Copy();
@@ -173,7 +173,7 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
         if (Bsaux->IsPeriodic())
           ElCLib::AdjustPeriodic(Bsaux->FirstParameter(),
                                  Bsaux->LastParameter(),
-                                 Precision::PConfusion(),
+                                 math::precision::Precision::PConfusion(),
                                  u1,
                                  u2);
         else
@@ -184,7 +184,7 @@ void BndLib_Add3dCurve::Add(const Adaptor3d_Curve& C,
           if (Bsaux->LastParameter() < U2)
             u2 = Bsaux->LastParameter();
         }
-        double aSegmentTol = 2. * Precision::PConfusion();
+        double aSegmentTol = 2. * math::precision::Precision::PConfusion();
 
         if (Bsaux->IsPeriodic())
         {
@@ -352,7 +352,7 @@ void BndLib_Add3dCurve::AddGenCurv(const Adaptor3d_Curve& C,
     }
   }
 
-  double eps = std::max(Tol, Precision::Confusion());
+  double eps = std::max(Tol, math::precision::Precision::Confusion());
   for (k = 0; k < 3; ++k)
   {
     double d = DeflMax[k];
@@ -491,7 +491,7 @@ double AdjustExtr(const Adaptor3d_Curve& C,
   double aSign = IsMin ? 1. : -1.;
   double extr  = aSign * Extr0;
 
-  double uTol = std::max(C.Resolution(Tol), Precision::PConfusion());
+  double uTol = std::max(C.Resolution(Tol), math::precision::Precision::PConfusion());
   double Du   = (C.LastParameter() - C.FirstParameter());
 
   double reltol = uTol / std::max(std::abs(UMin), std::abs(UMax));

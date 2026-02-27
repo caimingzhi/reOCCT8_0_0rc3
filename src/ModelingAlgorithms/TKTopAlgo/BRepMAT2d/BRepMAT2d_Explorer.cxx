@@ -58,7 +58,7 @@ void BRepMAT2d_Explorer::Perform(const TopoDS_Face& aFace)
   TopExp_Explorer Exp(F, TopAbs_WIRE);
 
   occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(F);
-  TopoDS_Face               aNewF = BRepBuilderAPI_MakeFace(aSurf, Precision::Confusion());
+  TopoDS_Face               aNewF = BRepBuilderAPI_MakeFace(aSurf, math::precision::Precision::Confusion());
 
   while (Exp.More())
   {
@@ -365,7 +365,7 @@ TopoDS_Edge MakeEdge(const occ::handle<Geom2d_Curve>& theCurve,
 {
   TopoDS_Edge      aNewEdge;
   BRep_Builder     aBuilder;
-  constexpr double aTol  = Precision::Confusion();
+  constexpr double aTol  = math::precision::Precision::Confusion();
   double           aFPar = theCurve->FirstParameter();
   double           aLPar = theCurve->LastParameter();
 

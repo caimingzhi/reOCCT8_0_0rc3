@@ -6,7 +6,10 @@
 #include <TDF_Label.hpp>
 #include <NCollection_Sequence.hpp>
 
+namespace System { namespace os {
 class OSD_File;
+}} // namespace System::os
+
 class Standard_GUID;
 class TCollection_AsciiString;
 class TCollection_ExtendedString;
@@ -74,7 +77,7 @@ public:
     const TCollection_ExtendedString& theTimeStamp,
     const TCollection_ExtendedString& theTitle,
     const TCollection_AsciiString&    theMIMEtype,
-    OSD_File&                         theFile);
+    System::os::OSD_File&                         theFile);
 
   Standard_EXPORT occ::handle<XCAFDoc_Note> CreateBinData(
     const TCollection_ExtendedString&                theUserName,

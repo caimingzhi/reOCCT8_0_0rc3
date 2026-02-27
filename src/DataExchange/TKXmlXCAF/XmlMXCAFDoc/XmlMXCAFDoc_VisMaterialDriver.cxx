@@ -212,7 +212,7 @@ static void writeTexture(XmlObjMgt_Persistent&             theTarget,
   }
   else
   {
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning: XmlMXCAFDoc_VisMaterialDriver : Can't write a texture to buffer.";
   }
 }
@@ -248,13 +248,13 @@ static void readTexture(const XmlObjMgt_Element&    theElement,
   }
   else if (!anId.IsEmpty())
   {
-    Message::SendWarning()
+    System::log::Message::SendWarning()
       << "Warning: XmlMXCAFDoc_VisMaterialDriver : Can't write a texture to buffer.";
   }
 }
 
 XmlMXCAFDoc_VisMaterialDriver::XmlMXCAFDoc_VisMaterialDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "VisMaterial")
 {
 }

@@ -26,7 +26,7 @@ CDF_Application::CDF_Application()
 
 occ::handle<CDF_Application> CDF_Application::Load(const Standard_GUID& aGUID)
 {
-  return occ::down_cast<CDF_Application>(Plugin::Load(aGUID));
+  return occ::down_cast<CDF_Application>(System::plugin::Plugin::Load(aGUID));
 }
 
 void CDF_Application::NewDocument(const TCollection_ExtendedString&, occ::handle<CDM_Document>&) {}
@@ -55,7 +55,7 @@ occ::handle<CDM_Document> CDF_Application::Retrieve(const TCollection_ExtendedSt
                                                     const TCollection_ExtendedString& aName,
                                                     const bool UseStorageConfiguration,
                                                     const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                                    const Message_ProgressRange&          theRange)
+                                                    const System::log::Message_ProgressRange&          theRange)
 {
   TCollection_ExtendedString nullVersion;
   return Retrieve(aFolder, aName, nullVersion, UseStorageConfiguration, theFilter, theRange);
@@ -66,7 +66,7 @@ occ::handle<CDM_Document> CDF_Application::Retrieve(const TCollection_ExtendedSt
                                                     const TCollection_ExtendedString& aVersion,
                                                     const bool UseStorageConfiguration,
                                                     const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                                    const Message_ProgressRange&          theRange)
+                                                    const System::log::Message_ProgressRange&          theRange)
 {
   occ::handle<CDM_MetaData> theMetaData;
 
@@ -170,7 +170,7 @@ bool CDF_Application::SetDefaultFolder(const char16_t* aFolder)
 occ::handle<CDM_Document> CDF_Application::Retrieve(const occ::handle<CDM_MetaData>& aMetaData,
                                                     const bool UseStorageConfiguration,
                                                     const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                                    const Message_ProgressRange&          theRange)
+                                                    const System::log::Message_ProgressRange&          theRange)
 {
   return Retrieve(aMetaData, UseStorageConfiguration, true, theFilter, theRange);
 }
@@ -179,7 +179,7 @@ occ::handle<CDM_Document> CDF_Application::Retrieve(const occ::handle<CDM_MetaDa
                                                     const bool UseStorageConfiguration,
                                                     const bool IsComponent,
                                                     const occ::handle<PCDM_ReaderFilter>& theFilter,
-                                                    const Message_ProgressRange&          theRange)
+                                                    const System::log::Message_ProgressRange&          theRange)
 {
 
   occ::handle<CDM_Document> theDocumentToReturn;
@@ -304,9 +304,9 @@ CDF_TypeOfActivation CDF_Application::TypeOfActivation(const occ::handle<CDM_Met
 void CDF_Application::Read(Standard_IStream&                     theIStream,
                            occ::handle<CDM_Document>&            theDocument,
                            const occ::handle<PCDM_ReaderFilter>& theFilter,
-                           const Message_ProgressRange&          theRange)
+                           const System::log::Message_ProgressRange&          theRange)
 {
-  occ::handle<Storage_Data> dData;
+  occ::handle<app::storage::Storage_Data> dData;
 
   TCollection_ExtendedString aFormat;
 
@@ -400,7 +400,7 @@ occ::handle<PCDM_Reader> CDF_Application::ReaderFromFormat(
   try
   {
     OCC_CATCH_SIGNALS
-    aReader = occ::down_cast<PCDM_RetrievalDriver>(Plugin::Load(aPluginId));
+    aReader = occ::down_cast<PCDM_RetrievalDriver>(System::plugin::Plugin::Load(aPluginId));
   }
   catch (Standard_Failure const& anException)
   {
@@ -448,7 +448,7 @@ occ::handle<PCDM_StorageDriver> CDF_Application::WriterFromFormat(
   try
   {
     OCC_CATCH_SIGNALS
-    aDriver = occ::down_cast<PCDM_StorageDriver>(Plugin::Load(aPluginId));
+    aDriver = occ::down_cast<PCDM_StorageDriver>(System::plugin::Plugin::Load(aPluginId));
   }
   catch (Standard_Failure const& anException)
   {

@@ -29,7 +29,7 @@ double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor
                                                        const occ::handle<Adaptor3d_Surface>& theS2,
                                                        const IntSurf_PntOn2S& theUVPoint)
 {
-  constexpr double aSmallValue   = 1.0 / Precision::Infinite();
+  constexpr double aSmallValue   = 1.0 / math::precision::Precision::Infinite();
   constexpr double aSqSmallValue = aSmallValue * aSmallValue;
 
   double aU1 = 0.0, aV1 = 0.0, aU2 = 0.0, aV2 = 0.0;
@@ -94,7 +94,7 @@ double IntPatch_PointLine::CurvatureRadiusOfIntersLine(const occ::handle<Adaptor
 
   if (aSqMagnSDer < aSqSmallValue)
   {
-    return Precision::Infinite();
+    return math::precision::Precision::Infinite();
   }
 
   const double aFactSqRad = aSqMagnFDer * aSqMagnFDer * aSqMagnFDer / aSqMagnSDer;

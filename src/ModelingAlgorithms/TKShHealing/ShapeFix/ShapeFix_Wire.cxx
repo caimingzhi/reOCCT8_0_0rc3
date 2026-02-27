@@ -466,17 +466,17 @@ bool ShapeFix_Wire::FixEdgeCurves()
             if (SAC.Project(GAC, P3d, MinTolerance(), pr, split, true)
                 < std::max(Preci, MinTolerance()))
             {
-              if (split - a > ::Precision::PConfusion() && b - split > ::Precision::PConfusion())
+              if (split - a > math::precision::Precision::PConfusion() && b - split > math::precision::Precision::PConfusion())
               {
                 int k;
                 for (k = 1; k <= seq.Length(); k++)
                 {
-                  if (split < seq(k) - ::Precision::PConfusion())
+                  if (split < seq(k) - math::precision::Precision::PConfusion())
                   {
                     seq.InsertBefore(k, split);
                     break;
                   }
-                  else if (split < seq(k) + ::Precision::PConfusion())
+                  else if (split < seq(k) + math::precision::Precision::PConfusion())
                     break;
                 }
                 if (k > seq.Length())
@@ -643,10 +643,10 @@ bool ShapeFix_Wire::FixEdgeCurves()
         TopLoc_Location           L;
         double                    first = 0., last = 0.;
         BRep_Tool::CurveOnSurface(sbwd->Edge(i), C, S, L, first, last);
-        if (C.IsNull() || std::abs(last - first) < Precision::PConfusion())
+        if (C.IsNull() || std::abs(last - first) < math::precision::Precision::PConfusion())
         {
 
-          SendWarning(sbwd->Edge(i), Message_Msg("FixWire.FixCurve3d.Removed"));
+          SendWarning(sbwd->Edge(i), System::log::Message_Msg("FixWire.FixCurve3d.Removed"));
 
           sbwd->Remove(i--);
           nb--;
@@ -700,8 +700,8 @@ bool ShapeFix_Wire::FixEdgeCurves()
         double                    fp2d, lp2d;
         if (sae.PCurve(sbwd->Edge(i), face, C2d, fp2d, lp2d, false))
         {
-          if (fabs(First - fp2d) > Precision::PConfusion()
-              || fabs(Last - lp2d) > Precision::PConfusion())
+          if (fabs(First - fp2d) > math::precision::Precision::PConfusion()
+              || fabs(Last - lp2d) > math::precision::Precision::PConfusion())
           {
             BRep_Builder B;
             B.SameRange(sbwd->Edge(i), false);
@@ -1015,7 +1015,7 @@ bool ShapeFix_Wire::FixSmall(const int num, const bool lockvtx, const double pre
   if (!Context().IsNull())
     Context()->Remove(WireData()->Edge(n));
 
-  SendWarning(WireData()->Edge(n), Message_Msg("FixAdvWire.FixSmall.MSG0"));
+  SendWarning(WireData()->Edge(n), System::log::Message_Msg("FixAdvWire.FixSmall.MSG0"));
 
   WireData()->Remove(n);
 
@@ -1368,9 +1368,10 @@ bool ShapeFix_Wire::FixShifted()
           double rot2 = (pd1.XY() - pn2.XY()) ^ x.XY();
           double scld = (pd2.XY() - pd1.XY()) * x.XY();
           double scln = (pn2.XY() - pn1.XY()) * x.XY();
-          if (rot1 * rot2 < -::Precision::PConfusion() && scld * scln < -::Precision::PConfusion()
+          if (rot1 * rot2 < -math::precision::Precision::PConfusion()
+              && scld * scln < -math::precision::Precision::PConfusion()
               && std::abs(scln) > 0.1 * period && std::abs(scld) > 0.1 * period
-              && rot1 * scld > ::Precision::PConfusion() && rot2 * scln > ::Precision::PConfusion())
+              && rot1 * scld > math::precision::Precision::PConfusion() && rot2 * scln > math::precision::Precision::PConfusion())
           {
 
             double sign  = (rot2 > 0 ? 1. : -1.);
@@ -1395,8 +1396,8 @@ bool ShapeFix_Wire::FixShifted()
             double deep = deep2 - deep1;
 
             double dx = ShapeAnalysis::AdjustToPeriod(deep,
-                                                      ::Precision::PConfusion(),
-                                                      period + ::Precision::PConfusion());
+                                                      math::precision::Precision::PConfusion(),
+                                                      period + math::precision::Precision::PConfusion());
             x *= (scld > 0 ? -dx : dx);
 
             gp_Trsf2d Shift;
@@ -1554,7 +1555,7 @@ bool ShapeFix_Wire::FixDegenerated(const int num)
   BRep_Builder B;
   B.MakeEdge(degEdge);
   B.Degenerated(degEdge, true);
-  B.UpdateEdge(degEdge, line2d, Face(), ::Precision::Confusion());
+  B.UpdateEdge(degEdge, line2d, Face(), math::precision::Precision::Confusion());
   B.Range(degEdge, Face(), 0., vect2d.Magnitude());
 
   occ::handle<ShapeExtend_WireData> sbwd = WireData();
@@ -1714,10 +1715,10 @@ static bool RemoveLoop(TopoDS_Edge&                      E,
   Mults.SetValue(2, 2);
 
   occ::handle<Geom_BSplineCurve> patch = new Geom_BSplineCurve(Poles, Knots, Mults, 1);
-  if (!connect.Add(patch, ::Precision::PConfusion(), true, false))
+  if (!connect.Add(patch, math::precision::Precision::PConfusion(), true, false))
     return false;
 
-  if (!connect.Add(trim, ::Precision::PConfusion(), true, false))
+  if (!connect.Add(trim, math::precision::Precision::PConfusion(), true, false))
     return false;
 
   occ::handle<Geom_Curve> aNew3dCrv = connect.BSplineCurve();
@@ -1746,7 +1747,7 @@ static bool RemoveLoop(TopoDS_Edge&                      E,
     if (newtol > std::max(prec, tol))
       return false;
 
-    if (std::abs(a - f) > ::Precision::PConfusion() || std::abs(b - l) > ::Precision::PConfusion())
+    if (std::abs(a - f) > math::precision::Precision::PConfusion() || std::abs(b - l) > math::precision::Precision::PConfusion())
       return false;
 
     if (!aPlaneSurf.IsNull())
@@ -1812,10 +1813,10 @@ static bool RemoveLoop(TopoDS_Edge&                      E,
 
     occ::handle<Geom_BSplineCurve> patch1 = new Geom_BSplineCurve(Poles1, Knots1, Mults1, 1);
 
-    if (!connect1.Add(patch1, ::Precision::PConfusion(), true, false))
+    if (!connect1.Add(patch1, math::precision::Precision::PConfusion(), true, false))
       return false;
 
-    if (!connect1.Add(trim1, ::Precision::PConfusion(), true, false))
+    if (!connect1.Add(trim1, math::precision::Precision::PConfusion(), true, false))
       return false;
 
     bs1 = connect1.BSplineCurve();
@@ -1875,7 +1876,7 @@ static bool RemoveLoop(TopoDS_Edge&                      E,
     return false;
 
   occ::handle<Geom2d_TrimmedCurve> trim1;
-  if ((t1 - a) > Precision::PConfusion())
+  if ((t1 - a) > math::precision::Precision::PConfusion())
     trim1 = new Geom2d_TrimmedCurve(c2d, a, t1);
 
   occ::handle<Geom2d_TrimmedCurve> trim2 = new Geom2d_TrimmedCurve(c2d, t2, b);
@@ -2138,7 +2139,7 @@ bool ShapeFix_Wire::FixSelfIntersectingEdge(const int num)
   if (LastFixStatus(ShapeExtend_DONE) && !myShape.IsNull())
   {
 
-    SendWarning(E, Message_Msg("FixAdvWire.FixIntersection.MSG5"));
+    SendWarning(E, System::log::Message_Msg("FixAdvWire.FixIntersection.MSG5"));
   }
 
   return LastFixStatus(ShapeExtend_DONE);
@@ -2442,7 +2443,7 @@ bool ShapeFix_Wire::FixIntersectingEdges(const int num)
   if (!myShape.IsNull())
   {
 
-    SendWarning(Message_Msg("FixAdvWire.FixIntersection.MSG10"));
+    SendWarning(System::log::Message_Msg("FixAdvWire.FixIntersection.MSG10"));
   }
   return true;
 }
@@ -2628,7 +2629,7 @@ bool ShapeFix_Wire::FixIntersectingEdges(const int num1, const int num2)
   if (!myShape.IsNull())
   {
 
-    SendWarning(Message_Msg("FixAdvWire.FixIntersection.MSG10"));
+    SendWarning(System::log::Message_Msg("FixAdvWire.FixIntersection.MSG10"));
   }
   return true;
 }
@@ -2662,19 +2663,19 @@ static bool TryBendingPCurve(const TopoDS_Edge&         E,
         return false;
 
       double par = (end ? last : first);
-      if (fabs(bs->FirstParameter() - par) < ::Precision::PConfusion()
+      if (fabs(bs->FirstParameter() - par) < math::precision::Precision::PConfusion()
           && bs->Multiplicity(1) > bs->Degree())
         bs->SetPole(1, p2d);
-      else if (fabs(bs->LastParameter() - par) < ::Precision::PConfusion()
+      else if (fabs(bs->LastParameter() - par) < math::precision::Precision::PConfusion()
                && bs->Multiplicity(bs->NbKnots()) > bs->Degree())
         bs->SetPole(bs->NbPoles(), p2d);
       else
       {
         bs->Segment(first, last);
-        if (fabs(bs->FirstParameter() - par) < ::Precision::PConfusion()
+        if (fabs(bs->FirstParameter() - par) < math::precision::Precision::PConfusion()
             && bs->Multiplicity(1) > bs->Degree())
           bs->SetPole(1, p2d);
-        else if (fabs(bs->LastParameter() - par) < ::Precision::PConfusion()
+        else if (fabs(bs->LastParameter() - par) < math::precision::Precision::PConfusion()
                  && bs->Multiplicity(bs->NbKnots()) > bs->Degree())
           bs->SetPole(bs->NbPoles(), p2d);
         else
@@ -2732,7 +2733,7 @@ bool ShapeFix_Wire::FixLacking(const int num, const bool force)
   occ::handle<ShapeAnalysis_Surface> surf = myAnalyzer->Surface();
 
   gp_Pnt p3d1, p3d2;
-  double tol1 = ::Precision::Confusion(), tol2 = ::Precision::Confusion();
+  double tol1 = math::precision::Precision::Confusion(), tol2 = math::precision::Precision::Confusion();
 
   double                    bendtol1 = 0., bendtol2 = 0.;
   occ::handle<Geom2d_Curve> bendc1, bendc2;
@@ -2895,7 +2896,7 @@ bool ShapeFix_Wire::FixLacking(const int num, const bool force)
       B.Degenerated(edge, true);
     gp_Vec2d                 v12(p2d1, p2d2);
     occ::handle<Geom2d_Line> theLine2d = new Geom2d_Line(p2d1, gp_Dir2d(v12));
-    B.UpdateEdge(edge, theLine2d, face, ::Precision::Confusion());
+    B.UpdateEdge(edge, theLine2d, face, math::precision::Precision::Confusion());
     B.Range(edge, face, 0, dist2d);
     B.Add(edge, newV1.Oriented(TopAbs_FORWARD));
     B.Add(edge, newV2.Oriented(TopAbs_REVERSED));
@@ -3021,9 +3022,9 @@ bool ShapeFix_Wire::FixNotchedEdges()
       ShapeBuild_Edge    sbe;
       TopAbs_Orientation orient = splitE.Orientation();
 
-      if (std::abs(param - (isRemoveFirst ? b : a)) <= ::Precision::PConfusion()
+      if (std::abs(param - (isRemoveFirst ? b : a)) <= math::precision::Precision::PConfusion()
           || (sae.IsClosed3d(splitE)
-              && std::abs(param - (isRemoveFirst ? a : b)) <= ::Precision::PConfusion()))
+              && std::abs(param - (isRemoveFirst ? a : b)) <= math::precision::Precision::PConfusion()))
       {
         FixDummySeam(n1);
 
@@ -3032,7 +3033,7 @@ bool ShapeFix_Wire::FixNotchedEdges()
       else
       {
 
-        if (std::abs((isRemoveFirst ? a : b) - param) < ::Precision::PConfusion())
+        if (std::abs((isRemoveFirst ? a : b) - param) < math::precision::Precision::PConfusion())
         {
           continue;
         }
@@ -3056,7 +3057,7 @@ bool ShapeFix_Wire::FixNotchedEdges()
         BRep_Builder  B;
         B.MakeVertex(Vnew,
                      Analyzer()->Surface()->Value(c2d->Value(param)),
-                     ::Precision::Confusion());
+                     math::precision::Precision::Confusion());
         TopoDS_Edge wE = splitE;
         wE.Orientation(TopAbs_FORWARD);
         TopoDS_Shape aTmpShape = Vnew.Oriented(TopAbs_REVERSED);

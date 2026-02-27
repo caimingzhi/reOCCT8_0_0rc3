@@ -44,11 +44,11 @@ void StdPrs_ShadedSurface::Add(const occ::handle<Prs3d_Presentation>& thePrs,
       V1 = anInterV(NV);
       V2 = anInterV(NV + 1);
 
-      U1 = (Precision::IsNegativeInfinite(U1)) ? -theDrawer->MaximalParameterValue() : U1;
-      U2 = (Precision::IsPositiveInfinite(U2)) ? theDrawer->MaximalParameterValue() : U2;
+      U1 = (math::precision::Precision::IsNegativeInfinite(U1)) ? -theDrawer->MaximalParameterValue() : U1;
+      U2 = (math::precision::Precision::IsPositiveInfinite(U2)) ? theDrawer->MaximalParameterValue() : U2;
 
-      V1 = (Precision::IsNegativeInfinite(V1)) ? -theDrawer->MaximalParameterValue() : V1;
-      V2 = (Precision::IsPositiveInfinite(V2)) ? theDrawer->MaximalParameterValue() : V2;
+      V1 = (math::precision::Precision::IsNegativeInfinite(V1)) ? -theDrawer->MaximalParameterValue() : V1;
+      V2 = (math::precision::Precision::IsPositiveInfinite(V2)) ? theDrawer->MaximalParameterValue() : V2;
 
       DU = (U2 - U1) / N1;
       DV = (V2 - V1) / N2;

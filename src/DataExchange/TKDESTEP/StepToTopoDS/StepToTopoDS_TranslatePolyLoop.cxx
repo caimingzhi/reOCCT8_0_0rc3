@@ -81,7 +81,7 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
     }
     else
     {
-      B.MakeVertex(V1, GP1->Pnt(), Precision::Confusion());
+      B.MakeVertex(V1, GP1->Pnt(), math::precision::Precision::Confusion());
       aTool.BindVertex(P1, V1);
     }
     B.MakeWire(W);
@@ -102,12 +102,12 @@ void StepToTopoDS_TranslatePolyLoop::Init(const occ::handle<StepShape_PolyLoop>&
         }
         else
         {
-          B.MakeVertex(V2, GP2->Pnt(), Precision::Confusion());
+          B.MakeVertex(V2, GP2->Pnt(), math::precision::Precision::Confusion());
           aTool.BindVertex(P2, V2);
         }
         V = gp_Vec(GP1->Pnt(), GP2->Pnt());
         L = new Geom_Line(GP1->Pnt(), gp_Dir(V));
-        B.MakeEdge(E, L, Precision::Confusion());
+        B.MakeEdge(E, L, math::precision::Precision::Confusion());
         V1.Orientation(TopAbs_FORWARD);
         V2.Orientation(TopAbs_REVERSED);
         B.Add(E, V1);

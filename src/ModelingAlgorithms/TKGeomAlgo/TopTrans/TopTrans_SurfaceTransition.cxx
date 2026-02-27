@@ -195,7 +195,7 @@ void TopTrans_SurfaceTransition::Reset(const gp_Dir& Tgt,
 {
   STATIC_DEFINED = true;
 
-  constexpr double tola     = Precision::Angular();
+  constexpr double tola     = math::precision::Precision::Angular();
   bool             curismax = (std::abs(MaxD.Dot(myTgt)) < tola);
   bool             curismin = (std::abs(MinD.Dot(myTgt)) < tola);
 
@@ -260,7 +260,7 @@ void TopTrans_SurfaceTransition::Compare
 
   double Curv = 0.;
 
-  constexpr double tola     = Precision::Angular();
+  constexpr double tola     = math::precision::Precision::Angular();
   bool             curismax = (std::abs(MaxD.Dot(myTgt)) < tola);
   bool             curismin = (std::abs(MinD.Dot(myTgt)) < tola);
   if (!curismax && !curismin)
@@ -340,7 +340,7 @@ void TopTrans_SurfaceTransition::Compare
     return;
 
   double           Ang  = ::FUN_Ang(myNorm, beafter, myTgt, Norm, O);
-  constexpr double tola = Precision::Angular();
+  constexpr double tola = math::precision::Precision::Angular();
 
   int i, j;
   ::FUN_getSTA(Ang, tola, i, j);

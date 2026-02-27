@@ -8,7 +8,8 @@
 #include <OSD_Chronometer.hpp>
 #include <Standard_OStream.hpp>
 
-class OSD_Timer : public OSD_Chronometer
+namespace System { namespace os {
+class OSD_Timer : public System::os::OSD_Chronometer
 {
 public:
   Standard_EXPORT static double GetWallClockTime();
@@ -43,3 +44,5 @@ private:
   double myTimeStart;
   double myTimeCumul;
 };
+}} // namespace System::os
+

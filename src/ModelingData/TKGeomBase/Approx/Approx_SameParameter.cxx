@@ -141,13 +141,13 @@ static double ComputeTolReached(const occ::handle<Adaptor3d_Curve>& c3d,
     }
     catch (Standard_Failure const&)
     {
-      d2 = Precision::Infinite();
+      d2 = math::precision::Precision::Infinite();
       break;
     }
-    if (Precision::IsInfinite(Pcons.X()) || Precision::IsInfinite(Pcons.Y())
-        || Precision::IsInfinite(Pcons.Z()))
+    if (math::precision::Precision::IsInfinite(Pcons.X()) || math::precision::Precision::IsInfinite(Pcons.Y())
+        || math::precision::Precision::IsInfinite(Pcons.Z()))
     {
-      d2 = Precision::Infinite();
+      d2 = math::precision::Precision::Infinite();
       break;
     }
     d2 = std::max(d2, Pc3d.SquareDistance(Pcons));
@@ -155,7 +155,7 @@ static double ComputeTolReached(const occ::handle<Adaptor3d_Curve>& c3d,
 
   const double aMult      = 1. + 0.05;
   double       aDeviation = aMult * sqrt(d2);
-  aDeviation              = std::max(aDeviation, Precision::Confusion());
+  aDeviation              = std::max(aDeviation, math::precision::Precision::Confusion());
   return aDeviation;
 }
 
@@ -197,7 +197,7 @@ static bool Check(const NCollection_Array1<double>&   FlatKnots,
 
     if (tcons < tprev || tcons > aParamLast)
     {
-      tol = Precision::Infinite();
+      tol = math::precision::Precision::Infinite();
       return false;
     }
     tprev        = tcons;
@@ -224,7 +224,7 @@ Approx_SameParameter::Approx_SameParameter(const occ::handle<Geom_Curve>&   C3D,
                                            const occ::handle<Geom2d_Curve>& C2D,
                                            const occ::handle<Geom_Surface>& S,
                                            const double                     Tol)
-    : myDeltaMin(Precision::PConfusion()),
+    : myDeltaMin(math::precision::Precision::PConfusion()),
       mySameParameter(true),
       myDone(false)
 {
@@ -238,7 +238,7 @@ Approx_SameParameter::Approx_SameParameter(const occ::handle<Adaptor3d_Curve>&  
                                            const occ::handle<Geom2d_Curve>&      C2D,
                                            const occ::handle<Adaptor3d_Surface>& S,
                                            const double                          Tol)
-    : myDeltaMin(Precision::PConfusion()),
+    : myDeltaMin(math::precision::Precision::PConfusion()),
       mySameParameter(true),
       myDone(false)
 {
@@ -252,7 +252,7 @@ Approx_SameParameter::Approx_SameParameter(const occ::handle<Adaptor3d_Curve>&  
                                            const occ::handle<Adaptor2d_Curve2d>& C2D,
                                            const occ::handle<Adaptor3d_Surface>& S,
                                            const double                          Tol)
-    : myDeltaMin(Precision::PConfusion()),
+    : myDeltaMin(math::precision::Precision::PConfusion()),
       mySameParameter(true),
       myDone(false)
 {
@@ -324,7 +324,7 @@ void Approx_SameParameter::Build(const double Tolerance)
   if (aContinuity > GeomAbs_C1)
     aContinuity = GeomAbs_C1;
 
-  double besttol2 = aData.myTol * aData.myTol, tolsov = Precision::Infinite();
+  double besttol2 = aData.myTol * aData.myTol, tolsov = math::precision::Precision::Infinite();
   bool   interpolok = false, hasCountChanged = false;
   do
   {

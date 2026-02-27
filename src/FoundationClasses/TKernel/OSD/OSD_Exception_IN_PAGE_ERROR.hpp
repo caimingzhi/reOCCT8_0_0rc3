@@ -7,9 +7,12 @@
 #if !defined No_Exception && !defined No_OSD_Exception_IN_PAGE_ERROR
   #define OSD_Exception_IN_PAGE_ERROR_Raise_if(CONDITION, MESSAGE)                                 \
     if (CONDITION)                                                                                 \
-      throw OSD_Exception_IN_PAGE_ERROR(MESSAGE);
+      throw System::os::OSD_Exception_IN_PAGE_ERROR(MESSAGE);
 #else
   #define OSD_Exception_IN_PAGE_ERROR_Raise_if(CONDITION, MESSAGE)
 #endif
 
-DEFINE_STANDARD_EXCEPTION(OSD_Exception_IN_PAGE_ERROR, OSD_Exception)
+namespace System { namespace os {
+DEFINE_STANDARD_EXCEPTION(OSD_Exception_IN_PAGE_ERROR, System::os::OSD_Exception)
+}} // namespace System::os
+

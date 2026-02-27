@@ -20,7 +20,7 @@ public:
                                                    const double       prec = 0.0);
 
   Standard_EXPORT void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT bool IsDone() const override;
 

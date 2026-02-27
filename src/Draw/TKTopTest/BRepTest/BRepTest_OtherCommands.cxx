@@ -268,7 +268,7 @@ int brepintcs(Draw_Interpretor& di, int n, const char** a)
 {
   if (n <= 2)
   {
-    Message::SendFail()
+    System::log::Message::SendFail()
       << "Invalid input arguments. Should be: curve1 [curve2 ...] shape [result] [tol]";
     return 1;
   }
@@ -282,7 +282,7 @@ int brepintcs(Draw_Interpretor& di, int n, const char** a)
   }
   if (S.IsNull())
   {
-    Message::SendFail() << "Invalid input shape";
+    System::log::Message::SendFail() << "Invalid input shape";
     return 1;
   }
 
@@ -291,7 +291,7 @@ int brepintcs(Draw_Interpretor& di, int n, const char** a)
   if (indshape < n - 1)
   {
     double preci = atof(a[n - 1]);
-    if (preci >= Precision::Confusion())
+    if (preci >= math::precision::Precision::Confusion())
       tol = preci;
   }
   int             nbpi = 0;
@@ -538,7 +538,7 @@ TopoDS_Face NextFaceForPrism(const TopoDS_Shape& shape,
     {
       int                no = 1, IndFrom, IndTo;
       TopAbs_Orientation theOr;
-      constexpr double   min = 1.e-04, Tol = -Precision::Confusion();
+      constexpr double   min = 1.e-04, Tol = -math::precision::Precision::Confusion();
       if (ASI.LocalizeAfter(no, min, Tol, theOr, IndFrom, IndTo))
       {
         nextFace = ASI.Point(no, IndFrom).Face();

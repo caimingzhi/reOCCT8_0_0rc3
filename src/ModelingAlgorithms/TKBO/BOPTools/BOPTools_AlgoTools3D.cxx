@@ -248,7 +248,7 @@ bool BOPTools_AlgoTools3D::DoSplitSEAMOnFace(const TopoDS_Edge& theEOrigin,
   double aDist1 = aProjPC1.NbPoints() ? aProjPC1.LowerDistance() : RealLast();
   double aDist2 = aProjPC2.NbPoints() ? aProjPC2.LowerDistance() : RealLast();
 
-  if (aDist1 > Precision::PConfusion() && aDist2 > Precision::PConfusion())
+  if (aDist1 > math::precision::Precision::PConfusion() && aDist2 > math::precision::Precision::PConfusion())
     return false;
 
   gp_Pnt2d aNewPnt = aDist1 < aDist2 ? aC2D2->Value(aProjPC1.LowerDistanceParameter())
@@ -896,7 +896,7 @@ int BOPTools_AlgoTools3D::PointInFace(const TopoDS_Face&                   theF,
 
   occ::handle<Geom2d_Line>         aL2D = new Geom2d_Line(aP2D, aD2D);
   occ::handle<Geom2d_TrimmedCurve> aL2DTrim =
-    new Geom2d_TrimmedCurve(aL2D, 0., Precision::Infinite());
+    new Geom2d_TrimmedCurve(aL2D, 0., math::precision::Precision::Infinite());
 
   iErr = BOPTools_AlgoTools3D::PointInFace(theF, aL2DTrim, theP, theP2D, theContext, theDt2D);
 

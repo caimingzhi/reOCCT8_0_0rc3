@@ -200,7 +200,7 @@ namespace
 
       const gp_Pnt2d& aFPntOfPC1 = aPC1->Value(aPC1->FirstParameter());
 
-      if (std::abs(aLPntOfIPC1.X() - aFPntOfPC1.X()) > Precision::Confusion())
+      if (std::abs(aLPntOfIPC1.X() - aFPntOfPC1.X()) > math::precision::Precision::Confusion())
       {
         std::swap(aPC1, aPC2);
       }
@@ -223,8 +223,8 @@ namespace
       for (int aPointIdx = 1;; ++aPointIdx)
       {
         const double aCurrParam = aFirstParam + aPointIdx * theDT * (isReversed ? -1.0 : 1.0);
-        if ((isReversed && (aCurrParam - aLastParam < Precision::PConfusion()))
-            || (!isReversed && !(aCurrParam - aLastParam < -Precision::PConfusion())))
+        if ((isReversed && (aCurrParam - aLastParam < math::precision::Precision::PConfusion()))
+            || (!isReversed && !(aCurrParam - aLastParam < -math::precision::Precision::PConfusion())))
         {
           break;
         }
@@ -251,7 +251,7 @@ BRepMesh_ModelPreProcessor::~BRepMesh_ModelPreProcessor() = default;
 
 bool BRepMesh_ModelPreProcessor::performInternal(const occ::handle<IMeshData_Model>& theModel,
                                                  const IMeshTools_Parameters&        theParameters,
-                                                 const Message_ProgressRange&        theRange)
+                                                 const System::log::Message_ProgressRange&        theRange)
 {
   (void)theRange;
   if (theModel.IsNull())
@@ -261,8 +261,8 @@ bool BRepMesh_ModelPreProcessor::performInternal(const occ::handle<IMeshData_Mod
 
   const int  aFacesNb    = theModel->FacesNb();
   const bool isOneThread = !theParameters.InParallel;
-  OSD_Parallel::For(0, aFacesNb, SeamEdgeAmplifier(theModel, theParameters), isOneThread);
-  OSD_Parallel::For(0,
+  System::os::OSD_Parallel::For(0, aFacesNb, SeamEdgeAmplifier(theModel, theParameters), isOneThread);
+  System::os::OSD_Parallel::For(0,
                     aFacesNb,
                     TriangulationConsistency(theModel, theParameters.AllowQualityDecrease),
                     isOneThread);

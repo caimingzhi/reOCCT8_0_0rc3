@@ -94,7 +94,7 @@ const NCollection_List<TopoDS_Shape>* BOPAlgo_Builder::LocModified(const TopoDS_
   return myImages.Seek(theS);
 }
 
-void BOPAlgo_Builder::PrepareHistory(const Message_ProgressRange& theRange)
+void BOPAlgo_Builder::PrepareHistory(const System::log::Message_ProgressRange& theRange)
 {
   if (!HasHistory())
     return;
@@ -105,7 +105,7 @@ void BOPAlgo_Builder::PrepareHistory(const Message_ProgressRange& theRange)
   TopExp::MapShapes(myShape, myMapShape);
 
   int                   aNbS = myDS->NbSourceShapes();
-  Message_ProgressScope aPS(theRange, "Preparing history information", aNbS);
+  System::log::Message_ProgressScope aPS(theRange, "Preparing history information", aNbS);
   for (int i = 0; i < aNbS; ++i, aPS.Next())
   {
     const TopoDS_Shape& aS = myDS->Shape(i);

@@ -26,7 +26,7 @@ IMPLEMENT_DOMSTRING(MirrorRefString, "mirror")
 IMPLEMENT_DOMSTRING(TrueString, "true")
 
 XmlMDataXtd_PatternStdDriver::XmlMDataXtd_PatternStdDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

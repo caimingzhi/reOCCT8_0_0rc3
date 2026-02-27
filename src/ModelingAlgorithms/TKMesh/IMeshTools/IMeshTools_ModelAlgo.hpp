@@ -14,7 +14,7 @@ public:
 
   bool Perform(const occ::handle<IMeshData_Model>& theModel,
                const IMeshTools_Parameters&        theParameters,
-               const Message_ProgressRange&        theRange)
+               const System::log::Message_ProgressRange&        theRange)
   {
     try
     {
@@ -35,5 +35,5 @@ protected:
 
   Standard_EXPORT virtual bool performInternal(const occ::handle<IMeshData_Model>& theModel,
                                                const IMeshTools_Parameters&        theParameters,
-                                               const Message_ProgressRange&        theRange) = 0;
+                                               const System::log::Message_ProgressRange&        theRange) = 0;
 };

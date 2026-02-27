@@ -142,7 +142,7 @@ bool ShapeCustom_SweptToElementary::NewSurface(const TopoDS_Face&         F,
     }
   }
 
-  SendMsg(F, Message_Msg("SweptToElementary.NewSurface.MSG0"));
+  SendMsg(F, System::log::Message_Msg("SweptToElementary.NewSurface.MSG0"));
 
   Tol      = BRep_Tool::Tolerance(F);
   RevWires = false;
@@ -214,7 +214,7 @@ bool ShapeCustom_SweptToElementary::NewCurve2d(const TopoDS_Edge&         E,
         gp_Pnt P0;
         SR->D0(U1, V1, P0);
         occ::handle<ShapeAnalysis_Surface> sas = new ShapeAnalysis_Surface(NS);
-        gp_Pnt2d                           p2d = sas->ValueOfUV(P0, Precision::Confusion());
+        gp_Pnt2d                           p2d = sas->ValueOfUV(P0, math::precision::Precision::Confusion());
         gp_Vec2d                           shift(p2d.X() - U1, p2d.Y() - V1);
         C->Translate(shift);
       }

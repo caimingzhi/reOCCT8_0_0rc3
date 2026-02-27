@@ -123,7 +123,7 @@ void TopOpeBRepDS_Edge3dInterferenceTool::Init(const TopoDS_Shape&              
   const TopoDS_Face& FF    = TopoDS::Face(F);
   myrefdef                 = false;
 
-  myTole = Precision::Angular();
+  myTole = math::precision::Precision::Angular();
 
   double pref = 0.0;
   bool   ok   = ::FUN_hasparam(I, pref);
@@ -163,7 +163,7 @@ void TopOpeBRepDS_Edge3dInterferenceTool::Init(const TopoDS_Shape&              
 
   double dot  = tgref.Dot(tgOO);
   dot         = 1 - std::abs(dot);
-  double tola = Precision::Confusion();
+  double tola = math::precision::Precision::Confusion();
   bool   Esdm = (std::abs(dot) < tola);
   if (Esdm)
     return;

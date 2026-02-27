@@ -70,7 +70,7 @@ void PrsDim_Relation::ComputeProjEdgePresentation(const occ::handle<Prs3d_Presen
   occ::handle<Geom_Curve> curve;
   bool                    isInfinite;
   curve      = BRep_Tool::Curve(anEdge, loc, pf, pl);
-  isInfinite = (Precision::IsInfinite(pf) || Precision::IsInfinite(pl));
+  isInfinite = (math::precision::Precision::IsInfinite(pf) || math::precision::Precision::IsInfinite(pl));
 
   TopoDS_Edge E;
 
@@ -168,7 +168,7 @@ void PrsDim_Relation::ComputeProjVertexPresentation(const occ::handle<Prs3d_Pres
     li->SetWidth(width);
   }
 
-  if (!ProjPoint.IsEqual(BRep_Tool::Pnt(aVertex), Precision::Confusion()))
+  if (!ProjPoint.IsEqual(BRep_Tool::Pnt(aVertex), math::precision::Precision::Confusion()))
   {
     occ::handle<Graphic3d_Group>           aGroup         = aPrs->NewGroup();
     occ::handle<Graphic3d_ArrayOfSegments> anArrayOfLines = new Graphic3d_ArrayOfSegments(2);

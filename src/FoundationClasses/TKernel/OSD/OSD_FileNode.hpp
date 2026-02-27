@@ -5,9 +5,13 @@
 #include <OSD_Path.hpp>
 #include <OSD_Error.hpp>
 
+namespace System { namespace os {
 class OSD_Protection;
+}} // namespace System::os
+
 class Quantity_Date;
 
+namespace System { namespace os {
 class OSD_FileNode
 {
 public:
@@ -52,3 +56,5 @@ protected:
   OSD_Path  myPath;
   OSD_Error myError;
 };
+}} // namespace System::os
+

@@ -718,7 +718,7 @@ void ViewerTest_EventManager::SetupWindowCallbacks(const occ::handle<Aspect_Wind
   occ::handle<Wasm_Window> aWindow = occ::down_cast<Wasm_Window>(theWin);
   if (aWindow->CanvasId().IsEmpty() || aWindow->CanvasId() == "#")
   {
-    Message::SendFail("Error: unable registering callbacks to Module.canvas");
+    System::log::Message::SendFail("Error: unable registering callbacks to Module.canvas");
     return;
   }
 

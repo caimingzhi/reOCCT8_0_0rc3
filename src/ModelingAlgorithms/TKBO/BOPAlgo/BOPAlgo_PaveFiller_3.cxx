@@ -59,7 +59,7 @@ public:
 
   void Perform() override
   {
-    Message_ProgressScope aPS(myProgressRange, nullptr, 1);
+    System::log::Message_ProgressScope aPS(myProgressRange, nullptr, 1);
     if (UserBreak(aPS))
     {
       return;
@@ -109,13 +109,13 @@ protected:
 
 typedef NCollection_Vector<BOPAlgo_EdgeEdge> BOPAlgo_VectorOfEdgeEdge;
 
-void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::PerformEE(const System::log::Message_ProgressRange& theRange)
 {
   FillShrunkData(TopAbs_EDGE, TopAbs_EDGE);
 
   myIterator->Initialize(TopAbs_EDGE, TopAbs_EDGE);
   int                   iSize = myIterator->ExpectedLength();
-  Message_ProgressScope aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope aPSOuter(theRange, nullptr, 10);
   if (!iSize)
   {
     return;
@@ -235,7 +235,7 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
 
   aNbEdgeEdge = aVEdgeEdge.Length();
 
-  Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Edge-edge intersection", aNbEdgeEdge);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(9), "Performing Edge-edge intersection", aNbEdgeEdge);
   for (k = 0; k < aNbEdgeEdge; k++)
   {
     BOPAlgo_EdgeEdge& anEdgeEdge = aVEdgeEdge.ChangeValue(k);
@@ -346,7 +346,7 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
           IntTools_Range aCR1, aCR2;
 
           IntTools_Tools::VertexParameters(aCPart, aT1, aT2);
-          aTol = Precision::Confusion();
+          aTol = math::precision::Precision::Confusion();
           aCR1 = aCPart.Range1();
           aCR2 = aCPart.Ranges2()(1);
 
@@ -388,7 +388,7 @@ void BOPAlgo_PaveFiller::PerformEE(const Message_ProgressRange& theRange)
 
             const gp_Pnt aPOnE1 = BRepAdaptor_Curve(aE1).Value(aT1);
             const gp_Pnt aPOnE2 = BRepAdaptor_Curve(aE2).Value(aT2);
-            if (aPOnE1.Distance(aPOnE2) > Precision::Intersection())
+            if (aPOnE1.Distance(aPOnE2) > math::precision::Precision::Intersection())
 
               continue;
 
@@ -543,7 +543,7 @@ void BOPAlgo_PaveFiller::PerformNewVertices(
   NCollection_IndexedDataMap<TopoDS_Shape, BOPDS_CoupleOfPaveBlocks, TopTools_ShapeMapHasher>&
                                                 theMVCPB,
   const occ::handle<NCollection_BaseAllocator>& theAllocator,
-  const Message_ProgressRange&                  theRange,
+  const System::log::Message_ProgressRange&                  theRange,
   const bool                                    bIsEEIntersection)
 {
   int aNbV = theMVCPB.Extent();
@@ -561,9 +561,9 @@ void BOPAlgo_PaveFiller::PerformNewVertices(
   NCollection_Vector<BOPDS_InterfEE>& aEEs = myDS->InterfEE();
   NCollection_Vector<BOPDS_InterfEF>& aEFs = myDS->InterfEF();
 
-  Message_ProgressScope aPS(theRange, nullptr, 2);
+  System::log::Message_ProgressScope aPS(theRange, nullptr, 2);
   int                   i, aNb = aImages.Extent();
-  Message_ProgressScope aPS1(aPS.Next(), nullptr, aNb + aNbV);
+  System::log::Message_ProgressScope aPS1(aPS.Next(), nullptr, aNb + aNbV);
   for (i = 1; i <= aNb; ++i, aPS1.Next())
   {
     if (UserBreak(aPS))
@@ -839,7 +839,7 @@ bool BOPAlgo_PaveFiller::GetPBBox(const TopoDS_Edge&                  theE,
 {
   thePB->Range(theFirst, theLast);
 
-  bool bValid = theLast - theFirst > Precision::PConfusion();
+  bool bValid = theLast - theFirst > math::precision::Precision::PConfusion();
   if (!bValid)
   {
     return bValid;
@@ -863,7 +863,7 @@ bool BOPAlgo_PaveFiller::GetPBBox(const TopoDS_Edge&                  theE,
   {
 
     BRepAdaptor_Curve aBAC(theE);
-    double            aTol = BRep_Tool::Tolerance(theE) + Precision::Confusion();
+    double            aTol = BRep_Tool::Tolerance(theE) + math::precision::Precision::Confusion();
     BndLib_Add3dCurve::Add(aBAC, theSFirst, theSLast, aTol, theBox);
     thePBBox.Bind(thePB, theBox);
   }
@@ -902,11 +902,11 @@ void BOPAlgo_PaveFiller::UpdateVerticesOfCB()
   }
 }
 
-void BOPAlgo_PaveFiller::ForceInterfEE(const Message_ProgressRange& theRange)
+void BOPAlgo_PaveFiller::ForceInterfEE(const System::log::Message_ProgressRange& theRange)
 {
 
   occ::handle<NCollection_IncAllocator> anAlloc = new NCollection_IncAllocator;
-  Message_ProgressScope                 aPSOuter(theRange, nullptr, 10);
+  System::log::Message_ProgressScope                 aPSOuter(theRange, nullptr, 10);
 
   const int aNbS = myDS->NbSourceShapes();
   for (int i = 0; i < aNbS; ++i)
@@ -1091,7 +1091,7 @@ void BOPAlgo_PaveFiller::ForceInterfEE(const Message_ProgressRange& theRange)
   aMPBFence.Clear();
   anAlloc->Reset(false);
 
-  Message_ProgressScope aPS(aPSOuter.Next(9), "Checking for coinciding edges", aNbPairs);
+  System::log::Message_ProgressScope aPS(aPSOuter.Next(9), "Checking for coinciding edges", aNbPairs);
   for (int i = 0; i < aNbPairs; i++)
   {
     BOPAlgo_EdgeEdge& anEdgeEdge = aVEdgeEdge.ChangeValue(i);

@@ -32,7 +32,7 @@ namespace
 #endif
 } // namespace
 
-double OSD_Timer::GetWallClockTime()
+double System::os::OSD_Timer::GetWallClockTime()
 {
 #ifdef _WIN32
 
@@ -55,39 +55,39 @@ double OSD_Timer::GetWallClockTime()
 #endif
 }
 
-OSD_Timer::OSD_Timer(bool theThisThreadOnly)
-    : OSD_Chronometer(theThisThreadOnly),
+System::os::OSD_Timer::OSD_Timer(bool theThisThreadOnly)
+    : System::os::OSD_Chronometer(theThisThreadOnly),
       myTimeStart(0.0),
       myTimeCumul(0.0)
 {
 }
 
-void OSD_Timer::Reset(const double theTimeElapsedSec)
+void System::os::OSD_Timer::Reset(const double theTimeElapsedSec)
 {
   myTimeStart = 0.0;
   myTimeCumul = theTimeElapsedSec;
-  OSD_Chronometer::Reset();
+  System::os::OSD_Chronometer::Reset();
 }
 
-void OSD_Timer::Reset()
+void System::os::OSD_Timer::Reset()
 {
   myTimeStart = myTimeCumul = 0.0;
-  OSD_Chronometer::Reset();
+  System::os::OSD_Chronometer::Reset();
 }
 
-void OSD_Timer::Restart()
+void System::os::OSD_Timer::Restart()
 {
   myTimeStart = GetWallClockTime();
   myTimeCumul = 0.0;
-  OSD_Chronometer::Restart();
+  System::os::OSD_Chronometer::Restart();
 }
 
-void OSD_Timer::Show() const
+void System::os::OSD_Timer::Show() const
 {
   Show(std::cout);
 }
 
-double OSD_Timer::ElapsedTime() const
+double System::os::OSD_Timer::ElapsedTime() const
 {
   if (myIsStopped)
   {
@@ -97,15 +97,15 @@ double OSD_Timer::ElapsedTime() const
   return myTimeCumul + GetWallClockTime() - myTimeStart;
 }
 
-void OSD_Timer::Show(double& theSeconds, int& theMinutes, int& theHours, double& theCPUtime) const
+void System::os::OSD_Timer::Show(double& theSeconds, int& theMinutes, int& theHours, double& theCPUtime) const
 {
   const double aTimeCumul =
     myIsStopped ? myTimeCumul : myTimeCumul + GetWallClockTime() - myTimeStart;
   timeToHoursMinutesSeconds(aTimeCumul, theHours, theMinutes, theSeconds);
-  OSD_Chronometer::Show(theCPUtime);
+  System::os::OSD_Chronometer::Show(theCPUtime);
 }
 
-void OSD_Timer::Show(Standard_OStream& theOStream) const
+void System::os::OSD_Timer::Show(Standard_OStream& theOStream) const
 {
   const double aTimeCumul = ElapsedTime();
 
@@ -116,24 +116,24 @@ void OSD_Timer::Show(Standard_OStream& theOStream) const
   std::streamsize prec = theOStream.precision(12);
   theOStream << "Elapsed time: " << anHours << " Hours " << aMinutes << " Minutes " << aSeconds
              << " Seconds\n";
-  OSD_Chronometer::Show(theOStream);
+  System::os::OSD_Chronometer::Show(theOStream);
   theOStream.precision(prec);
 }
 
-void OSD_Timer::Stop()
+void System::os::OSD_Timer::Stop()
 {
   if (!myIsStopped)
   {
     myTimeCumul += GetWallClockTime() - myTimeStart;
-    OSD_Chronometer::Stop();
+    System::os::OSD_Chronometer::Stop();
   }
 }
 
-void OSD_Timer::Start()
+void System::os::OSD_Timer::Start()
 {
   if (myIsStopped)
   {
     myTimeStart = GetWallClockTime();
-    OSD_Chronometer::Start();
+    System::os::OSD_Chronometer::Start();
   }
 }

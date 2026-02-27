@@ -175,7 +175,7 @@ int BRepToIGESBRep_Entity::AddEdge(const TopoDS_Edge&                      myedg
 
 occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferShape(
   const TopoDS_Shape&          start,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<IGESData_IGESEntity> res;
 
@@ -520,7 +520,7 @@ occ::handle<IGESSolid_Face> BRepToIGESBRep_Entity ::TransferFace(const TopoDS_Fa
 
 occ::handle<IGESSolid_Shell> BRepToIGESBRep_Entity ::TransferShell(
   const TopoDS_Shell&          start,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<IGESSolid_Shell> myshell = new IGESSolid_Shell;
   if (start.IsNull())
@@ -535,7 +535,7 @@ occ::handle<IGESSolid_Shell> BRepToIGESBRep_Entity ::TransferShell(
   int nbf = 0;
   for (Ex.Init(start, TopAbs_FACE); Ex.More(); Ex.Next())
     nbf++;
-  Message_ProgressScope aPS(theProgress, nullptr, nbf);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbf);
   for (Ex.Init(start, TopAbs_FACE); Ex.More() && aPS.More(); Ex.Next(), aPS.Next())
   {
     TopoDS_Face F = TopoDS::Face(Ex.Current());
@@ -582,7 +582,7 @@ occ::handle<IGESSolid_Shell> BRepToIGESBRep_Entity ::TransferShell(
 
 occ::handle<IGESSolid_ManifoldSolid> BRepToIGESBRep_Entity ::TransferSolid(
   const TopoDS_Solid&          start,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<IGESSolid_ManifoldSolid> mysol = new IGESSolid_ManifoldSolid;
   if (start.IsNull())
@@ -598,10 +598,10 @@ occ::handle<IGESSolid_ManifoldSolid> BRepToIGESBRep_Entity ::TransferSolid(
   int nbs = 0;
   for (Ex.Init(start, TopAbs_SHELL); Ex.More(); Ex.Next())
     nbs++;
-  Message_ProgressScope aPS(theProgress, nullptr, nbs);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbs);
   for (Ex.Init(start, TopAbs_SHELL); Ex.More() && aPS.More(); Ex.Next())
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     TopoDS_Shell          S      = TopoDS::Shell(Ex.Current());
     if (S.IsNull())
     {
@@ -667,7 +667,7 @@ occ::handle<IGESSolid_ManifoldSolid> BRepToIGESBRep_Entity ::TransferSolid(
 
 occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferCompSolid(
   const TopoDS_CompSolid&      start,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<IGESData_IGESEntity> myent;
   if (start.IsNull())
@@ -681,10 +681,10 @@ occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferCompSolid(
   int nbs = 0;
   for (Ex.Init(start, TopAbs_SOLID); Ex.More(); Ex.Next())
     nbs++;
-  Message_ProgressScope aPS(theProgress, nullptr, nbs);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbs);
   for (Ex.Init(start, TopAbs_SOLID); Ex.More() && aPS.More(); Ex.Next())
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     TopoDS_Solid          S      = TopoDS::Solid(Ex.Current());
     if (S.IsNull())
     {
@@ -728,7 +728,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferCompSolid(
 
 occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferCompound(
   const TopoDS_Compound&       start,
-  const Message_ProgressRange& theProgress)
+  const System::log::Message_ProgressRange& theProgress)
 {
   occ::handle<IGESData_IGESEntity> res;
   if (start.IsNull())
@@ -752,11 +752,11 @@ occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferCompound(
     nbshapes++;
   for (Ex.Init(start, TopAbs_VERTEX, TopAbs_EDGE); Ex.More(); Ex.Next())
     nbshapes++;
-  Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
+  System::log::Message_ProgressScope aPS(theProgress, nullptr, nbshapes);
 
   for (Ex.Init(start, TopAbs_SOLID); Ex.More() && aPS.More(); Ex.Next())
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     TopoDS_Solid          S      = TopoDS::Solid(Ex.Current());
     if (S.IsNull())
     {
@@ -772,7 +772,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGESBRep_Entity::TransferCompound(
 
   for (Ex.Init(start, TopAbs_SHELL, TopAbs_SOLID); Ex.More() && aPS.More(); Ex.Next())
   {
-    Message_ProgressRange aRange = aPS.Next();
+    System::log::Message_ProgressRange aRange = aPS.Next();
     TopoDS_Shell          S      = TopoDS::Shell(Ex.Current());
     if (S.IsNull())
     {

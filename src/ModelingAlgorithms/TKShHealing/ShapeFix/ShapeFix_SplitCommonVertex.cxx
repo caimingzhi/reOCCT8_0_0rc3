@@ -28,7 +28,7 @@ IMPLEMENT_STANDARD_RTTIEXT(ShapeFix_SplitCommonVertex, ShapeFix_Root)
 ShapeFix_SplitCommonVertex::ShapeFix_SplitCommonVertex()
 {
   myStatus = ShapeExtend::EncodeStatus(ShapeExtend_OK);
-  SetPrecision(Precision::Confusion());
+  SetPrecision(math::precision::Precision::Confusion());
 }
 
 void ShapeFix_SplitCommonVertex::Init(const TopoDS_Shape& S)
@@ -124,7 +124,7 @@ void ShapeFix_SplitCommonVertex::Perform()
       }
     }
     if (!MapVV.IsEmpty())
-      SendWarning(Message_Msg("Fix.SplitCommonVertex.MSG0"));
+      SendWarning(System::log::Message_Msg("Fix.SplitCommonVertex.MSG0"));
   }
 
   myShape = Context()->Apply(myShape);

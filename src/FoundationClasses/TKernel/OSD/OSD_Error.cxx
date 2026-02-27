@@ -9,17 +9,17 @@
 
   #include <cstdio>
 
-OSD_Error::OSD_Error()
+System::os::OSD_Error::OSD_Error()
 {
   myErrno = 0;
 }
 
-void OSD_Error::Reset()
+void System::os::OSD_Error::Reset()
 {
   myErrno = 0;
 }
 
-bool OSD_Error::Failed() const
+bool System::os::OSD_Error::Failed() const
 {
   if (myErrno == 0)
     return (false);
@@ -27,19 +27,19 @@ bool OSD_Error::Failed() const
     return (true);
 }
 
-void OSD_Error::SetValue(const int errcode, const int from, const TCollection_AsciiString& message)
+void System::os::OSD_Error::SetValue(const int errcode, const int from, const TCollection_AsciiString& message)
 {
   myErrno   = errcode;
   myCode    = (OSD_WhoAmI)from;
   myMessage = message;
 }
 
-int OSD_Error::Error() const
+int System::os::OSD_Error::Error() const
 {
   return (extCode);
 }
 
-void OSD_Error::Perror()
+void System::os::OSD_Error::Perror()
 {
   TCollection_AsciiString buffer;
 
@@ -184,7 +184,7 @@ void OSD_Error::Perror()
           extCode = ERR_FPERM;
           break;
         default:
-          buffer += "abnormal error : you modified OSD library";
+          buffer += "abnormal error : you modified System::os::OSD library";
           extCode = ERR_PERM;
           break;
       }
@@ -447,7 +447,7 @@ void OSD_Error::Perror()
     }
   }
   buffer += ".\n\n";
-  throw OSD_OSDError(buffer.ToCString());
+  throw System::os::OSD_OSDError(buffer.ToCString());
 }
 
 #else
@@ -571,14 +571,14 @@ static ERROR_TABLE fileNodeErrorTable[] = {
 
 static int _get_comm_error(DWORD);
 
-OSD_Error ::OSD_Error()
+System::os::OSD_Error ::OSD_Error()
     : myCode((OSD_WhoAmI)0),
       extCode(0)
 {
   Reset();
 }
 
-void OSD_Error ::Perror()
+void System::os::OSD_Error ::Perror()
 {
 
   wchar_t buff[32];
@@ -589,31 +589,31 @@ void OSD_Error ::Perror()
   {
 
     case OSD_WDirectoryIterator:
-      StringCchCatW(buff, _countof(buff), L"OSD_DirectoryIterator");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_DirectoryIterator");
       break;
 
     case OSD_WDirectory:
-      StringCchCatW(buff, _countof(buff), L"OSD_Directory");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_Directory");
       break;
 
     case OSD_WFileIterator:
-      StringCchCatW(buff, _countof(buff), L"OSD_FileIterator");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_FileIterator");
       break;
 
     case OSD_WFile:
-      StringCchCatW(buff, _countof(buff), L"OSD_File");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_File");
       break;
 
     case OSD_WFileNode:
-      StringCchCatW(buff, _countof(buff), L"OSD_FileNode");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_FileNode");
       break;
 
     case OSD_WHost:
-      StringCchCatW(buff, _countof(buff), L"OSD_Host");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_Host");
       break;
 
     case OSD_WProcess:
-      StringCchCatW(buff, _countof(buff), L"OSD_Environment");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_Environment");
       break;
 
     case OSD_WEnvironmentIterator:
@@ -621,11 +621,11 @@ void OSD_Error ::Perror()
       break;
 
     case OSD_WEnvironment:
-      StringCchCatW(buff, _countof(buff), L"OSD_Environment");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_Environment");
       break;
 
     case OSD_WDisk:
-      StringCchCatW(buff, _countof(buff), L"OSD_Disk");
+      StringCchCatW(buff, _countof(buff), L"System::os::OSD_Disk");
       break;
 
     default:
@@ -639,7 +639,7 @@ void OSD_Error ::Perror()
   std::cerr << myMessage.ToCString() << std::endl << std::flush;
 }
 
-void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_AsciiString& Message)
+void System::os::OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_AsciiString& Message)
 {
 
   int i;
@@ -705,19 +705,19 @@ void OSD_Error ::SetValue(const int Errcode, const int From, const TCollection_A
   }
 }
 
-int OSD_Error ::Error() const
+int System::os::OSD_Error ::Error() const
 {
 
   return extCode;
 }
 
-bool OSD_Error ::Failed() const
+bool System::os::OSD_Error ::Failed() const
 {
 
   return myErrno == ERROR_SUCCESS ? false : true;
 }
 
-void OSD_Error ::Reset()
+void System::os::OSD_Error ::Reset()
 {
   myErrno = ERROR_SUCCESS;
 }

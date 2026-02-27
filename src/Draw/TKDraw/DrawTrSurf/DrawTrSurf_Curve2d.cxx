@@ -56,8 +56,8 @@ void DrawTrSurf_Curve2d::DrawOn(Draw_Display& dis) const
 
   double First    = curv->FirstParameter();
   double Last     = curv->LastParameter();
-  bool   firstInf = Precision::IsNegativeInfinite(First);
-  bool   lastInf  = Precision::IsPositiveInfinite(Last);
+  bool   firstInf = math::precision::Precision::IsNegativeInfinite(First);
+  bool   lastInf  = math::precision::Precision::IsPositiveInfinite(Last);
 
   if (firstInf || lastInf)
   {

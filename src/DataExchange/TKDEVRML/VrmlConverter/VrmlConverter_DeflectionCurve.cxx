@@ -23,8 +23,8 @@ static void FindLimits(const Adaptor3d_Curve& aCurve,
 {
   First         = aCurve.FirstParameter();
   Last          = aCurve.LastParameter();
-  bool firstInf = Precision::IsNegativeInfinite(First);
-  bool lastInf  = Precision::IsPositiveInfinite(Last);
+  bool firstInf = math::precision::Precision::IsNegativeInfinite(First);
+  bool lastInf  = math::precision::Precision::IsPositiveInfinite(Last);
 
   if (firstInf || lastInf)
   {
@@ -136,7 +136,7 @@ static void DrawCurve(Adaptor3d_Curve&                         aCurve,
     case GeomAbs_Circle:
     {
       double Radius = aCurve.Circle().Radius();
-      if (!Precision::IsInfinite(Radius))
+      if (!math::precision::Precision::IsInfinite(Radius))
       {
         double DU = std::sqrt(8.0 * TheDeflection / Radius);
         int    N  = int(std::abs(U2 - U1) / DU);
@@ -222,7 +222,7 @@ static double GetDeflection(const Adaptor3d_Curve&                   aCurve,
   if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)
   {
     Bnd_Box box;
-    BndLib_Add3dCurve::Add(aCurve, U1, U2, Precision::Confusion(), box);
+    BndLib_Add3dCurve::Add(aCurve, U1, U2, math::precision::Precision::Confusion(), box);
 
     double Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, diagonal;
     box.Get(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax);
@@ -231,7 +231,7 @@ static double GetDeflection(const Adaptor3d_Curve&                   aCurve,
     {
       diagonal = std::sqrt((Xmax - Xmin) * (Xmax - Xmin) + (Ymax - Ymin) * (Ymax - Ymin)
                            + (Zmax - Zmin) * (Zmax - Zmin));
-      diagonal = std::max(diagonal, Precision::Confusion());
+      diagonal = std::max(diagonal, math::precision::Precision::Confusion());
       theRequestedDeflection = aDrawer->DeviationCoefficient() * diagonal;
     }
     else
@@ -270,9 +270,9 @@ void VrmlConverter_DeflectionCurve::Add(Standard_OStream&                       
   double V1 = U1;
   double V2 = U2;
 
-  if (Precision::IsNegativeInfinite(V1))
+  if (math::precision::Precision::IsNegativeInfinite(V1))
     V1 = -aDrawer->MaximalParameterValue();
-  if (Precision::IsPositiveInfinite(V2))
+  if (math::precision::Precision::IsPositiveInfinite(V2))
     V2 = aDrawer->MaximalParameterValue();
 
   double theRequestedDeflection = GetDeflection(aCurve, V1, V2, aDrawer);

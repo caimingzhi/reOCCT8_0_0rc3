@@ -6,7 +6,10 @@
 #include <TCollection_AsciiString.hpp>
 #include <TCollection_ExtendedString.hpp>
 
+namespace System { namespace os {
 class OSD_File;
+}} // namespace System::os
+
 
 class XCAFDoc_NoteBinData : public XCAFDoc_Note
 {
@@ -23,7 +26,7 @@ public:
     const TCollection_ExtendedString& theTimeStamp,
     const TCollection_ExtendedString& theTitle,
     const TCollection_AsciiString&    theMIMEtype,
-    OSD_File&                         theFile);
+    System::os::OSD_File&                         theFile);
 
   Standard_EXPORT static occ::handle<XCAFDoc_NoteBinData> Set(
     const TDF_Label&                                 theLabel,
@@ -37,7 +40,7 @@ public:
 
   Standard_EXPORT bool Set(const TCollection_ExtendedString& theTitle,
                            const TCollection_AsciiString&    theMIMEtype,
-                           OSD_File&                         theFile);
+                           System::os::OSD_File&                         theFile);
 
   Standard_EXPORT void Set(const TCollection_ExtendedString&                theTitle,
                            const TCollection_AsciiString&                   theMIMEtype,

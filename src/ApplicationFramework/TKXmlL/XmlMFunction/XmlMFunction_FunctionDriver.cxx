@@ -11,7 +11,7 @@ IMPLEMENT_DOMSTRING(GuidString, "guid")
 IMPLEMENT_DOMSTRING(FailureString, "failure")
 
 XmlMFunction_FunctionDriver::XmlMFunction_FunctionDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, nullptr)
 {
 }

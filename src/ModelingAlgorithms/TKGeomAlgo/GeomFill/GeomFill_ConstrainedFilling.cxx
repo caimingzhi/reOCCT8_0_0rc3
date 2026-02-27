@@ -29,7 +29,7 @@ Standard_IMPORT void Law_draw1dcurve(const occ::handle<Law_BSpline>& bs,
                                      const double                    scal);
 
   #include <OSD_Chronometer.hpp>
-static OSD_Chronometer totclock, parclock, appclock, cstclock;
+static System::os::OSD_Chronometer totclock, parclock, appclock, cstclock;
 #endif
 
 static int inqadd(const double d1,

@@ -34,7 +34,7 @@ public:
 
   Standard_EXPORT virtual occ::handle<IGESData_IGESEntity> TransferShape(
     const TopoDS_Shape&          start,
-    const Message_ProgressRange& theProgress = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theProgress = System::log::Message_ProgressRange());
 
   Standard_EXPORT void AddFail(const TopoDS_Shape& start, const char* amess);
 

@@ -5,7 +5,10 @@
 #include <XmlMDF_ADriver.hpp>
 #include <XmlObjMgt_RRelocationTable.hpp>
 #include <XmlObjMgt_SRelocationTable.hpp>
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDF_Attribute;
 class XmlObjMgt_Persistent;
 
@@ -14,7 +17,7 @@ class XmlMDataXtd_TriangulationDriver : public XmlMDF_ADriver
 
 public:
   Standard_EXPORT XmlMDataXtd_TriangulationDriver(
-    const occ::handle<Message_Messenger>& theMessageDriver);
+    const occ::handle<System::log::Message_Messenger>& theMessageDriver);
 
   Standard_EXPORT occ::handle<TDF_Attribute> NewEmpty() const override;
 

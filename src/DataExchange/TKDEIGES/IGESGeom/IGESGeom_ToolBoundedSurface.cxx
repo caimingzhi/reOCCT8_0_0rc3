@@ -33,24 +33,24 @@ void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_Bound
 
   if (!PR.ReadInteger(PR.Current(), tempType))
   {
-    Message_Msg Msg165("XTSEP_165");
+    System::log::Message_Msg Msg165("XTSEP_165");
     PR.SendFail(Msg165);
   }
   if (!PR.ReadEntity(IR, PR.Current(), aStatus, tempSurface))
   {
-    Message_Msg Msg166("XTSEP_166");
+    System::log::Message_Msg Msg166("XTSEP_166");
     switch (aStatus)
     {
       case IGESData_ReferenceError:
       {
-        Message_Msg Msg216("IGES_216");
+        System::log::Message_Msg Msg216("IGES_216");
         Msg166.Arg(Msg216.Value());
         PR.SendFail(Msg166);
         break;
       }
       case IGESData_EntityError:
       {
-        Message_Msg Msg217("IGES_217");
+        System::log::Message_Msg Msg217("IGES_217");
         Msg166.Arg(Msg217.Value());
         PR.SendFail(Msg166);
         break;
@@ -67,7 +67,7 @@ void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_Bound
   }
   else
   {
-    Message_Msg Msg167("XTSEP_167");
+    System::log::Message_Msg Msg167("XTSEP_167");
     PR.SendFail(Msg167);
   }
 
@@ -81,19 +81,19 @@ void IGESGeom_ToolBoundedSurface::ReadOwnParams(const occ::handle<IGESGeom_Bound
         tempBounds->SetValue(i, occ::down_cast<IGESGeom_Boundary>(tempEnt));
       else
       {
-        Message_Msg Msg168("XTSEP_168");
+        System::log::Message_Msg Msg168("XTSEP_168");
         switch (aStatus)
         {
           case IGESData_ReferenceError:
           {
-            Message_Msg Msg216("IGES_216");
+            System::log::Message_Msg Msg216("IGES_216");
             Msg168.Arg(Msg216.Value());
             PR.SendFail(Msg168);
             break;
           }
           case IGESData_EntityError:
           {
-            Message_Msg Msg217("IGES_217");
+            System::log::Message_Msg Msg217("IGES_217");
             Msg168.Arg(Msg217.Value());
             PR.SendFail(Msg168);
             break;
@@ -174,7 +174,7 @@ void IGESGeom_ToolBoundedSurface::OwnCheck(const occ::handle<IGESGeom_BoundedSur
 
   if ((ent->RepresentationType() != 0) && (ent->RepresentationType() != 1))
   {
-    Message_Msg Msg165("XTSEP_165");
+    System::log::Message_Msg Msg165("XTSEP_165");
     ach->SendFail(Msg165);
   }
 }

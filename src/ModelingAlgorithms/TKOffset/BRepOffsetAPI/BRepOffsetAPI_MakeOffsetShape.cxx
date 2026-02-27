@@ -14,7 +14,7 @@ void BRepOffsetAPI_MakeOffsetShape::PerformByJoin(const TopoDS_Shape&          S
                                                   const bool                   SelfInter,
                                                   const GeomAbs_JoinType       Join,
                                                   const bool                   RemoveIntEdges,
-                                                  const Message_ProgressRange& theRange)
+                                                  const System::log::Message_ProgressRange& theRange)
 {
   NotDone();
   myLastUsedAlgo = OffsetAlgo_JOIN;
@@ -51,7 +51,7 @@ const BRepOffset_MakeOffset& BRepOffsetAPI_MakeOffsetShape::MakeOffset() const
   return myOffsetShape;
 }
 
-void BRepOffsetAPI_MakeOffsetShape::Build(const Message_ProgressRange&) {}
+void BRepOffsetAPI_MakeOffsetShape::Build(const System::log::Message_ProgressRange&) {}
 
 const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_MakeOffsetShape::Generated(
   const TopoDS_Shape& S)

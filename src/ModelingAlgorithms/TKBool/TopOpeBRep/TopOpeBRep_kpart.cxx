@@ -40,8 +40,8 @@ static void FUNBREP_Periodize(const TopOpeBRep_LineInter&                   L,
   {
     double f, l;
     L.Bounds(f, l);
-    bool onf  = std::abs(parline - f) < Precision::PConfusion();
-    bool onl  = std::abs(parline - l) < Precision::PConfusion();
+    bool onf  = std::abs(parline - f) < math::precision::Precision::PConfusion();
+    bool onl  = std::abs(parline - l) < math::precision::Precision::PConfusion();
     bool onfl = onf || onl;
     if (onfl)
     {
@@ -655,7 +655,7 @@ static bool TopoParameter(const TopOpeBRep_LineInter&                   L,
   bool   samepar = false;
   double pCPI    = TopOpeBRepDS_InterferenceTool::Parameter(I);
   if (!closingedge)
-    samepar = (std::abs(parline - pCPI) < Precision::PConfusion());
+    samepar = (std::abs(parline - pCPI) < math::precision::Precision::PConfusion());
   else
   {
 
@@ -666,7 +666,7 @@ static bool TopoParameter(const TopOpeBRep_LineInter&                   L,
     }
     else
     {
-      samepar = (std::abs(parline - pCPI) < Precision::PConfusion());
+      samepar = (std::abs(parline - pCPI) < math::precision::Precision::PConfusion());
     }
   }
   return samepar;

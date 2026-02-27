@@ -145,7 +145,7 @@ void V3d_Trihedron::SetArrowsColor(const Quantity_Color& theXColor,
 
 void V3d_Trihedron::SetScale(const double theScale)
 {
-  if (std::abs(myScale - theScale) > Precision::Confusion())
+  if (std::abs(myScale - theScale) > math::precision::Precision::Confusion())
   {
     invalidate();
   }
@@ -154,7 +154,7 @@ void V3d_Trihedron::SetScale(const double theScale)
 
 void V3d_Trihedron::SetSizeRatio(const double theRatio)
 {
-  if (std::abs(myRatio - theRatio) > Precision::Confusion())
+  if (std::abs(myRatio - theRatio) > math::precision::Precision::Confusion())
   {
     invalidate();
   }
@@ -163,7 +163,7 @@ void V3d_Trihedron::SetSizeRatio(const double theRatio)
 
 void V3d_Trihedron::SetArrowDiameter(const double theDiam)
 {
-  if (std::abs(myDiameter - theDiam) > Precision::Confusion())
+  if (std::abs(myDiameter - theDiam) > math::precision::Precision::Confusion())
   {
     invalidate();
   }

@@ -77,7 +77,7 @@ namespace
                     * (aStartPoint->CoordinatesValue(2) - anEndPoint->CoordinatesValue(2))
                 + (aStartPoint->CoordinatesValue(3) - anEndPoint->CoordinatesValue(3))
                     * (aStartPoint->CoordinatesValue(3) - anEndPoint->CoordinatesValue(3)));
-    return aDistance < Precision::Confusion();
+    return aDistance < math::precision::Precision::Confusion();
   }
 } // namespace
 

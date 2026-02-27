@@ -27,7 +27,10 @@ enum
 #include <gp_Pnt2d.hpp>
 #include <Standard_ShortReal.hpp>
 
+namespace System { namespace os {
 class OSD_FileSystem;
+}} // namespace System::os
+
 class Poly_Triangulation;
 class Poly_TriangulationParameters;
 
@@ -199,10 +202,10 @@ public:
   virtual bool HasDeferredData() const { return NbDeferredTriangles() > 0; }
 
   Standard_EXPORT virtual bool LoadDeferredData(
-    const occ::handle<OSD_FileSystem>& theFileSystem = occ::handle<OSD_FileSystem>());
+    const occ::handle<System::os::OSD_FileSystem>& theFileSystem = occ::handle<System::os::OSD_FileSystem>());
 
   Standard_EXPORT virtual occ::handle<Poly_Triangulation> DetachedLoadDeferredData(
-    const occ::handle<OSD_FileSystem>& theFileSystem = occ::handle<OSD_FileSystem>()) const;
+    const occ::handle<System::os::OSD_FileSystem>& theFileSystem = occ::handle<System::os::OSD_FileSystem>()) const;
 
   Standard_EXPORT virtual bool UnloadDeferredData();
 
@@ -212,7 +215,7 @@ protected:
     return new Poly_Triangulation();
   }
 
-  virtual bool loadDeferredData(const occ::handle<OSD_FileSystem>&     theFileSystem,
+  virtual bool loadDeferredData(const occ::handle<System::os::OSD_FileSystem>&     theFileSystem,
                                 const occ::handle<Poly_Triangulation>& theDestTriangulation) const
   {
     (void)theFileSystem;

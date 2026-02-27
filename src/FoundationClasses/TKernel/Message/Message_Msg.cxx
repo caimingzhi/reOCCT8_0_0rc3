@@ -10,9 +10,9 @@ typedef enum
   Msg_IndefiniteType
 } FormatType;
 
-Message_Msg::Message_Msg() = default;
+System::log::Message_Msg::Message_Msg() = default;
 
-Message_Msg::Message_Msg(const Message_Msg& theMsg)
+System::log::Message_Msg::Message_Msg(const System::log::Message_Msg& theMsg)
 {
   myMessageBody = theMsg.myMessageBody;
   myOriginal    = theMsg.myOriginal;
@@ -20,24 +20,24 @@ Message_Msg::Message_Msg(const Message_Msg& theMsg)
     mySeqOfFormats.Append(theMsg.mySeqOfFormats.Value(i));
 }
 
-Message_Msg::Message_Msg(const char* theMsgCode)
+System::log::Message_Msg::Message_Msg(const char* theMsgCode)
 {
   TCollection_AsciiString aKey((char*)theMsgCode);
-  Set(Message_MsgFile::Msg(aKey));
+  Set(System::log::Message_MsgFile::Msg(aKey));
 }
 
-Message_Msg::Message_Msg(const TCollection_ExtendedString& theMsgCode)
+System::log::Message_Msg::Message_Msg(const TCollection_ExtendedString& theMsgCode)
 {
-  Set(Message_MsgFile::Msg(theMsgCode));
+  Set(System::log::Message_MsgFile::Msg(theMsgCode));
 }
 
-void Message_Msg::Set(const char* theMsg)
+void System::log::Message_Msg::Set(const char* theMsg)
 {
   TCollection_AsciiString aMsg((char*)theMsg);
   Set(aMsg);
 }
 
-void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
+void System::log::Message_Msg::Set(const TCollection_ExtendedString& theMsg)
 {
   myMessageBody = theMsg;
 
@@ -105,7 +105,7 @@ void Message_Msg::Set(const TCollection_ExtendedString& theMsg)
   myOriginal = myMessageBody;
 }
 
-Message_Msg& Message_Msg::Arg(const char* theString)
+System::log::Message_Msg& System::log::Message_Msg::Arg(const char* theString)
 {
 
   TCollection_AsciiString aFormat;
@@ -124,7 +124,7 @@ Message_Msg& Message_Msg::Arg(const char* theString)
   return *this;
 }
 
-Message_Msg& Message_Msg::Arg(const TCollection_ExtendedString& theString)
+System::log::Message_Msg& System::log::Message_Msg::Arg(const TCollection_ExtendedString& theString)
 {
 
   TCollection_AsciiString aFormat;
@@ -137,7 +137,7 @@ Message_Msg& Message_Msg::Arg(const TCollection_ExtendedString& theString)
   return *this;
 }
 
-Message_Msg& Message_Msg::Arg(const int theValue)
+System::log::Message_Msg& System::log::Message_Msg::Arg(const int theValue)
 {
 
   TCollection_AsciiString aFormat;
@@ -154,7 +154,7 @@ Message_Msg& Message_Msg::Arg(const int theValue)
   return *this;
 }
 
-Message_Msg& Message_Msg::Arg(const double theValue)
+System::log::Message_Msg& System::log::Message_Msg::Arg(const double theValue)
 {
 
   TCollection_AsciiString aFormat;
@@ -171,7 +171,7 @@ Message_Msg& Message_Msg::Arg(const double theValue)
   return *this;
 }
 
-const TCollection_ExtendedString& Message_Msg::Get()
+const TCollection_ExtendedString& System::log::Message_Msg::Get()
 {
 
   int                                     i, anIncrement = 0;
@@ -188,7 +188,7 @@ const TCollection_ExtendedString& Message_Msg::Get()
   return myMessageBody;
 }
 
-int Message_Msg::getFormat(const int theType, TCollection_AsciiString& theFormat)
+int System::log::Message_Msg::getFormat(const int theType, TCollection_AsciiString& theFormat)
 {
   for (int i = 1; i <= mySeqOfFormats.Length(); i += 3)
     if (mySeqOfFormats(i) == theType)
@@ -208,7 +208,7 @@ int Message_Msg::getFormat(const int theType, TCollection_AsciiString& theFormat
   return 0;
 }
 
-void Message_Msg::replaceText(const int                         theFirst,
+void System::log::Message_Msg::replaceText(const int                         theFirst,
                               const int                         theNb,
                               const TCollection_ExtendedString& theStr)
 {

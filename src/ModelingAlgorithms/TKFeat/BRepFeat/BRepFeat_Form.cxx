@@ -744,8 +744,8 @@ void BRepFeat_Form::GlobalPerform()
     theBuilder.PartsOfTool(lshape);
 
     double                  pbmin = RealLast(), pbmax = RealFirst();
-    double                  prmin = RealLast() - 2 * Precision::Confusion();
-    double                  prmax = RealFirst() + 2 * Precision::Confusion();
+    double                  prmin = RealLast() - 2 * math::precision::Precision::Confusion();
+    double                  prmax = RealFirst() + 2 * math::precision::Precision::Confusion();
     bool                    flag1 = false;
     occ::handle<Geom_Curve> C;
 
@@ -854,7 +854,7 @@ void BRepFeat_Form::GlobalPerform()
         }
       }
 
-      constexpr double delta = Precision::Confusion();
+      constexpr double delta = math::precision::Precision::Confusion();
 
       if (myPerfSelection != BRepFeat_NoSelection)
       {

@@ -186,7 +186,7 @@ void PrsDim_EllipseRadiusDimension::ComputePlanarFaceGeometry()
     return;
   }
 
-  if (!ptfirst.IsEqual(ptend, Precision::Confusion()))
+  if (!ptfirst.IsEqual(ptend, math::precision::Precision::Confusion()))
   {
     myIsAnArc  = true;
     myFirstPar = ElCLib::Parameter(myEllipse, ptfirst);
@@ -215,7 +215,7 @@ void PrsDim_EllipseRadiusDimension::ComputeEdgeGeometry()
   aPlane.SetPosition(gp_Ax3(myEllipse.Position()));
   myPlane = new Geom_Plane(aPlane);
 
-  if (ptfirst.IsEqual(ptend, Precision::Confusion()))
+  if (ptfirst.IsEqual(ptend, math::precision::Precision::Confusion()))
   {
     myIsAnArc = false;
   }

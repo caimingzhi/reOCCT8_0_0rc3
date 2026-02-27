@@ -20,7 +20,7 @@ StlAPI_Writer::StlAPI_Writer()
 
 bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
                           const char*                  theFileName,
-                          const Message_ProgressRange& theProgress)
+                          const System::log::Message_ProgressRange& theProgress)
 {
   std::ofstream aStream(theFileName, myASCIIMode ? std::ios::out : std::ios::binary);
   if (!aStream.is_open())
@@ -33,7 +33,7 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
 
 bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
                           Standard_OStream&            theStream,
-                          const Message_ProgressRange& theProgress)
+                          const System::log::Message_ProgressRange& theProgress)
 {
   int aNbNodes     = 0;
   int aNbTriangles = 0;
@@ -119,7 +119,7 @@ bool StlAPI_Writer::Write(const TopoDS_Shape&          theShape,
       TCollection_AsciiString("Warning: ") + TCollection_AsciiString(aNbFacesNoTri)
       + TCollection_AsciiString((aNbFacesNoTri == 1) ? " face has" : " faces have")
       + TCollection_AsciiString(" been skipped due to null triangulation");
-    Message::SendWarning(aWarningMsg);
+    System::log::Message::SendWarning(aWarningMsg);
   }
 
   return isDone;

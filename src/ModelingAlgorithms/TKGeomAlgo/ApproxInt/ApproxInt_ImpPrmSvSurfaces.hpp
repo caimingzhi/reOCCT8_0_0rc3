@@ -305,8 +305,8 @@ bool ApproxInt_ImpPrmSvSurfaces::Compute(double&   u1,
   gp_Vec2d&              aQuadTg = MyImplicitFirst ? Tguv1 : Tguv2;
   gp_Vec2d&              aPrmTg  = MyImplicitFirst ? Tguv2 : Tguv1;
 
-  constexpr double aNullValue = Precision::Approximation() * Precision::Approximation(),
-                   anAngTol   = Precision::Angular();
+  constexpr double aNullValue = math::precision::Precision::Approximation() * math::precision::Precision::Approximation(),
+                   anAngTol   = math::precision::Precision::Angular();
 
   double tu1 = u1;
   double tu2 = u2;
@@ -821,10 +821,10 @@ bool ApproxInt_ImpPrmSvSurfaces::FillInitialVectorOfSolution(const double u1,
 
   if (GetUseSolver())
   {
-    double du = std::max(Precision::Confusion(),
-                         ThePSurfaceTool::UResolution(aPSurf, Precision::Confusion()));
-    double dv = std::max(Precision::Confusion(),
-                         ThePSurfaceTool::VResolution(aPSurf, Precision::Confusion()));
+    double du = std::max(math::precision::Precision::Confusion(),
+                         ThePSurfaceTool::UResolution(aPSurf, math::precision::Precision::Confusion()));
+    double dv = std::max(math::precision::Precision::Confusion(),
+                         ThePSurfaceTool::VResolution(aPSurf, math::precision::Precision::Confusion()));
     if (X(1) - 0.0000000001 <= binfu)
       X(1) = X(1) + du;
     if (X(1) + 0.0000000001 >= bsupu)

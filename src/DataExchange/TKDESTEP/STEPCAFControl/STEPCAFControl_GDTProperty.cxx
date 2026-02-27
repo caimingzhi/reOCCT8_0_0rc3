@@ -51,7 +51,7 @@ namespace
     }
 
     auto isEqual = [](const double theVal1, const double theVal2)
-    { return std::abs(theVal1 - theVal2) < Precision::Confusion(); };
+    { return std::abs(theVal1 - theVal2) < math::precision::Precision::Confusion(); };
 
     const gp_Dir aReferenceNormal = theTriangulation->Normal(1);
     for (int aNodeIndex = 1; aNodeIndex <= theTriangulation->NbNodes(); ++aNodeIndex)
@@ -194,7 +194,7 @@ namespace
       {
         ShapeConstruct_Curve           aSCC;
         occ::handle<Geom_BSplineCurve> aBSCurve =
-          aSCC.ConvertToBSpline(anEdgeCurve, aFirstParam, aLastParam, Precision::Confusion());
+          aSCC.ConvertToBSpline(anEdgeCurve, aFirstParam, aLastParam, math::precision::Precision::Confusion());
         for (int aPoleIndex = 1; aPoleIndex <= aBSCurve->NbPoles(); ++aPoleIndex)
         {
           aTmpPointsContainer.Append(aBSCurve->Pole(aPoleIndex).XYZ());

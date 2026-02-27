@@ -83,8 +83,8 @@ int GeomFill_Fixed::NbIntervals(const GeomAbs_Shape) const
 
 void GeomFill_Fixed::Intervals(NCollection_Array1<double>& theT, const GeomAbs_Shape) const
 {
-  theT(theT.Lower()) = -Precision::Infinite();
-  theT(theT.Upper()) = Precision::Infinite();
+  theT(theT.Lower()) = -math::precision::Precision::Infinite();
+  theT(theT.Upper()) = math::precision::Precision::Infinite();
 }
 
 void GeomFill_Fixed::GetAverageLaw(gp_Vec& ATangent, gp_Vec& ANormal, gp_Vec& ABiNormal)

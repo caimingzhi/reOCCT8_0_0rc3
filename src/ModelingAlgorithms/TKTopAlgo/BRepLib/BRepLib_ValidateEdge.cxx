@@ -86,8 +86,8 @@ void BRepLib_ValidateEdge::processApprox()
   int  aControlPointsNumber = (myControlPointsNumber < 1) ? 1 : myControlPointsNumber;
   bool anIsProjection =
     (!mySameParameter
-     || std::abs(anOtherFirstParam - aReferenceFirstParam) > Precision::PConfusion()
-     || std::abs(anOtherLastParam - aReferenceLastParam) > Precision::PConfusion());
+     || std::abs(anOtherFirstParam - aReferenceFirstParam) > math::precision::Precision::PConfusion()
+     || std::abs(anOtherLastParam - aReferenceLastParam) > math::precision::Precision::PConfusion());
 
   if (!anIsProjection)
   {
@@ -143,11 +143,11 @@ void BRepLib_ValidateEdge::processApprox()
     aReferenceExtrema.Initialize(*myReferenceCurve,
                                  aReferenceFirstParam,
                                  aReferenceLastParam,
-                                 myReferenceCurve->Resolution(Precision::Confusion()));
+                                 myReferenceCurve->Resolution(math::precision::Precision::Confusion()));
     anOtherExtrema.Initialize(*myOtherCurve,
                               anOtherFirstParam,
                               anOtherLastParam,
-                              myOtherCurve->Resolution(Precision::Confusion()));
+                              myOtherCurve->Resolution(math::precision::Precision::Confusion()));
     for (int i = 1; i < aControlPointsNumber; i++)
     {
       double aReferenceParam =

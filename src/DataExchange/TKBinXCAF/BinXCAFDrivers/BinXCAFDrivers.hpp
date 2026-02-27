@@ -5,7 +5,10 @@
 class Standard_Transient;
 class Standard_GUID;
 class BinMDF_ADriverTable;
+namespace System { namespace log {
 class Message_Messenger;
+}} // namespace System::log
+
 class TDocStd_Application;
 
 class BinXCAFDrivers
@@ -17,5 +20,5 @@ public:
   Standard_EXPORT static void DefineFormat(const occ::handle<TDocStd_Application>& theApp);
 
   Standard_EXPORT static occ::handle<BinMDF_ADriverTable> AttributeDrivers(
-    const occ::handle<Message_Messenger>& MsgDrv);
+    const occ::handle<System::log::Message_Messenger>& MsgDrv);
 };

@@ -19,8 +19,8 @@ static void FindLimits(const Adaptor3d_Curve& aCurve,
 {
   First         = aCurve.FirstParameter();
   Last          = aCurve.LastParameter();
-  bool firstInf = Precision::IsNegativeInfinite(First);
-  bool lastInf  = Precision::IsPositiveInfinite(Last);
+  bool firstInf = math::precision::Precision::IsNegativeInfinite(First);
+  bool lastInf  = math::precision::Precision::IsPositiveInfinite(Last);
 
   if (firstInf || lastInf)
   {
@@ -185,9 +185,9 @@ void VrmlConverter_Curve::Add(const Adaptor3d_Curve&                   aCurve,
   double V1       = U1;
   double V2       = U2;
 
-  if (Precision::IsNegativeInfinite(V1))
+  if (math::precision::Precision::IsNegativeInfinite(V1))
     V1 = -aDrawer->MaximalParameterValue();
-  if (Precision::IsPositiveInfinite(V2))
+  if (math::precision::Precision::IsPositiveInfinite(V2))
     V2 = aDrawer->MaximalParameterValue();
 
   DrawCurve(aCurve, NbPoints, V1, V2, aDrawer, anOStream);
@@ -206,9 +206,9 @@ void VrmlConverter_Curve::Add(const Adaptor3d_Curve& aCurve,
   double V1 = U1;
   double V2 = U2;
 
-  if (Precision::IsNegativeInfinite(V1))
+  if (math::precision::Precision::IsNegativeInfinite(V1))
     V1 = -aDrawer->MaximalParameterValue();
-  if (Precision::IsPositiveInfinite(V2))
+  if (math::precision::Precision::IsPositiveInfinite(V2))
     V2 = aDrawer->MaximalParameterValue();
 
   DrawCurve(aCurve, aNbPoints, V1, V2, aDrawer, anOStream);

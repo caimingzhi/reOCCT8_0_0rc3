@@ -125,7 +125,7 @@ void BRepCheck_Edge::Minimum()
     if (!myCref.IsNull())
     {
       occ::handle<BRep_GCurve> GCref(occ::down_cast<BRep_GCurve>(myCref));
-      constexpr double         eps = Precision::PConfusion();
+      constexpr double         eps = math::precision::Precision::PConfusion();
       double                   First, Last;
       GCref->Range(First, Last);
       if (Last <= First)
@@ -305,7 +305,7 @@ void BRepCheck_Edge::InContext(const TopoDS_Shape& S)
         bool                             pcurvefound = false;
 
         NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator itcr(TE->Curves());
-        constexpr double eps           = Precision::PConfusion();
+        constexpr double eps           = math::precision::Precision::PConfusion();
         const bool       toRunParallel = myMutex != nullptr;
         while (itcr.More())
         {
@@ -543,7 +543,7 @@ double BRepCheck_Edge::Tolerance()
   int                      it, iRep = 1, nbRep = (TE->Curves()).Extent();
   if (nbRep <= 1)
   {
-    return Precision::Confusion();
+    return math::precision::Precision::Confusion();
   }
   NCollection_Array1<occ::handle<Standard_Transient>> theRep(1, nbRep * 2);
   double                                              First, Last;
@@ -620,18 +620,18 @@ double BRepCheck_Edge::Tolerance()
     prm  = ((NCONTROL - 1 - i) * First + i * Last) / (NCONTROL - 1);
     tol2 = dist2 = 0.;
     center       = (*(occ::handle<Adaptor3d_Curve>*)&theRep(1))->Value(prm);
-    if (Precision::IsInfinite(center.X()) || Precision::IsInfinite(center.Y())
-        || Precision::IsInfinite(center.Z()))
+    if (math::precision::Precision::IsInfinite(center.X()) || math::precision::Precision::IsInfinite(center.Y())
+        || math::precision::Precision::IsInfinite(center.Z()))
     {
-      return Precision::Infinite();
+      return math::precision::Precision::Infinite();
     }
     for (iRep = 2; iRep <= nbRep; iRep++)
     {
       othP = (*(occ::handle<Adaptor3d_Curve>*)&theRep(iRep))->Value(prm);
-      if (Precision::IsInfinite(othP.X()) || Precision::IsInfinite(othP.Y())
-          || Precision::IsInfinite(othP.Z()))
+      if (math::precision::Precision::IsInfinite(othP.X()) || math::precision::Precision::IsInfinite(othP.Y())
+          || math::precision::Precision::IsInfinite(othP.Z()))
       {
-        return Precision::Infinite();
+        return math::precision::Precision::Infinite();
       }
       dist2 = center.SquareDistance(othP);
       if (dist2 > tolCal)

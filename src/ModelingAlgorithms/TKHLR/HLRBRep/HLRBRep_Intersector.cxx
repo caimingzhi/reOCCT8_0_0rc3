@@ -94,7 +94,7 @@ void HLRBRep_Intersector::Perform(HLRBRep_EdgeData* theEdge1,
   b = myC1->Parameter2d(b);
   IntRes2d_Domain D1(pa, a, (double)ta, pb, b, (double)tb);
 
-  tol = Precision::Confusion();
+  tol = math::precision::Precision::Confusion();
 
   myIntersector.Perform(myC1, D1, tol, tol);
 }
@@ -120,8 +120,8 @@ void HLRBRep_Intersector::Perform(const int,
   double   a1, b1, a2, b2, d, dd, tol, tol1, tol2;
   float    ta, tb;
 
-  tol1 = Precision::Confusion();
-  tol2 = Precision::Confusion();
+  tol1 = math::precision::Precision::Confusion();
+  tol2 = math::precision::Precision::Confusion();
 
   if (tol1 > tol2)
     tol = tol1;

@@ -236,7 +236,7 @@ occ::handle<Vrml_Material> VrmlAPI_Writer::GetUnfreeBoundsMaterial() const
 
 bool VrmlAPI_Writer::Write(const TopoDS_Shape& aShape, const char* aFile, const int aVersion) const
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      anOutStream =
     aFileSystem->OpenOStream(aFile, std::ios::out | std::ios::binary);
   if (anOutStream.get() == nullptr)
@@ -251,7 +251,7 @@ bool VrmlAPI_Writer::WriteDoc(const occ::handle<TDocStd_Document>& theDoc,
                               const char*                          theFile,
                               const double                         theScale) const
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      anOutStream =
     aFileSystem->OpenOStream(theFile, std::ios::out | std::ios::binary);
   if (anOutStream.get() == nullptr)

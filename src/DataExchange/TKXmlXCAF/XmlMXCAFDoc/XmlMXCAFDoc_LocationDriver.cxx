@@ -19,7 +19,7 @@ IMPLEMENT_DOMSTRING(TrsfString, "trsf")
 IMPLEMENT_DOMSTRING(LocIdString, "locId")
 
 XmlMXCAFDoc_LocationDriver::XmlMXCAFDoc_LocationDriver(
-  const occ::handle<Message_Messenger>& theMsgDriver)
+  const occ::handle<System::log::Message_Messenger>& theMsgDriver)
     : XmlMDF_ADriver(theMsgDriver, "xcaf", "Location"),
       myLocations(nullptr)
 {

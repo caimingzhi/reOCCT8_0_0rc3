@@ -452,7 +452,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
       SecondAttach = ElCLib::Value(ElCLib::Parameter(l2, Position), l2);
     }
 
-    constexpr double confusion(Precision::Confusion());
+    constexpr double confusion(math::precision::Precision::Confusion());
     if (arrsize < confusion)
       arrsize = Val * 0.1;
     if (std::abs(Val) <= confusion)
@@ -487,7 +487,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
     gp_Circ                  aCirc1 = aCir1->Circ();
     gp_Circ                  aCirc2 = aCir2->Circ();
 
-    constexpr double aTol = Precision::Confusion();
+    constexpr double aTol = math::precision::Precision::Confusion();
     if (aCirc2.Axis().IsOpposite(aCirc1.Axis(), aTol)
         || aCirc2.XAxis().IsOpposite(aCirc1.XAxis(), aTol)
         || aCirc2.YAxis().IsOpposite(aCirc1.YAxis(), aTol))
@@ -509,7 +509,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
       gp_Dir XDir = aPln.XAxis().Direction();
       gp_Dir YDir = aPln.YAxis().Direction();
 
-      if (PrPnt12.Distance(PrCenter) > Precision::Confusion())
+      if (PrPnt12.Distance(PrCenter) > math::precision::Precision::Confusion())
       {
         gp_Dir aDir1(PrPnt12.XYZ() - PrCenter.XYZ());
         double anAngle = aDir1.Angle(XDir);
@@ -518,7 +518,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
         par1 = anAngle;
       }
 
-      if (PrPnt22.Distance(PrCenter) > Precision::Confusion())
+      if (PrPnt22.Distance(PrCenter) > math::precision::Precision::Confusion())
       {
         gp_Dir aDir2(PrPnt22.XYZ() - PrCenter.XYZ());
         double anAngle = aDir2.Angle(XDir);
@@ -563,9 +563,9 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
     Position.SetXYZ((FirstAttach.XYZ() + SecondAttach.XYZ()) * 0.5);
   }
 
-  if (arrsize < Precision::Confusion())
+  if (arrsize < math::precision::Precision::Confusion())
     arrsize = Val * 0.1;
-  if (std::abs(Val) <= Precision::Confusion())
+  if (std::abs(Val) <= math::precision::Precision::Confusion())
   {
     arrsize = 0.;
   }
@@ -603,7 +603,7 @@ void PrsDim_EqualDistanceRelation::ComputeTwoVerticesLength(
   PrsDim::ComputeGeometry(FirstVertex, FirstAttach, Plane, isOnPlane1);
   PrsDim::ComputeGeometry(SecondVertex, SecondAttach, Plane, isOnPlane2);
 
-  constexpr double confusion(Precision::Confusion());
+  constexpr double confusion(math::precision::Precision::Confusion());
   bool             samePoint(FirstAttach.IsEqual(SecondAttach, confusion));
 
   if (TypeDist == PrsDim_TypeOfDist_Vertical)
@@ -732,7 +732,7 @@ void PrsDim_EqualDistanceRelation::ComputeOneEdgeOneVertexLength(
     gp_Dir DirAttach = l.Direction();
 
     double arrsize = ArrowSize;
-    if (std::abs(Val) <= Precision::Confusion())
+    if (std::abs(Val) <= math::precision::Precision::Confusion())
     {
       arrsize = 0.;
     }

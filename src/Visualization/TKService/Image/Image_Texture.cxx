@@ -121,7 +121,7 @@ occ::handle<Image_PixMap> Image_Texture::loadImageBuffer(
   }
   else if (theBuffer->Size() > (size_t)IntegerLast())
   {
-    Message::SendFail(TCollection_AsciiString("Error: Image file size is too big '") + theId + "'");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Image file size is too big '") + theId + "'");
     return occ::handle<Image_PixMap>();
   }
 
@@ -139,24 +139,24 @@ occ::handle<Image_PixMap> Image_Texture::loadImageOffset(const TCollection_Ascii
 {
   if (theLength > IntegerLast())
   {
-    Message::SendFail(TCollection_AsciiString("Error: Image file size is too big '") + thePath
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Image file size is too big '") + thePath
                       + "'");
     return occ::handle<Image_PixMap>();
   }
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aFile =
     aFileSystem->OpenIStream(thePath, std::ios::in | std::ios::binary);
   if (aFile.get() == nullptr)
   {
-    Message::SendFail(TCollection_AsciiString("Error: Image file '") + thePath
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Image file '") + thePath
                       + "' cannot be opened");
     return occ::handle<Image_PixMap>();
   }
   aFile->seekg((std::streamoff)theOffset, std::ios_base::beg);
   if (!aFile->good())
   {
-    Message::SendFail(TCollection_AsciiString("Error: Image is defined with invalid file offset '")
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Image is defined with invalid file offset '")
                       + thePath + "'");
     return occ::handle<Image_PixMap>();
   }
@@ -203,12 +203,12 @@ TCollection_AsciiString Image_Texture::ProbeImageFileFormat() const
   }
   else
   {
-    const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+    const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
     std::shared_ptr<std::istream>      aFileIn =
       aFileSystem->OpenIStream(myImagePath, std::ios::in | std::ios::binary);
     if (aFileIn.get() == nullptr)
     {
-      Message::SendFail(TCollection_AsciiString("Error: Unable to open file '") + myImagePath
+      System::log::Message::SendFail(TCollection_AsciiString("Error: Unable to open file '") + myImagePath
                         + "'");
       return false;
     }
@@ -217,7 +217,7 @@ TCollection_AsciiString Image_Texture::ProbeImageFileFormat() const
       aFileIn->seekg((std::streamoff)myOffset, std::ios_base::beg);
       if (!aFileIn->good())
       {
-        Message::SendFail(
+        System::log::Message::SendFail(
           TCollection_AsciiString("Error: Image is defined with invalid file offset '")
           + myImagePath + "'");
         return false;
@@ -226,7 +226,7 @@ TCollection_AsciiString Image_Texture::ProbeImageFileFormat() const
 
     if (!aFileIn->read(aBuffer, THE_PROBE_SIZE))
     {
-      Message::SendFail(TCollection_AsciiString("Error: unable to read image file '") + myImagePath
+      System::log::Message::SendFail(TCollection_AsciiString("Error: unable to read image file '") + myImagePath
                         + "'");
       return false;
     }
@@ -271,12 +271,12 @@ TCollection_AsciiString Image_Texture::ProbeImageFileFormat() const
 
 bool Image_Texture::WriteImage(const TCollection_AsciiString& theFile)
 {
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::ostream>      aFileOut =
     aFileSystem->OpenOStream(theFile, std::ios::out | std::ios::binary | std::ios::trunc);
   if (aFileOut.get() == nullptr)
   {
-    Message::SendFail(TCollection_AsciiString("Error: Unable to create file '") + theFile + "'");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Unable to create file '") + theFile + "'");
     return false;
   }
 
@@ -288,7 +288,7 @@ bool Image_Texture::WriteImage(const TCollection_AsciiString& theFile)
   aFileOut->flush();
   if (!aFileOut->good())
   {
-    Message::SendFail(TCollection_AsciiString("Error: Unable to write file '") + theFile + "'");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Unable to write file '") + theFile + "'");
     return false;
   }
   aFileOut.reset();
@@ -302,18 +302,18 @@ bool Image_Texture::WriteImage(std::ostream& theStream, const TCollection_AsciiS
     theStream.write((const char*)myBuffer->Data(), myBuffer->Size());
     if (!theStream.good())
     {
-      Message::SendFail(TCollection_AsciiString("File '") + theFile + "' cannot be written");
+      System::log::Message::SendFail(TCollection_AsciiString("File '") + theFile + "' cannot be written");
       return false;
     }
     return true;
   }
 
-  const occ::handle<OSD_FileSystem>& aFileSystem = OSD_FileSystem::DefaultFileSystem();
+  const occ::handle<System::os::OSD_FileSystem>& aFileSystem = System::os::OSD_FileSystem::DefaultFileSystem();
   std::shared_ptr<std::istream>      aFileIn =
     aFileSystem->OpenIStream(myImagePath, std::ios::in | std::ios::binary);
   if (aFileIn.get() == nullptr)
   {
-    Message::SendFail(TCollection_AsciiString("Error: Unable to open file ") + myImagePath + "!");
+    System::log::Message::SendFail(TCollection_AsciiString("Error: Unable to open file ") + myImagePath + "!");
     return false;
   }
 
@@ -323,7 +323,7 @@ bool Image_Texture::WriteImage(std::ostream& theStream, const TCollection_AsciiS
     aFileIn->seekg((std::streamoff)myOffset, std::ios_base::beg);
     if (!aFileIn->good())
     {
-      Message::SendFail(
+      System::log::Message::SendFail(
         TCollection_AsciiString("Error: Image is defined with invalid file offset '") + myImagePath
         + "'");
       return false;
@@ -346,7 +346,7 @@ bool Image_Texture::WriteImage(std::ostream& theStream, const TCollection_AsciiS
     }
     if (!aFileIn->read((char*)&aBuffer.ChangeFirst(), aChunkSize))
     {
-      Message::SendFail(TCollection_AsciiString("Error: unable to read image file '") + myImagePath
+      System::log::Message::SendFail(TCollection_AsciiString("Error: unable to read image file '") + myImagePath
                         + "'");
       return false;
     }
@@ -354,7 +354,7 @@ bool Image_Texture::WriteImage(std::ostream& theStream, const TCollection_AsciiS
   }
   if (!theStream.good())
   {
-    Message::SendFail(TCollection_AsciiString("File '") + theFile + "' can not be written");
+    System::log::Message::SendFail(TCollection_AsciiString("File '") + theFile + "' can not be written");
     return false;
   }
   return true;

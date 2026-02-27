@@ -379,7 +379,7 @@ static int BUC60944(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   TCollection_AsciiString in(argv[1]);
-  OSD_Path*               aPath = new OSD_Path(in);
+  System::os::OSD_Path*               aPath = new System::os::OSD_Path(in);
   TCollection_AsciiString out;
   aPath->SystemName(out);
   if (in == out)
@@ -482,7 +482,7 @@ bool BuildWires(const NCollection_List<TopoDS_Shape>& theListOfEdges,
                 NCollection_List<TopoDS_Shape>&       theListOfWires,
                 const bool                            isFixConnectedMode = false,
                 const bool                            isKeepLoopsMode    = true,
-                const double                          theTolerance       = Precision::Confusion())
+                const double                          theTolerance       = math::precision::Precision::Confusion())
 {
   occ::handle<ShapeBuild_ReShape> aReshape = new ShapeBuild_ReShape;
   return BuildWiresWithReshape(aReshape,

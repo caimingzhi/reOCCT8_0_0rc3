@@ -45,7 +45,7 @@ static bool IsOriginalPnt(const gp_Pnt& P, const Extrema_POnSurf* Points, const 
 {
   for (int i = 1; i <= NbPoints; i++)
   {
-    if (Points[i - 1].Value().IsEqual(P, Precision::Confusion()))
+    if (Points[i - 1].Value().IsEqual(P, math::precision::Precision::Confusion()))
     {
       return false;
     }
@@ -247,7 +247,7 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
 
   gp_Ax2 anOrtogSection(P, myDirection);
   double U, V;
-  bool   isMin, isSimpleCase = myDirection.IsParallel(myPosition.Direction(), Precision::Angular());
+  bool   isMin, isSimpleCase = myDirection.IsParallel(myPosition.Direction(), math::precision::Precision::Angular());
   int    i, aNbExt           = anExt.NbExt();
   math_Vector UV(1, 2), Tol(1, 2), UVinf(1, 2), UVsup(1, 2);
   Tol(1)   = mytolu;
@@ -265,7 +265,7 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
     if (myC->IsPeriodic())
     {
       double U2 = U;
-      ElCLib::AdjustPeriodic(myuinf, myuinf + 2. * M_PI, Precision::PConfusion(), U, U2);
+      ElCLib::AdjustPeriodic(myuinf, myuinf + 2. * M_PI, math::precision::Precision::PConfusion(), U, U2);
     }
 
     gp_Pnt E = POC.Value();
@@ -328,7 +328,7 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
 
       for (k = 1; k <= myF.NbExt(); k++)
       {
-        if (myF.SquareDistance(k) > Precision::Confusion() * Precision::Confusion())
+        if (myF.SquareDistance(k) > math::precision::Precision::Confusion() * math::precision::Precision::Confusion())
         {
 
           double                 dist = std::sqrt(myF.SquareDistance(k));
@@ -345,16 +345,16 @@ void Extrema_ExtPExtS::Perform(const gp_Pnt& P)
           double mdv = dv.Magnitude();
           u          = std::abs(Vals(1));
           v          = std::abs(Vals(2));
-          if (mdu > Precision::PConfusion())
+          if (mdu > math::precision::Precision::PConfusion())
           {
-            if (u / dist / mdu > Precision::PConfusion())
+            if (u / dist / mdu > math::precision::Precision::PConfusion())
             {
               continue;
             }
           }
-          if (mdv > Precision::PConfusion())
+          if (mdv > math::precision::Precision::PConfusion())
           {
-            if (v / dist / mdv > Precision::PConfusion())
+            if (v / dist / mdv > math::precision::Precision::PConfusion())
             {
               continue;
             }
@@ -463,10 +463,10 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
   switch (C->GetType())
   {
     case GeomAbs_Hyperbola:
-      E.Perform(P, C->Hyperbola(), Tol, -Precision::Infinite(), Precision::Infinite());
+      E.Perform(P, C->Hyperbola(), Tol, -math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
       return;
     case GeomAbs_Line:
-      E.Perform(P, C->Line(), Tol, -Precision::Infinite(), Precision::Infinite());
+      E.Perform(P, C->Line(), Tol, -math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
       return;
     case GeomAbs_Circle:
       E.Perform(P, C->Circle(), Tol, 0.0, 2.0 * M_PI);
@@ -475,7 +475,7 @@ static void PerformExtPElC(Extrema_ExtPElC&                    E,
       E.Perform(P, C->Ellipse(), Tol, 0.0, 2.0 * M_PI);
       return;
     case GeomAbs_Parabola:
-      E.Perform(P, C->Parabola(), Tol, -Precision::Infinite(), Precision::Infinite());
+      E.Perform(P, C->Parabola(), Tol, -math::precision::Precision::Infinite(), math::precision::Precision::Infinite());
       return;
     default:
       return;

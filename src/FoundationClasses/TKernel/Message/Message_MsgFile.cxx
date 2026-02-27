@@ -33,7 +33,7 @@ typedef enum
   MsgFile_Indefinite
 } LoadingState;
 
-bool Message_MsgFile::Load(const char* theDirName, const char* theFileName)
+bool System::log::Message_MsgFile::Load(const char* theDirName, const char* theFileName)
 {
   if (!theDirName || !theFileName)
     return false;
@@ -137,7 +137,7 @@ static inline bool loadFile(_Char* theBuffer)
     {
       case MsgFile_WaitingMoreMessage:
         if (isKeyword)
-          Message_MsgFile::AddMsg(aKeyword, aMessage);
+          System::log::Message_MsgFile::AddMsg(aKeyword, aMessage);
 
         else
         {
@@ -176,7 +176,7 @@ static inline bool loadFile(_Char* theBuffer)
   }
 
   if (aState == MsgFile_WaitingMoreMessage)
-    Message_MsgFile::AddMsg(aKeyword, aMessage);
+    System::log::Message_MsgFile::AddMsg(aKeyword, aMessage);
   return true;
 }
 
@@ -195,7 +195,7 @@ static int GetFileSize(FILE* theFile)
   return (int)nRealFileSize;
 }
 
-bool Message_MsgFile::LoadFile(const char* theFileName)
+bool System::log::Message_MsgFile::LoadFile(const char* theFileName)
 {
   if (theFileName == nullptr || *theFileName == '\0')
     return false;
@@ -249,14 +249,14 @@ bool Message_MsgFile::LoadFile(const char* theFileName)
     return ::loadFile(anMsgBuffer);
 }
 
-bool Message_MsgFile::LoadFromEnv(const char* theEnvName,
+bool System::log::Message_MsgFile::LoadFromEnv(const char* theEnvName,
                                   const char* theFileName,
                                   const char* theLangExt)
 {
   TCollection_AsciiString aLangExt(theLangExt != nullptr ? theLangExt : "");
   if (aLangExt.IsEmpty())
   {
-    OSD_Environment aLangEnv("CSF_LANGUAGE");
+    System::os::OSD_Environment aLangEnv("CSF_LANGUAGE");
     aLangExt = aLangEnv.Value();
     if (aLangExt.IsEmpty())
     {
@@ -267,7 +267,7 @@ bool Message_MsgFile::LoadFromEnv(const char* theEnvName,
   TCollection_AsciiString aFilePath(theFileName);
   if (theEnvName != nullptr && theEnvName[0] != '\0')
   {
-    OSD_Environment         aNameEnv(theEnvName);
+    System::os::OSD_Environment         aNameEnv(theEnvName);
     TCollection_AsciiString aNameEnvStr = aNameEnv.Value();
     if (!aNameEnvStr.IsEmpty())
     {
@@ -285,10 +285,10 @@ bool Message_MsgFile::LoadFromEnv(const char* theEnvName,
   }
   aFilePath.AssignCat(aLangExt);
 
-  return Message_MsgFile::LoadFile(aFilePath.ToCString());
+  return System::log::Message_MsgFile::LoadFile(aFilePath.ToCString());
 }
 
-bool Message_MsgFile::LoadFromString(const char* theContent, const int theLength)
+bool System::log::Message_MsgFile::LoadFromString(const char* theContent, const int theLength)
 {
   int                aStringSize = theLength >= 0 ? theLength : (int)strlen(theContent);
   NCollection_Buffer aBuffer(NCollection_BaseAllocator::CommonBaseAllocator());
@@ -304,7 +304,7 @@ bool Message_MsgFile::LoadFromString(const char* theContent, const int theLength
   return ::loadFile(anMsgBuffer);
 }
 
-bool Message_MsgFile::AddMsg(const TCollection_AsciiString&    theKeyword,
+bool System::log::Message_MsgFile::AddMsg(const TCollection_AsciiString&    theKeyword,
                              const TCollection_ExtendedString& theMessage)
 {
   Message_DataMapOfExtendedString& aDataMap = ::msgsDataMap();
@@ -314,19 +314,19 @@ bool Message_MsgFile::AddMsg(const TCollection_AsciiString&    theKeyword,
   return true;
 }
 
-const TCollection_ExtendedString& Message_MsgFile::Msg(const char* theKeyword)
+const TCollection_ExtendedString& System::log::Message_MsgFile::Msg(const char* theKeyword)
 {
   TCollection_AsciiString aKey(theKeyword);
   return Msg(aKey);
 }
 
-bool Message_MsgFile::HasMsg(const TCollection_AsciiString& theKeyword)
+bool System::log::Message_MsgFile::HasMsg(const TCollection_AsciiString& theKeyword)
 {
   std::lock_guard<std::mutex> aLock(Message_MsgFile_Mutex());
   return ::msgsDataMap().IsBound(theKeyword);
 }
 
-const TCollection_ExtendedString& Message_MsgFile::Msg(const TCollection_AsciiString& theKeyword)
+const TCollection_ExtendedString& System::log::Message_MsgFile::Msg(const TCollection_AsciiString& theKeyword)
 {
 
   Message_DataMapOfExtendedString& aDataMap = ::msgsDataMap();

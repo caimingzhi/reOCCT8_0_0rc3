@@ -42,7 +42,7 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
                                                double&                          Tolerance)
 {
 
-  Tolerance = std::max(Precision::PConfusion(), Tolerance);
+  Tolerance = std::max(math::precision::Precision::PConfusion(), Tolerance);
 
   GeomAdaptor_Curve   AC(C, First, Last);
   GeomAdaptor_Surface AS(S, UDeb, UFin, VDeb, VFin);
@@ -133,7 +133,7 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
 {
   double First = C->FirstParameter();
   double Last  = C->LastParameter();
-  double Tol   = Precision::PConfusion();
+  double Tol   = math::precision::Precision::PConfusion();
   return GeomProjLib::Curve2d(C, First, Last, S, UDeb, UFin, VDeb, VFin, Tol);
 }
 
@@ -155,7 +155,7 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
 {
   double First = C->FirstParameter();
   double Last  = C->LastParameter();
-  double Tol   = Precision::PConfusion();
+  double Tol   = math::precision::Precision::PConfusion();
   return GeomProjLib::Curve2d(C, First, Last, S, Tol);
 }
 
@@ -164,7 +164,7 @@ occ::handle<Geom2d_Curve> GeomProjLib::Curve2d(const occ::handle<Geom_Curve>&   
                                                const double                     Last,
                                                const occ::handle<Geom_Surface>& S)
 {
-  double Tol = Precision::PConfusion();
+  double Tol = math::precision::Precision::PConfusion();
   return GeomProjLib::Curve2d(C, First, Last, S, Tol);
 }
 
@@ -180,7 +180,7 @@ occ::handle<Geom_Curve> GeomProjLib::Project(const occ::handle<Geom_Curve>&   C,
   {
     ProjLib_ProjectOnPlane         Proj(AS.Plane().Position());
     occ::handle<GeomAdaptor_Curve> HC = new GeomAdaptor_Curve(AC);
-    Proj.Load(HC, Precision::PApproximation());
+    Proj.Load(HC, math::precision::Precision::PApproximation());
 
     switch (Proj.GetType())
     {
@@ -256,7 +256,7 @@ occ::handle<Geom_Curve> GeomProjLib::ProjectOnPlane(const occ::handle<Geom_Curve
   occ::handle<GeomAdaptor_Curve> HC = new GeomAdaptor_Curve(AC);
 
   ProjLib_ProjectOnPlane Proj(Plane->Position(), Dir);
-  Proj.Load(HC, Precision::Approximation(), KeepParametrization);
+  Proj.Load(HC, math::precision::Precision::Approximation(), KeepParametrization);
 
   occ::handle<Geom_Curve> GC;
 

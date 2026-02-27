@@ -2,6 +2,14 @@
 
 #include <Standard_Type.hpp>
 
+namespace app
+{
+  namespace storage
+  {
+    class Storage_Schema;
+  }
+} // namespace app
+
 class Standard_Persistent : public Standard_Transient
 {
 public:
@@ -21,5 +29,5 @@ private:
   int _typenum;
   int _refnum;
 
-  friend class Storage_Schema;
+  friend class app::storage::Storage_Schema;
 };

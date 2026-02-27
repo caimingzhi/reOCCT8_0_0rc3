@@ -36,7 +36,7 @@ Storage_Error StdStorage::Read(const TCollection_AsciiString& theFileName,
                                occ::handle<StdStorage_Data>&  theData)
 {
 
-  occ::handle<Storage_BaseDriver> aDriver;
+  occ::handle<app::storage::Storage_BaseDriver> aDriver;
   if (PCDM::FileDriverType(theFileName, aDriver) == PCDM_TOFD_Unknown)
     return Storage_VSWrongFileDriver;
 
@@ -53,7 +53,7 @@ Storage_Error StdStorage::Read(const TCollection_AsciiString& theFileName,
   return Read(aDriver, theData);
 }
 
-Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
+Storage_Error StdStorage::Read(const occ::handle<app::storage::Storage_BaseDriver>& theDriver,
                                occ::handle<StdStorage_Data>&          theData)
 {
   if (theData.IsNull())
@@ -104,7 +104,7 @@ Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
       theDriver->ReadReferenceType(aRef, aType);
       anError = Storage_VSOk;
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       anError = Storage_VSTypeMismatch;
     }
@@ -131,15 +131,15 @@ Storage_Error StdStorage::Read(const occ::handle<Storage_BaseDriver>& theDriver,
       aReadData.ReadPersistentObject(i);
       anError = Storage_VSOk;
     }
-    catch (Storage_StreamTypeMismatchError const&)
+    catch (app::storage::Storage_StreamTypeMismatchError const&)
     {
       anError = Storage_VSTypeMismatch;
     }
-    catch (Storage_StreamFormatError const&)
+    catch (app::storage::Storage_StreamFormatError const&)
     {
       anError = Storage_VSFormatError;
     }
-    catch (Storage_StreamReadError const&)
+    catch (app::storage::Storage_StreamReadError const&)
     {
       anError = Storage_VSFormatError;
     }
@@ -184,7 +184,7 @@ static TCollection_AsciiString currentDate()
 #undef SLENGTH
 }
 
-Storage_Error StdStorage::Write(const occ::handle<Storage_BaseDriver>& theDriver,
+Storage_Error StdStorage::Write(const occ::handle<app::storage::Storage_BaseDriver>& theDriver,
                                 const occ::handle<StdStorage_Data>&    theData)
 {
   Standard_NullObject_Raise_if(theData.IsNull(), "Null storage data");
@@ -284,7 +284,7 @@ Storage_Error StdStorage::Write(const occ::handle<Storage_BaseDriver>& theDriver
     if (anError != Storage_VSOk)
       return anError;
   }
-  catch (Storage_StreamWriteError const&)
+  catch (app::storage::Storage_StreamWriteError const&)
   {
     return Storage_VSWriteError;
   }

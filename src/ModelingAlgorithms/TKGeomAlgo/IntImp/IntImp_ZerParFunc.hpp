@@ -28,11 +28,11 @@ IntImp_ZerParFunc::IntImp_ZerParFunc(const ThePSurface& S1, const ThePSurface& S
   ub1 = ThePSurfaceTool::LastUParameter(SURF2);
   vb1 = ThePSurfaceTool::LastVParameter(SURF2);
 
-  ures1 = ThePSurfaceTool::UResolution(SURF1, Precision::Confusion());
-  vres1 = ThePSurfaceTool::VResolution(SURF1, Precision::Confusion());
+  ures1 = ThePSurfaceTool::UResolution(SURF1, math::precision::Precision::Confusion());
+  vres1 = ThePSurfaceTool::VResolution(SURF1, math::precision::Precision::Confusion());
 
-  ures2 = ThePSurfaceTool::UResolution(SURF2, Precision::Confusion());
-  vres2 = ThePSurfaceTool::VResolution(SURF2, Precision::Confusion());
+  ures2 = ThePSurfaceTool::UResolution(SURF2, math::precision::Precision::Confusion());
+  vres2 = ThePSurfaceTool::VResolution(SURF2, math::precision::Precision::Confusion());
   memset(f, 0, sizeof(f));
   compute = false;
   tangent = false;

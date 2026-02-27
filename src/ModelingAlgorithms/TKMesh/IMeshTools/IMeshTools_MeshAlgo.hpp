@@ -13,7 +13,7 @@ public:
 
   Standard_EXPORT virtual void Perform(const IMeshData::IFaceHandle& theDFace,
                                        const IMeshTools_Parameters&  theParameters,
-                                       const Message_ProgressRange&  theRange) = 0;
+                                       const System::log::Message_ProgressRange&  theRange) = 0;
 
   DEFINE_STANDARD_RTTIEXT(IMeshTools_MeshAlgo, Standard_Transient)
 

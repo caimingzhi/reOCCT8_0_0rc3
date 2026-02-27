@@ -15,27 +15,27 @@ public:
   Standard_EXPORT ~BOPAlgo_CheckerSI() override;
 
   Standard_EXPORT void Perform(
-    const Message_ProgressRange& theRange = Message_ProgressRange()) override;
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange()) override;
 
   Standard_EXPORT void SetLevelOfCheck(const int theLevel);
 
 protected:
-  Standard_EXPORT void Init(const Message_ProgressRange& theRange) override;
+  Standard_EXPORT void Init(const System::log::Message_ProgressRange& theRange) override;
 
   Standard_EXPORT void PostTreat();
 
-  Standard_EXPORT void CheckFaceSelfIntersection(const Message_ProgressRange& theRange);
+  Standard_EXPORT void CheckFaceSelfIntersection(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformVZ(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformVZ(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformEZ(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformEZ(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformFZ(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformFZ(const System::log::Message_ProgressRange& theRange);
 
-  Standard_EXPORT virtual void PerformZZ(const Message_ProgressRange& theRange);
+  Standard_EXPORT virtual void PerformZZ(const System::log::Message_ProgressRange& theRange);
 
   Standard_EXPORT virtual void PerformSZ(const TopAbs_ShapeEnum       aTS,
-                                         const Message_ProgressRange& theRange);
+                                         const System::log::Message_ProgressRange& theRange);
 
   int myLevelOfCheck;
 };

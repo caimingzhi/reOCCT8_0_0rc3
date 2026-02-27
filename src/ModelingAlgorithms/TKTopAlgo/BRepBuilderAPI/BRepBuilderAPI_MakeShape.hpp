@@ -15,7 +15,7 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT virtual void Build(
-    const Message_ProgressRange& theRange = Message_ProgressRange());
+    const System::log::Message_ProgressRange& theRange = System::log::Message_ProgressRange());
 
   Standard_EXPORT virtual const TopoDS_Shape& Shape();
   Standard_EXPORT                             operator TopoDS_Shape();
