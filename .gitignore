@@ -23,6 +23,7 @@
 !/tests/
 !/test_results/
 !/.github/
+!/add_namespaces.csv
 
 # ============================================================================
 # DEEPER LEVEL RULES (applied recursively within allowed directories above)
