@@ -57,7 +57,7 @@ bool TopOpeBRepTool_CLASSI::Add2d(const TopoDS_Shape& S)
     bool haspc = FC2D_HasCurveOnSurface(E, myFref);
     if (!haspc)
       return false;
-    BRepAdaptor_Curve2d BC2d(E, myFref);
+    ::model::adapter::BRepAdaptor_Curve2d BC2d(E, myFref);
     double              tol2d = BC2d.Resolution(tolE);
     BndLib_Add2dCurve::Add(BC2d, tol2d, B2d);
   }

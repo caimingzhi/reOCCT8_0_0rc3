@@ -91,8 +91,8 @@ void ChFi2d_FilletAlgo::Init(const TopoDS_Edge& theEdge1,
 
   myEdgesExchnged = false;
 
-  BRepAdaptor_Curve aBAC1(theEdge1);
-  BRepAdaptor_Curve aBAC2(theEdge2);
+  ::model::adapter::BRepAdaptor_Curve aBAC1(theEdge1);
+  ::model::adapter::BRepAdaptor_Curve aBAC2(theEdge2);
   if (aBAC1.GetType() < aBAC2.GetType())
   {
     myEdge1         = theEdge2;

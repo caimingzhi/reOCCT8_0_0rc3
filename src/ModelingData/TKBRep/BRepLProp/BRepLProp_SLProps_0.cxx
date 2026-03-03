@@ -8,7 +8,7 @@
 
 #include <LProp_SLProps_0.hpp>
 
-#define Surface BRepAdaptor_Surface
+#define Surface ::model::adapter::BRepAdaptor_Surface
 #define Surface_hxx <BRepAdaptor_Surface.hpp>
 #define Tool BRepLProp_SurfaceTool
 #define Tool_hxx <BRepLProp_SurfaceTool.hpp>

@@ -58,7 +58,7 @@ static void MakeWires(
   BOPAlgo_IndexedDataMapOfShapeDir&                                    theDMEdgeTgt,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&              theMEdgesNoUniquePlane);
 
-static bool FindPlane(const BRepAdaptor_Curve& theCurve, gp_Pln& thePlane);
+static bool FindPlane(const ::model::adapter::BRepAdaptor_Curve& theCurve, gp_Pln& thePlane);
 
 static bool FindPlane(
   const TopoDS_Shape&                                     theWire,
@@ -70,7 +70,7 @@ static bool FindEdgeTangent(const TopoDS_Edge&                theEdge,
                             BOPAlgo_IndexedDataMapOfShapeDir& theDMEdgeTgt,
                             gp_Dir&                           theTgt);
 
-static bool FindEdgeTangent(const BRepAdaptor_Curve& theCurve, gp_Vec& theTangent);
+static bool FindEdgeTangent(const ::model::adapter::BRepAdaptor_Curve& theCurve, gp_Vec& theTangent);
 
 void BOPAlgo_Tools::FillMap(
   const occ::handle<BOPDS_PaveBlock>&                                              aPB,
@@ -394,7 +394,7 @@ int BOPAlgo_Tools::EdgesToWires(const TopoDS_Shape& theEdges,
   for (; aExp.More(); aExp.Next())
   {
     const TopoDS_Edge& aE = TopoDS::Edge(aExp.Current());
-    BRepAdaptor_Curve  aBAC(aE);
+    ::model::adapter::BRepAdaptor_Curve  aBAC(aE);
 
     gp_Pln aPln;
     if (FindPlane(aBAC, aPln))
@@ -767,7 +767,7 @@ bool FindEdgeTangent(const TopoDS_Edge&                theEdge,
   if (!pDTE)
   {
     gp_Vec            aVTE;
-    BRepAdaptor_Curve aBAC(theEdge);
+    ::model::adapter::BRepAdaptor_Curve aBAC(theEdge);
     if (!FindEdgeTangent(aBAC, aVTE))
     {
       return false;
@@ -778,7 +778,7 @@ bool FindEdgeTangent(const TopoDS_Edge&                theEdge,
   return true;
 }
 
-bool FindEdgeTangent(const BRepAdaptor_Curve& theCurve, gp_Vec& theTangent)
+bool FindEdgeTangent(const ::model::adapter::BRepAdaptor_Curve& theCurve, gp_Vec& theTangent)
 {
   if (!theCurve.Is3DCurve())
   {
@@ -808,7 +808,7 @@ bool FindEdgeTangent(const BRepAdaptor_Curve& theCurve, gp_Vec& theTangent)
   return false;
 }
 
-bool FindPlane(const BRepAdaptor_Curve& theCurve, gp_Pln& thePlane)
+bool FindPlane(const ::model::adapter::BRepAdaptor_Curve& theCurve, gp_Pln& thePlane)
 {
   if (!theCurve.Is3DCurve())
   {
@@ -928,7 +928,7 @@ bool FindPlane(const TopoDS_Shape&                                     theWire,
     {
       continue;
     }
-    BRepAdaptor_Curve aBAC(aE);
+    ::model::adapter::BRepAdaptor_Curve aBAC(aE);
     if (FindPlane(aBAC, thePlane))
     {
       return true;

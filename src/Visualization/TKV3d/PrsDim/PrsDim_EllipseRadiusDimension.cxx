@@ -87,7 +87,7 @@ void PrsDim_EllipseRadiusDimension::ComputeCylFaceGeometry(
   const double                     Offset)
 {
 
-  BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
+  ::model::adapter::BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
   double              vFirst, vLast;
   vFirst      = surf1.FirstVParameter();
   vLast       = surf1.LastVParameter();
@@ -195,7 +195,7 @@ void PrsDim_EllipseRadiusDimension::ComputePlanarFaceGeometry()
   else
     myIsAnArc = false;
 
-  BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
+  ::model::adapter::BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
   myPlane = new Geom_Plane(surfAlgo.Plane());
 }
 

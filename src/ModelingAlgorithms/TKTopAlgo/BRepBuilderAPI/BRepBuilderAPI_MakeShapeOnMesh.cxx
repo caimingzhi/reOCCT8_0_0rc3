@@ -173,8 +173,8 @@ void BRepBuilderAPI_MakeShapeOnMesh::Build(const System::log::Message_ProgressRa
     aWireMaker.Add(aTEdge3);
     const TopoDS_Wire aWire = aWireMaker.Wire();
 
-    BRepAdaptor_Curve aC1(aTEdge1);
-    BRepAdaptor_Curve aC2(aTEdge2);
+    ::model::adapter::BRepAdaptor_Curve aC1(aTEdge1);
+    ::model::adapter::BRepAdaptor_Curve aC2(aTEdge2);
     const gp_Dir      aD1 = aC1.Line().Direction();
     const gp_Dir      aD2 = aC2.Line().Direction();
     gp_XYZ            aN  = aD1.XYZ().Crossed(aD2.XYZ());

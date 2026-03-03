@@ -38,8 +38,8 @@ extern bool TopOpeBRep_GettraceCONIC();
 #endif
 
 static void FUN_ALINETOWLINE(const occ::handle<IntPatch_ALine>&                AL,
-                             const occ::handle<BRepAdaptor_Surface>&           surf1,
-                             const occ::handle<BRepAdaptor_Surface>&           surf2,
+                             const occ::handle<::model::adapter::BRepAdaptor_Surface>&           surf1,
+                             const occ::handle<::model::adapter::BRepAdaptor_Surface>&           surf2,
                              NCollection_Sequence<occ::handle<IntPatch_Line>>& theLines)
 {
   int nbpointsmax = 200;
@@ -54,8 +54,8 @@ static void FUN_ALINETOWLINE(const occ::handle<IntPatch_ALine>&                A
 }
 
 void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
-                                   const BRepAdaptor_Surface&        S1,
-                                   const BRepAdaptor_Surface&        S2)
+                                   const ::model::adapter::BRepAdaptor_Surface&        S1,
+                                   const ::model::adapter::BRepAdaptor_Surface&        S2)
 {
 
   myIL                = L;
@@ -111,7 +111,7 @@ void TopOpeBRep_LineInter::SetLine(const occ::handle<IntPatch_Line>& L,
   if (myTypeLineCurve == TopOpeBRep_ANALYTIC)
   {
     NCollection_Sequence<occ::handle<IntPatch_Line>> aSLin;
-    FUN_ALINETOWLINE(myILA, new BRepAdaptor_Surface(S1), new BRepAdaptor_Surface(S2), aSLin);
+    FUN_ALINETOWLINE(myILA, new ::model::adapter::BRepAdaptor_Surface(S1), new ::model::adapter::BRepAdaptor_Surface(S2), aSLin);
 
     if (aSLin.Length() > 0)
       myILW = occ::down_cast<IntPatch_WLine>(aSLin.Value(1));
@@ -464,14 +464,14 @@ const TopoDS_Shape& TopOpeBRep_LineInter::Arc() const
     if (myILR->IsArcOnS1())
     {
       const occ::handle<Adaptor2d_Curve2d>& AHC2D = myILR->ArcOnS1();
-      const BRepAdaptor_Curve2d&            BC2DP = *((BRepAdaptor_Curve2d*)AHC2D.get());
+      const ::model::adapter::BRepAdaptor_Curve2d&            BC2DP = *((::model::adapter::BRepAdaptor_Curve2d*)AHC2D.get());
       const TopoDS_Shape&                   S     = BC2DP.Edge();
       return S;
     }
     else
     {
       const occ::handle<Adaptor2d_Curve2d>& AHC2D = myILR->ArcOnS2();
-      const BRepAdaptor_Curve2d&            BC2DP = *((BRepAdaptor_Curve2d*)AHC2D.get());
+      const ::model::adapter::BRepAdaptor_Curve2d&            BC2DP = *((::model::adapter::BRepAdaptor_Curve2d*)AHC2D.get());
       const TopoDS_Shape&                   S     = BC2DP.Edge();
       return S;
     }

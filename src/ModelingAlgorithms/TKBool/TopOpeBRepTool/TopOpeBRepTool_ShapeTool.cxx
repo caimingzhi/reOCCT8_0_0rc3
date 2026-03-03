@@ -356,10 +356,10 @@ bool TopOpeBRepTool_ShapeTool::ShapesSameOriented(const TopoDS_Shape& S1, const 
   return so;
 }
 
-bool TopOpeBRepTool_ShapeTool::SurfacesSameOriented(const BRepAdaptor_Surface& S1,
-                                                    const BRepAdaptor_Surface& Sref)
+bool TopOpeBRepTool_ShapeTool::SurfacesSameOriented(const ::model::adapter::BRepAdaptor_Surface& S1,
+                                                    const ::model::adapter::BRepAdaptor_Surface& Sref)
 {
-  const BRepAdaptor_Surface& S2  = Sref;
+  const ::model::adapter::BRepAdaptor_Surface& S2  = Sref;
   GeomAbs_SurfaceType        ST1 = S1.GetType();
   GeomAbs_SurfaceType        ST2 = S2.GetType();
 
@@ -442,8 +442,8 @@ bool TopOpeBRepTool_ShapeTool::FacesSameOriented(const TopoDS_Shape& S1, const T
   }
 
   bool                computerestriction = false;
-  BRepAdaptor_Surface BAS1(F1, computerestriction);
-  BRepAdaptor_Surface BAS2(F2, computerestriction);
+  ::model::adapter::BRepAdaptor_Surface BAS1(F1, computerestriction);
+  ::model::adapter::BRepAdaptor_Surface BAS2(F2, computerestriction);
   bool                so = F1.IsSame(F2) || SurfacesSameOriented(BAS1, BAS2);
   bool                b  = so;
   if (o1 != o2)
@@ -451,10 +451,10 @@ bool TopOpeBRepTool_ShapeTool::FacesSameOriented(const TopoDS_Shape& S1, const T
   return b;
 }
 
-bool TopOpeBRepTool_ShapeTool::CurvesSameOriented(const BRepAdaptor_Curve& C1,
-                                                  const BRepAdaptor_Curve& Cref)
+bool TopOpeBRepTool_ShapeTool::CurvesSameOriented(const ::model::adapter::BRepAdaptor_Curve& C1,
+                                                  const ::model::adapter::BRepAdaptor_Curve& Cref)
 {
-  const BRepAdaptor_Curve& C2  = Cref;
+  const ::model::adapter::BRepAdaptor_Curve& C2  = Cref;
   GeomAbs_CurveType        CT1 = C1.GetType();
   GeomAbs_CurveType        CT2 = C2.GetType();
   bool                     so  = true;
@@ -499,8 +499,8 @@ bool TopOpeBRepTool_ShapeTool::EdgesSameOriented(const TopoDS_Shape& S1, const T
   {
     return true;
   }
-  BRepAdaptor_Curve BAC1(E1);
-  BRepAdaptor_Curve BAC2(E2);
+  ::model::adapter::BRepAdaptor_Curve BAC1(E1);
+  ::model::adapter::BRepAdaptor_Curve BAC2(E2);
   bool              so = CurvesSameOriented(BAC1, BAC2);
   bool              b  = so;
   if (o1 != o2)
@@ -508,7 +508,7 @@ bool TopOpeBRepTool_ShapeTool::EdgesSameOriented(const TopoDS_Shape& S1, const T
   return b;
 }
 
-double TopOpeBRepTool_ShapeTool::EdgeData(const BRepAdaptor_Curve& BAC,
+double TopOpeBRepTool_ShapeTool::EdgeData(const ::model::adapter::BRepAdaptor_Curve& BAC,
                                           const double             P,
                                           gp_Dir&                  T,
                                           gp_Dir&                  N,
@@ -517,7 +517,7 @@ double TopOpeBRepTool_ShapeTool::EdgeData(const BRepAdaptor_Curve& BAC,
 {
   double tol = math::precision::Precision::Angular();
 
-  BRepLProp_CLProps BL(BAC, P, 2, tol);
+  ::model::localproperties::BRepLProp_CLProps BL(BAC, P, 2, tol);
   BL.Tangent(T);
   C = BL.Curvature();
 
@@ -536,7 +536,7 @@ double TopOpeBRepTool_ShapeTool::EdgeData(const TopoDS_Shape& E,
                                           gp_Dir&             N,
                                           double&             C)
 {
-  BRepAdaptor_Curve BAC(TopoDS::Edge(E));
+  ::model::adapter::BRepAdaptor_Curve BAC(TopoDS::Edge(E));
   double            d = EdgeData(BAC, P, T, N, C);
   return d;
 }

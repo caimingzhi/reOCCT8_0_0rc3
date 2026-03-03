@@ -24,7 +24,7 @@ void VrmlConverter_HLRShape::Add(Standard_OStream&                           anO
   int               NbEdge = Tool.NbEdges();
   int               i;
   double            U1, U2;
-  BRepAdaptor_Curve TheCurve;
+  ::model::adapter::BRepAdaptor_Curve TheCurve;
 
   double theRequestedDeflection;
   if (aDrawer->TypeOfDeflection() == Aspect_TOD_RELATIVE)

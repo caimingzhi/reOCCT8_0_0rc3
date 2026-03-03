@@ -16,7 +16,7 @@ TEST(BRepAdaptor_CompCurve_Test, OCC5696_EdgeMethod)
 
   TopoDS_Wire aWire = BRepBuilderAPI_MakeWire(anEdge);
 
-  BRepAdaptor_CompCurve aCurve(aWire);
+  ::model::adapter::BRepAdaptor_CompCurve aCurve(aWire);
 
   double aFirst = aCurve.FirstParameter();
   double aLast  = aCurve.LastParameter();

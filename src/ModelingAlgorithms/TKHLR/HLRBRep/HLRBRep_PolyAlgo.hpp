@@ -544,7 +544,7 @@ private:
   double                                                        myTolEnd;
   double                                                        myTolAngular;
   occ::handle<Geom_Surface>                                     myGSurf;
-  BRepAdaptor_Surface                                           myBSurf;
-  BRepAdaptor_Curve                                             myBCurv;
-  BRepAdaptor_Curve2d                                           myPC;
+  ::model::adapter::BRepAdaptor_Surface                                           myBSurf;
+  ::model::adapter::BRepAdaptor_Curve                                             myBCurv;
+  ::model::adapter::BRepAdaptor_Curve2d                                           myPC;
 };

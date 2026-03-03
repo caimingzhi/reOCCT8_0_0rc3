@@ -375,8 +375,8 @@ static int projpcurve(Draw_Interpretor& di, int argc, const char** argv)
   }
 
   Adaptor3d_CurveOnSurface aCOnS =
-    Adaptor3d_CurveOnSurface(new BRepAdaptor_Curve2d(BRepAdaptor_Curve2d(aEdge, aFace)),
-                             new BRepAdaptor_Surface(BRepAdaptor_Surface(aFace, false)));
+    Adaptor3d_CurveOnSurface(new ::model::adapter::BRepAdaptor_Curve2d(::model::adapter::BRepAdaptor_Curve2d(aEdge, aFace)),
+                             new ::model::adapter::BRepAdaptor_Surface(::model::adapter::BRepAdaptor_Surface(aFace, false)));
 
   gp_Pnt              aPnt;
   double              aParam;

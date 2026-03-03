@@ -6,7 +6,10 @@
 #include <TopoDS_Edge.hpp>
 #include <Precision.hpp>
 
+namespace model { namespace adapter {
 class BRepAdaptor_Curve;
+}} // namespace model::adapter
+
 class gp_Pnt2d;
 class BRepMesh_DefaultRangeSplitter;
 
@@ -26,7 +29,7 @@ public:
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT BRepMesh_GeomTool(const BRepAdaptor_Curve& theCurve,
+  Standard_EXPORT BRepMesh_GeomTool(const ::model::adapter::BRepAdaptor_Curve& theCurve,
                                     const double             theFirstParam,
                                     const double             theLastParam,
                                     const double             theLinDeflection,
@@ -34,7 +37,7 @@ public:
                                     const int                theMinPointsNb = 2,
                                     const double             theMinSize = math::precision::Precision::Confusion());
 
-  Standard_EXPORT BRepMesh_GeomTool(const occ::handle<BRepAdaptor_Surface>& theSurface,
+  Standard_EXPORT BRepMesh_GeomTool(const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                                     const GeomAbs_IsoType                   theIsoType,
                                     const double                            theParamIso,
                                     const double                            theFirstParam,
@@ -58,13 +61,13 @@ public:
                              gp_Pnt2d&    theUV) const;
 
   Standard_EXPORT bool Value(const int                               theIndex,
-                             const occ::handle<BRepAdaptor_Surface>& theSurface,
+                             const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                              double&                                 theParam,
                              gp_Pnt&                                 thePoint,
                              gp_Pnt2d&                               theUV) const;
 
 public:
-  Standard_EXPORT static bool Normal(const occ::handle<BRepAdaptor_Surface>& theSurface,
+  Standard_EXPORT static bool Normal(const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                                      const double                            theParamU,
                                      const double                            theParamV,
                                      gp_Pnt&                                 thePoint,

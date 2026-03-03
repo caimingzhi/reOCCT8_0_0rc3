@@ -50,7 +50,7 @@ public:
 
   Standard_EXPORT Geom2dHatch_Hatcher& Hatcher(const TopoDS_Face& aF);
 
-  Standard_EXPORT BRepAdaptor_Surface& SurfaceAdaptor(const TopoDS_Face& theFace);
+  Standard_EXPORT ::model::adapter::BRepAdaptor_Surface& SurfaceAdaptor(const TopoDS_Face& theFace);
 
   Standard_EXPORT Bnd_OBB& OBB(const TopoDS_Shape& theShape,
                                const double        theFuzzyValue = math::precision::Precision::Confusion());
@@ -145,7 +145,7 @@ protected:
   NCollection_DataMap<TopoDS_Shape, IntTools_SurfaceRangeLocalizeData*, TopTools_ShapeMapHasher>
                                                                                    myProjSDataMap;
   NCollection_DataMap<TopoDS_Shape, Bnd_Box*, TopTools_ShapeMapHasher>             myBndBoxDataMap;
-  NCollection_DataMap<TopoDS_Shape, BRepAdaptor_Surface*, TopTools_ShapeMapHasher> mySurfAdaptorMap;
+  NCollection_DataMap<TopoDS_Shape, ::model::adapter::BRepAdaptor_Surface*, TopTools_ShapeMapHasher> mySurfAdaptorMap;
 
   NCollection_DataMap<TopoDS_Shape, Bnd_OBB*, TopTools_ShapeMapHasher> myOBBMap;
 

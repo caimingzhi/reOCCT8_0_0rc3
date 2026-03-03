@@ -142,7 +142,7 @@ void BRepFill_SectionPlacement::Perform(const bool          WithContact,
   }
 
   GeomFill_SectionPlacement          aSectionPlacement(myLaw->Law(1), aSection);
-  occ::handle<BRepAdaptor_CompCurve> aWireAdaptor = new BRepAdaptor_CompCurve(myLaw->Wire());
+  occ::handle<::model::adapter::BRepAdaptor_CompCurve> aWireAdaptor = new ::model::adapter::BRepAdaptor_CompCurve(myLaw->Wire());
   aSectionPlacement.Perform(aWireAdaptor, math::precision::Precision::Confusion());
 
   const double     aSectionParam   = aSectionPlacement.ParameterOnPath();

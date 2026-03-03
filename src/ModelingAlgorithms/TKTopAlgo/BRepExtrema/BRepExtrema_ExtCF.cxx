@@ -15,11 +15,11 @@ BRepExtrema_ExtCF::BRepExtrema_ExtCF(const TopoDS_Edge& E, const TopoDS_Face& F)
 
 void BRepExtrema_ExtCF::Initialize(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
-  BRepAdaptor_Surface Surf(F);
+  ::model::adapter::BRepAdaptor_Surface Surf(F);
   if (Surf.GetType() == GeomAbs_OtherSurface || !BRep_Tool::IsGeometric(E))
     return;
-  BRepAdaptor_Curve aC(E);
-  myHS = new BRepAdaptor_Surface(Surf);
+  ::model::adapter::BRepAdaptor_Curve aC(E);
+  myHS = new ::model::adapter::BRepAdaptor_Surface(Surf);
   double aTolC, aTolS;
 
   aTolS = std::min(BRep_Tool::Tolerance(F), math::precision::Precision::Confusion());
@@ -47,8 +47,8 @@ void BRepExtrema_ExtCF::Perform(const TopoDS_Edge& E, const TopoDS_Face& F2)
   double U1, U2;
   BRep_Tool::Range(E, U1, U2);
 
-  BRepAdaptor_Curve              Curv(E);
-  occ::handle<BRepAdaptor_Curve> HC = new BRepAdaptor_Curve(Curv);
+  ::model::adapter::BRepAdaptor_Curve              Curv(E);
+  occ::handle<::model::adapter::BRepAdaptor_Curve> HC = new ::model::adapter::BRepAdaptor_Curve(Curv);
   myExtCS.Perform(*HC, U1, U2);
 
   if (!myExtCS.IsDone())

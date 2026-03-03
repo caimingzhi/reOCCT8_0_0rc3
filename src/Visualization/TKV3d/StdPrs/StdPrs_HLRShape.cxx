@@ -31,7 +31,7 @@ void StdPrs_HLRShape::ComputeHLR(const occ::handle<Prs3d_Presentation>& thePrese
   int                          aNbEdges = aTool.NbEdges();
   int                          anI;
   double                       anU1, anU2;
-  BRepAdaptor_Curve            aCurve;
+  ::model::adapter::BRepAdaptor_Curve            aCurve;
   double                       aDeviation = theDrawer->MaximalChordialDeviation();
   occ::handle<Graphic3d_Group> aGroup     = thePresentation->CurrentGroup();
 

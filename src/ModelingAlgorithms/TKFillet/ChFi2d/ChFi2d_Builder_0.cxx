@@ -389,7 +389,7 @@ TopoDS_Vertex ChFi2d_Builder::RemoveChamfer(const TopoDS_Edge& Chamfer)
     Ex.Next();
   }
 
-  BRepAdaptor_Surface Adaptor3dSurface(refFace);
+  ::model::adapter::BRepAdaptor_Surface Adaptor3dSurface(refFace);
   BRepLib_MakeFace    mFace(Adaptor3dSurface.Plane(), newWire);
   newFace.Nullify();
   newFace = mFace;
@@ -479,7 +479,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
   gp_Pnt p  = BRep_Tool::Pnt(V);
   gp_Vec myVec(p1, p);
 
-  BRepAdaptor_Curve c(AdjEdge2, refFace);
+  ::model::adapter::BRepAdaptor_Curve c(AdjEdge2, refFace);
   double            first, last;
   first = c.FirstParameter();
   last  = c.LastParameter();
@@ -549,7 +549,7 @@ TopoDS_Edge ChFi2d_Builder::BuildChamferEdge(const TopoDS_Vertex& V,
 gp_Pnt ComputePoint(const TopoDS_Vertex& V, const TopoDS_Edge& E, const double D, double& Param)
 {
 
-  BRepAdaptor_Curve c(E);
+  ::model::adapter::BRepAdaptor_Curve c(E);
   double            first, last;
   first = c.FirstParameter();
   last  = c.LastParameter();
@@ -642,7 +642,7 @@ gp_Pnt ComputePoint(const TopoDS_Face&            F,
                     const TopoDS_Edge&            E,
                     double&                       Param)
 {
-  BRepAdaptor_Surface       Adaptor3dSurface(F);
+  ::model::adapter::BRepAdaptor_Surface       Adaptor3dSurface(F);
   occ::handle<Geom_Plane>   refSurf = new Geom_Plane(Adaptor3dSurface.Plane());
   occ::handle<Geom2d_Curve> lin2d   = GeomAPI::To2d(L, refSurf->Pln());
   occ::handle<Geom2d_Curve> c2d;

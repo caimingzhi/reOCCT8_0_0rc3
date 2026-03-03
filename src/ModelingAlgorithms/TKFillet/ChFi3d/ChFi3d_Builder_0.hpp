@@ -96,10 +96,10 @@ ChFiDS_State ChFi3d_EdgeState(TopoDS_Edge* E, const ChFiDS_Map& EFMap);
 
 bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
                         const int                        IE,
-                        const BRepAdaptor_Surface&       S1,
-                        const BRepAdaptor_Surface&       S2);
+                        const ::model::adapter::BRepAdaptor_Surface&       S1,
+                        const ::model::adapter::BRepAdaptor_Surface&       S2);
 
-void ChFi3d_BoundFac(BRepAdaptor_Surface& S,
+void ChFi3d_BoundFac(::model::adapter::BRepAdaptor_Surface& S,
                      const double         umin,
                      const double         umax,
                      const double         vmin,
@@ -445,7 +445,7 @@ Standard_EXPORT void ChFi3d_PerformElSpine(occ::handle<ChFiDS_ElSpine>& HES,
                                            const bool                   IsOffset = false);
 
 TopoDS_Face ChFi3d_EnlargeFace(const occ::handle<ChFiDS_Spine>&        Spine,
-                               const occ::handle<BRepAdaptor_Surface>& HS,
+                               const occ::handle<::model::adapter::BRepAdaptor_Surface>& HS,
                                const double                            Tol);
 
 void ChFi3d_cherche_face1(const NCollection_List<TopoDS_Shape>& map,

@@ -10,8 +10,14 @@ class Geom_Curve;
 class TopoDS_Edge;
 class Geom_Surface;
 class TopoDS_Face;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
+namespace model { namespace adapter {
 class BRepAdaptor_Curve;
+}} // namespace model::adapter
+
 class gp_Dir;
 
 class TopOpeBRepTool_ShapeTool
@@ -57,17 +63,17 @@ public:
 
   Standard_EXPORT static bool ShapesSameOriented(const TopoDS_Shape& S1, const TopoDS_Shape& S2);
 
-  Standard_EXPORT static bool SurfacesSameOriented(const BRepAdaptor_Surface& S1,
-                                                   const BRepAdaptor_Surface& S2);
+  Standard_EXPORT static bool SurfacesSameOriented(const ::model::adapter::BRepAdaptor_Surface& S1,
+                                                   const ::model::adapter::BRepAdaptor_Surface& S2);
 
   Standard_EXPORT static bool FacesSameOriented(const TopoDS_Shape& F1, const TopoDS_Shape& F2);
 
-  Standard_EXPORT static bool CurvesSameOriented(const BRepAdaptor_Curve& C1,
-                                                 const BRepAdaptor_Curve& C2);
+  Standard_EXPORT static bool CurvesSameOriented(const ::model::adapter::BRepAdaptor_Curve& C1,
+                                                 const ::model::adapter::BRepAdaptor_Curve& C2);
 
   Standard_EXPORT static bool EdgesSameOriented(const TopoDS_Shape& E1, const TopoDS_Shape& E2);
 
-  Standard_EXPORT static double EdgeData(const BRepAdaptor_Curve& BRAC,
+  Standard_EXPORT static double EdgeData(const ::model::adapter::BRepAdaptor_Curve& BRAC,
                                          const double             P,
                                          gp_Dir&                  T,
                                          gp_Dir&                  N,

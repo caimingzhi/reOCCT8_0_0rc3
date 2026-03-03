@@ -2040,7 +2040,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
         if (BRep_Tool::Degenerated(anEdge))
         {
 
-          BRepAdaptor_Curve BACurve(anEdge, aFace);
+          ::model::adapter::BRepAdaptor_Curve BACurve(anEdge, aFace);
           gp_Pnt            Pfirst, Plast, Pmid;
           Pfirst = BACurve.Value(BACurve.FirstParameter());
           Plast  = BACurve.Value(BACurve.LastParameter());
@@ -2158,7 +2158,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
       BRepLib::SameParameter(CurEdge);
       BB.Add(SphereWire, CurEdge);
 
-      BRepAdaptor_Curve2d BAc2d(CurEdge, aFace);
+      ::model::adapter::BRepAdaptor_Curve2d BAc2d(CurEdge, aFace);
       gp_Pnt2d            fPnt2d, lPnt2d;
       fPnt2d = BAc2d.Value(BAc2d.FirstParameter());
       lPnt2d = BAc2d.Value(BAc2d.LastParameter());
@@ -2184,7 +2184,7 @@ void BRepOffset_MakeOffset::CorrectConicalFaces()
         Eforward.Free(true);
         TopoDS_Vertex V1, V2;
         TopExp::Vertices(Eforward, V1, V2);
-        BRepAdaptor_Curve2d EEc(Eforward, aFace);
+        ::model::adapter::BRepAdaptor_Curve2d EEc(Eforward, aFace);
         gp_Pnt2d            p2d1, p2d2;
         p2d1 = EEc.Value(EEc.FirstParameter());
         p2d2 = EEc.Value(EEc.LastParameter());
@@ -2808,8 +2808,8 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const System::log::Message_Progress
       theWire.Closed(true);
       TopoDS_Face               NewFace;
       occ::handle<Geom_Surface> theSurf;
-      BRepAdaptor_Curve         BAcurve(anEdge);
-      BRepAdaptor_Curve         BAcurveOE(OE);
+      ::model::adapter::BRepAdaptor_Curve         BAcurve(anEdge);
+      ::model::adapter::BRepAdaptor_Curve         BAcurveOE(OE);
       double                    fpar      = BAcurve.FirstParameter();
       double                    lpar      = BAcurve.LastParameter();
       gp_Pnt                    PonE      = BAcurve.Value(fpar);
@@ -3448,7 +3448,7 @@ void BRepOffset_MakeOffset::EncodeRegularity()
 
         if (myJoin == GeomAbs_Intersection)
         {
-          BRepAdaptor_Surface BS(F1, false);
+          ::model::adapter::BRepAdaptor_Surface BS(F1, false);
           GeomAbs_SurfaceType SType = BS.GetType();
           if (SType == GeomAbs_Cylinder || SType == GeomAbs_Cone || SType == GeomAbs_Sphere
               || SType == GeomAbs_Torus)
@@ -3640,7 +3640,7 @@ void UpdateTolerance(TopoDS_Shape&                                              
     {
       continue;
     }
-    BRepAdaptor_Surface aBAS(TopoDS::Face(F), false);
+    ::model::adapter::BRepAdaptor_Surface aBAS(TopoDS::Face(F), false);
     TopExp_Explorer     Exp;
     for (Exp.Init(F, TopAbs_EDGE); Exp.More(); Exp.Next())
     {
@@ -4241,7 +4241,7 @@ bool TrimEdges(
         else
         {
           TopoDS_Edge&      anEdge = TopoDS::Edge(NE);
-          BRepAdaptor_Curve aBAC(anEdge);
+          ::model::adapter::BRepAdaptor_Curve aBAC(anEdge);
           if (aBAC.GetType() == GeomAbs_Line)
           {
             TopoDS_Edge aNewEdge;
@@ -4342,7 +4342,7 @@ bool TrimEdge(
 
   if (!bTrim)
   {
-    BRepAdaptor_Curve aBAC(NE);
+    ::model::adapter::BRepAdaptor_Curve aBAC(NE);
     if (aBAC.GetType() == GeomAbs_Line)
     {
       if (AsDes->HasAscendant(NE))
@@ -4720,7 +4720,7 @@ bool BRepOffset_MakeOffset::IsPlanar()
   for (; aExp.More(); aExp.Next())
   {
     const TopoDS_Face&  aF = *(TopoDS_Face*)&aExp.Current();
-    BRepAdaptor_Surface aBAS(aF, false);
+    ::model::adapter::BRepAdaptor_Surface aBAS(aF, false);
     if (aBAS.GetType() == GeomAbs_Plane)
       continue;
 

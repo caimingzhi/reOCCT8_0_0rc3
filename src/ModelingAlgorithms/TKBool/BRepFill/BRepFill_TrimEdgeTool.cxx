@@ -492,7 +492,7 @@ void BRepFill_TrimEdgeTool::IntersectWith(const TopoDS_Edge&            Edge1,
       if (V2.IsSame(End1) || V2.IsSame(End2))
         ToExtendLastPar = false;
     }
-    BRepAdaptor_Curve IC1(InitEdge1);
+    ::model::adapter::BRepAdaptor_Curve IC1(InitEdge1);
     if (IC1.GetType() == GeomAbs_Circle)
     {
       double Delta = 2 * M_PI - IC1.LastParameter() + IC1.FirstParameter();

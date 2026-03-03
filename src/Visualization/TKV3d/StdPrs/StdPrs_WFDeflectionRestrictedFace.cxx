@@ -71,7 +71,7 @@ static void FindLimits(const Adaptor3d_Curve& aCurve,
 
 void StdPrs_WFDeflectionRestrictedFace::Add(
   const occ::handle<Prs3d_Presentation>&                        aPresentation,
-  const occ::handle<BRepAdaptor_Surface>&                       aFace,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>&                       aFace,
   const bool                                                    DrawUIso,
   const bool                                                    DrawVIso,
   const double                                                  Deflection,
@@ -276,7 +276,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(
   Adaptor3d_IsoCurve anIso;
   anIso.Load(aFace);
   occ::handle<Geom_Curve>    BC;
-  const BRepAdaptor_Surface& BS      = *aFace;
+  const ::model::adapter::BRepAdaptor_Surface& BS      = *aFace;
   GeomAbs_SurfaceType        thetype = aFace->GetType();
 
   occ::handle<Geom_Surface> GB;
@@ -362,7 +362,7 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
                                               const double                            Y,
                                               const double                            Z,
                                               const double                            aDistance,
-                                              const occ::handle<BRepAdaptor_Surface>& aFace,
+                                              const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                               const occ::handle<Prs3d_Drawer>&        aDrawer,
                                               const bool                              DrawUIso,
                                               const bool                              DrawVIso,
@@ -505,7 +505,7 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
 }
 
 void StdPrs_WFDeflectionRestrictedFace::Add(const occ::handle<Prs3d_Presentation>&  aPresentation,
-                                            const occ::handle<BRepAdaptor_Surface>& aFace,
+                                            const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                             const occ::handle<Prs3d_Drawer>&        aDrawer)
 {
   NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>> Curves;
@@ -522,7 +522,7 @@ void StdPrs_WFDeflectionRestrictedFace::Add(const occ::handle<Prs3d_Presentation
 
 void StdPrs_WFDeflectionRestrictedFace::AddUIso(
   const occ::handle<Prs3d_Presentation>&  aPresentation,
-  const occ::handle<BRepAdaptor_Surface>& aFace,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
   const occ::handle<Prs3d_Drawer>&        aDrawer)
 {
   NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>> Curves;
@@ -539,7 +539,7 @@ void StdPrs_WFDeflectionRestrictedFace::AddUIso(
 
 void StdPrs_WFDeflectionRestrictedFace::AddVIso(
   const occ::handle<Prs3d_Presentation>&  aPresentation,
-  const occ::handle<BRepAdaptor_Surface>& aFace,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
   const occ::handle<Prs3d_Drawer>&        aDrawer)
 {
   NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>> Curves;
@@ -558,7 +558,7 @@ bool StdPrs_WFDeflectionRestrictedFace::Match(const double                      
                                               const double                            Y,
                                               const double                            Z,
                                               const double                            aDistance,
-                                              const occ::handle<BRepAdaptor_Surface>& aFace,
+                                              const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                               const occ::handle<Prs3d_Drawer>&        aDrawer)
 {
   return StdPrs_WFDeflectionRestrictedFace::Match(X,
@@ -578,7 +578,7 @@ bool StdPrs_WFDeflectionRestrictedFace::MatchUIso(const double                  
                                                   const double                            Y,
                                                   const double                            Z,
                                                   const double                            aDistance,
-                                                  const occ::handle<BRepAdaptor_Surface>& aFace,
+                                                  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                                   const occ::handle<Prs3d_Drawer>&        aDrawer)
 {
   return StdPrs_WFDeflectionRestrictedFace::Match(X,
@@ -598,7 +598,7 @@ bool StdPrs_WFDeflectionRestrictedFace::MatchVIso(const double                  
                                                   const double                            Y,
                                                   const double                            Z,
                                                   const double                            aDistance,
-                                                  const occ::handle<BRepAdaptor_Surface>& aFace,
+                                                  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                                   const occ::handle<Prs3d_Drawer>&        aDrawer)
 {
   return StdPrs_WFDeflectionRestrictedFace::Match(X,

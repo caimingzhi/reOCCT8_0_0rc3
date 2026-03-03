@@ -83,7 +83,7 @@ protected:
                                       const NCollection_Sequence<IntTools_Range>& theRanges2,
                                       const bool                                  bSplit2);
 
-  Standard_EXPORT static bool FindParameters(const BRepAdaptor_Curve& theBAC,
+  Standard_EXPORT static bool FindParameters(const ::model::adapter::BRepAdaptor_Curve& theBAC,
                                              const double             aT1,
                                              const double             aT2,
                                              const double             theTol,
@@ -125,8 +125,8 @@ protected:
   TopoDS_Edge                              myEdge2;
   occ::handle<Geom_Curve>                  myGeom1;
   occ::handle<Geom_Curve>                  myGeom2;
-  BRepAdaptor_Curve                        myCurve1;
-  BRepAdaptor_Curve                        myCurve2;
+  ::model::adapter::BRepAdaptor_Curve                        myCurve1;
+  ::model::adapter::BRepAdaptor_Curve                        myCurve2;
   double                                   myTol1;
   double                                   myTol2;
   double                                   myTol;

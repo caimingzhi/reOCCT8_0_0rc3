@@ -33,11 +33,11 @@ public:
 
   void Projector(const HLRAlgo_Projector* Proj) { myProj = Proj; }
 
-  BRepAdaptor_Curve& Curve();
+  ::model::adapter::BRepAdaptor_Curve& Curve();
 
   Standard_EXPORT void Curve(const TopoDS_Edge& E);
 
-  const BRepAdaptor_Curve& GetCurve() const;
+  const ::model::adapter::BRepAdaptor_Curve& GetCurve() const;
 
   Standard_EXPORT double Parameter2d(const double P3d) const;
 
@@ -128,7 +128,7 @@ public:
   Standard_EXPORT void Multiplicities(NCollection_Array1<int>& mu) const;
 
 private:
-  BRepAdaptor_Curve        myCurve;
+  ::model::adapter::BRepAdaptor_Curve        myCurve;
   GeomAbs_CurveType        myType;
   const HLRAlgo_Projector* myProj;
   double                   myOX;
@@ -148,12 +148,12 @@ private:
 #include <gp_Parab2d.hpp>
 #include <HLRBRep_BCurveTool.hpp>
 
-inline BRepAdaptor_Curve& HLRBRep_Curve::Curve()
+inline ::model::adapter::BRepAdaptor_Curve& HLRBRep_Curve::Curve()
 {
   return myCurve;
 }
 
-inline const BRepAdaptor_Curve& HLRBRep_Curve::GetCurve() const
+inline const ::model::adapter::BRepAdaptor_Curve& HLRBRep_Curve::GetCurve() const
 {
   return myCurve;
 }

@@ -2063,7 +2063,7 @@ static int OCC27466(Draw_Interpretor& theDI, int theNArg, const char** theArgVal
   gp_Pnt2d aUV;
   if (!DrawTrSurf::GetPoint2d(theArgVal[3], aUV))
     return 1;
-  BRepAdaptor_Surface aSurf(aFace);
+  ::model::adapter::BRepAdaptor_Surface aSurf(aFace);
 
   constexpr double aTolU = math::precision::Precision::PConfusion();
   constexpr double aTolV = math::precision::Precision::PConfusion();
@@ -2811,7 +2811,7 @@ static int OCC29430(Draw_Interpretor& theDI, int, const char** theArgVal)
 
   DBRep::Set(theArgVal[1], circle);
 
-  BRepAdaptor_CompCurve curve(circle);
+  ::model::adapter::BRepAdaptor_CompCurve curve(circle);
   theDI << "Curve.FirstParameter() = " << curve.FirstParameter() << "\n";
   theDI << "Curve.LastParameter() = " << curve.LastParameter() << "\n";
   theDI << "Curve.Period() = " << (curve.IsPeriodic() ? curve.Period() : 0.0) << "\n";
@@ -3426,7 +3426,7 @@ static int OCC30869(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  BRepAdaptor_CompCurve aBACC(TopoDS::Wire(aWire));
+  ::model::adapter::BRepAdaptor_CompCurve aBACC(TopoDS::Wire(aWire));
 
   double aFirst = aBACC.FirstParameter();
   double aLast  = aBACC.LastParameter();

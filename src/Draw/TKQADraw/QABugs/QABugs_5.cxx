@@ -37,8 +37,8 @@ static int OCC6001(Draw_Interpretor& di, int argc, const char** argv)
       di << "incorrect 1st parameter, curve or wire expected\n";
       return 1;
     }
-    BRepAdaptor_CompCurve comp_curve(TopoDS::Wire(wire));
-    hcurve = new BRepAdaptor_CompCurve(comp_curve);
+    ::model::adapter::BRepAdaptor_CompCurve comp_curve(TopoDS::Wire(wire));
+    hcurve = new ::model::adapter::BRepAdaptor_CompCurve(comp_curve);
   }
   occ::handle<Geom_Surface>        surf  = DrawTrSurf::GetSurface(argv[3]);
   occ::handle<GeomAdaptor_Surface> hsurf = new GeomAdaptor_Surface(surf);

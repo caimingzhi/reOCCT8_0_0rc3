@@ -65,7 +65,7 @@ static void ComputeTrsf(const TopoDS_Wire& W, const gp_Dir& D, Bnd_Box& Box, gp_
 
   gp_Ax3 N(Bary, D);
   Tf.SetTransformation(N);
-  BRepAdaptor_Curve AC;
+  ::model::adapter::BRepAdaptor_Curve AC;
 
   TopoDS_Wire     TheW = W;
   TopLoc_Location Loc(Tf);
@@ -414,7 +414,7 @@ void BRepFill_Draft::BuildShell(const occ::handle<Geom_Surface>& Surf, const boo
     TopExp_Explorer ex(myShell, TopAbs_FACE);
     TopoDS_Face     F;
     F = TopoDS::Face(ex.Current());
-    BRepAdaptor_Surface SF(F);
+    ::model::adapter::BRepAdaptor_Surface SF(F);
     double              u, v;
     gp_Pnt              P;
     gp_Vec              V1, V2, V;

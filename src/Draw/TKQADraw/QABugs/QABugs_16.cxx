@@ -277,8 +277,8 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
     {
       FaceExpB.Next();
       TopoDS_Edge       EdgeC = TopoDS::Edge(FaceExpB.Current());
-      BRepAdaptor_Curve theCurveB(EdgeB);
-      BRepAdaptor_Curve theCurveC(EdgeC);
+      ::model::adapter::BRepAdaptor_Curve theCurveB(EdgeB);
+      ::model::adapter::BRepAdaptor_Curve theCurveC(EdgeC);
       A = theCurveC.Value(0.1);
       B = theCurveC.Value(0.9);
       C = theCurveB.Value(0.5);
@@ -286,7 +286,7 @@ static int OCC218bug(Draw_Interpretor& di, int argc, const char** argv)
     else
     {
 
-      BRepAdaptor_Curve theCurveB(EdgeB);
+      ::model::adapter::BRepAdaptor_Curve theCurveB(EdgeB);
       A = theCurveB.Value(0.1);
       B = theCurveB.Value(0.9);
       C = theCurveB.Value(0.5);

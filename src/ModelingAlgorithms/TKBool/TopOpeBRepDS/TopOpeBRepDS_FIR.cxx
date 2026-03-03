@@ -57,7 +57,7 @@ bool FUN_findPonF(const TopoDS_Edge&                                            
                   double&                                                         par)
 {
   bool                                                            Pok = false;
-  BRepAdaptor_Curve                                               BAC(E);
+  ::model::adapter::BRepAdaptor_Curve                                               BAC(E);
   const NCollection_List<occ::handle<TopOpeBRepDS_Interference>>& LIE = BDS.ShapeInterferences(E);
   NCollection_List<occ::handle<TopOpeBRepDS_Interference>>::Iterator itI;
   itI.Initialize(LIE);

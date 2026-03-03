@@ -3,10 +3,11 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Face.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_Curve2d, Geom2dAdaptor_Curve)
+IMPLEMENT_STANDARD_RTTIEXT(::model::adapter::BRepAdaptor_Curve2d, Geom2dAdaptor_Curve)
 
-BRepAdaptor_Curve2d::BRepAdaptor_Curve2d() = default;
+::model::adapter::BRepAdaptor_Curve2d::BRepAdaptor_Curve2d() = default;
 
+namespace model { namespace adapter {
 BRepAdaptor_Curve2d::BRepAdaptor_Curve2d(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
   Initialize(E, F);
@@ -48,3 +49,5 @@ const TopoDS_Face& BRepAdaptor_Curve2d::Face() const
 {
   return myFace;
 }
+
+}} // namespace model::adapter

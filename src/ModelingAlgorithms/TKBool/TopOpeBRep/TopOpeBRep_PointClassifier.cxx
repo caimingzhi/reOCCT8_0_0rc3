@@ -5,7 +5,7 @@
 
 TopOpeBRep_PointClassifier::TopOpeBRep_PointClassifier()
 {
-  myHSurface = new BRepAdaptor_Surface();
+  myHSurface = new ::model::adapter::BRepAdaptor_Surface();
   Init();
 }
 

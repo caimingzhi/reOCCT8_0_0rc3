@@ -15,7 +15,7 @@ BRepTopAdaptor_Tool::BRepTopAdaptor_Tool(const TopoDS_Face& F, const double)
 {
   myTopolTool = new BRepTopAdaptor_TopolTool();
 
-  occ::handle<BRepAdaptor_Surface> surface = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surface = new ::model::adapter::BRepAdaptor_Surface();
   surface->Initialize(F, true);
   const occ::handle<Adaptor3d_Surface>& aSurf = surface;
   myTopolTool->Initialize(aSurf);
@@ -34,7 +34,7 @@ BRepTopAdaptor_Tool::BRepTopAdaptor_Tool(const occ::handle<Adaptor3d_Surface>& s
 
 void BRepTopAdaptor_Tool::Init(const TopoDS_Face& F, const double)
 {
-  occ::handle<BRepAdaptor_Surface> surface = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surface = new ::model::adapter::BRepAdaptor_Surface();
   surface->Initialize(F);
   const occ::handle<Adaptor3d_Surface>& aSurf = surface;
   myTopolTool->Initialize(aSurf);

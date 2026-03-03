@@ -33,7 +33,7 @@ static bool NeedsConvertion(const TopoDS_Wire& theWire)
   for (; anIter.More(); anIter.Next())
   {
     const TopoDS_Edge& anEdge = TopoDS::Edge(anIter.Value());
-    BRepAdaptor_Curve  aBAcurve(anEdge);
+    ::model::adapter::BRepAdaptor_Curve  aBAcurve(anEdge);
     GeomAbs_CurveType  aType = aBAcurve.GetType();
     if (aType != GeomAbs_Line && aType != GeomAbs_Circle)
       return true;
@@ -234,7 +234,7 @@ static void BuildDomains(TopoDS_Face&                           myFace,
   for (itF.Initialize(Faces); itF.More(); itF.Next())
   {
     TopoDS_Face&        F = TopoDS::Face(itF.ChangeValue());
-    BRepAdaptor_Surface S(F, false);
+    ::model::adapter::BRepAdaptor_Surface S(F, false);
     double              Tol = BRep_Tool::Tolerance(F);
 
     BRepTopAdaptor_FClass2d CL(F, math::precision::Precision::Confusion());

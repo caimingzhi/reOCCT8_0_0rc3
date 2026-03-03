@@ -26,8 +26,8 @@ TopOpeBRep_Hctxee2d::TopOpeBRep_Hctxee2d() = default;
 
 void TopOpeBRep_Hctxee2d::SetEdges(const TopoDS_Edge&         E1,
                                    const TopoDS_Edge&         E2,
-                                   const BRepAdaptor_Surface& BAS1,
-                                   const BRepAdaptor_Surface& BAS2)
+                                   const ::model::adapter::BRepAdaptor_Surface& BAS1,
+                                   const ::model::adapter::BRepAdaptor_Surface& BAS2)
 {
   const TopoDS_Face&  F1  = BAS1.Face();
   GeomAbs_SurfaceType ST1 = BAS1.GetType();

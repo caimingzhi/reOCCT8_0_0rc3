@@ -60,7 +60,7 @@
 #include <TopTools_ShapeMapHasher.hpp>
 class BOPDS_PaveBlock;
 
-static double ToleranceFF(const BRepAdaptor_Surface& aBAS1, const BRepAdaptor_Surface& aBAS2);
+static double ToleranceFF(const ::model::adapter::BRepAdaptor_Surface& aBAS1, const ::model::adapter::BRepAdaptor_Surface& aBAS2);
 
 static bool IsPlaneFF(const occ::handle<Geom_Surface>& theSurface)
 {
@@ -315,8 +315,8 @@ void BOPAlgo_PaveFiller::PerformFF(const System::log::Message_ProgressRange& the
       const TopoDS_Face& aF1 = (*(TopoDS_Face*)(&myDS->Shape(nF1)));
       const TopoDS_Face& aF2 = (*(TopoDS_Face*)(&myDS->Shape(nF2)));
 
-      const BRepAdaptor_Surface& aBAS1 = myContext->SurfaceAdaptor(aF1);
-      const BRepAdaptor_Surface& aBAS2 = myContext->SurfaceAdaptor(aF2);
+      const ::model::adapter::BRepAdaptor_Surface& aBAS1 = myContext->SurfaceAdaptor(aF1);
+      const ::model::adapter::BRepAdaptor_Surface& aBAS2 = myContext->SurfaceAdaptor(aF2);
       if (aBAS1.GetType() == GeomAbs_Plane && aBAS2.GetType() == GeomAbs_Plane)
       {
 
@@ -1896,7 +1896,7 @@ bool BOPAlgo_PaveFiller::IsExistingPaveBlock(
 
         if (isVtgt1Valid)
         {
-          BRepAdaptor_Curve aBAC2(aSp);
+          ::model::adapter::BRepAdaptor_Curve aBAC2(aSp);
           if (aIC.Type() != GeomAbs_Line || aBAC2.GetType() != GeomAbs_Line)
           {
             double aTldp;
@@ -3491,7 +3491,7 @@ void BOPAlgo_PaveFiller::RemovePaveBlocks(const NCollection_Map<int>& theEdges)
   }
 }
 
-double ToleranceFF(const BRepAdaptor_Surface& aBAS1, const BRepAdaptor_Surface& aBAS2)
+double ToleranceFF(const ::model::adapter::BRepAdaptor_Surface& aBAS1, const ::model::adapter::BRepAdaptor_Surface& aBAS2)
 {
   double aTol1  = aBAS1.Tolerance();
   double aTol2  = aBAS2.Tolerance();
@@ -3789,7 +3789,7 @@ void BOPAlgo_PaveFiller::CorrectToleranceOfSE()
       }
       int                nE = aPB->Edge();
       const TopoDS_Edge& aE = TopoDS::Edge(myDS->Shape(nE));
-      BRepAdaptor_Curve  aC(aE);
+      ::model::adapter::BRepAdaptor_Curve  aC(aE);
       for (int iPave = 0; iPave < 2; ++iPave)
       {
         const BOPDS_Pave& aPave = !iPave ? aPB->Pave1() : aPB->Pave2();

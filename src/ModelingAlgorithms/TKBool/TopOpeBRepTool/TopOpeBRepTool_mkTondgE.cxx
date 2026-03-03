@@ -103,7 +103,7 @@ int TopOpeBRepTool_mkTondgE::GetAllRest(NCollection_List<TopoDS_Shape>& lEi)
 {
   lEi.Clear();
 
-  BRepAdaptor_Surface bs(myFi);
+  ::model::adapter::BRepAdaptor_Surface bs(myFi);
   double              tol3d = bs.Tolerance();
   double              tolu  = bs.UResolution(tol3d);
   double              tolv  = bs.VResolution(tol3d);

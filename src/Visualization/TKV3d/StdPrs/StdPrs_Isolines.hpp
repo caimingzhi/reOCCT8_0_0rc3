@@ -80,7 +80,7 @@ public:
     NCollection_List<occ::handle<NCollection_HSequence<gp_Pnt>>>& theVPolylines);
 
   Standard_EXPORT static void AddOnSurface(const occ::handle<Prs3d_Presentation>&  thePresentation,
-                                           const occ::handle<BRepAdaptor_Surface>& theSurface,
+                                           const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                                            const occ::handle<Prs3d_Drawer>&        theDrawer,
                                            const double                            theDeflection,
                                            const NCollection_Sequence<double>&     theUIsoParams,
@@ -121,7 +121,7 @@ public:
 
 private:
   Standard_EXPORT static void addOnSurface(
-    const occ::handle<BRepAdaptor_Surface>&                       theSurface,
+    const occ::handle<::model::adapter::BRepAdaptor_Surface>&                       theSurface,
     const occ::handle<Prs3d_Drawer>&                              theDrawer,
     const double                                                  theDeflection,
     const NCollection_Sequence<double>&                           theUIsoParams,

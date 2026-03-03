@@ -26,6 +26,7 @@ class gp_Parab;
 class Geom_BezierCurve;
 class Geom_BSplineCurve;
 
+namespace model { namespace adapter {
 class BRepAdaptor_CompCurve : public Adaptor3d_Curve
 {
   DEFINE_STANDARD_RTTIEXT(BRepAdaptor_CompCurve, Adaptor3d_Curve)
@@ -133,3 +134,5 @@ private:
   bool                                                Forward;
   bool                                                IsbyAC;
 };
+}} // namespace model::adapter
+

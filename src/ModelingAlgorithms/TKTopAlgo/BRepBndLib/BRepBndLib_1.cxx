@@ -103,7 +103,7 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
   for (anExpF.Init(theS, TopAbs_FACE); anExpF.More(); anExpF.Next())
   {
     const TopoDS_Face&        aF = TopoDS::Face(anExpF.Current());
-    const BRepAdaptor_Surface anAS(aF, false);
+    const ::model::adapter::BRepAdaptor_Surface anAS(aF, false);
 
     if (!IsPlanar(anAS.Surface()))
     {
@@ -119,7 +119,7 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
         const TopoDS_Edge& anE = TopoDS::Edge(anExpE.Current());
         if (BRep_Tool::IsGeometric(anE))
         {
-          const BRepAdaptor_Curve anAC(anE);
+          const ::model::adapter::BRepAdaptor_Curve anAC(anE);
           if (!IsLinear(anAC))
           {
             if (!theIsTriangulationUsed)
@@ -168,7 +168,7 @@ static int PointsForOBB(const TopoDS_Shape&         theS,
     const TopoDS_Edge& anE = TopoDS::Edge(anExpE.Current());
     if (BRep_Tool::IsGeometric(anE))
     {
-      const BRepAdaptor_Curve anAC(anE);
+      const ::model::adapter::BRepAdaptor_Curve anAC(anE);
       if (IsLinear(anAC))
       {
 

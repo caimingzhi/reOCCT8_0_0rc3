@@ -12,7 +12,7 @@
 #include <gp_Dir.hpp>
 #include <gp_Dir2d.hpp>
 
-#define ThePSurface BRepAdaptor_Surface
+#define ThePSurface ::model::adapter::BRepAdaptor_Surface
 #define ThePSurface_hxx <BRepAdaptor_Surface.hpp>
 #define ThePSurfaceTool BRepApprox_SurfaceTool
 #define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hpp>

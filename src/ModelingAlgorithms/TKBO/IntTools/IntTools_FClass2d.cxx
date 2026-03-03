@@ -78,7 +78,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
   Toluv = TolUV;
   Face  = aFace;
   Face.Orientation(TopAbs_FORWARD);
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(aFace, false);
 
   Tole = 0.;
@@ -130,8 +130,8 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
         return;
       }
 
-      BRepAdaptor_Curve2d C(edge, Face);
-      BRepAdaptor_Curve   C3d;
+      ::model::adapter::BRepAdaptor_Curve2d C(edge, Face);
+      ::model::adapter::BRepAdaptor_Curve   C3d;
 
       degenerated = false;
       if (BRep_Tool::Degenerated(edge) || BRep_Tool::IsClosed(edge, Face))
@@ -410,7 +410,7 @@ void IntTools_FClass2d::Init(const TopoDS_Face& aFace, const double TolUV)
               BRep_Tool::Range(edge, Face, pfbid, plbid);
               if (std::abs(plbid - pfbid) < 1.e-9)
                 continue;
-              BRepAdaptor_Curve2d           C(edge, Face);
+              ::model::adapter::BRepAdaptor_Curve2d           C(edge, Face);
               GCPnts_QuasiUniformDeflection aDiscr(C, aDiscrDefl);
               if (!aDiscr.IsDone())
                 break;
@@ -558,7 +558,7 @@ TopAbs_State IntTools_FClass2d::Perform(const gp_Pnt2d& _Puv, const bool Recadre
   double       vv      = v;
   TopAbs_State aStatus = TopAbs_UNKNOWN;
 
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(Face, false);
 
   const bool   IsUPer  = surf->IsUPeriodic();
@@ -719,7 +719,7 @@ TopAbs_State IntTools_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
   double v  = _Puv.Y();
   double uu = u, vv = v;
 
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(Face, false);
   const bool   IsUPer   = surf->IsUPeriodic();
   const bool   IsVPer   = surf->IsVPeriodic();

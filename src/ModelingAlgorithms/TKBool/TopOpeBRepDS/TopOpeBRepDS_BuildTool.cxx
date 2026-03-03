@@ -446,7 +446,7 @@ bool FUN_reversePC(const occ::handle<Geom2d_Curve>& PCnew,
 {
   gp_Pnt2d P2D;
   PCnew->D0(par2d, P2D);
-  BRepAdaptor_Surface BAS(F, false);
+  ::model::adapter::BRepAdaptor_Surface BAS(F, false);
   gp_Pnt              P3D        = BAS.Value(P2D.X(), P2D.Y());
   bool                PCreversed = false;
   bool                sam        = P3D.IsEqual(P3DC3D, tol);

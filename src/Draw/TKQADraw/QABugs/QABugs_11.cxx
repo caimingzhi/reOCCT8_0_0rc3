@@ -211,7 +211,7 @@ static int BUC60610(Draw_Interpretor& di, int argc, const char** argv)
   for (; ex.More(); ex.Next())
   {
     const TopoDS_Edge&       E = TopoDS::Edge(ex.Current());
-    BRepAdaptor_Curve        aCurve(E);
+    ::model::adapter::BRepAdaptor_Curve        aCurve(E);
     GCPnts_UniformDeflection plin(aCurve, 0.1);
     di << "Num points = " << plin.NbPoints() << "\n";
     if (argc > 2)
@@ -1705,7 +1705,7 @@ static int OCC5739_UniAbs(Draw_Interpretor& di, int argc, const char** argv)
       di << argv[0] << " Faulty : incorrect 1st parameter, curve or wire expected\n";
       return 1;
     }
-    adapCurve = new BRepAdaptor_CompCurve(TopoDS::Wire(wire));
+    adapCurve = new ::model::adapter::BRepAdaptor_CompCurve(TopoDS::Wire(wire));
   }
   double                 step = Draw::Atof(argv[3]);
   GCPnts_UniformAbscissa aUni(*adapCurve, step);
@@ -1789,13 +1789,13 @@ static int OCC5698(Draw_Interpretor& di, int argc, const char** argv)
     return 1;
   TopoDS_Wire wire = TopoDS::Wire(shape);
 
-  BRepAdaptor_CompCurve curve(wire, true);
+  ::model::adapter::BRepAdaptor_CompCurve curve(wire, true);
   double                length      = curve.LastParameter();
   double                need_length = length / 2;
   gp_Pnt                pnt;
   curve.D0(need_length, pnt);
 
-  BRepAdaptor_CompCurve check_curve(wire);
+  ::model::adapter::BRepAdaptor_CompCurve check_curve(wire);
   double                check_par = GCPnts_AbscissaPoint(check_curve, need_length, 0).Parameter();
   gp_Pnt                check_pnt;
   check_curve.D0(check_par, check_pnt);

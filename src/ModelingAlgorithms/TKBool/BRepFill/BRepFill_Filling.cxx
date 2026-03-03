@@ -237,7 +237,7 @@ int BRepFill_Filling::Add(const double        U,
                           const TopoDS_Face&  Support,
                           const GeomAbs_Shape Order)
 {
-  occ::handle<BRepAdaptor_Surface> HSurf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HSurf = new ::model::adapter::BRepAdaptor_Surface();
   HSurf->Initialize(Support);
   occ::handle<GeomPlate_PointConstraint> aPC =
     new GeomPlate_PointConstraint(U,
@@ -271,7 +271,7 @@ void BRepFill_Filling::AddConstraints(
     {
       if (CurOrder == GeomAbs_C0)
       {
-        occ::handle<BRepAdaptor_Curve> HCurve = new BRepAdaptor_Curve();
+        occ::handle<::model::adapter::BRepAdaptor_Curve> HCurve = new ::model::adapter::BRepAdaptor_Curve();
         HCurve->Initialize(CurEdge);
         const occ::handle<Adaptor3d_Curve>& aHCurve = HCurve;
         Constr = new BRepFill_CurveConstraint(aHCurve, CurOrder, myNbPtsOnCur, myTol3d);
@@ -308,9 +308,9 @@ void BRepFill_Filling::AddConstraints(
     }
     else
     {
-      occ::handle<BRepAdaptor_Surface> Surf = new BRepAdaptor_Surface();
+      occ::handle<::model::adapter::BRepAdaptor_Surface> Surf = new ::model::adapter::BRepAdaptor_Surface();
       Surf->Initialize(CurFace);
-      occ::handle<BRepAdaptor_Curve2d> Curve2d = new BRepAdaptor_Curve2d();
+      occ::handle<::model::adapter::BRepAdaptor_Curve2d> Curve2d = new ::model::adapter::BRepAdaptor_Curve2d();
       Curve2d->Initialize(CurEdge, CurFace);
 
       Adaptor3d_CurveOnSurface              CurvOnSurf(Curve2d, Surf);
@@ -532,7 +532,7 @@ void BRepFill_Filling::Build()
     double                     U1, V1, U2, V2;
 
     CurFace                                = myFreeConstraints(j).myFace;
-    occ::handle<BRepAdaptor_Surface> HSurf = new BRepAdaptor_Surface();
+    occ::handle<::model::adapter::BRepAdaptor_Surface> HSurf = new ::model::adapter::BRepAdaptor_Surface();
     HSurf->Initialize(CurFace);
     occ::handle<Geom_Surface> CurSurface = BRep_Tool::Surface(HSurf->Face());
 
@@ -566,7 +566,7 @@ void BRepFill_Filling::Build()
 
   if (myIsInitFaceGiven)
   {
-    occ::handle<BRepAdaptor_Surface> HSurfInit = new BRepAdaptor_Surface();
+    occ::handle<::model::adapter::BRepAdaptor_Surface> HSurfInit = new ::model::adapter::BRepAdaptor_Surface();
     HSurfInit->Initialize(myInitFace);
     myBuilder->LoadInitSurface(BRep_Tool::Surface(HSurfInit->Face()));
   }

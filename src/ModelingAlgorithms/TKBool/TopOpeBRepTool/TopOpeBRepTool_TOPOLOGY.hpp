@@ -34,11 +34,11 @@ Standard_EXPORT bool FUN_tool_outbounds(const TopoDS_Shape& Sh,
                                         bool&               outbounds);
 
 Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt&            P,
-                                   const BRepAdaptor_Curve& BAC,
+                                   const ::model::adapter::BRepAdaptor_Curve& BAC,
                                    const double             pmin,
                                    const double             pmax,
                                    const double             tol);
-Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt& P, const BRepAdaptor_Curve& BAC, const double tol);
+Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt& P, const ::model::adapter::BRepAdaptor_Curve& BAC, const double tol);
 
 Standard_EXPORT bool         FUN_tool_value(const double par, const TopoDS_Edge& E, gp_Pnt& P);
 Standard_EXPORT bool         FUN_tool_value(const gp_Pnt2d& UV, const TopoDS_Face& F, gp_Pnt& P);
@@ -162,14 +162,14 @@ Standard_EXPORT bool   FUN_tool_parF(const TopoDS_Edge& E,
                                      const double&      par,
                                      const TopoDS_Face& F,
                                      gp_Pnt2d&          UV);
-Standard_EXPORT gp_Dir FUN_tool_dirC(const double par, const BRepAdaptor_Curve& BAC);
+Standard_EXPORT gp_Dir FUN_tool_dirC(const double par, const ::model::adapter::BRepAdaptor_Curve& BAC);
 Standard_EXPORT gp_Vec FUN_tool_tggeomE(const double paronE, const TopoDS_Edge& E);
-Standard_EXPORT bool   FUN_tool_line(const BRepAdaptor_Curve& BAC);
+Standard_EXPORT bool   FUN_tool_line(const ::model::adapter::BRepAdaptor_Curve& BAC);
 Standard_EXPORT bool   FUN_tool_quad(const TopoDS_Edge& E);
-Standard_EXPORT bool   FUN_tool_quad(const BRepAdaptor_Curve& BAC);
+Standard_EXPORT bool   FUN_tool_quad(const ::model::adapter::BRepAdaptor_Curve& BAC);
 Standard_EXPORT bool   FUN_tool_quad(const TopoDS_Face& F);
-Standard_EXPORT bool   FUN_tool_findPinBAC(const BRepAdaptor_Curve& BAC, gp_Pnt& P, double& par);
-Standard_EXPORT bool   FUN_tool_findparinBAC(const BRepAdaptor_Curve& BAC, double& par);
+Standard_EXPORT bool   FUN_tool_findPinBAC(const ::model::adapter::BRepAdaptor_Curve& BAC, gp_Pnt& P, double& par);
+Standard_EXPORT bool   FUN_tool_findparinBAC(const ::model::adapter::BRepAdaptor_Curve& BAC, double& par);
 Standard_EXPORT bool   FUN_tool_findparinE(const TopoDS_Shape& E, double& par);
 Standard_EXPORT bool   FUN_tool_findPinE(const TopoDS_Shape& E, gp_Pnt& P, double& par);
 Standard_EXPORT bool   FUN_tool_maxtol(const TopoDS_Shape&     S,

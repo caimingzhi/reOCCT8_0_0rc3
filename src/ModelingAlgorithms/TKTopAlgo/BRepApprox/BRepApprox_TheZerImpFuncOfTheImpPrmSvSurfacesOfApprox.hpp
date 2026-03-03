@@ -9,7 +9,10 @@
 #include <math_FunctionSetWithDerivatives.hpp>
 #include <math_Vector.hpp>
 class StdFail_UndefinedDerivative;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class BRepApprox_SurfaceTool;
 class IntSurf_Quadric;
 class IntSurf_QuadricTool;
@@ -26,12 +29,12 @@ public:
   Standard_EXPORT BRepApprox_TheZerImpFuncOfTheImpPrmSvSurfacesOfApprox();
 
   Standard_EXPORT BRepApprox_TheZerImpFuncOfTheImpPrmSvSurfacesOfApprox(
-    const BRepAdaptor_Surface& PS,
+    const ::model::adapter::BRepAdaptor_Surface& PS,
     const IntSurf_Quadric&     IS);
 
   Standard_EXPORT BRepApprox_TheZerImpFuncOfTheImpPrmSvSurfacesOfApprox(const IntSurf_Quadric& IS);
 
-  void Set(const BRepAdaptor_Surface& PS);
+  void Set(const ::model::adapter::BRepAdaptor_Surface& PS);
 
   void SetImplicitSurface(const IntSurf_Quadric& IS);
 
@@ -59,7 +62,7 @@ public:
 
   const gp_Dir2d& Direction2d();
 
-  const BRepAdaptor_Surface& PSurface() const;
+  const ::model::adapter::BRepAdaptor_Surface& PSurface() const;
 
   const IntSurf_Quadric& ISurface() const;
 
@@ -83,7 +86,7 @@ private:
   gp_Dir2d d2d;
 };
 
-#define ThePSurface BRepAdaptor_Surface
+#define ThePSurface ::model::adapter::BRepAdaptor_Surface
 #define ThePSurface_hxx <BRepAdaptor_Surface.hpp>
 #define ThePSurfaceTool BRepApprox_SurfaceTool
 #define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hpp>

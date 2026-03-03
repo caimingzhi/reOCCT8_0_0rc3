@@ -13,7 +13,10 @@
 #include <Approx_ParametrizationType.hpp>
 class Standard_OutOfRange;
 class StdFail_NotDone;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class BRepApprox_SurfaceTool;
 class IntSurf_Quadric;
 class IntSurf_QuadricTool;
@@ -67,8 +70,8 @@ public:
 
   Standard_EXPORT BRepApprox_Approx();
 
-  Standard_EXPORT void Perform(const BRepAdaptor_Surface&                Surf1,
-                               const BRepAdaptor_Surface&                Surf2,
+  Standard_EXPORT void Perform(const ::model::adapter::BRepAdaptor_Surface&                Surf1,
+                               const ::model::adapter::BRepAdaptor_Surface&                Surf2,
                                const occ::handle<BRepApprox_ApproxLine>& aLine,
                                const bool                                ApproxXYZ  = true,
                                const bool                                ApproxU1V1 = true,
@@ -113,7 +116,7 @@ public:
 
 private:
   Standard_EXPORT void Perform(const IntSurf_Quadric&                    Surf1,
-                               const BRepAdaptor_Surface&                Surf2,
+                               const ::model::adapter::BRepAdaptor_Surface&                Surf2,
                                const occ::handle<BRepApprox_ApproxLine>& aLine,
                                const bool                                ApproxXYZ,
                                const bool                                ApproxU1V1,

@@ -188,7 +188,7 @@ void PrsDim_PerpendicularRelation::ComputeTwoEdgesPerpendicular(
     return;
 
   BRepBuilderAPI_MakeFace makeface(myPlane->Pln());
-  BRepAdaptor_Surface     adp(makeface.Face());
+  ::model::adapter::BRepAdaptor_Surface     adp(makeface.Face());
 
   occ::handle<Geom2d_Curve> aGeom2dCurve = GeomAPI::To2d(geom_lin1, myPlane->Pln());
   occ::handle<Geom2d_Line>  lin1_2d      = occ::down_cast<Geom2d_Line>(aGeom2dCurve);

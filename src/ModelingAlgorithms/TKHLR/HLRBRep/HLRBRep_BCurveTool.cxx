@@ -4,7 +4,7 @@
 #include <gp_Pnt.hpp>
 #include <NCollection_Array1.hpp>
 
-int HLRBRep_BCurveTool::NbSamples(const BRepAdaptor_Curve& C, const double U0, const double U1)
+int HLRBRep_BCurveTool::NbSamples(const ::model::adapter::BRepAdaptor_Curve& C, const double U0, const double U1)
 {
   GeomAbs_CurveType typC     = C.GetType();
   static double     nbsOther = 10.0;
@@ -28,7 +28,7 @@ int HLRBRep_BCurveTool::NbSamples(const BRepAdaptor_Curve& C, const double U0, c
   return ((int)nbs);
 }
 
-void HLRBRep_BCurveTool::Poles(const BRepAdaptor_Curve& C, NCollection_Array1<gp_Pnt>& T)
+void HLRBRep_BCurveTool::Poles(const ::model::adapter::BRepAdaptor_Curve& C, NCollection_Array1<gp_Pnt>& T)
 {
   if (C.GetType() == GeomAbs_BezierCurve)
     C.Bezier()->Poles(T);
@@ -36,7 +36,7 @@ void HLRBRep_BCurveTool::Poles(const BRepAdaptor_Curve& C, NCollection_Array1<gp
     C.BSpline()->Poles(T);
 }
 
-void HLRBRep_BCurveTool::PolesAndWeights(const BRepAdaptor_Curve&    C,
+void HLRBRep_BCurveTool::PolesAndWeights(const ::model::adapter::BRepAdaptor_Curve&    C,
                                          NCollection_Array1<gp_Pnt>& T,
                                          NCollection_Array1<double>& W)
 {
@@ -54,12 +54,12 @@ void HLRBRep_BCurveTool::PolesAndWeights(const BRepAdaptor_Curve&    C,
   }
 }
 
-occ::handle<Geom_BezierCurve> HLRBRep_BCurveTool::Bezier(const BRepAdaptor_Curve& C)
+occ::handle<Geom_BezierCurve> HLRBRep_BCurveTool::Bezier(const ::model::adapter::BRepAdaptor_Curve& C)
 {
   return (C.Bezier());
 }
 
-occ::handle<Geom_BSplineCurve> HLRBRep_BCurveTool::BSpline(const BRepAdaptor_Curve& C)
+occ::handle<Geom_BSplineCurve> HLRBRep_BCurveTool::BSpline(const ::model::adapter::BRepAdaptor_Curve& C)
 {
   return (C.BSpline());
 }

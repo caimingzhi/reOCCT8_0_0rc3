@@ -23,10 +23,11 @@
 #include <TopoDS_Face.hpp>
 #include <Geom_OffsetCurve.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_Curve, Adaptor3d_Curve)
+IMPLEMENT_STANDARD_RTTIEXT(::model::adapter::BRepAdaptor_Curve, Adaptor3d_Curve)
 
-BRepAdaptor_Curve::BRepAdaptor_Curve() = default;
+::model::adapter::BRepAdaptor_Curve::BRepAdaptor_Curve() = default;
 
+namespace model { namespace adapter {
 BRepAdaptor_Curve::BRepAdaptor_Curve(const TopoDS_Edge& E)
 {
   Initialize(E);
@@ -490,3 +491,5 @@ occ::handle<Geom_OffsetCurve> BRepAdaptor_Curve::OffsetCurve() const
            ? anOffC
            : occ::down_cast<Geom_OffsetCurve>(anOffC->Transformed(myTrsf));
 }
+
+}} // namespace model::adapter

@@ -249,7 +249,7 @@ static bool KPartCircle(
     myShape.Location(L);
     if (fabs(Alt) > gp::Resolution())
     {
-      BRepAdaptor_Surface S(mySpine, false);
+      ::model::adapter::BRepAdaptor_Surface S(mySpine, false);
       gp_Ax1              Nor = S.Plane().Axis();
       gp_Trsf             T;
       gp_Vec              Trans(Nor.Direction());

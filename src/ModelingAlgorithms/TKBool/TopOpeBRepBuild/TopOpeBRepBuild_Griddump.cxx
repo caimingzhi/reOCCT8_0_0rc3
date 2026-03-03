@@ -50,7 +50,7 @@ void TopOpeBRepBuild_Builder::PrintGeo(const TopoDS_Shape&) {}
 #ifdef OCCT_DEBUG
 void TopOpeBRepBuild_Builder::PrintSur(const TopoDS_Face& F)
 {
-  BRepAdaptor_Surface STA_Surface(F);
+  ::model::adapter::BRepAdaptor_Surface STA_Surface(F);
   GeomAbs_SurfaceType t = STA_Surface.GetType();
   switch (t)
   {

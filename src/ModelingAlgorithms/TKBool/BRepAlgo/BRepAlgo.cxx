@@ -70,7 +70,7 @@ TopoDS_Wire BRepAlgo::ConvertWire(const TopoDS_Wire& theWire,
   for (; anExpE.More(); anExpE.Next())
   {
     const TopoDS_Edge&  anEdge = anExpE.Current();
-    BRepAdaptor_Curve2d aCurve(anEdge, theFace);
+    ::model::adapter::BRepAdaptor_Curve2d aCurve(anEdge, theFace);
     double              aTol = BRep_Tool::Tolerance(anEdge);
     if (aTol < MINIMAL_TOLERANCE)
       aTol = MINIMAL_TOLERANCE;

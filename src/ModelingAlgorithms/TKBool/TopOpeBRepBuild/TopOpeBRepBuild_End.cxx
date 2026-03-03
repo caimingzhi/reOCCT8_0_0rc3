@@ -245,7 +245,7 @@ void TopOpeBRepBuild_Builder::End()
           }
           C2D                    = FC2D_CurveOnSurface(E, F, f, l, tolpc);
           gp_Pnt2d            P2 = C2D->Value(pv);
-          BRepAdaptor_Surface BAS(F, false);
+          ::model::adapter::BRepAdaptor_Surface BAS(F, false);
           Pv        = BAS.Value(P2.X(), P2.Y());
           TP(++nP2) = Pv;
 

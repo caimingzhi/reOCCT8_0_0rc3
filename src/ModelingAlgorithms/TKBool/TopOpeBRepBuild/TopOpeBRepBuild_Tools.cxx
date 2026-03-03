@@ -396,7 +396,7 @@ void TopOpeBRepBuild_Tools::GetNormalToFaceOnEdge(const TopoDS_Face& aFObj,
   double                    f2 = 0., l2 = 0., tolpc = 0., f = 0., l = 0., par = 0.;
   occ::handle<Geom2d_Curve> C2D = FC2D_CurveOnSurface(aEd, aFS, f2, l2, tolpc, true);
 
-  BRepAdaptor_Curve aCA(aEd);
+  ::model::adapter::BRepAdaptor_Curve aCA(aEd);
   f   = aCA.FirstParameter();
   l   = aCA.LastParameter();
   par = f * PAR_T + (1 - PAR_T) * l;
@@ -406,7 +406,7 @@ void TopOpeBRepBuild_Tools::GetNormalToFaceOnEdge(const TopoDS_Face& aFObj,
 
   gp_Pnt              aP;
   gp_Vec              aTg1, aTg2;
-  BRepAdaptor_Surface aSA1(aFS);
+  ::model::adapter::BRepAdaptor_Surface aSA1(aFS);
   aSA1.D1(aUV1.X(), aUV1.Y(), aP, aTg1, aTg2);
   aNormal = aTg1 ^ aTg2;
 }
@@ -441,7 +441,7 @@ void TopOpeBRepBuild_Tools::GetNormalInNearestPoint(const TopoDS_Face& F,
   gp_Vec aTg1, aTg2;
   gp_Pnt aP1;
 
-  BRepAdaptor_Surface BS(F);
+  ::model::adapter::BRepAdaptor_Surface BS(F);
   BS.D1(newU, newV, aP1, aTg1, aTg2);
 
   gp_Pnt2d                aP2d(newU, newV);
@@ -477,8 +477,8 @@ bool TopOpeBRepBuild_Tools::GetTangentToEdgeEdge(const TopoDS_Face&,
 
   double f = 0., l = 0., par = 0., parOri = 0.;
 
-  BRepAdaptor_Curve aCA(aEd);
-  BRepAdaptor_Curve aCAOri(aEOri);
+  ::model::adapter::BRepAdaptor_Curve aCA(aEd);
+  ::model::adapter::BRepAdaptor_Curve aCAOri(aEOri);
 
   f = aCA.FirstParameter();
   l = aCA.LastParameter();
@@ -528,7 +528,7 @@ bool TopOpeBRepBuild_Tools::GetTangentToEdge(const TopoDS_Edge& anEdgeObj, gp_Ve
 
   double f = 0., l = 0., par = 0.;
 
-  BRepAdaptor_Curve aCA(aEd);
+  ::model::adapter::BRepAdaptor_Curve aCA(aEd);
 
   f = aCA.FirstParameter();
   l = aCA.LastParameter();
@@ -657,7 +657,7 @@ void TopOpeBRepBuild_Tools::UpdateEdgeOnPeriodicalFace(const TopoDS_Edge& aEdgeT
 
   tol = std::max(tolpc, tolE);
 
-  BRepAdaptor_Surface aBAS(fFace);
+  ::model::adapter::BRepAdaptor_Surface aBAS(fFace);
   gp_Vec2d            aTrV;
 
   double   ff = 0., lf = 0., fr = 0., lr = 0.;

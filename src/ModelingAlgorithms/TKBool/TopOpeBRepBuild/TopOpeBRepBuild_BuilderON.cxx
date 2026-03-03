@@ -440,7 +440,7 @@ static bool ComputeFaceCrvtInSec(const TopoDS_Face& aFace,
                                  const gp_Dir&      aSecDir,
                                  double&            aCrvt)
 {
-  BRepAdaptor_Surface aSurf(aFace);
+  ::model::adapter::BRepAdaptor_Surface aSurf(aFace);
   int                 cn = BRepLProp_SurfaceTool::Continuity(aSurf);
   if (cn < 2)
     return false;
@@ -821,9 +821,9 @@ void TopOpeBRepBuild_BuilderON::GFillONPartsWES2(const occ::handle<TopOpeBRepDS_
       tolON = std::max(std::max(tolFOR, tolFS), tolEG) * 10.;
       double d;
 
-      BRepAdaptor_Surface BSfor(FOR);
+      ::model::adapter::BRepAdaptor_Surface BSfor(FOR);
       GeomAbs_SurfaceType STfor = BSfor.GetType();
-      BRepAdaptor_Surface BSfs(FS);
+      ::model::adapter::BRepAdaptor_Surface BSfs(FS);
       GeomAbs_SurfaceType STfs  = BSfs.GetType();
       int                 kpart = FUN_Kpart(STfor, STfs);
       if (kpart == 0)

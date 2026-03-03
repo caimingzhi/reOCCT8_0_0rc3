@@ -301,13 +301,13 @@ void BRepFill_PipeShell::Set(const TopoDS_Wire&           AuxiliarySpine,
     }
     else
     {
-      BRepAdaptor_CompCurve BC(mySpine);
+      ::model::adapter::BRepAdaptor_CompCurve BC(mySpine);
       BC.D1(0, SpOr, Dir);
     }
     BRepFill::SearchOrigin(TheGuide, SpOr, Dir, 100 * myTol3d);
   }
 
-  occ::handle<BRepAdaptor_CompCurve> Guide = new (BRepAdaptor_CompCurve)(TheGuide);
+  occ::handle<::model::adapter::BRepAdaptor_CompCurve> Guide = new (::model::adapter::BRepAdaptor_CompCurve)(TheGuide);
 
   if (CurvilinearEquivalence)
   {

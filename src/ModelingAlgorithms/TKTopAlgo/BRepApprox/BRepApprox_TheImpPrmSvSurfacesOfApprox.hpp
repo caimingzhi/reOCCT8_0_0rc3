@@ -11,7 +11,10 @@
 #include <Standard_Boolean.hpp>
 #include <BRepApprox_TheZerImpFuncOfTheImpPrmSvSurfacesOfApprox.hpp>
 #include <ApproxInt_SvSurfaces.hpp>
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class BRepApprox_SurfaceTool;
 class IntSurf_Quadric;
 class IntSurf_QuadricTool;
@@ -26,11 +29,11 @@ class BRepApprox_TheImpPrmSvSurfacesOfApprox : public ApproxInt_SvSurfaces
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT BRepApprox_TheImpPrmSvSurfacesOfApprox(const BRepAdaptor_Surface& Surf1,
+  Standard_EXPORT BRepApprox_TheImpPrmSvSurfacesOfApprox(const ::model::adapter::BRepAdaptor_Surface& Surf1,
                                                          const IntSurf_Quadric&     Surf2);
 
   Standard_EXPORT BRepApprox_TheImpPrmSvSurfacesOfApprox(const IntSurf_Quadric&     Surf1,
-                                                         const BRepAdaptor_Surface& Surf2);
+                                                         const ::model::adapter::BRepAdaptor_Surface& Surf2);
 
   Standard_EXPORT bool Compute(double&   u1,
                                double&   v1,

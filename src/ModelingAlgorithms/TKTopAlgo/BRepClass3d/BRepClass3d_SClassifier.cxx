@@ -321,7 +321,7 @@ void BRepClass3d_SClassifier::Perform(BRepClass3d_SolidExplorer& SolidExplorer,
                 if (Intersector3d.IsParallel())
                 {
 
-                  BRepAdaptor_Surface aBAS(f, false);
+                  ::model::adapter::BRepAdaptor_Surface aBAS(f, false);
                   Extrema_ExtPS       aProj(P,
                                       aBAS,
                                       math::precision::Precision::PConfusion(),

@@ -132,7 +132,7 @@ bool TopoDSToStep_WireframeBuilder::GetTrimmedCurveFromEdge(
     aSGC = occ::down_cast<StepGeom_Curve>(*aTransient);
   }
 
-  BRepAdaptor_Curve aCA;
+  ::model::adapter::BRepAdaptor_Curve aCA;
   try
   {
     OCC_CATCH_SIGNALS

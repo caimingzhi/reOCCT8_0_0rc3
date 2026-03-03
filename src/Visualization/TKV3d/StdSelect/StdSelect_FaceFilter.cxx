@@ -39,34 +39,34 @@ bool StdSelect_FaceFilter::IsOk(const occ::handle<SelectMgr_EntityOwner>& EO) co
       return true;
     case StdSelect_Plane:
     {
-      BRepAdaptor_Surface surf(TopoDS::Face(anobj));
+      ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Plane);
     }
     case StdSelect_Cylinder:
     {
-      BRepAdaptor_Surface surf(TopoDS::Face(anobj));
+      ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cylinder);
     }
     case StdSelect_Sphere:
     {
-      BRepAdaptor_Surface surf(TopoDS::Face(anobj));
+      ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Sphere);
     }
     case StdSelect_Torus:
     {
-      BRepAdaptor_Surface surf(TopoDS::Face(anobj));
+      ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Torus);
     }
     case StdSelect_Revol:
     {
-      BRepAdaptor_Surface surf(TopoDS::Face(anobj));
+      ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cylinder || surf.GetType() == GeomAbs_Cone
               || surf.GetType() == GeomAbs_Torus || surf.GetType() == GeomAbs_Sphere
               || surf.GetType() == GeomAbs_SurfaceOfRevolution);
     }
     case StdSelect_Cone:
     {
-      BRepAdaptor_Surface surf(TopoDS::Face(anobj));
+      ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(anobj));
       return (surf.GetType() == GeomAbs_Cone);
     }
   }

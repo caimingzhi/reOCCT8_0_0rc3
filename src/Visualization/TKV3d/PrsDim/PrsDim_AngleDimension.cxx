@@ -731,8 +731,8 @@ bool PrsDim_AngleDimension::InitTwoEdgesAngle(gp_Pln& theComputedPlane)
   TopoDS_Edge aFirstEdge  = TopoDS::Edge(myFirstShape);
   TopoDS_Edge aSecondEdge = TopoDS::Edge(mySecondShape);
 
-  BRepAdaptor_Curve aMakeFirstLine(aFirstEdge);
-  BRepAdaptor_Curve aMakeSecondLine(aSecondEdge);
+  ::model::adapter::BRepAdaptor_Curve aMakeFirstLine(aFirstEdge);
+  ::model::adapter::BRepAdaptor_Curve aMakeSecondLine(aSecondEdge);
 
   if (aMakeFirstLine.GetType() != GeomAbs_Line || aMakeSecondLine.GetType() != GeomAbs_Line)
   {
@@ -944,7 +944,7 @@ bool PrsDim_AngleDimension::InitConeAngle()
   occ::handle<Geom_ConicalSurface>      aConicalSurf;
   occ::handle<Geom_SurfaceOfRevolution> aRevSurf;
   occ::handle<Geom_Line>                aLine;
-  BRepAdaptor_Surface                   aConeAdaptor(aConeShape);
+  ::model::adapter::BRepAdaptor_Surface                   aConeAdaptor(aConeShape);
   TopoDS_Face                           aFace;
   PrsDim_KindOfSurface                  aSurfType;
   double                                anOffset = 0.;

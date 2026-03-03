@@ -79,7 +79,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
 
     case TopAbs_EDGE:
     {
-      BRepAdaptor_Curve CU(TopoDS::Edge(S));
+      ::model::adapter::BRepAdaptor_Curve CU(TopoDS::Edge(S));
       u1 = CU.FirstParameter();
       u2 = CU.LastParameter();
       if (facpar == 0.)
@@ -94,7 +94,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aME;
       TopExp::MapShapes(S, TopAbs_EDGE, aME);
       const TopoDS_Edge& anEdge = TopoDS::Edge(aME(1));
-      BRepAdaptor_Curve  CU(anEdge);
+      ::model::adapter::BRepAdaptor_Curve  CU(anEdge);
       u1 = CU.FirstParameter();
       u2 = CU.LastParameter();
       if (facpar == 0.)
@@ -106,7 +106,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
 
     case TopAbs_FACE:
     {
-      BRepAdaptor_Surface SU(TopoDS::Face(S));
+      ::model::adapter::BRepAdaptor_Surface SU(TopoDS::Face(S));
       BRepTools::UVBounds(TopoDS::Face(S), u1, u2, v1, v2);
 
       facpar = .2;
@@ -123,7 +123,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
       TopExp::MapShapes(S, TopAbs_FACE, aMF);
       const TopoDS_Face& aF = TopoDS::Face(aMF(1));
 
-      BRepAdaptor_Surface SU(TopoDS::Face(aF));
+      ::model::adapter::BRepAdaptor_Surface SU(TopoDS::Face(aF));
       BRepTools::UVBounds(aF, u1, u2, v1, v2);
       facpar = .4;
       u      = u1 + (u2 - u1) * facpar;

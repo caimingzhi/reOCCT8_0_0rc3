@@ -150,7 +150,7 @@ occ::handle<VrmlData_Geometry> VrmlData_ShapeConvert::makeTShapeNode(
         occ::handle<Poly_Polygon3D> aPol;
         if (!aPT.IsNull() && !aT.IsNull() && aPT->HasParameters())
         {
-          BRepAdaptor_Curve                        aCurve(aEdge);
+          ::model::adapter::BRepAdaptor_Curve                        aCurve(aEdge);
           occ::handle<NCollection_HArray1<double>> aPrs    = aPT->Parameters();
           int                                      nbNodes = aPT->NbNodes();
           NCollection_Array1<gp_Pnt>               arrNodes(1, nbNodes);
@@ -170,7 +170,7 @@ occ::handle<VrmlData_Geometry> VrmlData_ShapeConvert::makeTShapeNode(
 
           if (aPol.IsNull())
           {
-            BRepAdaptor_Curve aCurve(aEdge);
+            ::model::adapter::BRepAdaptor_Curve aCurve(aEdge);
             const double      aFirst = aCurve.FirstParameter();
             const double      aLast  = aCurve.LastParameter();
 

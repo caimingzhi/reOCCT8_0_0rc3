@@ -128,8 +128,8 @@ static void ConcatCurves(NCollection_Sequence<occ::handle<Geom_Curve>>& theCurve
 
 static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
                                   const double               Distance,
-                                  const BRepAdaptor_Surface& S1,
-                                  const BRepAdaptor_Surface& S2)
+                                  const ::model::adapter::BRepAdaptor_Surface& S1,
+                                  const ::model::adapter::BRepAdaptor_Surface& S2)
 {
   TopoDS_Edge OffsetEdge;
 
@@ -162,7 +162,7 @@ static TopoDS_Edge MakeOffsetEdge(const TopoDS_Edge&         theEdge,
 
   occ::handle<Geom_Curve> IntCurve = Intersector.Line(1);
   gp_Pnt                  Ends[2];
-  BRepAdaptor_Curve       aBAcurve(theEdge);
+  ::model::adapter::BRepAdaptor_Curve       aBAcurve(theEdge);
   Ends[0] = aBAcurve.Value(aBAcurve.FirstParameter());
   Ends[1] = aBAcurve.Value(aBAcurve.LastParameter());
 
@@ -503,8 +503,8 @@ bool ChFi3d_Builder::FaceTangency(const TopoDS_Edge&   E0,
 
 static bool TangentExtremity(const TopoDS_Vertex&                    V,
                              const TopoDS_Edge&                      E,
-                             const occ::handle<BRepAdaptor_Surface>& hs1,
-                             const occ::handle<BRepAdaptor_Surface>& hs2,
+                             const occ::handle<::model::adapter::BRepAdaptor_Surface>& hs1,
+                             const occ::handle<::model::adapter::BRepAdaptor_Surface>& hs2,
 
                              const double tang)
 {
@@ -559,8 +559,8 @@ static bool TangentOnVertex(const TopoDS_Vertex& V,
   ChFi3d_conexfaces(E, ff1, ff2, EFMap);
   if (ff1.IsNull() || ff2.IsNull())
     return false;
-  occ::handle<BRepAdaptor_Surface> S1 = new (BRepAdaptor_Surface)(ff1);
-  occ::handle<BRepAdaptor_Surface> S2 = new (BRepAdaptor_Surface)(ff2);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> S1 = new (::model::adapter::BRepAdaptor_Surface)(ff1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> S2 = new (::model::adapter::BRepAdaptor_Surface)(ff2);
   return TangentExtremity(V, E, S1, S2, tang);
 }
 
@@ -574,7 +574,7 @@ void ChFi3d_Builder::PerformExtremity(const occ::handle<ChFiDS_Spine>& Spine)
     TopoDS_Vertex                    V;
     ChFiDS_State                     sst;
     int                              iedge;
-    occ::handle<BRepAdaptor_Surface> hs1, hs2;
+    occ::handle<::model::adapter::BRepAdaptor_Surface> hs1, hs2;
     if (ii == 1)
     {
       sst   = Spine->FirstStatus();
@@ -750,8 +750,8 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
   Spine->SetTypeOfConcavity(TypeOfConcavity);
 
   bool                ToRestrict = Offset > 0;
-  BRepAdaptor_Surface Sb1(ff1, ToRestrict);
-  BRepAdaptor_Surface Sb2(ff2, ToRestrict);
+  ::model::adapter::BRepAdaptor_Surface Sb1(ff1, ToRestrict);
+  ::model::adapter::BRepAdaptor_Surface Sb2(ff2, ToRestrict);
   if (Offset > 0)
   {
     TopoDS_Edge OffsetEdge = MakeOffsetEdge(Ec, Offset, Sb1, Sb2);
@@ -759,7 +759,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
     Spine->SetOffsetEdges(OffsetEdge);
   }
 
-  BRepAdaptor_Curve  CEc, CEv;
+  ::model::adapter::BRepAdaptor_Curve  CEc, CEv;
   TopAbs_Orientation curor = Ec.Orientation();
   TopExp::Vertices(Ec, VStart, LVEc);
 
@@ -853,7 +853,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
             myEdgeFirstFace.Bind(Ec, CurF1);
             if (Offset > 0)
             {
-              BRepAdaptor_Surface CurSb1(CurF1), CurSb2(CurF2);
+              ::model::adapter::BRepAdaptor_Surface CurSb1(CurF1), CurSb2(CurF2);
               TopoDS_Edge         anOffsetEdge = MakeOffsetEdge(Ec, Offset, CurSb1, CurSb2);
               anOffsetEdge.Orientation(Or1);
               Spine->SetOffsetEdges(anOffsetEdge);
@@ -955,7 +955,7 @@ bool ChFi3d_Builder::PerformElement(const occ::handle<ChFiDS_Spine>& Spine,
               myEdgeFirstFace.Bind(Ec, CurF1);
               if (Offset > 0)
               {
-                BRepAdaptor_Surface CurSb1(CurF1), CurSb2(CurF2);
+                ::model::adapter::BRepAdaptor_Surface CurSb1(CurF1), CurSb2(CurF2);
                 TopoDS_Edge         anOffsetEdge = MakeOffsetEdge(Ec, Offset, CurSb1, CurSb2);
                 anOffsetEdge.Orientation(Or1);
                 Spine->PutInFirstOffset(anOffsetEdge);

@@ -67,8 +67,8 @@ void PrsDim_OffsetDimension::Compute(const occ::handle<PrsMgr_PresentationManage
   if (myArrowSize < 15.)
     myArrowSize = 15.;
 
-  BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
-  BRepAdaptor_Surface surf2(TopoDS::Face(mySShape));
+  ::model::adapter::BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
+  ::model::adapter::BRepAdaptor_Surface surf2(TopoDS::Face(mySShape));
 
   if (surf1.GetType() == GeomAbs_Cylinder || surf1.GetType() == GeomAbs_Cone
       || surf1.GetType() == GeomAbs_Torus)
@@ -197,8 +197,8 @@ void PrsDim_OffsetDimension::ComputeSelection(const occ::handle<SelectMgr_Select
 void PrsDim_OffsetDimension::ComputeTwoAxesOffset(const occ::handle<Prs3d_Presentation>& aprs,
                                                   const gp_Trsf&                         aTrsf)
 {
-  BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
-  BRepAdaptor_Surface surf2(TopoDS::Face(mySShape));
+  ::model::adapter::BRepAdaptor_Surface surf1(TopoDS::Face(myFShape));
+  ::model::adapter::BRepAdaptor_Surface surf2(TopoDS::Face(mySShape));
 
   gp_Ax1 Ax1Surf1, Ax1Surf2;
 

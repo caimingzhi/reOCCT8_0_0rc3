@@ -636,15 +636,15 @@ static int VTrihedron2D(Draw_Interpretor&, int theArgsNum, const char** theArgVe
   {
     aFaceExp.Next();
     TopoDS_Edge       anEdge1 = TopoDS::Edge(aFaceExp.Current());
-    BRepAdaptor_Curve aCurve0(anEdge0);
-    BRepAdaptor_Curve aCurve1(anEdge1);
+    ::model::adapter::BRepAdaptor_Curve aCurve0(anEdge0);
+    ::model::adapter::BRepAdaptor_Curve aCurve1(anEdge1);
     A = aCurve1.Value(0.1);
     B = aCurve1.Value(0.9);
     C = aCurve0.Value(0.5);
   }
   else
   {
-    BRepAdaptor_Curve aCurve0(anEdge0);
+    ::model::adapter::BRepAdaptor_Curve aCurve0(anEdge0);
     A = aCurve0.Value(0.1);
     B = aCurve0.Value(0.9);
     C = aCurve0.Value(0.5);
@@ -1457,7 +1457,7 @@ static int VPlaneBuilder(Draw_Interpretor&, int argc, const char** argv)
       else if (aShapeA.ShapeType() == TopAbs_FACE)
       {
         TopoDS_Face         aFace = TopoDS::Face(aShapeA);
-        BRepAdaptor_Surface aSurface(aFace, false);
+        ::model::adapter::BRepAdaptor_Surface aSurface(aFace, false);
         if (aSurface.GetType() == GeomAbs_Plane)
         {
           gp_Pln                  aPlane     = aSurface.Plane();
@@ -1504,7 +1504,7 @@ static int VPlaneBuilder(Draw_Interpretor&, int argc, const char** argv)
       gp_Pnt A = BRep_Tool::Pnt(TopoDS::Vertex(*aShapeA));
 
       TopoDS_Face         aFace = TopoDS::Face(*aShapeB);
-      BRepAdaptor_Surface aSurface(aFace, false);
+      ::model::adapter::BRepAdaptor_Surface aSurface(aFace, false);
       if (aSurface.GetType() == GeomAbs_Plane)
       {
         gp_Pln aPlane = aSurface.Plane();
@@ -1568,7 +1568,7 @@ static int VPlaneBuilder(Draw_Interpretor&, int argc, const char** argv)
         return 1;
       }
 
-      BRepAdaptor_Surface aSurface(aFace, false);
+      ::model::adapter::BRepAdaptor_Surface aSurface(aFace, false);
       if (aSurface.GetType() == GeomAbs_Plane)
       {
         gp_Pln aPlane = aSurface.Plane();
@@ -2148,7 +2148,7 @@ static int VCircleBuilder(Draw_Interpretor&, int argc, const char** argv)
       std::cin >> isFilled;
 
       TopoDS_Face             aFace = TopoDS::Face(aShapeA);
-      BRepAdaptor_Surface     aSurface(aFace, false);
+      ::model::adapter::BRepAdaptor_Surface     aSurface(aFace, false);
       gp_Pln                  aPlane     = aSurface.Plane();
       occ::handle<Geom_Plane> aGeomPlane = new Geom_Plane(aPlane);
       gp_Pln                  aGpPlane   = aGeomPlane->Pln();

@@ -271,7 +271,7 @@ void BOPAlgo_WireSplitter::SplitBlock(const TopoDS_Face&                   myFac
     return;
   }
 
-  const BRepAdaptor_Surface& aBAS = theContext->SurfaceAdaptor(myFace);
+  const ::model::adapter::BRepAdaptor_Surface& aBAS = theContext->SurfaceAdaptor(myFace);
   const GeomAdaptor_Surface& aGAS = aBAS.Surface();
 
   for (i = 1; i <= aNb; i++)

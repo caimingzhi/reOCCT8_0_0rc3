@@ -31,7 +31,7 @@ void BRepLib_CheckCurveOnSurface::Init(const TopoDS_Edge& theEdge, const TopoDS_
     return;
   }
 
-  const occ::handle<Adaptor3d_Curve> anAdaptor3dCurve = new BRepAdaptor_Curve(theEdge);
+  const occ::handle<Adaptor3d_Curve> anAdaptor3dCurve = new ::model::adapter::BRepAdaptor_Curve(theEdge);
 
   TopLoc_Location aLocation;
   double          aFirstParam, aLastParam;

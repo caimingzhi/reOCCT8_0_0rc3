@@ -245,7 +245,7 @@ void LocOpe_WiresOnShape::BindAll()
       }
 
       double              vtx_param = BRep_Tool::Parameter(vtx, edg);
-      BRepAdaptor_Curve2d BAcurve2d(edg, fac);
+      ::model::adapter::BRepAdaptor_Curve2d BAcurve2d(edg, fac);
 
       gp_Pnt2d p2d =
         (!BAcurve2d.Curve().IsNull() ? BAcurve2d.Value(vtx_param)
@@ -398,7 +398,7 @@ bool LocOpe_WiresOnShape::OnEdge(const TopoDS_Vertex& V,
 
     TopoDS_Face         aFace     = TopoDS::Face(aShape);
     double              vtx_param = BRep_Tool::Parameter(V, EdgeFrom);
-    BRepAdaptor_Curve2d BAcurve2d(EdgeFrom, aFace);
+    ::model::adapter::BRepAdaptor_Curve2d BAcurve2d(EdgeFrom, aFace);
     gp_Pnt2d            p2d = BAcurve2d.Value(vtx_param);
 
     prm = Project(V, p2d, Ed, aFace);
@@ -1002,7 +1002,7 @@ void PutPCurves(const TopoDS_Edge& Efrom, const TopoDS_Edge& Eto, const TopoDS_S
 
     TopoDS_Vertex       FirstVertex = TopExp::FirstVertex(Efrom);
     double              vtx_param   = BRep_Tool::Parameter(FirstVertex, Efrom);
-    BRepAdaptor_Curve2d BAcurve2d(Efrom, Fac);
+    ::model::adapter::BRepAdaptor_Curve2d BAcurve2d(Efrom, Fac);
     gp_Pnt2d            p2d = BAcurve2d.Value(vtx_param);
 
     double prmproj = Project(TopExp::FirstVertex(Efrom), p2d, Eto, Fac);
@@ -1132,7 +1132,7 @@ void FindInternalIntersections(
   constexpr double TolExt = math::precision::Precision::PConfusion();
   int              i, j;
 
-  BRepAdaptor_Surface          anAdSurf(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface          anAdSurf(theFace, false);
   NCollection_Sequence<double> SplitPars;
 
   TopoDS_Vertex theVertices[2];
@@ -1148,7 +1148,7 @@ void FindInternalIntersections(
 
   double aTolVExt[2] = {ext * aTolV[0] * aTolV[0], ext * aTolV[1] * aTolV[1]};
 
-  BRepAdaptor_Curve2d thePCurve(theEdge, theFace);
+  ::model::adapter::BRepAdaptor_Curve2d thePCurve(theEdge, theFace);
   Bnd_Box2d           theBox;
   BndLib_Add2dCurve::Add(thePCurve, BRep_Tool::Tolerance(theEdge), theBox);
 
@@ -1164,7 +1164,7 @@ void FindInternalIntersections(
   for (; Explo.More(); Explo.Next())
   {
     const TopoDS_Edge&  anEdge = TopoDS::Edge(Explo.Current());
-    BRepAdaptor_Curve2d aPCurve(anEdge, theFace);
+    ::model::adapter::BRepAdaptor_Curve2d aPCurve(anEdge, theFace);
     Bnd_Box2d           aBox;
     BndLib_Add2dCurve::Add(aPCurve, BRep_Tool::Tolerance(anEdge), aBox);
     if (theBox.IsOut(aBox))
@@ -1343,7 +1343,7 @@ bool LocOpe_WiresOnShape::Add(const NCollection_Sequence<TopoDS_Shape>& theEdges
     BRepBndLib::Add(aCurF, aBoxF);
     if (aBoxF.IsVoid())
       continue;
-    BRepAdaptor_Surface                         anAdF(aCurF, false);
+    ::model::adapter::BRepAdaptor_Surface                         anAdF(aCurF, false);
     NCollection_Handle<BRepTopAdaptor_FClass2d> aCheckStateTool;
 
     Extrema_ExtPS anExtr;

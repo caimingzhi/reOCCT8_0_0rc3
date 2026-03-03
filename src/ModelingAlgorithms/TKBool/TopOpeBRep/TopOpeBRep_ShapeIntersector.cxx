@@ -930,7 +930,7 @@ static int OneShapeIsHalfSpace(const TopoDS_Shape& S1, const TopoDS_Shape& S2)
           testFace = TopoDS::Face(SolidExplorer.Current());
       }
 
-      BRepAdaptor_Surface FSurf(testFace);
+      ::model::adapter::BRepAdaptor_Surface FSurf(testFace);
       bool                SolidIsSphereOrTorus = false;
 
       if (FSurf.GetType() == GeomAbs_Sphere || FSurf.GetType() == GeomAbs_Torus)
@@ -1014,7 +1014,7 @@ static TopoDS_Solid GetNewSolid(const TopoDS_Shape& S, TopoDS_Face& F)
   for (ShapeExplorer.Init(S, TopAbs_FACE); ShapeExplorer.More(); ShapeExplorer.Next())
     hsFace = TopoDS::Face(ShapeExplorer.Current());
 
-  BRepAdaptor_Surface ASurf(hsFace);
+  ::model::adapter::BRepAdaptor_Surface ASurf(hsFace);
 
   double MinU = ASurf.FirstUParameter();
   double MaxU = ASurf.LastUParameter();

@@ -66,10 +66,10 @@ static void EdgeAnalyse(const TopoDS_Edge&                     E,
   I.First(f);
   I.Last(l);
 
-  BRepAdaptor_Surface aBAsurf1(F1, false);
+  ::model::adapter::BRepAdaptor_Surface aBAsurf1(F1, false);
   GeomAbs_SurfaceType aSurfType1 = aBAsurf1.GetType();
 
-  BRepAdaptor_Surface aBAsurf2(F2, false);
+  ::model::adapter::BRepAdaptor_Surface aBAsurf2(F2, false);
   GeomAbs_SurfaceType aSurfType2 = aBAsurf2.GetType();
 
   bool isTwoPlanes = (aSurfType1 == GeomAbs_Plane && aSurfType2 == GeomAbs_Plane);
@@ -839,10 +839,10 @@ void BRepOffset_Analyse::TangentEdges(const TopoDS_Edge&              Edge,
   gp_Vec V, VRef;
 
   double            U, URef;
-  BRepAdaptor_Curve C3d, C3dRef;
+  ::model::adapter::BRepAdaptor_Curve C3d, C3dRef;
 
   URef   = BRep_Tool::Parameter(Vertex, Edge);
-  C3dRef = BRepAdaptor_Curve(Edge);
+  C3dRef = ::model::adapter::BRepAdaptor_Curve(Edge);
   VRef   = C3dRef.DN(URef, 1);
   CorrectOrientationOfTangent(VRef, Vertex, Edge);
   if (VRef.SquareMagnitude() < gp::Resolution())
@@ -858,7 +858,7 @@ void BRepOffset_Analyse::TangentEdges(const TopoDS_Edge&              Edge,
     if (CurE.IsSame(Edge))
       continue;
     U   = BRep_Tool::Parameter(Vertex, CurE);
-    C3d = BRepAdaptor_Curve(CurE);
+    C3d = ::model::adapter::BRepAdaptor_Curve(CurE);
     V   = C3d.DN(U, 1);
     CorrectOrientationOfTangent(V, Vertex, CurE);
     if (V.SquareMagnitude() < gp::Resolution())

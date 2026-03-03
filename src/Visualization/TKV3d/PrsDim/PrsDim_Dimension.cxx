@@ -953,7 +953,7 @@ bool PrsDim_Dimension::CircleFromEdge(const TopoDS_Edge& theEdge,
                                       gp_Pnt&            theFirstPoint,
                                       gp_Pnt&            theLastPoint)
 {
-  BRepAdaptor_Curve anAdaptedCurve(theEdge);
+  ::model::adapter::BRepAdaptor_Curve anAdaptedCurve(theEdge);
   switch (anAdaptedCurve.GetType())
   {
     case GeomAbs_Circle:
@@ -1018,7 +1018,7 @@ bool PrsDim_Dimension::InitCircularDimension(const TopoDS_Shape& theShape,
       else
       {
         gp_Pnt              aCurPos;
-        BRepAdaptor_Surface aSurf1(TopoDS::Face(theShape));
+        ::model::adapter::BRepAdaptor_Surface aSurf1(TopoDS::Face(theShape));
         double              aFirstU = aSurf1.FirstUParameter();
         double              aLastU  = aSurf1.LastUParameter();
         double              aFirstV = aSurf1.FirstVParameter();

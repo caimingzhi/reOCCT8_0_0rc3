@@ -43,7 +43,7 @@ static void FindExactUVBounds(const TopoDS_Face& F,
                               const double       Tol,
                               bool&              isNaturalRestriction);
 
-static void AdjustFaceBox(const BRepAdaptor_Surface& BS,
+static void AdjustFaceBox(const ::model::adapter::BRepAdaptor_Surface& BS,
                           const double               umin,
                           const double               umax,
                           const double               vmin,
@@ -52,7 +52,7 @@ static void AdjustFaceBox(const BRepAdaptor_Surface& BS,
                           const Bnd_Box&             EdgeBox,
                           const double               Tol);
 
-static bool IsModifySize(const BRepAdaptor_Surface&     theBS,
+static bool IsModifySize(const ::model::adapter::BRepAdaptor_Surface&     theBS,
                          const gp_Pln&                  thePln,
                          const gp_Pnt&                  theP,
                          const double                   umin,
@@ -67,10 +67,10 @@ void BRepBndLib::Add(const TopoDS_Shape& S, Bnd_Box& B, bool useTriangulation)
 {
   TopExp_Explorer ex;
 
-  BRepAdaptor_Surface BS;
+  ::model::adapter::BRepAdaptor_Surface BS;
   TopLoc_Location     l, aDummyLoc;
   int                 i, nbNodes;
-  BRepAdaptor_Curve   BC;
+  ::model::adapter::BRepAdaptor_Curve   BC;
 
   for (ex.Init(S, TopAbs_FACE); ex.More(); ex.Next())
   {
@@ -194,7 +194,7 @@ void BRepBndLib::AddClose(const TopoDS_Shape& S, Bnd_Box& B)
 {
   TopExp_Explorer ex;
 
-  BRepAdaptor_Curve BC;
+  ::model::adapter::BRepAdaptor_Curve BC;
 
   for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())
   {
@@ -219,11 +219,11 @@ void BRepBndLib::AddOptimal(const TopoDS_Shape& S,
 {
   TopExp_Explorer ex;
 
-  BRepAdaptor_Surface             BS;
+  ::model::adapter::BRepAdaptor_Surface             BS;
   occ::handle<Poly_Triangulation> T;
   TopLoc_Location                 l;
   int                             i, nbNodes;
-  BRepAdaptor_Curve               BC;
+  ::model::adapter::BRepAdaptor_Curve               BC;
 
   for (ex.Init(S, TopAbs_FACE); ex.More(); ex.Next())
   {
@@ -430,7 +430,7 @@ void FindExactUVBounds(const TopoDS_Face& FF,
   TopExp_Explorer ex(F, TopAbs_EDGE);
 
   isNaturalRestriction = BRep_Tool::NaturalRestriction(F);
-  BRepAdaptor_Surface aBAS(F, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS(F, false);
   if (!isNaturalRestriction)
   {
 
@@ -600,7 +600,7 @@ inline void Reorder(double& a, double& b)
   }
 }
 
-bool IsModifySize(const BRepAdaptor_Surface&     theBS,
+bool IsModifySize(const ::model::adapter::BRepAdaptor_Surface&     theBS,
                   const gp_Pln&                  thePln,
                   const gp_Pnt&                  theP,
                   const double                   umin,
@@ -661,7 +661,7 @@ bool IsModifySize(const BRepAdaptor_Surface&     theBS,
   return false;
 }
 
-void AdjustFaceBox(const BRepAdaptor_Surface& BS,
+void AdjustFaceBox(const ::model::adapter::BRepAdaptor_Surface& BS,
                    const double               umin,
                    const double               umax,
                    const double               vmin,

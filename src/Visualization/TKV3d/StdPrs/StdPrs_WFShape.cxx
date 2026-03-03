@@ -358,7 +358,7 @@ void StdPrs_WFShape::addEdges(
     else if (BRep_Tool::IsGeometric(anEdge))
     {
 
-      BRepAdaptor_Curve aCurve(anEdge);
+      ::model::adapter::BRepAdaptor_Curve aCurve(anEdge);
       StdPrs_DeflectionCurve::Add(occ::handle<Prs3d_Presentation>(),
                                   aCurve,
                                   theShapeDeflection,

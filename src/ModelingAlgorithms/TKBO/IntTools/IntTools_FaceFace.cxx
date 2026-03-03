@@ -202,8 +202,8 @@ void IntTools_FaceFace::SetList(NCollection_List<IntSurf_PntOn2S>& aListOfPnts)
   myListOfPnts = aListOfPnts;
 }
 
-static bool isTreatAnalityc(const BRepAdaptor_Surface& theBAS1,
-                            const BRepAdaptor_Surface& theBAS2,
+static bool isTreatAnalityc(const ::model::adapter::BRepAdaptor_Surface& theBAS1,
+                            const ::model::adapter::BRepAdaptor_Surface& theBAS2,
                             const double               theTol)
 {
   const double Tolang = 1.e-8;
@@ -287,8 +287,8 @@ void IntTools_FaceFace::Perform(const TopoDS_Face& aF1,
   myFace1 = aF1;
   myFace2 = aF2;
 
-  const BRepAdaptor_Surface& aBAS1  = myContext->SurfaceAdaptor(myFace1);
-  const BRepAdaptor_Surface& aBAS2  = myContext->SurfaceAdaptor(myFace2);
+  const ::model::adapter::BRepAdaptor_Surface& aBAS1  = myContext->SurfaceAdaptor(myFace1);
+  const ::model::adapter::BRepAdaptor_Surface& aBAS2  = myContext->SurfaceAdaptor(myFace2);
   GeomAbs_SurfaceType        aType1 = aBAS1.GetType();
   GeomAbs_SurfaceType        aType2 = aBAS2.GetType();
 

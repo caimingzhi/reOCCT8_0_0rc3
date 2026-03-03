@@ -72,7 +72,7 @@ bool HLRBRep_EdgeFaceTool::UVPoint(const double             Par,
   }
   else
   {
-    BRepAdaptor_Curve2d PC(((HLRBRep_Curve*)E)->Curve().Edge(),
+    ::model::adapter::BRepAdaptor_Curve2d PC(((HLRBRep_Curve*)E)->Curve().Edge(),
                            ((HLRBRep_Surface*)F)->Surface().Face());
     gp_Pnt2d            P2d;
     PC.D0(Par, P2d);

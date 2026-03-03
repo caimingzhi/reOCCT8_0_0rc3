@@ -1316,7 +1316,7 @@ static int wavefront(Draw_Interpretor&, int nbarg, const char** argv)
 
       if (Tr->HasUVNodes())
       {
-        BRepAdaptor_Surface BS(F, false);
+        ::model::adapter::BRepAdaptor_Surface BS(F, false);
 
         for (i = 1; i <= nbNodes; i++)
         {

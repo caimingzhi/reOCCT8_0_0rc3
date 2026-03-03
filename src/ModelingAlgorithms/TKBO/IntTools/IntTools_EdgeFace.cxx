@@ -26,9 +26,9 @@
 #include <Precision.hpp>
 
 #include <algorithm>
-static bool IsCoplanar(const BRepAdaptor_Curve&, const BRepAdaptor_Surface&);
-static bool IsRadius(const BRepAdaptor_Curve&   aCurve,
-                     const BRepAdaptor_Surface& aSurface,
+static bool IsCoplanar(const ::model::adapter::BRepAdaptor_Curve&, const ::model::adapter::BRepAdaptor_Surface&);
+static bool IsRadius(const ::model::adapter::BRepAdaptor_Curve&   aCurve,
+                     const ::model::adapter::BRepAdaptor_Surface& aSurface,
                      const double               aCriteria);
 
 IntTools_EdgeFace::IntTools_EdgeFace()
@@ -177,7 +177,7 @@ double IntTools_EdgeFace::DistanceFunction(const double t)
 }
 
 bool IntTools_EdgeFace::IsEqDistance(const gp_Pnt&              aP,
-                                     const BRepAdaptor_Surface& aBAS,
+                                     const ::model::adapter::BRepAdaptor_Surface& aBAS,
                                      const double               aTol,
                                      double&                    aD)
 {
@@ -697,7 +697,7 @@ bool IntTools_EdgeFace::CheckTouchVertex(const IntTools_CommonPrt& aCP, double& 
   return theflag;
 }
 
-bool IsCoplanar(const BRepAdaptor_Curve& aCurve, const BRepAdaptor_Surface& aSurface)
+bool IsCoplanar(const ::model::adapter::BRepAdaptor_Curve& aCurve, const ::model::adapter::BRepAdaptor_Surface& aSurface)
 {
   bool bFlag = false;
 
@@ -722,8 +722,8 @@ bool IsCoplanar(const BRepAdaptor_Curve& aCurve, const BRepAdaptor_Surface& aSur
   return bFlag;
 }
 
-bool IsRadius(const BRepAdaptor_Curve&   aCurve,
-              const BRepAdaptor_Surface& aSurface,
+bool IsRadius(const ::model::adapter::BRepAdaptor_Curve&   aCurve,
+              const ::model::adapter::BRepAdaptor_Surface& aSurface,
               const double               aCriteria)
 {
   bool bFlag = false;
@@ -750,8 +750,8 @@ bool IsRadius(const BRepAdaptor_Curve&   aCurve,
 }
 
 int AdaptiveDiscret(const int                  iDiscret,
-                    const BRepAdaptor_Curve&   aCurve,
-                    const BRepAdaptor_Surface& aSurface)
+                    const ::model::adapter::BRepAdaptor_Curve&   aCurve,
+                    const ::model::adapter::BRepAdaptor_Surface& aSurface)
 {
   int iDiscretNew;
 

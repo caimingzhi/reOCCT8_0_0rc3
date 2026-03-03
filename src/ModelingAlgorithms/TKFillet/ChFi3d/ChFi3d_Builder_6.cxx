@@ -607,10 +607,10 @@ bool ChFi3d_Builder::StoreData(occ::handle<ChFiDS_SurfData>&         Data,
 
   double UFirst, ULast, VFirst, VLast, pppdeb, pppfin;
   Surf->Bounds(UFirst, ULast, VFirst, VLast);
-  BRepAdaptor_Curve2d              brc;
-  BRepAdaptor_Curve                CArc;
-  occ::handle<BRepAdaptor_Surface> BS1 = occ::down_cast<BRepAdaptor_Surface>(S1);
-  occ::handle<BRepAdaptor_Surface> BS2 = occ::down_cast<BRepAdaptor_Surface>(S2);
+  ::model::adapter::BRepAdaptor_Curve2d              brc;
+  ::model::adapter::BRepAdaptor_Curve                CArc;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> BS1 = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> BS2 = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S2);
   Geom2dAPI_ProjectPointOnCurve    projector;
 
   double Uon1 = UFirst, Uon2 = ULast;
@@ -1504,10 +1504,10 @@ bool ChFi3d_Builder::ComputeData(occ::handle<ChFiDS_SurfData>&           Data,
   Data->LastExtensionValue(0);
 
   TopoDS_Face                      F1, F2;
-  occ::handle<BRepAdaptor_Surface> HS = occ::down_cast<BRepAdaptor_Surface>(S1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S1);
   if (!HS.IsNull())
     F1 = HS->Face();
-  HS = occ::down_cast<BRepAdaptor_Surface>(S2);
+  HS = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S2);
   if (!HS.IsNull())
     F2 = HS->Face();
 

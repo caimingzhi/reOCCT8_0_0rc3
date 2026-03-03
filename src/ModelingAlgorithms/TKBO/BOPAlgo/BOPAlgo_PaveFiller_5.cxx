@@ -344,7 +344,7 @@ void BOPAlgo_PaveFiller::PerformEF(const System::log::Message_ProgressRange& the
     bool bLinePlane = false;
     if (aNbCPrts)
     {
-      BRepAdaptor_Curve aBAC(aE);
+      ::model::adapter::BRepAdaptor_Curve aBAC(aE);
       bLinePlane = (aBAC.GetType() == GeomAbs_Line
                     && myContext->SurfaceAdaptor(aF).GetType() == GeomAbs_Plane);
     }
@@ -826,7 +826,7 @@ void BOPAlgo_PaveFiller::ForceInterfEF(
     }
 
     GeomAPI_ProjectPointOnSurf& aProjPS      = myContext->ProjPS(aF);
-    BRepAdaptor_Surface&        aSurfAdaptor = myContext->SurfaceAdaptor(aF);
+    ::model::adapter::BRepAdaptor_Surface&        aSurfAdaptor = myContext->SurfaceAdaptor(aF);
 
     const NCollection_List<int>&    aLIPB = aSelector.Indices();
     NCollection_List<int>::Iterator itLIPB(aLIPB);
@@ -854,7 +854,7 @@ void BOPAlgo_PaveFiller::ForceInterfEF(
       }
 
       const TopoDS_Edge& aE = TopoDS::Edge(myDS->Shape(nE));
-      BRepAdaptor_Curve  aBAC(aE);
+      ::model::adapter::BRepAdaptor_Curve  aBAC(aE);
 
       bool bUseAddTol = true;
 

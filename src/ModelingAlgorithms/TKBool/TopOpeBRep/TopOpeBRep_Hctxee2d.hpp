@@ -8,7 +8,10 @@
 #include <IntRes2d_Domain.hpp>
 #include <Standard_Transient.hpp>
 #include <Standard_Integer.hpp>
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class TopoDS_Shape;
 
 class TopOpeBRep_Hctxee2d : public Standard_Transient
@@ -19,8 +22,8 @@ public:
 
   Standard_EXPORT void SetEdges(const TopoDS_Edge&         E1,
                                 const TopoDS_Edge&         E2,
-                                const BRepAdaptor_Surface& BAS1,
-                                const BRepAdaptor_Surface& BAS2);
+                                const ::model::adapter::BRepAdaptor_Surface& BAS1,
+                                const ::model::adapter::BRepAdaptor_Surface& BAS2);
 
   Standard_EXPORT const TopoDS_Shape& Edge(const int I) const;
 

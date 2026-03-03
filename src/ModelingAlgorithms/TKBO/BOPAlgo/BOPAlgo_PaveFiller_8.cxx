@@ -199,7 +199,7 @@ void BOPAlgo_PaveFiller::FillPaves(const int                                    
   const TopoDS_Face&   aDF = (*(TopoDS_Face*)(&myDS->Shape(nFD)));
 
   double                     aTolV = BRep_Tool::Tolerance(aDV);
-  const BRepAdaptor_Surface& aBAS  = myContext->SurfaceAdaptor(aDF);
+  const ::model::adapter::BRepAdaptor_Surface& aBAS  = myContext->SurfaceAdaptor(aDF);
 
   double aTolInt = math::precision::Precision::PConfusion();
 

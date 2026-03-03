@@ -131,7 +131,7 @@ static occ::handle<Adaptor3d_Surface> Geometry(TopOpeBRepDS_DataStructure& DStr,
     TopoDS_Face F = TopoDS::Face(DStr.Shape(ind));
     if (F.IsNull())
       return occ::handle<Adaptor3d_Surface>();
-    occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface();
+    occ::handle<::model::adapter::BRepAdaptor_Surface> HS = new ::model::adapter::BRepAdaptor_Surface();
     HS->Initialize(F, false);
     return HS;
   }
@@ -188,7 +188,7 @@ void ChFi3d_EnlargeBox(const TopoDS_Edge&                    E,
                        Bnd_Box&                              box)
 
 {
-  BRepAdaptor_Curve BC(E);
+  ::model::adapter::BRepAdaptor_Curve BC(E);
   box.Add(BC.Value(w));
   NCollection_List<TopoDS_Shape>::Iterator It;
   for (It.Initialize(LF); It.More(); It.Next())
@@ -344,7 +344,7 @@ GeomAbs_Shape ChFi3d_evalconti(const TopoDS_Edge&, const TopoDS_Face& F1, const 
     return cont;
   TopoDS_Face F = F1;
   F.Orientation(TopAbs_FORWARD);
-  BRepAdaptor_Surface S(F, false);
+  ::model::adapter::BRepAdaptor_Surface S(F, false);
   GeomAbs_SurfaceType typ = S.GetType();
   if (typ != GeomAbs_Cone && typ != GeomAbs_Sphere && typ != GeomAbs_Torus)
     return cont;
@@ -353,8 +353,8 @@ GeomAbs_Shape ChFi3d_evalconti(const TopoDS_Edge&, const TopoDS_Face& F1, const 
 
 bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
                         const int                        IE,
-                        const BRepAdaptor_Surface&       S1,
-                        const BRepAdaptor_Surface&       S2)
+                        const ::model::adapter::BRepAdaptor_Surface&       S1,
+                        const ::model::adapter::BRepAdaptor_Surface&       S2)
 {
   bool bRet;
 
@@ -380,8 +380,8 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
     return !bRet;
   }
 
-  const BRepAdaptor_Surface& aS1 = (bIsPlane1) ? S1 : S2;
-  const BRepAdaptor_Surface& aS2 = (bIsPlane1) ? S2 : S1;
+  const ::model::adapter::BRepAdaptor_Surface& aS1 = (bIsPlane1) ? S1 : S2;
+  const ::model::adapter::BRepAdaptor_Surface& aS2 = (bIsPlane1) ? S2 : S1;
   aST1                           = aS1.GetType();
   aST2                           = aS2.GetType();
 
@@ -390,7 +390,7 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
     return !bRet;
   }
 
-  const BRepAdaptor_Curve& bc = Spine->CurrentElementarySpine(IE);
+  const ::model::adapter::BRepAdaptor_Curve& bc = Spine->CurrentElementarySpine(IE);
   aCT                         = bc.GetType();
   if (aCT != GeomAbs_Line && aCT != GeomAbs_Circle)
   {
@@ -432,7 +432,7 @@ bool ChFi3d_KParticular(const occ::handle<ChFiDS_Spine>& Spine,
   return !bRet;
 }
 
-void ChFi3d_BoundFac(BRepAdaptor_Surface& S,
+void ChFi3d_BoundFac(::model::adapter::BRepAdaptor_Surface& S,
                      const double         uumin,
                      const double         uumax,
                      const double         vvmin,
@@ -1700,7 +1700,7 @@ void ChFi3d_ComputeArete(const ChFiDS_CommonPoint&        P1,
     }
     else
     {
-      BRepAdaptor_Curve C1(P1.Arc());
+      ::model::adapter::BRepAdaptor_Curve C1(P1.Arc());
       gp_Pnt            Pp;
       gp_Vec            Vv1;
       C1.D1(P1.ParameterOnArc(), Pp, Vv1);
@@ -1823,7 +1823,7 @@ Standard_EXPORT void ChFi3d_FilCommonPoint(const BRepBlend_Extremity& SP,
   {
 
     const BRepBlend_PointOnRst&      PR   = SP.PointOnRst(1);
-    occ::handle<BRepAdaptor_Curve2d> Harc = occ::down_cast<BRepAdaptor_Curve2d>(PR.Arc());
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> Harc = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(PR.Arc());
     if (!Harc.IsNull())
     {
 
@@ -3016,7 +3016,7 @@ occ::handle<Geom_Surface> trsfsurf(const occ::handle<Adaptor3d_Surface>& HS,
 {
 
   occ::handle<Geom_Surface>        res;
-  occ::handle<BRepAdaptor_Surface> hbs = occ::down_cast<BRepAdaptor_Surface>(HS);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> hbs = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(HS);
   occ::handle<GeomAdaptor_Surface> hgs = occ::down_cast<GeomAdaptor_Surface>(HS);
   if (!hbs.IsNull())
   {
@@ -4087,7 +4087,7 @@ Standard_EXPORT void ChFi3d_PerformElSpine(occ::handle<ChFiDS_ElSpine>& HES,
   cepadur                      = false;
   E                            = (IsOffset) ? Spine->OffsetEdges(IF) : Spine->Edges(IF);
   Bof                          = BRepLib::BuildCurve3d(E);
-  const BRepAdaptor_Curve& edc = Spine->CurrentElementarySpine(IF);
+  const ::model::adapter::BRepAdaptor_Curve& edc = Spine->CurrentElementarySpine(IF);
   tolpared                     = edc.Resolution(tol);
   Cv                           = BRep_Tool::Curve(E, First, Last);
 
@@ -4699,8 +4699,8 @@ void ChFi3d_edge_common_faces(const NCollection_List<TopoDS_Shape>& mapEF,
 double ChFi3d_AngleEdge(const TopoDS_Vertex& Vtx, const TopoDS_Edge& E1, const TopoDS_Edge& E2)
 {
   double            angle;
-  BRepAdaptor_Curve BCurv1(E1);
-  BRepAdaptor_Curve BCurv2(E2);
+  ::model::adapter::BRepAdaptor_Curve BCurv1(E1);
+  ::model::adapter::BRepAdaptor_Curve BCurv2(E2);
   double            parE1, parE2;
   gp_Vec            dir1, dir2;
   gp_Pnt            P1, P2;

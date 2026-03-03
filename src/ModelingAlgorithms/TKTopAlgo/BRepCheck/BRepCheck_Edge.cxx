@@ -652,7 +652,7 @@ BRepCheck_Status BRepCheck_Edge::CheckPolygonOnTriangulation(const TopoDS_Edge& 
     (*((occ::handle<BRep_TEdge>*)&theEdge.TShape()))->ChangeCurves();
   NCollection_List<occ::handle<BRep_CurveRepresentation>>::Iterator anITCR(aListOfCR);
 
-  BRepAdaptor_Curve aBC;
+  ::model::adapter::BRepAdaptor_Curve aBC;
   aBC.Initialize(theEdge);
 
   if (!aBC.Is3DCurve())

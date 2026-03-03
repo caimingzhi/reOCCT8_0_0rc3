@@ -285,7 +285,7 @@ TopAbs_State TopOpeBRepBuild_WireEdgeClassifier::CompareShapes(const TopoDS_Shap
 
       BB.Add(F2, TopoDS::Wire(B2));
 
-      BRepAdaptor_Curve2d BC2d(E2, F2);
+      ::model::adapter::BRepAdaptor_Curve2d BC2d(E2, F2);
       double              f, l;
       FUN_tool_bounds(E2, f, l);
       double   x   = 0.45678;

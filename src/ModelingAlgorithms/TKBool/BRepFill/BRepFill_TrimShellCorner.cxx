@@ -1301,7 +1301,7 @@ bool FindCommonVertex(const BOPDS_PDS& theDS,
 
   TopoDS_Edge       theE1 = TopoDS::Edge(theDS->Shape(theEIndex1));
   TopoDS_Edge       theE2 = TopoDS::Edge(theDS->Shape(theEIndex2));
-  BRepAdaptor_Curve aBC1(theE1), aBC2(theE2);
+  ::model::adapter::BRepAdaptor_Curve aBC1(theE1), aBC2(theE2);
 
   int aNbEEs;
   aNbEEs = aEEs.Length();
@@ -1390,7 +1390,7 @@ bool GetUEdges(const int                                             theIndex,
   gp_Pnt2d            pf = C2->Value(f);
   TopoDS_Vertex       aV = (theRank == 0) ? TopExp::LastVertex(E1) : TopExp::FirstVertex(E1);
   double              aTolerance = BRep_Tool::Tolerance(aV);
-  BRepAdaptor_Surface aBAS(aFace, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS(aFace, false);
 
   if (pf.Distance(PU1) > aBAS.UResolution(aTolerance))
   {
@@ -1540,7 +1540,7 @@ bool CheckAndOrientEdges(const NCollection_List<TopoDS_Shape>& theOrderedList,
   occ::handle<Geom2d_Curve> aCurve = BRep_Tool::CurveOnSurface(aEPrev, theFace, f, l);
   TopoDS_Vertex             Vf, Vl;
   TopExp::Vertices(aEPrev, Vf, Vl);
-  BRepAdaptor_Surface aBAS(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS(theFace, false);
 
   double aTolerance1 = (Vf.IsNull()) ? math::precision::Precision::Confusion() : BRep_Tool::Tolerance(Vf);
   double aTolerance2 = (Vl.IsNull()) ? math::precision::Precision::Confusion() : BRep_Tool::Tolerance(Vl);
@@ -2078,7 +2078,7 @@ bool FindFromVEdge(
           occ::handle<Geom2d_Curve> pc = BRep_Tool::CurveOnSurface(theUE2Old, aFaceF, f, l);
           gp_Pnt2d                  p3 = pc->Value(aPIt2.Value().Parameter());
           TopoDS_Vertex             aV = TopoDS::Vertex(theDS->Shape(aPave2.Index()));
-          BRepAdaptor_Surface       aBAS(aFaceF, false);
+          ::model::adapter::BRepAdaptor_Surface       aBAS(aFaceF, false);
           double                    aTolerance = BRep_Tool::Tolerance(aV);
           double                    utol       = aBAS.UResolution(aTolerance);
           double                    vtol       = aBAS.VResolution(aTolerance);
@@ -2403,7 +2403,7 @@ static double ComputeAveragePlaneAndMaxDeviation(const TopoDS_Shape& aWire,
   for (TopoDS_Iterator iter(aWire); iter.More(); iter.Next())
   {
     const TopoDS_Edge&     anEdge = TopoDS::Edge(iter.Value());
-    BRepAdaptor_Curve      aCurve(anEdge);
+    ::model::adapter::BRepAdaptor_Curve      aCurve(anEdge);
     GCPnts_UniformAbscissa Distribution(aCurve, N + 1);
     for (i = 1; i <= N; i++)
     {
@@ -2501,7 +2501,7 @@ static TopoDS_Edge FindEdgeCloseToBisectorPlane(const TopoDS_Vertex& theVertex,
       if (issing)
       {
 
-        BRepAdaptor_Curve BAcurve(anEdge);
+        ::model::adapter::BRepAdaptor_Curve BAcurve(anEdge);
         gp_Pnt            FirstPnt = BAcurve.Value(BAcurve.FirstParameter());
         gp_Pnt            LastPnt  = BAcurve.Value(BAcurve.LastParameter());
         gp_Vec            EdgeVec(FirstPnt, LastPnt);

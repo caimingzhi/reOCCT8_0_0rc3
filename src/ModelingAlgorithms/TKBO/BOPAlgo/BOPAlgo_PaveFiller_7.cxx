@@ -208,7 +208,7 @@ public:
       }
       else
       {
-        const BRepAdaptor_Surface& aBAS = myContext->SurfaceAdaptor(myF);
+        const ::model::adapter::BRepAdaptor_Surface& aBAS = myContext->SurfaceAdaptor(myF);
         if (aBAS.IsUPeriodic() || aBAS.IsVPeriodic())
         {
 

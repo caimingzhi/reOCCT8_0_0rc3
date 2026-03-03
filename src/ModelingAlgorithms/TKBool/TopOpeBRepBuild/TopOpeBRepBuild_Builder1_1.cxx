@@ -638,7 +638,7 @@ void TopOpeBRepBuild_Builder1::SplitEdge(
   NCollection_List<occ::handle<TopOpeBRepBuild_Pave>>                               aPVSlist;
   NCollection_DataMap<TopoDS_Shape, NCollection_List<int>, TopTools_ShapeMapHasher> aVerOriMap;
 
-  BRepAdaptor_Curve aCurveAdaptor(TopoDS::Edge(anEdge));
+  ::model::adapter::BRepAdaptor_Curve aCurveAdaptor(TopoDS::Edge(anEdge));
   double            tolEdge = BRep_Tool::Tolerance(TopoDS::Edge(anEdge));
 
   while (PVS.MoreLoop())

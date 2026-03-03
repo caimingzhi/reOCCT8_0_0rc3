@@ -26,8 +26,8 @@ Standard_EXPORT void FTOL_FaceTolerances(const Bnd_Box&             B1,
                                          const Bnd_Box&             B2,
                                          const TopoDS_Face&         myFace1,
                                          const TopoDS_Face&         myFace2,
-                                         const BRepAdaptor_Surface& mySurface1,
-                                         const BRepAdaptor_Surface& mySurface2,
+                                         const ::model::adapter::BRepAdaptor_Surface& mySurface1,
+                                         const ::model::adapter::BRepAdaptor_Surface& mySurface2,
                                          double&                    myTol1,
                                          double&                    myTol2,
                                          double&                    Deflection,
@@ -185,8 +185,8 @@ Standard_EXPORT void FTOL_FaceTolerances3d(const TopoDS_Face& myFace1,
   {
     B2.Update(0., 0., 0., 1., 1., 1.);
   }
-  BRepAdaptor_Surface mySurface1;
-  BRepAdaptor_Surface mySurface2;
+  ::model::adapter::BRepAdaptor_Surface mySurface1;
+  ::model::adapter::BRepAdaptor_Surface mySurface2;
   mySurface1.Initialize(myFace1);
   mySurface2.Initialize(myFace2);
   double Deflection = 0.01, MaxUV = 0.01;
@@ -210,8 +210,8 @@ Standard_EXPORT void FTOL_FaceTolerances3d(const Bnd_Box&             B1,
                                            const Bnd_Box&             B2,
                                            const TopoDS_Face&         myFace1,
                                            const TopoDS_Face&         myFace2,
-                                           const BRepAdaptor_Surface& mySurface1,
-                                           const BRepAdaptor_Surface& mySurface2,
+                                           const ::model::adapter::BRepAdaptor_Surface& mySurface1,
+                                           const ::model::adapter::BRepAdaptor_Surface& mySurface2,
                                            double&                    myTol1,
                                            double&                    myTol2,
                                            double&                    Deflection,
@@ -233,8 +233,8 @@ Standard_EXPORT void FTOL_FaceTolerances2d(const Bnd_Box&             B1,
                                            const Bnd_Box&             B2,
                                            const TopoDS_Face&         myFace1,
                                            const TopoDS_Face&         myFace2,
-                                           const BRepAdaptor_Surface& mySurface1,
-                                           const BRepAdaptor_Surface& mySurface2,
+                                           const ::model::adapter::BRepAdaptor_Surface& mySurface1,
+                                           const ::model::adapter::BRepAdaptor_Surface& mySurface2,
                                            double&                    myTol1,
                                            double&                    myTol2)
 {

@@ -373,7 +373,7 @@ bool IsDistanceIn3DTolerance(const gp_Pnt& thePnt_f, const gp_Pnt& thePnt_l, con
   return Dist < aTol3d;
 }
 
-static bool IsDistanceIn2DTolerance(const BRepAdaptor_Surface& aFaceSurface,
+static bool IsDistanceIn2DTolerance(const ::model::adapter::BRepAdaptor_Surface& aFaceSurface,
                                     const gp_Pnt2d&            thePnt,
                                     const gp_Pnt2d&            thePntRef,
                                     const double               aTol3d,
@@ -472,7 +472,7 @@ BRepCheck_Status BRepCheck_Wire::Closed2d(const TopoDS_Face& theFace, const bool
     return aClosedStat;
   }
 
-  BRepAdaptor_Surface aFaceSurface(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface aFaceSurface(theFace, false);
 
   int             aNbOrirntedEdges = 0;
   TopExp_Explorer anEdgeExp(myShape, TopAbs_EDGE);
@@ -922,7 +922,7 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
   double                               first1, last1, first2, last2, tolint;
   gp_Pnt2d                             pfirst1, plast1, pfirst2, plast2;
   gp_Pnt                               P3d, P3d2;
-  occ::handle<BRepAdaptor_Surface>     HS;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>     HS;
   Geom2dAdaptor_Curve                  C1, C2;
   Geom2dInt_GInter                     Inter;
   IntRes2d_Domain                      myDomain1;
@@ -930,7 +930,7 @@ BRepCheck_Status BRepCheck_Wire::SelfIntersect(const TopoDS_Face& F,
   NCollection_Map<TopoDS_Shape>        auxmape;
 
   tolint = 1.e-10;
-  HS     = new BRepAdaptor_Surface();
+  HS     = new ::model::adapter::BRepAdaptor_Surface();
   HS->Initialize(F, false);
 
   for (TopoDS_Iterator Iter1(myShape); Iter1.More(); Iter1.Next())
@@ -1651,7 +1651,7 @@ void ChoixUV(const TopoDS_Vertex&            theVertex,
   double              a_gpResolution = gp::Resolution();
   TopAbs_Orientation  aVOrientation, anEdgOrientation;
   double              aParam = 0.0, aFirstParam = 0.0, aLastParam = 0.0, aParPiv = 0.0;
-  BRepAdaptor_Surface aFaceSurface(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface aFaceSurface(theFace, false);
 
   occ::handle<Geom2d_Curve> C2d =
     BRep_Tool::CurveOnSurface(theEdge, theFace, aFirstParam, aLastParam);
@@ -1733,8 +1733,8 @@ void ChoixUV(const TopoDS_Vertex&            theVertex,
 
       {
 
-        BRepAdaptor_Curve bcEdg(theEdge, theFace);
-        BRepAdaptor_Curve bcEvois(anEFound, theFace);
+        ::model::adapter::BRepAdaptor_Curve bcEdg(theEdge, theFace);
+        ::model::adapter::BRepAdaptor_Curve bcEvois(anEFound, theFace);
         gp_Pnt            pEdg    = bcEdg.Value(aParPiv);
         gp_Pnt            pEFound = bcEvois.Value(aParam);
 
@@ -1850,7 +1850,7 @@ static bool IsClosed2dForPeriodicFace(const TopoDS_Face&   theFace,
   if (aSeamEdges.Extent() == 0)
     return true;
 
-  BRepAdaptor_Surface aFaceSurface(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface aFaceSurface(theFace, false);
   double              aTol      = BRep_Tool::Tolerance(theVertex);
   double              aUResol   = aFaceSurface.UResolution(aTol);
   double              aVResol   = aFaceSurface.VResolution(aTol);

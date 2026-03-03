@@ -340,7 +340,7 @@ void ChFi3d_ChBuilder::PerformThreeCorner(const int Jndex)
   occ::handle<ChFiDS_SurfData>& fdpiv =
     CD[pivot]->ChangeSetOfSurfData()->ChangeValue(i[pivot][deb]);
 
-  occ::handle<BRepAdaptor_Surface> Fac     = new BRepAdaptor_Surface(face[pivot]);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> Fac     = new ::model::adapter::BRepAdaptor_Surface(face[pivot]);
   occ::handle<GeomAdaptor_Surface> bidsurf = new GeomAdaptor_Surface(Fac->Surface());
   occ::handle<Adaptor3d_TopolTool> IFac    = new Adaptor3d_TopolTool(bidsurf);
 
@@ -547,7 +547,7 @@ void ChFi3d_ChBuilder::PerformThreeCorner(const int Jndex)
     if (!c1triangle)
     {
       GeomInt_IntSS             inter;
-      BRepAdaptor_Surface       facebid(face[pivot]);
+      ::model::adapter::BRepAdaptor_Surface       facebid(face[pivot]);
       occ::handle<Geom_Surface> surfbid =
         occ::down_cast<Geom_Surface>(facebid.Surface().Surface()->Transformed(facebid.Trsf()));
       inter.Perform(gpl, surfbid, math::precision::Precision::Intersection());
@@ -568,7 +568,7 @@ void ChFi3d_ChBuilder::PerformThreeCorner(const int Jndex)
           gac->Load(gcface);
           occ::handle<GeomAdaptor_Surface> gas = new GeomAdaptor_Surface;
           gas->Load(gpl);
-          occ::handle<BRepAdaptor_Surface> gaf = new BRepAdaptor_Surface;
+          occ::handle<::model::adapter::BRepAdaptor_Surface> gaf = new ::model::adapter::BRepAdaptor_Surface;
           gaf->Initialize(face[pivot]);
 
           double tolr;

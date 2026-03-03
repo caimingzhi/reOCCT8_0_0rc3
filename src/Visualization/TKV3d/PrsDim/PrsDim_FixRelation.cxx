@@ -275,7 +275,7 @@ void PrsDim_FixRelation::ComputeEdge(const TopoDS_Edge& FixEdge, gp_Pnt& curpos)
   {
     gp_Circ           gcirc = occ::down_cast<Geom_Circle>(curEdge)->Circ();
     double            pfirst, plast;
-    BRepAdaptor_Curve cu(FixEdge);
+    ::model::adapter::BRepAdaptor_Curve cu(FixEdge);
     pfirst = cu.FirstParameter();
     plast  = cu.LastParameter();
     ComputeCirclePosition(gcirc, curpos, pfirst, plast);
@@ -414,7 +414,7 @@ bool PrsDim_FixRelation::ConnectedEdges(const TopoDS_Wire&   WIRE,
   if (iterator.More())
   {
     E1 = TopoDS::Edge(iterator.Value());
-    BRepAdaptor_Curve curv(E1);
+    ::model::adapter::BRepAdaptor_Curve curv(E1);
     iterator.Next();
   }
   else
@@ -426,7 +426,7 @@ bool PrsDim_FixRelation::ConnectedEdges(const TopoDS_Wire&   WIRE,
   if (iterator.More())
   {
     E2 = TopoDS::Edge(iterator.Value());
-    BRepAdaptor_Curve curv(E2);
+    ::model::adapter::BRepAdaptor_Curve curv(E2);
     iterator.Next();
   }
   else

@@ -28,7 +28,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
   if (aDrawer->UIsoAspect()->Number() != 0 || aDrawer->VIsoAspect()->Number() != 0)
   {
 
-    BRepAdaptor_Surface S;
+    ::model::adapter::BRepAdaptor_Surface S;
     bool                isoU, isoV;
     for (Tool.InitFace(); Tool.MoreFace(); Tool.NextFace())
     {
@@ -44,7 +44,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
         if (isoU || isoV)
         {
           S.Initialize(Tool.GetFace());
-          occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface(S);
+          occ::handle<::model::adapter::BRepAdaptor_Surface> HS = new ::model::adapter::BRepAdaptor_Surface(S);
           VrmlConverter_WFRestrictedFace::Add(anOStream,
                                               HS,
                                               isoU,
@@ -63,7 +63,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
     if (aDrawer->UIsoAspect()->Number() != 0)
     {
 
-      BRepAdaptor_Surface S;
+      ::model::adapter::BRepAdaptor_Surface S;
       for (Tool.InitFace(); Tool.MoreFace(); Tool.NextFace())
       {
         bool isoU = true;
@@ -74,7 +74,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
           if (isoU)
           {
             S.Initialize(Tool.GetFace());
-            occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface(S);
+            occ::handle<::model::adapter::BRepAdaptor_Surface> HS = new ::model::adapter::BRepAdaptor_Surface(S);
             VrmlConverter_WFRestrictedFace::Add(anOStream,
                                                 HS,
                                                 isoU,
@@ -90,7 +90,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
     if (aDrawer->VIsoAspect()->Number() != 0)
     {
 
-      BRepAdaptor_Surface S;
+      ::model::adapter::BRepAdaptor_Surface S;
       for (Tool.InitFace(); Tool.MoreFace(); Tool.NextFace())
       {
         bool isoV = true;
@@ -101,7 +101,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
           if (isoV)
           {
             S.Initialize(Tool.GetFace());
-            occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface(S);
+            occ::handle<::model::adapter::BRepAdaptor_Surface> HS = new ::model::adapter::BRepAdaptor_Surface(S);
             VrmlConverter_WFRestrictedFace::Add(anOStream,
                                                 HS,
                                                 false,
@@ -137,7 +137,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
         {
           if (Tool.HasCurve())
           {
-            BRepAdaptor_Curve C(Tool.GetCurve());
+            ::model::adapter::BRepAdaptor_Curve C(Tool.GetCurve());
             VrmlConverter_Curve::Add(C, aDrawer, anOStream);
           }
         }
@@ -162,7 +162,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
         {
           if (Tool.HasCurve())
           {
-            BRepAdaptor_Curve C(Tool.GetCurve());
+            ::model::adapter::BRepAdaptor_Curve C(Tool.GetCurve());
             VrmlConverter_Curve::Add(C, aDrawer, anOStream);
           }
         }
@@ -187,7 +187,7 @@ void VrmlConverter_WFShape::Add(Standard_OStream&                        anOStre
         {
           if (Tool.HasCurve())
           {
-            BRepAdaptor_Curve C(Tool.GetCurve());
+            ::model::adapter::BRepAdaptor_Curve C(Tool.GetCurve());
             VrmlConverter_Curve::Add(C, aDrawer, anOStream);
           }
         }

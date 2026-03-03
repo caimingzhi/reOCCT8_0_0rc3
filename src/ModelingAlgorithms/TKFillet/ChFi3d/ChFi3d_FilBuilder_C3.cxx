@@ -194,7 +194,7 @@ static bool ToricCorner(const TopoDS_Face& F, const double rd, const double rf, 
   {
     return false;
   }
-  BRepAdaptor_Surface bs(F);
+  ::model::adapter::BRepAdaptor_Surface bs(F);
   if (bs.GetType() != GeomAbs_Plane)
   {
     return false;
@@ -482,7 +482,7 @@ void ChFi3d_FilBuilder::PerformThreeCorner(const int Jndex)
     CD[pivot]->ChangeSetOfSurfData()->ChangeValue(i[pivot][deb]);
 
   TopAbs_Orientation               OFac = face[pivot].Orientation();
-  occ::handle<BRepAdaptor_Surface> Fac  = new BRepAdaptor_Surface(face[pivot]);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> Fac  = new ::model::adapter::BRepAdaptor_Surface(face[pivot]);
   gp_Pnt2d                         ppp1, ppp2;
   const ChFiDS_FaceInterference&   bid1 =
     CD[pivot]->SetOfSurfData()->Value(i[pivot][deb])->InterferenceOnS1();

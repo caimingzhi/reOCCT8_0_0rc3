@@ -14,7 +14,7 @@
 #include <VrmlConverter_WFRestrictedFace.hpp>
 
 void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                        anOStream,
-                                         const occ::handle<BRepAdaptor_Surface>&  aFace,
+                                         const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
                                          const bool                               DrawUIso,
                                          const bool                               DrawVIso,
                                          const int                                NBUiso,
@@ -251,7 +251,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
 }
 
 void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                        anOStream,
-                                         const occ::handle<BRepAdaptor_Surface>&  aFace,
+                                         const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
                                          const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 
@@ -262,7 +262,7 @@ void VrmlConverter_WFRestrictedFace::Add(Standard_OStream&                      
 }
 
 void VrmlConverter_WFRestrictedFace::AddUIso(Standard_OStream&                        anOStream,
-                                             const occ::handle<BRepAdaptor_Surface>&  aFace,
+                                             const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
                                              const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 
@@ -273,7 +273,7 @@ void VrmlConverter_WFRestrictedFace::AddUIso(Standard_OStream&                  
 }
 
 void VrmlConverter_WFRestrictedFace::AddVIso(Standard_OStream&                        anOStream,
-                                             const occ::handle<BRepAdaptor_Surface>&  aFace,
+                                             const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
                                              const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 

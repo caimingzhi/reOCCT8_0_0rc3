@@ -20,14 +20,14 @@ TEST(BRepMesh_GeomTool_Test, OCC25547_StaticMethodsExportAndFunctionality)
   occ::handle<Geom_Circle>       aCircle = new Geom_Circle(gp_Ax2(gp::Origin(), gp::DZ()), 10);
   occ::handle<Geom_TrimmedCurve> aHalf   = new Geom_TrimmedCurve(aCircle, aFirstP, aLastP);
   TopoDS_Edge                    anEdge  = BRepBuilderAPI_MakeEdge(aHalf);
-  BRepAdaptor_Curve              anAdaptor(anEdge);
+  ::model::adapter::BRepAdaptor_Curve              anAdaptor(anEdge);
   BRepMesh_GeomTool              aGeomTool(anAdaptor, aFirstP, aLastP, 0.1, 0.5);
 
   EXPECT_GT(aGeomTool.NbPoints(), 0) << "BRepMesh_GeomTool failed to discretize an arc";
 
   TopoDS_Face                      aFace = BRepBuilderAPI_MakeFace(gp_Pln(gp::Origin(), gp::DZ()));
-  BRepAdaptor_Surface              aSurf(aFace);
-  occ::handle<BRepAdaptor_Surface> aHSurf = new BRepAdaptor_Surface(aSurf);
+  ::model::adapter::BRepAdaptor_Surface              aSurf(aFace);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> aHSurf = new ::model::adapter::BRepAdaptor_Surface(aSurf);
 
   gp_Pnt aPnt;
   gp_Dir aNormal;

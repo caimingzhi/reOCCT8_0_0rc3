@@ -167,7 +167,7 @@ bool ShapeAnalysis::IsOuterBound(const TopoDS_Face& face)
   }
   else
   {
-    BRepAdaptor_Surface     Ads(F, false);
+    ::model::adapter::BRepAdaptor_Surface     Ads(F, false);
     double                  tol   = BRep_Tool::Tolerance(F);
     double                  toluv = std::min(Ads.UResolution(tol), Ads.VResolution(tol));
     BRepTopAdaptor_FClass2d fcl(F, toluv);

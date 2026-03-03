@@ -5,10 +5,11 @@
 #include <Geom_Surface.hpp>
 #include <TopoDS_Face.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_Surface, GeomAdaptor_TransformedSurface)
+IMPLEMENT_STANDARD_RTTIEXT(::model::adapter::BRepAdaptor_Surface, GeomAdaptor_TransformedSurface)
 
-BRepAdaptor_Surface::BRepAdaptor_Surface() = default;
+::model::adapter::BRepAdaptor_Surface::BRepAdaptor_Surface() = default;
 
+namespace model { namespace adapter {
 BRepAdaptor_Surface::BRepAdaptor_Surface(const TopoDS_Face& F, const bool R)
 {
   Initialize(F, R);
@@ -61,3 +62,5 @@ double BRepAdaptor_Surface::Tolerance() const
 {
   return BRep_Tool::Tolerance(myFace);
 }
+
+}} // namespace model::adapter

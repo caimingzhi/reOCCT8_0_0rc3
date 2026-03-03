@@ -78,7 +78,7 @@ int DNaming_CylinderDriver::Execute(occ::handle<TFunction_Logbook>& theLog) cons
     aTopoDSAxis = anExplorer.Current();
   }
 
-  BRepAdaptor_Curve aCurveAda(TopoDS::Edge(aTopoDSAxis));
+  ::model::adapter::BRepAdaptor_Curve aCurveAda(TopoDS::Edge(aTopoDSAxis));
   if (aCurveAda.GetType() == GeomAbs_Line)
   {
     gp_Lin aLin = aCurveAda.Line();

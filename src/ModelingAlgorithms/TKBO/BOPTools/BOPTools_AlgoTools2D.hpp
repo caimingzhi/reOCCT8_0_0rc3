@@ -12,7 +12,10 @@ class TopoDS_Face;
 class gp_Vec;
 class Geom2d_Curve;
 class Geom_Curve;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class IntTools_Context;
 
 class BOPTools_AlgoTools2D
@@ -75,7 +78,7 @@ public:
     occ::handle<Geom2d_Curve>&           theC2DA,
     const occ::handle<IntTools_Context>& theContext = occ::handle<IntTools_Context>());
 
-  Standard_EXPORT static void AdjustPCurveOnSurf(const BRepAdaptor_Surface&       aF,
+  Standard_EXPORT static void AdjustPCurveOnSurf(const ::model::adapter::BRepAdaptor_Surface&       aF,
                                                  const double                     aT1,
                                                  const double                     aT2,
                                                  const occ::handle<Geom2d_Curve>& aC2D,

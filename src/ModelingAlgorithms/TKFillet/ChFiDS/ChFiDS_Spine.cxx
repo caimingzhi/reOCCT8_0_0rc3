@@ -687,7 +687,7 @@ void ChFiDS_Spine::SetCurrent(const int Index)
   }
 }
 
-const BRepAdaptor_Curve& ChFiDS_Spine::CurrentElementarySpine(const int Index)
+const ::model::adapter::BRepAdaptor_Curve& ChFiDS_Spine::CurrentElementarySpine(const int Index)
 {
   if (Index != indexofcurve)
   {

@@ -446,7 +446,7 @@ static void IsInversed(const TopoDS_Shape& S,
 
   gp_Pnt            P;
   gp_Vec            DS, DC1, DC2;
-  BRepAdaptor_Curve CS(TopoDS::Edge(S));
+  ::model::adapter::BRepAdaptor_Curve CS(TopoDS::Edge(S));
   if (S.Orientation() == TopAbs_FORWARD)
   {
     CS.D1(CS.FirstParameter(), P, DS);
@@ -459,7 +459,7 @@ static void IsInversed(const TopoDS_Shape& S,
 
   if (!BRep_Tool::Degenerated(E1))
   {
-    BRepAdaptor_Curve C1(TopoDS::Edge(E1));
+    ::model::adapter::BRepAdaptor_Curve C1(TopoDS::Edge(E1));
     if (E1.Orientation() == TopAbs_FORWARD)
     {
       C1.D1(C1.FirstParameter(), P, DC1);
@@ -476,7 +476,7 @@ static void IsInversed(const TopoDS_Shape& S,
 
   if (!BRep_Tool::Degenerated(E2))
   {
-    BRepAdaptor_Curve C2(TopoDS::Edge(E2));
+    ::model::adapter::BRepAdaptor_Curve C2(TopoDS::Edge(E2));
     if (E2.Orientation() == TopAbs_FORWARD)
     {
       C2.D1(C2.FirstParameter(), P, DC2);
@@ -1721,8 +1721,8 @@ void BRepFill_Evolved::AddTopAndBottom(BRepTools_Quilt& Glue)
 
         if (!ComputeOrientation)
         {
-          BRepAdaptor_Curve C1(ES);
-          BRepAdaptor_Curve C2(E);
+          ::model::adapter::BRepAdaptor_Curve C1(ES);
+          ::model::adapter::BRepAdaptor_Curve C2(E);
           double            f, l, fs, ls;
           BRep_Tool::Range(E, f, l);
           BRep_Tool::Range(ES, fs, ls);
@@ -1759,7 +1759,7 @@ void BRepFill_Evolved::AddTopAndBottom(BRepTools_Quilt& Glue)
           if (!BRep_Tool::Degenerated(E))
           {
 
-            BRepAdaptor_Curve C(E);
+            ::model::adapter::BRepAdaptor_Curve C(E);
             double            f, l;
             BRep_Tool::Range(E, f, l);
             double u = 0.3 * f + 0.7 * l;
@@ -2027,9 +2027,9 @@ void BRepFill_Evolved::ContinuityOnOffsetEdge(const NCollection_List<TopoDS_Shap
 
       double            U1 = BRep_Tool::Parameter(V, CurE);
       double            U2 = BRep_Tool::Parameter(V, PrecE);
-      BRepAdaptor_Curve Curve1(CurE);
-      BRepAdaptor_Curve Curve2(PrecE);
-      GeomAbs_Shape     Continuity = BRepLProp::Continuity(Curve1, Curve2, U1, U2);
+      ::model::adapter::BRepAdaptor_Curve Curve1(CurE);
+      ::model::adapter::BRepAdaptor_Curve Curve2(PrecE);
+      GeomAbs_Shape     Continuity = ::model::localproperties::BRepLProp::Continuity(Curve1, Curve2, U1, U2);
 
       if (Continuity >= 1)
       {
@@ -2059,9 +2059,9 @@ void BRepFill_Evolved::ContinuityOnOffsetEdge(const NCollection_List<TopoDS_Shap
 
     double            U1 = BRep_Tool::Parameter(VF, CurE);
     double            U2 = BRep_Tool::Parameter(VF, FirstE);
-    BRepAdaptor_Curve Curve1(CurE);
-    BRepAdaptor_Curve Curve2(FirstE);
-    GeomAbs_Shape     Continuity = BRepLProp::Continuity(Curve1, Curve2, U1, U2);
+    ::model::adapter::BRepAdaptor_Curve Curve1(CurE);
+    ::model::adapter::BRepAdaptor_Curve Curve2(FirstE);
+    GeomAbs_Shape     Continuity = ::model::localproperties::BRepLProp::Continuity(Curve1, Curve2, U1, U2);
 
     if (Continuity >= 1)
     {

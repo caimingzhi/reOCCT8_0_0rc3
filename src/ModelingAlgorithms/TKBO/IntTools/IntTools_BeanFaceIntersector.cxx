@@ -42,7 +42,7 @@
 
 static bool SetEmptyResultRange(const double theParameter, IntTools_MarkedRangeSet& theMarkedRange);
 
-static Bnd_Box GetSurfaceBox(const BRepAdaptor_Surface&         theSurf,
+static Bnd_Box GetSurfaceBox(const ::model::adapter::BRepAdaptor_Surface&         theSurf,
                              const double                       theFirstU,
                              const double                       theLastU,
                              const double                       theFirstV,
@@ -50,7 +50,7 @@ static Bnd_Box GetSurfaceBox(const BRepAdaptor_Surface&         theSurf,
                              const double                       theTolerance,
                              IntTools_SurfaceRangeLocalizeData& theSurfaceData);
 
-static void ComputeGridPoints(const BRepAdaptor_Surface&         theSurf,
+static void ComputeGridPoints(const ::model::adapter::BRepAdaptor_Surface&         theSurf,
                               occ::handle<Geom_BSplineSurface>   theBsplSurf,
                               const double                       theFirstU,
                               const double                       theLastU,
@@ -59,7 +59,7 @@ static void ComputeGridPoints(const BRepAdaptor_Surface&         theSurf,
                               const double                       theTolerance,
                               IntTools_SurfaceRangeLocalizeData& theSurfaceData);
 
-static void BuildBox(const BRepAdaptor_Surface&         theSurf,
+static void BuildBox(const ::model::adapter::BRepAdaptor_Surface&         theSurf,
                      const double                       theFirstU,
                      const double                       theLastU,
                      const double                       theFirstV,
@@ -115,8 +115,8 @@ IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const TopoDS_Edge& th
   Init(theEdge, theFace);
 }
 
-IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const BRepAdaptor_Curve&   theCurve,
-                                                           const BRepAdaptor_Surface& theSurface,
+IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                                                           const ::model::adapter::BRepAdaptor_Surface& theSurface,
                                                            const double theBeanTolerance,
                                                            const double theFaceTolerance)
     : myFirstParameter(0.),
@@ -131,8 +131,8 @@ IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const BRepAdaptor_Cur
   Init(theCurve, theSurface, theBeanTolerance, theFaceTolerance);
 }
 
-IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const BRepAdaptor_Curve&   theCurve,
-                                                           const BRepAdaptor_Surface& theSurface,
+IntTools_BeanFaceIntersector::IntTools_BeanFaceIntersector(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                                                           const ::model::adapter::BRepAdaptor_Surface& theSurface,
                                                            const double theFirstParOnCurve,
                                                            const double theLastParOnCurve,
                                                            const double theUMinParameter,
@@ -186,8 +186,8 @@ void IntTools_BeanFaceIntersector::Init(const TopoDS_Edge& theEdge, const TopoDS
   myResults.Clear();
 }
 
-void IntTools_BeanFaceIntersector::Init(const BRepAdaptor_Curve&   theCurve,
-                                        const BRepAdaptor_Surface& theSurface,
+void IntTools_BeanFaceIntersector::Init(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                                        const ::model::adapter::BRepAdaptor_Surface& theSurface,
                                         const double               theBeanTolerance,
                                         const double               theFaceTolerance)
 {
@@ -208,8 +208,8 @@ void IntTools_BeanFaceIntersector::Init(const BRepAdaptor_Curve&   theCurve,
   myResults.Clear();
 }
 
-void IntTools_BeanFaceIntersector::Init(const BRepAdaptor_Curve&   theCurve,
-                                        const BRepAdaptor_Surface& theSurface,
+void IntTools_BeanFaceIntersector::Init(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                                        const ::model::adapter::BRepAdaptor_Surface& theSurface,
                                         const double               theFirstParOnCurve,
                                         const double               theLastParOnCurve,
                                         const double               theUMinParameter,
@@ -507,8 +507,8 @@ void IntTools_BeanFaceIntersector::ComputeAroundExactIntersection()
 {
   IntCurveSurface_HInter anExactIntersector;
 
-  occ::handle<BRepAdaptor_Curve>   aCurve   = new BRepAdaptor_Curve(myCurve);
-  occ::handle<BRepAdaptor_Surface> aSurface = new BRepAdaptor_Surface(mySurface);
+  occ::handle<::model::adapter::BRepAdaptor_Curve>   aCurve   = new ::model::adapter::BRepAdaptor_Curve(myCurve);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> aSurface = new ::model::adapter::BRepAdaptor_Surface(mySurface);
 
   anExactIntersector.Perform(aCurve, aSurface);
 
@@ -1982,7 +1982,7 @@ bool IntTools_BeanFaceIntersector::TestComputeCoinside()
   return true;
 }
 
-Bnd_Box GetSurfaceBox(const BRepAdaptor_Surface&         theSurf,
+Bnd_Box GetSurfaceBox(const ::model::adapter::BRepAdaptor_Surface&         theSurf,
                       const double                       theFirstU,
                       const double                       theLastU,
                       const double                       theFirstV,
@@ -1998,7 +1998,7 @@ Bnd_Box GetSurfaceBox(const BRepAdaptor_Surface&         theSurf,
   return aTotalBox;
 }
 
-void ComputeGridPoints(const BRepAdaptor_Surface&         theSurf,
+void ComputeGridPoints(const ::model::adapter::BRepAdaptor_Surface&         theSurf,
                        occ::handle<Geom_BSplineSurface>   theBsplSurf,
                        const double                       theFirstU,
                        const double                       theLastU,
@@ -2223,7 +2223,7 @@ void ComputeGridPoints(const BRepAdaptor_Surface&         theSurf,
   theSurfaceData.SetGridDeflection(aDef);
 }
 
-void BuildBox(const BRepAdaptor_Surface&         theSurf,
+void BuildBox(const ::model::adapter::BRepAdaptor_Surface&         theSurf,
               const double                       theFirstU,
               const double                       theLastU,
               const double                       theFirstV,

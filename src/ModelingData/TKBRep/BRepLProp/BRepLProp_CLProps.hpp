@@ -12,22 +12,29 @@ class LProp_BadContinuity;
 class Standard_DomainError;
 class Standard_OutOfRange;
 class LProp_NotDefined;
+namespace model { namespace adapter {
 class BRepAdaptor_Curve;
+}} // namespace model::adapter
+
 class gp_Vec;
 class gp_Pnt;
 class gp_Dir;
+namespace model { namespace localproperties {
 class BRepLProp_CurveTool;
+}} // namespace model::localproperties
 
+
+namespace model { namespace localproperties {
 class BRepLProp_CLProps
 {
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT BRepLProp_CLProps(const BRepAdaptor_Curve& C,
+  Standard_EXPORT BRepLProp_CLProps(const ::model::adapter::BRepAdaptor_Curve& C,
                                     const int                N,
                                     const double             Resolution);
 
-  Standard_EXPORT BRepLProp_CLProps(const BRepAdaptor_Curve& C,
+  Standard_EXPORT BRepLProp_CLProps(const ::model::adapter::BRepAdaptor_Curve& C,
                                     const double             U,
                                     const int                N,
                                     const double             Resolution);
@@ -36,7 +43,7 @@ public:
 
   Standard_EXPORT void SetParameter(const double U);
 
-  Standard_EXPORT void SetCurve(const BRepAdaptor_Curve& C);
+  Standard_EXPORT void SetCurve(const ::model::adapter::BRepAdaptor_Curve& C);
 
   Standard_EXPORT const gp_Pnt& Value() const;
 
@@ -57,7 +64,7 @@ public:
   Standard_EXPORT void CentreOfCurvature(gp_Pnt& P);
 
 private:
-  BRepAdaptor_Curve myCurve;
+  ::model::adapter::BRepAdaptor_Curve myCurve;
   double            myU;
   int               myDerOrder;
   double            myCN;
@@ -69,3 +76,5 @@ private:
   LProp_Status      myTangentStatus;
   int               mySignificantFirstDerivativeOrder;
 };
+}} // namespace model::localproperties
+

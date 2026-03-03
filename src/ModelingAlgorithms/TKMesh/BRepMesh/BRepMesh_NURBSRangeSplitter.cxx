@@ -284,7 +284,7 @@ Handle(IMeshData::ListOfPnt2d) BRepMesh_NURBSRangeSplitter::GenerateSurfaceNodes
   const std::pair<double, double>& aDelta  = GetDelta();
 
   const double                            aDefFace = GetDFace()->GetDeflection();
-  const occ::handle<BRepAdaptor_Surface>& gFace    = GetSurface();
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& gFace    = GetSurface();
   occ::handle<Geom_Surface>               aSurface = gFace->Surface().Surface();
 
   const occ::handle<NCollection_IncAllocator> aTmpAlloc =
@@ -404,7 +404,7 @@ void BRepMesh_NURBSRangeSplitter::getUndefinedInterval(
 bool BRepMesh_NURBSRangeSplitter::initParameters() const
 {
   const GeomAbs_Shape                     aContinuity = GeomAbs_CN;
-  const occ::handle<BRepAdaptor_Surface>& aSurface    = GetSurface();
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aSurface    = GetSurface();
 
   NCollection_Array1<double> aIntervals[2];
   getUndefinedInterval(aSurface, true, aContinuity, GetRangeU(), aIntervals[0]);
@@ -498,7 +498,7 @@ Handle(IMeshData::SequenceOfReal) BRepMesh_NURBSRangeSplitter::computeGrainAndFi
     aMinDiff /= theDelta;
   }
 
-  const occ::handle<BRepAdaptor_Surface>& aSurface = GetSurface();
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aSurface = GetSurface();
   const double aMinSize2d = std::max(aSurface->UResolution(theParameters.MinSize),
                                      aSurface->VResolution(theParameters.MinSize));
 

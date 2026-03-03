@@ -25,7 +25,7 @@
 #include <TopExp.hpp>
 #include <ElSLib.hpp>
 
-static bool isCW(const BRepAdaptor_Curve& AC)
+static bool isCW(const ::model::adapter::BRepAdaptor_Curve& AC)
 {
   const double             f      = AC.FirstParameter();
   const double             l      = AC.LastParameter();
@@ -148,7 +148,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Wire& theWire, const gp_Pln& thePla
     throw Standard_TypeMismatch(
       "The algorithm expects a wire consisting of two linear or circular edges.");
 
-  BRepAdaptor_Curve AC1(e1);
+  ::model::adapter::BRepAdaptor_Curve AC1(e1);
   if (AC1.GetType() != GeomAbs_Line && AC1.GetType() != GeomAbs_Circle)
     throw Standard_TypeMismatch("A segment or an arc of circle is expected.");
 
@@ -177,7 +177,7 @@ void ChFi2d_AnaFilletAlgo::Init(const TopoDS_Wire& theWire, const gp_Pln& thePla
     cw1     = isCW(AC1);
   }
 
-  BRepAdaptor_Curve AC2(e2);
+  ::model::adapter::BRepAdaptor_Curve AC2(e2);
   if (AC2.GetType() != GeomAbs_Line && AC2.GetType() != GeomAbs_Circle)
     throw Standard_TypeMismatch("A segment or an arc of circle is expected.");
 
@@ -295,7 +295,7 @@ bool ChFi2d_AnaFilletAlgo::Perform(const double radius)
     }
   }
 
-  BRepAdaptor_Curve AC1(e1), AC2(e2);
+  ::model::adapter::BRepAdaptor_Curve AC1(e1), AC2(e2);
   if (segment1 && segment2)
   {
     bRet = SegmentFilletSegment(radius, xc, yc, cw, start, end);

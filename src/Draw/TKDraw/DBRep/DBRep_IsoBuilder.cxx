@@ -342,7 +342,7 @@ void DBRep_IsoBuilder::LoadIsos(const occ::handle<DBRep_Face>& Face) const
 void DBRep_IsoBuilder::FillGaps(const TopoDS_Face& theFace, DataMapOfEdgePCurve& theEdgePCurveMap)
 {
 
-  BRepAdaptor_Surface aBASurf(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface aBASurf(theFace, false);
 
   TopoDS_Iterator aItW(theFace);
   for (; aItW.More(); aItW.Next())

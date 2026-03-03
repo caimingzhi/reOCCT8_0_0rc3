@@ -80,7 +80,7 @@ void VrmlConverter_WFDeflectionShape::Add(Standard_OStream&                     
         {
           if (Tool.HasCurve())
           {
-            BRepAdaptor_Curve C(Tool.GetCurve());
+            ::model::adapter::BRepAdaptor_Curve C(Tool.GetCurve());
             BRep_Tool::PolygonOnTriangulation(Tool.GetCurve(), aPT, aT, aL);
             if (!aPT.IsNull() && !aT.IsNull() && aPT->HasParameters())
               VrmlConverter_DeflectionCurve::Add(anOStream,
@@ -113,7 +113,7 @@ void VrmlConverter_WFDeflectionShape::Add(Standard_OStream&                     
         {
           if (Tool.HasCurve())
           {
-            BRepAdaptor_Curve C(Tool.GetCurve());
+            ::model::adapter::BRepAdaptor_Curve C(Tool.GetCurve());
             BRep_Tool::PolygonOnTriangulation(Tool.GetCurve(), aPT, aT, aL);
             if (!aPT.IsNull() && !aT.IsNull() && aPT->HasParameters())
               VrmlConverter_DeflectionCurve::Add(anOStream,
@@ -146,7 +146,7 @@ void VrmlConverter_WFDeflectionShape::Add(Standard_OStream&                     
         {
           if (Tool.HasCurve())
           {
-            BRepAdaptor_Curve C(Tool.GetCurve());
+            ::model::adapter::BRepAdaptor_Curve C(Tool.GetCurve());
             BRep_Tool::PolygonOnTriangulation(Tool.GetCurve(), aPT, aT, aL);
             if (!aPT.IsNull() && !aT.IsNull() && aPT->HasParameters())
               VrmlConverter_DeflectionCurve::Add(anOStream,

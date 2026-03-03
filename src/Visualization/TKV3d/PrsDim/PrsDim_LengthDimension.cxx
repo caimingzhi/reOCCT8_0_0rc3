@@ -340,7 +340,7 @@ bool PrsDim_LengthDimension::InitTwoEdgesLength(const TopoDS_Edge& theFirstEdge,
   {
     double aParam1 = 0.0, aParam2 = 0.0;
     anExtrema.LowerDistanceParameters(aParam1, aParam2);
-    BRepAdaptor_Curve aCurveAdaptor(theFirstEdge);
+    ::model::adapter::BRepAdaptor_Curve aCurveAdaptor(theFirstEdge);
     gp_Pnt            aPoint;
     gp_Vec            aDir;
     aCurveAdaptor.D1(aParam1, aPoint, aDir);
@@ -390,7 +390,7 @@ bool PrsDim_LengthDimension::InitEdgeVertexLength(const TopoDS_Edge&   theEdge,
     return false;
   }
 
-  BRepAdaptor_Curve aCurveAdaptor(theEdge);
+  ::model::adapter::BRepAdaptor_Curve aCurveAdaptor(theEdge);
   gp_Pnt            aPoint;
   gp_Vec            aDir;
   aCurveAdaptor.D1(anExtrema.LowerDistanceParameter(), aPoint, aDir);
@@ -416,7 +416,7 @@ bool PrsDim_LengthDimension::InitEdgeFaceLength(const TopoDS_Edge& theEdge,
   myFirstPoint  = aDistAdaptor.PointOnShape1(1);
   mySecondPoint = aDistAdaptor.PointOnShape2(1);
 
-  BRepAdaptor_Curve aCurveAdaptor(theEdge);
+  ::model::adapter::BRepAdaptor_Curve aCurveAdaptor(theEdge);
   double            aParam;
   if (aDistAdaptor.SupportOnShape1(1).ShapeType() == TopAbs_EDGE)
   {
@@ -679,7 +679,7 @@ bool PrsDim_LengthDimension::InitOneShapePoints(const TopoDS_Shape& theShape)
 
   TopoDS_Edge anEdge = TopoDS::Edge(theShape);
 
-  BRepAdaptor_Curve aBrepCurve(anEdge);
+  ::model::adapter::BRepAdaptor_Curve aBrepCurve(anEdge);
   double            aFirst = aBrepCurve.FirstParameter();
   double            aLast  = aBrepCurve.LastParameter();
 

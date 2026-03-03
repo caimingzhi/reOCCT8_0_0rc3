@@ -72,7 +72,7 @@ namespace
       if (BRep_Tool::IsClosed(anEdge, theFace))
         ++aNbSeams;
 
-      BRepAdaptor_Curve anAdaptor(anEdge);
+      ::model::adapter::BRepAdaptor_Curve anAdaptor(anEdge);
       if (anAdaptor.GetType() == GeomAbs_Circle)
         ++aNbCirles;
     }
@@ -508,7 +508,7 @@ void StdSelect_BRepSelectionTool::GetEdgeSensitive(
     return;
   }
 
-  BRepAdaptor_Curve cu3d;
+  ::model::adapter::BRepAdaptor_Curve cu3d;
   try
   {
     OCC_CATCH_SIGNALS
@@ -642,7 +642,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
     }
     if (isFullSphere)
     {
-      gp_Sphere                             aSphere = BRepAdaptor_Surface(theFace).Sphere();
+      gp_Sphere                             aSphere = ::model::adapter::BRepAdaptor_Surface(theFace).Sphere();
       occ::handle<Select3D_SensitiveSphere> aSensSphere =
         new Select3D_SensitiveSphere(theOwner,
                                      aSphere.Position().Axis().Location(),
@@ -726,7 +726,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
     if (aSubfacesMap.Extent() == 1)
     {
       const TopoDS_Edge& anEdge = TopoDS::Edge(aSubfacesMap.FindKey(1));
-      BRepAdaptor_Curve  anAdaptor(anEdge);
+      ::model::adapter::BRepAdaptor_Curve  anAdaptor(anEdge);
       if (anAdaptor.GetType() == GeomAbs_Circle && BRep_Tool::IsClosed(anEdge))
       {
         occ::handle<Select3D_SensitiveCircle> aSensSCyl =
@@ -746,7 +746,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
     return true;
   }
 
-  BRepAdaptor_Surface BS(theFace);
+  ::model::adapter::BRepAdaptor_Surface BS(theFace);
   if (BS.GetType() == GeomAbs_Plane)
   {
     const double aFirstU =
@@ -789,7 +789,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
 
   NCollection_Sequence<gp_Pnt> aWirePoints;
   bool                         isFirstExp = true;
-  BRepAdaptor_Curve            cu3d;
+  ::model::adapter::BRepAdaptor_Curve            cu3d;
   for (BRepTools_WireExplorer aWireExplorer(aWire); aWireExplorer.More(); aWireExplorer.Next())
   {
     try
@@ -972,7 +972,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForCylinder(
         && aGeomPln->Position().Direction().IsEqual(aGeomCone->Position().Direction(),
                                                     math::precision::Precision::Angular()))
     {
-      const gp_Cone aCone = BRepAdaptor_Surface(*aFaces[aConIndex]).Cone();
+      const gp_Cone aCone = ::model::adapter::BRepAdaptor_Surface(*aFaces[aConIndex]).Cone();
       const double  aRad1 = aCone.RefRadius();
       const double  aHeight =
         (aRad1 != 0.0) ? aRad1 / std::abs(std::tan(aCone.SemiAngle()))
@@ -1040,7 +1040,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForCylinder(
           && aGeomPlanes[1]->Position().Direction().IsEqual(aGeomCone->Position().Direction(),
                                                             math::precision::Precision::Angular()))
       {
-        const gp_Cone aCone = BRepAdaptor_Surface(*aFaces[aConIndex]).Cone();
+        const gp_Cone aCone = ::model::adapter::BRepAdaptor_Surface(*aFaces[aConIndex]).Cone();
         const double  aRad1 = aCone.RefRadius();
         const double  aHeight =
           aGeomPlanes[0]
@@ -1070,7 +1070,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForCylinder(
           && aGeomPlanes[1]->Position().Direction().IsParallel(aGeomCyl->Position().Direction(),
                                                                math::precision::Precision::Angular()))
       {
-        const gp_Cylinder aCyl = BRepAdaptor_Surface(*aFaces[aConIndex]).Cylinder();
+        const gp_Cylinder aCyl = ::model::adapter::BRepAdaptor_Surface(*aFaces[aConIndex]).Cylinder();
         const double      aRad = aCyl.Radius();
         const double      aHeight =
           aGeomPlanes[0]

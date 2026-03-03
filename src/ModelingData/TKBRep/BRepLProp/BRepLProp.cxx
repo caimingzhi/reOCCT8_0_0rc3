@@ -7,8 +7,9 @@
 #include <TopAbs_Orientation.hpp>
 #include <TopoDS_Edge.hpp>
 
-GeomAbs_Shape BRepLProp::Continuity(const BRepAdaptor_Curve& C1,
-                                    const BRepAdaptor_Curve& C2,
+namespace model { namespace localproperties {
+GeomAbs_Shape BRepLProp::Continuity(const ::model::adapter::BRepAdaptor_Curve& C1,
+                                    const ::model::adapter::BRepAdaptor_Curve& C2,
                                     const double             u1,
                                     const double             u2,
                                     const double             tl,
@@ -86,10 +87,12 @@ GeomAbs_Shape BRepLProp::Continuity(const BRepAdaptor_Curve& C1,
   return cont;
 }
 
-GeomAbs_Shape BRepLProp::Continuity(const BRepAdaptor_Curve& C1,
-                                    const BRepAdaptor_Curve& C2,
+GeomAbs_Shape BRepLProp::Continuity(const ::model::adapter::BRepAdaptor_Curve& C1,
+                                    const ::model::adapter::BRepAdaptor_Curve& C2,
                                     const double             u1,
                                     const double             u2)
 {
   return Continuity(C1, C2, u1, u2, math::precision::Precision::Confusion(), math::precision::Precision::Angular());
 }
+
+}} // namespace model::localproperties

@@ -199,8 +199,8 @@ void BOPTools_AlgoTools2D::AdjustPCurveOnFace(const TopoDS_Face&                
                                               occ::handle<Geom2d_Curve>&           theC2DA,
                                               const occ::handle<IntTools_Context>& theContext)
 {
-  BRepAdaptor_Surface        aBASTmp;
-  const BRepAdaptor_Surface* pBAS;
+  ::model::adapter::BRepAdaptor_Surface        aBASTmp;
+  const ::model::adapter::BRepAdaptor_Surface* pBAS;
   if (!theContext.IsNull())
   {
     pBAS = &theContext->SurfaceAdaptor(theF);
@@ -214,7 +214,7 @@ void BOPTools_AlgoTools2D::AdjustPCurveOnFace(const TopoDS_Face&                
   BOPTools_AlgoTools2D::AdjustPCurveOnSurf(*pBAS, theFirst, theLast, theC2D, theC2DA);
 }
 
-void BOPTools_AlgoTools2D::AdjustPCurveOnSurf(const BRepAdaptor_Surface&       aBAS,
+void BOPTools_AlgoTools2D::AdjustPCurveOnSurf(const ::model::adapter::BRepAdaptor_Surface&       aBAS,
                                               const double                     aFirst,
                                               const double                     aLast,
                                               const occ::handle<Geom2d_Curve>& aC2D,
@@ -458,8 +458,8 @@ void BOPTools_AlgoTools2D::MakePCurveOnFace(const TopoDS_Face&                  
                                             double&                              TolReached2d,
                                             const occ::handle<IntTools_Context>& theContext)
 {
-  BRepAdaptor_Surface        aBASTmp;
-  const BRepAdaptor_Surface* pBAS;
+  ::model::adapter::BRepAdaptor_Surface        aBASTmp;
+  const ::model::adapter::BRepAdaptor_Surface* pBAS;
   if (!theContext.IsNull())
   {
     pBAS = &theContext->SurfaceAdaptor(aF);
@@ -470,7 +470,7 @@ void BOPTools_AlgoTools2D::MakePCurveOnFace(const TopoDS_Face&                  
     pBAS = &aBASTmp;
   }
 
-  occ::handle<BRepAdaptor_Surface> aBAHS = new BRepAdaptor_Surface(*pBAS);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> aBAHS = new ::model::adapter::BRepAdaptor_Surface(*pBAS);
   occ::handle<GeomAdaptor_Curve>   aBAHC = new GeomAdaptor_Curve(aC3D, aT1, aT2);
 
   double aTolR;

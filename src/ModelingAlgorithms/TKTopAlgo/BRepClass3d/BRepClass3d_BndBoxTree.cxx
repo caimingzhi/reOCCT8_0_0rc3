@@ -21,7 +21,7 @@ bool BRepClass3d_BndBoxTreeSelectorPoint::Accept(const int& theObj)
     double             EdgeTSq = BRep_Tool::Tolerance(E);
     EdgeTSq *= EdgeTSq;
     double            f, l;
-    BRepAdaptor_Curve C(E);
+    ::model::adapter::BRepAdaptor_Curve C(E);
     BRep_Tool::Range(E, f, l);
 
     Extrema_ExtPC ExtPC(myP, C, f, l);
@@ -64,7 +64,7 @@ bool BRepClass3d_BndBoxTreeSelectorLine::Accept(const int& theObj)
     double             EdgeTSq = BRep_Tool::Tolerance(E);
     EdgeTSq *= EdgeTSq;
     double            f, l;
-    BRepAdaptor_Curve C(E);
+    ::model::adapter::BRepAdaptor_Curve C(E);
     BRep_Tool::Range(E, f, l);
 
     Extrema_ExtCC ExtCC(C, myLC, f, l, myLC.FirstParameter(), myLC.LastParameter());

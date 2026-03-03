@@ -111,8 +111,8 @@ void BRepIntCurveSurface_Inter::Find()
                     : (!myCurveBox.IsVoid() ? aFaceBox.IsOut(myCurveBox) : false));
     if (isOut)
       continue;
-    occ::handle<BRepAdaptor_Surface> aSurfForFastClass =
-      new BRepAdaptor_Surface(TopoDS::Face(aCurface));
+    occ::handle<::model::adapter::BRepAdaptor_Surface> aSurfForFastClass =
+      new ::model::adapter::BRepAdaptor_Surface(TopoDS::Face(aCurface));
     myIntcs.Perform(myCurve, aSurfForFastClass);
     myCurrentnbpoints = myIntcs.NbPoints();
     if (!myCurrentnbpoints)

@@ -318,7 +318,7 @@ TopAbs_Orientation BRepSweep_Translation::DirectSolid(const TopoDS_Shape& aGenS,
                                                       const Sweep_NumShape&)
 {
 
-  BRepAdaptor_Surface surf(TopoDS::Face(aGenS));
+  ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(aGenS));
   gp_Pnt              P;
   gp_Vec              du, dv;
   surf.D1((surf.FirstUParameter() + surf.LastUParameter()) / 2.,

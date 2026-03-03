@@ -351,7 +351,7 @@ static void CurveHermite(const TopOpeBRepDS_DataStructure&                DStr,
   }
   for (nb = 1; nb <= nbface - 1; nb++)
   {
-    BRepAdaptor_Curve C(TopoDS::Edge(Ecom.Value(nb)));
+    ::model::adapter::BRepAdaptor_Curve C(TopoDS::Edge(Ecom.Value(nb)));
     C.D0(param.Value(nb), p02);
     GeomAdaptor_Curve L(Bezier);
     Extrema_ExtCC     ext(C, L);
@@ -1701,7 +1701,7 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
         Indices(nedge, ic, icplus, icmoins);
         if (sharp.Value(ic))
         {
-          BRepAdaptor_Curve C(TopoDS::Edge(Evive.Value(ic)));
+          ::model::adapter::BRepAdaptor_Curve C(TopoDS::Edge(Evive.Value(ic)));
 
           if (!tangentregul(ic))
             ec = distance * 100 * C.Resolution(0.01);
@@ -1779,7 +1779,7 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
       if (sharp.Value(ic))
       {
         Indices(nedge, ic, icplus, icmoins);
-        BRepAdaptor_Curve C(TopoDS::Edge(Evive.Value(ic)));
+        ::model::adapter::BRepAdaptor_Curve C(TopoDS::Edge(Evive.Value(ic)));
         PE                    = C.Value(p.Value(ic, icplus));
         double             d1 = 0., d2 = 0., dS = PE.Distance(sommet);
         ChFiDS_CommonPoint cp1, cp2;
@@ -2320,7 +2320,7 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
     if (sharp.Value(ic))
     {
       Indices(nedge, ic, icplus, icmoins);
-      BRepAdaptor_Curve C(TopoDS::Edge(Evive.Value(ic)));
+      ::model::adapter::BRepAdaptor_Curve C(TopoDS::Edge(Evive.Value(ic)));
       PE = C.Value(p.Value(ic, icplus));
       TopOpeBRepDS_Point TPE(PE, BRep_Tool::Tolerance(TopoDS::Edge(Evive.Value(ic))));
       ChFiDS_CommonPoint cp;
@@ -3034,8 +3034,8 @@ void ChFi3d_Builder::PerformMoreThreeCorner(const int Jndex, const int nconges)
           occ::handle<Geom_Curve>   C3d;
           occ::handle<Geom2d_Curve> C2d, curv2d;
           gp_Pnt                    ptic, pticplus;
-          BRepAdaptor_Curve         BCurv1(TopoDS::Edge(Evive.Value(ic)));
-          BRepAdaptor_Curve         BCurv2(TopoDS::Edge(Evive.Value(icplus)));
+          ::model::adapter::BRepAdaptor_Curve         BCurv1(TopoDS::Edge(Evive.Value(ic)));
+          ::model::adapter::BRepAdaptor_Curve         BCurv2(TopoDS::Edge(Evive.Value(icplus)));
           double                    par1 = p.Value(ic, icplus);
           double                    par2 = p.Value(icplus, ic);
           BCurv1.D0(par1, ptic);

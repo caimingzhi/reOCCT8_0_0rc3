@@ -378,7 +378,7 @@ int TopOpeBRepBuild_CorrectFace2d::ConnectWire(
     double U = aTrV.X();
     double V = aTrV.Y();
 
-    BRepAdaptor_Surface BAS(aCopyFace);
+    ::model::adapter::BRepAdaptor_Surface BAS(aCopyFace);
     bool                UP = BAS.IsUPeriodic();
     bool                VP = BAS.IsVPeriodic();
 
@@ -731,7 +731,7 @@ void TopOpeBRepBuild_CorrectFace2d::BndBoxWire(const TopoDS_Wire& aWire, Bnd_Box
   {
     const TopoDS_Edge&  anEdge = TopoDS::Edge(aWEx.Current());
     double              aTolE  = BRep_Tool::Tolerance(anEdge);
-    BRepAdaptor_Curve2d aBAC2d(anEdge, myCorrectedFace);
+    ::model::adapter::BRepAdaptor_Curve2d aBAC2d(anEdge, myCorrectedFace);
     BndLib_Add2dCurve::Add(aBAC2d, aTolE, aB2d);
   }
   B2d = aB2d;

@@ -35,12 +35,12 @@ Standard_EXPORT bool FUN_projPonL(const gp_Pnt&                 P,
   double             dist;
   if (hasC3D)
   {
-    BRepAdaptor_Curve BAC(E);
+    ::model::adapter::BRepAdaptor_Curve BAC(E);
     paramLdef = FUN_tool_projPonC(P, BAC, paramL, dist);
   }
   else
   {
-    BRepAdaptor_Curve2d BAC2D;
+    ::model::adapter::BRepAdaptor_Curve2d BAC2D;
     if (Esi == 1)
       BAC2D.Initialize(E, FF.Face(1));
     else if (Esi == 2)
@@ -394,7 +394,7 @@ void TopOpeBRep_FacesFiller::VP_PositionOnR(TopOpeBRep_LineInter& L)
     isline = FUN_tool_line(earc);
   else
   {
-    BRepAdaptor_Curve2d BAC2D;
+    ::model::adapter::BRepAdaptor_Curve2d BAC2D;
     if (Esi == 1)
       BAC2D.Initialize(earc, myF1);
     else if (Esi == 2)

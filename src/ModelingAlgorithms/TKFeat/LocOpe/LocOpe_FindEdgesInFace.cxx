@@ -54,7 +54,7 @@ void LocOpe_FindEdgesInFace::Set(const TopoDS_Shape& Sh, const TopoDS_Face& F)
     return;
   }
 
-  occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface(myFace);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS = new ::model::adapter::BRepAdaptor_Surface(myFace);
   BRepTopAdaptor_TopolTool         TPT(HS);
 
   for (exp.Init(myShape, TopAbs_EDGE); exp.More(); exp.Next())

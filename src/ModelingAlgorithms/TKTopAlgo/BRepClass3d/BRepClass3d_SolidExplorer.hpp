@@ -69,7 +69,7 @@ public:
                                       double&                                 v,
                                       double&                                 Param,
                                       int&                                    Index,
-                                      const occ::handle<BRepAdaptor_Surface>& surf,
+                                      const occ::handle<::model::adapter::BRepAdaptor_Surface>& surf,
                                       const double                            u1,
                                       const double                            v1,
                                       const double                            u2,
@@ -81,7 +81,7 @@ public:
                                       double&                                 v,
                                       double&                                 Param,
                                       int&                                    Index,
-                                      const occ::handle<BRepAdaptor_Surface>& surf,
+                                      const occ::handle<::model::adapter::BRepAdaptor_Surface>& surf,
                                       const double                            u1,
                                       const double                            v1,
                                       const double                            u2,
@@ -138,7 +138,7 @@ private:
 
 protected:
   Standard_EXPORT TopAbs_State ClassifyUVPoint(const IntCurvesFace_Intersector& theIntersector,
-                                               const occ::handle<BRepAdaptor_Surface>& theSurf,
+                                               const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurf,
                                                const gp_Pnt2d& theP2d) const;
 
 private:

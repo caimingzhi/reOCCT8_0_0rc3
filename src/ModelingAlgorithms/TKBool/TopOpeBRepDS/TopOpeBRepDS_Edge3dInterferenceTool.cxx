@@ -134,7 +134,7 @@ void TopOpeBRepDS_Edge3dInterferenceTool::Init(const TopoDS_Shape&              
   }
 
   {
-    BRepAdaptor_Curve BC(EEref);
+    ::model::adapter::BRepAdaptor_Curve BC(EEref);
     myP3d = BC.Value(pref);
   }
   gp_Vec tmp;
@@ -209,7 +209,7 @@ void TopOpeBRepDS_Edge3dInterferenceTool::Add(const TopoDS_Shape&               
     return;
   gp_Pnt2d uv;
   {
-    BRepAdaptor_Curve2d BC2d(EE, FF);
+    ::model::adapter::BRepAdaptor_Curve2d BC2d(EE, FF);
     uv = BC2d.Value(pOO);
   }
 

@@ -19,7 +19,7 @@
 #include <TopoDS_Iterator.hpp>
 #include <BRepExtrema_DistShapeShape.hpp>
 
-static void   BndBuildBox(const BRepAdaptor_Curve& theBAC,
+static void   BndBuildBox(const ::model::adapter::BRepAdaptor_Curve& theBAC,
                           const double             aT1,
                           const double             aT2,
                           const double             theTol,
@@ -57,12 +57,12 @@ static int    FindDistPC(const double                   aT1A,
                          double&                        aT1max,
                          double&                        aT2max,
                          const bool                     bMaxDist = true);
-static double ResolutionCoeff(const BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange);
+static double ResolutionCoeff(const ::model::adapter::BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange);
 static double Resolution(const occ::handle<Geom_Curve>& theCurve,
                          const GeomAbs_CurveType        theCurveType,
                          const double                   theResCoeff,
                          const double                   theR3D);
-static double CurveDeflection(const BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange);
+static double CurveDeflection(const ::model::adapter::BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange);
 static bool   IsClosed(const occ::handle<Geom_Curve>& theCurve,
                        const double                   aT1,
                        const double                   aT2,
@@ -119,7 +119,7 @@ void IntTools_EdgeEdge::Prepare()
     myEdge1          = myEdge2;
     myEdge2          = tmpE;
 
-    BRepAdaptor_Curve tmpC = myCurve1;
+    ::model::adapter::BRepAdaptor_Curve tmpC = myCurve1;
     myCurve1               = myCurve2;
     myCurve2               = tmpC;
 
@@ -506,7 +506,7 @@ void IntTools_EdgeEdge::FindSolutions(const IntTools_Range&                 theR
   }
 }
 
-bool IntTools_EdgeEdge::FindParameters(const BRepAdaptor_Curve& theBAC,
+bool IntTools_EdgeEdge::FindParameters(const ::model::adapter::BRepAdaptor_Curve& theBAC,
                                        const double             aT1,
                                        const double             aT2,
                                        const double             theTol,
@@ -1312,7 +1312,7 @@ int SplitRangeOnSegments(const double                          aT1,
   return aNbSegments;
 }
 
-void BndBuildBox(const BRepAdaptor_Curve& theBAC,
+void BndBuildBox(const ::model::adapter::BRepAdaptor_Curve& theBAC,
                  const double             aT1,
                  const double             aT2,
                  const double             theTol,
@@ -1382,7 +1382,7 @@ int TypeToInteger(const GeomAbs_CurveType theCType)
   return iRet;
 }
 
-double ResolutionCoeff(const BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange)
+double ResolutionCoeff(const ::model::adapter::BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange)
 {
   double aResCoeff = 0.;
 
@@ -1507,7 +1507,7 @@ double Resolution(const occ::handle<Geom_Curve>& theCurve,
   return aRes;
 }
 
-double CurveDeflection(const BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange)
+double CurveDeflection(const ::model::adapter::BRepAdaptor_Curve& theBAC, const IntTools_Range& theRange)
 {
   double aDt, aT, aT1, aT2, aDefl;
   int    i, aNbP;

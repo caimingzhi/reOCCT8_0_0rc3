@@ -12,8 +12,8 @@ public:
 
   Standard_EXPORT void SetFaces(const TopoDS_Face& F1, const TopoDS_Face& F2);
 
-  Standard_EXPORT void SetHSurfaces(const occ::handle<BRepAdaptor_Surface>& S1,
-                                    const occ::handle<BRepAdaptor_Surface>& S2);
+  Standard_EXPORT void SetHSurfaces(const occ::handle<::model::adapter::BRepAdaptor_Surface>& S1,
+                                    const occ::handle<::model::adapter::BRepAdaptor_Surface>& S2);
 
   Standard_EXPORT void SetTolerances(const double Tol1, const double Tol2);
 
@@ -23,7 +23,7 @@ public:
 
   Standard_EXPORT const TopoDS_Face& Face(const int I) const;
 
-  Standard_EXPORT occ::handle<BRepAdaptor_Surface> HSurface(const int I) const;
+  Standard_EXPORT occ::handle<::model::adapter::BRepAdaptor_Surface> HSurface(const int I) const;
 
   Standard_EXPORT bool SurfacesSameOriented() const;
 
@@ -37,11 +37,11 @@ private:
   Standard_EXPORT void SetHSurfacesPrivate();
 
   TopoDS_Face                      myFace1;
-  occ::handle<BRepAdaptor_Surface> mySurface1;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> mySurface1;
   GeomAbs_SurfaceType              mySurfaceType1;
   bool                             myf1surf1F_sameoriented;
   TopoDS_Face                      myFace2;
-  occ::handle<BRepAdaptor_Surface> mySurface2;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> mySurface2;
   GeomAbs_SurfaceType              mySurfaceType2;
   bool                             myf2surf1F_sameoriented;
   bool                             mySurfacesSameOriented;

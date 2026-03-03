@@ -2020,7 +2020,7 @@ bool BOPDS_DS::IsValidShrunkData(const occ::handle<BOPDS_PaveBlock>& thePB)
   thePB->Indices(nV[0], nV[1]);
 
   const TopoDS_Edge& aE = TopoDS::Edge(Shape(thePB->OriginalEdge()));
-  BRepAdaptor_Curve  aBAC(aE);
+  ::model::adapter::BRepAdaptor_Curve  aBAC(aE);
 
   double anEps = BRep_Tool::Tolerance(aE) * 0.01;
 

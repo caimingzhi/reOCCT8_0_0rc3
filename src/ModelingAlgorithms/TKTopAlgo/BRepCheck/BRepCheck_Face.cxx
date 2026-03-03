@@ -567,7 +567,7 @@ static bool Intersect(const TopoDS_Wire&         wir1,
       CommonVertices.Append(V);
   }
 
-  BRepAdaptor_Surface Surf(F, false);
+  ::model::adapter::BRepAdaptor_Surface Surf(F, false);
 
   NCollection_Sequence<gp_Pnt> PntSeq;
   int                          i;

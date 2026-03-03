@@ -180,21 +180,21 @@ static void tgtfaces(const TopoDS_Edge& Ed,
 
   double              u;
   TopoDS_Edge         E = Ed;
-  BRepAdaptor_Surface aBAS1(F1, false);
-  BRepAdaptor_Surface aBAS2(F2, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS1(F1, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS2(F2, false);
 
-  occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface(aBAS1);
-  occ::handle<BRepAdaptor_Surface> HS2;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS1 = new ::model::adapter::BRepAdaptor_Surface(aBAS1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS2;
   if (couture)
     HS2 = HS1;
   else
-    HS2 = new BRepAdaptor_Surface(aBAS2);
+    HS2 = new ::model::adapter::BRepAdaptor_Surface(aBAS2);
 
   E.Orientation(TopAbs_FORWARD);
-  BRepAdaptor_Curve2d C2d1(E, F1);
+  ::model::adapter::BRepAdaptor_Curve2d C2d1(E, F1);
   if (couture)
     E.Orientation(TopAbs_REVERSED);
-  BRepAdaptor_Curve2d C2d2(E, F2);
+  ::model::adapter::BRepAdaptor_Curve2d C2d2(E, F2);
 
   bool   rev1 = (F1.Orientation() == TopAbs_REVERSED);
   bool   rev2 = (F2.Orientation() == TopAbs_REVERSED);

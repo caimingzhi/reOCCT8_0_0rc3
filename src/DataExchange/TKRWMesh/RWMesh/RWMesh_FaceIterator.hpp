@@ -115,7 +115,7 @@ private:
   TopoDS_Face                     myFace;
   occ::handle<Poly_Triangulation> myPolyTriang;
   mutable ::model::localproperties::BRepLProp_SLProps       mySLTool;
-  BRepAdaptor_Surface             myFaceAdaptor;
+  ::model::adapter::BRepAdaptor_Surface             myFaceAdaptor;
   bool                            myHasNormals;
   bool                            myIsMirrored;
 };

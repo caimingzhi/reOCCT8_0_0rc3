@@ -57,7 +57,7 @@ private:
   const IMeshData::IEdgeHandle& myDEdge;
   const IMeshTools_Parameters&  myParameters;
   TopoDS_Edge                   myEdge;
-  BRepAdaptor_Curve             myCurve;
+  ::model::adapter::BRepAdaptor_Curve             myCurve;
   int                           myMinPointsNb;
   GCPnts_TangentialDeflection   myDiscretTool;
   TopoDS_Vertex                 myFirstVertex;

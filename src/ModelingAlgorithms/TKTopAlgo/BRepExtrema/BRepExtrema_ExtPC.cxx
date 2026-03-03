@@ -14,7 +14,7 @@ void BRepExtrema_ExtPC::Initialize(const TopoDS_Edge& E)
   if (!BRep_Tool::IsGeometric(E))
     return;
   double U1, U2;
-  myHC       = new BRepAdaptor_Curve(E);
+  myHC       = new ::model::adapter::BRepAdaptor_Curve(E);
   double Tol = std::min(BRep_Tool::Tolerance(E), math::precision::Precision::Confusion());
   Tol        = std::max(myHC->Resolution(Tol), math::precision::Precision::PConfusion());
   BRep_Tool::Range(E, U1, U2);

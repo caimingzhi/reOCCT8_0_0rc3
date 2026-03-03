@@ -36,13 +36,13 @@ public:
   Standard_EXPORT IntTools_BeanFaceIntersector(const TopoDS_Edge& theEdge,
                                                const TopoDS_Face& theFace);
 
-  Standard_EXPORT IntTools_BeanFaceIntersector(const BRepAdaptor_Curve&   theCurve,
-                                               const BRepAdaptor_Surface& theSurface,
+  Standard_EXPORT IntTools_BeanFaceIntersector(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                                               const ::model::adapter::BRepAdaptor_Surface& theSurface,
                                                const double               theBeanTolerance,
                                                const double               theFaceTolerance);
 
-  Standard_EXPORT IntTools_BeanFaceIntersector(const BRepAdaptor_Curve&   theCurve,
-                                               const BRepAdaptor_Surface& theSurface,
+  Standard_EXPORT IntTools_BeanFaceIntersector(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                                               const ::model::adapter::BRepAdaptor_Surface& theSurface,
                                                const double               theFirstParOnCurve,
                                                const double               theLastParOnCurve,
                                                const double               theUMinParameter,
@@ -54,13 +54,13 @@ public:
 
   Standard_EXPORT void Init(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace);
 
-  Standard_EXPORT void Init(const BRepAdaptor_Curve&   theCurve,
-                            const BRepAdaptor_Surface& theSurface,
+  Standard_EXPORT void Init(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                            const ::model::adapter::BRepAdaptor_Surface& theSurface,
                             const double               theBeanTolerance,
                             const double               theFaceTolerance);
 
-  Standard_EXPORT void Init(const BRepAdaptor_Curve&   theCurve,
-                            const BRepAdaptor_Surface& theSurface,
+  Standard_EXPORT void Init(const ::model::adapter::BRepAdaptor_Curve&   theCurve,
+                            const ::model::adapter::BRepAdaptor_Surface& theSurface,
                             const double               theFirstParOnCurve,
                             const double               theLastParOnCurve,
                             const double               theUMinParameter,
@@ -134,8 +134,8 @@ private:
 
   Standard_EXPORT bool TestComputeCoinside();
 
-  BRepAdaptor_Curve                    myCurve;
-  BRepAdaptor_Surface                  mySurface;
+  ::model::adapter::BRepAdaptor_Curve                    myCurve;
+  ::model::adapter::BRepAdaptor_Surface                  mySurface;
   occ::handle<Geom_Surface>            myTrsfSurface;
   double                               myFirstParameter;
   double                               myLastParameter;

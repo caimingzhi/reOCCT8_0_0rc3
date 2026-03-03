@@ -169,7 +169,7 @@ TopoDS_Edge HLRBRep::MakeEdge3d(const HLRBRep_Curve& ec, const double U1, const 
   TopoDS_Edge anEdge = ec.GetCurve().Edge();
   double      fpar, lpar;
 
-  BRepAdaptor_Curve BAcurve(anEdge);
+  ::model::adapter::BRepAdaptor_Curve BAcurve(anEdge);
   fpar = BAcurve.FirstParameter();
   lpar = BAcurve.LastParameter();
 

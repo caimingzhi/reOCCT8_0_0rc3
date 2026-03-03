@@ -103,17 +103,17 @@ bool LocOpe::Closed(const TopoDS_Edge& E, const TopoDS_Face& F)
 
 bool LocOpe::TgtFaces(const TopoDS_Edge& E, const TopoDS_Face& F1, const TopoDS_Face& F2)
 {
-  BRepAdaptor_Surface bs(F1, false);
+  ::model::adapter::BRepAdaptor_Surface bs(F1, false);
   double              u;
   double              ta = 0.0001;
 
   TopoDS_Edge e = E;
 
-  occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface(F1);
-  occ::handle<BRepAdaptor_Surface> HS2 = new BRepAdaptor_Surface(F2);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS1 = new ::model::adapter::BRepAdaptor_Surface(F1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS2 = new ::model::adapter::BRepAdaptor_Surface(F2);
   e.Orientation(TopAbs_FORWARD);
-  occ::handle<BRepAdaptor_Curve2d> HC2d  = new BRepAdaptor_Curve2d();
-  occ::handle<BRepAdaptor_Curve2d> HC2d2 = new BRepAdaptor_Curve2d();
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> HC2d  = new ::model::adapter::BRepAdaptor_Curve2d();
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> HC2d2 = new ::model::adapter::BRepAdaptor_Curve2d();
   HC2d->Initialize(e, F1);
   HC2d2->Initialize(e, F2);
 

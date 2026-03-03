@@ -162,7 +162,7 @@ static TopAbs_ShapeEnum ShapeType(const TopoDS_Shape& theShape)
 
 static bool IsValidSurfType(const TopoDS_Face& theFace)
 {
-  BRepAdaptor_Surface          anAdapt(theFace);
+  ::model::adapter::BRepAdaptor_Surface          anAdapt(theFace);
   occ::handle<Adaptor3d_Curve> aBasisCurve;
   const GeomAbs_SurfaceType&   aType = anAdapt.GetType();
   return aType == GeomAbs_Sphere;

@@ -74,7 +74,7 @@ public:
 
 protected:
   Standard_EXPORT static bool IsEqDistance(const gp_Pnt&              aP,
-                                           const BRepAdaptor_Surface& aS,
+                                           const ::model::adapter::BRepAdaptor_Surface& aS,
                                            const double               aT,
                                            double&                    aD);
   Standard_EXPORT void        CheckData();
@@ -95,8 +95,8 @@ protected:
   TopoDS_Edge                              myEdge;
   TopoDS_Face                              myFace;
   double                                   myFuzzyValue;
-  BRepAdaptor_Curve                        myC;
-  BRepAdaptor_Surface                      myS;
+  ::model::adapter::BRepAdaptor_Curve                        myC;
+  ::model::adapter::BRepAdaptor_Surface                      myS;
   double                                   myCriteria;
   bool                                     myIsDone;
   int                                      myErrorStatus;

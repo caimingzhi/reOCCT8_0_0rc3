@@ -15,7 +15,7 @@ public:
 
   Standard_EXPORT StdPrs_ToolRFace();
 
-  Standard_EXPORT StdPrs_ToolRFace(const occ::handle<BRepAdaptor_Surface>& aSurface);
+  Standard_EXPORT StdPrs_ToolRFace(const occ::handle<::model::adapter::BRepAdaptor_Surface>& aSurface);
 
   bool IsOriented() const { return true; }
 

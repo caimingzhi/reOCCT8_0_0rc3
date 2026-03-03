@@ -84,7 +84,7 @@ void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumSha
     if (HasShape(aGenS, aDirS))
     {
       TopoDS_Edge       E = TopoDS::Edge(aGenS);
-      BRepAdaptor_Curve e;
+      ::model::adapter::BRepAdaptor_Curve e;
       double            ud, uf;
       TopoDS_Vertex     d, f;
       TopExp::Vertices(E, d, f);
@@ -95,7 +95,7 @@ void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumSha
         e.Initialize(E);
         ud   = BRep_Tool::Parameter(d, TopoDS::Edge(aGenS));
         uf   = BRep_Tool::Parameter(f, TopoDS::Edge(aGenS));
-        cont = BRepLProp::Continuity(e, e, ud, uf, tol3d, ta);
+        cont = ::model::localproperties::BRepLProp::Continuity(e, e, ud, uf, tol3d, ta);
         if (cont >= 1)
         {
           TopoDS_Shape s_wnt = Shape(d, aDirS);
@@ -128,7 +128,7 @@ void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumSha
   else if (aGenS.ShapeType() == TopAbs_WIRE)
   {
     TopoDS_Edge       E1, E2;
-    BRepAdaptor_Curve e1, e2;
+    ::model::adapter::BRepAdaptor_Curve e1, e2;
     double            u1, u2;
     NCollection_IndexedDataMap<TopoDS_Shape,
                                NCollection_List<TopoDS_Shape>,
@@ -159,7 +159,7 @@ void BRepSweep_Trsf::SetContinuity(const TopoDS_Shape& aGenS, const Sweep_NumSha
             const double tol3d = std::max(tl, 2. * BRep_Tool::Tolerance(V));
             e1.Initialize(E1);
             e2.Initialize(E2);
-            cont = BRepLProp::Continuity(e1, e2, u1, u2, tol3d, ta);
+            cont = ::model::localproperties::BRepLProp::Continuity(e1, e2, u1, u2, tol3d, ta);
             if (cont >= 1)
             {
               TopoDS_Shape s_wnt = Shape(V, aDirS);

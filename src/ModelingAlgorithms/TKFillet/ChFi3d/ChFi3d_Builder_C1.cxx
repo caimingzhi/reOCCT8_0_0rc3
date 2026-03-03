@@ -228,7 +228,7 @@ static bool Update(const occ::handle<Adaptor3d_Surface>& fb,
 }
 
 static bool IntersUpdateOnSame(occ::handle<GeomAdaptor_Surface>& HGs,
-                               occ::handle<BRepAdaptor_Surface>& HBs,
+                               occ::handle<::model::adapter::BRepAdaptor_Surface>& HBs,
                                const occ::handle<Geom_Curve>&    c3dFI,
                                const TopoDS_Face&                Fop,
                                const TopoDS_Face&                Fprol,
@@ -382,7 +382,7 @@ static void ComputeCurve2d(const occ::handle<Geom_Curve>& Ct,
   }
 }
 
-static void ChFi3d_Recale(BRepAdaptor_Surface& Bs, gp_Pnt2d& p1, gp_Pnt2d& p2, const bool refon1)
+static void ChFi3d_Recale(::model::adapter::BRepAdaptor_Surface& Bs, gp_Pnt2d& p1, gp_Pnt2d& p2, const bool refon1)
 {
   occ::handle<Geom_Surface>                   surf = Bs.ChangeSurface().Surface();
   occ::handle<Geom_RectangularTrimmedSurface> ts =
@@ -512,12 +512,12 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
     Arcspine = spine->Edges(spine->NbEdges());
   TopAbs_Orientation               OArcprolv = TopAbs_FORWARD, OArcprolop = TopAbs_FORWARD;
   int                              ICurve;
-  occ::handle<BRepAdaptor_Surface> HBs  = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HBad = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HBop = new BRepAdaptor_Surface();
-  BRepAdaptor_Surface&             Bs   = *HBs;
-  BRepAdaptor_Surface&             Bad  = *HBad;
-  BRepAdaptor_Surface&             Bop  = *HBop;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBs  = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBad = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBop = new ::model::adapter::BRepAdaptor_Surface();
+  ::model::adapter::BRepAdaptor_Surface&             Bs   = *HBs;
+  ::model::adapter::BRepAdaptor_Surface&             Bad  = *HBad;
+  ::model::adapter::BRepAdaptor_Surface&             Bop  = *HBop;
   occ::handle<Geom_Curve>          Cc;
   occ::handle<Geom2d_Curve>        Pc, Ps;
   double                           Ubid, Vbid;
@@ -698,7 +698,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
                                 p2dbout,
                                 wop);
 
-    occ::handle<BRepAdaptor_Curve2d> pced = new BRepAdaptor_Curve2d();
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> pced = new ::model::adapter::BRepAdaptor_Curve2d();
     pced->Initialize(CPadArc.Arc(), Fv);
 
     if ((FiadArc.LastParameter() - FiadArc.FirstParameter()) > 10 * tolesp)
@@ -721,7 +721,7 @@ void ChFi3d_Builder::PerformOneCorner(const int Index, const bool thePrepareOnSa
       return;
     }
     Bs.Initialize(Fv);
-    occ::handle<BRepAdaptor_Curve2d> pced = new BRepAdaptor_Curve2d();
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> pced = new ::model::adapter::BRepAdaptor_Curve2d();
     pced->Initialize(CV1.Arc(), Fv);
     Update(HBs, pced, HGs, Fd->ChangeInterferenceOnS1(), CV1, isfirst);
     pced->Initialize(CV2.Arc(), Fv);
@@ -1656,8 +1656,8 @@ void ChFi3d_Builder::PerformIntersectionAtEnd(const int Index)
   ChFiDS_FaceInterference          Fi1 = Fd->InterferenceOnS1();
   ChFiDS_FaceInterference          Fi2 = Fd->InterferenceOnS2();
   GeomAdaptor_Surface&             Gs  = *HGs;
-  occ::handle<BRepAdaptor_Surface> HBs = new BRepAdaptor_Surface();
-  BRepAdaptor_Surface&             Bs  = *HBs;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBs = new ::model::adapter::BRepAdaptor_Surface();
+  ::model::adapter::BRepAdaptor_Surface&             Bs  = *HBs;
   occ::handle<Geom_Curve>          Cc;
   occ::handle<Geom2d_Curve>        Pc, Ps;
   double                           Ubid, Vbid;
@@ -3857,12 +3857,12 @@ void ChFi3d_Builder::IntersectMoreCorner(const int Index)
   TopAbs_Orientation               OArcprolbis = TopAbs_FORWARD;
   TopAbs_Orientation               OArcprolv = TopAbs_FORWARD, OArcprolop = TopAbs_FORWARD;
   int                              ICurve;
-  occ::handle<BRepAdaptor_Surface> HBs  = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HBad = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HBop = new BRepAdaptor_Surface();
-  BRepAdaptor_Surface&             Bs   = *HBs;
-  BRepAdaptor_Surface&             Bad  = *HBad;
-  BRepAdaptor_Surface&             Bop  = *HBop;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBs  = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBad = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBop = new ::model::adapter::BRepAdaptor_Surface();
+  ::model::adapter::BRepAdaptor_Surface&             Bs   = *HBs;
+  ::model::adapter::BRepAdaptor_Surface&             Bad  = *HBad;
+  ::model::adapter::BRepAdaptor_Surface&             Bop  = *HBop;
   occ::handle<Geom_Curve>          Cc;
   occ::handle<Geom2d_Curve>        Pc, Ps;
   double                           Ubid, Vbid;
@@ -4040,7 +4040,7 @@ void ChFi3d_Builder::IntersectMoreCorner(const int Index)
       inters =
         Update(HBs, pcprol, HGs, FiopArc, CPopArc, p2dbout, isfirst, partemp, wop, 10 * tolapp3d);
     }
-    occ::handle<BRepAdaptor_Curve2d> pced = new BRepAdaptor_Curve2d();
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> pced = new ::model::adapter::BRepAdaptor_Curve2d();
     pced->Initialize(CPadArc.Arc(), Fv);
     Update(HBs, pced, HGs, FiadArc, CPadArc, isfirst);
   }

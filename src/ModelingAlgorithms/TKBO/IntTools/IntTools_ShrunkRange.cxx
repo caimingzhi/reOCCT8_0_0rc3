@@ -66,7 +66,7 @@ void IntTools_ShrunkRange::SetShrunkRange(const double aT1, const double aT2)
   myTS1 = aT1;
   myTS2 = aT2;
 
-  BRepAdaptor_Curve aBAC(myEdge);
+  ::model::adapter::BRepAdaptor_Curve aBAC(myEdge);
   BndLib_Add3dCurve::Add(aBAC, aT1, aT2, 0., myBndBox);
 }
 
@@ -104,7 +104,7 @@ void IntTools_ShrunkRange::Perform()
   aTolV1 += aDTol;
   aTolV2 += aDTol;
 
-  BRepAdaptor_Curve aBAC(myEdge);
+  ::model::adapter::BRepAdaptor_Curve aBAC(myEdge);
   if (!BRepLib::FindValidRange(aBAC, aTolE, myT1, aP1, aTolV1, myT2, aP2, aTolV2, myTS1, myTS2))
   {
 

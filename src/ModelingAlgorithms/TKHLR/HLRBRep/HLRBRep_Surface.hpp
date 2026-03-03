@@ -30,9 +30,9 @@ public:
 
   void Projector(const HLRAlgo_Projector* Proj) { myProj = Proj; }
 
-  BRepAdaptor_Surface& Surface();
+  ::model::adapter::BRepAdaptor_Surface& Surface();
 
-  const BRepAdaptor_Surface& Surface() const;
+  const ::model::adapter::BRepAdaptor_Surface& Surface() const;
 
   Standard_EXPORT void Surface(const TopoDS_Face& F);
 
@@ -134,7 +134,7 @@ private:
                                        const int                   nbvPoles,
                                        NCollection_Array2<gp_Pnt>& Pnt) const;
 
-  BRepAdaptor_Surface      mySurf;
+  ::model::adapter::BRepAdaptor_Surface      mySurf;
   GeomAbs_SurfaceType      myType;
   const HLRAlgo_Projector* myProj;
 };
@@ -142,12 +142,12 @@ private:
 #include <BRepAdaptor_Surface.hpp>
 #include <HLRBRep_BSurfaceTool.hpp>
 
-inline BRepAdaptor_Surface& HLRBRep_Surface::Surface()
+inline ::model::adapter::BRepAdaptor_Surface& HLRBRep_Surface::Surface()
 {
   return mySurf;
 }
 
-inline const BRepAdaptor_Surface& HLRBRep_Surface::Surface() const
+inline const ::model::adapter::BRepAdaptor_Surface& HLRBRep_Surface::Surface() const
 {
   return mySurf;
 }

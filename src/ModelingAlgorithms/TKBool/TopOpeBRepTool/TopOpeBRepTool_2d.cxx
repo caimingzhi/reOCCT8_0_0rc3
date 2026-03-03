@@ -250,10 +250,10 @@ static occ::handle<Geom2d_Curve> FC2D_make2d(const TopoDS_Edge& E,
     if (FE.IsNull())
       return C2D;
     bool                             compminmaxUV = false;
-    BRepAdaptor_Surface              BAS(F, compminmaxUV);
-    occ::handle<BRepAdaptor_Surface> BAHS = new BRepAdaptor_Surface(BAS);
-    BRepAdaptor_Curve                AC(E, FE);
-    occ::handle<BRepAdaptor_Curve>   AHC = new BRepAdaptor_Curve(AC);
+    ::model::adapter::BRepAdaptor_Surface              BAS(F, compminmaxUV);
+    occ::handle<::model::adapter::BRepAdaptor_Surface> BAHS = new ::model::adapter::BRepAdaptor_Surface(BAS);
+    ::model::adapter::BRepAdaptor_Curve                AC(E, FE);
+    occ::handle<::model::adapter::BRepAdaptor_Curve>   AHC = new ::model::adapter::BRepAdaptor_Curve(AC);
     double                           tolin;
     FTOL_FaceTolerances3d(F, FE, tolin);
     ProjLib_ProjectedCurve projcurv(BAHS, AHC, tolin);
@@ -428,10 +428,10 @@ static occ::handle<Geom2d_Curve> FC2D_make2d(const TopoDS_Edge& E,
     if (FE.IsNull())
       return C2D;
     bool                             compminmaxUV = false;
-    BRepAdaptor_Surface              BAS(F, compminmaxUV);
-    occ::handle<BRepAdaptor_Surface> BAHS = new BRepAdaptor_Surface(BAS);
-    BRepAdaptor_Curve                AC(E, FE);
-    occ::handle<BRepAdaptor_Curve>   AHC = new BRepAdaptor_Curve(AC);
+    ::model::adapter::BRepAdaptor_Surface              BAS(F, compminmaxUV);
+    occ::handle<::model::adapter::BRepAdaptor_Surface> BAHS = new ::model::adapter::BRepAdaptor_Surface(BAS);
+    ::model::adapter::BRepAdaptor_Curve                AC(E, FE);
+    occ::handle<::model::adapter::BRepAdaptor_Curve>   AHC = new ::model::adapter::BRepAdaptor_Curve(AC);
     double                           tolin;
     FTOL_FaceTolerances3d(F, FE, tolin);
     ProjLib_ProjectedCurve projcurv(BAHS, AHC, tolin);

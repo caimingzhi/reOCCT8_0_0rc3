@@ -142,7 +142,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     return;
   }
 
-  BRepAdaptor_Curve           CA = BRepAdaptor_Curve(aEdge);
+  ::model::adapter::BRepAdaptor_Curve           CA = ::model::adapter::BRepAdaptor_Curve(aEdge);
   occ::handle<StepGeom_Curve> Gpms;
   occ::handle<Geom_Curve>     C = CA.Curve().Curve();
 
@@ -210,7 +210,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
     std::cout << "Warning: TopoDSToStep_MakeStepEdge: edge without 3d curve; creating..."
               << std::endl;
 #endif
-    BRepAdaptor_Surface SA = BRepAdaptor_Surface(aTool.CurrentFace());
+    ::model::adapter::BRepAdaptor_Surface SA = ::model::adapter::BRepAdaptor_Surface(aTool.CurrentFace());
 
     if ((SA.GetType() == GeomAbs_Plane) && (CA.GetType() == GeomAbs_Line))
     {

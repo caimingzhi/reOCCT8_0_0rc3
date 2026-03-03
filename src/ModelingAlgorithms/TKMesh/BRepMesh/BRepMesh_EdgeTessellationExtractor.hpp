@@ -125,7 +125,7 @@ private:
   mutable double myCurParam;
   mutable double myFoundParam;
 
-  BRepAdaptor_Curve myCurveAdaptor;
+  ::model::adapter::BRepAdaptor_Curve myCurveAdaptor;
 
   mutable Extrema_LocateExtPC myProjector;
 };

@@ -14,7 +14,7 @@ class BRepTopAdaptor_HVertex : public Adaptor3d_HVertex
 
 public:
   Standard_EXPORT BRepTopAdaptor_HVertex(const TopoDS_Vertex&                    Vtx,
-                                         const occ::handle<BRepAdaptor_Curve2d>& Curve);
+                                         const occ::handle<::model::adapter::BRepAdaptor_Curve2d>& Curve);
 
   const TopoDS_Vertex& Vertex() const;
 
@@ -34,7 +34,7 @@ public:
 
 private:
   TopoDS_Vertex                    myVtx;
-  occ::handle<BRepAdaptor_Curve2d> myCurve;
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> myCurve;
 };
 
 inline const TopoDS_Vertex& BRepTopAdaptor_HVertex::Vertex() const

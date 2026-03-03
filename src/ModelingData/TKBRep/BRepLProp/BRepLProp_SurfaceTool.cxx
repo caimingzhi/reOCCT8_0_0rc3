@@ -3,7 +3,7 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
-void BRepLProp_SurfaceTool::Value(const BRepAdaptor_Surface& S,
+void BRepLProp_SurfaceTool::Value(const ::model::adapter::BRepAdaptor_Surface& S,
                                   const double               U,
                                   const double               V,
                                   gp_Pnt&                    P)
@@ -11,7 +11,7 @@ void BRepLProp_SurfaceTool::Value(const BRepAdaptor_Surface& S,
   P = S.Value(U, V);
 }
 
-void BRepLProp_SurfaceTool::D1(const BRepAdaptor_Surface& S,
+void BRepLProp_SurfaceTool::D1(const ::model::adapter::BRepAdaptor_Surface& S,
                                const double               U,
                                const double               V,
                                gp_Pnt&                    P,
@@ -21,7 +21,7 @@ void BRepLProp_SurfaceTool::D1(const BRepAdaptor_Surface& S,
   S.D1(U, V, P, D1U, D1V);
 }
 
-void BRepLProp_SurfaceTool::D2(const BRepAdaptor_Surface& S,
+void BRepLProp_SurfaceTool::D2(const ::model::adapter::BRepAdaptor_Surface& S,
                                const double               U,
                                const double               V,
                                gp_Pnt&                    P,
@@ -34,7 +34,7 @@ void BRepLProp_SurfaceTool::D2(const BRepAdaptor_Surface& S,
   S.D2(U, V, P, D1U, D1V, D2U, D2V, DUV);
 }
 
-gp_Vec BRepLProp_SurfaceTool::DN(const BRepAdaptor_Surface& S,
+gp_Vec BRepLProp_SurfaceTool::DN(const ::model::adapter::BRepAdaptor_Surface& S,
                                  const double               U,
                                  const double               V,
                                  const int                  IU,
@@ -43,7 +43,7 @@ gp_Vec BRepLProp_SurfaceTool::DN(const BRepAdaptor_Surface& S,
   return S.DN(U, V, IU, IV);
 }
 
-int BRepLProp_SurfaceTool::Continuity(const BRepAdaptor_Surface& S)
+int BRepLProp_SurfaceTool::Continuity(const ::model::adapter::BRepAdaptor_Surface& S)
 {
   GeomAbs_Shape s = std::min(S.UContinuity(), S.VContinuity());
   switch (s)
@@ -66,7 +66,7 @@ int BRepLProp_SurfaceTool::Continuity(const BRepAdaptor_Surface& S)
   return 0;
 }
 
-void BRepLProp_SurfaceTool::Bounds(const BRepAdaptor_Surface& S,
+void BRepLProp_SurfaceTool::Bounds(const ::model::adapter::BRepAdaptor_Surface& S,
                                    double&                    U1,
                                    double&                    V1,
                                    double&                    U2,

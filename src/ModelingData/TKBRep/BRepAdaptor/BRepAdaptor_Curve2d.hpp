@@ -8,6 +8,7 @@
 #include <TopoDS_Face.hpp>
 #include <Geom2dAdaptor_Curve.hpp>
 
+namespace model { namespace adapter {
 class BRepAdaptor_Curve2d : public Geom2dAdaptor_Curve
 {
   DEFINE_STANDARD_RTTIEXT(BRepAdaptor_Curve2d, Geom2dAdaptor_Curve)
@@ -28,3 +29,5 @@ private:
   TopoDS_Edge myEdge;
   TopoDS_Face myFace;
 };
+}} // namespace model::adapter
+

@@ -89,7 +89,7 @@ void BRepMesh_ShapeTool::CheckAndUpdateFlags(const IMeshData::IEdgeHandle&   the
     return;
   }
 
-  BRepAdaptor_Curve aCurveOnSurf(aEdge, aFace);
+  ::model::adapter::BRepAdaptor_Curve aCurveOnSurf(aEdge, aFace);
   if (theEdge->GetSameParam() || theEdge->GetSameRange())
   {
     if (theEdge->GetSameRange())

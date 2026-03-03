@@ -360,7 +360,7 @@ void BOPAlgo_CheckerSI::CheckFaceSelfIntersection(const System::log::Message_Pro
       continue;
 
     const TopoDS_Face&  aF = (*(TopoDS_Face*)(&aSI.Shape()));
-    BRepAdaptor_Surface BAsurf(aF, false);
+    ::model::adapter::BRepAdaptor_Surface BAsurf(aF, false);
     GeomAbs_SurfaceType aSurfType = BAsurf.GetType();
     if (aSurfType == GeomAbs_Plane || aSurfType == GeomAbs_Cylinder || aSurfType == GeomAbs_Cone
         || aSurfType == GeomAbs_Sphere)

@@ -40,7 +40,7 @@ void DrawDim_Radius::DrawOn(Draw_Display& dis) const
 #ifdef OCCT_DEBUG
   std::cout << "entree dans computeonefaceradius" << std::endl;
 #endif
-  BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
+  ::model::adapter::BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
   double              uFirst, uLast, vFirst, vLast;
   uFirst      = surfAlgo.FirstUParameter();
   uLast       = surfAlgo.LastUParameter();

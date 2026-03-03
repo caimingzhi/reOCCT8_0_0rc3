@@ -143,7 +143,7 @@ static bool FUN_getnearpar(const TopoDS_Edge& e,
                            double&            nearpar)
 {
 
-  BRepAdaptor_Curve bc(e);
+  ::model::adapter::BRepAdaptor_Curve bc(e);
   double            tol1d = bc.Resolution(bc.Tolerance());
   bool              onf   = (std::abs(par - f) < tol1d);
   bool              onl   = (std::abs(par - l) < tol1d);
@@ -363,7 +363,7 @@ static bool FUN_getnearuv(const TopoDS_Face& f,
                           const gp_Dir2d&    duv,
                           gp_Pnt2d&          nearuv)
 {
-  BRepAdaptor_Surface bs(f);
+  ::model::adapter::BRepAdaptor_Surface bs(f);
 
   gp_Vec2d xuv = gp_Vec2d(duv).Multiplied(factor);
   if (sta == BEFORE)

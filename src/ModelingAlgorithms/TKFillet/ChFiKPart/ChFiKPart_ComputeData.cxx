@@ -52,10 +52,10 @@ bool ChFiKPart_ComputeData::Compute(TopOpeBRepDS_DataStructure&           DStr,
     ctyp = CSpine->CurrentElementarySpine(Iedge).GetType();
 
   TopAbs_Orientation               OrFace1 = TopAbs_FORWARD, OrFace2 = TopAbs_FORWARD;
-  occ::handle<BRepAdaptor_Surface> HS = occ::down_cast<BRepAdaptor_Surface>(S1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S1);
   if (!HS.IsNull())
     OrFace1 = HS->Face().Orientation();
-  HS = occ::down_cast<BRepAdaptor_Surface>(S2);
+  HS = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S2);
   if (!HS.IsNull())
     OrFace2 = HS->Face().Orientation();
 

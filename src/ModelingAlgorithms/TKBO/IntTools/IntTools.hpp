@@ -7,7 +7,10 @@
 class TopoDS_Edge;
 class gp_Pnt;
 class Geom_Curve;
+namespace model { namespace adapter {
 class BRepAdaptor_Curve;
+}} // namespace model::adapter
+
 
 class IntTools
 {
@@ -29,12 +32,12 @@ public:
                                        const occ::handle<Geom_Curve>& Curve,
                                        double&                        aParm);
 
-  Standard_EXPORT static int GetRadius(const BRepAdaptor_Curve& C,
+  Standard_EXPORT static int GetRadius(const ::model::adapter::BRepAdaptor_Curve& C,
                                        const double             t1,
                                        const double             t3,
                                        double&                  R);
 
-  Standard_EXPORT static int PrepareArgs(BRepAdaptor_Curve&          C,
+  Standard_EXPORT static int PrepareArgs(::model::adapter::BRepAdaptor_Curve&          C,
                                          const double                tMax,
                                          const double                tMin,
                                          const int                   Discret,

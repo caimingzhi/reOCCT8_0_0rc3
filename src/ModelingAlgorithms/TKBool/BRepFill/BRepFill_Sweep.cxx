@@ -75,7 +75,7 @@ static int NumberOfPoles(const TopoDS_Wire& W)
   TopoDS_Iterator iter(W);
   for (; iter.More(); iter.Next())
   {
-    BRepAdaptor_Curve c(TopoDS::Edge(iter.Value()));
+    ::model::adapter::BRepAdaptor_Curve c(TopoDS::Edge(iter.Value()));
 
     double dfUf = c.FirstParameter();
     double dfUl = c.LastParameter();
@@ -334,7 +334,7 @@ static void CorrectSameParameter(TopoDS_Edge&       theEdge,
   occ::handle<Geom_Curve> aCurve = BRep_Tool::Curve(theEdge, fpar, lpar);
 
   bool              PCurveExists[2] = {false, false};
-  BRepAdaptor_Curve BAcurve[2];
+  ::model::adapter::BRepAdaptor_Curve BAcurve[2];
 
   if (!theFace1.IsNull())
   {
@@ -891,7 +891,7 @@ static bool Filling(const TopoDS_Shape&                                         
     }
     else
     {
-      BRepAdaptor_Curve aCurve(E3);
+      ::model::adapter::BRepAdaptor_Curve aCurve(E3);
       double            AngleOld = aCurve.LastParameter();
       if (Angle > AngleOld)
       {
@@ -915,7 +915,7 @@ static bool Filling(const TopoDS_Shape&                                         
     }
     else
     {
-      BRepAdaptor_Curve aCurve(E3);
+      ::model::adapter::BRepAdaptor_Curve aCurve(E3);
       double            AngleOld = aCurve.LastParameter();
       if (Angle > AngleOld)
       {
@@ -935,7 +935,7 @@ static bool Filling(const TopoDS_Shape&                                         
     }
     else
     {
-      BRepAdaptor_Curve aCurve(E4);
+      ::model::adapter::BRepAdaptor_Curve aCurve(E4);
       double            AngleOld = aCurve.LastParameter();
       if (Angle > AngleOld)
       {
@@ -977,7 +977,7 @@ static bool Filling(const TopoDS_Shape&                                         
 
     C1 = BRep_Tool::CurveOnSurface(E1, TopoDS::Face(F1), f2, l2);
     C1->D0(aPrm[i], P2d);
-    occ::handle<BRepAdaptor_Surface> AS = new BRepAdaptor_Surface(TopoDS::Face(F1));
+    occ::handle<::model::adapter::BRepAdaptor_Surface> AS = new ::model::adapter::BRepAdaptor_Surface(TopoDS::Face(F1));
     AS->D1(P2d.X(), P2d.Y(), P, D1U, D1V);
     N2 = D1U ^ D1V;
 
@@ -1305,7 +1305,7 @@ static void UpdateEdge(TopoDS_Edge&                     E,
 
     gp_Vec2d          V2d;
     gp_Vec            V3d, du, dv, dC3d;
-    BRepAdaptor_Curve C3d(E);
+    ::model::adapter::BRepAdaptor_Curve C3d(E);
 
     C3d.D1(First, POnS, dC3d);
     CL->D1(F2d, P2d, V2d);
@@ -1575,7 +1575,7 @@ bool BRepFill_Sweep::CorrectApproxParameters()
   for (; iter.More(); iter.Next())
   {
     TopoDS_Edge       anEdge = TopoDS::Edge(iter.Value());
-    BRepAdaptor_Curve aBAcurve(anEdge);
+    ::model::adapter::BRepAdaptor_Curve aBAcurve(anEdge);
     GeomAbs_Shape     aContinuity = aBAcurve.Continuity();
     int               aNbInterv   = aBAcurve.NbIntervals(GeomAbs_CN);
     if (aContinuity < NewCont)

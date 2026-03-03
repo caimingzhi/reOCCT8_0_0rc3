@@ -41,7 +41,7 @@ protected:
 public:
   const IMeshData::IFaceHandle& GetDFace() const { return myDFace; }
 
-  const occ::handle<BRepAdaptor_Surface>& GetSurface() const { return myDFace->GetSurface(); }
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& GetSurface() const { return myDFace->GetSurface(); }
 
   const std::pair<double, double>& GetRangeU() const { return myRangeU; }
 

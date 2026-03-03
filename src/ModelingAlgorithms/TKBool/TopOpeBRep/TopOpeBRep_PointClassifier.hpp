@@ -28,7 +28,7 @@ public:
 
 private:
   occ::handle<BRepTopAdaptor_TopolTool> myTopolTool;
-  occ::handle<BRepAdaptor_Surface>      myHSurface;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>      myHSurface;
   NCollection_DataMap<TopoDS_Shape, occ::handle<BRepTopAdaptor_TopolTool>, TopTools_ShapeMapHasher>
                myTopolToolMap;
   TopAbs_State myState;

@@ -18,7 +18,7 @@
 #include <VrmlConverter_IsoAspect.hpp>
 #include <VrmlConverter_WFDeflectionRestrictedFace.hpp>
 
-static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
+static double GetDeflection(const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
                             const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 
@@ -52,7 +52,7 @@ static double GetDeflection(const occ::handle<BRepAdaptor_Surface>&  aFace,
 }
 
 void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
-                                                   const occ::handle<BRepAdaptor_Surface>& aFace,
+                                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                                    const bool                              DrawUIso,
                                                    const bool                              DrawVIso,
                                                    const double Deflection,
@@ -302,7 +302,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
 }
 
 void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
-                                                   const occ::handle<BRepAdaptor_Surface>&  aFace,
+                                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
                                                    const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 
@@ -323,7 +323,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::Add(Standard_OStream& anOStream,
 
 void VrmlConverter_WFDeflectionRestrictedFace::AddUIso(
   Standard_OStream&                        anOStream,
-  const occ::handle<BRepAdaptor_Surface>&  aFace,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
   const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 
@@ -343,7 +343,7 @@ void VrmlConverter_WFDeflectionRestrictedFace::AddUIso(
 
 void VrmlConverter_WFDeflectionRestrictedFace::AddVIso(
   Standard_OStream&                        anOStream,
-  const occ::handle<BRepAdaptor_Surface>&  aFace,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>&  aFace,
   const occ::handle<VrmlConverter_Drawer>& aDrawer)
 {
 

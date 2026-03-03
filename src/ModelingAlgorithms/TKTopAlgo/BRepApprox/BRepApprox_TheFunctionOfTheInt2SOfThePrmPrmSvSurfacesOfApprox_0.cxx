@@ -6,7 +6,7 @@
 #include <BRepApprox_SurfaceTool.hpp>
 #include <math_Matrix.hpp>
 
-#define ThePSurface BRepAdaptor_Surface
+#define ThePSurface ::model::adapter::BRepAdaptor_Surface
 #define ThePSurface_hxx <BRepAdaptor_Surface.hpp>
 #define ThePSurfaceTool BRepApprox_SurfaceTool
 #define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hpp>

@@ -137,7 +137,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
     }
   }
 
-  BRepAdaptor_Surface Surface(TF);
+  ::model::adapter::BRepAdaptor_Surface Surface(TF);
   double              Tolerance = BRep_Tool::Tolerance(TF);
 
   int    IIso;

@@ -73,7 +73,7 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
   if (!F.IsNull())
   {
 
-    const GeomAbs_SurfaceType aSurfType = BRepAdaptor_Surface(F, false).GetType();
+    const GeomAbs_SurfaceType aSurfType = ::model::adapter::BRepAdaptor_Surface(F, false).GetType();
     if (aSurfType == GeomAbs_Cone || aSurfType == GeomAbs_BSplineSurface
         || aSurfType == GeomAbs_BezierSurface)
     {

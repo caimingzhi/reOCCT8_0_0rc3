@@ -309,7 +309,7 @@ void BOPAlgo_PaveFiller::PerformEE(const System::log::Message_ProgressRange& the
       const TopoDS_Edge& aOE1 = *(TopoDS_Edge*)&myDS->Shape(nE1);
       const TopoDS_Edge& aOE2 = *(TopoDS_Edge*)&myDS->Shape(nE2);
 
-      BRepAdaptor_Curve aBAC1(aOE1), aBAC2(aOE2);
+      ::model::adapter::BRepAdaptor_Curve aBAC1(aOE1), aBAC2(aOE2);
 
       GeomAbs_CurveType aType1 = aBAC1.GetType();
       GeomAbs_CurveType aType2 = aBAC2.GetType();
@@ -386,8 +386,8 @@ void BOPAlgo_PaveFiller::PerformEE(const System::log::Message_ProgressRange& the
           if (isVExists)
           {
 
-            const gp_Pnt aPOnE1 = BRepAdaptor_Curve(aE1).Value(aT1);
-            const gp_Pnt aPOnE2 = BRepAdaptor_Curve(aE2).Value(aT2);
+            const gp_Pnt aPOnE1 = ::model::adapter::BRepAdaptor_Curve(aE1).Value(aT1);
+            const gp_Pnt aPOnE2 = ::model::adapter::BRepAdaptor_Curve(aE2).Value(aT2);
             if (aPOnE1.Distance(aPOnE2) > math::precision::Precision::Intersection())
 
               continue;
@@ -410,7 +410,7 @@ void BOPAlgo_PaveFiller::PerformEE(const System::log::Message_ProgressRange& the
           if (bAnalytical)
           {
 
-            double aTolMin = (BRepAdaptor_Curve(aE1).GetType() == GeomAbs_Line)
+            double aTolMin = (::model::adapter::BRepAdaptor_Curve(aE1).GetType() == GeomAbs_Line)
                                ? (aCR1.Last() - aCR1.First()) / 2.
                                : (aCR2.Last() - aCR2.First()) / 2.;
             if (aTolMin > aTolVnew)
@@ -862,7 +862,7 @@ bool BOPAlgo_PaveFiller::GetPBBox(const TopoDS_Edge&                  theE,
   else
   {
 
-    BRepAdaptor_Curve aBAC(theE);
+    ::model::adapter::BRepAdaptor_Curve aBAC(theE);
     double            aTol = BRep_Tool::Tolerance(theE) + math::precision::Precision::Confusion();
     BndLib_Add3dCurve::Add(aBAC, theSFirst, theSLast, aTol, theBox);
     thePBBox.Bind(thePB, theBox);
@@ -1006,7 +1006,7 @@ void BOPAlgo_PaveFiller::ForceInterfEE(const System::log::Message_ProgressRange&
       const TopoDS_Edge&                    aE1  = TopoDS::Edge(myDS->Shape(nE1));
       double                                aT11, aT12;
       aPB1->Range(aT11, aT12);
-      BRepAdaptor_Curve aBAC1(aE1);
+      ::model::adapter::BRepAdaptor_Curve aBAC1(aE1);
       gp_Pnt            aPm;
       gp_Vec            aVTgt1;
       aBAC1.D1((aT11 + aT12) * 0.5, aPm, aVTgt1);
@@ -1042,7 +1042,7 @@ void BOPAlgo_PaveFiller::ForceInterfEE(const System::log::Message_ProgressRange&
 
         bool bUseAddTol = true;
         {
-          BRepAdaptor_Curve aBAC2(aE2);
+          ::model::adapter::BRepAdaptor_Curve aBAC2(aE2);
           if (aBAC1.GetType() != GeomAbs_Line || aBAC2.GetType() != GeomAbs_Line)
           {
             GeomAPI_ProjectPointOnCurve& aProjPC = myContext->ProjPC(aE2);

@@ -106,7 +106,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
     const TopoDS_Edge& anE1 = TopoDS::Edge(aLE.First());
     const TopoDS_Edge& anE2 = TopoDS::Edge(aLE.Last());
 
-    const BRepAdaptor_Curve anAC1(anE1), anAC2(anE2);
+    const ::model::adapter::BRepAdaptor_Curve anAC1(anE1), anAC2(anE2);
 
     const double aPar1 = BRep_Tool::Parameter(aVC, anE1);
     const double aPar2 = BRep_Tool::Parameter(aVC, anE2);
@@ -187,7 +187,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
         const TopoDS_Edge& anE1 = TopoDS::Edge(aLE.First());
         const TopoDS_Edge& anE2 = TopoDS::Edge(aLE.Last());
 
-        const BRepAdaptor_Curve anAC1(anE1), anAC2(anE2);
+        const ::model::adapter::BRepAdaptor_Curve anAC1(anE1), anAC2(anE2);
 
         const double aPar1 = BRep_Tool::Parameter(aV, anE1);
         const double aPar2 = BRep_Tool::Parameter(aV, anE2);
@@ -222,7 +222,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
       else
       {
         const TopoDS_Edge       anE = TopoDS::Edge(anExtr.SupportOnShape1(anIdxMin));
-        const BRepAdaptor_Curve anAC(anE);
+        const ::model::adapter::BRepAdaptor_Curve anAC(anE);
         double                  aPar;
         anExtr.ParOnEdgeS1(anIdxMin, aPar);
 
@@ -264,7 +264,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
         const TopoDS_Edge& anE1 = TopoDS::Edge(aLE.First());
         const TopoDS_Edge& anE2 = TopoDS::Edge(aLE.Last());
 
-        const BRepAdaptor_Curve anAC1(anE1), anAC2(anE2);
+        const ::model::adapter::BRepAdaptor_Curve anAC1(anE1), anAC2(anE2);
 
         const double aPar1 = BRep_Tool::Parameter(aV, anE1);
         const double aPar2 = BRep_Tool::Parameter(aV, anE2);
@@ -300,7 +300,7 @@ void BRepFill_AdvancedEvolved::GetSpineAndProfile(const TopoDS_Wire& theSpine,
       else
       {
         const TopoDS_Edge       anE = TopoDS::Edge(anExtr.SupportOnShape2(anIdxMin));
-        const BRepAdaptor_Curve anAC(anE);
+        const ::model::adapter::BRepAdaptor_Curve anAC(anE);
         double                  aPar;
         anExtr.ParOnEdgeS2(anIdxMin, aPar);
 
@@ -520,7 +520,7 @@ void BRepFill_AdvancedEvolved::GetLids()
 
     const TopoDS_Edge& anE = TopoDS::Edge(aMapEF.FindKey(i));
 
-    BRepAdaptor_Curve anAC(anE);
+    ::model::adapter::BRepAdaptor_Curve anAC(anE);
     if (!anAC.Is3DCurve())
     {
 
@@ -1039,7 +1039,7 @@ static bool MakeEdgeDegenerated(const TopoDS_Vertex&            theV,
                                 const gp_Pnt2d&                 thePl,
                                 NCollection_List<TopoDS_Shape>& theLEdges)
 {
-  BRepAdaptor_Surface anAS(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface anAS(theFace, false);
 
   const double aTol  = 2.0 * BRep_Tool::Tolerance(theV);
   const double aTolU = anAS.UResolution(aTol), aTolV = anAS.VResolution(aTol);
@@ -1261,7 +1261,7 @@ bool BRepFill_AdvancedEvolved::CheckSingularityAndAdd(
   NCollection_List<TopoDS_Shape>& theListOfFaces,
   NCollection_List<TopoDS_Shape>& theListOfSplits) const
 {
-  const BRepAdaptor_Surface anAS(theF, false);
+  const ::model::adapter::BRepAdaptor_Surface anAS(theF, false);
   GeomAbs_SurfaceType       aSType = anAS.GetType();
 
   if (aSType == GeomAbs_OffsetSurface)

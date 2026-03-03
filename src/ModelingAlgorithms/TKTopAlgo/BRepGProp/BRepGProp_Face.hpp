@@ -80,7 +80,7 @@ public:
                                  occ::handle<NCollection_HArray1<double>>& theTKnots) const;
 
 private:
-  BRepAdaptor_Surface mySurface;
+  ::model::adapter::BRepAdaptor_Surface mySurface;
   Geom2dAdaptor_Curve myCurve;
   bool                mySReverse;
   bool                myIsUseSpan;

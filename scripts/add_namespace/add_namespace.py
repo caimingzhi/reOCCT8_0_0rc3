@@ -205,45 +205,129 @@ def process_file(filepath, ref_regex, mapping, mapping_names_set, dry_run):
     tu, abs_path = get_clang_tu(filepath)
     clang_extents = get_class_extents_from_tu(tu, abs_path) if tu else {}
 
-    # ==== Phase 1: 类定义包裹 ====
+# ==== Phase 1: 类定义包裹 ====
     class_keyword_regex = re.compile(r'\b(class|struct)\s+')
     for kw_match in class_keyword_regex.finditer(content):
         line_no = content[:kw_match.start()].count('\n')
         if line_no in include_line_set: continue
         
-        prefix_check = content[max(0, kw_match.start()-10):kw_match.start()]
-        if 'friend' in prefix_check: continue
+        # 1. 检查是否是 friend 声明
+        friend_check_pos = kw_match.start() - 1
+        while friend_check_pos >= 0 and content[friend_check_pos] in ' \t': friend_check_pos -= 1
+        is_friend = False
+        if friend_check_pos >= 5:
+            candidate = content[friend_check_pos-5:friend_check_pos+1]
+            if candidate == 'friend':
+                before_friend = friend_check_pos - 6
+                if before_friend < 0 or not (content[before_friend].isalnum() or content[before_friend] == '_'):
+                    is_friend = True
 
+        # 2. 提取 class 关键字后的标识符 (修复回归：支持 class Standard_EXPORT A)
         pos = kw_match.end()
-        match_name = re.match(r'\s*([A-Za-z0-9_]+)', content[pos:])
-        if not match_name: continue
-        class_name = match_name.group(1)
-        name_start = pos + match_name.start(1); name_end = pos + match_name.end(1)
+        words = []
+        word_positions =[]
+        while pos < len(content):
+            while pos < len(content) and content[pos] in ' \t': pos += 1
+            if pos >= len(content) or content[pos] in '{;:(<\r\n': break
+            if content[pos].isalpha() or content[pos] == '_':
+                word_start = pos
+                while pos < len(content) and (content[pos].isalnum() or content[pos] == '_'): pos += 1
+                words.append(content[word_start:pos])
+                word_positions.append((word_start, pos))
+            else:
+                break
 
-        if class_name not in mapping: continue
+        # 寻找匹配的类名
+        class_name = None
+        name_start = -1
+        name_end = -1
+        for word, (ws, we) in zip(words, word_positions):
+            if word in mapping:
+                class_name = word
+                name_start = ws
+                name_end = we
+                break
+
+        if class_name is None: continue
         ns_str = mapping[class_name]
+
+        # 如果是 friend 且属于同 namespace，则保护它不加前缀，也不包裹
+        if is_friend:
+            enclosing_ns = None
+            for (bs, be, cn) in protected_body_ranges:
+                if bs <= kw_match.start() <= be:
+                    enclosing_ns = mapping.get(cn)
+                    break
+            if enclosing_ns == ns_str:
+                protected_name_pos.append((name_start, name_end))
+            continue
+
+        # 3. 确定是定义还是前向声明 (修复回归：恢复手动扫描逻辑)
+        scan_pos = name_end
+        while scan_pos < len(content) and content[scan_pos] in ' \t\r\n': scan_pos += 1
         
+        rest_word = ''
+        if scan_pos < len(content) and content[scan_pos].isalpha():
+            wp = scan_pos
+            while wp < len(content) and (content[wp].isalnum() or content[wp] == '_'): wp += 1
+            rest_word = content[scan_pos:wp]
+            scan_pos = wp
+            while scan_pos < len(content) and content[scan_pos] in ' \t\r\n': scan_pos += 1
+
+        next_char = content[scan_pos] if scan_pos < len(content) else ''
+        
+        # 4. 结合 Clang 范围查询
         found_extent = None
         if class_name in clang_extents:
             for (cs, ce, cis_def) in clang_extents[class_name]:
                 if ce >= name_end and cs <= name_start: 
                     found_extent = (cs, ce, cis_def); break
-        
-        if found_extent and found_extent[2]: 
-            wrap_start = find_template_start(content, found_extent[0])
-            end_scan = found_extent[1]
-            while end_scan < len(content) and content[end_scan] in ' \t\r\n': end_scan += 1
-            wrap_end = end_scan + 1 if (end_scan < len(content) and content[end_scan] == ';') else found_extent[1]
 
+        # 5. 计算包裹范围 (修复回归：同时处理前向声明、以及 Clang 失效时的降级)
+        wrap_start, wrap_end = -1, -1
+        is_definition = False
+
+        if next_char == ';' and rest_word == '':
+            # 这是一个前向声明
+            wrap_start = found_extent[0] if found_extent else kw_match.start()
+            wrap_end = scan_pos + 1
+        elif next_char == '{' or next_char == ':' or rest_word == 'final':
+            # 这是一个类定义
+            is_definition = True
+            if found_extent:
+                wrap_start = found_extent[0]
+                end_scan = found_extent[1]
+                while end_scan < len(content) and content[end_scan] in ' \t\r\n': end_scan += 1
+                wrap_end = end_scan + 1 if (end_scan < len(content) and content[end_scan] == ';') else found_extent[1]
+            else:
+                # 降级：手动找大括号
+                wrap_start = kw_match.start()
+                brace_pos = content.find('{', name_end)
+                if brace_pos != -1:
+                    close_pos = find_matching_brace(content, brace_pos)
+                    if close_pos != -1:
+                        semi_pos = close_pos + 1
+                        while semi_pos < len(content) and content[semi_pos] in ' \t\r\n': semi_pos += 1
+                        wrap_end = semi_pos + 1 if (semi_pos < len(content) and content[semi_pos] == ';') else close_pos + 1
+
+        # 6. 执行 namespace 包裹
+        if wrap_start != -1 and wrap_end != -1:
+            # 向上扩展包含 template<...>
+            wrap_start = find_template_start(content, wrap_start) 
+            
             prefix, suffix = generate_namespace_wrapper(ns_str)
             modifications.append((wrap_start, 0, prefix))
             modifications.append((wrap_end, 0, suffix))
+            # 保护类名位置，不让 Phase 2 再加前缀
             protected_name_pos.append((name_start, name_end))
             
-            brace_pos = content.find('{', name_end)
-            if brace_pos != -1 and brace_pos < wrap_end:
-                close_pos = find_matching_brace(content, brace_pos)
-                if close_pos != -1: protected_body_ranges.append((brace_pos, close_pos, class_name))
+            # 如果是类定义，还需要保护大括号内部作用域
+            if is_definition:
+                brace_pos = content.find('{', name_end)
+                if brace_pos != -1 and brace_pos < wrap_end:
+                    close_pos = find_matching_brace(content, brace_pos)
+                    if close_pos != -1:
+                        protected_body_ranges.append((brace_pos, close_pos, class_name))
 
     # ==== Phase 1.5: 函数实现包裹 ====
     if tu:

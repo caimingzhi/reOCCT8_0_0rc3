@@ -47,5 +47,5 @@ public:
 
 private:
   Extrema_ExtCC                  myExtCC;
-  occ::handle<BRepAdaptor_Curve> myHC;
+  occ::handle<::model::adapter::BRepAdaptor_Curve> myHC;
 };

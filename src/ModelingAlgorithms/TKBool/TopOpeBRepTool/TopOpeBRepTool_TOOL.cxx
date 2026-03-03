@@ -75,7 +75,7 @@ static bool FUN_nullprodv(const double prodv)
 
 static bool CheckEdgeLength(const TopoDS_Edge& E)
 {
-  BRepAdaptor_Curve BC(E);
+  ::model::adapter::BRepAdaptor_Curve BC(E);
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aM;
   TopExp::MapShapes(E, TopAbs_VERTEX, aM);
@@ -298,7 +298,7 @@ double TopOpeBRepTool_TOOL::ParE(const int Iv, const TopoDS_Edge& E)
 
 int TopOpeBRepTool_TOOL::OnBoundary(const double par, const TopoDS_Edge& e)
 {
-  BRepAdaptor_Curve bc(e);
+  ::model::adapter::BRepAdaptor_Curve bc(e);
   bool              closed = bc.IsClosed();
   double            first  = bc.FirstParameter();
   double            last   = bc.LastParameter();
@@ -449,7 +449,7 @@ bool TopOpeBRepTool_TOOL::ParE2d(const gp_Pnt2d&    p2d,
                                  double&            dist)
 {
 
-  BRepAdaptor_Curve2d              BC2d(E, F);
+  ::model::adapter::BRepAdaptor_Curve2d              BC2d(E, F);
   GeomAbs_CurveType                CT  = BC2d.GetType();
   const occ::handle<Geom2d_Curve>& C2d = BC2d.Curve();
   if (CT == GeomAbs_Line)
@@ -508,7 +508,7 @@ bool TopOpeBRepTool_TOOL::TgINSIDE(const TopoDS_Vertex& v,
   return true;
 }
 
-bool TopOpeBRepTool_TOOL::TggeomE(const double par, const BRepAdaptor_Curve& BC, gp_Vec& Tg)
+bool TopOpeBRepTool_TOOL::TggeomE(const double par, const ::model::adapter::BRepAdaptor_Curve& BC, gp_Vec& Tg)
 {
 
   double f = BC.FirstParameter(), l = BC.LastParameter();
@@ -535,7 +535,7 @@ bool TopOpeBRepTool_TOOL::TggeomE(const double par, const TopoDS_Edge& E, gp_Vec
   if (isdgE)
     return false;
 
-  BRepAdaptor_Curve BC(E);
+  ::model::adapter::BRepAdaptor_Curve BC(E);
 
   if (!CheckEdgeLength(E))
   {
@@ -715,7 +715,7 @@ bool TopOpeBRepTool_TOOL::tryNgApp(const double       par,
 
 bool TopOpeBRepTool_TOOL::IsQuad(const TopoDS_Edge& E)
 {
-  BRepAdaptor_Curve bc(E);
+  ::model::adapter::BRepAdaptor_Curve bc(E);
   return (FUN_quadCT(bc.GetType()));
 }
 
@@ -731,7 +731,7 @@ bool TopOpeBRepTool_TOOL::CurvE(const TopoDS_Edge& E,
                                 double&            curv)
 {
   curv = 0.;
-  BRepAdaptor_Curve BAC(E);
+  ::model::adapter::BRepAdaptor_Curve BAC(E);
   GeomAbs_CurveType CT   = BAC.GetType();
   bool              line = (CT == GeomAbs_Line);
   double            tola = math::precision::Precision::Angular() * 1.e3;
@@ -742,7 +742,7 @@ bool TopOpeBRepTool_TOOL::CurvE(const TopoDS_Edge& E,
     return std::abs(1 - dot) >= tola;
   }
 
-  BRepLProp_CLProps clprops(BAC, par, 2, math::precision::Precision::Confusion());
+  ::model::localproperties::BRepLProp_CLProps clprops(BAC, par, 2, math::precision::Precision::Confusion());
   bool              tgdef = clprops.IsTangentDefined();
   if (!tgdef)
     return false;
@@ -1197,7 +1197,7 @@ bool TopOpeBRepTool_TOOL::Nt(const gp_Pnt2d& uv, const TopoDS_Face& f, gp_Dir& n
 
 static bool FUN_ngF(const gp_Pnt2d& uv, const TopoDS_Face& F, gp_Vec& ngF)
 {
-  BRepAdaptor_Surface bs(F);
+  ::model::adapter::BRepAdaptor_Surface bs(F);
   double              tol3d = bs.Tolerance();
   double              tolu  = bs.UResolution(tol3d);
   double              tolv  = bs.VResolution(tol3d);
@@ -1420,7 +1420,7 @@ bool TopOpeBRepTool_TOOL::Remove(NCollection_List<TopoDS_Shape>& loS, const Topo
 
 double TopOpeBRepTool_TOOL::minDUV(const TopoDS_Face& F)
 {
-  BRepAdaptor_Surface BS(F);
+  ::model::adapter::BRepAdaptor_Surface BS(F);
   double              delta = BS.LastUParameter() - BS.FirstUParameter();
   double              tmp   = BS.LastVParameter() - BS.FirstVParameter();
   delta                     = (tmp < delta) ? tmp : delta;
@@ -1434,7 +1434,7 @@ double TopOpeBRepTool_TOOL::minDUV(const TopoDS_Face& F)
 
 void TopOpeBRepTool_TOOL::stuvF(const gp_Pnt2d& uv, const TopoDS_Face& f, int& onU, int& onV)
 {
-  BRepAdaptor_Surface bs(f);
+  ::model::adapter::BRepAdaptor_Surface bs(f);
   onU = onV   = 0;
   double tolf = bs.Tolerance();
   double tolu = bs.UResolution(tolf), tolv = bs.VResolution(tolf);
@@ -1463,7 +1463,7 @@ void TopOpeBRepTool_TOOL::stuvF(const gp_Pnt2d& uv, const TopoDS_Face& f, int& o
 
 bool TopOpeBRepTool_TOOL::outUVbounds(const gp_Pnt2d& uv, const TopoDS_Face& F)
 {
-  BRepAdaptor_Surface BS(F);
+  ::model::adapter::BRepAdaptor_Surface BS(F);
   bool outofboundU = (uv.X() > BS.LastUParameter()) || (uv.X() < BS.FirstUParameter());
   bool outofboundV = (uv.Y() > BS.LastVParameter()) || (uv.Y() < BS.FirstVParameter());
   return outofboundU || outofboundV;
@@ -1471,7 +1471,7 @@ bool TopOpeBRepTool_TOOL::outUVbounds(const gp_Pnt2d& uv, const TopoDS_Face& F)
 
 double TopOpeBRepTool_TOOL::TolUV(const TopoDS_Face& F, const double tol3d)
 {
-  BRepAdaptor_Surface bs(F);
+  ::model::adapter::BRepAdaptor_Surface bs(F);
   double              tol2d = bs.UResolution(tol3d);
   tol2d                     = std::max(tol2d, bs.VResolution(tol3d));
   return tol2d;
@@ -1479,7 +1479,7 @@ double TopOpeBRepTool_TOOL::TolUV(const TopoDS_Face& F, const double tol3d)
 
 double TopOpeBRepTool_TOOL::TolP(const TopoDS_Edge& E, const TopoDS_Face& F)
 {
-  BRepAdaptor_Curve2d BC2d(E, F);
+  ::model::adapter::BRepAdaptor_Curve2d BC2d(E, F);
   return (BC2d.Resolution(BRep_Tool::Tolerance(E)));
 }
 
@@ -1540,12 +1540,12 @@ bool TopOpeBRepTool_TOOL::EdgeONFace(const double       par,
   if (!etgf)
     return true;
 
-  BRepAdaptor_Surface bs(fa);
+  ::model::adapter::BRepAdaptor_Surface bs(fa);
   GeomAbs_SurfaceType st       = bs.GetType();
   bool                plane    = (st == GeomAbs_Plane);
   bool                cylinder = (st == GeomAbs_Cylinder);
 
-  BRepAdaptor_Curve bc(ed);
+  ::model::adapter::BRepAdaptor_Curve bc(ed);
   GeomAbs_CurveType ct     = bc.GetType();
   bool              line   = (ct == GeomAbs_Line);
   bool              circle = (ct == GeomAbs_Circle);

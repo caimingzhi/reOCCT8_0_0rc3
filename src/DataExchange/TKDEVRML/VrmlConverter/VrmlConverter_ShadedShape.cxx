@@ -283,7 +283,7 @@ void VrmlConverter_ShadedShape::ComputeNormal(const TopoDS_Face&          aFace,
                                               NCollection_Array1<gp_Dir>& Nor)
 {
   const occ::handle<Poly_Triangulation>& T = pc.Triangulation();
-  BRepAdaptor_Surface                    S;
+  ::model::adapter::BRepAdaptor_Surface                    S;
   bool                                   hasUV = T->HasUVNodes();
   int                                    i;
   TopLoc_Location                        l;

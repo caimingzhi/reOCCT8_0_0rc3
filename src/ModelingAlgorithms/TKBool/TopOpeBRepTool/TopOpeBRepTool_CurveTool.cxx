@@ -605,8 +605,8 @@ bool TopOpeBRepTool_CurveTool::MakeCurves(const double                     parmi
   bool withtangency = true;
 
   bool                compminmaxUV = true;
-  BRepAdaptor_Surface BAS1(TopoDS::Face(S1), compminmaxUV);
-  BRepAdaptor_Surface BAS2(TopoDS::Face(S2), compminmaxUV);
+  ::model::adapter::BRepAdaptor_Surface BAS1(TopoDS::Face(S1), compminmaxUV);
+  ::model::adapter::BRepAdaptor_Surface BAS2(TopoDS::Face(S2), compminmaxUV);
 
   occ::handle<BRepApprox_ApproxLine> AL;
   AL = new BRepApprox_ApproxLine(HC3D, HPC1, HPC2);
@@ -813,7 +813,7 @@ bool TopOpeBRepTool_CurveTool::IsProjectable(const TopoDS_Shape&            S,
 {
   const TopoDS_Face&  F            = TopoDS::Face(S);
   bool                compminmaxUV = false;
-  BRepAdaptor_Surface BAS(F, compminmaxUV);
+  ::model::adapter::BRepAdaptor_Surface BAS(F, compminmaxUV);
   GeomAbs_SurfaceType suty = BAS.GetType();
   GeomAdaptor_Curve   GAC(C3D);
   GeomAbs_CurveType   cuty = GAC.GetType();
@@ -876,13 +876,13 @@ occ::handle<Geom2d_Curve> TopOpeBRepTool_CurveTool::MakePCurveOnFace(
 
   const TopoDS_Face&  F            = TopoDS::Face(S);
   bool                compminmaxUV = false;
-  BRepAdaptor_Surface BAS(F, compminmaxUV);
+  ::model::adapter::BRepAdaptor_Surface BAS(F, compminmaxUV);
   GeomAdaptor_Curve   GAC;
   if (trim)
     GAC.Load(C3D, first, last);
   else
     GAC.Load(C3D);
-  occ::handle<BRepAdaptor_Surface> BAHS = new BRepAdaptor_Surface(BAS);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> BAHS = new ::model::adapter::BRepAdaptor_Surface(BAS);
   occ::handle<GeomAdaptor_Curve>   BAHC = new GeomAdaptor_Curve(GAC);
   ProjLib_ProjectedCurve           projcurv(BAHS, BAHC);
   occ::handle<Geom2d_Curve>        C2D = ::MakePCurve(projcurv);

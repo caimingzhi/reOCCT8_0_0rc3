@@ -87,7 +87,7 @@ static GeomAbs_CurveType TypeOfEdge(const TopoDS_Edge& anEdge)
   if (IsLinear(anEdge, aLin))
     return GeomAbs_Line;
 
-  BRepAdaptor_Curve BAcurve(anEdge);
+  ::model::adapter::BRepAdaptor_Curve BAcurve(anEdge);
   return BAcurve.GetType();
 }
 

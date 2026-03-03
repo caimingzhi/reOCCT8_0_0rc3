@@ -99,10 +99,10 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
     if (CEE.IsNull())
     {
       bool                             compminmaxUV = false;
-      BRepAdaptor_Surface              BAS(FS, compminmaxUV);
-      occ::handle<BRepAdaptor_Surface> BAHS = new BRepAdaptor_Surface(BAS);
-      BRepAdaptor_Curve                AC(EE, FS);
-      occ::handle<BRepAdaptor_Curve>   AHC = new BRepAdaptor_Curve(AC);
+      ::model::adapter::BRepAdaptor_Surface              BAS(FS, compminmaxUV);
+      occ::handle<::model::adapter::BRepAdaptor_Surface> BAHS = new ::model::adapter::BRepAdaptor_Surface(BAS);
+      ::model::adapter::BRepAdaptor_Curve                AC(EE, FS);
+      occ::handle<::model::adapter::BRepAdaptor_Curve>   AHC = new ::model::adapter::BRepAdaptor_Curve(AC);
       double                           tolin;
       FTOL_FaceTolerances3d(FF, FS, tolin);
       ProjLib_ProjectedCurve projcurv(BAHS, AHC, tolin);

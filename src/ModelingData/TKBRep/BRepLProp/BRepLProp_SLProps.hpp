@@ -13,7 +13,10 @@ class LProp_BadContinuity;
 class Standard_DomainError;
 class Standard_OutOfRange;
 class LProp_NotDefined;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class BRepLProp_SurfaceTool;
 class gp_Pnt;
 class gp_Vec;
@@ -25,19 +28,19 @@ class BRepLProp_SLProps
 public:
   DEFINE_STANDARD_ALLOC
 
-  Standard_EXPORT BRepLProp_SLProps(const BRepAdaptor_Surface& S,
+  Standard_EXPORT BRepLProp_SLProps(const ::model::adapter::BRepAdaptor_Surface& S,
                                     const double               U,
                                     const double               V,
                                     const int                  N,
                                     const double               Resolution);
 
-  Standard_EXPORT BRepLProp_SLProps(const BRepAdaptor_Surface& S,
+  Standard_EXPORT BRepLProp_SLProps(const ::model::adapter::BRepAdaptor_Surface& S,
                                     const int                  N,
                                     const double               Resolution);
 
   Standard_EXPORT BRepLProp_SLProps(const int N, const double Resolution);
 
-  Standard_EXPORT void SetSurface(const BRepAdaptor_Surface& S);
+  Standard_EXPORT void SetSurface(const ::model::adapter::BRepAdaptor_Surface& S);
 
   Standard_EXPORT void SetParameters(const double U, const double V);
 
@@ -80,7 +83,7 @@ public:
   Standard_EXPORT double GaussianCurvature();
 
 private:
-  BRepAdaptor_Surface mySurf;
+  ::model::adapter::BRepAdaptor_Surface mySurf;
   double              myU;
   double              myV;
   int                 myDerOrder;

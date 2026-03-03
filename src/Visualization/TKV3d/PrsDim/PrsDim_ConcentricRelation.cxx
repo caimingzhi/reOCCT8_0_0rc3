@@ -127,8 +127,8 @@ void PrsDim_ConcentricRelation::ComputeTwoVerticesConcentric(
 void PrsDim_ConcentricRelation::ComputeTwoEdgesConcentric(
   const occ::handle<Prs3d_Presentation>& aPresentation)
 {
-  BRepAdaptor_Curve curv1(TopoDS::Edge(myFShape));
-  BRepAdaptor_Curve curv2(TopoDS::Edge(mySShape));
+  ::model::adapter::BRepAdaptor_Curve curv1(TopoDS::Edge(myFShape));
+  ::model::adapter::BRepAdaptor_Curve curv2(TopoDS::Edge(mySShape));
 
   gp_Pnt                  ptat11, ptat12, ptat21, ptat22;
   occ::handle<Geom_Curve> geom1, geom2;

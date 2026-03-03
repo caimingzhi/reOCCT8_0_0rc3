@@ -181,12 +181,12 @@ void BRepAlgo_NormalProjection::Build()
   for (i = 1; i <= NbEdges; i++)
   {
     DescenList.Clear();
-    occ::handle<BRepAdaptor_Curve> hcur = new BRepAdaptor_Curve(TopoDS::Edge(Edges->Value(i)));
+    occ::handle<::model::adapter::BRepAdaptor_Curve> hcur = new ::model::adapter::BRepAdaptor_Curve(TopoDS::Edge(Edges->Value(i)));
     Elementary                          = IsElementary(*hcur);
     for (j = 1; j <= NbFaces; j++)
     {
-      occ::handle<BRepAdaptor_Surface> hsur =
-        new BRepAdaptor_Surface(TopoDS::Face(Faces->Value(j)));
+      occ::handle<::model::adapter::BRepAdaptor_Surface> hsur =
+        new ::model::adapter::BRepAdaptor_Surface(TopoDS::Face(Faces->Value(j)));
 
       double TolU, TolV;
 

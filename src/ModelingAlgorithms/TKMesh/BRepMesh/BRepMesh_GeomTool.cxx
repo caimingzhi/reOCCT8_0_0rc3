@@ -127,7 +127,7 @@ namespace
   }
 } // namespace
 
-BRepMesh_GeomTool::BRepMesh_GeomTool(const BRepAdaptor_Curve& theCurve,
+BRepMesh_GeomTool::BRepMesh_GeomTool(const ::model::adapter::BRepAdaptor_Curve& theCurve,
                                      const double             theFirstParam,
                                      const double             theLastParam,
                                      const double             theLinDeflection,
@@ -147,7 +147,7 @@ BRepMesh_GeomTool::BRepMesh_GeomTool(const BRepAdaptor_Curve& theCurve,
                            theMinSize);
 }
 
-BRepMesh_GeomTool::BRepMesh_GeomTool(const occ::handle<BRepAdaptor_Surface>& theSurface,
+BRepMesh_GeomTool::BRepMesh_GeomTool(const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                                      const GeomAbs_IsoType                   theIsoType,
                                      const double                            theParamIso,
                                      const double                            theFirstParam,
@@ -172,7 +172,7 @@ BRepMesh_GeomTool::BRepMesh_GeomTool(const occ::handle<BRepAdaptor_Surface>& the
 }
 
 bool BRepMesh_GeomTool::Value(const int                               theIndex,
-                              const occ::handle<BRepAdaptor_Surface>& theSurface,
+                              const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                               double&                                 theParam,
                               gp_Pnt&                                 thePoint,
                               gp_Pnt2d&                               theUV) const
@@ -216,7 +216,7 @@ bool BRepMesh_GeomTool::Value(const int    theIndex,
   return true;
 }
 
-bool BRepMesh_GeomTool::Normal(const occ::handle<BRepAdaptor_Surface>& theSurface,
+bool BRepMesh_GeomTool::Normal(const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                                const double                            theParamU,
                                const double                            theParamV,
                                gp_Pnt&                                 thePoint,

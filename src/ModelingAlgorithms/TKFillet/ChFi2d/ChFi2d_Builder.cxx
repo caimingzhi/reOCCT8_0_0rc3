@@ -378,7 +378,7 @@ TopoDS_Vertex ChFi2d_Builder::RemoveFillet(const TopoDS_Edge& Fillet)
     }
     Ex.Next();
   }
-  BRepAdaptor_Surface Adaptor3dSurface(refFace);
+  ::model::adapter::BRepAdaptor_Surface Adaptor3dSurface(refFace);
   BRepLib_MakeFace    mFace(Adaptor3dSurface.Plane(), newWire);
   newFace.Nullify();
   newFace = mFace;
@@ -473,7 +473,7 @@ void ChFi2d_Builder::BuildNewWire(const TopoDS_Edge& OldE1,
   }
 
   newWire.Closed(aClosedStatus);
-  BRepAdaptor_Surface Adaptor3dSurface(refFace);
+  ::model::adapter::BRepAdaptor_Surface Adaptor3dSurface(refFace);
   BRepLib_MakeFace    mFace(Adaptor3dSurface.Plane(), newWire);
   newFace = mFace;
 }
@@ -868,7 +868,7 @@ TopoDS_Edge ChFi2d_Builder::BuildFilletEdge(const TopoDS_Vertex& V,
     occ::handle<Geom2d_Circle> circle = new Geom2d_Circle(cir);
 
     BRep_Builder            B;
-    BRepAdaptor_Surface     Adaptor3dSurface(refFace);
+    ::model::adapter::BRepAdaptor_Surface     Adaptor3dSurface(refFace);
     occ::handle<Geom_Plane> refSurf = new Geom_Plane(Adaptor3dSurface.Plane());
     Fillet.Tangency1(numsol, U1, U2, Ptg1);
     Fillet.Tangency2(numsol, Vv1, Vv2, Ptg2);

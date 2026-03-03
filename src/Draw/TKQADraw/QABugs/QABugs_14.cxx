@@ -120,7 +120,7 @@ static int BUC60889(Draw_Interpretor& di, int argc, const char** argv)
       di << "Need an edge to define the band direction\n";
       return 1;
     }
-    BRepAdaptor_Curve curve(ed);
+    ::model::adapter::BRepAdaptor_Curve curve(ed);
     gp_Dir            d = curve.Line().Direction();
     Bnd_Box           bnd_box;
     bnd_box.Update(Draw::Atof(argv[4]),
@@ -150,7 +150,7 @@ static int BUC60852(Draw_Interpretor& di, int argc, const char** argv)
       di << "shape must be an edge\n";
     else
     {
-      BRepAdaptor_Curve curve(shape);
+      ::model::adapter::BRepAdaptor_Curve curve(shape);
       gp_Lin            lin = curve.Line();
       Bnd_Box           bnd_box;
       bnd_box.Update(Draw::Atof(argv[2]),

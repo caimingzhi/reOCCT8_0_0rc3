@@ -39,7 +39,7 @@ void StdPrs_HLRToolShape::NextVisible()
   myEdgeIterator.NextVisible();
 }
 
-void StdPrs_HLRToolShape::Visible(BRepAdaptor_Curve& TheEdge, double& U1, double& U2)
+void StdPrs_HLRToolShape::Visible(::model::adapter::BRepAdaptor_Curve& TheEdge, double& U1, double& U2)
 {
 
   TheEdge = MyData->EDataArray().ChangeValue(MyCurrentEdgeNumber).ChangeGeometry().Curve();
@@ -63,7 +63,7 @@ void StdPrs_HLRToolShape::NextHidden()
   myEdgeIterator.NextHidden();
 }
 
-void StdPrs_HLRToolShape::Hidden(BRepAdaptor_Curve& TheEdge, double& U1, double& U2)
+void StdPrs_HLRToolShape::Hidden(::model::adapter::BRepAdaptor_Curve& TheEdge, double& U1, double& U2)
 {
 
   TheEdge = MyData->EDataArray().ChangeValue(MyCurrentEdgeNumber).ChangeGeometry().Curve();

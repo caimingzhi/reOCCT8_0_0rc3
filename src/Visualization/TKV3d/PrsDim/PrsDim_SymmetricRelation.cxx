@@ -121,7 +121,7 @@ void PrsDim_SymmetricRelation::ComputeSelection(const occ::handle<SelectMgr_Sele
 
   if (myFShape.ShapeType() != TopAbs_VERTEX)
   {
-    BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
+    ::model::adapter::BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
 
     if (cu1.GetType() == GeomAbs_Line)
     {
@@ -332,10 +332,10 @@ void PrsDim_SymmetricRelation::ComputeTwoFacesSymmetric(const occ::handle<Prs3d_
 
 void PrsDim_SymmetricRelation::ComputeTwoEdgesSymmetric(const occ::handle<Prs3d_Presentation>& aprs)
 {
-  BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
+  ::model::adapter::BRepAdaptor_Curve cu1(TopoDS::Edge(myFShape));
   if (cu1.GetType() != GeomAbs_Line && cu1.GetType() != GeomAbs_Circle)
     return;
-  BRepAdaptor_Curve cu2(TopoDS::Edge(mySShape));
+  ::model::adapter::BRepAdaptor_Curve cu2(TopoDS::Edge(mySShape));
   if (cu2.GetType() != GeomAbs_Line && cu2.GetType() != GeomAbs_Circle)
     return;
 

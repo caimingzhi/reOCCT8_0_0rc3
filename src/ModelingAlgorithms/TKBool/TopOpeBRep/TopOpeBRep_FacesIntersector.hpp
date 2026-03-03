@@ -86,8 +86,8 @@ private:
   int                                                           myLineNb;
   TopoDS_Face                                                   myFace1;
   TopoDS_Face                                                   myFace2;
-  occ::handle<BRepAdaptor_Surface>                              mySurface1;
-  occ::handle<BRepAdaptor_Surface>                              mySurface2;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>                              mySurface1;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>                              mySurface2;
   GeomAbs_SurfaceType                                           mySurfaceType1;
   GeomAbs_SurfaceType                                           mySurfaceType2;
   bool                                                          mySurfacesSameOriented;

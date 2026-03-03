@@ -67,7 +67,7 @@ void BRepGProp::LinearProperties(const TopoDS_Shape& S,
   P.Transform(S.Location());
   SProps = GProp_GProps(P);
 
-  BRepAdaptor_Curve                                      BAC;
+  ::model::adapter::BRepAdaptor_Curve                                      BAC;
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> anEMap;
   TopExp_Explorer                                        ex;
   for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())

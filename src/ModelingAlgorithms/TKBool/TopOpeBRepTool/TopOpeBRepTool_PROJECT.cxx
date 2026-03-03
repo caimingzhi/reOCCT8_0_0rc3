@@ -15,7 +15,7 @@
 
 Standard_EXPORT void FUN_tool_bounds(const TopoDS_Edge& E, double& f, double& l)
 {
-  BRepAdaptor_Curve BAC(E);
+  ::model::adapter::BRepAdaptor_Curve BAC(E);
   f = BAC.FirstParameter();
   l = BAC.LastParameter();
 }
@@ -56,7 +56,7 @@ Standard_EXPORT int FUN_tool_getindex(const Extrema_ExtPC2d& ponc)
 
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        const double             tole,
-                                       const BRepAdaptor_Curve& BAC,
+                                       const ::model::adapter::BRepAdaptor_Curve& BAC,
                                        const double             pmin,
                                        const double             pmax,
                                        double&                  param,
@@ -95,7 +95,7 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
 }
 
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
-                                       const BRepAdaptor_Curve& BAC,
+                                       const ::model::adapter::BRepAdaptor_Curve& BAC,
                                        const double             pmin,
                                        const double             pmax,
                                        double&                  param,
@@ -108,7 +108,7 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
 }
 
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
-                                       const BRepAdaptor_Curve& BAC,
+                                       const ::model::adapter::BRepAdaptor_Curve& BAC,
                                        double&                  param,
                                        double&                  dist)
 {
@@ -122,7 +122,7 @@ Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
 
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          const double               tole,
-                                         const BRepAdaptor_Curve2d& BAC2D,
+                                         const ::model::adapter::BRepAdaptor_Curve2d& BAC2D,
                                          const double               pmin,
                                          const double               pmax,
                                          double&                    param,
@@ -167,7 +167,7 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
 }
 
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
-                                         const BRepAdaptor_Curve2d& BAC2D,
+                                         const ::model::adapter::BRepAdaptor_Curve2d& BAC2D,
                                          const double               pmin,
                                          const double               pmax,
                                          double&                    param,
@@ -180,7 +180,7 @@ Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
 }
 
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
-                                         const BRepAdaptor_Curve2d& BAC2D,
+                                         const ::model::adapter::BRepAdaptor_Curve2d& BAC2D,
                                          double&                    param,
                                          double&                    dist)
 {
@@ -227,7 +227,7 @@ Standard_EXPORT bool FUN_tool_projPonE(const gp_Pnt&      P,
                                        double&            dist)
 {
   dist = 1.;
-  BRepAdaptor_Curve BAC(E);
+  ::model::adapter::BRepAdaptor_Curve BAC(E);
   double            first = BAC.FirstParameter();
   double            last  = BAC.LastParameter();
   bool              ok    = FUN_tool_projPonC(P, tole, BAC, first, last, param, dist);

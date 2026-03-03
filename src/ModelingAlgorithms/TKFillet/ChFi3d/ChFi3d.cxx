@@ -36,7 +36,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
   if (C1.IsNull() || C2.IsNull())
     return ChFiDS_Other;
 
-  BRepAdaptor_Curve C(E);
+  ::model::adapter::BRepAdaptor_Curve C(E);
   f = C.FirstParameter();
   l = C.LastParameter();
 
@@ -180,10 +180,10 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   if (aSurf1.IsNull() || aSurf2.IsNull())
     return false;
 
-  BRepAdaptor_Surface                   aBAS1(theFace1);
-  BRepAdaptor_Surface                   aBAS2(theFace2);
-  occ::handle<BRepAdaptor_Surface>      aBAHS1      = new BRepAdaptor_Surface(aBAS1);
-  occ::handle<BRepAdaptor_Surface>      aBAHS2      = new BRepAdaptor_Surface(aBAS2);
+  ::model::adapter::BRepAdaptor_Surface                   aBAS1(theFace1);
+  ::model::adapter::BRepAdaptor_Surface                   aBAS2(theFace2);
+  occ::handle<::model::adapter::BRepAdaptor_Surface>      aBAHS1      = new ::model::adapter::BRepAdaptor_Surface(aBAS1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface>      aBAHS2      = new ::model::adapter::BRepAdaptor_Surface(aBAS2);
   occ::handle<BRepTopAdaptor_TopolTool> aTool1      = new BRepTopAdaptor_TopolTool(aBAHS1);
   occ::handle<BRepTopAdaptor_TopolTool> aTool2      = new BRepTopAdaptor_TopolTool(aBAHS2);
   int                                   aNbSamples1 = aTool1->NbSamples();
@@ -232,8 +232,8 @@ bool ChFi3d::IsTangentFaces(const TopoDS_Edge&  theEdge,
   return dot >= 0.;
 }
 
-int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
-                        const BRepAdaptor_Surface& S2,
+int ChFi3d::ConcaveSide(const ::model::adapter::BRepAdaptor_Surface& S1,
+                        const ::model::adapter::BRepAdaptor_Surface& S2,
                         const TopoDS_Edge&         E,
                         TopAbs_Orientation&        Or1,
                         TopAbs_Orientation&        Or2)
@@ -241,7 +241,7 @@ int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
 {
   int ChoixConge;
   Or1 = Or2 = TopAbs_FORWARD;
-  BRepAdaptor_Curve CE(E);
+  ::model::adapter::BRepAdaptor_Curve CE(E);
   double            first = CE.FirstParameter();
   double            last  = CE.LastParameter();
   double            par   = 0.691254 * first + 0.308746 * last;
@@ -298,8 +298,8 @@ int ChFi3d::ConcaveSide(const BRepAdaptor_Surface& S1,
       return 0;
     }
   }
-  BRepAdaptor_Curve2d pc1(E1, F1);
-  BRepAdaptor_Curve2d pc2(E2, F2);
+  ::model::adapter::BRepAdaptor_Curve2d pc1(E1, F1);
+  ::model::adapter::BRepAdaptor_Curve2d pc2(E2, F2);
   gp_Pnt2d            p2d1, p2d2;
   gp_Vec              DU1, DV1, DU2, DV2;
   p2d1 = pc1.Value(par);
@@ -529,7 +529,7 @@ bool ChFi3d::SameSide(const TopAbs_Orientation Or,
 
 void Correct2dPoint(const TopoDS_Face& theF, gp_Pnt2d& theP2d)
 {
-  BRepAdaptor_Surface aBAS(theF, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS(theF, false);
   if (aBAS.GetType() < GeomAbs_BezierSurface)
   {
     return;

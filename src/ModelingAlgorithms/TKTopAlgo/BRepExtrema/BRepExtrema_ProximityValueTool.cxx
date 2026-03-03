@@ -53,7 +53,7 @@ static double calcEdgeRefinementStep(const TopoDS_Edge& theEdge, const int theNb
   if (theNbNodes < 2)
     return 0;
 
-  BRepAdaptor_Curve aBAC(theEdge);
+  ::model::adapter::BRepAdaptor_Curve aBAC(theEdge);
   double            aLen = GCPnts_AbscissaPoint::Length(aBAC);
   return aLen / (double)(theNbNodes - 1);
 }
@@ -181,7 +181,7 @@ bool BRepExtrema_ProximityValueTool::getEdgeAdditionalVertices(
   BVH_Array3d&                        theAddVertices,
   NCollection_Vector<ProxPnt_Status>& theAddStatuses)
 {
-  BRepAdaptor_Curve aBAC(theEdge);
+  ::model::adapter::BRepAdaptor_Curve aBAC(theEdge);
 
   if (!aBAC.Is3DCurve() || theStep < math::precision::Precision::Confusion())
   {

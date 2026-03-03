@@ -19,7 +19,10 @@ class gp_Pnt2d;
 class TopOpeBRepTool_C2DF;
 class gp_Vec;
 class gp_Dir2d;
+namespace model { namespace adapter {
 class BRepAdaptor_Curve;
+}} // namespace model::adapter
+
 class gp_Vec2d;
 class gp_Dir;
 class Geom2d_Curve;
@@ -90,7 +93,7 @@ public:
 
   Standard_EXPORT static void stuvF(const gp_Pnt2d& uv, const TopoDS_Face& F, int& onU, int& onV);
 
-  Standard_EXPORT static bool TggeomE(const double par, const BRepAdaptor_Curve& BC, gp_Vec& Tg);
+  Standard_EXPORT static bool TggeomE(const double par, const ::model::adapter::BRepAdaptor_Curve& BC, gp_Vec& Tg);
 
   Standard_EXPORT static bool TggeomE(const double par, const TopoDS_Edge& E, gp_Vec& Tg);
 

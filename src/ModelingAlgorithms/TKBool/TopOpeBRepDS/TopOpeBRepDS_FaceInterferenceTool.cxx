@@ -27,7 +27,7 @@ static void FUN_RaiseError()
 
 Standard_EXPORT bool FUN_Parameters(const gp_Pnt& Pnt, const TopoDS_Shape& F, double& u, double& v)
 {
-  BRepAdaptor_Surface Surf(TopoDS::Face(F));
+  ::model::adapter::BRepAdaptor_Surface Surf(TopoDS::Face(F));
 
   double        uvtol = Surf.Tolerance();
   double        fu = Surf.FirstUParameter(), lu = Surf.LastUParameter();
@@ -70,7 +70,7 @@ Standard_EXPORT void FUN_ComputeGeomData(const TopoDS_Shape& F,
                                          double&             Cur1,
                                          double&             Cur2)
 {
-  BRepAdaptor_Surface surf(TopoDS::Face(F));
+  ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(F));
   double              uu = uv.X(), vv = uv.Y();
 
   bool sphere = FUN_sphere(F);

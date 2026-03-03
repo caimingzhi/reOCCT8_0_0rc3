@@ -49,7 +49,7 @@ void BRepTopAdaptor_TopolTool::Initialize()
 
 void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& S)
 {
-  occ::handle<BRepAdaptor_Surface> brhs = occ::down_cast<BRepAdaptor_Surface>(S);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> brhs = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S);
   if (brhs.IsNull())
   {
     throw Standard_ConstructionError();
@@ -68,8 +68,8 @@ void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& 
   TopExp_Explorer ex(myFace, TopAbs_EDGE);
   for (; ex.More(); ex.Next())
   {
-    occ::handle<BRepAdaptor_Curve2d> aCurve =
-      new BRepAdaptor_Curve2d(BRepAdaptor_Curve2d(TopoDS::Edge(ex.Current()), myFace));
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> aCurve =
+      new ::model::adapter::BRepAdaptor_Curve2d(::model::adapter::BRepAdaptor_Curve2d(TopoDS::Edge(ex.Current()), myFace));
     myCurves.Append(aCurve);
   }
   myCIterator = NCollection_List<occ::handle<Standard_Transient>>::Iterator();
@@ -77,7 +77,7 @@ void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor3d_Surface>& 
 
 void BRepTopAdaptor_TopolTool::Initialize(const occ::handle<Adaptor2d_Curve2d>& C)
 {
-  myCurve = occ::down_cast<BRepAdaptor_Curve2d>(C);
+  myCurve = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(C);
   if (myCurve.IsNull())
   {
     throw Standard_ConstructionError();
@@ -106,8 +106,8 @@ occ::handle<Adaptor2d_Curve2d> BRepTopAdaptor_TopolTool::Value()
 
 void* BRepTopAdaptor_TopolTool::Edge() const
 {
-  occ::handle<BRepAdaptor_Curve2d> aHCurve =
-    occ::down_cast<BRepAdaptor_Curve2d>(myCIterator.Value());
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> aHCurve =
+    occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(myCIterator.Value());
   return (void*)(&aHCurve->Edge());
 }
 
@@ -167,7 +167,7 @@ void BRepTopAdaptor_TopolTool::Destroy()
 
 TopAbs_Orientation BRepTopAdaptor_TopolTool::Orientation(const occ::handle<Adaptor2d_Curve2d>& C)
 {
-  occ::handle<BRepAdaptor_Curve2d> brhc = occ::down_cast<BRepAdaptor_Curve2d>(C);
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> brhc = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(C);
   return brhc->Edge().Orientation();
 }
 
@@ -504,7 +504,7 @@ bool BRepTopAdaptor_TopolTool::Has3d() const
 
 double BRepTopAdaptor_TopolTool::Tol3d(const occ::handle<Adaptor2d_Curve2d>& C) const
 {
-  occ::handle<BRepAdaptor_Curve2d> brhc = occ::down_cast<BRepAdaptor_Curve2d>(C);
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> brhc = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(C);
   if (brhc.IsNull())
   {
     throw Standard_DomainError("BRepTopAdaptor_TopolTool: arc has no 3d representation");

@@ -161,7 +161,7 @@ namespace
     }
 
     bool bMicro = BOPTools_AlgoTools::IsMicroEdge(theEdge, theCtx);
-    if (bMicro && BRepAdaptor_Curve(theEdge).GetType() == GeomAbs_Line)
+    if (bMicro && ::model::adapter::BRepAdaptor_Curve(theEdge).GetType() == GeomAbs_Line)
     {
       double aLen = BRep_Tool::Pnt(aV1).Distance(BRep_Tool::Pnt(aV2));
       BRep_Builder().UpdateVertex(aV1, aLen / 2.);
@@ -292,7 +292,7 @@ namespace
 
   static int NbPoints(const TopoDS_Edge& theEdge)
   {
-    BRepAdaptor_Curve aBAC(theEdge);
+    ::model::adapter::BRepAdaptor_Curve aBAC(theEdge);
     switch (aBAC.GetType())
     {
       case GeomAbs_Line:

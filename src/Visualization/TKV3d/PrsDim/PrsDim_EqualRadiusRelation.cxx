@@ -36,7 +36,7 @@ void PrsDim_EqualRadiusRelation::Compute(const occ::handle<PrsMgr_PresentationMa
                                          const occ::handle<Prs3d_Presentation>& aPresentation,
                                          const int)
 {
-  BRepAdaptor_Curve FirstCurve(TopoDS::Edge(myFShape)), SecondCurve(TopoDS::Edge(mySShape));
+  ::model::adapter::BRepAdaptor_Curve FirstCurve(TopoDS::Edge(myFShape)), SecondCurve(TopoDS::Edge(mySShape));
 
   double FirstPar1 = FirstCurve.FirstParameter(), LastPar1 = FirstCurve.LastParameter(),
          FirstPar2 = SecondCurve.FirstParameter(), LastPar2 = SecondCurve.LastParameter();

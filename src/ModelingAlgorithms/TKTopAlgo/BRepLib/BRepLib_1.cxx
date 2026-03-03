@@ -189,7 +189,7 @@ bool BRepLib::FindValidRange(const TopoDS_Edge& theEdge, double& theFirst, doubl
   double          f, l;
   if (BRep_Tool::Curve(theEdge, aLoc, f, l).IsNull())
     return false;
-  BRepAdaptor_Curve anAC(theEdge);
+  ::model::adapter::BRepAdaptor_Curve anAC(theEdge);
   double            aParV[2] = {anAC.FirstParameter(), anAC.LastParameter()};
   if (aParV[1] - aParV[0] < math::precision::Precision::PConfusion())
     return false;

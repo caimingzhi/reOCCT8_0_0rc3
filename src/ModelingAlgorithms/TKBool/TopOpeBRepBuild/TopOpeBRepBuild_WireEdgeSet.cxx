@@ -42,7 +42,7 @@ void TopOpeBRepBuild_WireEdgeSet::AddShape(const TopoDS_Shape& S)
   bool iswire  = (S.ShapeType() == TopAbs_WIRE);
   if (iswire)
   {
-    BRepAdaptor_Surface bas(myFace, false);
+    ::model::adapter::BRepAdaptor_Surface bas(myFace, false);
     bool                uc = bas.IsUClosed();
     bool                vc = bas.IsVClosed();
     if (uc || vc)
@@ -66,7 +66,7 @@ void TopOpeBRepBuild_WireEdgeSet::AddStartElement(const TopoDS_Shape& S)
   bool isedge  = (S.ShapeType() == TopAbs_EDGE);
   if (isedge)
   {
-    BRepAdaptor_Curve cac(TopoDS::Edge(S));
+    ::model::adapter::BRepAdaptor_Curve cac(TopoDS::Edge(S));
     GeomAbs_CurveType t = cac.GetType();
     bool              b = (t == GeomAbs_BSplineCurve || t == GeomAbs_BezierCurve);
     tocheck             = !b;

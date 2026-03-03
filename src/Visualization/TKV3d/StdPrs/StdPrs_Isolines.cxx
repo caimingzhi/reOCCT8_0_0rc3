@@ -338,8 +338,8 @@ void StdPrs_Isolines::AddOnSurface(
                   aVmin,
                   aVmax);
 
-  BRepAdaptor_Surface aSurface(theFace);
-  addOnSurface(new BRepAdaptor_Surface(aSurface),
+  ::model::adapter::BRepAdaptor_Surface aSurface(theFace);
+  addOnSurface(new ::model::adapter::BRepAdaptor_Surface(aSurface),
                theDrawer,
                theDeflection,
                aUIsoParams,
@@ -349,7 +349,7 @@ void StdPrs_Isolines::AddOnSurface(
 }
 
 void StdPrs_Isolines::AddOnSurface(const occ::handle<Prs3d_Presentation>&  thePresentation,
-                                   const occ::handle<BRepAdaptor_Surface>& theSurface,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface,
                                    const occ::handle<Prs3d_Drawer>&        theDrawer,
                                    const double                            theDeflection,
                                    const NCollection_Sequence<double>&     theUIsoParams,
@@ -368,7 +368,7 @@ void StdPrs_Isolines::AddOnSurface(const occ::handle<Prs3d_Presentation>&  thePr
 }
 
 void StdPrs_Isolines::addOnSurface(
-  const occ::handle<BRepAdaptor_Surface>&                       theSurface,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>&                       theSurface,
   const occ::handle<Prs3d_Drawer>&                              theDrawer,
   const double                                                  theDeflection,
   const NCollection_Sequence<double>&                           theUIsoParams,

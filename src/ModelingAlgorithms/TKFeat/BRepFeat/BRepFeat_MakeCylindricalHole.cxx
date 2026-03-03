@@ -707,7 +707,7 @@ bool GetOffset(const LocOpe_PntFace& PntInfo,
                double&               outOff)
 {
   const TopoDS_Face&  FF = PntInfo.Face();
-  BRepAdaptor_Surface FFA(FF);
+  ::model::adapter::BRepAdaptor_Surface FFA(FF);
 
   double Up = PntInfo.UParameter();
   double Vp = PntInfo.VParameter();

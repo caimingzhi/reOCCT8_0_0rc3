@@ -27,7 +27,7 @@ void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
 {
 
   IntCurveSurface_HInter   HICS;
-  BRepAdaptor_Surface      surface;
+  ::model::adapter::BRepAdaptor_Surface      surface;
   BRepClass_FaceClassifier classifier2d;
 
   occ::handle<Geom_Line> geomline = new Geom_Line(L);
@@ -46,7 +46,7 @@ void BRepClass3d_Intersector3d::Perform(const gp_Lin& L,
   double V2 = surface.LastVParameter();
 
   occ::handle<GeomAdaptor_Curve>   HLL      = new GeomAdaptor_Curve(LL);
-  occ::handle<BRepAdaptor_Surface> Hsurface = new BRepAdaptor_Surface(surface);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> Hsurface = new ::model::adapter::BRepAdaptor_Surface(surface);
 
   HICS.Perform(HLL, Hsurface);
 

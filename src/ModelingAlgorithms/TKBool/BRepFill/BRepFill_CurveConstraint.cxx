@@ -43,8 +43,8 @@ BRepFill_CurveConstraint ::BRepFill_CurveConstraint(
   }
   else
   {
-    occ::handle<BRepAdaptor_Surface> BS1;
-    BS1  = occ::down_cast<BRepAdaptor_Surface>(myFrontiere->GetSurface());
+    occ::handle<::model::adapter::BRepAdaptor_Surface> BS1;
+    BS1  = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(myFrontiere->GetSurface());
     Surf = BRep_Tool::Surface(BS1->Face());
   }
   myLProp.SetSurface(Surf);

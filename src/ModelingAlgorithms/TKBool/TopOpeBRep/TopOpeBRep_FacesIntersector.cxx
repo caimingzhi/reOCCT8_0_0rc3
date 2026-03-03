@@ -127,8 +127,8 @@ TopOpeBRep_FacesIntersector::TopOpeBRep_FacesIntersector()
   ResetIntersection();
   myTol1 = myTol2   = math::precision::Precision::Confusion();
   myForceTolerances = false;
-  mySurface1        = new BRepAdaptor_Surface();
-  mySurface2        = new BRepAdaptor_Surface();
+  mySurface1        = new ::model::adapter::BRepAdaptor_Surface();
+  mySurface2        = new ::model::adapter::BRepAdaptor_Surface();
   myDomain1         = new BRepTopAdaptor_TopolTool();
   myDomain2         = new BRepTopAdaptor_TopolTool();
 }
@@ -151,9 +151,9 @@ void TopOpeBRep_FacesIntersector::Perform(const TopoDS_Shape& F1,
   myFace1.Orientation(TopAbs_FORWARD);
   myFace2 = TopoDS::Face(F2);
   myFace2.Orientation(TopAbs_FORWARD);
-  BRepAdaptor_Surface& S1 = *mySurface1;
+  ::model::adapter::BRepAdaptor_Surface& S1 = *mySurface1;
   S1.Initialize(myFace1);
-  BRepAdaptor_Surface& S2 = *mySurface2;
+  ::model::adapter::BRepAdaptor_Surface& S2 = *mySurface2;
   S2.Initialize(myFace2);
   mySurfaceType1                               = S1.GetType();
   mySurfaceType2                               = S2.GetType();
@@ -305,8 +305,8 @@ void TopOpeBRep_FacesIntersector::PrepareLines()
   myLineNb                = 0;
   int n                   = myIntersector.NbLines();
   myHAL                   = new NCollection_HArray1<TopOpeBRep_LineInter>(0, n);
-  BRepAdaptor_Surface& S1 = *mySurface1;
-  BRepAdaptor_Surface& S2 = *mySurface2;
+  ::model::adapter::BRepAdaptor_Surface& S1 = *mySurface1;
+  ::model::adapter::BRepAdaptor_Surface& S2 = *mySurface2;
 
   if (n == 0)
     return;

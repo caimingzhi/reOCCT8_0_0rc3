@@ -100,9 +100,9 @@ static int plate(Draw_Interpretor& di, int n, const char** a)
     int T = Draw::Atoi(a[3 * i + 3]);
     Tang->SetValue(i, T);
     NbPtsCur->SetValue(i, Draw::Atoi(a[2]));
-    occ::handle<BRepAdaptor_Surface> S = new BRepAdaptor_Surface();
+    occ::handle<::model::adapter::BRepAdaptor_Surface> S = new ::model::adapter::BRepAdaptor_Surface();
     S->Initialize(F);
-    occ::handle<BRepAdaptor_Curve2d> C = new BRepAdaptor_Curve2d();
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> C = new ::model::adapter::BRepAdaptor_Curve2d();
     C->Initialize(E, F);
     Adaptor3d_CurveOnSurface              ConS(C, S);
     occ::handle<Adaptor3d_CurveOnSurface> HConS = new Adaptor3d_CurveOnSurface(ConS);
@@ -184,7 +184,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
     Indice--;
   else
   {
-    occ::handle<BRepAdaptor_Surface> HSI = new BRepAdaptor_Surface();
+    occ::handle<::model::adapter::BRepAdaptor_Surface> HSI = new ::model::adapter::BRepAdaptor_Surface();
     HSI->Initialize(SI);
     Henri.LoadInitSurface(BRep_Tool::Surface(HSI->Face()));
   }
@@ -198,7 +198,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
     Conti = Draw::Atoi(a[Indice++]);
     if ((Conti == 0) || (Conti == -1))
     {
-      occ::handle<BRepAdaptor_Curve> C = new BRepAdaptor_Curve();
+      occ::handle<::model::adapter::BRepAdaptor_Curve> C = new ::model::adapter::BRepAdaptor_Curve();
       C->Initialize(E);
       const occ::handle<Adaptor3d_Curve>&    aC   = C;
       occ::handle<GeomPlate_CurveConstraint> Cont = new BRepFill_CurveConstraint(aC, Conti);
@@ -211,9 +211,9 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
 
       if (F.IsNull())
         return 1;
-      occ::handle<BRepAdaptor_Surface> S = new BRepAdaptor_Surface();
+      occ::handle<::model::adapter::BRepAdaptor_Surface> S = new ::model::adapter::BRepAdaptor_Surface();
       S->Initialize(F);
-      occ::handle<BRepAdaptor_Curve2d> C = new BRepAdaptor_Curve2d();
+      occ::handle<::model::adapter::BRepAdaptor_Curve2d> C = new ::model::adapter::BRepAdaptor_Curve2d();
       C->Initialize(E, F);
       Adaptor3d_CurveOnSurface               ConS(C, S);
       occ::handle<Adaptor3d_CurveOnSurface>  HConS = new Adaptor3d_CurveOnSurface(ConS);
@@ -244,7 +244,7 @@ static int gplate(Draw_Interpretor& di, int n, const char** a)
 
       if (F.IsNull())
         return 1;
-      occ::handle<BRepAdaptor_Surface> HF = new BRepAdaptor_Surface();
+      occ::handle<::model::adapter::BRepAdaptor_Surface> HF = new ::model::adapter::BRepAdaptor_Surface();
       HF->Initialize(F);
       occ::handle<GeomPlate_PointConstraint> PCont =
         new GeomPlate_PointConstraint(u,
@@ -319,9 +319,9 @@ static int approxplate(Draw_Interpretor& di, int n, const char** a)
     int T = Draw::Atoi(a[3 * i + 3]);
     Tang->SetValue(i, T);
     NbPtsCur->SetValue(i, NbMedium);
-    occ::handle<BRepAdaptor_Surface> S = new BRepAdaptor_Surface();
+    occ::handle<::model::adapter::BRepAdaptor_Surface> S = new ::model::adapter::BRepAdaptor_Surface();
     S->Initialize(F);
-    occ::handle<BRepAdaptor_Curve2d> C = new BRepAdaptor_Curve2d();
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> C = new ::model::adapter::BRepAdaptor_Curve2d();
     C->Initialize(E, F);
     Adaptor3d_CurveOnSurface              ConS(C, S);
     occ::handle<Adaptor3d_CurveOnSurface> HConS = new Adaptor3d_CurveOnSurface(ConS);

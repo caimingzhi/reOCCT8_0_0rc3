@@ -24,6 +24,7 @@ class Geom_BezierCurve;
 class Geom_BSplineCurve;
 class Geom_OffsetCurve;
 
+namespace model { namespace adapter {
 class BRepAdaptor_Curve : public Adaptor3d_Curve
 {
   DEFINE_STANDARD_RTTIEXT(BRepAdaptor_Curve, Adaptor3d_Curve)
@@ -127,3 +128,5 @@ private:
   occ::handle<Adaptor3d_CurveOnSurface> myConSurf;
   TopoDS_Edge                           myEdge;
 };
+}} // namespace model::adapter
+

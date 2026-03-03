@@ -994,7 +994,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         return 1;
       }
 
-      BRepAdaptor_Curve aCurve1(TopoDS::Edge(aShape1));
+      ::model::adapter::BRepAdaptor_Curve aCurve1(TopoDS::Edge(aShape1));
       gp_Circ           aCircle1 = aCurve1.Circle();
       gp_Pnt            aCenter1 = aCircle1.Location();
       gp_Pnt            B        = aCurve1.Value(0.25);
@@ -1095,7 +1095,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
 
       TopoDS_Edge       anEdge1 = TopoDS::Edge(aShape1);
       TopoDS_Edge       anEdge2 = TopoDS::Edge(aShape2);
-      BRepAdaptor_Curve aCurve1(anEdge1);
+      ::model::adapter::BRepAdaptor_Curve aCurve1(anEdge1);
       gp_Pnt            A = aCurve1.Value(0.1);
       gp_Pnt            B = aCurve1.Value(0.5);
       gp_Pnt            C = aCurve1.Value(0.9);
@@ -1120,7 +1120,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
       }
 
       TopoDS_Edge       anEdge = TopoDS::Edge(aShape);
-      BRepAdaptor_Curve aCurve(anEdge);
+      ::model::adapter::BRepAdaptor_Curve aCurve(anEdge);
       gp_Pnt            A = aCurve.Value(0.1);
       gp_Pnt            B = aCurve.Value(0.5);
       gp_Pnt            D = aCurve.Value(0.9);
@@ -1145,7 +1145,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
       if (aShapeA.ShapeType() == TopAbs_EDGE)
       {
         TopoDS_Edge       anEdgeA = TopoDS::Edge(aShapeA);
-        BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
 
         A = aCurveA.Value(0.1);
         B = aCurveA.Value(0.9);
@@ -1158,7 +1158,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         if (aShapeB.ShapeType() == TopAbs_EDGE)
         {
           TopoDS_Edge       anEdgeB = TopoDS::Edge(aShapeB);
-          BRepAdaptor_Curve aCurveB(anEdgeB);
+          ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
 
           A = aCurveB.Value(0.1);
           B = aCurveB.Value(0.9);
@@ -1171,7 +1171,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
           TopoDS_Face       aFaceB = TopoDS::Face(aShapeB);
           TopExp_Explorer   aFaceExp(aFaceB, TopAbs_EDGE);
           TopoDS_Edge       anEdgeFromB = TopoDS::Edge(aFaceExp.Current());
-          BRepAdaptor_Curve aCurveB(anEdgeFromB);
+          ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeFromB);
           A = aCurveB.Value(0.1);
           B = aCurveB.Value(0.5);
           C = aCurveB.Value(0.9);
@@ -1190,7 +1190,7 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         TopoDS_Face       aFaceA = TopoDS::Face(aShapeA);
         TopExp_Explorer   aFaceExp(aFaceA, TopAbs_EDGE);
         TopoDS_Edge       anEdgeFromA = TopoDS::Edge(aFaceExp.Current());
-        BRepAdaptor_Curve aCurveA(anEdgeFromA);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeFromA);
         A = aCurveA.Value(0.1);
         B = aCurveA.Value(0.5);
         C = aCurveA.Value(0.9);
@@ -1254,8 +1254,8 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
           return 1;
         }
 
-        BRepAdaptor_Curve aCurveA(anEdgeA);
-        BRepAdaptor_Curve aCurveB(anEdgeB);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
 
         gp_Pnt A = aCurveA.Value(0.1);
         gp_Pnt B = aCurveA.Value(0.9);
@@ -1283,8 +1283,8 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         TopoDS_Edge anEdgeA = TopoDS::Edge(aFaceExpA.Current());
         TopoDS_Edge anEdgeB = TopoDS::Edge(aFaceExpB.Current());
 
-        BRepAdaptor_Curve aCurveA(anEdgeA);
-        BRepAdaptor_Curve aCurveB(anEdgeB);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
         gp_Pnt            A = aCurveA.Value(0.1);
         gp_Pnt            B = aCurveA.Value(0.9);
         gp_Pnt            C = aCurveB.Value(0.5);
@@ -1311,8 +1311,8 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         TopoDS_Edge anEdgeA = TopoDS::Edge(aShapeA);
         TopoDS_Edge anEdgeB = TopoDS::Edge(aShapeB);
 
-        BRepAdaptor_Curve aCurveA(anEdgeA);
-        BRepAdaptor_Curve aCurveB(anEdgeB);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
 
         gp_Pnt A = aCurveA.Value(0.1);
         gp_Pnt B = aCurveA.Value(0.9);
@@ -1333,8 +1333,8 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         TopoDS_Edge anEdgeA = TopoDS::Edge(aFaceExpA.Current());
         TopoDS_Edge anEdgeB = TopoDS::Edge(aFaceExpB.Current());
 
-        BRepAdaptor_Curve aCurveA(anEdgeA);
-        BRepAdaptor_Curve aCurveB(anEdgeB);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
 
         gp_Pnt A = aCurveA.Value(0.1);
         gp_Pnt B = aCurveA.Value(0.9);
@@ -1363,8 +1363,8 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         TopoDS_Edge anEdgeA = TopoDS::Edge(aShapeA);
         TopoDS_Edge anEdgeB = TopoDS::Edge(aShapeB);
 
-        BRepAdaptor_Curve aCurveA(anEdgeA);
-        BRepAdaptor_Curve aCurveB(anEdgeB);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
 
         gp_Pnt A = aCurveA.Value(0.1);
         gp_Pnt B = aCurveA.Value(0.9);
@@ -1385,8 +1385,8 @@ static int VRelationBuilder(Draw_Interpretor&, int theArgsNb, const char** theAr
         TopoDS_Edge anEdgeA = TopoDS::Edge(aFaceExpA.Current());
         TopoDS_Edge anEdgeB = TopoDS::Edge(aFaceExpB.Current());
 
-        BRepAdaptor_Curve aCurveA(anEdgeA);
-        BRepAdaptor_Curve aCurveB(anEdgeB);
+        ::model::adapter::BRepAdaptor_Curve aCurveA(anEdgeA);
+        ::model::adapter::BRepAdaptor_Curve aCurveB(anEdgeB);
 
         gp_Pnt A = aCurveA.Value(0.1);
         gp_Pnt B = aCurveA.Value(0.9);

@@ -39,7 +39,7 @@ namespace
     return aNextValue == theValue ? std::nextafter(theValue, theDirection) : aNextValue;
   }
 
-  bool isDegenerated(const BRepAdaptor_Curve& theCurve,
+  bool isDegenerated(const ::model::adapter::BRepAdaptor_Curve& theCurve,
                      const double             theStartParam,
                      const double             theEndParam)
   {
@@ -69,7 +69,7 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
 {
 
   Face.Orientation(TopAbs_FORWARD);
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(aFace, false);
 
   TopoDS_Edge            edge;
@@ -132,8 +132,8 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
           degenerated = true;
         }
 
-        const BRepAdaptor_Curve2d aCurveAdaptor2D(edge, Face);
-        const BRepAdaptor_Curve   aCurveAdaptor3D(edge, Face);
+        const ::model::adapter::BRepAdaptor_Curve2d aCurveAdaptor2D(edge, Face);
+        const ::model::adapter::BRepAdaptor_Curve   aCurveAdaptor3D(edge, Face);
 
         if (!degenerated)
         {
@@ -278,7 +278,7 @@ BRepTopAdaptor_FClass2d::BRepTopAdaptor_FClass2d(const TopoDS_Face& aFace, const
               BRep_Tool::Range(edge, Face, pfbid, plbid);
               if (std::abs(plbid - pfbid) < 1.e-9)
                 continue;
-              BRepAdaptor_Curve2d           C(edge, Face);
+              ::model::adapter::BRepAdaptor_Curve2d           C(edge, Face);
               GCPnts_QuasiUniformDeflection aDiscr(C, aDiscrDefl);
               if (!aDiscr.IsDone())
                 break;
@@ -427,7 +427,7 @@ TopAbs_State BRepTopAdaptor_FClass2d::Perform(const gp_Pnt2d& _Puv,
   double v  = _Puv.Y();
   double uu = u, vv = v;
 
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(Face, false);
   const bool   IsUPer   = surf->IsUPeriodic();
   const bool   IsVPer   = surf->IsVPeriodic();
@@ -566,7 +566,7 @@ TopAbs_State BRepTopAdaptor_FClass2d::TestOnRestriction(const gp_Pnt2d& _Puv,
   double v  = _Puv.Y();
   double uu = u, vv = v;
 
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(Face, false);
   const bool   IsUPer   = surf->IsUPeriodic();
   const bool   IsVPer   = surf->IsVPeriodic();

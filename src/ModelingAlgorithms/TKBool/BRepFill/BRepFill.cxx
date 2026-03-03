@@ -764,7 +764,7 @@ void BRepFill::Axe(const TopoDS_Shape& Spine,
         if (Dist < DistMin)
         {
           DistMin = Dist;
-          BRepAdaptor_Curve BAC(E);
+          ::model::adapter::BRepAdaptor_Curve BAC(E);
           BAC.D1(Par, Loc, Tang);
           if (E.Orientation() == TopAbs_REVERSED)
             Tang.Reverse();
@@ -885,7 +885,7 @@ void BRepFill::SearchOrigin(TopoDS_Wire& W, const gp_Pnt& P, const gp_Vec& Dir, 
 
     theparam = BRep_Tool::Parameter(V, E);
   }
-  BRepAdaptor_Curve AC(E);
+  ::model::adapter::BRepAdaptor_Curve AC(E);
   gp_Pnt            Pe;
   gp_Vec            Ve;
   AC.D1(theparam, Pe, Ve);
@@ -916,7 +916,7 @@ void BRepFill::ComputeACR(const TopoDS_Wire& wire, NCollection_Array1<double>& A
     ACR(nbEdges)     = ACR(nbEdges - 1);
     if (!BRep_Tool::Degenerated(Ecur))
     {
-      BRepAdaptor_Curve anEcur(Ecur);
+      ::model::adapter::BRepAdaptor_Curve anEcur(Ecur);
       ACR(nbEdges) += GCPnts_AbscissaPoint::Length(anEcur);
     }
   }

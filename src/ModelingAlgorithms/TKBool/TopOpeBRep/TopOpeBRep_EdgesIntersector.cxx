@@ -42,8 +42,8 @@ Standard_EXPORT TOPKRO KRO_DSFILLER_INTEE("intersection edge/edge");
 
 TopOpeBRep_EdgesIntersector::TopOpeBRep_EdgesIntersector()
 {
-  mySurface1              = new BRepAdaptor_Surface();
-  mySurface2              = new BRepAdaptor_Surface();
+  mySurface1              = new ::model::adapter::BRepAdaptor_Surface();
+  mySurface2              = new ::model::adapter::BRepAdaptor_Surface();
   mySurfacesSameOriented  = false;
   myFacesSameOriented     = false;
   myTol1                  = 0.;
@@ -87,12 +87,12 @@ void TopOpeBRep_EdgesIntersector::SetFaces(const TopoDS_Shape& F1,
   myFacesSameOriented     = true;
 
   myFace1                 = TopoDS::Face(F1);
-  BRepAdaptor_Surface& S1 = *mySurface1;
+  ::model::adapter::BRepAdaptor_Surface& S1 = *mySurface1;
   S1.Initialize(myFace1, computerestriction);
   mySurfaceType1 = S1.GetType();
 
   myFace2                 = TopoDS::Face(F2);
-  BRepAdaptor_Surface& S2 = *mySurface2;
+  ::model::adapter::BRepAdaptor_Surface& S2 = *mySurface2;
   S2.Initialize(myFace2, computerestriction);
   mySurfaceType2 = S2.GetType();
 
@@ -277,7 +277,7 @@ void TopOpeBRep_EdgesIntersector::Perform(const TopoDS_Shape& E1,
   gp_Pnt2d                  pfirst, plast;
   occ::handle<Geom2d_Curve> PC1;
 
-  BRepAdaptor_Surface aSurface1(myFace1), aSurface2(myFace2);
+  ::model::adapter::BRepAdaptor_Surface aSurface1(myFace1), aSurface2(myFace2);
   GeomAbs_SurfaceType aSurfaceType1 = aSurface1.GetType(), aSurfaceType2 = aSurface2.GetType();
 
   if (aSurfaceType1 == GeomAbs_Sphere && aSurfaceType2 == GeomAbs_Sphere)
@@ -633,7 +633,7 @@ bool TopOpeBRep_EdgesIntersector::ComputeSameDomain()
   const gp_Pnt2d& p1 = c1.Location();
   const gp_Pnt2d& p2 = c2.Location();
 
-  const BRepAdaptor_Surface& BAS1 = Surface(1);
+  const ::model::adapter::BRepAdaptor_Surface& BAS1 = Surface(1);
   double                     u1, v1;
   p1.Coord(u1, v1);
   gp_Pnt P1 = BAS1.Value(u1, v1);
@@ -853,7 +853,7 @@ const TopoDS_Shape& TopOpeBRep_EdgesIntersector::Face(const int Index) const
     throw Standard_Failure("TopOpeBRep_EdgesIntersector::Face");
 }
 
-const BRepAdaptor_Surface& TopOpeBRep_EdgesIntersector::Surface(const int Index) const
+const ::model::adapter::BRepAdaptor_Surface& TopOpeBRep_EdgesIntersector::Surface(const int Index) const
 {
   if (Index == 1)
     return *mySurface1;

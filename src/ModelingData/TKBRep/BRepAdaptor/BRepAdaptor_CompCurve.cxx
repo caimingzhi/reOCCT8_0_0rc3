@@ -17,9 +17,9 @@
 #include <TopoDS_Edge.hpp>
 #include <TopoDS_Wire.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepAdaptor_CompCurve, Adaptor3d_Curve)
+IMPLEMENT_STANDARD_RTTIEXT(::model::adapter::BRepAdaptor_CompCurve, Adaptor3d_Curve)
 
-BRepAdaptor_CompCurve::BRepAdaptor_CompCurve()
+::model::adapter::BRepAdaptor_CompCurve::BRepAdaptor_CompCurve()
     : TFirst(0.0),
       TLast(0.0),
       PTol(0.0),
@@ -29,6 +29,7 @@ BRepAdaptor_CompCurve::BRepAdaptor_CompCurve()
 {
 }
 
+namespace model { namespace adapter {
 BRepAdaptor_CompCurve::BRepAdaptor_CompCurve(const TopoDS_Wire& theWire, const bool theIsAC)
     : myWire(theWire),
       TFirst(0.0),
@@ -511,3 +512,5 @@ void BRepAdaptor_CompCurve::InvPrepare(const int index, double& First, double& D
     First = f;
   }
 }
+
+}} // namespace model::adapter

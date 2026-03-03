@@ -178,7 +178,7 @@ bool PrsDim::ComputeGeometry(const TopoDS_Edge&       theEdge,
                              gp_Pnt&                  theLastPnt,
                              bool&                    theIsInfinite)
 {
-  BRepAdaptor_Curve anAdaptor(theEdge);
+  ::model::adapter::BRepAdaptor_Curve anAdaptor(theEdge);
   theCurve = occ::down_cast<Geom_Curve>(anAdaptor.Curve().Curve()->Transformed(anAdaptor.Trsf()));
   if (theCurve.IsNull())
   {
@@ -222,7 +222,7 @@ bool PrsDim::ComputeGeometry(const TopoDS_Edge&             theEdge,
     return false;
   }
 
-  BRepAdaptor_Curve aCurveAdaptor(theEdge);
+  ::model::adapter::BRepAdaptor_Curve aCurveAdaptor(theEdge);
   theCurve =
     occ::down_cast<Geom_Curve>(aCurveAdaptor.Curve().Curve()->Transformed(aCurveAdaptor.Trsf()));
   if (theCurve.IsNull())
@@ -475,8 +475,8 @@ bool PrsDim::ComputeGeometry(const TopoDS_Edge&             theFirstEdge,
   double aFirst1, aLast1, aFirst2, aLast2;
   theIsInfinite1 = theIsInfinite2 = false;
 
-  BRepAdaptor_Curve aFirstAdaptor(theFirstEdge);
-  BRepAdaptor_Curve aSecondAdaptor(theSecondEdge);
+  ::model::adapter::BRepAdaptor_Curve aFirstAdaptor(theFirstEdge);
+  ::model::adapter::BRepAdaptor_Curve aSecondAdaptor(theSecondEdge);
 
   theFirstCurve =
     occ::down_cast<Geom_Curve>(aFirstAdaptor.Curve().Curve()->Transformed(aFirstAdaptor.Trsf()));
@@ -660,7 +660,7 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
 
 {
   bool                           Result = false;
-  BRepAdaptor_Surface            surf1(aFace);
+  ::model::adapter::BRepAdaptor_Surface            surf1(aFace);
   occ::handle<Adaptor3d_Surface> surf2;
   bool                           isOffset = false;
   Offset                                  = 0.0;
@@ -672,7 +672,7 @@ bool PrsDim::GetPlaneFromFace(const TopoDS_Face&         aFace,
     isOffset = true;
   }
   else
-    surf2 = new BRepAdaptor_Surface(surf1);
+    surf2 = new ::model::adapter::BRepAdaptor_Surface(surf1);
 
   aSurf = surf1.Surface().Surface();
 

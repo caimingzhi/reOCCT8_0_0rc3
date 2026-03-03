@@ -90,14 +90,14 @@ static bool IsOnSingularity(const NCollection_List<TopoDS_Shape>& theEdgeList)
 
 static bool IsUiso(const TopoDS_Edge& theEdge, const TopoDS_Face& theFace)
 {
-  BRepAdaptor_Curve2d aBAcurve2d(theEdge, theFace);
+  ::model::adapter::BRepAdaptor_Curve2d aBAcurve2d(theEdge, theFace);
   gp_Pnt2d            aP2d;
   gp_Vec2d            aVec;
   aBAcurve2d.D1(aBAcurve2d.FirstParameter(), aP2d, aVec);
   return (std::abs(aVec.Y()) > std::abs(aVec.X()));
 }
 
-static bool IsLinear(const BRepAdaptor_Curve& theBAcurve, gp_Dir& theDir)
+static bool IsLinear(const ::model::adapter::BRepAdaptor_Curve& theBAcurve, gp_Dir& theDir)
 {
   GeomAbs_CurveType aType = theBAcurve.GetType();
 
@@ -301,7 +301,7 @@ static double ComputeMinEdgeSize(
     theEdgesMap.Add(anEdge);
     TopoDS_Vertex V1, V2;
     TopExp::Vertices(anEdge, V1, V2);
-    BRepAdaptor_Curve2d BAcurve2d(anEdge, theRefFace);
+    ::model::adapter::BRepAdaptor_Curve2d BAcurve2d(anEdge, theRefFace);
     if (BAcurve2d.Curve().IsNull())
     {
       continue;
@@ -442,7 +442,7 @@ static bool FindCoordBounds(
 static std::pair<gp_Pnt2d, gp_Pnt2d> getCurveParams(const TopoDS_Edge& theEdge,
                                                     const TopoDS_Face& theRefFace)
 {
-  BRepAdaptor_Curve2d aCurveAdaptor(theEdge, theRefFace);
+  ::model::adapter::BRepAdaptor_Curve2d aCurveAdaptor(theEdge, theRefFace);
   double              aFirstParam = aCurveAdaptor.FirstParameter();
   double              aLastParam  = aCurveAdaptor.LastParameter();
   if (theEdge.Orientation() != TopAbs_FORWARD)
@@ -622,7 +622,7 @@ static void InsertWiresIntoFaces(const NCollection_Sequence<TopoDS_Shape>& theWi
     const TopoDS_Wire&  aWire = TopoDS::Wire(theWires(ii));
     TopoDS_Iterator     iter(aWire);
     const TopoDS_Edge&  anEdge = TopoDS::Edge(iter.Value());
-    BRepAdaptor_Curve2d BAcurve2d(anEdge, theRefFace);
+    ::model::adapter::BRepAdaptor_Curve2d BAcurve2d(anEdge, theRefFace);
     gp_Pnt2d            aPnt2d =
       BAcurve2d.Value((BAcurve2d.FirstParameter() + BAcurve2d.LastParameter()) / 2.);
     TopoDS_Shape RequiredFace;
@@ -1135,7 +1135,7 @@ static void AddPCurves(
   const TopoDS_Face&                                      theRefFace,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& theMapEdgesWithTemporaryPCurves)
 {
-  BRepAdaptor_Surface RefBAsurf(theRefFace, false);
+  ::model::adapter::BRepAdaptor_Surface RefBAsurf(theRefFace, false);
 
   GeomAbs_SurfaceType aType = RefBAsurf.GetType();
   if (aType == GeomAbs_Plane)
@@ -1572,7 +1572,7 @@ void ShapeUpgrade_UnifySameDomain::UnionPCurves(const NCollection_Sequence<TopoD
 
     aFace.Orientation(TopAbs_FORWARD);
 
-    BRepAdaptor_Surface aBAsurf(aFace, false);
+    ::model::adapter::BRepAdaptor_Surface aBAsurf(aFace, false);
     if (aBAsurf.GetType() == GeomAbs_Plane)
       continue;
 
@@ -1999,8 +1999,8 @@ bool ShapeUpgrade_UnifySameDomain::MergeSubSeq(
     c3d1 = BRep_Tool::Curve(edge1, fp1, lp1);
     c3d2 = BRep_Tool::Curve(edge2, fp2, lp2);
 
-    BRepAdaptor_Curve aBAcurve1(edge1);
-    BRepAdaptor_Curve aBAcurve2(edge2);
+    ::model::adapter::BRepAdaptor_Curve aBAcurve1(edge1);
+    ::model::adapter::BRepAdaptor_Curve aBAcurve2(edge2);
     gp_Dir            aDir1, aDir2;
 
     if (c3d1.IsNull() || c3d2.IsNull())
@@ -2110,7 +2110,7 @@ bool ShapeUpgrade_UnifySameDomain::MergeSubSeq(
     if (isClosed)
     {
 
-      BRepAdaptor_Curve        adef(FE);
+      ::model::adapter::BRepAdaptor_Curve        adef(FE);
       occ::handle<Geom_Circle> Cir1;
       double                   FP, LP;
       if (FE.Orientation() == TopAbs_FORWARD)
@@ -2166,7 +2166,7 @@ bool ShapeUpgrade_UnifySameDomain::MergeSubSeq(
       gp_Pnt PointFirst = BRep_Tool::Pnt(V[0]);
       while (std::abs(ParamLast - ParamFirst) > 7 * M_PI / 8)
         ParamLast = (ParamFirst + ParamLast) / 2;
-      BRepAdaptor_Curve        BAcurveFE(FE);
+      ::model::adapter::BRepAdaptor_Curve        BAcurveFE(FE);
       gp_Pnt                   PointLast = BAcurveFE.Value(ParamLast);
       gp_Pnt                   Origin    = Cir->Circ().Location();
       gp_Dir                   Dir1      = gp_Vec(Origin, PointFirst);
@@ -2273,8 +2273,8 @@ static bool IsMergingPossible(
   if (CV.IsNull() || AvoidEdgeVrt.Contains(CV))
     return false;
 
-  BRepAdaptor_Curve ade1(edge1);
-  BRepAdaptor_Curve ade2(edge2);
+  ::model::adapter::BRepAdaptor_Curve ade1(edge1);
+  ::model::adapter::BRepAdaptor_Curve ade2(edge2);
 
   GeomAbs_CurveType t1 = ade1.GetType();
   GeomAbs_CurveType t2 = ade2.GetType();
@@ -3330,7 +3330,7 @@ void ShapeUpgrade_UnifySameDomain::IntUnifyFaces(
       for (int ii = 1; ii <= edges.Length(); ii++)
       {
         const TopoDS_Edge&  anEdge = TopoDS::Edge(edges(ii));
-        BRepAdaptor_Curve2d aBAcurve(anEdge, F_RefFace);
+        ::model::adapter::BRepAdaptor_Curve2d aBAcurve(anEdge, F_RefFace);
         if (aBAcurve.Curve().IsNull())
         {
           continue;

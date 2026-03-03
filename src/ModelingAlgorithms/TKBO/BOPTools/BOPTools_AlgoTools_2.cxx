@@ -246,7 +246,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE1,
 {
   int               i;
   double            aRes, aTolE1, aTolE2, aTF, aTL, dT;
-  BRepAdaptor_Curve aBC;
+  ::model::adapter::BRepAdaptor_Curve aBC;
   GeomAbs_CurveType aCT;
   gp_Pnt            aP;
   gp_Vec            aDer;
@@ -323,7 +323,7 @@ void BOPTools_AlgoTools::CorrectRange(const TopoDS_Edge&    aE,
 {
   int               i;
   double            aRes, aTolF, aTF, aTL, dT;
-  BRepAdaptor_Curve aBC;
+  ::model::adapter::BRepAdaptor_Curve aBC;
   GeomAbs_CurveType aCT;
   gp_Pnt            aP;
   gp_Vec            aDer;

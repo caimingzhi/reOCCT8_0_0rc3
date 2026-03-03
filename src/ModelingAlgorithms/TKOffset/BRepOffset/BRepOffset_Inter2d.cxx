@@ -163,8 +163,8 @@ static void GetEdgesOrientedInFace(const TopoDS_Shape&                 theShape,
         const TopoDS_Edge&                    anEdge2 = TopoDS::Edge(aElist.Last());
         double                                aParam1 = BRep_Tool::Parameter(aVertex, anEdge1);
         double                                aParam2 = BRep_Tool::Parameter(aVertex, anEdge2);
-        BRepAdaptor_Curve2d                   aBAcurve1(anEdge1, theFace);
-        BRepAdaptor_Curve2d                   aBAcurve2(anEdge2, theFace);
+        ::model::adapter::BRepAdaptor_Curve2d                   aBAcurve1(anEdge1, theFace);
+        ::model::adapter::BRepAdaptor_Curve2d                   aBAcurve2(anEdge2, theFace);
         gp_Pnt2d                              aPnt1 = aBAcurve1.Value(aParam1);
         gp_Pnt2d                              aPnt2 = aBAcurve2.Value(aParam2);
         double aDelta = std::abs(aPnt1.Coord(IndCoord) - aPnt2.Coord(IndCoord));
@@ -348,7 +348,7 @@ static void Store(
 
 static void EdgeInter(
   const TopoDS_Face&                 F,
-  const BRepAdaptor_Surface&         BAsurf,
+  const ::model::adapter::BRepAdaptor_Surface&         BAsurf,
   const TopoDS_Edge&                 E1,
   const TopoDS_Edge&                 E2,
   const occ::handle<BRepAlgo_AsDes>& AsDes,
@@ -368,8 +368,8 @@ static void EdgeInter(
   BRep_Tool::Range(E1, f[1], l[1]);
   BRep_Tool::Range(E2, f[2], l[2]);
 
-  BRepAdaptor_Curve CE1(E1, F);
-  BRepAdaptor_Curve CE2(E2, F);
+  ::model::adapter::BRepAdaptor_Curve CE1(E1, F);
+  ::model::adapter::BRepAdaptor_Curve CE2(E2, F);
 
   TopoDS_Edge EI[3];
   EI[1] = E1;
@@ -403,7 +403,7 @@ static void EdgeInter(
       }
       else
       {
-        BRepAdaptor_Curve CEdeg(EI[ideg], F);
+        ::model::adapter::BRepAdaptor_Curve CEdeg(EI[ideg], F);
         DegPoint = CEdeg.Value(CEdeg.FirstParameter());
       }
     }
@@ -482,8 +482,8 @@ static void EdgeInter(
       TopAbs_Orientation OO2 = TopAbs_REVERSED;
       if (WithOri)
       {
-        BRepAdaptor_Curve2d PCE1(E1, F);
-        BRepAdaptor_Curve2d PCE2(E2, F);
+        ::model::adapter::BRepAdaptor_Curve2d PCE1(E1, F);
+        ::model::adapter::BRepAdaptor_Curve2d PCE2(E2, F);
         gp_Pnt2d            P2d1, P2d2;
         gp_Vec2d            V1, V2, V1or, V2or;
         PCE1.D1(aT1, P2d1, V1);
@@ -607,7 +607,7 @@ static void EdgeInter(
 
 static void RefEdgeInter(
   const TopoDS_Face&                 F,
-  const BRepAdaptor_Surface&         BAsurf,
+  const ::model::adapter::BRepAdaptor_Surface&         BAsurf,
   const TopoDS_Edge&                 E1,
   const TopoDS_Edge&                 E2,
   const TopAbs_Orientation           theOr1,
@@ -638,8 +638,8 @@ static void RefEdgeInter(
   if (pcurve1.IsNull() || pcurve2.IsNull())
     return;
 
-  BRepAdaptor_Curve CE1(E1, F);
-  BRepAdaptor_Curve CE2(E2, F);
+  ::model::adapter::BRepAdaptor_Curve CE1(E1, F);
+  ::model::adapter::BRepAdaptor_Curve CE2(E2, F);
 
   TopoDS_Edge EI[3];
   EI[1] = E1;
@@ -667,7 +667,7 @@ static void RefEdgeInter(
     }
     else
     {
-      BRepAdaptor_Curve CEdeg(EI[ideg], F);
+      ::model::adapter::BRepAdaptor_Curve CEdeg(EI[ideg], F);
       DegPoint = CEdeg.Value(CEdeg.FirstParameter());
     }
   }
@@ -769,8 +769,8 @@ static void RefEdgeInter(
     TopAbs_Orientation OO2 = TopAbs_REVERSED;
     if (WithOri)
     {
-      BRepAdaptor_Curve2d PCE1(E1, F);
-      BRepAdaptor_Curve2d PCE2(E2, F);
+      ::model::adapter::BRepAdaptor_Curve2d PCE1(E1, F);
+      ::model::adapter::BRepAdaptor_Curve2d PCE2(E2, F);
       gp_Pnt2d            P2d1, P2d2;
       gp_Vec2d            V1, V2, V1or, V2or;
       PCE1.D1(aT1, P2d1, V1);
@@ -1454,8 +1454,8 @@ bool BRepOffset_Inter2d::ExtentEdge(const TopoDS_Edge& E, TopoDS_Edge& NE, const
 
 static bool UpdateVertex(const TopoDS_Vertex& V, TopoDS_Edge& OE, TopoDS_Edge& NE, double TolConf)
 {
-  BRepAdaptor_Curve OC(OE);
-  BRepAdaptor_Curve NC(NE);
+  ::model::adapter::BRepAdaptor_Curve OC(OE);
+  ::model::adapter::BRepAdaptor_Curve NC(NE);
   double            Of     = OC.FirstParameter();
   double            Ol     = OC.LastParameter();
   double            Nf     = NC.FirstParameter();
@@ -1516,7 +1516,7 @@ void BRepOffset_Inter2d::Compute(
   const NCollection_List<TopoDS_Shape>& LE = AsDes->Descendant(F);
   TopoDS_Vertex                         V1, V2;
   int                                   j, i = 1;
-  BRepAdaptor_Surface                   BAsurf(F);
+  ::model::adapter::BRepAdaptor_Surface                   BAsurf(F);
 
   System::log::Message_ProgressScope aPS(theRange, "Intersecting edges on faces", LE.Size());
   for (it1LE.Initialize(LE); it1LE.More(); it1LE.Next(), aPS.Next())
@@ -1642,7 +1642,7 @@ bool BRepOffset_Inter2d::ConnexIntByInt(
   if (MES.IsBound(FIO))
     FIO = TopoDS::Face(MES(FIO));
 
-  BRepAdaptor_Surface BAsurf(FIO);
+  ::model::adapter::BRepAdaptor_Surface BAsurf(FIO);
 
   TopExp_Explorer exp(FI.Oriented(TopAbs_FORWARD), TopAbs_WIRE);
   for (; exp.More(); exp.Next(), aPS.Next())
@@ -1838,7 +1838,7 @@ void BRepOffset_Inter2d::ConnexIntByIntInVert(
     aME.Add(aE);
   }
 
-  BRepAdaptor_Surface BAsurf(FIO);
+  ::model::adapter::BRepAdaptor_Surface BAsurf(FIO);
 
   System::log::Message_ProgressScope aPS(theRange, "Intersecting edges created from vertices", 1, true);
   TopExp_Explorer       exp(FI.Oriented(TopAbs_FORWARD), TopAbs_WIRE);

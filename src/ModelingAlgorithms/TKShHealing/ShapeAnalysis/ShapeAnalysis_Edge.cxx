@@ -693,7 +693,7 @@ static bool IsOverlapPartEdges(const TopoDS_Edge& theFirstEdge,
                                const double&      theEndLength)
 {
   NCollection_Sequence<int> aSeqIntervals;
-  BRepAdaptor_Curve         aAdCurve1(theFirstEdge);
+  ::model::adapter::BRepAdaptor_Curve         aAdCurve1(theFirstEdge);
 
   BRepExtrema_DistShapeShape aMinDist;
   aMinDist.LoadS1(theSecEdge);
@@ -735,9 +735,9 @@ bool ShapeAnalysis_Edge::CheckOverlapping(const TopoDS_Edge& theEdge1,
                                           const double       theDomainDist)
 {
   bool              isOverlap = false;
-  BRepAdaptor_Curve aAdCurve1(theEdge1);
+  ::model::adapter::BRepAdaptor_Curve aAdCurve1(theEdge1);
   double            aLength1 = GCPnts_AbscissaPoint::Length(aAdCurve1);
-  BRepAdaptor_Curve aAdCurve2(theEdge2);
+  ::model::adapter::BRepAdaptor_Curve aAdCurve2(theEdge2);
   double            aLength2   = GCPnts_AbscissaPoint::Length(aAdCurve2);
   TopoDS_Edge       aFirstEdge = (aLength1 >= aLength2 ? theEdge2 : theEdge1);
   TopoDS_Edge       aSecEdge   = (aLength1 >= aLength2 ? theEdge1 : theEdge2);
@@ -788,7 +788,7 @@ bool ShapeAnalysis_Edge::CheckOverlapping(const TopoDS_Edge& theEdge1,
         double aParam1, aFirst, aLast;
         aMinDist.ParOnEdgeS1(i, aParam1);
         BRep_Tool::Range(aFirstEdge, aFirst, aLast);
-        BRepAdaptor_Curve anAdaptor(aFirstEdge);
+        ::model::adapter::BRepAdaptor_Curve anAdaptor(aFirstEdge);
         aLengthP = GCPnts_AbscissaPoint::Length(anAdaptor, aFirst, aParam1);
       }
       else

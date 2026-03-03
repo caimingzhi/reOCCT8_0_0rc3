@@ -894,8 +894,8 @@ static int crvpoints(Draw_Interpretor& di, int, const char** a)
       System::log::Message::SendFail() << "cannot evaluate the argument " << a[2] << " as a curve";
       return 1;
     }
-    BRepAdaptor_CompCurve aCompCurve(aWire);
-    aHCurve = new BRepAdaptor_CompCurve(aCompCurve);
+    ::model::adapter::BRepAdaptor_CompCurve aCompCurve(aWire);
+    aHCurve = new ::model::adapter::BRepAdaptor_CompCurve(aCompCurve);
   }
   else
   {
@@ -964,8 +964,8 @@ static int crvtpoints(Draw_Interpretor& di, int n, const char** a)
       System::log::Message::SendFail() << "cannot evaluate the argument " << a[2] << " as a curve";
       return 1;
     }
-    BRepAdaptor_CompCurve aCompCurve(aWire);
-    aHCurve = new BRepAdaptor_CompCurve(aCompCurve);
+    ::model::adapter::BRepAdaptor_CompCurve aCompCurve(aWire);
+    aHCurve = new ::model::adapter::BRepAdaptor_CompCurve(aCompCurve);
   }
   else
   {

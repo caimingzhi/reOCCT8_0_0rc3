@@ -184,7 +184,7 @@ Standard_EXPORT Draw_Color DBRep_ColorOrientation(const TopAbs_Orientation Or);
 
 static void PlotIso(Draw_Display&            dis,
                     occ::handle<DBRep_Face>& F,
-                    BRepAdaptor_Surface&     S,
+                    ::model::adapter::BRepAdaptor_Surface&     S,
                     GeomAbs_IsoType          T,
                     double&                  U,
                     double&                  V,
@@ -371,7 +371,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
           restriction = false;
       }
 
-      BRepAdaptor_Surface S(F->Face(), restriction);
+      ::model::adapter::BRepAdaptor_Surface S(F->Face(), restriction);
 
       GeomAbs_SurfaceType SurfType = S.GetType();
 
@@ -634,7 +634,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
         continue;
       }
 
-      BRepAdaptor_Curve C(E->Edge());
+      ::model::adapter::BRepAdaptor_Curve C(E->Edge());
 
       double f = C.FirstParameter();
       double l = C.LastParameter();
@@ -1096,7 +1096,7 @@ bool DBRep_DrawableShape::addMeshNormals(NCollection_Vector<std::pair<gp_Pnt, gp
     return false;
   }
 
-  BRepAdaptor_Surface aSurface(theFace);
+  ::model::adapter::BRepAdaptor_Surface aSurface(theFace);
   for (int aNodeIter = 1; aNodeIter <= aTriangulation->NbNodes(); ++aNodeIter)
   {
     gp_Pnt aP1 = aTriangulation->Node(aNodeIter);
@@ -1179,7 +1179,7 @@ bool DBRep_DrawableShape::addSurfaceNormals(
   const double aDU       = (aUmax - aUmin) / (isUseMidU ? 2 : (theNbAlongU - 1));
   const double aDV       = (aVmax - aVmin) / (isUseMidV ? 2 : (theNbAlongV - 1));
 
-  BRepAdaptor_Surface aSurface(theFace);
+  ::model::adapter::BRepAdaptor_Surface aSurface(theFace);
   for (int aUIter = 0; aUIter < theNbAlongU; ++aUIter)
   {
     const double aU = aUmin + (isUseMidU ? 1 : aUIter) * aDU;

@@ -58,7 +58,7 @@ void PrsDim_Chamf3dDimension::Compute(const occ::handle<PrsMgr_PresentationManag
                                       const int)
 {
 
-  BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
+  ::model::adapter::BRepAdaptor_Surface surfAlgo(TopoDS::Face(myFShape));
   double              uFirst, uLast, vFirst, vLast;
   uFirst      = surfAlgo.FirstUParameter();
   uLast       = surfAlgo.LastUParameter();

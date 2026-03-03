@@ -14,7 +14,7 @@ void BRepGProp_Cinert::SetLocation(const gp_Pnt& CLocation)
   loc = CLocation;
 }
 
-void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
+void BRepGProp_Cinert::Perform(const ::model::adapter::BRepAdaptor_Curve& C)
 {
 
   double Ix, Iy, Iz, Ixx, Iyy, Izz, Ixy, Ixz, Iyz;
@@ -134,7 +134,7 @@ void BRepGProp_Cinert::Perform(const BRepAdaptor_Curve& C)
     g.SetCoord(Ix / dim, Iy / dim, Iz / dim);
 }
 
-BRepGProp_Cinert::BRepGProp_Cinert(const BRepAdaptor_Curve& C, const gp_Pnt& CLocation)
+BRepGProp_Cinert::BRepGProp_Cinert(const ::model::adapter::BRepAdaptor_Curve& C, const gp_Pnt& CLocation)
 {
   SetLocation(CLocation);
   Perform(C);

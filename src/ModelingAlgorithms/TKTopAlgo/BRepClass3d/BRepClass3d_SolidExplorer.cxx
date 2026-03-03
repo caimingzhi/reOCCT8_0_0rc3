@@ -52,7 +52,7 @@ bool BRepClass3d_SolidExplorer::FindAPointInTheFace(const TopoDS_Face& _face,
   face.Orientation(TopAbs_FORWARD);
 
   TopExp_Explorer     faceexplorer;
-  BRepAdaptor_Curve2d c;
+  ::model::adapter::BRepAdaptor_Curve2d c;
   gp_Vec2d            T;
   gp_Pnt2d            P;
 
@@ -130,7 +130,7 @@ bool BRepClass3d_SolidExplorer::FindAPointInTheFace(const TopoDS_Face& _face,
       if (StateOfResultingPoint != TopAbs_IN)
         return false;
 
-      BRepAdaptor_Surface s;
+      ::model::adapter::BRepAdaptor_Surface s;
       s.Initialize(face, false);
       s.D1(u_, v_, APoint_, theVecD1U, theVecD1V);
 
@@ -150,7 +150,7 @@ bool BRepClass3d_SolidExplorer::PointInTheFace(const TopoDS_Face&               
                                                double&                                 v_,
                                                double&                                 param_,
                                                int&                                    IndexPoint,
-                                               const occ::handle<BRepAdaptor_Surface>& surf,
+                                               const occ::handle<::model::adapter::BRepAdaptor_Surface>& surf,
                                                const double                            U1,
                                                const double                            V1,
                                                const double                            U2,
@@ -174,7 +174,7 @@ bool BRepClass3d_SolidExplorer::PointInTheFace(const TopoDS_Face&               
 
 TopAbs_State BRepClass3d_SolidExplorer::ClassifyUVPoint(
   const IntCurvesFace_Intersector&        theIntersector,
-  const occ::handle<BRepAdaptor_Surface>& theSurf,
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurf,
   const gp_Pnt2d&                         theP2d) const
 {
 
@@ -196,7 +196,7 @@ bool BRepClass3d_SolidExplorer::PointInTheFace(const TopoDS_Face&               
                                                double&                                 v_,
                                                double&                                 param_,
                                                int&                                    IndexPoint,
-                                               const occ::handle<BRepAdaptor_Surface>& surf,
+                                               const occ::handle<::model::adapter::BRepAdaptor_Surface>& surf,
                                                const double                            U1,
                                                const double                            V1,
                                                const double                            U2,
@@ -426,7 +426,7 @@ int BRepClass3d_SolidExplorer::OtherSegment(const gp_Pnt& P, gp_Lin& L, double& 
         continue;
       face = TopoDS::Face(faceexplorer.Current());
 
-      occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+      occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
       if (aTestInvert)
       {
         BRepTopAdaptor_FClass2d aClass(face, math::precision::Precision::Confusion());
@@ -674,7 +674,7 @@ bool BRepClass3d_SolidExplorer::PointInTheFace(const TopoDS_Face& _face,
 {
   TopoDS_Face Face = _face;
   Face.Orientation(TopAbs_FORWARD);
-  occ::handle<BRepAdaptor_Surface> surf = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> surf = new ::model::adapter::BRepAdaptor_Surface();
   surf->Initialize(Face);
   double U1, V1, U2, V2;
   U1 = surf->FirstUParameter();

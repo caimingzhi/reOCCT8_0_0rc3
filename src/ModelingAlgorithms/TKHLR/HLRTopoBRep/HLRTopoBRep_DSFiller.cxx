@@ -110,7 +110,7 @@ void HLRTopoBRep_DSFiller::InsertFace(const int,
     if (Line.TypeContour() == Contap_Restriction)
     {
 
-      TopoDS_Edge E = (*(BRepAdaptor_Curve2d*)(Line.Arc().get())).Edge();
+      TopoDS_Edge E = (*(::model::adapter::BRepAdaptor_Curve2d*)(Line.Arc().get())).Edge();
       OutL.Append(E);
       TopExp::Vertices(E, VF, VL);
 
@@ -440,7 +440,7 @@ TopoDS_Vertex HLRTopoBRep_DSFiller::MakeVertex(const Contap_Point& P,
 
     if (P.IsOnArc())
     {
-      const TopoDS_Edge& E   = (*(BRepAdaptor_Curve2d*)(P.Arc().get())).Edge();
+      const TopoDS_Edge& E   = (*(::model::adapter::BRepAdaptor_Curve2d*)(P.Arc().get())).Edge();
       double             Par = P.ParameterOnArc();
       const gp_Pnt&      P3d = P.Value();
 

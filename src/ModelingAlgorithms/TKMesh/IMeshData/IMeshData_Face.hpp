@@ -22,7 +22,7 @@ public:
 
   Standard_EXPORT virtual const IMeshData::IWireHandle& GetWire(const int theIndex) const = 0;
 
-  const occ::handle<BRepAdaptor_Surface>& GetSurface() const { return mySurface; }
+  const occ::handle<::model::adapter::BRepAdaptor_Surface>& GetSurface() const { return mySurface; }
 
   const TopoDS_Face& GetFace() const { return TopoDS::Face(GetShape()); }
 
@@ -38,10 +38,10 @@ protected:
   IMeshData_Face(const TopoDS_Face& theFace)
       : IMeshData_TessellatedShape(theFace)
   {
-    BRepAdaptor_Surface aSurfAdaptor(GetFace(), false);
-    mySurface = new BRepAdaptor_Surface(aSurfAdaptor);
+    ::model::adapter::BRepAdaptor_Surface aSurfAdaptor(GetFace(), false);
+    mySurface = new ::model::adapter::BRepAdaptor_Surface(aSurfAdaptor);
   }
 
 private:
-  mutable occ::handle<BRepAdaptor_Surface> mySurface;
+  mutable occ::handle<::model::adapter::BRepAdaptor_Surface> mySurface;
 };

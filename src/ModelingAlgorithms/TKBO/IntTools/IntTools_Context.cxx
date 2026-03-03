@@ -148,12 +148,12 @@ IntTools_Context::~IntTools_Context()
   }
   myBndBoxDataMap.Clear();
 
-  for (NCollection_DataMap<TopoDS_Shape, BRepAdaptor_Surface*, TopTools_ShapeMapHasher>::Iterator
+  for (NCollection_DataMap<TopoDS_Shape, ::model::adapter::BRepAdaptor_Surface*, TopTools_ShapeMapHasher>::Iterator
          anIt(mySurfAdaptorMap);
        anIt.More();
        anIt.Next())
   {
-    BRepAdaptor_Surface* pSurfAdaptor = anIt.Value();
+    ::model::adapter::BRepAdaptor_Surface* pSurfAdaptor = anIt.Value();
     (*pSurfAdaptor).~BRepAdaptor_Surface();
     myAllocator->Free(pSurfAdaptor);
   }
@@ -287,14 +287,14 @@ BRepClass3d_SolidClassifier& IntTools_Context::SolidClassifier(const TopoDS_Soli
   return *pSC;
 }
 
-BRepAdaptor_Surface& IntTools_Context::SurfaceAdaptor(const TopoDS_Face& theFace)
+::model::adapter::BRepAdaptor_Surface& IntTools_Context::SurfaceAdaptor(const TopoDS_Face& theFace)
 {
-  BRepAdaptor_Surface* pBAS = nullptr;
+  ::model::adapter::BRepAdaptor_Surface* pBAS = nullptr;
   if (!mySurfAdaptorMap.Find(theFace, pBAS))
   {
 
-    pBAS = (BRepAdaptor_Surface*)myAllocator->Allocate(sizeof(BRepAdaptor_Surface));
-    new (pBAS) BRepAdaptor_Surface(theFace, true);
+    pBAS = (::model::adapter::BRepAdaptor_Surface*)myAllocator->Allocate(sizeof(::model::adapter::BRepAdaptor_Surface));
+    new (pBAS) ::model::adapter::BRepAdaptor_Surface(theFace, true);
 
     mySurfAdaptorMap.Bind(theFace, pBAS);
   }
@@ -939,7 +939,7 @@ void IntTools_Context::UVBounds(const TopoDS_Face& theFace,
                                 double&            VMin,
                                 double&            VMax)
 {
-  const BRepAdaptor_Surface& aBAS = SurfaceAdaptor(theFace);
+  const ::model::adapter::BRepAdaptor_Surface& aBAS = SurfaceAdaptor(theFace);
   UMin                            = aBAS.FirstUParameter();
   UMax                            = aBAS.LastUParameter();
   VMin                            = aBAS.FirstVParameter();

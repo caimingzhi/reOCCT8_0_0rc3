@@ -899,7 +899,7 @@ void TPrsStd_ConstraintTools::ComputeAngle(const occ::handle<TDataXtd_Constraint
     gp_Ax1 anax1aFace1;
     gp_Pln aPlnaFace1;
 
-    BRepAdaptor_Surface aSurfaFace(aFace);
+    ::model::adapter::BRepAdaptor_Surface aSurfaFace(aFace);
     GeomAbs_SurfaceType aTypeaFace = aSurfaFace.GetType();
     if (aTypeaFace == GeomAbs_Plane)
     {
@@ -1513,8 +1513,8 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
 
   if (aShape1.ShapeType() == TopAbs_EDGE && aShape2.ShapeType() == TopAbs_EDGE)
   {
-    BRepAdaptor_Curve aCurve1(TopoDS::Edge(aShape1));
-    BRepAdaptor_Curve aCurve2(TopoDS::Edge(aShape2));
+    ::model::adapter::BRepAdaptor_Curve aCurve1(TopoDS::Edge(aShape1));
+    ::model::adapter::BRepAdaptor_Curve aCurve2(TopoDS::Edge(aShape2));
     if (aCurve1.GetType() == GeomAbs_Line && aCurve2.GetType() == GeomAbs_Line)
     {
       gp_Dir aDir1 = aCurve1.Line().Direction();
@@ -1550,7 +1550,7 @@ static bool CheckShapesPair(const TopoDS_Shape& aShape1, const TopoDS_Shape& aSh
   else if (aShape1.ShapeType() != TopAbs_VERTEX || aShape2.ShapeType() != TopAbs_VERTEX)
   {
     gp_Pnt            aPnt;
-    BRepAdaptor_Curve aCurve;
+    ::model::adapter::BRepAdaptor_Curve aCurve;
     if (aShape1.ShapeType() == TopAbs_VERTEX)
     {
       aPnt = BRep_Tool::Pnt(TopoDS::Vertex(aShape1));
@@ -1616,7 +1616,7 @@ void TPrsStd_ConstraintTools::ComputeEqualRadius(const occ::handle<TDataXtd_Cons
   if (!IsPlanar || aplane.IsNull())
   {
 
-    BRepAdaptor_Curve       aCurve(edge1);
+    ::model::adapter::BRepAdaptor_Curve       aCurve(edge1);
     occ::handle<Geom_Curve> aProjCurve = aCurve.Curve().Curve();
     gp_Circ                 aCircle    = (occ::down_cast<Geom_Circle>(aProjCurve))->Circ();
     gp_Ax3                  anAx31(aCircle.Position());
@@ -1887,7 +1887,7 @@ void TPrsStd_ConstraintTools::ComputeOffset(const occ::handle<TDataXtd_Constrain
     {
 
       TopoDS_Edge       OE = TopoDS::Edge(S1);
-      BRepAdaptor_Curve CURVE(OE);
+      ::model::adapter::BRepAdaptor_Curve CURVE(OE);
       if (CURVE.GetType() == GeomAbs_Line)
       {
 

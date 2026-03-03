@@ -56,7 +56,7 @@ static TopoDS_Shape ChooseDirection(const TopoDS_Shape&,
                                     const TopoDS_Face&,
                                     const NCollection_List<TopoDS_Shape>&);
 
-inline bool SameUV(const gp_Pnt2d& P1, const gp_Pnt2d& P2, const BRepAdaptor_Surface& theBAS)
+inline bool SameUV(const gp_Pnt2d& P1, const gp_Pnt2d& P2, const ::model::adapter::BRepAdaptor_Surface& theBAS)
 {
   bool isSame = true;
   if (theBAS.IsUPeriodic())
@@ -627,7 +627,7 @@ static bool checkOverlapping(const TopoDS_Edge& theEdge1,
                              const TopoDS_Face& theFace)
 {
 
-  BRepAdaptor_Surface anAdS(theFace, false);
+  ::model::adapter::BRepAdaptor_Surface anAdS(theFace, false);
 
   double MaxTol = (BRep_Tool::Tolerance(theEdge1) + BRep_Tool::Tolerance(theEdge2));
 
@@ -734,7 +734,7 @@ bool LocOpe_SplitShape::AddOpenWire(const TopoDS_Wire& W, const TopoDS_Face& F)
   lf.Remove(itl);
   BRep_Builder B;
 
-  BRepAdaptor_Surface BAS(FaceRef, false);
+  ::model::adapter::BRepAdaptor_Surface BAS(FaceRef, false);
 
   bool IsPeriodic = BAS.IsUPeriodic() || BAS.IsVPeriodic();
 
@@ -1432,7 +1432,7 @@ bool ChoixUV(const TopoDS_Edge&                                                 
   gp_Vec2d v2d;
   gp_Pnt   aPCur, aPlst;
 
-  BRepAdaptor_Surface surf(F, false);
+  ::model::adapter::BRepAdaptor_Surface surf(F, false);
   surf.D0(plst.X(), plst.Y(), aPlst);
 
   gp_Dir2d ref2d(dlst);

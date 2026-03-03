@@ -430,8 +430,8 @@ void BRepFill_NSections::Init(const NCollection_Sequence<double>& P, const bool 
       }
       else
       {
-        BRepAdaptor_Curve Curve1(Edge1);
-        BRepAdaptor_Curve Curve2(Edge2);
+        ::model::adapter::BRepAdaptor_Curve Curve1(Edge1);
+        ::model::adapter::BRepAdaptor_Curve Curve2(Edge2);
         double            U1  = BRep_Tool::Parameter(V1, Edge1);
         double            U2  = BRep_Tool::Parameter(V2, Edge2);
         double            Eps = BRep_Tool::Tolerance(V2) + BRep_Tool::Tolerance(V1);
@@ -710,10 +710,10 @@ GeomAbs_Shape BRepFill_NSections::Continuity(const int Index, const double TolAn
     {
       double            U1 = BRep_Tool::Parameter(V1, Edge1);
       double            U2 = BRep_Tool::Parameter(V2, Edge2);
-      BRepAdaptor_Curve Curve1(Edge1);
-      BRepAdaptor_Curve Curve2(Edge2);
+      ::model::adapter::BRepAdaptor_Curve Curve1(Edge1);
+      ::model::adapter::BRepAdaptor_Curve Curve2(Edge2);
       double            Eps = BRep_Tool::Tolerance(V2) + BRep_Tool::Tolerance(V1);
-      cont_jj               = BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, TolAngular);
+      cont_jj               = ::model::localproperties::BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, TolAngular);
     }
 
     if (jj == 1)

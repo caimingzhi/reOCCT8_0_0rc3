@@ -13,7 +13,10 @@ class StdFail_NotDone;
 class Standard_DomainError;
 class Standard_ConstructionError;
 class StdFail_UndefinedDerivative;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class BRepApprox_SurfaceTool;
 class BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox;
 class math_FunctionSetRoot;
@@ -28,12 +31,12 @@ public:
 
   Standard_EXPORT BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox(
     const NCollection_Array1<double>& Param,
-    const BRepAdaptor_Surface&        S1,
-    const BRepAdaptor_Surface&        S2,
+    const ::model::adapter::BRepAdaptor_Surface&        S1,
+    const ::model::adapter::BRepAdaptor_Surface&        S2,
     const double                      TolTangency);
 
-  Standard_EXPORT BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox(const BRepAdaptor_Surface& S1,
-                                                                   const BRepAdaptor_Surface& S2,
+  Standard_EXPORT BRepApprox_TheInt2SOfThePrmPrmSvSurfacesOfApprox(const ::model::adapter::BRepAdaptor_Surface& S1,
+                                                                   const ::model::adapter::BRepAdaptor_Surface& S2,
                                                                    const double TolTangency);
 
   Standard_EXPORT IntImp_ConstIsoparametric Perform(const NCollection_Array1<double>& Param,
@@ -85,7 +88,7 @@ private:
   double                                                        vres2;
 };
 
-#define ThePSurface BRepAdaptor_Surface
+#define ThePSurface ::model::adapter::BRepAdaptor_Surface
 #define ThePSurface_hxx <BRepAdaptor_Surface.hpp>
 #define ThePSurfaceTool BRepApprox_SurfaceTool
 #define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hpp>

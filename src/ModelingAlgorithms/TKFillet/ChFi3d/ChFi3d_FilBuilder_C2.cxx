@@ -60,9 +60,9 @@ extern void ChFi3d_InitChron(System::os::OSD_Chronometer& ch);
 extern void ChFi3d_ResultChron(System::os::OSD_Chronometer& ch, double& time);
 #endif
 
-static bool ToricRotule(const BRepAdaptor_Surface&        fac,
-                        const BRepAdaptor_Surface&        s1,
-                        const BRepAdaptor_Surface&        s2,
+static bool ToricRotule(const ::model::adapter::BRepAdaptor_Surface&        fac,
+                        const ::model::adapter::BRepAdaptor_Surface&        s1,
+                        const ::model::adapter::BRepAdaptor_Surface&        s2,
                         const occ::handle<ChFiDS_Stripe>& c1,
                         const occ::handle<ChFiDS_Stripe>& c2)
 
@@ -153,12 +153,12 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   else
     E2 = st2->Spine()->Edges(st2->Spine()->NbEdges());
 
-  BRepAdaptor_Curve BCurv1(E1);
-  BRepAdaptor_Curve BCurv2(E2);
+  ::model::adapter::BRepAdaptor_Curve BCurv1(E1);
+  ::model::adapter::BRepAdaptor_Curve BCurv2(E2);
   parE1 = BRep_Tool::Parameter(Vtx, E1);
   parE2 = BRep_Tool::Parameter(Vtx, E2);
-  BRepLProp_CLProps CL1(BCurv1, parE1, 1, 1.e-4);
-  BRepLProp_CLProps CL2(BCurv2, parE2, 1, 1.e-4);
+  ::model::localproperties::BRepLProp_CLProps CL1(BCurv1, parE1, 1, 1.e-4);
+  ::model::localproperties::BRepLProp_CLProps CL2(BCurv2, parE2, 1, 1.e-4);
   gp_Dir            dir1, dir2;
   CL1.Tangent(dir1);
   CL2.Tangent(dir2);
@@ -313,26 +313,26 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
   {
     yapiv = (pivot.IsSame(CP2.Arc()));
   }
-  occ::handle<BRepAdaptor_Curve> Hpivot;
+  occ::handle<::model::adapter::BRepAdaptor_Curve> Hpivot;
   bool                           sameparam = false;
   double                         parCP1 = 0., parCP2 = 0.;
   if (yapiv)
   {
-    Hpivot      = new BRepAdaptor_Curve(pivot);
+    Hpivot      = new ::model::adapter::BRepAdaptor_Curve(pivot);
     parCP1      = CP1.ParameterOnArc();
     parCP2      = CP2.ParameterOnArc();
     gp_Pnt tst1 = Hpivot->Value(parCP1);
     gp_Pnt tst2 = Hpivot->Value(parCP2);
     sameparam   = tst1.Distance(tst2) <= tolapp3d;
   }
-  occ::handle<BRepAdaptor_Surface> HFaCo = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HFaPiv;
-  occ::handle<BRepAdaptor_Surface> HBRS1 = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HBRS2 = new BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HFaCo = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HFaPiv;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBRS1 = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HBRS2 = new ::model::adapter::BRepAdaptor_Surface();
 
-  BRepAdaptor_Surface& BRS1   = *HBRS1;
-  BRepAdaptor_Surface& BRS2   = *HBRS2;
-  BRepAdaptor_Surface& BRFaCo = *HFaCo;
+  ::model::adapter::BRepAdaptor_Surface& BRS1   = *HBRS1;
+  ::model::adapter::BRepAdaptor_Surface& BRS2   = *HBRS2;
+  ::model::adapter::BRepAdaptor_Surface& BRFaCo = *HFaCo;
   BRFaCo.Initialize(FaCo);
 
   TopoDS_Face                      FF1, FF2, F, FaPiv;
@@ -520,7 +520,7 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
             Hpivot->Trim(std::min(parCP1, parCP2), std::max(parCP1, parCP2), tolesp);
           Bpiv = new GeomFill_SimpleBound(HPivTrim, tolapp3d, 2.e-4);
           fil.Init(Bfac, B2, Bpiv, B1, true);
-          BRepAdaptor_Curve2d pcpivot;
+          ::model::adapter::BRepAdaptor_Curve2d pcpivot;
           gp_Vec              dArc, dcf;
           gp_Pnt              bidon;
           Hpivot->D1(parCP1, bidon, dArc);
@@ -846,10 +846,10 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
       const occ::handle<Geom_Curve>& curvopsam =
         DStr.Curve(sdsam->Interference(ifaopsam).LineIndex()).Curve();
       curvopsam->D1(uintpcsam, PPfacsam, VVfacsam);
-      BRepAdaptor_Curve2d PCArcFac(Arcopdif, Fopsam);
+      ::model::adapter::BRepAdaptor_Curve2d PCArcFac(Arcopdif, Fopsam);
       PCArcFac.D0(cpopdif.ParameterOnArc(), ppfacdif);
 
-      BRepAdaptor_Surface SurFopsam(Fopsam);
+      ::model::adapter::BRepAdaptor_Surface SurFopsam(Fopsam);
       if (SurFopsam.IsUClosed())
       {
         double Uperiod = SurFopsam.LastUParameter() - SurFopsam.FirstUParameter();
@@ -862,10 +862,10 @@ void ChFi3d_FilBuilder::PerformTwoCorner(const int Index)
         }
       }
 
-      BRepAdaptor_Curve CArcFac(Arcopdif);
+      ::model::adapter::BRepAdaptor_Curve CArcFac(Arcopdif);
       CArcFac.D1(cpopdif.ParameterOnArc(), PPfacdif, VVfacdif);
-      occ::handle<BRepAdaptor_Surface> HBRFopsam = new BRepAdaptor_Surface();
-      BRepAdaptor_Surface&             BRFopsam  = *HBRFopsam;
+      occ::handle<::model::adapter::BRepAdaptor_Surface> HBRFopsam = new ::model::adapter::BRepAdaptor_Surface();
+      ::model::adapter::BRepAdaptor_Surface&             BRFopsam  = *HBRFopsam;
       BRFopsam.Initialize(Fopsam, false);
       occ::handle<Geom2d_Curve> pcFopsam =
         ChFi3d_BuildPCurve(HBRFopsam, ppfacsam, VVfacsam, ppfacdif, VVfacdif, true);

@@ -273,8 +273,8 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
 
     const TopoDS_Face& aFace = TopoDS::Face(CurFace);
 
-    BRepAdaptor_Curve2d aBAC2D1(TopoDS::Edge(CurEdge), aFace);
-    BRepAdaptor_Curve2d aBAC2D1R(TopoDS::Edge(CurEdge.Reversed()), aFace);
+    ::model::adapter::BRepAdaptor_Curve2d aBAC2D1(TopoDS::Edge(CurEdge), aFace);
+    ::model::adapter::BRepAdaptor_Curve2d aBAC2D1R(TopoDS::Edge(CurEdge.Reversed()), aFace);
 
     TopLoc_Location                  aLoc;
     const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aFace, aLoc);
@@ -294,7 +294,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         {
           const TopoDS_Edge& anEdge = TopoDS::Edge(eit.Value());
 
-          BRepAdaptor_Curve2d aBAC2D2(anEdge, aFace);
+          ::model::adapter::BRepAdaptor_Curve2d aBAC2D2(anEdge, aFace);
 
           Geom2dInt_GInter aGInter;
           aGInter.Perform(aBAC2D1, aBAC2D2, TolInter, TolInter);
@@ -490,7 +490,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       }
       else
       {
-        BRepAdaptor_Curve bcur(NewE);
+        ::model::adapter::BRepAdaptor_Curve bcur(NewE);
         gp_Pnt            Point = bcur.Value(par);
         NewV                    = BRepLib_MakeVertex(Point);
         BB.UpdateVertex(NewV, par, NewE, 10. * math::precision::Precision::Confusion());
@@ -765,7 +765,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
         TopoDS_Edge anEdge = TopoDS::Edge(eit.Value());
         gp_Pnt2d    Pfirst, Plast, Pmid;
         BRep_Tool::UVPoints(anEdge, TopoDS::Face(CurFace), Pfirst, Plast);
-        BRepAdaptor_Curve2d bc2d(anEdge, TopoDS::Face(CurFace));
+        ::model::adapter::BRepAdaptor_Curve2d bc2d(anEdge, TopoDS::Face(CurFace));
         Pmid = bc2d.Value((bc2d.FirstParameter() + bc2d.LastParameter()) / 2.);
         gp_Vec2d offset;
         bool     translate = false;

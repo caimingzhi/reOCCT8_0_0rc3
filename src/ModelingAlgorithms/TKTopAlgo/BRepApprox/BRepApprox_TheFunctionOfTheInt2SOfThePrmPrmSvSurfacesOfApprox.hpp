@@ -13,7 +13,10 @@
 #include <gp_Dir2d.hpp>
 class StdFail_UndefinedDerivative;
 class Standard_ConstructionError;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class BRepApprox_SurfaceTool;
 class math_Matrix;
 
@@ -24,8 +27,8 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT BRepApprox_TheFunctionOfTheInt2SOfThePrmPrmSvSurfacesOfApprox(
-    const BRepAdaptor_Surface& S1,
-    const BRepAdaptor_Surface& S2);
+    const ::model::adapter::BRepAdaptor_Surface& S1,
+    const ::model::adapter::BRepAdaptor_Surface& S2);
 
   Standard_EXPORT int NbVariables() const override;
 
@@ -58,9 +61,9 @@ public:
 
   gp_Dir2d DirectionOnS2() const;
 
-  const BRepAdaptor_Surface& AuxillarSurface1() const;
+  const ::model::adapter::BRepAdaptor_Surface& AuxillarSurface1() const;
 
-  const BRepAdaptor_Surface& AuxillarSurface2() const;
+  const ::model::adapter::BRepAdaptor_Surface& AuxillarSurface2() const;
 
 private:
   void*                     surf1;
@@ -88,7 +91,7 @@ private:
   double                    vres2;
 };
 
-#define ThePSurface BRepAdaptor_Surface
+#define ThePSurface ::model::adapter::BRepAdaptor_Surface
 #define ThePSurface_hxx <BRepAdaptor_Surface.hpp>
 #define ThePSurfaceTool BRepApprox_SurfaceTool
 #define ThePSurfaceTool_hxx <BRepApprox_SurfaceTool.hpp>

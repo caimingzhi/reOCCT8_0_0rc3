@@ -1376,7 +1376,7 @@ bool BOPTools_AlgoTools::IsHole(const TopoDS_Shape& aW, const TopoDS_Shape& aFac
       break;
     }
 
-    BRepAdaptor_Curve2d aBAC2D(aE, aFF);
+    ::model::adapter::BRepAdaptor_Curve2d aBAC2D(aE, aFF);
     aNbS = Geom2dInt_Geom2dCurveTool::NbSamples(aBAC2D);
     if (aNbS > 2)
     {
@@ -2036,7 +2036,7 @@ double MinStep3D(const TopoDS_Edge&                              theE1,
       aDtMax = aDt;
     }
 
-    const BRepAdaptor_Surface& aBAS   = theContext->SurfaceAdaptor(aF);
+    const ::model::adapter::BRepAdaptor_Surface& aBAS   = theContext->SurfaceAdaptor(aF);
     double                     aR     = 0.;
     GeomAbs_SurfaceType        aSType = aBAS.GetType();
     switch (aSType)
@@ -2086,7 +2086,7 @@ double MinStep3D(const TopoDS_Edge&                              theE1,
     const BOPTools_CoupleOfShape& aCS = aIt.Value();
     const TopoDS_Face&            aF  = (*(TopoDS_Face*)(&aCS.Shape2()));
 
-    const BRepAdaptor_Surface& aBAS = theContext->SurfaceAdaptor(aF);
+    const ::model::adapter::BRepAdaptor_Surface& aBAS = theContext->SurfaceAdaptor(aF);
 
     double aUMin, aUMax, aVMin, aVMax;
     theContext->UVBounds(aF, aUMin, aUMax, aVMin, aVMax);

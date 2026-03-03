@@ -175,7 +175,7 @@ void PrsDim_TangentRelation::ComputeTwoEdgesTangent(
   aPresentation->SetInfiniteState(isInfinite1 || isInfinite2);
 
   BRepBuilderAPI_MakeFace makeface(myPlane->Pln());
-  BRepAdaptor_Surface     adp(makeface.Face());
+  ::model::adapter::BRepAdaptor_Surface     adp(makeface.Face());
 
   int typArg(0);
 

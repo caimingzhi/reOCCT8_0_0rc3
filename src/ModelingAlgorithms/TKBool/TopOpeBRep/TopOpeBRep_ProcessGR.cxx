@@ -60,7 +60,7 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
 
   bool               isperiodic;
   const TopoDS_Edge& EArc = TopoDS::Edge(Lrest.Arc());
-  BRepAdaptor_Curve  BAC(EArc);
+  ::model::adapter::BRepAdaptor_Curve  BAC(EArc);
   GeomAbs_CurveType  CT = BAC.GetType();
   isperiodic            = (CT == GeomAbs_Circle);
   isperiodic            = isperiodic || (CT == GeomAbs_Ellipse);
@@ -131,7 +131,7 @@ TopAbs_State TopOpeBRep_FacesFiller::StBipVPonF(const TopOpeBRep_VPointInter& vp
   }
 
   const TopoDS_Edge& arc = TopoDS::Edge(Lrest.Arc());
-  BRepAdaptor_Curve  BC(arc);
+  ::model::adapter::BRepAdaptor_Curve  BC(arc);
   double             x      = 0.789;
   double             parmil = (1 - x) * uf + x * ul;
   gp_Pnt             pmil   = BC.Value(parmil);
@@ -225,7 +225,7 @@ bool TopOpeBRep_FacesFiller::LSameDomainERL(const TopOpeBRep_LineInter&         
     const TopoDS_Edge& E      = TopoDS::Edge(it.Value());
     double             tolE   = BRep_Tool::Tolerance(E);
     double             maxtol = std::max(tolE, GLOBAL_tolFF);
-    BRepAdaptor_Curve  BAC(E);
+    ::model::adapter::BRepAdaptor_Curve  BAC(E);
     f         = BAC.FirstParameter();
     l         = BAC.LastParameter();
     bool pinc = FUN_tool_PinC(Pm, BAC, f, l, maxtol);

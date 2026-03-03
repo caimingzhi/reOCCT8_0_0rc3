@@ -48,7 +48,7 @@ Standard_EXPORT TopAbs_State FSC_StateEonFace(const TopoDS_Shape&             E,
                                               const TopoDS_Shape&             F,
                                               TopOpeBRepTool_ShapeClassifier& PSC)
 {
-  BRepAdaptor_Curve BAC(TopoDS::Edge(E));
+  ::model::adapter::BRepAdaptor_Curve BAC(TopoDS::Edge(E));
   double            f, l;
   FUN_tool_bounds(TopoDS::Edge(E), f, l);
   double par = (1 - t) * f + t * l;

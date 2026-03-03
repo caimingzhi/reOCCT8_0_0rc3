@@ -11,7 +11,7 @@ StdPrs_ToolRFace::StdPrs_ToolRFace()
 {
 }
 
-StdPrs_ToolRFace::StdPrs_ToolRFace(const occ::handle<BRepAdaptor_Surface>& theSurface)
+StdPrs_ToolRFace::StdPrs_ToolRFace(const occ::handle<::model::adapter::BRepAdaptor_Surface>& theSurface)
     : myFace(theSurface->Face()),
       myHasNullCurves(false)
 {

@@ -439,7 +439,7 @@ static double MapEdgeLength(const TopoDS_Edge&                         theEdge,
     double aLen = 0.;
     if (!BRep_Tool::Degenerated(theEdge))
     {
-      BRepAdaptor_Curve aCurve(theEdge);
+      ::model::adapter::BRepAdaptor_Curve aCurve(theEdge);
       aLen = GCPnts_AbscissaPoint::Length(aCurve);
     }
     pLen = theMapEdgeLen.Bound(theEdge, aLen);

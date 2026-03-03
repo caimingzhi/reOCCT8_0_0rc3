@@ -182,8 +182,8 @@ void BRepFill_ShapeLaw::Init(const bool Build)
     }
     else
     {
-      BRepAdaptor_Curve Curve1(Edge1);
-      BRepAdaptor_Curve Curve2(Edge2);
+      ::model::adapter::BRepAdaptor_Curve Curve1(Edge1);
+      ::model::adapter::BRepAdaptor_Curve Curve2(Edge2);
       double            U1  = BRep_Tool::Parameter(V1, Edge1);
       double            U2  = BRep_Tool::Parameter(V2, Edge2);
       double            Eps = BRep_Tool::Tolerance(V2) + BRep_Tool::Tolerance(V1);
@@ -396,11 +396,11 @@ GeomAbs_Shape BRepFill_ShapeLaw::Continuity(const int Index, const double TolAng
 
   double            U1 = BRep_Tool::Parameter(V1, Edge1);
   double            U2 = BRep_Tool::Parameter(V2, Edge2);
-  BRepAdaptor_Curve Curve1(Edge1);
-  BRepAdaptor_Curve Curve2(Edge2);
+  ::model::adapter::BRepAdaptor_Curve Curve1(Edge1);
+  ::model::adapter::BRepAdaptor_Curve Curve2(Edge2);
   double            Eps = BRep_Tool::Tolerance(V2) + BRep_Tool::Tolerance(V1);
   GeomAbs_Shape     cont;
-  cont = BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, TolAngular);
+  cont = ::model::localproperties::BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, TolAngular);
 
   return cont;
 }

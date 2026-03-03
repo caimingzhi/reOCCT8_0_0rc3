@@ -16,6 +16,7 @@ class Geom_BSplineSurface;
 class gp_Ax1;
 class gp_Dir;
 
+namespace model { namespace adapter {
 class BRepAdaptor_Surface : public GeomAdaptor_TransformedSurface
 {
   DEFINE_STANDARD_RTTIEXT(BRepAdaptor_Surface, GeomAdaptor_TransformedSurface)
@@ -35,3 +36,5 @@ public:
 private:
   TopoDS_Face myFace;
 };
+}} // namespace model::adapter
+

@@ -302,8 +302,8 @@ static void WireContinuity(const TopoDS_Wire& W, GeomAbs_Shape& contW)
       TopExp::Vertices(Edge2, V2, Vbid, true);
       double            U1 = BRep_Tool::Parameter(V1, Edge1);
       double            U2 = BRep_Tool::Parameter(V2, Edge2);
-      BRepAdaptor_Curve Curve1(Edge1);
-      BRepAdaptor_Curve Curve2(Edge2);
+      ::model::adapter::BRepAdaptor_Curve Curve1(Edge1);
+      ::model::adapter::BRepAdaptor_Curve Curve2(Edge2);
       double            Eps = BRep_Tool::Tolerance(V2) + BRep_Tool::Tolerance(V1);
 
       if (j == nbEdges)
@@ -311,7 +311,7 @@ static void WireContinuity(const TopoDS_Wire& W, GeomAbs_Shape& contW)
 
       if (testconti)
       {
-        cont = BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, math::precision::Precision::Angular());
+        cont = ::model::localproperties::BRepLProp::Continuity(Curve1, Curve2, U1, U2, Eps, math::precision::Precision::Angular());
         if (cont <= contW)
           contW = cont;
       }
@@ -1133,7 +1133,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
     TopExp::Vertices(ECur, VF, VL, true);
     double                                   U1 = BRep_Tool::Parameter(VF, ECur);
     double                                   U2 = BRep_Tool::Parameter(VL, ECur);
-    BRepAdaptor_Curve                        Curve(ECur);
+    ::model::adapter::BRepAdaptor_Curve                        Curve(ECur);
     gp_Pnt                                   PPs = Curve.Value(0.1 * (U1 + 9 * U2));
     NCollection_List<TopoDS_Shape>::Iterator itF(MapVLV(VF)), itL(MapVLV(VL));
     int                                      rang = ideb;
@@ -1159,7 +1159,7 @@ void BRepFill_CompatibleWires::SameNumberByPolarMethod(const bool WithRotation)
       {
         double            U1param = BRep_Tool::Parameter(VVF, E);
         double            U2param = BRep_Tool::Parameter(VVL, E);
-        BRepAdaptor_Curve CurveE(E);
+        ::model::adapter::BRepAdaptor_Curve CurveE(E);
         gp_Pnt            PP1 = CurveE.Value(0.1 * (U1param + 9 * U2param));
         gp_Pnt            PP2 = CurveE.Value(0.1 * (9 * U1param + U2param));
 
@@ -1646,8 +1646,8 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
           {
             const TopoDS_Edge& PrevEdge = TopoDS::Edge(PrevEseq(n));
             const TopoDS_Edge& CurEdge  = TopoDS::Edge(SeqEdges(k));
-            BRepAdaptor_Curve  PrevEcurve(PrevEdge);
-            BRepAdaptor_Curve  Ecurve(CurEdge);
+            ::model::adapter::BRepAdaptor_Curve  PrevEcurve(PrevEdge);
+            ::model::adapter::BRepAdaptor_Curve  Ecurve(CurEdge);
             double             SampleOnPrev =
               (PrevEcurve.LastParameter() - PrevEcurve.FirstParameter()) / NbSamples;
             double SampleOnCur = (Ecurve.LastParameter() - Ecurve.FirstParameter()) / NbSamples;
@@ -1677,8 +1677,8 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
           {
             const TopoDS_Edge& PrevEdge = TopoDS::Edge(PrevEseq(n));
             const TopoDS_Edge& CurEdge  = TopoDS::Edge(SeqEdges(k));
-            BRepAdaptor_Curve  PrevEcurve(PrevEdge);
-            BRepAdaptor_Curve  Ecurve(CurEdge);
+            ::model::adapter::BRepAdaptor_Curve  PrevEcurve(PrevEdge);
+            ::model::adapter::BRepAdaptor_Curve  Ecurve(CurEdge);
             double             SampleOnPrev =
               (PrevEcurve.LastParameter() - PrevEcurve.FirstParameter()) / NbSamples;
             double SampleOnCur = (Ecurve.LastParameter() - Ecurve.FirstParameter()) / NbSamples;
@@ -1719,8 +1719,8 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
               k_cur = theLength;
             const TopoDS_Edge& PrevEdge = TopoDS::Edge(PrevEseq(n));
             const TopoDS_Edge& CurEdge  = TopoDS::Edge(SeqEdges(k_cur));
-            BRepAdaptor_Curve  PrevEcurve(PrevEdge);
-            BRepAdaptor_Curve  Ecurve(CurEdge);
+            ::model::adapter::BRepAdaptor_Curve  PrevEcurve(PrevEdge);
+            ::model::adapter::BRepAdaptor_Curve  Ecurve(CurEdge);
             double             SampleOnPrev =
               (PrevEcurve.LastParameter() - PrevEcurve.FirstParameter()) / NbSamples;
             double SampleOnCur = (Ecurve.LastParameter() - Ecurve.FirstParameter()) / NbSamples;
@@ -1750,8 +1750,8 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
           {
             const TopoDS_Edge& PrevEdge = TopoDS::Edge(PrevEseq(n));
             const TopoDS_Edge& CurEdge  = TopoDS::Edge(SeqEdges(k - 1));
-            BRepAdaptor_Curve  PrevEcurve(PrevEdge);
-            BRepAdaptor_Curve  Ecurve(CurEdge);
+            ::model::adapter::BRepAdaptor_Curve  PrevEcurve(PrevEdge);
+            ::model::adapter::BRepAdaptor_Curve  Ecurve(CurEdge);
             double             SampleOnPrev =
               (PrevEcurve.LastParameter() - PrevEcurve.FirstParameter()) / NbSamples;
             double SampleOnCur = (Ecurve.LastParameter() - Ecurve.FirstParameter()) / NbSamples;
@@ -1876,7 +1876,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
       Psuiv                = BRep_Tool::Pnt(Vsuiv);
       double            U1 = BRep_Tool::Parameter(Vdeb, Ecur);
       double            U2 = BRep_Tool::Parameter(Vsuiv, Ecur);
-      BRepAdaptor_Curve Curve(Ecur);
+      ::model::adapter::BRepAdaptor_Curve Curve(Ecur);
       PPs          = Curve.Value(0.25 * (U1 + 3 * U2));
       myWork(ideb) = wire;
     }
@@ -2048,9 +2048,9 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
         {
 
           Pbout = PPn;
-          BRepAdaptor_Curve Curve1(E1);
+          ::model::adapter::BRepAdaptor_Curve Curve1(E1);
           P1 = Curve1.Value(U1);
-          BRepAdaptor_Curve Curve2(E2);
+          ::model::adapter::BRepAdaptor_Curve Curve2(E2);
           P2 = Curve2.Value(U2);
         }
 
@@ -2069,7 +2069,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
               rangdeb = rang;
             }
           }
-          BRepAdaptor_Curve Curve(E1);
+          ::model::adapter::BRepAdaptor_Curve Curve(E1);
           PPs = Curve.Value(U1);
         }
         else
@@ -2086,7 +2086,7 @@ void BRepFill_CompatibleWires::ComputeOrigin(const bool)
               rangdeb = rang;
             }
           }
-          BRepAdaptor_Curve Curve(E2);
+          ::model::adapter::BRepAdaptor_Curve Curve(E2);
           PPs = Curve.Value(U2);
         }
       }
@@ -2217,7 +2217,7 @@ void BRepFill_CompatibleWires::SearchOrigin()
 
       if (P1.IsEqual(P2, math::precision::Precision::Confusion()) || P1o.IsEqual(P2o, math::precision::Precision::Confusion()))
       {
-        BRepAdaptor_Curve Curve0(E0), Curve(E);
+        ::model::adapter::BRepAdaptor_Curve Curve0(E0), Curve(E);
         Curve0.D0(Curve0.FirstParameter() + math::precision::Precision::Confusion(), P2o);
         Curve.D0(Curve.FirstParameter() + math::precision::Precision::Confusion(), P2);
       };

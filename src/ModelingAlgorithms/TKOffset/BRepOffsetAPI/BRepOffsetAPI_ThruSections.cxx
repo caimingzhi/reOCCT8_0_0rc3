@@ -1310,7 +1310,7 @@ const NCollection_List<TopoDS_Shape>& BRepOffsetAPI_ThruSections::Generated(cons
     FirstFace.Orientation(TopAbs_FORWARD);
     Explo.Init(FirstFace, TopAbs_EDGE);
     TopoDS_Edge         anEdge;
-    BRepAdaptor_Surface BAsurf(FirstFace, false);
+    ::model::adapter::BRepAdaptor_Surface BAsurf(FirstFace, false);
     TopoDS_Vertex       FirstVertex;
     TopExp::MapShapesAndAncestors(FirstFace, TopAbs_VERTEX, TopAbs_EDGE, VEmap);
     if (myDegen1 && BAsurf.GetType() == GeomAbs_Plane)

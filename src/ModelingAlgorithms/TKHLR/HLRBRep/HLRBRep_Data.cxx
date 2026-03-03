@@ -903,7 +903,7 @@ void HLRBRep_Data::InitEdge(
   myIntersector.Load(iFaceGeom);
 
   HLRBRep_Surface*           p1   = iFaceGeom;
-  const BRepAdaptor_Surface& bras = p1->Surface();
+  const ::model::adapter::BRepAdaptor_Surface& bras = p1->Surface();
 
   const TopoDS_Face& topodsface = bras.Face();
 

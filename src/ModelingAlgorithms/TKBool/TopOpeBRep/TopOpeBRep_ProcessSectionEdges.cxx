@@ -225,7 +225,7 @@ Standard_EXPORT bool FUN_brep_sdmRE(const TopoDS_Edge& E1, const TopoDS_Edge& E2
 {
 
   bool              ok = false;
-  BRepAdaptor_Curve BAC;
+  ::model::adapter::BRepAdaptor_Curve BAC;
   TopoDS_Vertex     v1, v2;
   TopExp::Vertices(E1, v1, v2);
   TopoDS_Vertex v3, v4;

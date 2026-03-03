@@ -49,7 +49,7 @@ void DrawDim_Distance::Plane2(const TopoDS_Face& face)
 void DrawDim_Distance::DrawOn(Draw_Display& dis) const
 {
 
-  BRepAdaptor_Surface surf1(myPlane1);
+  ::model::adapter::BRepAdaptor_Surface surf1(myPlane1);
 
   if (surf1.GetType() != GeomAbs_Plane)
     return;
@@ -74,7 +74,7 @@ void DrawDim_Distance::DrawOn(Draw_Display& dis) const
   if (!myPlane2.IsNull())
   {
 
-    BRepAdaptor_Surface surf2(myPlane2);
+    ::model::adapter::BRepAdaptor_Surface surf2(myPlane2);
     surf2.D0(0, 0, SAttach);
     double r = V.Dot(gp_Vec(FAttach, SAttach));
     V *= r;

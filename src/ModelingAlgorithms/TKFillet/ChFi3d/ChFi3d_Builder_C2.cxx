@@ -211,7 +211,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
   pivot                                 = CP1.Arc();
   double                         parCP1 = CP1.ParameterOnArc();
   double                         parCP2 = CP2.ParameterOnArc();
-  occ::handle<BRepAdaptor_Curve> Hpivot = new BRepAdaptor_Curve(pivot);
+  occ::handle<::model::adapter::BRepAdaptor_Curve> Hpivot = new ::model::adapter::BRepAdaptor_Curve(pivot);
   if (!pivot.IsSame(CP2.Arc()))
   {
     occ::handle<Geom_Curve> csau;
@@ -584,7 +584,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     ChFi3d_EnlargeBox(BigHS, PGc2, WFirst, WLast, bco, bmil);
 
     TopoDS_Face                      F       = TopoDS::Face(DStr.Shape(SmaFD->Index(IFaArcSma)));
-    occ::handle<BRepAdaptor_Surface> HF      = new BRepAdaptor_Surface(F);
+    occ::handle<::model::adapter::BRepAdaptor_Surface> HF      = new ::model::adapter::BRepAdaptor_Surface(F);
     double                           fsma    = FiArcSma.FirstParameter();
     double                           lsma    = FiArcSma.LastParameter();
     double                           deltSma = 0.05 * (lsma - fsma);
@@ -623,7 +623,7 @@ bool ChFi3d_Builder::PerformTwoCornerbyInter(const int Index)
     TopoDS_Edge         etest = cpend.Arc();
     if (BRep_Tool::IsClosed(etest, F))
       etest.Reverse();
-    BRepAdaptor_Curve2d arc(etest, F);
+    ::model::adapter::BRepAdaptor_Curve2d arc(etest, F);
     UVi            = arc.Value(cpend.ParameterOnArc());
     Parfin(1)      = UVi.X();
     Parfin(2)      = UVi.Y();

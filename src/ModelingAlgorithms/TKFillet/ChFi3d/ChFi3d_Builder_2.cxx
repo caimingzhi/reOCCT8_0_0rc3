@@ -84,8 +84,8 @@ namespace
     if (compoint1.IsOnArc() && compoint2.IsOnArc())
     {
       gp_Pnt            P1, P2;
-      BRepAdaptor_Curve BCurv1(compoint1.Arc());
-      BRepAdaptor_Curve BCurv2(compoint2.Arc());
+      ::model::adapter::BRepAdaptor_Curve BCurv1(compoint1.Arc());
+      ::model::adapter::BRepAdaptor_Curve BCurv2(compoint2.Arc());
       double            parE1, parE2;
       parE1 = compoint1.ParameterOnArc();
       parE2 = compoint2.ParameterOnArc();
@@ -172,7 +172,7 @@ namespace
   }
 
   static bool BonVoisin(const gp_Pnt&                     Point,
-                        occ::handle<BRepAdaptor_Surface>& HS,
+                        occ::handle<::model::adapter::BRepAdaptor_Surface>& HS,
                         TopoDS_Face&                      F,
                         occ::handle<GeomAdaptor_Surface>& plane,
                         const TopoDS_Edge&                cured,
@@ -185,7 +185,7 @@ namespace
     double                         winter;
     gp_Pnt                         papp = HS->Value(XDep, YDep);
     double                         dist = RealLast();
-    occ::handle<BRepAdaptor_Curve> hc   = new BRepAdaptor_Curve();
+    occ::handle<::model::adapter::BRepAdaptor_Curve> hc   = new ::model::adapter::BRepAdaptor_Curve();
     occ::handle<Geom2d_Curve>      PC;
     bool                           found = false;
 
@@ -322,7 +322,7 @@ namespace
                     gp_Vec&                             ded)
   {
     double                   wtg = CD->InterferenceOnS1().Parameter(isfirst);
-    const BRepAdaptor_Curve& bc  = Spine->CurrentElementarySpine(iedge);
+    const ::model::adapter::BRepAdaptor_Curve& bc  = Spine->CurrentElementarySpine(iedge);
     if (Spine->Edges(iedge).Orientation() == TopAbs_FORWARD)
       bc.D1(wtg + bc.FirstParameter(), ped, ded);
     else
@@ -353,13 +353,13 @@ namespace
         TopExp::Vertices(E, Vf, Vl);
         if (Vf.IsSame(Ve))
         {
-          BRepAdaptor_Curve Cb(E);
+          ::model::adapter::BRepAdaptor_Curve Cb(E);
           Cb.D1(BRep_Tool::Parameter(Ve, E), Point, Vec3d[Trouve]);
           Trouve++;
         }
         else if (Vl.IsSame(Ve))
         {
-          BRepAdaptor_Curve Cb(E);
+          ::model::adapter::BRepAdaptor_Curve Cb(E);
           Cb.D1(BRep_Tool::Parameter(Ve, E), Point, Vec3d[Trouve]);
           Vec3d[Trouve].Reverse();
           Trouve++;
@@ -514,7 +514,7 @@ namespace
 
       gp_Vec            tgarc;
       gp_Pnt            P;
-      BRepAdaptor_Curve AC(Arc);
+      ::model::adapter::BRepAdaptor_Curve AC(Arc);
       AC.D1(Precedant.ParameterOnArc(), P, tgarc);
       tochange = tgarc.IsParallel(Precedant.Vector(), math::precision::Precision::Confusion());
     }
@@ -533,13 +533,13 @@ void ChFi3d_Builder::CallPerformSurf(occ::handle<ChFiDS_Stripe>&                
                                      occ::handle<ChFiDS_SurfData>&                       SD,
                                      const occ::handle<ChFiDS_ElSpine>&                  HGuide,
                                      const occ::handle<ChFiDS_Spine>&                    Spine,
-                                     const occ::handle<BRepAdaptor_Surface>&             HS1,
-                                     const occ::handle<BRepAdaptor_Surface>&             HS3,
+                                     const occ::handle<::model::adapter::BRepAdaptor_Surface>&             HS1,
+                                     const occ::handle<::model::adapter::BRepAdaptor_Surface>&             HS3,
                                      const gp_Pnt2d&                                     pp1,
                                      const gp_Pnt2d&                                     pp3,
                                      const occ::handle<Adaptor3d_TopolTool>&             It1,
-                                     const occ::handle<BRepAdaptor_Surface>&             HS2,
-                                     const occ::handle<BRepAdaptor_Surface>&             HS4,
+                                     const occ::handle<::model::adapter::BRepAdaptor_Surface>&             HS2,
+                                     const occ::handle<::model::adapter::BRepAdaptor_Surface>&             HS4,
                                      const gp_Pnt2d&                                     pp2,
                                      const gp_Pnt2d&                                     pp4,
                                      const occ::handle<Adaptor3d_TopolTool>&             It2,
@@ -556,10 +556,10 @@ void ChFi3d_Builder::CallPerformSurf(occ::handle<ChFiDS_Stripe>&                
                                      math_Vector&                      Soldep,
                                      int&                              intf,
                                      int&                              intl,
-                                     occ::handle<BRepAdaptor_Surface>& Surf1,
-                                     occ::handle<BRepAdaptor_Surface>& Surf2)
+                                     occ::handle<::model::adapter::BRepAdaptor_Surface>& Surf1,
+                                     occ::handle<::model::adapter::BRepAdaptor_Surface>& Surf2)
 {
-  occ::handle<BRepAdaptor_Surface> HSon1, HSon2;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HSon1, HSon2;
   HSon1 = HS1;
   HSon2 = HS2;
 
@@ -717,7 +717,7 @@ bool ChFi3d_Builder::StripeOrientations(const occ::handle<ChFiDS_Spine>& Spine,
                                         int&                             ChoixConge) const
 {
 
-  BRepAdaptor_Surface Sb1, Sb2;
+  ::model::adapter::BRepAdaptor_Surface Sb1, Sb2;
   TopAbs_Orientation  Of1, Of2;
   TopoDS_Face         ff1, ff2;
   TopoDS_Edge         anEdge    = Spine->Edges(1);
@@ -744,15 +744,15 @@ bool ChFi3d_Builder::StripeOrientations(const occ::handle<ChFiDS_Spine>& Spine,
 
 void ChFi3d_Builder::ConexFaces(const occ::handle<ChFiDS_Spine>&  Spine,
                                 const int                         IEdge,
-                                occ::handle<BRepAdaptor_Surface>& HS1,
-                                occ::handle<BRepAdaptor_Surface>& HS2) const
+                                occ::handle<::model::adapter::BRepAdaptor_Surface>& HS1,
+                                occ::handle<::model::adapter::BRepAdaptor_Surface>& HS2) const
 {
   if (HS1.IsNull())
-    HS1 = new BRepAdaptor_Surface();
+    HS1 = new ::model::adapter::BRepAdaptor_Surface();
   if (HS2.IsNull())
-    HS2 = new BRepAdaptor_Surface();
-  BRepAdaptor_Surface& Sb1 = *HS1;
-  BRepAdaptor_Surface& Sb2 = *HS2;
+    HS2 = new ::model::adapter::BRepAdaptor_Surface();
+  ::model::adapter::BRepAdaptor_Surface& Sb1 = *HS1;
+  ::model::adapter::BRepAdaptor_Surface& Sb2 = *HS2;
 
   TopoDS_Face ff1, ff2;
   TopoDS_Edge anEdge = Spine->Edges(IEdge);
@@ -772,8 +772,8 @@ void ChFi3d_Builder::ConexFaces(const occ::handle<ChFiDS_Spine>&  Spine,
 
 void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
                               const occ::handle<ChFiDS_ElSpine>&     HGuide,
-                              occ::handle<BRepAdaptor_Surface>&      HS1,
-                              occ::handle<BRepAdaptor_Surface>&      HS2,
+                              occ::handle<::model::adapter::BRepAdaptor_Surface>&      HS1,
+                              occ::handle<::model::adapter::BRepAdaptor_Surface>&      HS2,
                               occ::handle<BRepTopAdaptor_TopolTool>& I1,
                               occ::handle<BRepTopAdaptor_TopolTool>& I2,
                               gp_Pnt2d&                              P1,
@@ -791,7 +791,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
   double wl = 0.9973 * Spine->LastParameter(nbed) + 0.0027 * Spine->FirstParameter(nbed);
 
   double              TolE = 1.0e-7;
-  BRepAdaptor_Surface AS;
+  ::model::adapter::BRepAdaptor_Surface AS;
 
   int                       nbessai;
   int                       iedge = 0;
@@ -872,7 +872,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
     SolDep(2)                    = P1.Y();
     SolDep(3)                    = P2.X();
     SolDep(4)                    = P2.Y();
-    const BRepAdaptor_Curve& Ced = Spine->CurrentElementarySpine(iedge);
+    const ::model::adapter::BRepAdaptor_Curve& Ced = Spine->CurrentElementarySpine(iedge);
     gp_Pnt                   pnt = Ced.Value(woned);
 
     if (Projection(PExt, pnt, els, w, tolapp3d)
@@ -916,7 +916,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
     SolDep(2)                    = P1.Y();
     SolDep(3)                    = P2.X();
     SolDep(4)                    = P2.Y();
-    const BRepAdaptor_Curve& Ced = Spine->CurrentElementarySpine(iedge);
+    const ::model::adapter::BRepAdaptor_Curve& Ced = Spine->CurrentElementarySpine(iedge);
     gp_Pnt                   pnt = Ced.Value(woned);
 
     if (Projection(PExt, pnt, els, w, tolapp3d))
@@ -973,7 +973,7 @@ void ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Stripe>&      Stripe,
 }
 
 static void ChFi3d_BuildPlane(TopOpeBRepDS_DataStructure&         DStr,
-                              occ::handle<BRepAdaptor_Surface>&   HS,
+                              occ::handle<::model::adapter::BRepAdaptor_Surface>&   HS,
                               gp_Pnt2d&                           pons,
                               const occ::handle<ChFiDS_SurfData>& SD,
                               const bool                          isfirst,
@@ -1006,20 +1006,20 @@ static void ChFi3d_BuildPlane(TopOpeBRepDS_DataStructure&         DStr,
 }
 
 bool ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Spine>&    Spine,
-                              occ::handle<BRepAdaptor_Surface>&   HS,
+                              occ::handle<::model::adapter::BRepAdaptor_Surface>&   HS,
                               gp_Pnt2d&                           pons,
-                              occ::handle<BRepAdaptor_Curve2d>&   HC,
+                              occ::handle<::model::adapter::BRepAdaptor_Curve2d>&   HC,
                               double&                             W,
                               const occ::handle<ChFiDS_SurfData>& SD,
                               const bool                          isfirst,
                               const int                           ons,
-                              occ::handle<BRepAdaptor_Surface>&   HSref,
-                              occ::handle<BRepAdaptor_Curve2d>&   HCref,
+                              occ::handle<::model::adapter::BRepAdaptor_Surface>&   HSref,
+                              occ::handle<::model::adapter::BRepAdaptor_Curve2d>&   HCref,
                               bool&                               RecP,
                               bool&                               RecS,
                               bool&                               RecRst,
                               bool&                               c1obstacle,
-                              occ::handle<BRepAdaptor_Surface>&   HSBis,
+                              occ::handle<::model::adapter::BRepAdaptor_Surface>&   HSBis,
                               gp_Pnt2d&                           PBis,
                               const bool                          decroch,
                               const TopoDS_Vertex&                Vref) const
@@ -1237,7 +1237,7 @@ bool ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Spine>&    Spine,
         HS->Initialize(Fv);
         if (Nb >= 2)
         {
-          HSBis = new BRepAdaptor_Surface(aux);
+          HSBis = new ::model::adapter::BRepAdaptor_Surface(aux);
           PBis  = BRep_Tool::Parameters(aCommonPoint.Vertex(), aux);
         }
         return true;
@@ -1259,7 +1259,7 @@ bool ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Spine>&    Spine,
         if (isTangentToArc(aCommonPoint, 0.1))
         {
           aPCurve = getCurveOnSurface(aCommonPoint.Arc(), F);
-          HSBis   = new BRepAdaptor_Surface(F);
+          HSBis   = new ::model::adapter::BRepAdaptor_Surface(F);
           PBis    = aPCurve->Value(aCommonPoint.ParameterOnArc());
         }
 
@@ -1294,7 +1294,7 @@ bool ChFi3d_Builder::StartSol(const occ::handle<ChFiDS_Spine>&    Spine,
         HS->Initialize(Fv);
         HSref->Initialize(F);
         W  = aCommonPoint.ParameterOnArc();
-        HC = new BRepAdaptor_Curve2d();
+        HC = new ::model::adapter::BRepAdaptor_Curve2d();
         TopoDS_Edge newedge;
         TopoDS_Face newface = Fv;
         newface.Orientation(TopAbs_FORWARD);
@@ -1983,14 +1983,14 @@ void ChFi3d_Builder::PerformSetOfSurfOnElSpine(const occ::handle<ChFiDS_ElSpine>
   occ::handle<ChFiDS_SurfData> raf = Guide.Next();
   RemoveSD(Stripe, ref, raf);
 
-  occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HS2 = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HS3, HS4;
-  occ::handle<BRepAdaptor_Surface> HSref1 = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Surface> HSref2 = new BRepAdaptor_Surface();
-  occ::handle<BRepAdaptor_Curve2d> HC1, HC2;
-  occ::handle<BRepAdaptor_Curve2d> HCref1   = new BRepAdaptor_Curve2d();
-  occ::handle<BRepAdaptor_Curve2d> HCref2   = new BRepAdaptor_Curve2d();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS1 = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS2 = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS3, HS4;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HSref1 = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HSref2 = new ::model::adapter::BRepAdaptor_Surface();
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> HC1, HC2;
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> HCref1   = new ::model::adapter::BRepAdaptor_Curve2d();
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d> HCref2   = new ::model::adapter::BRepAdaptor_Curve2d();
   bool                             decroch1 = false, decroch2 = false;
   bool        RecP1 = false, RecS1 = false, RecRst1 = false, obstacleon1 = false;
   bool        RecP2 = false, RecS2 = false, RecRst2 = false, obstacleon2 = false;
@@ -2651,7 +2651,7 @@ void ChFi3d_Builder::PerformSetOfKPart(occ::handle<ChFiDS_Stripe>& Stripe, const
 {
   TopOpeBRepDS_DataStructure&      DStr  = myDS->ChangeDS();
   occ::handle<ChFiDS_Spine>&       Spine = Stripe->ChangeSpine();
-  occ::handle<BRepAdaptor_Surface> HS1, HS2;
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS1, HS2;
   TopAbs_Orientation               Or1, Or2, RefOr1, RefOr2;
   int                              RefChoix;
 
@@ -3006,10 +3006,10 @@ void ChFi3d_Builder::PerformSetOfKGen(occ::handle<ChFiDS_Stripe>& Stripe, const 
 
       occ::handle<Geom2d_Curve>        PC1 = intf1.PCurveOnFace();
       occ::handle<Geom2d_Curve>        PC2 = intf2.PCurveOnFace();
-      occ::handle<BRepAdaptor_Surface> S1  = new BRepAdaptor_Surface();
+      occ::handle<::model::adapter::BRepAdaptor_Surface> S1  = new ::model::adapter::BRepAdaptor_Surface();
       TopoDS_Face                      F1  = TopoDS::Face(DStr.Shape(cursurf1));
       S1->Initialize(F1);
-      occ::handle<BRepAdaptor_Surface> S2 = new BRepAdaptor_Surface();
+      occ::handle<::model::adapter::BRepAdaptor_Surface> S2 = new ::model::adapter::BRepAdaptor_Surface();
       TopoDS_Face                      F2 = TopoDS::Face(DStr.Shape(cursurf2));
       S2->Initialize(F2);
       occ::handle<GeomFill_Boundary> Bdeb, Bfin, Bon1, Bon2;

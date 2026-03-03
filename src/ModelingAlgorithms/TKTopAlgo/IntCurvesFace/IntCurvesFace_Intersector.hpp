@@ -77,7 +77,7 @@ private:
                                     const double                  psup);
 
   occ::handle<BRepTopAdaptor_TopolTool>                   myTopolTool;
-  occ::handle<BRepAdaptor_Surface>                        Hsurface;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>                        Hsurface;
   double                                                  Tol;
   NCollection_Sequence<IntCurveSurface_IntersectionPoint> SeqPnt;
   NCollection_Sequence<int>                               mySeqState;

@@ -15,11 +15,11 @@ BRepExtrema_ExtFF::BRepExtrema_ExtFF(const TopoDS_Face& F1, const TopoDS_Face& F
 
 void BRepExtrema_ExtFF::Initialize(const TopoDS_Face& F2)
 {
-  BRepAdaptor_Surface Surf(F2);
+  ::model::adapter::BRepAdaptor_Surface Surf(F2);
   if (Surf.GetType() == GeomAbs_OtherSurface)
     return;
 
-  myHS       = new BRepAdaptor_Surface(Surf);
+  myHS       = new ::model::adapter::BRepAdaptor_Surface(Surf);
   double Tol = std::min(BRep_Tool::Tolerance(F2), math::precision::Precision::Confusion());
   Tol        = std::min(Surf.UResolution(Tol), Surf.VResolution(Tol));
   Tol        = std::max(Tol, math::precision::Precision::PConfusion());
@@ -34,11 +34,11 @@ void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
   myPointsOnS1.Clear();
   myPointsOnS2.Clear();
 
-  BRepAdaptor_Surface Surf1(F1);
+  ::model::adapter::BRepAdaptor_Surface Surf1(F1);
   if (myHS.IsNull() || Surf1.GetType() == GeomAbs_OtherSurface)
     return;
 
-  occ::handle<BRepAdaptor_Surface> HS1 = new BRepAdaptor_Surface(Surf1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS1 = new ::model::adapter::BRepAdaptor_Surface(Surf1);
   double Tol1                          = std::min(BRep_Tool::Tolerance(F1), math::precision::Precision::Confusion());
   Tol1                                 = std::min(Surf1.UResolution(Tol1), Surf1.VResolution(Tol1));
   Tol1                                 = std::max(Tol1, math::precision::Precision::PConfusion());

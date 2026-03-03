@@ -396,7 +396,7 @@ void BRepSweep_Rotation::SetGeneratingPCurve(const TopoDS_Shape& aNewFace,
   else if (AS.GetType() == GeomAbs_Torus)
   {
     gp_Torus          tor = AS.Torus();
-    BRepAdaptor_Curve BC(TopoDS::Edge(aNewEdge));
+    ::model::adapter::BRepAdaptor_Curve BC(TopoDS::Edge(aNewEdge));
     double            U = BC.FirstParameter();
     point               = BC.Value(U);
     if (point.Distance(tor.Location()) < math::precision::Precision::Confusion())
@@ -431,7 +431,7 @@ void BRepSweep_Rotation::SetGeneratingPCurve(const TopoDS_Shape& aNewFace,
   else if (AS.GetType() == GeomAbs_Sphere)
   {
     gp_Sphere         sph = AS.Sphere();
-    BRepAdaptor_Curve BC(TopoDS::Edge(aNewEdge));
+    ::model::adapter::BRepAdaptor_Curve BC(TopoDS::Edge(aNewEdge));
     double            U = BC.FirstParameter();
     point               = BC.Value(U);
     ElSLib::SphereParameters(sph.Position(), sph.Radius(), point, u, v);
@@ -514,7 +514,7 @@ void BRepSweep_Rotation::SetDirectingPCurve(const TopoDS_Shape& aNewFace,
       gp_Pnt            p1;
       double            u1, u2, v1, v2;
       gp_Torus          tor = AS.Torus();
-      BRepAdaptor_Curve BC(TopoDS::Edge(aGenE));
+      ::model::adapter::BRepAdaptor_Curve BC(TopoDS::Edge(aGenE));
       p1 = BC.Value(BC.FirstParameter());
       if (p1.Distance(tor.Location()) < math::precision::Precision::Confusion())
       {
@@ -575,7 +575,7 @@ TopAbs_Orientation BRepSweep_Rotation::DirectSolid(const TopoDS_Shape& aGenS, co
   TopAbs_Orientation  aOr;
   gp_Pnt              aP;
   gp_Vec              du, dv;
-  BRepAdaptor_Surface surf(TopoDS::Face(aGenS));
+  ::model::adapter::BRepAdaptor_Surface surf(TopoDS::Face(aGenS));
 
   aTol2 = math::precision::Precision::Confusion();
   aTol2 = aTol2 * aTol2;
@@ -745,7 +745,7 @@ bool BRepSweep_Rotation::IsInvariant(const TopoDS_Shape& aGenS) const
 {
   if (aGenS.ShapeType() == TopAbs_EDGE)
   {
-    BRepAdaptor_Curve aC(TopoDS::Edge(aGenS));
+    ::model::adapter::BRepAdaptor_Curve aC(TopoDS::Edge(aGenS));
     if (aC.GetType() == GeomAbs_Line || aC.GetType() == GeomAbs_BSplineCurve
         || aC.GetType() == GeomAbs_BezierCurve)
     {

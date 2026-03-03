@@ -43,36 +43,36 @@ Standard_EXPORT int  FUN_tool_getindex(const Extrema_ExtPC& ponc);
 Standard_EXPORT int  FUN_tool_getindex(const Extrema_ExtPC2d& ponc);
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
                                        const double             tole,
-                                       const BRepAdaptor_Curve& BAC,
+                                       const ::model::adapter::BRepAdaptor_Curve& BAC,
                                        const double             pmin,
                                        const double             pmax,
                                        double&                  param,
                                        double&                  dist);
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
-                                       const BRepAdaptor_Curve& BAC,
+                                       const ::model::adapter::BRepAdaptor_Curve& BAC,
                                        const double             pmin,
                                        const double             pmax,
                                        double&                  param,
                                        double&                  dist);
 Standard_EXPORT bool FUN_tool_projPonC(const gp_Pnt&            P,
-                                       const BRepAdaptor_Curve& BAC,
+                                       const ::model::adapter::BRepAdaptor_Curve& BAC,
                                        double&                  param,
                                        double&                  dist);
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
                                          const double               tole,
-                                         const BRepAdaptor_Curve2d& BAC2D,
+                                         const ::model::adapter::BRepAdaptor_Curve2d& BAC2D,
                                          const double               pmin,
                                          const double               pmax,
                                          double&                    param,
                                          double&                    dist);
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
-                                         const BRepAdaptor_Curve2d& BAC2D,
+                                         const ::model::adapter::BRepAdaptor_Curve2d& BAC2D,
                                          const double               pmin,
                                          const double               pmax,
                                          double&                    param,
                                          double&                    dist);
 Standard_EXPORT bool FUN_tool_projPonC2D(const gp_Pnt&              P,
-                                         const BRepAdaptor_Curve2d& BAC2D,
+                                         const ::model::adapter::BRepAdaptor_Curve2d& BAC2D,
                                          double&                    param,
                                          double&                    dist);
 Standard_EXPORT bool FUN_tool_projPonS(const gp_Pnt&                    P,

@@ -36,14 +36,14 @@
 Standard_EXPORT void FUN_tool_tolUV(const TopoDS_Face& F, double& tolu, double& tolv)
 {
   double              tolF = BRep_Tool::Tolerance(TopoDS::Face(F));
-  BRepAdaptor_Surface BS(TopoDS::Face(F));
+  ::model::adapter::BRepAdaptor_Surface BS(TopoDS::Face(F));
   tolu = BS.UResolution(tolF);
   tolv = BS.VResolution(tolF);
 }
 
 Standard_EXPORT bool FUN_tool_direct(const TopoDS_Face& F, bool& direct)
 {
-  BRepAdaptor_Surface BS(TopoDS::Face(F));
+  ::model::adapter::BRepAdaptor_Surface BS(TopoDS::Face(F));
   GeomAbs_SurfaceType ST    = BS.GetType();
   bool                plane = (ST == GeomAbs_Plane);
   bool                cyl   = (ST == GeomAbs_Cylinder);
@@ -217,7 +217,7 @@ Standard_EXPORT bool FUN_tool_outbounds(const TopoDS_Shape& Sh,
 }
 
 Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt&            P,
-                                   const BRepAdaptor_Curve& BAC,
+                                   const ::model::adapter::BRepAdaptor_Curve& BAC,
                                    const double             pmin,
                                    const double             pmax,
                                    const double             tol)
@@ -238,7 +238,7 @@ Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt&            P,
   return PinC;
 }
 
-Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt& P, const BRepAdaptor_Curve& BAC, const double tol)
+Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt& P, const ::model::adapter::BRepAdaptor_Curve& BAC, const double tol)
 {
 
   bool   PinC = false;
@@ -250,7 +250,7 @@ Standard_EXPORT bool FUN_tool_PinC(const gp_Pnt& P, const BRepAdaptor_Curve& BAC
 
 Standard_EXPORT bool FUN_tool_value(const double par, const TopoDS_Edge& E, gp_Pnt& P)
 {
-  BRepAdaptor_Curve BAC(E);
+  ::model::adapter::BRepAdaptor_Curve BAC(E);
   double            f  = BAC.FirstParameter();
   double            l  = BAC.LastParameter();
   bool              ok = (f <= par) && (par <= l);
@@ -262,7 +262,7 @@ Standard_EXPORT bool FUN_tool_value(const double par, const TopoDS_Edge& E, gp_P
 
 Standard_EXPORT bool FUN_tool_value(const gp_Pnt2d& UV, const TopoDS_Face& F, gp_Pnt& P)
 {
-  BRepAdaptor_Surface BS(F);
+  ::model::adapter::BRepAdaptor_Surface BS(F);
   P = BS.Value(UV.X(), UV.Y());
   return true;
 }
@@ -273,7 +273,7 @@ Standard_EXPORT TopAbs_State FUN_tool_staPinE(const gp_Pnt&      P,
 {
 
   TopAbs_State      sta = TopAbs_UNKNOWN;
-  BRepAdaptor_Curve BAC(E);
+  ::model::adapter::BRepAdaptor_Curve BAC(E);
   Extrema_ExtPC     ProjonBAC(P, BAC);
   if (ProjonBAC.IsDone() && ProjonBAC.NbExt() > 0)
   {
@@ -390,7 +390,7 @@ Standard_EXPORT bool FUN_tool_nggeomF(const double&      paronE,
   }
   if (project)
   {
-    BRepAdaptor_Curve BC(E);
+    ::model::adapter::BRepAdaptor_Curve BC(E);
     gp_Pnt            p3d = BC.Value(paronE);
     double            d;
     bool              ok = FUN_tool_projPonF(p3d, F, p2d, d);
@@ -523,14 +523,14 @@ Standard_EXPORT bool FUN_tool_EitangenttoFe(const gp_Dir&      ngFe,
 
 Standard_EXPORT GeomAbs_CurveType FUN_tool_typ(const TopoDS_Edge& E)
 {
-  BRepAdaptor_Curve BC(E);
+  ::model::adapter::BRepAdaptor_Curve BC(E);
   GeomAbs_CurveType typ = BC.GetType();
   return typ;
 }
 
 Standard_EXPORT bool FUN_tool_line(const TopoDS_Edge& E)
 {
-  BRepAdaptor_Curve BC(E);
+  ::model::adapter::BRepAdaptor_Curve BC(E);
   bool              line = (BC.GetType() == GeomAbs_Line);
   return line;
 }
@@ -612,7 +612,7 @@ Standard_EXPORT void FUN_tool_mkBnd2d(const TopoDS_Shape& W, const TopoDS_Shape&
       BRep_Builder BB;
       BB.UpdateEdge(E, pc, F, newtol);
     }
-    BRepAdaptor_Curve2d BC2d(E, F);
+    ::model::adapter::BRepAdaptor_Curve2d BC2d(E, F);
     BndLib_Add2dCurve::Add(BC2d, tol, newB2d);
   }
 
@@ -718,7 +718,7 @@ Standard_EXPORT bool FUN_tool_parVonE(const TopoDS_Vertex& v, const TopoDS_Edge&
       }
     }
 
-    BRepAdaptor_Curve BAC(E);
+    ::model::adapter::BRepAdaptor_Curve BAC(E);
     Extrema_ExtPC     pro(pt, BAC);
     bool              done = pro.IsDone() && (pro.NbExt() > 0);
     if (!done)
@@ -822,7 +822,7 @@ Standard_EXPORT bool FUN_tool_paronEF(const TopoDS_Edge& E,
   return ok;
 }
 
-Standard_EXPORT gp_Dir FUN_tool_dirC(const double par, const BRepAdaptor_Curve& BAC)
+Standard_EXPORT gp_Dir FUN_tool_dirC(const double par, const ::model::adapter::BRepAdaptor_Curve& BAC)
 {
   gp_Pnt p;
   gp_Vec tgE;
@@ -840,7 +840,7 @@ Standard_EXPORT gp_Vec FUN_tool_tggeomE(const double paronE, const TopoDS_Edge& 
   return dirE;
 }
 
-Standard_EXPORT bool FUN_tool_line(const BRepAdaptor_Curve& BAC)
+Standard_EXPORT bool FUN_tool_line(const ::model::adapter::BRepAdaptor_Curve& BAC)
 {
   bool line = (BAC.GetType() == GeomAbs_Line);
   return line;
@@ -848,13 +848,13 @@ Standard_EXPORT bool FUN_tool_line(const BRepAdaptor_Curve& BAC)
 
 Standard_EXPORT bool FUN_tool_quad(const TopoDS_Edge& E)
 {
-  BRepAdaptor_Curve BC(E);
+  ::model::adapter::BRepAdaptor_Curve BC(E);
   GeomAbs_CurveType CT   = BC.GetType();
   bool              quad = FUN_quadCT(CT);
   return quad;
 }
 
-Standard_EXPORT bool FUN_tool_quad(const BRepAdaptor_Curve& BAC)
+Standard_EXPORT bool FUN_tool_quad(const ::model::adapter::BRepAdaptor_Curve& BAC)
 {
   GeomAbs_CurveType CT     = BAC.GetType();
   bool              isquad = false;
@@ -878,14 +878,14 @@ Standard_EXPORT bool FUN_tool_quad(const TopoDS_Face& F)
   return quad;
 }
 
-Standard_EXPORT bool FUN_tool_findPinBAC(const BRepAdaptor_Curve& BAC, gp_Pnt& P, double& par)
+Standard_EXPORT bool FUN_tool_findPinBAC(const ::model::adapter::BRepAdaptor_Curve& BAC, gp_Pnt& P, double& par)
 {
   FUN_tool_findparinBAC(BAC, par);
   BAC.D0(par, P);
   return true;
 }
 
-Standard_EXPORT bool FUN_tool_findparinBAC(const BRepAdaptor_Curve& BAC, double& par)
+Standard_EXPORT bool FUN_tool_findparinBAC(const ::model::adapter::BRepAdaptor_Curve& BAC, double& par)
 {
   double fE = BAC.FirstParameter(), lE = BAC.LastParameter();
   double t = 0.34567237;
@@ -895,14 +895,14 @@ Standard_EXPORT bool FUN_tool_findparinBAC(const BRepAdaptor_Curve& BAC, double&
 
 Standard_EXPORT bool FUN_tool_findparinE(const TopoDS_Shape& E, double& par)
 {
-  BRepAdaptor_Curve BAC(TopoDS::Edge(E));
+  ::model::adapter::BRepAdaptor_Curve BAC(TopoDS::Edge(E));
   bool              r = FUN_tool_findparinBAC(BAC, par);
   return r;
 }
 
 Standard_EXPORT bool FUN_tool_findPinE(const TopoDS_Shape& E, gp_Pnt& P, double& par)
 {
-  BRepAdaptor_Curve BAC(TopoDS::Edge(E));
+  ::model::adapter::BRepAdaptor_Curve BAC(TopoDS::Edge(E));
   bool              r = FUN_tool_findPinBAC(BAC, P, par);
   return r;
 }
@@ -1150,8 +1150,8 @@ Standard_EXPORT bool FUN_tool_curvesSO(const TopoDS_Edge& E1,
                                        const double       p2,
                                        bool&              so)
 {
-  BRepAdaptor_Curve BAC1(E1);
-  BRepAdaptor_Curve BAC2(E2);
+  ::model::adapter::BRepAdaptor_Curve BAC1(E1);
+  ::model::adapter::BRepAdaptor_Curve BAC2(E2);
   gp_Vec            tg1;
   bool              ok = TopOpeBRepTool_TOOL::TggeomE(p1, E1, tg1);
   if (!ok)

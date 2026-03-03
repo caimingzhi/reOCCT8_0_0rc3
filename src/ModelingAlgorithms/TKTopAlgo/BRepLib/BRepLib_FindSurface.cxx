@@ -169,7 +169,7 @@ namespace
     theParams.Append(theParMax);
   }
 
-  static void fillPoints(const BRepAdaptor_Curve&          theCurve,
+  static void fillPoints(const ::model::adapter::BRepAdaptor_Curve&          theCurve,
                          const NCollection_Vector<double>& theParams,
                          NCollection_Sequence<gp_Pnt>&     thePoints,
                          NCollection_Sequence<double>&     theWeights)
@@ -289,7 +289,7 @@ void BRepLib_FindSurface::Init(const TopoDS_Shape& S,
 
   for (ex.Init(S, TopAbs_EDGE); ex.More(); ex.Next())
   {
-    BRepAdaptor_Curve c(TopoDS::Edge(ex.Current()));
+    ::model::adapter::BRepAdaptor_Curve c(TopoDS::Edge(ex.Current()));
 
     double dfUf = c.FirstParameter();
     double dfUl = c.LastParameter();

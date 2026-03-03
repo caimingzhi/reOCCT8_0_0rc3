@@ -23,7 +23,10 @@ class IntPatch_ALine;
 class IntPatch_RLine;
 class IntPatch_WLine;
 class IntPatch_GLine;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class TopOpeBRep_VPointInter;
 class Geom_Curve;
 class TCollection_AsciiString;
@@ -37,8 +40,8 @@ public:
   TopOpeBRep_LineInter();
 
   Standard_EXPORT void SetLine(const occ::handle<IntPatch_Line>& L,
-                               const BRepAdaptor_Surface&        S1,
-                               const BRepAdaptor_Surface&        S2);
+                               const ::model::adapter::BRepAdaptor_Surface&        S1,
+                               const ::model::adapter::BRepAdaptor_Surface&        S2);
 
   void SetFaces(const TopoDS_Face& F1, const TopoDS_Face& F2);
 

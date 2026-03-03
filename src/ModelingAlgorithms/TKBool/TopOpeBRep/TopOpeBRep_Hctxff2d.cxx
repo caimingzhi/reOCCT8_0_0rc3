@@ -30,20 +30,20 @@ void TopOpeBRep_Hctxff2d::SetFaces(const TopoDS_Face& F1, const TopoDS_Face& F2)
   if (newf1)
   {
     if (mySurface1.IsNull())
-      mySurface1 = new BRepAdaptor_Surface();
+      mySurface1 = new ::model::adapter::BRepAdaptor_Surface();
     mySurface1->Initialize(F1, computerestriction);
   }
   if (newf2)
   {
     if (mySurface2.IsNull())
-      mySurface2 = new BRepAdaptor_Surface();
+      mySurface2 = new ::model::adapter::BRepAdaptor_Surface();
     mySurface2->Initialize(F2, computerestriction);
   }
   SetHSurfacesPrivate();
 }
 
-void TopOpeBRep_Hctxff2d::SetHSurfaces(const occ::handle<BRepAdaptor_Surface>& HS1,
-                                       const occ::handle<BRepAdaptor_Surface>& HS2)
+void TopOpeBRep_Hctxff2d::SetHSurfaces(const occ::handle<::model::adapter::BRepAdaptor_Surface>& HS1,
+                                       const occ::handle<::model::adapter::BRepAdaptor_Surface>& HS2)
 {
   bool newf1 = false;
   bool newf2 = false;
@@ -62,11 +62,11 @@ void TopOpeBRep_Hctxff2d::SetHSurfaces(const occ::handle<BRepAdaptor_Surface>& H
 
 void TopOpeBRep_Hctxff2d::SetHSurfacesPrivate()
 {
-  BRepAdaptor_Surface& S1 = *mySurface1;
+  ::model::adapter::BRepAdaptor_Surface& S1 = *mySurface1;
   myFace1                 = S1.Face();
   mySurfaceType1          = S1.GetType();
 
-  BRepAdaptor_Surface& S2 = *mySurface2;
+  ::model::adapter::BRepAdaptor_Surface& S2 = *mySurface2;
   myFace2                 = S2.Face();
   mySurfaceType2          = S2.GetType();
 
@@ -141,7 +141,7 @@ const TopoDS_Face& TopOpeBRep_Hctxff2d::Face(const int Index) const
     throw Standard_Failure("TopOpeBRep_Hctxff2d::Face");
 }
 
-occ::handle<BRepAdaptor_Surface> TopOpeBRep_Hctxff2d::HSurface(const int Index) const
+occ::handle<::model::adapter::BRepAdaptor_Surface> TopOpeBRep_Hctxff2d::HSurface(const int Index) const
 {
   if (Index == 1)
     return mySurface1;

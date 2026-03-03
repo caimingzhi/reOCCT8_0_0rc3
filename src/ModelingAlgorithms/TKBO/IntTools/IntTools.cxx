@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-int IntTools::GetRadius(const BRepAdaptor_Curve& C, const double t1, const double t3, double& aR)
+int IntTools::GetRadius(const ::model::adapter::BRepAdaptor_Curve& C, const double t1, const double t3, double& aR)
 {
   GeomAbs_CurveType aType = C.GetType();
   if (aType == GeomAbs_Line)
@@ -62,7 +62,7 @@ int IntTools::GetRadius(const BRepAdaptor_Curve& C, const double t1, const doubl
   return 0;
 }
 
-int IntTools::PrepareArgs(BRepAdaptor_Curve&          C,
+int IntTools::PrepareArgs(::model::adapter::BRepAdaptor_Curve&          C,
                           const double                Tmax,
                           const double                Tmin,
                           const int                   Discret,

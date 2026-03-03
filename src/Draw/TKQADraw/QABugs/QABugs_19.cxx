@@ -3177,16 +3177,16 @@ int OCC26525(Draw_Interpretor& di, int n, const char** a)
   int                               i, aNbPoints;
   double                            aU, aV, aT;
   gp_Pnt                            aP;
-  BRepAdaptor_Curve                 aBAC;
-  BRepAdaptor_Surface               aBAS;
+  ::model::adapter::BRepAdaptor_Curve                 aBAC;
+  ::model::adapter::BRepAdaptor_Surface               aBAS;
   IntCurveSurface_TransitionOnCurve aTC;
   IntCurveSurface_HInter            aHInter;
 
   aBAC.Initialize(aE);
   aBAS.Initialize(aF);
 
-  occ::handle<BRepAdaptor_Curve>   aHBAC = new BRepAdaptor_Curve(aBAC);
-  occ::handle<BRepAdaptor_Surface> aHBAS = new BRepAdaptor_Surface(aBAS);
+  occ::handle<::model::adapter::BRepAdaptor_Curve>   aHBAC = new ::model::adapter::BRepAdaptor_Curve(aBAC);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> aHBAS = new ::model::adapter::BRepAdaptor_Surface(aBAS);
 
   aHInter.Perform(aHBAC, aHBAS);
   bIsDone = aHInter.IsDone();

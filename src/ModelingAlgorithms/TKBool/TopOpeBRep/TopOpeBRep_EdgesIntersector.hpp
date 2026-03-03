@@ -15,7 +15,10 @@
 #include <TopOpeBRepDS_Config.hpp>
 
 class Bnd_Box;
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class TCollection_AsciiString;
 class TopOpeBRep_Point2d;
 class IntRes2d_IntersectionSegment;
@@ -61,7 +64,7 @@ public:
 
   Standard_EXPORT const TopoDS_Shape& Face(const int Index) const;
 
-  Standard_EXPORT const BRepAdaptor_Surface& Surface(const int Index) const;
+  Standard_EXPORT const ::model::adapter::BRepAdaptor_Surface& Surface(const int Index) const;
 
   Standard_EXPORT bool SurfacesSameOriented() const;
 
@@ -139,8 +142,8 @@ private:
 
   TopoDS_Face                                        myFace1;
   TopoDS_Face                                        myFace2;
-  occ::handle<BRepAdaptor_Surface>                   mySurface1;
-  occ::handle<BRepAdaptor_Surface>                   mySurface2;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>                   mySurface1;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>                   mySurface2;
   GeomAbs_SurfaceType                                mySurfaceType1;
   GeomAbs_SurfaceType                                mySurfaceType2;
   bool                                               mySurfacesSameOriented;

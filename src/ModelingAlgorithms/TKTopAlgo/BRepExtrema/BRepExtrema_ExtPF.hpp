@@ -46,5 +46,5 @@ private:
   Extrema_ExtPS                         myExtPS;
   NCollection_Sequence<double>          mySqDist;
   NCollection_Sequence<Extrema_POnSurf> myPoints;
-  BRepAdaptor_Surface                   mySurf;
+  ::model::adapter::BRepAdaptor_Surface                   mySurf;
 };

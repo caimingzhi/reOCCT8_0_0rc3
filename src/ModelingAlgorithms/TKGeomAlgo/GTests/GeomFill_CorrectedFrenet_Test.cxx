@@ -132,7 +132,7 @@ TEST(GeomFill_CorrectedFrenet, ActualReproducerCase)
     anExtend.Add(anEdge);
   }
 
-  BRepAdaptor_CompCurve anAdaptor(anExtend.WireAPIMake());
+  ::model::adapter::BRepAdaptor_CompCurve anAdaptor(anExtend.WireAPIMake());
 
   GeomFill_CorrectedFrenet aCorrectedFrenet(false);
 

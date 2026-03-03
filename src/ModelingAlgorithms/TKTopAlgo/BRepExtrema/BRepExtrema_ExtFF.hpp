@@ -48,5 +48,5 @@ private:
   NCollection_Sequence<double>          mySqDist;
   NCollection_Sequence<Extrema_POnSurf> myPointsOnS1;
   NCollection_Sequence<Extrema_POnSurf> myPointsOnS2;
-  occ::handle<BRepAdaptor_Surface>      myHS;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>      myHS;
 };

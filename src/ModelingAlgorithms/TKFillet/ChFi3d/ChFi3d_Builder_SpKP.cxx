@@ -140,7 +140,7 @@ static bool AdjustParam(const HatchGen_Domain& Dom,
   return false;
 }
 
-static double ComputeAbscissa(const BRepAdaptor_Curve& C, const double U)
+static double ComputeAbscissa(const ::model::adapter::BRepAdaptor_Curve& C, const double U)
 {
   switch (C.GetType())
   {
@@ -211,8 +211,8 @@ static double ParamOnSpine(const TopOpeBRepDS_DataStructure&   DStr,
       pok = true;
       return Nl;
     }
-    occ::handle<BRepAdaptor_Curve> HE = new BRepAdaptor_Curve();
-    BRepAdaptor_Curve&             CE = *HE;
+    occ::handle<::model::adapter::BRepAdaptor_Curve> HE = new ::model::adapter::BRepAdaptor_Curve();
+    ::model::adapter::BRepAdaptor_Curve&             CE = *HE;
 
     while (!found && !fini)
     {
@@ -297,7 +297,7 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
   gp_Vec        ded, dsp;
   TopoDS_Vertex bout1, bout2, boutemp;
 
-  const BRepAdaptor_Curve& bc = Spine->CurrentElementarySpine(iedge);
+  const ::model::adapter::BRepAdaptor_Curve& bc = Spine->CurrentElementarySpine(iedge);
 
   TopoDS_Edge support = bc.Edge();
   TopExp::Vertices(support, bout1, bout2);
@@ -342,8 +342,8 @@ void ChFi3d_Builder::Trunc(const occ::handle<ChFiDS_SurfData>&   SD,
   int ivois;
   if (!tron && YaUnVoisin(Spine, iedge, ivois, isfirst))
   {
-    occ::handle<BRepAdaptor_Surface> BS1 = occ::down_cast<BRepAdaptor_Surface>(S1);
-    occ::handle<BRepAdaptor_Surface> BS2 = occ::down_cast<BRepAdaptor_Surface>(S2);
+    occ::handle<::model::adapter::BRepAdaptor_Surface> BS1 = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S1);
+    occ::handle<::model::adapter::BRepAdaptor_Surface> BS2 = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S2);
     if (!BS1.IsNull() && !BS2.IsNull())
     {
       TopoDS_Face               FBID;
@@ -408,7 +408,7 @@ static double ResetProl(const TopOpeBRepDS_DataStructure&   DStr,
                         const int                           iedge,
                         const bool                          isfirst)
 {
-  const BRepAdaptor_Curve&         bc     = Spine->CurrentElementarySpine(iedge);
+  const ::model::adapter::BRepAdaptor_Curve&         bc     = Spine->CurrentElementarySpine(iedge);
   double                           edglen = bc.LastParameter() - bc.FirstParameter();
   const occ::handle<Geom_Surface>& surf   = DStr.Surface(CD->Surf()).Surface();
   double                           par    = 0., x, y;
@@ -563,7 +563,7 @@ static void FillSD(TopOpeBRepDS_DataStructure&                               DSt
       {
         const HatchGen_PointOnElement& PEtemp = pPH->Point(LeType);
         IE                                    = PEtemp.Index();
-        occ::handle<BRepAdaptor_Curve2d> HE   = occ::down_cast<BRepAdaptor_Curve2d>(M(IE));
+        occ::handle<::model::adapter::BRepAdaptor_Curve2d> HE   = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(M(IE));
         if (!HE.IsNull())
         {
           const TopoDS_Edge& Etemp = HE->Edge();
@@ -593,7 +593,7 @@ static void FillSD(TopOpeBRepDS_DataStructure&                               DSt
     }
     const HatchGen_PointOnElement&   PE = pPH->Point(LeType);
     int                              IE = PE.Index();
-    occ::handle<BRepAdaptor_Curve2d> HE = occ::down_cast<BRepAdaptor_Curve2d>(M(IE));
+    occ::handle<::model::adapter::BRepAdaptor_Curve2d> HE = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(M(IE));
     if (HE.IsNull())
       return;
     const TopoDS_Edge& E = HE->Edge();
@@ -654,7 +654,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     ll1.Load(C1);
     for (I1->Init(); I1->More(); I1->Next())
     {
-      occ::handle<BRepAdaptor_Curve2d> Bc = occ::down_cast<BRepAdaptor_Curve2d>(I1->Value());
+      occ::handle<::model::adapter::BRepAdaptor_Curve2d> Bc = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(I1->Value());
       occ::handle<Geom2dAdaptor_Curve> Gc = occ::down_cast<Geom2dAdaptor_Curve>(I1->Value());
       if (Bc.IsNull())
         ie = H1.AddElement(*Gc, TopAbs_FORWARD);
@@ -683,7 +683,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
     ll2.Load(C2);
     for (I2->Init(); I2->More(); I2->Next())
     {
-      occ::handle<BRepAdaptor_Curve2d> Bc = occ::down_cast<BRepAdaptor_Curve2d>(I2->Value());
+      occ::handle<::model::adapter::BRepAdaptor_Curve2d> Bc = occ::down_cast<::model::adapter::BRepAdaptor_Curve2d>(I2->Value());
       occ::handle<Geom2dAdaptor_Curve> Gc = occ::down_cast<Geom2dAdaptor_Curve>(I2->Value());
       if (Bc.IsNull())
         ie = H2.AddElement(*Gc, TopAbs_FORWARD);
@@ -706,7 +706,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   }
 
   TopoDS_Vertex            bout1, bout2, boutemp;
-  const BRepAdaptor_Curve& bc      = Spine->CurrentElementarySpine(Iedge);
+  const ::model::adapter::BRepAdaptor_Curve& bc      = Spine->CurrentElementarySpine(Iedge);
   TopoDS_Edge              support = bc.Edge();
   TopExp::Vertices(support, bout1, bout2);
   if (support.Orientation() == TopAbs_REVERSED)
@@ -717,10 +717,10 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
   }
 
   TopoDS_Face                      F1, F2;
-  occ::handle<BRepAdaptor_Surface> bhs = occ::down_cast<BRepAdaptor_Surface>(S1);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> bhs = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S1);
   if (!bhs.IsNull())
     F1 = bhs->Face();
-  bhs = occ::down_cast<BRepAdaptor_Surface>(S2);
+  bhs = occ::down_cast<::model::adapter::BRepAdaptor_Surface>(S2);
   if (!bhs.IsNull())
     F2 = bhs->Face();
   TopoDS_Face FBID;
@@ -906,7 +906,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
 
       int                      ifirst = 0;
       double                   dist   = RealLast(), ptg, dsp;
-      const BRepAdaptor_Curve& ed     = Spine->CurrentElementarySpine(Iedge);
+      const ::model::adapter::BRepAdaptor_Curve& ed     = Spine->CurrentElementarySpine(Iedge);
       for (int i1 = 1; i1 <= SetData.Length(); i1++)
       {
         occ::handle<ChFiDS_SurfData>& CD1 = SetData.ChangeValue(i1);
@@ -1029,7 +1029,7 @@ bool ChFi3d_Builder::SplitKPart(const occ::handle<ChFiDS_SurfData>&             
       double                   dist  = RealLast(), ptg, dsp;
       double                   f     = Spine->FirstParameter(Iedge);
       double                   l     = Spine->LastParameter(Iedge);
-      const BRepAdaptor_Curve& ed    = Spine->CurrentElementarySpine(Iedge);
+      const ::model::adapter::BRepAdaptor_Curve& ed    = Spine->CurrentElementarySpine(Iedge);
       for (int i2 = 1; i2 <= SetData.Length(); i2++)
       {
         occ::handle<ChFiDS_SurfData>& CD3 = SetData.ChangeValue(i2);

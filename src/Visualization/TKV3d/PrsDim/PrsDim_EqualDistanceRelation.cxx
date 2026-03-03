@@ -210,7 +210,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
 
   if (myFShape.ShapeType() == TopAbs_EDGE)
   {
-    BRepAdaptor_Curve aCurve(TopoDS::Edge(myFShape));
+    ::model::adapter::BRepAdaptor_Curve aCurve(TopoDS::Edge(myFShape));
     if (aCurve.GetType() == GeomAbs_Line)
     {
 
@@ -237,7 +237,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
 
   if (mySShape.ShapeType() == TopAbs_EDGE)
   {
-    BRepAdaptor_Curve aCurve(TopoDS::Edge(mySShape));
+    ::model::adapter::BRepAdaptor_Curve aCurve(TopoDS::Edge(mySShape));
     if (aCurve.GetType() == GeomAbs_Line)
     {
 
@@ -264,7 +264,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
 
   if (myShape3.ShapeType() == TopAbs_EDGE)
   {
-    BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape3));
+    ::model::adapter::BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape3));
     if (aCurve.GetType() == GeomAbs_Line)
     {
 
@@ -296,7 +296,7 @@ void PrsDim_EqualDistanceRelation::ComputeSelection(
 
   if (myShape4.ShapeType() == TopAbs_EDGE)
   {
-    BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape4));
+    ::model::adapter::BRepAdaptor_Curve aCurve(TopoDS::Edge(myShape4));
     if (aCurve.GetType() == GeomAbs_Line)
     {
 
@@ -340,8 +340,8 @@ void PrsDim_EqualDistanceRelation::ComputeTwoEdgesLength(
   DsgPrs_ArrowSide&                      SymbolPrs)
 {
   gp_Dir            DirAttach;
-  BRepAdaptor_Curve cu1(FirstEdge);
-  BRepAdaptor_Curve cu2(SecondEdge);
+  ::model::adapter::BRepAdaptor_Curve cu1(FirstEdge);
+  ::model::adapter::BRepAdaptor_Curve cu2(SecondEdge);
 
   occ::handle<Geom_Curve> geom1, geom2;
   gp_Pnt                  ptat11, ptat12, ptat21, ptat22;

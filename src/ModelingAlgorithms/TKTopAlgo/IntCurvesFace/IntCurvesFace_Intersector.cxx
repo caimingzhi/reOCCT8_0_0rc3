@@ -110,10 +110,10 @@ IntCurvesFace_Intersector::IntCurvesFace_Intersector(const TopoDS_Face& Face,
       myUseBoundTol(UseBToler),
       myIsParallel(false)
 {
-  BRepAdaptor_Surface surface;
+  ::model::adapter::BRepAdaptor_Surface surface;
   face = Face;
   surface.Initialize(Face, aRestr);
-  Hsurface    = new BRepAdaptor_Surface(surface);
+  Hsurface    = new ::model::adapter::BRepAdaptor_Surface(surface);
   myTopolTool = new BRepTopAdaptor_TopolTool(Hsurface);
 
   GeomAbs_SurfaceType SurfaceType = Adaptor3d_HSurfaceTool::GetType(Hsurface);

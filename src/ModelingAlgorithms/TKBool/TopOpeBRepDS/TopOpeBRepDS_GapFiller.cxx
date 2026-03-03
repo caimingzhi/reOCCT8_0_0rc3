@@ -250,7 +250,7 @@ static bool Normal(const occ::handle<TopOpeBRepDS_GapTool>&        A,
   gp_Vec            TU, TV, N;
   gp_Pnt2d          P2d;
 
-  BRepAdaptor_Surface S(F);
+  ::model::adapter::BRepAdaptor_Surface S(F);
   if (S.GetType() == GeomAbs_Plane)
   {
     D = S.Plane().Axis().Direction();
@@ -311,7 +311,7 @@ void TopOpeBRepDS_GapFiller::FilterByIncidentDistance(
   const TopOpeBRepDS_Point& PI1 = myHDS->Point(I->Geometry());
   const gp_Pnt              GPI = PI1.Point();
 
-  BRepAdaptor_Surface S(F, false);
+  ::model::adapter::BRepAdaptor_Surface S(F, false);
 
   double TolDef  = 0.94;
   double TolDist = 20 * PI1.Tolerance();
@@ -388,7 +388,7 @@ void TopOpeBRepDS_GapFiller::ReBuildGeom(const occ::handle<TopOpeBRepDS_Interfer
     }
   }
   U = (UMax + UMin) * 0.5;
-  BRepAdaptor_Curve  C(E);
+  ::model::adapter::BRepAdaptor_Curve  C(E);
   gp_Pnt             GP = C.Value(U);
   TopOpeBRepDS_Point P(GP, TolMax);
 

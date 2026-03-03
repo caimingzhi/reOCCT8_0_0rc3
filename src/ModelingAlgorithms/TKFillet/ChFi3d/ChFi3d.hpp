@@ -8,7 +8,10 @@
 #include <Standard_Boolean.hpp>
 #include <ChFiDS_TypeOfConcavity.hpp>
 #include <GeomAbs_Shape.hpp>
+namespace model { namespace adapter {
 class BRepAdaptor_Surface;
+}} // namespace model::adapter
+
 class TopoDS_Edge;
 class TopoDS_Face;
 
@@ -28,8 +31,8 @@ public:
                                              const TopoDS_Face&  theFace2,
                                              const GeomAbs_Shape Order = GeomAbs_G1);
 
-  Standard_EXPORT static int ConcaveSide(const BRepAdaptor_Surface& S1,
-                                         const BRepAdaptor_Surface& S2,
+  Standard_EXPORT static int ConcaveSide(const ::model::adapter::BRepAdaptor_Surface& S1,
+                                         const ::model::adapter::BRepAdaptor_Surface& S2,
                                          const TopoDS_Edge&         E,
                                          TopAbs_Orientation&        Or1,
                                          TopAbs_Orientation&        Or2);

@@ -1820,7 +1820,7 @@ int TopOpeBRepBuild_Builder1::IsSame2d(const NCollection_Sequence<TopoDS_Shape>&
   TopoDS_Edge aPObj   = TopoDS::Edge(aPieceObj);
   TopoDS_Edge aPTool  = TopoDS::Edge(aPieceTool);
 
-  BRepAdaptor_Surface aBAS(aFObj);
+  ::model::adapter::BRepAdaptor_Surface aBAS(aFObj);
   if (!(aBAS.IsUPeriodic() || aBAS.IsVPeriodic()))
     return 1;
 

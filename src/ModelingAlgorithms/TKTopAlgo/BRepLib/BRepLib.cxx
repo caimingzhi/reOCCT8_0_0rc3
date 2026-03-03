@@ -845,7 +845,7 @@ static void InternalSameParameter(const TopoDS_Shape& theSh,
   }
 
   Done.Clear();
-  BRepAdaptor_Surface BS;
+  ::model::adapter::BRepAdaptor_Surface BS;
   for (ex.Init(theSh, TopAbs_FACE); ex.More(); ex.Next())
   {
     const TopoDS_Face& curface = TopoDS::Face(ex.Current());
@@ -1745,7 +1745,7 @@ void BRepLib::UpdateInnerTolerances(const TopoDS_Shape& aShape)
     BRep_Tool::Range(anEdge, fpar, lpar);
     double                         TolEdge = BRep_Tool::Tolerance(anEdge);
     gp_Pnt                         Pnt1, Pnt2;
-    occ::handle<BRepAdaptor_Curve> anHCurve = new BRepAdaptor_Curve();
+    occ::handle<::model::adapter::BRepAdaptor_Curve> anHCurve = new ::model::adapter::BRepAdaptor_Curve();
     anHCurve->Initialize(anEdge);
     if (!V1.IsNull())
       Pnt1 = BRep_Tool::Pnt(V1);
@@ -1760,7 +1760,7 @@ void BRepLib::UpdateInnerTolerances(const TopoDS_Shape& aShape)
       for (; itl.More(); itl.Next())
       {
         const TopoDS_Face&             aFace         = TopoDS::Face(itl.Value());
-        occ::handle<BRepAdaptor_Curve> anHCurvOnSurf = new BRepAdaptor_Curve();
+        occ::handle<::model::adapter::BRepAdaptor_Curve> anHCurvOnSurf = new ::model::adapter::BRepAdaptor_Curve();
         anHCurvOnSurf->Initialize(anEdge, aFace);
         theRep.Append(anHCurvOnSurf);
       }
@@ -1987,7 +1987,7 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
   double f, l, eps;
   BRep_Tool::Range(theEdge, f, l);
   Extrema_LocateExtPC            ext;
-  occ::handle<BRepAdaptor_Curve> aHC2;
+  occ::handle<::model::adapter::BRepAdaptor_Curve> aHC2;
 
   eps = (l - f) / 100.;
   f += eps;
@@ -2037,7 +2037,7 @@ GeomAbs_Shape BRepLib::ContinuityOfFaces(const TopoDS_Edge& theEdge,
       if (aHC2.IsNull())
       {
 
-        aHC2 = new BRepAdaptor_Curve(anEdgeInFace2, theFace2);
+        aHC2 = new ::model::adapter::BRepAdaptor_Curve(anEdgeInFace2, theFace2);
         ext.Initialize(*aHC2, f, l, math::precision::Precision::PConfusion());
       }
       ext.Perform(aSP1.Value(), u);
@@ -2352,7 +2352,7 @@ namespace
 
   struct EvalDeflection
   {
-    BRepAdaptor_Surface Surface;
+    ::model::adapter::BRepAdaptor_Surface Surface;
 
     EvalDeflection(const TopoDS_Face& theFace)
         : Surface(theFace)
@@ -2736,7 +2736,7 @@ void BRepLib::ExtendFace(const TopoDS_Face& theF,
                          TopoDS_Face&       theFExtended)
 {
 
-  BRepAdaptor_Surface aBAS(theF);
+  ::model::adapter::BRepAdaptor_Surface aBAS(theF);
   double              aFUMin = aBAS.FirstUParameter(), aFUMax = aBAS.LastUParameter(),
          aFVMin = aBAS.FirstVParameter(), aFVMax = aBAS.LastVParameter();
   const double aTol = BRep_Tool::Tolerance(theF);

@@ -1185,12 +1185,12 @@ void TopOpeBRepBuild_Builder::AddONPatchesSFS(const TopOpeBRepBuild_GTopo&  G1,
       if (aChkEdge.IsNull())
         continue;
 
-      BRepAdaptor_Curve2d aBAC1(aChkEdge, aFace1);
+      ::model::adapter::BRepAdaptor_Curve2d aBAC1(aChkEdge, aFace1);
       gp_Pnt2d            aP2d;
       const double        PAR_T = 0.456321;
       double par = aBAC1.FirstParameter() * (1. - PAR_T) + aBAC1.LastParameter() * PAR_T;
       aBAC1.D0(par, aP2d);
-      BRepAdaptor_Surface aBAS1(aFace1);
+      ::model::adapter::BRepAdaptor_Surface aBAS1(aFace1);
       gp_Pnt              aPbid;
       gp_Vec              aN1, aDU, aDV;
       aBAS1.D1(aP2d.X(), aP2d.Y(), aPbid, aDU, aDV);
@@ -1221,9 +1221,9 @@ void TopOpeBRepBuild_Builder::AddONPatchesSFS(const TopOpeBRepBuild_GTopo&  G1,
           if (!sameBnd)
             continue;
 
-          BRepAdaptor_Curve2d aBAC2(aChkEdge, aFace2);
+          ::model::adapter::BRepAdaptor_Curve2d aBAC2(aChkEdge, aFace2);
           aBAC2.D0(par, aP2d);
-          BRepAdaptor_Surface aBAS2(aFace2);
+          ::model::adapter::BRepAdaptor_Surface aBAS2(aFace2);
           gp_Vec              aN2;
           aBAS2.D1(aP2d.X(), aP2d.Y(), aPbid, aDU, aDV);
           aN2  = aDU ^ aDV;
@@ -1379,7 +1379,7 @@ static bool AreFacesCoincideInArea(const TopoDS_Shape&                   theBase
     return false;
 
   gp_Pnt2d            aP2d = ElCLib::Value(pLinMin * T, aLin);
-  BRepAdaptor_Surface aBAS(aBaseFace);
+  ::model::adapter::BRepAdaptor_Surface aBAS(aBaseFace);
   gp_Pnt              aPnt;
   gp_Vec              d1u, d1v;
   aBAS.D1(aP2d.X(), aP2d.Y(), aPnt, d1u, d1v);

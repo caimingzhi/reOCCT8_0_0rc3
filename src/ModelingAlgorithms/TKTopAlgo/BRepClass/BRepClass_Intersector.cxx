@@ -87,7 +87,7 @@ double MaxTol2DCurEdge(const TopoDS_Vertex& theV1,
   double aTol2D, anUr, aVr;
 
   double              aTolV3D = std::max(aTolV3D1, aTolV3D2);
-  BRepAdaptor_Surface aS(theF, false);
+  ::model::adapter::BRepAdaptor_Surface aS(theF, false);
 
   anUr   = aS.UResolution(aTolV3D);
   aVr    = aS.VResolution(aTolV3D);
@@ -436,7 +436,7 @@ void RefineTolerance(const TopoDS_Face&         aF,
 {
   GeomAbs_SurfaceType aTypeS;
 
-  BRepAdaptor_Surface aBAS(aF, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS(aF, false);
 
   aTypeS = aBAS.GetType();
   if (aTypeS == GeomAbs_Cylinder)

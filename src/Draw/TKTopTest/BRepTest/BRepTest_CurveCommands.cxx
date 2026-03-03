@@ -68,7 +68,7 @@ static int vertex(Draw_Interpretor&, int n, const char** a)
       return 0;
     if (S.ShapeType() != TopAbs_EDGE)
       return 0;
-    BRepAdaptor_Curve C(TopoDS::Edge(S));
+    ::model::adapter::BRepAdaptor_Curve C(TopoDS::Edge(S));
     gp_Pnt            P;
     C.D0(Draw::Atof(a[2]), P);
     DBRep::Set(a[1], BRepBuilderAPI_MakeVertex(P));

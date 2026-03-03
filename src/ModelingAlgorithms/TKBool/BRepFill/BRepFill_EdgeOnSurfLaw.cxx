@@ -36,7 +36,7 @@ BRepFill_EdgeOnSurfLaw::BRepFill_EdgeOnSurfLaw(const TopoDS_Wire& Path, const To
   occ::handle<Geom2d_Curve>               C;
   occ::handle<Geom2dAdaptor_Curve>        AC2d;
   occ::handle<Adaptor3d_CurveOnSurface>   AC;
-  occ::handle<BRepAdaptor_Surface>        AS;
+  occ::handle<::model::adapter::BRepAdaptor_Surface>        AS;
   double                                  First = 0., Last = 0.;
   occ::handle<GeomFill_Darboux>           TLaw = new (GeomFill_Darboux)();
   occ::handle<GeomFill_CurveAndTrihedron> Law  = new (GeomFill_CurveAndTrihedron)(TLaw);
@@ -56,7 +56,7 @@ BRepFill_EdgeOnSurfLaw::BRepFill_EdgeOnSurfLaw(const TopoDS_Wire& Path, const To
         if (!C.IsNull())
         {
           Trouve = true;
-          AS     = new (BRepAdaptor_Surface)(F);
+          AS     = new (::model::adapter::BRepAdaptor_Surface)(F);
         }
       }
       if (!Trouve)

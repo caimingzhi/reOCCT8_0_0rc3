@@ -417,7 +417,7 @@ gp_Dir BRepFeat_RibSlot::Normal(const TopoDS_Face& F, const gp_Pnt& P)
   double U, V;
   gp_Pnt pt;
 
-  BRepAdaptor_Surface AS(F, true);
+  ::model::adapter::BRepAdaptor_Surface AS(F, true);
 
   switch (AS.GetType())
   {

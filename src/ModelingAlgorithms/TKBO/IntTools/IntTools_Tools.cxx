@@ -273,7 +273,7 @@ bool IntTools_Tools::IsVertex(const TopoDS_Edge& aE, const TopoDS_Vertex& aV, co
   double aTolV, aTolV2, d2;
   gp_Pnt aPv, aPt;
 
-  BRepAdaptor_Curve aBAC(aE);
+  ::model::adapter::BRepAdaptor_Curve aBAC(aE);
   aBAC.D0(t, aPt);
 
   aTolV  = BRep_Tool::Tolerance(aV);
@@ -289,7 +289,7 @@ bool IntTools_Tools::IsVertex(const TopoDS_Edge& aE, const double t)
   TopoDS_Vertex aV;
   gp_Pnt        aPv, aPt;
 
-  BRepAdaptor_Curve aBAC(aE);
+  ::model::adapter::BRepAdaptor_Curve aBAC(aE);
   aBAC.D0(t, aPt);
 
   TopExp_Explorer anExp(aE, TopAbs_VERTEX);

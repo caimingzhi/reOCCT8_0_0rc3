@@ -905,7 +905,7 @@ int TreatLC(const TheArc&                    A,
   }
 
   GeomAbs_CurveType aTypeE;
-  BRepAdaptor_Curve aBAC(*anE);
+  ::model::adapter::BRepAdaptor_Curve aBAC(*anE);
   aTypeE = aBAC.GetType();
 
   if (aTypeE != GeomAbs_Line)

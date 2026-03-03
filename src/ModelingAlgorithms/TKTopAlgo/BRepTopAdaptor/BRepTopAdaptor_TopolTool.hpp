@@ -89,7 +89,7 @@ private:
   TopExp_Explorer                                             myVIterator;
   TopoDS_Face                                                 myFace;
   void*                                                       myFClass2d;
-  occ::handle<BRepAdaptor_Curve2d>                            myCurve;
+  occ::handle<::model::adapter::BRepAdaptor_Curve2d>                            myCurve;
   NCollection_List<occ::handle<Standard_Transient>>           myCurves;
   NCollection_List<occ::handle<Standard_Transient>>::Iterator myCIterator;
   double                                                      myU0;

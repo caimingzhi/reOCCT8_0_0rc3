@@ -9,7 +9,10 @@
 class HLRBRep_Data;
 class TopoDS_Shape;
 class HLRAlgo_Projector;
+namespace model { namespace adapter {
 class BRepAdaptor_Curve;
+}} // namespace model::adapter
+
 
 class StdPrs_HLRToolShape
 {
@@ -27,7 +30,7 @@ public:
 
   Standard_EXPORT void NextVisible();
 
-  Standard_EXPORT void Visible(BRepAdaptor_Curve& TheEdge, double& U1, double& U2);
+  Standard_EXPORT void Visible(::model::adapter::BRepAdaptor_Curve& TheEdge, double& U1, double& U2);
 
   Standard_EXPORT void InitHidden(const int EdgeNumber);
 
@@ -35,7 +38,7 @@ public:
 
   Standard_EXPORT void NextHidden();
 
-  Standard_EXPORT void Hidden(BRepAdaptor_Curve& TheEdge, double& U1, double& U2);
+  Standard_EXPORT void Hidden(::model::adapter::BRepAdaptor_Curve& TheEdge, double& U1, double& U2);
 
 private:
   occ::handle<HLRBRep_Data> MyData;

@@ -278,8 +278,8 @@ static void BuildPCurves(const TopoDS_Edge& E, const TopoDS_Face& F)
 
   constexpr double Tolerance = math::precision::Precision::Confusion();
 
-  BRepAdaptor_Surface AS(F, false);
-  BRepAdaptor_Curve   AC(E);
+  ::model::adapter::BRepAdaptor_Surface AS(F, false);
+  ::model::adapter::BRepAdaptor_Curve   AC(E);
 
   occ::handle<Geom_Surface>  theSurf = BRep_Tool::Surface(F);
   occ::handle<Standard_Type> typS    = theSurf->DynamicType();
@@ -297,7 +297,7 @@ static void BuildPCurves(const TopoDS_Edge& E, const TopoDS_Face& F)
     for (; Explo.More(); Explo.Next())
     {
       TopoDS_Edge       anEdge = TopoDS::Edge(Explo.Current());
-      BRepAdaptor_Curve aCurve(anEdge);
+      ::model::adapter::BRepAdaptor_Curve aCurve(anEdge);
       Extrema_ExtPC     fextr(fpoint, aCurve);
       if (!fextr.IsDone() || fextr.NbExt() < 1)
         continue;
@@ -358,8 +358,8 @@ static void BuildPCurves(const TopoDS_Edge& E, const TopoDS_Face& F)
     }
   }
 
-  occ::handle<BRepAdaptor_Surface> HS = new BRepAdaptor_Surface(AS);
-  occ::handle<BRepAdaptor_Curve>   HC = new BRepAdaptor_Curve(AC);
+  occ::handle<::model::adapter::BRepAdaptor_Surface> HS = new ::model::adapter::BRepAdaptor_Surface(AS);
+  occ::handle<::model::adapter::BRepAdaptor_Curve>   HC = new ::model::adapter::BRepAdaptor_Curve(AC);
 
   ProjLib_ProjectedCurve Proj(HS, HC, Tolerance);
 
@@ -427,7 +427,7 @@ void BRepOffset_Tool::OrientSection(const TopoDS_Edge&  E,
   occ::handle<Geom2d_Curve> C2 = BRep_Tool::CurveOnSurface(E, F2, f, l);
   occ::handle<Geom_Curve>   C  = BRep_Tool::Curve(E, L, f, l);
 
-  BRepAdaptor_Curve BAcurve(E);
+  ::model::adapter::BRepAdaptor_Curve BAcurve(E);
 
   GCPnts_AbscissaPoint AP(BAcurve, GCPnts_AbscissaPoint::Length(BAcurve) / 2.0, f);
   double               ParOnC;
@@ -1139,7 +1139,7 @@ static void CheckIntersFF(const BOPDS_PDS&                                      
     NearestCompound = CompList.First();
   else
   {
-    BRepAdaptor_Curve BAcurve(RefEdge);
+    ::model::adapter::BRepAdaptor_Curve BAcurve(RefEdge);
     gp_Pnt        Pref    = BAcurve.Value((BAcurve.FirstParameter() + BAcurve.LastParameter()) / 2);
     TopoDS_Vertex Vref    = BRepLib_MakeVertex(Pref);
     double        MinDist = RealLast();
@@ -1260,7 +1260,7 @@ void BRepOffset_Tool::Inter3D(const TopoDS_Face&              F1,
                               const TopoDS_Face&              theRefFace2)
 {
 
-  BRepAdaptor_Surface aBAS1(F1, false), aBAS2(F2, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS1(F1, false), aBAS2(F2, false);
   if (aBAS1.GetType() == GeomAbs_Plane && aBAS2.GetType() == GeomAbs_Plane)
   {
     aBAS1.Initialize(F1, true);
@@ -1426,7 +1426,7 @@ void BRepOffset_Tool::Inter3D(const TopoDS_Face&              F1,
       {
         TopoDS_Edge       MinAngleEdge;
         double            MinAngle = math::precision::Precision::Infinite();
-        BRepAdaptor_Curve aRefBAcurve(RefEdge);
+        ::model::adapter::BRepAdaptor_Curve aRefBAcurve(RefEdge);
         gp_Pnt            aRefPnt =
           aRefBAcurve.Value((aRefBAcurve.FirstParameter() + aRefBAcurve.LastParameter()) / 2);
 
@@ -1435,7 +1435,7 @@ void BRepOffset_Tool::Inter3D(const TopoDS_Face&              F1,
         {
           const TopoDS_Edge& anEdge = TopoDS::Edge(itl.Value());
 
-          BRepAdaptor_Curve aBAcurve(anEdge);
+          ::model::adapter::BRepAdaptor_Curve aBAcurve(anEdge);
           gp_Pnt            aMidPntOnEdge =
             aBAcurve.Value((aBAcurve.FirstParameter() + aBAcurve.LastParameter()) / 2);
           gp_Vec RefToMid(aRefPnt, aMidPntOnEdge);
@@ -1826,7 +1826,7 @@ static void ExtentEdge(const TopoDS_Face& F,
                        const TopoDS_Edge& E,
                        TopoDS_Edge&       NE)
 {
-  BRepAdaptor_Curve CE(E);
+  ::model::adapter::BRepAdaptor_Curve CE(E);
   GeomAbs_CurveType Type       = CE.GetType();
   TopoDS_Shape      aLocalEdge = E.EmptyCopied();
   NE                           = TopoDS::Edge(aLocalEdge);
@@ -1904,7 +1904,7 @@ static bool ProjectVertexOnEdge(TopoDS_Vertex& V, const TopoDS_Edge& E, double T
   bool            found = false;
 
   gp_Pnt            P = BRep_Tool::Pnt(V);
-  BRepAdaptor_Curve C = BRepAdaptor_Curve(E);
+  ::model::adapter::BRepAdaptor_Curve C = ::model::adapter::BRepAdaptor_Curve(E);
   f                   = C.FirstParameter();
   l                   = C.LastParameter();
 
@@ -2238,7 +2238,7 @@ static void SelectEdge(const TopoDS_Face&,
 
   double Fst, Lst, tmp;
   BRep_Tool::Range(E, Fst, Lst);
-  BRepAdaptor_Curve Ad1(E);
+  ::model::adapter::BRepAdaptor_Curve Ad1(E);
 
   gp_Pnt PFirst = Ad1.Value(Fst);
   gp_Pnt PLast  = Ad1.Value(Lst);
@@ -2248,7 +2248,7 @@ static void SelectEdge(const TopoDS_Face&,
     const TopoDS_Edge& EI = TopoDS::Edge(it.Value());
 
     BRep_Tool::Range(EI, Fst, Lst);
-    BRepAdaptor_Curve Ad2(EI);
+    ::model::adapter::BRepAdaptor_Curve Ad2(EI);
     gp_Pnt            P1 = Ad2.Value(Fst);
     gp_Pnt            P2 = Ad2.Value(Lst);
 
@@ -2830,7 +2830,7 @@ static void CompactUVBounds(const TopoDS_Face& F,
   for (exp.Init(F, TopAbs_EDGE); exp.More(); exp.Next())
   {
     const TopoDS_Edge&  E = TopoDS::Edge(exp.Current());
-    BRepAdaptor_Curve2d C(E, F);
+    ::model::adapter::BRepAdaptor_Curve2d C(E, F);
     BRep_Tool::Range(E, U1, U2);
     gp_Pnt2d P;
     double   U  = U1;
@@ -3125,8 +3125,8 @@ static bool TryParameter(const TopoDS_Edge& OE,
                          const TopoDS_Edge& NE,
                          double             TolConf)
 {
-  BRepAdaptor_Curve OC(OE);
-  BRepAdaptor_Curve NC(NE);
+  ::model::adapter::BRepAdaptor_Curve OC(OE);
+  ::model::adapter::BRepAdaptor_Curve NC(NE);
   double            Of = OC.FirstParameter();
   double            Ol = OC.LastParameter();
   double            Nf = NC.FirstParameter();
@@ -3878,7 +3878,7 @@ bool BRepOffset_Tool::CheckPlanesNormals(const TopoDS_Face& theFace1,
                                          const TopoDS_Face& theFace2,
                                          const double       theTolAng)
 {
-  BRepAdaptor_Surface aBAS1(theFace1, false), aBAS2(theFace2, false);
+  ::model::adapter::BRepAdaptor_Surface aBAS1(theFace1, false), aBAS2(theFace2, false);
   if (aBAS1.GetType() != GeomAbs_Plane || aBAS2.GetType() != GeomAbs_Plane)
   {
     return false;
@@ -3991,7 +3991,7 @@ static void UpdateVertexTolerances(const TopoDS_Face& theFace)
       double aParam = (V1.IsSame(aVertex)) ? fpar : lpar;
       if (!BRep_Tool::Degenerated(anEdge))
       {
-        BRepAdaptor_Curve BAcurve(anEdge);
+        ::model::adapter::BRepAdaptor_Curve BAcurve(anEdge);
         gp_Pnt            aPnt  = BAcurve.Value(aParam);
         double            aDist = PntVtx.Distance(aPnt);
         BB.UpdateVertex(aVertex, aDist);
@@ -4002,7 +4002,7 @@ static void UpdateVertexTolerances(const TopoDS_Face& theFace)
           BB.UpdateVertex(aVertex, aDist);
         }
       }
-      BRepAdaptor_Curve BAcurveonsurf(anEdge, theFace);
+      ::model::adapter::BRepAdaptor_Curve BAcurveonsurf(anEdge, theFace);
       gp_Pnt            aPnt  = BAcurveonsurf.Value(aParam);
       double            aDist = PntVtx.Distance(aPnt);
       BB.UpdateVertex(aVertex, aDist);

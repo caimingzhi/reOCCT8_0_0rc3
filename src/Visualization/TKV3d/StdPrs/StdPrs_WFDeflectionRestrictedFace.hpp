@@ -14,20 +14,20 @@ public:
   DEFINE_STANDARD_ALLOC
 
   Standard_EXPORT static void Add(const occ::handle<Prs3d_Presentation>&  aPresentation,
-                                  const occ::handle<BRepAdaptor_Surface>& aFace,
+                                  const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                   const occ::handle<Prs3d_Drawer>&        aDrawer);
 
   Standard_EXPORT static void AddUIso(const occ::handle<Prs3d_Presentation>&  aPresentation,
-                                      const occ::handle<BRepAdaptor_Surface>& aFace,
+                                      const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                       const occ::handle<Prs3d_Drawer>&        aDrawer);
 
   Standard_EXPORT static void AddVIso(const occ::handle<Prs3d_Presentation>&  aPresentation,
-                                      const occ::handle<BRepAdaptor_Surface>& aFace,
+                                      const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                       const occ::handle<Prs3d_Drawer>&        aDrawer);
 
   Standard_EXPORT static void Add(
     const occ::handle<Prs3d_Presentation>&                        aPresentation,
-    const occ::handle<BRepAdaptor_Surface>&                       aFace,
+    const occ::handle<::model::adapter::BRepAdaptor_Surface>&                       aFace,
     const bool                                                    DrawUIso,
     const bool                                                    DrawVIso,
     const double                                                  Deflection,
@@ -40,28 +40,28 @@ public:
                                     const double                            Y,
                                     const double                            Z,
                                     const double                            aDistance,
-                                    const occ::handle<BRepAdaptor_Surface>& aFace,
+                                    const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                     const occ::handle<Prs3d_Drawer>&        aDrawer);
 
   Standard_EXPORT static bool MatchUIso(const double                            X,
                                         const double                            Y,
                                         const double                            Z,
                                         const double                            aDistance,
-                                        const occ::handle<BRepAdaptor_Surface>& aFace,
+                                        const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                         const occ::handle<Prs3d_Drawer>&        aDrawer);
 
   Standard_EXPORT static bool MatchVIso(const double                            X,
                                         const double                            Y,
                                         const double                            Z,
                                         const double                            aDistance,
-                                        const occ::handle<BRepAdaptor_Surface>& aFace,
+                                        const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                         const occ::handle<Prs3d_Drawer>&        aDrawer);
 
   Standard_EXPORT static bool Match(const double                            X,
                                     const double                            Y,
                                     const double                            Z,
                                     const double                            aDistance,
-                                    const occ::handle<BRepAdaptor_Surface>& aFace,
+                                    const occ::handle<::model::adapter::BRepAdaptor_Surface>& aFace,
                                     const occ::handle<Prs3d_Drawer>&        aDrawer,
                                     const bool                              DrawUIso,
                                     const bool                              DrawVIso,

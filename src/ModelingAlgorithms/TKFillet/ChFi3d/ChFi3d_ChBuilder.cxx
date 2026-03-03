@@ -210,7 +210,7 @@ void ChFi3d_ChBuilder::SetDist(const double Dis, const int IC, const TopoDS_Face
 
     TopoDS_Face F1, F2, FirstF1, FirstF2;
 
-    BRepAdaptor_Surface Sb1, Sb2;
+    ::model::adapter::BRepAdaptor_Surface Sb1, Sb2;
     int                 i     = 1;
     bool                Found = false;
     while ((i <= csp->NbEdges()) && (!Found))
@@ -294,7 +294,7 @@ void ChFi3d_ChBuilder::SetDists(const double       Dis1,
     TopoDS_Face         F1, F2, FirstF1, FirstF2;
     TopAbs_Orientation  Or1, Or2;
     int                 Choix, ChoixConge;
-    BRepAdaptor_Surface Sb1, Sb2;
+    ::model::adapter::BRepAdaptor_Surface Sb1, Sb2;
     int                 i     = 1;
     bool                Found = false;
     while ((i <= csp->NbEdges()) && (!Found))
@@ -381,7 +381,7 @@ void ChFi3d_ChBuilder::SetDistAngle(const double       Dis,
     occ::handle<ChFiDS_ChamfSpine> csp = occ::down_cast<ChFiDS_ChamfSpine>(Value(IC));
 
     TopoDS_Face         F1, F2, FirstF1, FirstF2;
-    BRepAdaptor_Surface Sb1, Sb2;
+    ::model::adapter::BRepAdaptor_Surface Sb1, Sb2;
     int                 i     = 1;
     bool                Found = false;
 
@@ -580,9 +580,9 @@ bool ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&           Data,
                                  const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                  const occ::handle<ChFiDS_Spine>&        Spine,
                                  const int                               Choix,
-                                 const occ::handle<BRepAdaptor_Surface>& S1,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>& S1,
                                  const occ::handle<Adaptor3d_TopolTool>& I1,
-                                 const occ::handle<BRepAdaptor_Surface>& S2,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>& S2,
                                  const occ::handle<Adaptor3d_TopolTool>& I2,
                                  const double                            TolGuide,
                                  double&                                 First,
@@ -1067,13 +1067,13 @@ void ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
                                  const occ::handle<ChFiDS_ElSpine>&,
                                  const occ::handle<ChFiDS_Spine>&,
                                  const int,
-                                 const occ::handle<BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                  const occ::handle<Adaptor3d_TopolTool>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
-                                 const occ::handle<BRepAdaptor_Surface>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                  bool&,
-                                 const occ::handle<BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                  const occ::handle<Adaptor3d_TopolTool>&,
                                  const TopAbs_Orientation,
                                  const double,
@@ -1095,14 +1095,14 @@ void ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
                                  const occ::handle<ChFiDS_ElSpine>&,
                                  const occ::handle<ChFiDS_Spine>&,
                                  const int,
-                                 const occ::handle<BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                  const occ::handle<Adaptor3d_TopolTool>&,
                                  const TopAbs_Orientation,
-                                 const occ::handle<BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                  const occ::handle<Adaptor3d_TopolTool>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
-                                 const occ::handle<BRepAdaptor_Surface>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                  bool&,
                                  const double,
                                  const double,
@@ -1123,18 +1123,18 @@ void ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
                                  const occ::handle<ChFiDS_ElSpine>&,
                                  const occ::handle<ChFiDS_Spine>&,
                                  const int,
-                                 const occ::handle<BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                  const occ::handle<Adaptor3d_TopolTool>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
-                                 const occ::handle<BRepAdaptor_Surface>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                  bool&,
                                  const TopAbs_Orientation,
-                                 const occ::handle<BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                  const occ::handle<Adaptor3d_TopolTool>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
-                                 const occ::handle<BRepAdaptor_Surface>&,
-                                 const occ::handle<BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                 const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                  bool&,
                                  const TopAbs_Orientation,
                                  const double,
@@ -1156,8 +1156,8 @@ void ChFi3d_ChBuilder::SimulSurf(occ::handle<ChFiDS_SurfData>&,
 bool ChFi3d_ChBuilder::PerformFirstSection(const occ::handle<ChFiDS_Spine>&        Spine,
                                            const occ::handle<ChFiDS_ElSpine>&      HGuide,
                                            const int                               Choix,
-                                           occ::handle<BRepAdaptor_Surface>&       S1,
-                                           occ::handle<BRepAdaptor_Surface>&       S2,
+                                           occ::handle<::model::adapter::BRepAdaptor_Surface>&       S1,
+                                           occ::handle<::model::adapter::BRepAdaptor_Surface>&       S2,
                                            const occ::handle<Adaptor3d_TopolTool>& I1,
                                            const occ::handle<Adaptor3d_TopolTool>& I2,
                                            const double                            Par,
@@ -1407,9 +1407,9 @@ bool ChFi3d_ChBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfD
                                    const occ::handle<ChFiDS_ElSpine>&                  HGuide,
                                    const occ::handle<ChFiDS_Spine>&                    Spine,
                                    const int                                           Choix,
-                                   const occ::handle<BRepAdaptor_Surface>&             S1,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&             S1,
                                    const occ::handle<Adaptor3d_TopolTool>&             I1,
-                                   const occ::handle<BRepAdaptor_Surface>&             S2,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&             S2,
                                    const occ::handle<Adaptor3d_TopolTool>&             I2,
                                    const double                                        MaxStep,
                                    const double                                        Fleche,
@@ -1622,13 +1622,13 @@ void ChFi3d_ChBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfD
                                    const occ::handle<ChFiDS_ElSpine>&,
                                    const occ::handle<ChFiDS_Spine>&,
                                    const int,
-                                   const occ::handle<BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                    const occ::handle<Adaptor3d_TopolTool>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
-                                   const occ::handle<BRepAdaptor_Surface>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                    bool&,
-                                   const occ::handle<BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                    const occ::handle<Adaptor3d_TopolTool>&,
                                    const TopAbs_Orientation,
                                    const double,
@@ -1651,14 +1651,14 @@ void ChFi3d_ChBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfD
                                    const occ::handle<ChFiDS_ElSpine>&,
                                    const occ::handle<ChFiDS_Spine>&,
                                    const int,
-                                   const occ::handle<BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                    const occ::handle<Adaptor3d_TopolTool>&,
                                    const TopAbs_Orientation,
-                                   const occ::handle<BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                    const occ::handle<Adaptor3d_TopolTool>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
-                                   const occ::handle<BRepAdaptor_Surface>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                    bool&,
                                    const double,
                                    const double,
@@ -1680,18 +1680,18 @@ void ChFi3d_ChBuilder::PerformSurf(NCollection_Sequence<occ::handle<ChFiDS_SurfD
                                    const occ::handle<ChFiDS_ElSpine>&,
                                    const occ::handle<ChFiDS_Spine>&,
                                    const int,
-                                   const occ::handle<BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                    const occ::handle<Adaptor3d_TopolTool>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
-                                   const occ::handle<BRepAdaptor_Surface>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                    bool&,
                                    const TopAbs_Orientation,
-                                   const occ::handle<BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
                                    const occ::handle<Adaptor3d_TopolTool>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
-                                   const occ::handle<BRepAdaptor_Surface>&,
-                                   const occ::handle<BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Surface>&,
+                                   const occ::handle<::model::adapter::BRepAdaptor_Curve2d>&,
                                    bool&,
                                    const TopAbs_Orientation,
                                    const double,
@@ -1937,8 +1937,8 @@ void ChFi3d_ChBuilder::SetRegul()
   NCollection_List<TopoDS_Shape>::Iterator itc;
   NCollection_List<TopoDS_Shape>::Iterator its1;
   NCollection_List<TopoDS_Shape>::Iterator its2;
-  BRepAdaptor_Surface                      S;
-  BRepAdaptor_Curve2d                      PC;
+  ::model::adapter::BRepAdaptor_Surface                      S;
+  ::model::adapter::BRepAdaptor_Curve2d                      PC;
   double                                   u, v, t;
   gp_Pnt                                   p;
   gp_Vec                                   n1, n2, du, dv;
@@ -1995,7 +1995,7 @@ void ChFi3d_ChBuilder::ConexFaces(const occ::handle<ChFiDS_Spine>& Spine,
                                   TopoDS_Face&                     F1,
                                   TopoDS_Face&                     F2) const
 {
-  BRepAdaptor_Surface Sb1, Sb2;
+  ::model::adapter::BRepAdaptor_Surface Sb1, Sb2;
   TopAbs_Orientation  tmp1, tmp2;
   int                 RC, Choix;
   TopoDS_Face         f1, f2, ff1, ff2;

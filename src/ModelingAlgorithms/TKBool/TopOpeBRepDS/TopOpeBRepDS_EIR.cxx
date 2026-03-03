@@ -968,7 +968,7 @@ static bool CheckInterferenceIsValid(const occ::handle<TopOpeBRepDS_Interference
 {
   double            pref = 0.;
   bool              ok   = false;
-  BRepAdaptor_Curve BC(theEdge);
+  ::model::adapter::BRepAdaptor_Curve BC(theEdge);
 
   occ::handle<TopOpeBRepDS_CurvePointInterference> CPI;
   CPI = occ::down_cast<TopOpeBRepDS_CurvePointInterference>(I);
@@ -999,7 +999,7 @@ static bool CheckInterferenceIsValid(const occ::handle<TopOpeBRepDS_Interference
 
   if (!ok)
     return ok;
-  BRepAdaptor_Curve BCtmp(theSupportEdge);
+  ::model::adapter::BRepAdaptor_Curve BCtmp(theSupportEdge);
   gp_Pnt            P3d2 = BCtmp.Value(paronSupportE);
   double Tolerance       = (BRep_Tool::Tolerance(theEdge) > BRep_Tool::Tolerance(theSupportEdge))
                              ? BRep_Tool::Tolerance(theEdge)

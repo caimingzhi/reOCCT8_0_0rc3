@@ -81,7 +81,7 @@ void TopOpeBRepBuild_ShellFaceClassifier::ResetElement(const TopoDS_Shape& F)
   {
     if (t == TopAbs_FACE)
     {
-      BRepAdaptor_Surface BAS(TopoDS::Face(F));
+      ::model::adapter::BRepAdaptor_Surface BAS(TopoDS::Face(F));
       myPoint3d = BAS.Value(.5 * (BAS.FirstUParameter() + BAS.LastUParameter()),
                             .5 * (BAS.FirstVParameter() + BAS.LastVParameter()));
     }
