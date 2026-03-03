@@ -1,14 +1,3 @@
-#include <LProp_Status.hpp>
-#include <LProp_NotDefined.hpp>
-#include <Standard_OutOfRange.hpp>
-#include <Standard_DomainError.hpp>
-#include <CSLib.hpp>
-#include <CSLib_DerivativeStatus.hpp>
-#include <CSLib_NormalStatus.hpp>
-#include <gp_Vec.hpp>
-#include <NCollection_Array2.hpp>
-#include <math_DirectPolynomialRoots.hpp>
-
 static const double MinStep = 1.0e-7;
 
 static bool IsTangentDefined(LProp_SLProps& SProp,

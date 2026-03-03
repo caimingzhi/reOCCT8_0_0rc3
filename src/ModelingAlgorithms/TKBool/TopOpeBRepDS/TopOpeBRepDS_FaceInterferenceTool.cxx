@@ -76,7 +76,7 @@ Standard_EXPORT void FUN_ComputeGeomData(const TopoDS_Shape& F,
   bool sphere = FUN_sphere(F);
   bool plane  = FUN_tool_plane(F);
 
-  BRepLProp_SLProps props(surf, uu, vv, 2, math::precision::Precision::Confusion());
+  ::model::localproperties::BRepLProp_SLProps props(surf, uu, vv, 2, math::precision::Precision::Confusion());
   bool              curdef = props.IsCurvatureDefined();
   if (!curdef)
     throw Standard_ProgramError("TopOpeBRepDS_FaceInterferenceTool::Init");

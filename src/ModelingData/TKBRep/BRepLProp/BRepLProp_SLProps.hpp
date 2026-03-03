@@ -19,6 +19,7 @@ class gp_Pnt;
 class gp_Vec;
 class gp_Dir;
 
+namespace model { namespace localproperties {
 class BRepLProp_SLProps
 {
 public:
@@ -105,3 +106,5 @@ private:
   LProp_Status        myNormalStatus;
   LProp_Status        myCurvatureStatus;
 };
+}} // namespace model::localproperties
+

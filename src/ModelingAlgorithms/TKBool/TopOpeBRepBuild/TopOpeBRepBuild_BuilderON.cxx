@@ -444,7 +444,7 @@ static bool ComputeFaceCrvtInSec(const TopoDS_Face& aFace,
   int                 cn = BRepLProp_SurfaceTool::Continuity(aSurf);
   if (cn < 2)
     return false;
-  BRepLProp_SLProps aProp(aSurf, aP2d.X(), aP2d.Y(), 2, math::precision::Precision::Confusion());
+  ::model::localproperties::BRepLProp_SLProps aProp(aSurf, aP2d.X(), aP2d.Y(), 2, math::precision::Precision::Confusion());
   if (!aProp.IsCurvatureDefined())
     return false;
 

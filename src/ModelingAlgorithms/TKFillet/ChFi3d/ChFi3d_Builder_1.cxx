@@ -525,7 +525,7 @@ static bool TangentExtremity(const TopoDS_Vertex&                    V,
   gp_Vec                    n1, n2;
   occ::handle<Geom2d_Curve> pc1 = BRep_Tool::CurveOnSurface(e1, f1, f, l);
   pc1->Value(p1).Coord(u, v);
-  BRepLProp_SLProps theProp1(*hs1, u, v, 1, Eps);
+  ::model::localproperties::BRepLProp_SLProps theProp1(*hs1, u, v, 1, Eps);
   if (theProp1.IsNormalDefined())
   {
     n1.SetXYZ(theProp1.Normal().XYZ());
@@ -537,7 +537,7 @@ static bool TangentExtremity(const TopoDS_Vertex&                    V,
 
   occ::handle<Geom2d_Curve> pc2 = BRep_Tool::CurveOnSurface(e2, f2, f, l);
   pc2->Value(p2).Coord(u, v);
-  BRepLProp_SLProps theProp2(*hs2, u, v, 1, Eps);
+  ::model::localproperties::BRepLProp_SLProps theProp2(*hs2, u, v, 1, Eps);
   if (theProp2.IsNormalDefined())
   {
     n2.SetXYZ(theProp2.Normal().XYZ());

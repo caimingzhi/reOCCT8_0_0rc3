@@ -1,14 +1,12 @@
 #include <GeomLProp_SLProps.hpp>
-
 #include <Geom_Surface.hpp>
-#include <LProp_BadContinuity.hpp>
-#include <Standard_DomainError.hpp>
-#include <Standard_OutOfRange.hpp>
-#include <LProp_NotDefined.hpp>
 #include <GeomLProp_SurfaceTool.hpp>
+
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 #include <gp_Dir.hpp>
+
+#include <LProp_SLProps_0.hpp>
 
 #define Surface occ::handle<Geom_Surface>
 #define Surface_hxx <Geom_Surface.hpp>

@@ -1,13 +1,11 @@
 #include <HLRBRep_CLProps.hpp>
+#include <HLRBRep_CLPropsATool.hpp>
 
-#include <LProp_BadContinuity.hpp>
-#include <Standard_DomainError.hpp>
-#include <Standard_OutOfRange.hpp>
-#include <LProp_NotDefined.hpp>
 #include <gp_Vec2d.hpp>
 #include <gp_Pnt2d.hpp>
 #include <gp_Dir2d.hpp>
-#include <HLRBRep_CLPropsATool.hpp>
+
+#include <LProp_SLProps_0.hpp>
 
 #define Curve HLRBRep_Curve*
 #define Curve_hxx <HLRBRep_Curve.hpp>

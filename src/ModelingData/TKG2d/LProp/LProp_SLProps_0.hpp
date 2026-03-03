@@ -1,0 +1,10 @@
+#include <LProp_BadContinuity.hpp>
+#include <Standard_DomainError.hpp>
+#include <Standard_OutOfRange.hpp>
+#include <LProp_NotDefined.hpp>
+#include <LProp_Status.hpp>
+#include <CSLib.hpp>
+#include <CSLib_DerivativeStatus.hpp>
+#include <CSLib_NormalStatus.hpp>
+#include <NCollection_Array2.hpp>
+#include <math_DirectPolynomialRoots.hpp>

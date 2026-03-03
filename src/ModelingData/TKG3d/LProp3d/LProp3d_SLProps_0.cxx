@@ -1,14 +1,12 @@
 #include <LProp3d_SLProps.hpp>
-
 #include <Adaptor3d_Surface.hpp>
-#include <LProp_BadContinuity.hpp>
-#include <Standard_DomainError.hpp>
-#include <Standard_OutOfRange.hpp>
-#include <LProp_NotDefined.hpp>
 #include <LProp3d_SurfaceTool.hpp>
+
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 #include <gp_Dir.hpp>
+
+#include <LProp_SLProps_0.hpp>
 
 #define Surface occ::handle<Adaptor3d_Surface>
 #define Surface_hxx <Adaptor3d_Surface.hpp>

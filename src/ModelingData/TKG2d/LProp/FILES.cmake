@@ -11,5 +11,6 @@ set(OCCT_LProp_FILES
   LProp_NotDefined.hpp
 
   LProp_SLProps.hpp
+  LProp_SLProps_0.hpp
   LProp_Status.hpp
 )
