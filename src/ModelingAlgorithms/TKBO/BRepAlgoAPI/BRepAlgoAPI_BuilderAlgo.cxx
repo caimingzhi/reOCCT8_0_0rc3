@@ -120,7 +120,7 @@ void BRepAlgoAPI_BuilderAlgo::BuildResult(const System::log::Message_ProgressRan
 
   if (myFillHistory)
   {
-    myHistory = new BRepTools_History;
+    myHistory = new ::model::utils::BRepTools_History;
     myHistory->Merge(myBuilder->History());
   }
 }

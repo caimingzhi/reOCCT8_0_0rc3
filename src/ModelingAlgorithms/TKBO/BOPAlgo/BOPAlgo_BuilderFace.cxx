@@ -419,7 +419,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const System::log::Message_ProgressRange&
     const TopoDS_Face& aHFace = TopoDS::Face(aHoleFaces(i));
 
     Bnd_Box2d aBox;
-    BRepTools::AddUVBounds(aHFace, aBox);
+    ::model::utils::BRepTools::AddUVBounds(aHFace, aBox);
     aBoxTree.Add(i, Bnd_Tools::Bnd2BVH(aBox));
   }
 
@@ -441,7 +441,7 @@ void BOPAlgo_BuilderFace::PerformAreas(const System::log::Message_ProgressRange&
     const TopoDS_Face& aFace = TopoDS::Face(aItLS.Value());
 
     Bnd_Box2d aBox;
-    BRepTools::AddUVBounds(aFace, aBox);
+    ::model::utils::BRepTools::AddUVBounds(aFace, aBox);
 
     aSelector.Clear();
     aSelector.SetBox(Bnd_Tools::Bnd2BVH(aBox));
@@ -570,7 +570,7 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const System::log::Message_Progr
       if (!anEdgesMap.Contains(aE))
       {
         Bnd_Box2d aBoxE;
-        BRepTools::AddUVBounds(myFace, aE, aBoxE);
+        ::model::utils::BRepTools::AddUVBounds(myFace, aE, aBoxE);
 
         aBoxTree.Add(anEdgesMap.Add(aE), Bnd_Tools::Bnd2BVH(aBoxE));
       }
@@ -594,7 +594,7 @@ void BOPAlgo_BuilderFace::PerformInternalShapes(const System::log::Message_Progr
     TopoDS_Face& aF = *(TopoDS_Face*)&itLF.Value();
 
     Bnd_Box2d aBoxF;
-    BRepTools::AddUVBounds(aF, aBoxF);
+    ::model::utils::BRepTools::AddUVBounds(aF, aBoxF);
 
     BOPTools_Box2dTreeSelector aSelector;
     aSelector.SetBVHSet(&aBoxTree);

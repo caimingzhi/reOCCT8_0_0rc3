@@ -108,7 +108,7 @@ void BRepLib_MakePolygon::Add(const TopoDS_Vertex& V)
     else
     {
       last = myLastVertex;
-      if (BRepTools::Compare(V, myFirstVertex))
+      if (::model::utils::BRepTools::Compare(V, myFirstVertex))
       {
         myLastVertex = myFirstVertex;
         myShape.Closed(true);

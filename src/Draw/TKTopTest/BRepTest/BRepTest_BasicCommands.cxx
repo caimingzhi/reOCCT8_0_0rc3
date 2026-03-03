@@ -385,7 +385,7 @@ static int sameparameter(Draw_Interpretor& di, int n, const char** a)
   if ((n == 4 && IsUseTol) || (n == 3 && !IsUseTol))
   {
     TopoDS_Shape      aResultSh;
-    BRepTools_ReShape aResh;
+    ::model::utils::BRepTools_ReShape aResh;
     BRepLib::SameParameter(anInpS, aResh, aTol, force);
     aResultSh = aResh.Apply(anInpS);
     DBRep::Set(a[1], aResultSh);
@@ -419,7 +419,7 @@ static int updatetol(Draw_Interpretor& di, int n, const char** a)
   if ((n == 4 && IsF) || (n == 3 && !IsF))
   {
     TopoDS_Shape      aResultSh;
-    BRepTools_ReShape aResh;
+    ::model::utils::BRepTools_ReShape aResh;
     BRepLib::UpdateTolerances(anInpS, aResh, IsF);
     aResultSh = aResh.Apply(anInpS);
     DBRep::Set(a[1], aResultSh);
@@ -1407,7 +1407,7 @@ static int purgeloc(Draw_Interpretor& di, int, const char** a)
   if (aShapeBase.IsNull())
     return 1;
 
-  BRepTools_PurgeLocations aRemLoc;
+  ::model::utils::BRepTools_PurgeLocations aRemLoc;
   bool                     isDone = aRemLoc.Perform(aShapeBase);
   TopoDS_Shape             Result = aRemLoc.GetResult();
 
@@ -1431,7 +1431,7 @@ static int checkloc(Draw_Interpretor& di, int, const char** a)
     return 1;
 
   NCollection_List<TopoDS_Shape> aLS;
-  BRepTools::CheckLocations(aShapeBase, aLS);
+  ::model::utils::BRepTools::CheckLocations(aShapeBase, aLS);
   if (aLS.IsEmpty())
   {
     di << "There are no problematic shapes" << "\n";

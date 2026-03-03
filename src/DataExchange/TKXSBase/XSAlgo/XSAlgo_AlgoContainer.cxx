@@ -156,7 +156,7 @@ void XSAlgo_AlgoContainer::MergeTransferInfo(const occ::handle<Transfer_Transien
     else
     {
 
-      BRepTools_ReShape aReShape;
+      ::model::utils::BRepTools_ReShape aReShape;
       bool              hasModifiedEdges = false;
       TopExp_Explorer   anExpSE(orig, TopAbs_EDGE);
 

@@ -79,7 +79,7 @@ static int DefineClosedness(const TopoDS_Face& theFace)
   for (; anExplo.More(); anExplo.Next())
   {
     const TopoDS_Edge& anEdge = TopoDS::Edge(anExplo.Current());
-    if (BRepTools::IsReallyClosed(anEdge, theFace))
+    if (::model::utils::BRepTools::IsReallyClosed(anEdge, theFace))
     {
       double                    fpar, lpar;
       occ::handle<Geom2d_Curve> aPCurve  = BRep_Tool::CurveOnSurface(anEdge, theFace, fpar, lpar);

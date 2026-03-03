@@ -20,7 +20,7 @@
 #include <TopoDS_Face.hpp>
 #include <TopoDS_Vertex.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_TrsfModification, BRepTools_Modification)
+IMPLEMENT_STANDARD_RTTIEXT(BRepTools_TrsfModification, ::model::utils::BRepTools_Modification)
 
 BRepTools_TrsfModification::BRepTools_TrsfModification(const gp_Trsf& T)
     : myTrsf(T),

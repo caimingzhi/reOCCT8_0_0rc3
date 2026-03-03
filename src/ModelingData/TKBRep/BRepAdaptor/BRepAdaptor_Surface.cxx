@@ -45,7 +45,7 @@ void BRepAdaptor_Surface::Initialize(const TopoDS_Face& F, const bool Restrictio
   if (Restriction)
   {
     double umin, umax, vmin, vmax;
-    BRepTools::UVBounds(F, umin, umax, vmin, vmax);
+    ::model::utils::BRepTools::UVBounds(F, umin, umax, vmin, vmax);
     mySurf.Load(aSurface, umin, umax, vmin, vmax);
   }
   else

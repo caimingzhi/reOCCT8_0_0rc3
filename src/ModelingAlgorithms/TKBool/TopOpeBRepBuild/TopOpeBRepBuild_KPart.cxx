@@ -301,7 +301,7 @@ static bool FUN_makefaces(
 
   NCollection_List<TopoDS_Shape> loe;
 
-  TopoDS_Wire     outerwf = BRepTools::OuterWire(F);
+  TopoDS_Wire     outerwf = ::model::utils::BRepTools::OuterWire(F);
   TopExp_Explorer ex(outerwf, TopAbs_EDGE);
   for (; ex.More(); ex.Next())
   {
@@ -418,7 +418,7 @@ static bool FUN_rebuildfc(
 #ifdef OCCT_DEBUG
 
 #endif
-  TopoDS_Wire                    Owk = BRepTools::OuterWire(TopoDS::Face(Fk));
+  TopoDS_Wire                    Owk = ::model::utils::BRepTools::OuterWire(TopoDS::Face(Fk));
   NCollection_List<TopoDS_Shape> eds;
   FUN_tool_shapes(Owk, TopAbs_EDGE, eds);
   NCollection_List<TopoDS_Shape>::Iterator ite(eds);
@@ -1086,8 +1086,8 @@ int TopOpeBRepBuild_Builder::KPiskoletge()
   }
 #endif
 
-  TopoDS_Wire outerw1 = BRepTools::OuterWire(f1);
-  TopoDS_Wire outerw2 = BRepTools::OuterWire(f2);
+  TopoDS_Wire outerw1 = ::model::utils::BRepTools::OuterWire(f1);
+  TopoDS_Wire outerw2 = ::model::utils::BRepTools::OuterWire(f2);
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> mape1;
   TopExp::MapShapes(outerw1, TopAbs_EDGE, mape1);
@@ -1304,7 +1304,7 @@ bool TopOpeBRepBuild_Builder::KPiskoletgesh(const TopoDS_Shape&             Sarg
     if (!isplan)
       return false;
 
-    TopoDS_Wire outerw = BRepTools::OuterWire(fac);
+    TopoDS_Wire outerw = ::model::utils::BRepTools::OuterWire(fac);
     if (outerw.IsNull())
       return false;
 

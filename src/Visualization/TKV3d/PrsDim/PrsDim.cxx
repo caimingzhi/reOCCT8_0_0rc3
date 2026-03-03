@@ -813,8 +813,8 @@ bool PrsDim::InitAngleBetweenPlanarFaces(const TopoDS_Face& theFirstFace,
   double anU1Min, anU1Max, aV1Min, aV1Max;
   double anU2Min, anU2Max, aV2Min, aV2Max;
 
-  BRepTools::UVBounds(theFirstFace, anU1Min, anU1Max, aV1Min, aV1Max);
-  BRepTools::UVBounds(theSecondFace, anU2Min, anU2Max, aV2Min, aV2Max);
+  ::model::utils::BRepTools::UVBounds(theFirstFace, anU1Min, anU1Max, aV1Min, aV1Max);
+  ::model::utils::BRepTools::UVBounds(theSecondFace, anU2Min, anU2Max, aV2Min, aV2Max);
 
   if (theIsFirstPointSet)
   {

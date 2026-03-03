@@ -19,14 +19,14 @@ static int DNaming_CheckHasSame(Draw_Interpretor& di, int nb, const char** arg)
   if (S1.IsNull())
   {
     BRep_Builder aBuilder;
-    BRepTools::Read(S1, arg[1], aBuilder);
+    ::model::utils::BRepTools::Read(S1, arg[1], aBuilder);
   }
 
   TopoDS_Shape S2 = DBRep::Get(arg[2]);
   if (S2.IsNull())
   {
     BRep_Builder aBuilder;
-    BRepTools::Read(S2, arg[2], aBuilder);
+    ::model::utils::BRepTools::Read(S2, arg[2], aBuilder);
   }
   char M[8];
   strcpy(M, arg[3]);
@@ -86,7 +86,7 @@ static int DNaming_TCopyShape(Draw_Interpretor& di, int nb, const char** arg)
     if (S.IsNull())
     {
       BRep_Builder aBuilder;
-      BRepTools::Read(S, arg[i], aBuilder);
+      ::model::utils::BRepTools::Read(S, arg[i], aBuilder);
     }
 
     if (S.IsNull())
@@ -139,7 +139,7 @@ static int DNaming_TCopyTool(Draw_Interpretor& di, int nb, const char** arg)
 
     if (aShape.IsNull())
     {
-      BRepTools::Read(aShape, arg[i], aBuilder);
+      ::model::utils::BRepTools::Read(aShape, arg[i], aBuilder);
     }
 
     if (aShape.IsNull())

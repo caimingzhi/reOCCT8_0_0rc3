@@ -14,7 +14,7 @@
 #include <TopoDS_Shell.hpp>
 #include <TopoDS_Solid.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(ShapeBuild_ReShape, BRepTools_ReShape)
+IMPLEMENT_STANDARD_RTTIEXT(ShapeBuild_ReShape, ::model::utils::BRepTools_ReShape)
 
 ShapeBuild_ReShape::ShapeBuild_ReShape() = default;
 
@@ -139,7 +139,7 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape&    shape,
       return S;
     }
   }
-  std::cout << "BRepTools_ReShape::Apply NOT YET IMPLEMENTED" << std::endl;
+  std::cout << "::model::utils::BRepTools_ReShape::Apply NOT YET IMPLEMENTED" << std::endl;
   return shape;
 }
 
@@ -232,7 +232,7 @@ TopoDS_Shape ShapeBuild_ReShape::Apply(const TopoDS_Shape& shape, const TopAbs_S
 
 int ShapeBuild_ReShape::Status(const TopoDS_Shape& ashape, TopoDS_Shape& newsh, const bool last)
 {
-  return BRepTools_ReShape::Status(ashape, newsh, last);
+  return ::model::utils::BRepTools_ReShape::Status(ashape, newsh, last);
 }
 
 bool ShapeBuild_ReShape::Status(const ShapeExtend_Status status) const

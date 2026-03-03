@@ -115,7 +115,7 @@ static int OCC145bug(Draw_Interpretor& di, int argc, const char** argv)
   BRep_Builder aBld;
   TopoDS_Shape aShape;
 
-  if (!BRepTools::Read(aShape, aFileName.ToCString(), aBld))
+  if (!::model::utils::BRepTools::Read(aShape, aFileName.ToCString(), aBld))
   {
     di << "ERROR :Could not read a shape!!!\n";
     return 1;

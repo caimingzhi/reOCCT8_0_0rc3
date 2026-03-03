@@ -547,7 +547,7 @@ static int splitface(Draw_Interpretor& di, int argc, const char** argv)
 
   occ::handle<Geom_Surface> S = BRep_Tool::Surface(face);
   double                    Uf, Ul, Vf, Vl;
-  BRepTools::UVBounds(face, Uf, Ul, Vf, Vl);
+  ::model::utils::BRepTools::UVBounds(face, Uf, Ul, Vf, Vl);
   double Umin, Umax, Vmin, Vmax;
   S->Bounds(Umin, Umax, Vmin, Vmax);
   if (Uf < Umin && !S->IsUPeriodic())
@@ -1080,7 +1080,7 @@ static int reshape(Draw_Interpretor&, int theArgc, const char** theArgv)
     return 1;
   }
 
-  occ::handle<BRepTools_ReShape> aReShaper = new BRepTools_ReShape;
+  occ::handle<::model::utils::BRepTools_ReShape> aReShaper = new ::model::utils::BRepTools_ReShape;
 
   TopAbs_ShapeEnum aShapeLevel = TopAbs_SHAPE;
 

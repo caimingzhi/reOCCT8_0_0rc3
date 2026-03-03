@@ -56,7 +56,7 @@ public:
 
   Standard_EXPORT virtual bool HasDeleted() const;
 
-  occ::handle<BRepTools_History> History() { return myFeatureRemovalTool.History(); }
+  occ::handle<::model::utils::BRepTools_History> History() { return myFeatureRemovalTool.History(); }
 
 protected:
   void Clear() override

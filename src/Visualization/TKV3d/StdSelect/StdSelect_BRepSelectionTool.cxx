@@ -125,7 +125,7 @@ void StdSelect_BRepSelectionTool::Load(const occ::handle<SelectMgr_Selection>& t
                                        const double                            theMaxParam)
 {
   int aPriority = (thePriority == -1) ? GetStandardPriority(theShape, theType) : thePriority;
-  if (isAutoTriangulation && !BRepTools::Triangulation(theShape, math::precision::Precision::Infinite(), true))
+  if (isAutoTriangulation && !::model::utils::BRepTools::Triangulation(theShape, math::precision::Precision::Infinite(), true))
   {
     BRepMesh_IncrementalMesh aMesher(theShape, theDeflection, false, theDeviationAngle);
   }
@@ -656,7 +656,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
     if (isCylinderOrCone(theFace))
     {
       double aURange[2] = {}, aVRange[2] = {};
-      BRepTools::UVBounds(theFace, aURange[0], aURange[1], aVRange[0], aVRange[1]);
+      ::model::utils::BRepTools::UVBounds(theFace, aURange[0], aURange[1], aVRange[0], aVRange[1]);
 
       const gp_Circ aCirc1  = ElSLib::ConeVIso(aGeomCone->Position(),
                                               aGeomCone->RefRadius(),
@@ -694,7 +694,7 @@ bool StdSelect_BRepSelectionTool::GetSensitiveForFace(
     if (isCylinderOrCone(theFace))
     {
       double aURange[2] = {}, aVRange[2] = {};
-      BRepTools::UVBounds(theFace, aURange[0], aURange[1], aVRange[0], aVRange[1]);
+      ::model::utils::BRepTools::UVBounds(theFace, aURange[0], aURange[1], aVRange[0], aVRange[1]);
 
       const double aRad    = aGeomCyl->Radius();
       const double aHeight = aVRange[1] - aVRange[0];

@@ -16,10 +16,14 @@
 #include <TopLoc_Location.hpp>
 #include <Message_ProgressRange.hpp>
 
+namespace model { namespace utils {
 class BRepTools_Modification;
+}} // namespace model::utils
+
 class Geom_Curve;
 class Geom_Surface;
 
+namespace model { namespace utils {
 class BRepTools_Modifier
 {
 public:
@@ -101,9 +105,12 @@ private:
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>                    myHasNewGeom;
   bool                                                                      myMutableInput;
 };
+}} // namespace model::utils
+
 
 #include <Standard_NoSuchObject.hpp>
 
+namespace model { namespace utils {
 inline const TopoDS_Shape& BRepTools_Modifier::ModifiedShape(const TopoDS_Shape& S) const
 {
   if (!myMap.IsBound(S))
@@ -117,3 +124,5 @@ inline bool BRepTools_Modifier::IsDone() const
 {
   return myDone;
 }
+
+}} // namespace model::utils

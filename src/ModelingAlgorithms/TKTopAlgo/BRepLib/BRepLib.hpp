@@ -19,7 +19,10 @@ class Geom_Plane;
 class TopoDS_Shape;
 class TopoDS_Solid;
 class TopoDS_Face;
+namespace model { namespace utils {
 class BRepTools_ReShape;
+}} // namespace model::utils
+
 
 class BRepLib
 {
@@ -93,7 +96,7 @@ public:
                                             const bool          forced    = false);
 
   Standard_EXPORT static void SameParameter(const TopoDS_Shape& S,
-                                            BRepTools_ReShape&  theReshaper,
+                                            ::model::utils::BRepTools_ReShape&  theReshaper,
                                             const double        Tolerance = 1.0e-5,
                                             const bool          forced    = false);
 
@@ -101,7 +104,7 @@ public:
                                                const bool          verifyFaceTolerance = false);
 
   Standard_EXPORT static void UpdateTolerances(const TopoDS_Shape& S,
-                                               BRepTools_ReShape&  theReshaper,
+                                               ::model::utils::BRepTools_ReShape&  theReshaper,
                                                const bool          verifyFaceTolerance = false);
 
   Standard_EXPORT static void UpdateInnerTolerances(const TopoDS_Shape& S);

@@ -34,7 +34,7 @@ void BRepMesh_ShapeVisitor::Visit(const TopoDS_Edge& theEdge)
 
 void BRepMesh_ShapeVisitor::Visit(const TopoDS_Face& theFace)
 {
-  BRepTools::Update(theFace);
+  ::model::utils::BRepTools::Update(theFace);
   const IMeshData::IFaceHandle& aDFace = myModel->AddFace(theFace);
 
   TopoDS_Wire aOuterWire = ShapeAnalysis::OuterWire(theFace);

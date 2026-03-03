@@ -20,8 +20,8 @@ IMPLEMENT_STANDARD_RTTIEXT(XmlMNaming_NamedShapeDriver, XmlMDF_ADriver)
 
 static TNaming_Evolution          EvolutionEnum(const XmlObjMgt_DOMString&);
 static const XmlObjMgt_DOMString& EvolutionString(const TNaming_Evolution);
-static void doTranslate(const TopoDS_Shape&, XmlMNaming_Shape1&, BRepTools_ShapeSet&);
-static int  doTranslate(const XmlMNaming_Shape1&, TopoDS_Shape&, BRepTools_ShapeSet&);
+static void doTranslate(const TopoDS_Shape&, XmlMNaming_Shape1&, ::model::utils::BRepTools_ShapeSet&);
+static int  doTranslate(const XmlMNaming_Shape1&, TopoDS_Shape&, ::model::utils::BRepTools_ShapeSet&);
 
 IMPLEMENT_DOMSTRING(OldsString, "olds")
 IMPLEMENT_DOMSTRING(NewsString, "news")
@@ -74,7 +74,7 @@ bool XmlMNaming_NamedShapeDriver::Paste(const XmlObjMgt_Persistent&       theSou
 
   TopoDS_Shape        anOldShape;
   TopoDS_Shape        aNewShape;
-  BRepTools_ShapeSet& aShapeSet = (BRepTools_ShapeSet&)myShapeSet;
+  ::model::utils::BRepTools_ShapeSet& aShapeSet = (::model::utils::BRepTools_ShapeSet&)myShapeSet;
 
   int lower = NewPShapes.Lower();
   if (OldPShapes.Lower() < lower)
@@ -155,7 +155,7 @@ void XmlMNaming_NamedShapeDriver::Paste(const occ::handle<TDF_Attribute>& theSou
     SItr.Next();
   }
 
-  BRepTools_ShapeSet& aShapeSet = (BRepTools_ShapeSet&)myShapeSet;
+  ::model::utils::BRepTools_ShapeSet& aShapeSet = (::model::utils::BRepTools_ShapeSet&)myShapeSet;
   XmlObjMgt_Array1    OldPShapes(1, NbShapes), NewPShapes(1, NbShapes);
 
   OldPShapes.CreateArrayElement(theTarget, ::OldsString());
@@ -237,7 +237,7 @@ static TNaming_Evolution EvolutionEnum(const XmlObjMgt_DOMString& theString)
 
 static void doTranslate(const TopoDS_Shape& theShape,
                         XmlMNaming_Shape1&  theResult,
-                        BRepTools_ShapeSet& theShapeSet)
+                        ::model::utils::BRepTools_ShapeSet& theShapeSet)
 {
 
   if (theShape.IsNull())
@@ -256,7 +256,7 @@ static void doTranslate(const TopoDS_Shape& theShape,
 
 static int doTranslate(const XmlMNaming_Shape1& thePShape,
                        TopoDS_Shape&            theResult,
-                       BRepTools_ShapeSet&      theShapeSet)
+                       ::model::utils::BRepTools_ShapeSet&      theShapeSet)
 {
   const int aShapeId = thePShape.TShapeId();
 
@@ -325,7 +325,7 @@ void XmlMNaming_NamedShapeDriver::WriteShapeSection(XmlObjMgt_Element&    theEle
 
     anElement.appendChild(aText);
 
-    BRepTools_ShapeSet& aShapeSet = (BRepTools_ShapeSet&)myShapeSet;
+    ::model::utils::BRepTools_ShapeSet& aShapeSet = (::model::utils::BRepTools_ShapeSet&)myShapeSet;
     aShapeSet.Clear();
     if (!aPS.More())
       return;

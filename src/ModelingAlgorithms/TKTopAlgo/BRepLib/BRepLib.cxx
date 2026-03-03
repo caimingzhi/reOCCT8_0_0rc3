@@ -67,7 +67,7 @@ static occ::handle<Geom_Plane> thePlane;
 static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
                                      const bool          IsVerifyTolerance,
                                      const bool          IsMutableInput,
-                                     BRepTools_ReShape&  theReshaper);
+                                     ::model::utils::BRepTools_ReShape&  theReshaper);
 
 struct BRepLib_ComparePoints
 {
@@ -731,7 +731,7 @@ static void UpdTolMap(
 static void UpdShTol(
   const NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher>& theShToTol,
   const bool                                                                IsMutableInput,
-  BRepTools_ReShape&                                                        theReshaper,
+  ::model::utils::BRepTools_ReShape&                                                        theReshaper,
   bool                                                                      theVForceUpdate)
 {
   BRep_Builder                                                                 aB;
@@ -795,7 +795,7 @@ static void UpdShTol(
 }
 
 static void InternalSameParameter(const TopoDS_Shape& theSh,
-                                  BRepTools_ReShape&  theReshaper,
+                                  ::model::utils::BRepTools_ReShape&  theReshaper,
                                   const double        theTol,
                                   const bool          IsForced,
                                   const bool          IsMutableInput)
@@ -876,12 +876,12 @@ static void InternalSameParameter(const TopoDS_Shape& theSh,
 
 void BRepLib::SameParameter(const TopoDS_Shape& S, const double Tolerance, const bool forced)
 {
-  BRepTools_ReShape reshaper;
+  ::model::utils::BRepTools_ReShape reshaper;
   InternalSameParameter(S, reshaper, Tolerance, forced, true);
 }
 
 void BRepLib::SameParameter(const TopoDS_Shape& S,
-                            BRepTools_ReShape&  theReshaper,
+                            ::model::utils::BRepTools_ReShape&  theReshaper,
                             const double        Tolerance,
                             const bool          forced)
 {
@@ -1527,7 +1527,7 @@ TopoDS_Edge BRepLib::SameParameter(const TopoDS_Edge& theEdge,
 static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
                                      const bool          IsVerifyTolerance,
                                      const bool          IsMutableInput,
-                                     BRepTools_ReShape&  theReshaper)
+                                     ::model::utils::BRepTools_ReShape&  theReshaper)
 {
   NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher> aShToTol;
 
@@ -1713,12 +1713,12 @@ static void InternalUpdateTolerances(const TopoDS_Shape& theOldShape,
 
 void BRepLib::UpdateTolerances(const TopoDS_Shape& S, const bool verifyFaceTolerance)
 {
-  BRepTools_ReShape aReshaper;
+  ::model::utils::BRepTools_ReShape aReshaper;
   InternalUpdateTolerances(S, verifyFaceTolerance, true, aReshaper);
 }
 
 void BRepLib::UpdateTolerances(const TopoDS_Shape& S,
-                               BRepTools_ReShape&  theReshaper,
+                               ::model::utils::BRepTools_ReShape&  theReshaper,
                                const bool          verifyFaceTolerance)
 {
   InternalUpdateTolerances(S, verifyFaceTolerance, false, theReshaper);

@@ -554,7 +554,7 @@ bool ShapeFix_Face::Perform()
         myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_DONE2);
     }
 
-    BRepTools::Update(myFace);
+    ::model::utils::BRepTools::Update(myFace);
 
     bool NeedSplit = true;
     if (FixAddNaturalBound())
@@ -742,7 +742,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
 
     SendWarning(myFace, System::log::Message_Msg("FixAdvFace.FixOrientation.MSG0"));
 
-    BRepTools::Update(myFace);
+    ::model::utils::BRepTools::Update(myFace);
     myResult = myFace;
     return true;
   }
@@ -830,7 +830,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
         {
           if (!BRep_Tool::Degenerated(bnd->Edge(k)))
             continue;
-          if (BRepTools::Compare(V, sae.FirstVertex(bnd->Edge(k))))
+          if (::model::utils::BRepTools::Compare(V, sae.FirstVertex(bnd->Edge(k))))
             break;
         }
         if (k > bnd->NbEdges())
@@ -865,7 +865,7 @@ bool ShapeFix_Face::FixAddNaturalBound()
   if (!Context().IsNull())
     Context()->Replace(myFace, S);
   myFace = TopoDS::Face(S);
-  BRepTools::Update(myFace);
+  ::model::utils::BRepTools::Update(myFace);
 
   SendWarning(myFace, System::log::Message_Msg("FixAdvFace.FixOrientation.MSG0"));
 
@@ -1340,7 +1340,7 @@ bool ShapeFix_Face::FixOrientation(
     if (!Context().IsNull())
       Context()->Replace(myFace, S);
     myFace = TopoDS::Face(S);
-    BRepTools::Update(myFace);
+    ::model::utils::BRepTools::Update(myFace);
   }
   return done;
 }
@@ -1438,7 +1438,7 @@ bool ShapeFix_Face::FixMissingSeam()
   double URange, VRange, SUF, SUL, SVF, SVL;
   mySurf->Bounds(SUF, SUL, SVF, SVL);
   double fU1, fU2, fV1, fV2;
-  BRepTools::UVBounds(myFace, fU1, fU2, fV1, fV2);
+  ::model::utils::BRepTools::UVBounds(myFace, fU1, fU2, fV1, fV2);
 
   if (math::precision::Precision::IsInfinite(SUF) || math::precision::Precision::IsInfinite(SUL))
   {
@@ -1897,7 +1897,7 @@ bool ShapeFix_Face::FixMissingSeam()
         continue;
       myFace = TopoDS::Face(aShape);
     }
-    BRepTools::Update(myFace);
+    ::model::utils::BRepTools::Update(myFace);
   }
   myResult = Context()->Apply(myResult);
 
@@ -2209,7 +2209,7 @@ bool ShapeFix_Face::SplitEdge(
     for (TopExp_Explorer exp(wd->Wire(), TopAbs_EDGE); exp.More(); exp.Next())
     {
       TopoDS_Edge E = TopoDS::Edge(exp.Current());
-      BRepTools::Update(E);
+      ::model::utils::BRepTools::Update(E);
     }
 
     sewd->Set(newE1, num);
@@ -2284,7 +2284,7 @@ bool ShapeFix_Face::SplitEdge(
     for (TopExp_Explorer exp(wd->Wire(), TopAbs_EDGE); exp.More(); exp.Next())
     {
       TopoDS_Edge E = TopoDS::Edge(exp.Current());
-      BRepTools::Update(E);
+      ::model::utils::BRepTools::Update(E);
     }
 
     sewd->Set(newE1, num);
@@ -2495,7 +2495,7 @@ bool ShapeFix_Face::FixSplitFace(
     for (TopExp_Explorer exp(myResult, TopAbs_FACE); exp.More(); exp.Next())
     {
       myFace = TopoDS::Face(exp.Current());
-      BRepTools::Update(myFace);
+      ::model::utils::BRepTools::Update(myFace);
     }
     return true;
   }

@@ -33,6 +33,7 @@ class OSD_FileSystem;
 }} // namespace System::os
 
 
+namespace model { namespace utils {
 class BRepTools
 {
 public:
@@ -190,3 +191,5 @@ public:
   Standard_EXPORT static void CheckLocations(const TopoDS_Shape&             theS,
                                              NCollection_List<TopoDS_Shape>& theProblemShapes);
 };
+}} // namespace model::utils
+

@@ -261,7 +261,7 @@ void BRepBuilderAPI_FastSewing::Perform()
       myEdgeVec.ChangeValue(i).CreateTopologicalEdge(myVertexVec, myFaceVec, myTolerance);
     }
 
-    BRepTools_Quilt aQuilt;
+    ::model::utils::BRepTools_Quilt aQuilt;
 
     for (int i = myFaceVec.Lower(); i <= myFaceVec.Upper(); i++)
     {

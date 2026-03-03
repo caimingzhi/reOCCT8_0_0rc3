@@ -2,7 +2,8 @@
 
 #include <BRepTools_Modification.hpp>
 
-class BRepTools_CopyModification : public BRepTools_Modification
+namespace model { namespace utils {
+class BRepTools_CopyModification : public ::model::utils::BRepTools_Modification
 {
 public:
   Standard_EXPORT explicit BRepTools_CopyModification(const bool theCopyGeom = true,
@@ -60,3 +61,5 @@ private:
   bool myCopyGeom;
   bool myCopyMesh;
 };
+}} // namespace model::utils
+

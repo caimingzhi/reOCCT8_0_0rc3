@@ -560,7 +560,7 @@ void TopOpeBRepBuild_Builder::GFABUMakeFaces(
       double oumin, oumax, ovmin, ovmax;
       hrts->Bounds(oumin, oumax, ovmin, ovmax);
       double umin, umax, vmin, vmax;
-      BRepTools::UVBounds(newFace, umin, umax, vmin, vmax);
+      ::model::utils::BRepTools::UVBounds(newFace, umin, umax, vmin, vmax);
       if (umin < oumin)
         oumin = umin;
       if (umax > oumax)

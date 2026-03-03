@@ -107,7 +107,7 @@ static int BUC60652(Draw_Interpretor& di, int argc, const char** argv)
   }
   TopoDS_Shape shape = DBRep::Get(argv[1]);
   TopoDS_Face  face  = TopoDS::Face(shape);
-  TopoDS_Wire  ow    = BRepTools::OuterWire(face);
+  TopoDS_Wire  ow    = ::model::utils::BRepTools::OuterWire(face);
   DBRep::Set("w", ow);
   return 0;
 }
@@ -1084,7 +1084,7 @@ static int BUC60921(Draw_Interpretor& di, int nb, const char** arg)
 
     BRep_Builder B;
     TopoDS_Shape S;
-    BRepTools::Read(S, arg[3], B);
+    ::model::utils::BRepTools::Read(S, arg[3], B);
 
     TNaming_Builder tnBuild(L);
     tnBuild.Generated(S);

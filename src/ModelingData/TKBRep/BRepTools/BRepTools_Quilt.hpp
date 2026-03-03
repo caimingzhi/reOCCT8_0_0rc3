@@ -10,6 +10,7 @@ class TopoDS_Edge;
 class TopoDS_Vertex;
 class TopoDS_Shape;
 
+namespace model { namespace utils {
 class BRepTools_Quilt
 {
 public:
@@ -33,3 +34,5 @@ private:
   NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myBounds;
   bool                                                                            hasCopy;
 };
+}} // namespace model::utils
+

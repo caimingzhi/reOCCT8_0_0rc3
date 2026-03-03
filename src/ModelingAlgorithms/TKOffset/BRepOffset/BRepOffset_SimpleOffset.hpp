@@ -15,10 +15,10 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedDataMap.hpp>
 
-class BRepOffset_SimpleOffset : public BRepTools_Modification
+class BRepOffset_SimpleOffset : public ::model::utils::BRepTools_Modification
 {
 public:
-  DEFINE_STANDARD_RTTI_INLINE(BRepOffset_SimpleOffset, BRepTools_Modification)
+  DEFINE_STANDARD_RTTI_INLINE(BRepOffset_SimpleOffset, ::model::utils::BRepTools_Modification)
 
   Standard_EXPORT BRepOffset_SimpleOffset(const TopoDS_Shape& theInputShape,
                                           const double        theOffsetValue,

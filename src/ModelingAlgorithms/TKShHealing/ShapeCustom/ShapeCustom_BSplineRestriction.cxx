@@ -362,7 +362,7 @@ bool ShapeCustom_BSplineRestriction::NewSurface(const TopoDS_Face&         F,
   double UF, UL, VF, VL;
   aSurface->Bounds(UF, UL, VF, VL);
   double Umin, Umax, Vmin, Vmax;
-  BRepTools::UVBounds(F, Umin, Umax, Vmin, Vmax);
+  ::model::utils::BRepTools::UVBounds(F, Umin, Umax, Vmin, Vmax);
   if (myParameters->SegmentSurfaceMode())
   {
     UF = Umin;

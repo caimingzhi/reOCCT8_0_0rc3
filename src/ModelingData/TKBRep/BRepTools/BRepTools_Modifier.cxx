@@ -30,6 +30,7 @@
 
 static void SetShapeFlags(const TopoDS_Shape& theInSh, TopoDS_Shape& theOutSh);
 
+namespace model { namespace utils {
 BRepTools_Modifier::BRepTools_Modifier(bool theMutableInput)
     : myDone(false),
       myMutableInput(theMutableInput)
@@ -45,7 +46,7 @@ BRepTools_Modifier::BRepTools_Modifier(const TopoDS_Shape& S)
 }
 
 BRepTools_Modifier::BRepTools_Modifier(const TopoDS_Shape&                        S,
-                                       const occ::handle<BRepTools_Modification>& M)
+                                       const occ::handle<::model::utils::BRepTools_Modification>& M)
     : myShape(S),
       myDone(false),
       myMutableInput(false)
@@ -65,7 +66,7 @@ void BRepTools_Modifier::Init(const TopoDS_Shape& S)
 static NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> MapE, MapF;
 #endif
 
-void BRepTools_Modifier::Perform(const occ::handle<BRepTools_Modification>& M,
+void BRepTools_Modifier::Perform(const occ::handle<::model::utils::BRepTools_Modification>& M,
                                  const System::log::Message_ProgressRange&               theProgress)
 {
   if (myShape.IsNull())
@@ -175,7 +176,7 @@ void BRepTools_Modifier::Put(const TopoDS_Shape& S)
 }
 
 bool BRepTools_Modifier::Rebuild(const TopoDS_Shape&                        S,
-                                 const occ::handle<BRepTools_Modification>& M,
+                                 const occ::handle<::model::utils::BRepTools_Modification>& M,
                                  bool&                                      theNewGeom,
                                  const System::log::Message_ProgressRange&               theProgress)
 {
@@ -537,7 +538,7 @@ void BRepTools_Modifier::CreateNewVertices(
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>& theMVE,
-  const occ::handle<BRepTools_Modification>&                 M)
+  const occ::handle<::model::utils::BRepTools_Modification>&                 M)
 {
   double       aToler;
   BRep_Builder aBB;
@@ -564,7 +565,7 @@ void BRepTools_Modifier::FillNewCurveInfo(
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>& theMEF,
-  const occ::handle<BRepTools_Modification>&                 M)
+  const occ::handle<::model::utils::BRepTools_Modification>&                 M)
 {
   occ::handle<Geom_Curve>          aCurve;
   TopLoc_Location                  aLocation;
@@ -585,7 +586,7 @@ void BRepTools_Modifier::FillNewCurveInfo(
   }
 }
 
-void BRepTools_Modifier::FillNewSurfaceInfo(const occ::handle<BRepTools_Modification>& M)
+void BRepTools_Modifier::FillNewSurfaceInfo(const occ::handle<::model::utils::BRepTools_Modification>& M)
 {
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMF;
   TopExp::MapShapes(myShape, TopAbs_FACE, aMF);
@@ -651,7 +652,7 @@ void BRepTools_Modifier::CreateOtherVertices(
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>& theMEF,
-  const occ::handle<BRepTools_Modification>&                 M)
+  const occ::handle<::model::utils::BRepTools_Modification>&                 M)
 {
   double aToler;
 
@@ -720,3 +721,5 @@ void BRepTools_Modifier::SetMutableInput(bool theMutableInput)
 {
   myMutableInput = theMutableInput;
 }
+
+}} // namespace model::utils

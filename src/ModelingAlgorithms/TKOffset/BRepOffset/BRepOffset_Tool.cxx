@@ -2987,7 +2987,7 @@ bool BRepOffset_Tool::EnLargeFace(const TopoDS_Face& F,
   }
   else
   {
-    BRepTools::UVBounds(F, UF1, UF2, VF1, VF2);
+    ::model::utils::BRepTools::UVBounds(F, UF1, UF2, VF1, VF2);
   }
 
   S->Bounds(US1, US2, VS1, VS2);
@@ -3098,7 +3098,7 @@ bool BRepOffset_Tool::EnLargeFace(const TopoDS_Face& F,
     VV2 = VF2;
 
   bool uclosed = false, vclosed = false;
-  BRepTools::DetectClosedness(F, uclosed, vclosed);
+  ::model::utils::BRepTools::DetectClosedness(F, uclosed, vclosed);
   if (uclosed && !uperiodic && (theLenBeforeUfirst != 0. || theLenAfterUlast != 0.))
     uclosed = false;
   if (vclosed && !vperiodic && (theLenBeforeVfirst != 0. && theLenAfterVlast != 0.))
@@ -3714,7 +3714,7 @@ void BRepOffset_Tool::ExtentFace(
     B.Add(NF, NW.Oriented(W.Orientation()));
   }
   NF.Orientation(F.Orientation());
-  BRepTools::Update(NF);
+  ::model::utils::BRepTools::Update(NF);
 }
 
 TopoDS_Shape BRepOffset_Tool::Deboucle3D(

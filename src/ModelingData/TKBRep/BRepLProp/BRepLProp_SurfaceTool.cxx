@@ -3,6 +3,7 @@
 #include <gp_Pnt.hpp>
 #include <gp_Vec.hpp>
 
+namespace model { namespace localproperties {
 void BRepLProp_SurfaceTool::Value(const ::model::adapter::BRepAdaptor_Surface& S,
                                   const double               U,
                                   const double               V,
@@ -77,3 +78,5 @@ void BRepLProp_SurfaceTool::Bounds(const ::model::adapter::BRepAdaptor_Surface& 
   U2 = S.LastUParameter();
   V2 = S.LastVParameter();
 }
+
+}} // namespace model::localproperties

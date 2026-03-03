@@ -27,7 +27,7 @@ class TopoDS_Vertex;
 class gp_Pnt;
 class Geom2d_Curve;
 
-class Draft_Modification : public BRepTools_Modification
+class Draft_Modification : public ::model::utils::BRepTools_Modification
 {
 
 public:
@@ -90,7 +90,7 @@ public:
                                            const TopoDS_Face& NewF1,
                                            const TopoDS_Face& NewF2) override;
 
-  DEFINE_STANDARD_RTTIEXT(Draft_Modification, BRepTools_Modification)
+  DEFINE_STANDARD_RTTIEXT(Draft_Modification, ::model::utils::BRepTools_Modification)
 
 private:
   Standard_EXPORT bool InternalAdd(const TopoDS_Face& F,

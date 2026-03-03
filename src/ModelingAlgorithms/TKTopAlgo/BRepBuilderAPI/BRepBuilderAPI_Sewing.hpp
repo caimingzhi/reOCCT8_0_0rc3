@@ -18,7 +18,10 @@
 
 #include <Message_ProgressRange.hpp>
 
+namespace model { namespace utils {
 class BRepTools_ReShape;
+}} // namespace model::utils
+
 class TopoDS_Edge;
 class TopoDS_Face;
 class Geom_Surface;
@@ -50,9 +53,9 @@ public:
 
   Standard_EXPORT const TopoDS_Shape& SewedShape() const;
 
-  Standard_EXPORT void SetContext(const occ::handle<BRepTools_ReShape>& theContext);
+  Standard_EXPORT void SetContext(const occ::handle<::model::utils::BRepTools_ReShape>& theContext);
 
-  Standard_EXPORT const occ::handle<BRepTools_ReShape>& GetContext() const;
+  Standard_EXPORT const occ::handle<::model::utils::BRepTools_ReShape>& GetContext() const;
 
   Standard_EXPORT int NbFreeEdges() const;
 
@@ -208,7 +211,7 @@ protected:
     const NCollection_Sequence<TopoDS_Shape>&               seqEdges,
     const NCollection_Sequence<bool>&                       seqForward,
     NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& mapMerged,
-    const occ::handle<BRepTools_ReShape>&                   locReShape);
+    const occ::handle<::model::utils::BRepTools_ReShape>&                   locReShape);
 
   Standard_EXPORT virtual TopoDS_Edge SameParameterEdge(
     const TopoDS_Edge&                    edge1,
@@ -275,7 +278,7 @@ protected:
                                                                 myCuttingNode;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> myLittleFace;
   TopoDS_Shape                                                  myShape;
-  occ::handle<BRepTools_ReShape>                                myReShape;
+  occ::handle<::model::utils::BRepTools_ReShape>                                myReShape;
 
 private:
   bool                                                   myFaceMode;

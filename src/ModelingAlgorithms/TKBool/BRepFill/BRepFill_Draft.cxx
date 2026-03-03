@@ -315,7 +315,7 @@ void BRepFill_Draft::Perform(const TopoDS_Shape& StopShape, const bool KeepOutSi
   while (Ex.More())
   {
 
-    BRepTools::UVBounds(TopoDS::Face(Ex.Current()), Umin, Umax, Vmin, Vmax);
+    ::model::utils::BRepTools::UVBounds(TopoDS::Face(Ex.Current()), Umin, Umax, Vmin, Vmax);
     Surf = occ::down_cast<Geom_Surface>(
 
       BRep_Tool::Surface(TopoDS::Face(Ex.Current()))->Transformed(Trsf));
@@ -596,7 +596,7 @@ bool BRepFill_Draft::Fuse(const TopoDS_Shape& StopShape, const bool KeepOutSide)
     return false;
 
   TopoDS_Shape                   result;
-  occ::handle<BRepTools_History> aHistory = new BRepTools_History;
+  occ::handle<::model::utils::BRepTools_History> aHistory = new ::model::utils::BRepTools_History;
 
   bool isSingleOpNeeded = true;
 

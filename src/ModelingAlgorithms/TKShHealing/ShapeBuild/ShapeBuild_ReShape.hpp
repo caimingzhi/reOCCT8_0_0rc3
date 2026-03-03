@@ -13,7 +13,7 @@ class TopoDS_Shape;
   #undef Status
 #endif
 
-class ShapeBuild_ReShape : public BRepTools_ReShape
+class ShapeBuild_ReShape : public ::model::utils::BRepTools_ReShape
 {
 
 public:
@@ -32,5 +32,5 @@ public:
 
   Standard_EXPORT virtual bool Status(const ShapeExtend_Status status) const;
 
-  DEFINE_STANDARD_RTTIEXT(ShapeBuild_ReShape, BRepTools_ReShape)
+  DEFINE_STANDARD_RTTIEXT(ShapeBuild_ReShape, ::model::utils::BRepTools_ReShape)
 };

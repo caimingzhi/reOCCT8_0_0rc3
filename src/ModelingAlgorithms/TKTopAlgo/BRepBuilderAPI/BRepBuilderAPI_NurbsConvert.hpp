@@ -30,5 +30,5 @@ private:
   Standard_EXPORT void CorrectVertexTol();
 
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myVtxToReplace;
-  BRepTools_ReShape                                                        mySubs;
+  ::model::utils::BRepTools_ReShape                                                        mySubs;
 };

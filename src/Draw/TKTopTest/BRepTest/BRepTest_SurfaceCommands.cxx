@@ -103,7 +103,7 @@ static int quilt(Draw_Interpretor&, int n, const char** a)
 {
   if (n < 4)
     return 1;
-  BRepTools_Quilt Q;
+  ::model::utils::BRepTools_Quilt Q;
 
   int i = 2;
   while (i < n)

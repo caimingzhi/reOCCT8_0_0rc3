@@ -18,7 +18,7 @@ void BOPAlgo_MakeConnected::Perform()
     return;
 
   if (myHistory.IsNull())
-    myHistory = new BRepTools_History;
+    myHistory = new ::model::utils::BRepTools_History;
 
   MakeConnected();
   if (HasErrors())
@@ -71,7 +71,7 @@ void BOPAlgo_MakeConnected::MakeConnected()
 {
 
   if (myGlueHistory.IsNull())
-    myGlueHistory = new BRepTools_History;
+    myGlueHistory = new ::model::utils::BRepTools_History;
 
   if (myArguments.Extent() == 1)
   {
@@ -123,7 +123,7 @@ void BOPAlgo_MakeConnected::FillOrigins()
   for (int i = 1; i <= aNbS; ++i)
   {
     const TopoDS_Shape& aS = myAllInputsMap(i);
-    if (!BRepTools_History::IsSupportedType(aS))
+    if (!::model::utils::BRepTools_History::IsSupportedType(aS))
       continue;
 
     for (int j = 0; j < 2; ++j)

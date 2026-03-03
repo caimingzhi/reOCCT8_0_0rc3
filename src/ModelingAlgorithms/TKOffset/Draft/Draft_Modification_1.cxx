@@ -193,7 +193,7 @@ bool Draft_Modification::InternalAdd(const TopoDS_Face& F,
         || typs == STANDARD_TYPE(Geom_ConicalSurface))
     {
       double umin, umax, vmin, vmax;
-      BRepTools::UVBounds(F, umin, umax, vmin, vmax);
+      ::model::utils::BRepTools::UVBounds(F, umin, umax, vmin, vmax);
       if (!math::precision::Precision::IsNegativeInfinite(vmin) && !math::precision::Precision::IsPositiveInfinite(vmax))
       {
         double deltav = 10. * (vmax - vmin);
@@ -264,7 +264,7 @@ bool Draft_Modification::InternalAdd(const TopoDS_Face& F,
       bool        addface = false;
       TopoDS_Face OtherF;
 
-      if (BRepTools::IsReallyClosed(edg, F))
+      if (::model::utils::BRepTools::IsReallyClosed(edg, F))
       {
         addedg  = true;
         addface = false;
@@ -498,7 +498,7 @@ bool Draft_Modification::Propagate()
             || typs == STANDARD_TYPE(Geom_ConicalSurface))
         {
           double umin, umax, vmin, vmax;
-          BRepTools::UVBounds(F, umin, umax, vmin, vmax);
+          ::model::utils::BRepTools::UVBounds(F, umin, umax, vmin, vmax);
           if (!math::precision::Precision::IsNegativeInfinite(vmin) && !math::precision::Precision::IsPositiveInfinite(vmax))
           {
             double deltav = 10. * (vmax - vmin);
@@ -756,7 +756,7 @@ void Draft_Modification::Perform()
         occ::handle<Geom_Surface> NewS = new Geom_SurfaceOfLinearExtrusion(CCir, extrdir);
 
         double umin, umax, vmin, vmax;
-        BRepTools::UVBounds(FK, umin, umax, vmin, vmax);
+        ::model::utils::BRepTools::UVBounds(FK, umin, umax, vmin, vmax);
         if (!math::precision::Precision::IsNegativeInfinite(vmin) && !math::precision::Precision::IsPositiveInfinite(vmax))
         {
           double deltav = 2. * (vmax - vmin);

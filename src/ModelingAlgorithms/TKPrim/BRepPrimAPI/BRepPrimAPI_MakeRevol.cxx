@@ -118,7 +118,7 @@ void BRepPrimAPI_MakeRevol::Build(const System::log::Message_ProgressRange&)
   }
   if (!myDegenerated.IsEmpty())
   {
-    BRepTools_ReShape aSubs;
+    ::model::utils::BRepTools_ReShape aSubs;
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
          aDegF;
     bool isReplaced = false;
@@ -143,7 +143,7 @@ void BRepPrimAPI_MakeRevol::Build(const System::log::Message_ProgressRange&)
       }
     }
 
-    BRepTools_ReShape aSubsF;
+    ::model::utils::BRepTools_ReShape aSubsF;
     NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>::
       Iterator aFIter(aDegF);
     for (; aFIter.More(); aFIter.Next())
@@ -316,7 +316,7 @@ const NCollection_List<TopoDS_Shape>& BRepPrimAPI_MakeRevol::Generated(const Top
   TopoDS_Shape aGS = myRevol.Shape(S);
   if (!aGS.IsNull())
   {
-    if (BRepTools_History::IsSupportedType(aGS))
+    if (::model::utils::BRepTools_History::IsSupportedType(aGS))
     {
       if (aGS.ShapeType() == TopAbs_EDGE)
       {

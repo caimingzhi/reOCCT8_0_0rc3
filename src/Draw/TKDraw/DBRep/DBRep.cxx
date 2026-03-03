@@ -397,9 +397,9 @@ static int tclean(Draw_Interpretor& di, int n, const char** a)
   }
 
   if (toRemoveGeometry)
-    BRepTools::CleanGeometry(aCompound);
+    ::model::utils::BRepTools::CleanGeometry(aCompound);
   else
-    BRepTools::Clean(aCompound, isForceClean);
+    ::model::utils::BRepTools::Clean(aCompound, isForceClean);
   return 0;
 }
 
@@ -803,7 +803,7 @@ static int numshapes(Draw_Interpretor& di, int n, const char** a)
     TopoDS_Shape S = DBRep::Get(a[i]);
     if (!S.IsNull())
     {
-      BRepTools_ShapeSet BS;
+      ::model::utils::BRepTools_ShapeSet BS;
       BS.Add(S);
       di << "Number of shapes in " << a[i] << "\n";
       TCollection_AsciiString Astr;
@@ -870,7 +870,7 @@ static int nbshapes(Draw_Interpretor& di, int n, const char** a)
       }
       else
       {
-        BRepTools_ShapeSet BS;
+        ::model::utils::BRepTools_ShapeSet BS;
         BS.Add(S);
         BS.DumpExtent(Astr);
       }
@@ -1153,7 +1153,7 @@ static int check(Draw_Interpretor&, int n, const char** a)
     {
       C = ex.Current();
       C.Checked(false);
-      BRepTools::Update(C);
+      ::model::utils::BRepTools::Update(C);
     }
   }
 
@@ -1515,7 +1515,7 @@ static int writebrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArg
 
     TopTools_FormatVersion aTopToolsVersion =
       aVersion > 0 ? static_cast<TopTools_FormatVersion>(aVersion) : TopTools_FormatVersion_CURRENT;
-    if (!BRepTools::Write(aShape,
+    if (!::model::utils::BRepTools::Write(aShape,
                           aFileName.ToCString(),
                           isWithTriangles,
                           isWithNormals,
@@ -1574,7 +1574,7 @@ static int readbrep(Draw_Interpretor& theDI, int theNbArgs, const char** theArgV
   }
   else
   {
-    if (!BRepTools::Read(aShape, aFileName, BRep_Builder(), aProgress->Start()))
+    if (!::model::utils::BRepTools::Read(aShape, aFileName, BRep_Builder(), aProgress->Start()))
     {
       theDI << "Error: cannot read from the file '" << aFileName << "'";
       return 1;
@@ -1607,7 +1607,7 @@ static int removeInternals(Draw_Interpretor& di, int n, const char** a)
     isForce = (Draw::Atoi(a[2]) != 0);
   }
 
-  BRepTools::RemoveInternals(aShape, isForce);
+  ::model::utils::BRepTools::RemoveInternals(aShape, isForce);
 
   DBRep::Set(a[1], aShape);
 

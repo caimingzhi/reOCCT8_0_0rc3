@@ -268,7 +268,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
             continue;
           }
 
-          if (BRepTools::IsReallyClosed(edg, fac))
+          if (::model::utils::BRepTools::IsReallyClosed(edg, fac))
           {
             if (!theEEMap.IsBound(edg))
             {
@@ -544,7 +544,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
           if (P.IsNull())
           {
             double Vminc, Vmaxc;
-            BRepTools::UVBounds(fac, Uminc, Umaxc, Vminc, Vmaxc);
+            ::model::utils::BRepTools::UVBounds(fac, Uminc, Umaxc, Vminc, Vmaxc);
           }
 
           for (itl.Initialize(itf.Value()); itl.More(); itl.Next())
@@ -629,7 +629,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                       pl = C2d->Value(l);
                     }
 
-                    if (!BRepTools::IsReallyClosed(edg, facbis))
+                    if (!::model::utils::BRepTools::IsReallyClosed(edg, facbis))
                     {
                       B.UpdateEdge(edg, C2d, newface, tol);
                     }
@@ -684,7 +684,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
               C2d =
                 BRep_Tool::CurveOnSurface(TopoDS::Edge(aLocalEdge), TopoDS::Face(aLocalFace), f, l);
 
-              if (!BRepTools::IsReallyClosed(edg, fac))
+              if (!::model::utils::BRepTools::IsReallyClosed(edg, fac))
               {
                 B.UpdateEdge(newedg, C2d, newface, tol);
               }
@@ -708,7 +708,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
             bool AddPart = false;
             if (DontFuse.IsBound(edg))
             {
-              if (!BRepTools::IsReallyClosed(edg, fac))
+              if (!::model::utils::BRepTools::IsReallyClosed(edg, fac))
               {
                 if (DontFuse(edg).IsSame(fac))
                 {
@@ -980,7 +980,7 @@ void LocOpe_Generator::Perform(const occ::handle<LocOpe_GeneratedShape>& G)
                     pl = C2d->Value(l);
                   }
 
-                  if (!BRepTools::IsReallyClosed(edg, facbis))
+                  if (!::model::utils::BRepTools::IsReallyClosed(edg, facbis))
                   {
                     B.UpdateEdge(edg, C2d, newface, tol);
                   }

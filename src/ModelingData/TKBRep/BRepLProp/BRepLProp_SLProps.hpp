@@ -17,7 +17,10 @@ namespace model { namespace adapter {
 class BRepAdaptor_Surface;
 }} // namespace model::adapter
 
+namespace model { namespace localproperties {
 class BRepLProp_SurfaceTool;
+}} // namespace model::localproperties
+
 class gp_Pnt;
 class gp_Vec;
 class gp_Dir;

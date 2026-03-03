@@ -56,13 +56,13 @@ public:
 
   bool HasDeleted() const { return (myFillHistory && myHistory ? myHistory->HasRemoved() : false); }
 
-  occ::handle<BRepTools_History> History()
+  occ::handle<::model::utils::BRepTools_History> History()
   {
     if (myFillHistory)
     {
       if (myHistory.IsNull())
 
-        myHistory = new BRepTools_History();
+        myHistory = new ::model::utils::BRepTools_History();
 
       return myHistory;
     }
@@ -102,5 +102,5 @@ protected:
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher> myMapShape;
 
   bool                           myFillHistory;
-  occ::handle<BRepTools_History> myHistory;
+  occ::handle<::model::utils::BRepTools_History> myHistory;
 };

@@ -215,7 +215,7 @@ void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
   if (!theShape1.IsNull())
   {
     aName1 = aPath + "Arg1_" + TCollection_AsciiString(aNumOper) + ".brep";
-    BRepTools::Write(theShape1, aName1.ToCString());
+    ::model::utils::BRepTools::Write(theShape1, aName1.ToCString());
   }
   else
     fprintf(afile, "%s\n", "# First argument is Null ");
@@ -224,7 +224,7 @@ void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
   {
     aName2 = aPath + "Arg2_" + TCollection_AsciiString(aNumOper) + ".brep";
 
-    BRepTools::Write(theShape2, aName2.ToCString());
+    ::model::utils::BRepTools::Write(theShape2, aName2.ToCString());
   }
   else
     fprintf(afile, "%s\n", "# Second argument is Null ");
@@ -233,7 +233,7 @@ void BRepAlgoAPI_DumpOper::Dump(const TopoDS_Shape& theShape1,
   {
     aNameRes = aPath + "Result_" + TCollection_AsciiString(aNumOper) + ".brep";
 
-    BRepTools::Write(theResult, aNameRes.ToCString());
+    ::model::utils::BRepTools::Write(theResult, aNameRes.ToCString());
   }
   else
     fprintf(afile, "%s\n", "# Result is Null ");

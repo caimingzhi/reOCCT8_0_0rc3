@@ -2592,7 +2592,7 @@ ShapeUpgrade_UnifySameDomain::ShapeUpgrade_UnifySameDomain()
       myConcatBSplines(false),
       myAllowInternal(false),
       mySafeInputMode(true),
-      myHistory(new BRepTools_History)
+      myHistory(new ::model::utils::BRepTools_History)
 {
   myContext = new ShapeBuild_ReShape;
 }
@@ -2610,7 +2610,7 @@ ShapeUpgrade_UnifySameDomain::ShapeUpgrade_UnifySameDomain(const TopoDS_Shape& a
       myAllowInternal(false),
       mySafeInputMode(true),
       myShape(aShape),
-      myHistory(new BRepTools_History)
+      myHistory(new ::model::utils::BRepTools_History)
 {
   myContext = new ShapeBuild_ReShape;
 }
@@ -3093,14 +3093,14 @@ void ShapeUpgrade_UnifySameDomain::IntUnifyFaces(
       for (int ii = 1; ii <= faces.Length(); ii++)
       {
         const TopoDS_Face& face_ii     = TopoDS::Face(faces(ii));
-        TopoDS_Wire        anOuterWire = BRepTools::OuterWire(face_ii);
+        TopoDS_Wire        anOuterWire = ::model::utils::BRepTools::OuterWire(face_ii);
         TopoDS_Iterator    itw(anOuterWire);
         for (; itw.More(); itw.Next())
         {
           const TopoDS_Edge& anEdge = TopoDS::Edge(itw.Value());
           if (BRep_Tool::IsClosed(anEdge, face_ii))
           {
-            if (BRepTools::IsReallyClosed(anEdge, face_ii))
+            if (::model::utils::BRepTools::IsReallyClosed(anEdge, face_ii))
             {
               if (IsUiso(anEdge, face_ii))
                 UseamFound = true;
@@ -3857,9 +3857,9 @@ void ShapeUpgrade_UnifySameDomain::FillHistory()
 
     return;
 
-  occ::handle<BRepTools_History> aCtxHistory = myContext->History();
+  occ::handle<::model::utils::BRepTools_History> aCtxHistory = myContext->History();
 
-  occ::handle<BRepTools_History> aUSDHistory = new BRepTools_History();
+  occ::handle<::model::utils::BRepTools_History> aUSDHistory = new ::model::utils::BRepTools_History();
 
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMapInputShape;
   TopExp::MapShapes(myInitShape, TopAbs_VERTEX, aMapInputShape);

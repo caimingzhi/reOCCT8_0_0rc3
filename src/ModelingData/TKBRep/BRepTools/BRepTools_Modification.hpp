@@ -19,6 +19,7 @@ class Poly_Triangulation;
 class Poly_Polygon3D;
 class Poly_PolygonOnTriangulation;
 
+namespace model { namespace utils {
 class BRepTools_Modification : public Standard_Transient
 {
 
@@ -68,3 +69,5 @@ public:
 
   DEFINE_STANDARD_RTTIEXT(BRepTools_Modification, Standard_Transient)
 };
+}} // namespace model::utils
+

@@ -206,7 +206,7 @@ namespace
             NCollection_List<TopoDS_Shape>::Iterator It;
             TopoDS_Face                              ff;
             bool                                     isclosed = BRep_Tool::IsClosed(ecur, F);
-            bool isreallyclosed                               = BRepTools::IsReallyClosed(ecur, F);
+            bool isreallyclosed                               = ::model::utils::BRepTools::IsReallyClosed(ecur, F);
             for (It.Initialize(EFMap(ecur)); It.More(); It.Next())
             {
               ff          = TopoDS::Face(It.Value());

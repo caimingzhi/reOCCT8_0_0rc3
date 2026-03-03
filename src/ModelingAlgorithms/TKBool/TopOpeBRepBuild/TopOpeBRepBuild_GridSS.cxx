@@ -1393,7 +1393,7 @@ static bool AreFacesCoincideInArea(const TopoDS_Shape&                   theBase
 
   occ::handle<Geom_Surface> aSurf = BRep_Tool::Surface(aFace);
   double                    umin, umax, vmin, vmax;
-  BRepTools::UVBounds(aFace, umin, umax, vmin, vmax);
+  ::model::utils::BRepTools::UVBounds(aFace, umin, umax, vmin, vmax);
   GeomAPI_ProjectPointOnSurf aProj(aPnt, aSurf, umin, umax, vmin, vmax);
   if (!aProj.NbPoints() || aProj.LowerDistance() > maxDist)
     return false;

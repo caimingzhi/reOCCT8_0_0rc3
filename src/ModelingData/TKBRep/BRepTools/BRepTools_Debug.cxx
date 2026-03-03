@@ -12,7 +12,7 @@ const char* BRepTools_Write(const char* theFileStr, void* theShapePtr)
   try
   {
     OCC_CATCH_SIGNALS
-    if (BRepTools::Write(*(TopoDS_Shape*)theShapePtr, theFileStr))
+    if (::model::utils::BRepTools::Write(*(TopoDS_Shape*)theShapePtr, theFileStr))
       return theFileStr;
     else
       return "Error: write failed";
@@ -34,7 +34,7 @@ const char* BRepTools_Dump(void* theShapePtr)
     OCC_CATCH_SIGNALS
 
     std::cout << "\n\n";
-    BRepTools::Dump(*(TopoDS_Shape*)theShapePtr, std::cout);
+    ::model::utils::BRepTools::Dump(*(TopoDS_Shape*)theShapePtr, std::cout);
     std::cout << std::endl;
 
     return "Shape dumped to std::cout";

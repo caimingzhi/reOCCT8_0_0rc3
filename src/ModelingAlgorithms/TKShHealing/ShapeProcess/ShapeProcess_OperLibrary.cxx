@@ -35,7 +35,7 @@
 TopoDS_Shape ShapeProcess_OperLibrary::ApplyModifier(
   const TopoDS_Shape&                                                       S,
   const occ::handle<ShapeProcess_ShapeContext>&                             context,
-  const occ::handle<BRepTools_Modification>&                                M,
+  const occ::handle<::model::utils::BRepTools_Modification>&                                M,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& map,
   const occ::handle<ShapeExtend_MsgRegistrator>&                            msg,
   bool                                                                      theMutableInput)
@@ -75,7 +75,7 @@ TopoDS_Shape ShapeProcess_OperLibrary::ApplyModifier(
     return C.Oriented(S.Orientation());
   }
 
-  BRepTools_Modifier MD(SF);
+  ::model::utils::BRepTools_Modifier MD(SF);
   MD.SetMutableInput(theMutableInput);
   MD.Perform(M);
   context->RecordModification(SF, MD, msg);

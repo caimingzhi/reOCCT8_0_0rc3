@@ -14,7 +14,7 @@
 #include <TopoDS_Iterator.hpp>
 #include <TopoDS_Shape.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_ReShape, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(::model::utils::BRepTools_ReShape, Standard_Transient)
 
 namespace
 {
@@ -99,6 +99,7 @@ static void CopyRanges(const TopoDS_Shape& toedge,
   }
 }
 
+namespace model { namespace utils {
 BRepTools_ReShape::BRepTools_ReShape()
     : myStatus(-1)
 {
@@ -449,7 +450,7 @@ bool BRepTools_ReShape::IsNewShape(const TopoDS_Shape& theShape) const
   return myNewShapes.Contains(theShape);
 }
 
-occ::handle<BRepTools_History> BRepTools_ReShape::History() const
+occ::handle<::model::utils::BRepTools_History> BRepTools_ReShape::History() const
 {
   occ::handle<BRepTools_History> aHistory = new BRepTools_History;
 
@@ -497,3 +498,5 @@ occ::handle<BRepTools_History> BRepTools_ReShape::History() const
 
   return aHistory;
 }
+
+}} // namespace model::utils

@@ -70,7 +70,7 @@ bool BRepAlgo::IsValid(const NCollection_List<TopoDS_Shape>& theArgs,
       {
         if (toCheck.IsNull())
           bB.MakeCompound(toCheck);
-        BRepTools::Update(curf);
+        ::model::utils::BRepTools::Update(curf);
         bB.Add(toCheck, curf);
       }
     }

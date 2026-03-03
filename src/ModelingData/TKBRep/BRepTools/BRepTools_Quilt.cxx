@@ -18,6 +18,7 @@
 #include <NCollection_IndexedDataMap.hpp>
 #include <NCollection_Map.hpp>
 
+namespace model { namespace utils {
 BRepTools_Quilt::BRepTools_Quilt()
     : hasCopy(false)
 {
@@ -422,3 +423,5 @@ TopoDS_Shape BRepTools_Quilt::Shells() const
   }
   return result;
 }
+
+}} // namespace model::utils

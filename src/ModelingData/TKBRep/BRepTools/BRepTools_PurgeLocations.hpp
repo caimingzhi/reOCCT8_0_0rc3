@@ -5,6 +5,7 @@
 #include <BRepTools_ReShape.hpp>
 #include <TopTools_LocationSet.hpp>
 
+namespace model { namespace utils {
 class BRepTools_PurgeLocations
 {
 
@@ -30,3 +31,5 @@ private:
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myMapNewShapes;
   occ::handle<BRepTools_ReShape>                                           myReShape;
 };
+}} // namespace model::utils
+

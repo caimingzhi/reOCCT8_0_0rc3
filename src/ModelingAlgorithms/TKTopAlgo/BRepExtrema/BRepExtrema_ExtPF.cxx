@@ -31,7 +31,7 @@ void BRepExtrema_ExtPF::Initialize(const TopoDS_Face&    TheFace,
   aTolU = std::max(mySurf.UResolution(Tol), math::precision::Precision::PConfusion());
   aTolV = std::max(mySurf.VResolution(Tol), math::precision::Precision::PConfusion());
   double U1, U2, V1, V2;
-  BRepTools::UVBounds(TheFace, U1, U2, V1, V2);
+  ::model::utils::BRepTools::UVBounds(TheFace, U1, U2, V1, V2);
   myExtPS.SetFlag(TheFlag);
   myExtPS.SetAlgo(TheAlgo);
   myExtPS.Initialize(mySurf, U1, U2, V1, V2, aTolU, aTolV);

@@ -31,7 +31,7 @@ void BRepExtrema_ExtCF::Initialize(const TopoDS_Edge& E, const TopoDS_Face& F)
   aTolC = std::max(aTolC, math::precision::Precision::PConfusion());
 
   double U1, U2, V1, V2;
-  BRepTools::UVBounds(F, U1, U2, V1, V2);
+  ::model::utils::BRepTools::UVBounds(F, U1, U2, V1, V2);
   myExtCS.Initialize(*myHS, U1, U2, V1, V2, aTolC, aTolS);
 }
 

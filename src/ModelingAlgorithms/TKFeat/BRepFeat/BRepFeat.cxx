@@ -417,7 +417,7 @@ bool BRepFeat::IsInside(const TopoDS_Face& F1, const TopoDS_Face& F2)
   TopLoc_Location           L;
   occ::handle<Geom_Surface> S = BRep_Tool::Surface(F2);
 
-  BRepTools::UVBounds(F2, umin, umax, vmin, vmax);
+  ::model::utils::BRepTools::UVBounds(F2, umin, umax, vmin, vmax);
 
   if (S->IsUPeriodic())
   {

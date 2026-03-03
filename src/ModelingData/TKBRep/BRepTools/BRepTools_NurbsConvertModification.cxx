@@ -36,7 +36,7 @@
 #include <TopoDS_Edge.hpp>
 #include <BRep_Builder.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_NurbsConvertModification, BRepTools_CopyModification)
+IMPLEMENT_STANDARD_RTTIEXT(::model::utils::BRepTools_NurbsConvertModification, ::model::utils::BRepTools_CopyModification)
 
 namespace
 {
@@ -200,8 +200,9 @@ namespace
   }
 } // namespace
 
-BRepTools_NurbsConvertModification::BRepTools_NurbsConvertModification() = default;
+::model::utils::BRepTools_NurbsConvertModification::BRepTools_NurbsConvertModification() = default;
 
+namespace model { namespace utils {
 bool BRepTools_NurbsConvertModification::NewSurface(const TopoDS_Face&         F,
                                                     occ::handle<Geom_Surface>& S,
                                                     TopLoc_Location&           L,
@@ -906,3 +907,5 @@ const NCollection_List<TopoDS_Shape>& BRepTools_NurbsConvertModification::GetUpd
 {
   return myUpdatedEdges;
 }
+
+}} // namespace model::utils

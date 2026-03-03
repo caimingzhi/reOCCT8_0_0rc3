@@ -9,7 +9,10 @@
 #include <NCollection_DataMap.hpp>
 class TopoDS_Shape;
 class ShapeProcess_ShapeContext;
+namespace model { namespace utils {
 class BRepTools_Modification;
+}} // namespace model::utils
+
 class ShapeExtend_MsgRegistrator;
 
 class ShapeProcess_OperLibrary
@@ -22,7 +25,7 @@ public:
   Standard_EXPORT static TopoDS_Shape ApplyModifier(
     const TopoDS_Shape&                                                       S,
     const occ::handle<ShapeProcess_ShapeContext>&                             context,
-    const occ::handle<BRepTools_Modification>&                                M,
+    const occ::handle<::model::utils::BRepTools_Modification>&                                M,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& map,
     const occ::handle<ShapeExtend_MsgRegistrator>&                            msg = nullptr,
     bool theMutableInput                                                          = false);

@@ -406,7 +406,7 @@ static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_Sessi
       if (!cascomp && !cassave)
         XSControl::Vars(pilot)->SetShape(noms.ToCString(), list->Value(i));
       else if (!cascomp && cassave)
-        BRepTools::Write(list->Value(i), noms.ToCString());
+        ::model::utils::BRepTools::Write(list->Value(i), noms.ToCString());
       else if (cascomp)
         B.Add(C, list->Value(i));
     }
@@ -414,7 +414,7 @@ static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_Sessi
     if (cascomp && !cassave)
       XSControl::Vars(pilot)->SetShape(nomsh.ToCString(), C);
     else if (cascomp && cassave)
-      BRepTools::Write(C, nomsh.ToCString());
+      ::model::utils::BRepTools::Write(C, nomsh.ToCString());
   }
   else
   {
@@ -436,7 +436,7 @@ static IFSelect_ReturnStatus XSControl_traccess(const occ::handle<IFSelect_Sessi
     if (!cascomp && !cassave)
       XSControl::Vars(pilot)->SetShape(nomsh.ToCString(), sh);
     else if (!cascomp && cassave)
-      BRepTools::Write(sh, nomsh.ToCString());
+      ::model::utils::BRepTools::Write(sh, nomsh.ToCString());
     else
       sout << "Option non comprise" << std::endl;
   }

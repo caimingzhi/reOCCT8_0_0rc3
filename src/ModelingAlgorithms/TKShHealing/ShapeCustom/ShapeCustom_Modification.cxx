@@ -6,7 +6,7 @@
 #include <Standard_Type.hpp>
 #include <TopoDS_Shape.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_Modification, BRepTools_Modification)
+IMPLEMENT_STANDARD_RTTIEXT(ShapeCustom_Modification, ::model::utils::BRepTools_Modification)
 
 void ShapeCustom_Modification::SetMsgRegistrator(
   const occ::handle<ShapeExtend_BasicMsgRegistrator>& msgreg)

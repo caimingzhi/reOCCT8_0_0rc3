@@ -2568,7 +2568,7 @@ void BRepOffset_BuildOffsetFaces::FindInvalidFaces(
     bHasInverted         = false;
     aNbChecked           = 0;
 
-    const TopoDS_Wire& aWIm = BRepTools::OuterWire(aFIm);
+    const TopoDS_Wire& aWIm = ::model::utils::BRepTools::OuterWire(aFIm);
     TopExp_Explorer    aExp(aWIm, TopAbs_EDGE);
     for (; aExp.More(); aExp.Next())
     {
@@ -2693,7 +2693,7 @@ void BRepOffset_BuildOffsetFaces::FindInvalidFaces(
     bAllValid   = true;
     bAllInvalid = true;
 
-    const TopoDS_Wire& aWIm = BRepTools::OuterWire(aFIm);
+    const TopoDS_Wire& aWIm = ::model::utils::BRepTools::OuterWire(aFIm);
     TopExp_Explorer    aExp(aWIm, TopAbs_EDGE);
     for (; aExp.More(); aExp.Next())
     {
@@ -2742,7 +2742,7 @@ void BRepOffset_BuildOffsetFaces::FindFacesInsideHoleWires(
   }
 
   NCollection_List<TopoDS_Shape> aLHoleWires;
-  const TopoDS_Wire&             anOuterWire = BRepTools::OuterWire(theFOrigin);
+  const TopoDS_Wire&             anOuterWire = ::model::utils::BRepTools::OuterWire(theFOrigin);
   TopExp_Explorer                aExpW(theFOrigin, TopAbs_WIRE);
   for (; aExpW.More(); aExpW.Next())
   {

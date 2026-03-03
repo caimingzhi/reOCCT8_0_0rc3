@@ -86,12 +86,12 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
   gp_Vec N = d1u.Crossed(d1v);
   double FUMin, FUMax, FVMin, FVMax;
 
-  BRepTools::UVBounds(FF, FUMin, FUMax, FVMin, FVMax);
+  ::model::utils::BRepTools::UVBounds(FF, FUMin, FUMax, FVMin, FVMax);
 
   double EUMin, EUMax, EVMin, EVMax;
   if (EEofFF)
   {
-    BRepTools::UVBounds(FF, EE, EUMin, EUMax, EVMin, EVMax);
+    ::model::utils::BRepTools::UVBounds(FF, EE, EUMin, EUMax, EVMin, EVMax);
   }
   else
   {
@@ -140,7 +140,7 @@ Standard_EXPORT void FUN_UNKFstasta(const TopoDS_Face&              FF,
     TopoDS_Face FFx;
     BB.MakeFace(FFx, SFF, BRep_Tool::Tolerance(FF));
     BB.UpdateEdge(EEx, CEEFFx, FFx, BRep_Tool::Tolerance(FF));
-    BRepTools::UVBounds(FFx, EEx, EUMin, EUMax, EVMin, EVMax);
+    ::model::utils::BRepTools::UVBounds(FFx, EEx, EUMin, EUMax, EVMin, EVMax);
   }
 
   bool EisoU = (fabs(EVMax - EVMin) < math::precision::Precision::Confusion());

@@ -11,6 +11,7 @@ class BRepAdaptor_Surface;
 class gp_Pnt;
 class gp_Vec;
 
+namespace model { namespace localproperties {
 class BRepLProp_SurfaceTool
 {
 public:
@@ -52,3 +53,5 @@ public:
                                      double&                    U2,
                                      double&                    V2);
 };
+}} // namespace model::localproperties
+

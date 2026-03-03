@@ -292,5 +292,5 @@ void BRepMesh_MeshTool::DumpTriangles(const char*              theFileName,
     aBuilder.Add(aResult, aFaceBuilder.Shape());
   }
 
-  BRepTools::Write(aResult, theFileName);
+  ::model::utils::BRepTools::Write(aResult, theFileName);
 }

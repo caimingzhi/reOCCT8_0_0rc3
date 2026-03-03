@@ -404,7 +404,7 @@ void AIS_ColoredShape::ComputeSelection(const occ::handle<SelectMgr_Selection>& 
   const double aDeflection         = StdPrs_ToolTriangulatedShape::GetDeflection(myshape, myDrawer);
   const double aDeviationAngle     = myDrawer->DeviationAngle();
   const int    aPriority = StdSelect_BRepSelectionTool::GetStandardPriority(myshape, aTypOfSel);
-  if (myDrawer->IsAutoTriangulation() && !BRepTools::Triangulation(myshape, math::precision::Precision::Infinite()))
+  if (myDrawer->IsAutoTriangulation() && !::model::utils::BRepTools::Triangulation(myshape, math::precision::Precision::Infinite()))
   {
     BRepMesh_IncrementalMesh aMesher(myshape, aDeflection, false, aDeviationAngle);
   }

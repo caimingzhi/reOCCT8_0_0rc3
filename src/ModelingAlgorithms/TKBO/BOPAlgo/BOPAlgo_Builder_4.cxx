@@ -99,7 +99,7 @@ void BOPAlgo_Builder::PrepareHistory(const System::log::Message_ProgressRange& t
   if (!HasHistory())
     return;
 
-  myHistory = new BRepTools_History;
+  myHistory = new ::model::utils::BRepTools_History;
 
   myMapShape.Clear();
   TopExp::MapShapes(myShape, myMapShape);
@@ -110,7 +110,7 @@ void BOPAlgo_Builder::PrepareHistory(const System::log::Message_ProgressRange& t
   {
     const TopoDS_Shape& aS = myDS->Shape(i);
 
-    if (!BRepTools_History::IsSupportedType(aS))
+    if (!::model::utils::BRepTools_History::IsSupportedType(aS))
       continue;
 
     if (UserBreak(aPS))

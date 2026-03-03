@@ -934,7 +934,7 @@ void BRepOffsetAPI_ThruSections::CreateSmoothed()
 
   if (!myMutableInput)
   {
-    BRepTools_ReShape                                                            aReshaper;
+    ::model::utils::BRepTools_ReShape                                                            aReshaper;
     NCollection_DataMap<TopoDS_Shape, double, TopTools_ShapeMapHasher>::Iterator aMapIterator(
       aVertexToleranceMap);
     for (; aMapIterator.More(); aMapIterator.Next())

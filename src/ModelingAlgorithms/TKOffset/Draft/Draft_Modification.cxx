@@ -33,7 +33,7 @@
 #include <TopoDS_Shape.hpp>
 #include <TopoDS_Vertex.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(Draft_Modification, BRepTools_Modification)
+IMPLEMENT_STANDARD_RTTIEXT(Draft_Modification, ::model::utils::BRepTools_Modification)
 
 Draft_Modification::Draft_Modification(const TopoDS_Shape& S)
     : myComp(false),
@@ -369,7 +369,7 @@ bool Draft_Modification::NewCurve2d(const TopoDS_Edge& E,
   }
 
   occ::handle<Geom_Curve> aC3d = BRep_Tool::Curve(NewE, Fp, Lp);
-  Tol                          = BRepTools::EvalAndUpdateTol(NewE, aC3d, C, SB, Fp, Lp);
+  Tol                          = ::model::utils::BRepTools::EvalAndUpdateTol(NewE, aC3d, C, SB, Fp, Lp);
   return true;
 }
 

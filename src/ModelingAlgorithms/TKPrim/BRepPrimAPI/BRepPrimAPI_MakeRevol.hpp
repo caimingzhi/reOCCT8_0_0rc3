@@ -53,6 +53,6 @@ protected:
 private:
   BRepSweep_Revol                myRevol;
   NCollection_List<TopoDS_Shape> myDegenerated;
-  occ::handle<BRepTools_History> myHist;
+  occ::handle<::model::utils::BRepTools_History> myHist;
   bool                           myIsBuild;
 };

@@ -239,7 +239,7 @@ bool ShapeFix_IntersectionTool::SplitEdge1(
   for (TopExp_Explorer exp(wd->Wire(), TopAbs_EDGE); exp.More(); exp.Next())
   {
     TopoDS_Edge E = TopoDS::Edge(exp.Current());
-    BRepTools::Update(E);
+    ::model::utils::BRepTools::Update(E);
   }
 
   sewd->Set(newE1, num);
@@ -351,7 +351,7 @@ bool ShapeFix_IntersectionTool::SplitEdge2(
   for (TopExp_Explorer exp(wd->Wire(), TopAbs_EDGE); exp.More(); exp.Next())
   {
     TopoDS_Edge E = TopoDS::Edge(exp.Current());
-    BRepTools::Update(E);
+    ::model::utils::BRepTools::Update(E);
   }
 
   sewd->Set(newE1, num);

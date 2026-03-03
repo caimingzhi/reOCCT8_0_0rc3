@@ -52,7 +52,7 @@ ChFiDS_TypeOfConcavity ChFi3d::DefineConnectType(const TopoDS_Edge& E,
     T1.Normalize();
   }
 
-  if (BRepTools::OriEdgeInFace(E, F1) == TopAbs_REVERSED)
+  if (::model::utils::BRepTools::OriEdgeInFace(E, F1) == TopAbs_REVERSED)
   {
     T1.Reverse();
   }

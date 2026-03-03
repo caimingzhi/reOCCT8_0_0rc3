@@ -27,8 +27,8 @@ static void SAVFE(const TopoDS_Face& F1, const TopoDS_Edge& E)
   TCollection_AsciiString aname_1("FE_face"), aname_2("FE_edge");
   const char *            name_1 = aname_1.ToCString(), name_2 = aname_2.ToCString();
   std::cout << "FaceEdgeIntersector : " << name_1 << "," << name_2 << std::endl;
-  BRepTools::Write(F1, name_1);
-  BRepTools::Write(E, name_2);
+  ::model::utils::BRepTools::Write(F1, name_1);
+  ::model::utils::BRepTools::Write(E, name_2);
 }
 
 extern bool TopOpeBRepTool_GettraceKRO();

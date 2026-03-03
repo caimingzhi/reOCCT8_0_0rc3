@@ -381,11 +381,11 @@ void BRepFill_AdvancedEvolved::Perform(const TopoDS_Wire& theSpine,
   std::cout.precision(15);
 
   std::cout << "++++ Dump of Spine" << std::endl;
-  BRepTools::Dump(theSpine, std::cout);
+  ::model::utils::BRepTools::Dump(theSpine, std::cout);
   std::cout << "---- Dump of Spine" << std::endl;
 
   std::cout << "++++ Dump of Profile" << std::endl;
-  BRepTools::Dump(theProfile, std::cout);
+  ::model::utils::BRepTools::Dump(theProfile, std::cout);
   std::cout << "---- Dump of Profile" << std::endl;
 
   std::cout.precision(aPrecVal);

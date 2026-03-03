@@ -245,7 +245,7 @@ void BRepOffsetAPI_DraftAngle::CorrectWires()
       for (; mapit.More(); mapit.Next())
       {
         CurEdge = mapit.Key();
-        if (BRepTools::IsReallyClosed(TopoDS::Edge(CurEdge), TopoDS::Face(CurFace)))
+        if (::model::utils::BRepTools::IsReallyClosed(TopoDS::Edge(CurEdge), TopoDS::Face(CurFace)))
         {
           Eseq.Append(CurEdge);
           Wseq.Append(CurWire);

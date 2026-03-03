@@ -377,7 +377,7 @@ bool BRepSweep_Translation::HasShape(const TopoDS_Shape& aGenS, const Sweep_NumS
       for (; FaceExp.More(); FaceExp.Next())
       {
         TopoDS_Face F = TopoDS::Face(FaceExp.Current());
-        if (BRepTools::IsReallyClosed(E, F))
+        if (::model::utils::BRepTools::IsReallyClosed(E, F))
           return false;
       }
     }

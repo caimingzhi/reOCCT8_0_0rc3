@@ -50,7 +50,7 @@ void HLRTopoBRep_FaceIsoLiner::Perform(const int          FI,
   Geom2dHatch_Intersector Intersector(IntersectorConfusion, IntersectorTangency);
   Geom2dHatch_Hatcher     Hatcher(Intersector, HatcherConfusion2d, HatcherConfusion3d, true);
 
-  BRepTools::UVBounds(TF, UMin, UMax, VMin, VMax);
+  ::model::utils::BRepTools::UVBounds(TF, UMin, UMax, VMin, VMax);
   bool InfiniteUMin = math::precision::Precision::IsNegativeInfinite(UMin);
   bool InfiniteUMax = math::precision::Precision::IsPositiveInfinite(UMax);
   bool InfiniteVMin = math::precision::Precision::IsNegativeInfinite(VMin);

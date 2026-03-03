@@ -87,7 +87,7 @@ public:
 
   const BOPAlgo_PBuilder& Builder() const { return myBuilder; }
 
-  occ::handle<BRepTools_History> History() const { return myFillHistory ? myHistory : nullptr; }
+  occ::handle<::model::utils::BRepTools_History> History() const { return myFillHistory ? myHistory : nullptr; }
 
 protected:
   virtual void SetAttributes() {}
@@ -115,7 +115,7 @@ protected:
 
   BOPAlgo_PBuilder myBuilder;
 
-  occ::handle<BRepTools_History> myHistory;
+  occ::handle<::model::utils::BRepTools_History> myHistory;
 
-  occ::handle<BRepTools_History> mySimplifierHistory;
+  occ::handle<::model::utils::BRepTools_History> mySimplifierHistory;
 };

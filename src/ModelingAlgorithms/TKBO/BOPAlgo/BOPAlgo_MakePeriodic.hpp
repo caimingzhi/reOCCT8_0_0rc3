@@ -192,7 +192,7 @@ public:
   }
 
 public:
-  const occ::handle<BRepTools_History>& History() const { return myHistory; }
+  const occ::handle<::model::utils::BRepTools_History>& History() const { return myHistory; }
 
 public:
   void Clear() override
@@ -224,11 +224,11 @@ protected:
 
   Standard_EXPORT void SplitShape(
     const NCollection_List<TopoDS_Shape>& theTools,
-    const occ::handle<BRepTools_History>& theSplitShapeHistory = nullptr,
-    const occ::handle<BRepTools_History>& theSplitToolsHistory = nullptr);
+    const occ::handle<::model::utils::BRepTools_History>& theSplitShapeHistory = nullptr,
+    const occ::handle<::model::utils::BRepTools_History>& theSplitToolsHistory = nullptr);
 
-  Standard_EXPORT void UpdateTwins(const BRepTools_History& theTranslationHistory,
-                                   const BRepTools_History& theGluingHistory);
+  Standard_EXPORT void UpdateTwins(const ::model::utils::BRepTools_History& theTranslationHistory,
+                                   const ::model::utils::BRepTools_History& theGluingHistory);
 
 protected:
   TopoDS_Shape myInputShape;
@@ -245,7 +245,7 @@ protected:
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     myTwins;
 
-  occ::handle<BRepTools_History> mySplitHistory;
+  occ::handle<::model::utils::BRepTools_History> mySplitHistory;
 
-  occ::handle<BRepTools_History> myHistory;
+  occ::handle<::model::utils::BRepTools_History> myHistory;
 };

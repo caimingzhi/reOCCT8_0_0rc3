@@ -2405,7 +2405,7 @@ static int OCC27884(Draw_Interpretor& theDI, int theArgNb, const char** theArgVe
   TopoDS_Face aFace = BRepBuilderAPI_MakeFace(aWire.Wire());
 
   double anUMin, anUMax, aVMin, aVMax;
-  BRepTools::UVBounds(aFace, anUMin, anUMax, aVMin, aVMax);
+  ::model::utils::BRepTools::UVBounds(aFace, anUMin, anUMax, aVMin, aVMax);
   gp_Pnt2d aP2d(anUMin - ((anUMax + anUMin) / 2), aVMin - ((aVMax + aVMin) / 2));
 
   const double aTol = BRep_Tool::Tolerance(aFace);

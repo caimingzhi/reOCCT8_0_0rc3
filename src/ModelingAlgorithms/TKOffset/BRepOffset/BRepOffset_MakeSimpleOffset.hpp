@@ -85,7 +85,7 @@ private:
 
   NCollection_DataMap<TopoDS_Vertex, TopoDS_Edge> myMapVE;
 
-  BRepTools_Modifier myBuilder;
+  ::model::utils::BRepTools_Modifier myBuilder;
 
   occ::handle<ShapeBuild_ReShape> myReShape;
 

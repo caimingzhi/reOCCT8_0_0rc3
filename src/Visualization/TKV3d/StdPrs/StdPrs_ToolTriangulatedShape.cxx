@@ -126,7 +126,7 @@ double StdPrs_ToolTriangulatedShape::GetDeflection(const TopoDS_Shape&          
 bool StdPrs_ToolTriangulatedShape::IsTessellated(const TopoDS_Shape&              theShape,
                                                  const occ::handle<Prs3d_Drawer>& theDrawer)
 {
-  return BRepTools::Triangulation(theShape, GetDeflection(theShape, theDrawer), true);
+  return ::model::utils::BRepTools::Triangulation(theShape, GetDeflection(theShape, theDrawer), true);
 }
 
 bool StdPrs_ToolTriangulatedShape::Tessellate(const TopoDS_Shape&              theShape,
@@ -174,7 +174,7 @@ void StdPrs_ToolTriangulatedShape::ClearOnOwnDeflectionChange(
     return;
   }
 
-  BRepTools::Clean(theShape);
+  ::model::utils::BRepTools::Clean(theShape);
   if (theToResetCoeff)
   {
     theDrawer->UpdatePreviousDeviationAngle();

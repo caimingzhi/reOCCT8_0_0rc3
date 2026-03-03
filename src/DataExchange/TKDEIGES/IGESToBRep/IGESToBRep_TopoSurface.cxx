@@ -833,7 +833,7 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferTabulatedCylinder(
   if (res.ShapeType() == TopAbs_FACE)
   {
     double UMin, UMax, VMin, VMax;
-    BRepTools::UVBounds(TopoDS::Face(res), UMin, UMax, VMin, VMax);
+    ::model::utils::BRepTools::UVBounds(TopoDS::Face(res), UMin, UMax, VMin, VMax);
     if (VMax <= math::precision::Precision::PConfusion() && VMin < -math::precision::Precision::PConfusion())
     {
       TheULength *= -1;
@@ -984,7 +984,7 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferOffsetSurface(
         || math::precision::Precision::IsInfinite(vmax))
     {
 
-      BRepTools::UVBounds(face, umin, umax, vmin, vmax);
+      ::model::utils::BRepTools::UVBounds(face, umin, umax, vmin, vmax);
       occ::handle<Geom_RectangularTrimmedSurface> TS =
         new Geom_RectangularTrimmedSurface(geomSupport, umin, umax, vmin, vmax);
       occ::handle<Geom_BSplineSurface> BS =
@@ -1188,7 +1188,7 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferTrimmedSurface(
     }
   }
 
-  BRepTools::Update(face);
+  ::model::utils::BRepTools::Update(face);
 
   return face;
 }
@@ -1287,7 +1287,7 @@ TopoDS_Shape IGESToBRep_TopoSurface::TransferBoundedSurface(
   for (int i = 1; i <= st->NbBoundaries(); i++)
     TC.TransferBoundaryOnFace(face, st->Boundary(i), trans, uFact);
 
-  BRepTools::Update(face);
+  ::model::utils::BRepTools::Update(face);
 
   return face;
 }

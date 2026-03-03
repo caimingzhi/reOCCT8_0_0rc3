@@ -11,20 +11,20 @@
 BRepBuilderAPI_NurbsConvert::BRepBuilderAPI_NurbsConvert()
 
 {
-  myModification = new BRepTools_NurbsConvertModification();
+  myModification = new ::model::utils::BRepTools_NurbsConvertModification();
 }
 
 BRepBuilderAPI_NurbsConvert::BRepBuilderAPI_NurbsConvert(const TopoDS_Shape& S, const bool Copy)
 
 {
-  myModification = new BRepTools_NurbsConvertModification();
+  myModification = new ::model::utils::BRepTools_NurbsConvertModification();
   Perform(S, Copy);
 }
 
 void BRepBuilderAPI_NurbsConvert::Perform(const TopoDS_Shape& S, const bool)
 {
-  occ::handle<BRepTools_NurbsConvertModification> theModif =
-    occ::down_cast<BRepTools_NurbsConvertModification>(myModification);
+  occ::handle<::model::utils::BRepTools_NurbsConvertModification> theModif =
+    occ::down_cast<::model::utils::BRepTools_NurbsConvertModification>(myModification);
   DoModif(S, myModification);
   CorrectVertexTol();
 }
@@ -38,8 +38,8 @@ void BRepBuilderAPI_NurbsConvert::CorrectVertexTol()
     anInitVertices.Add(anExp.Current());
   }
 
-  occ::handle<BRepTools_NurbsConvertModification> aModif =
-    occ::down_cast<BRepTools_NurbsConvertModification>(myModification);
+  occ::handle<::model::utils::BRepTools_NurbsConvertModification> aModif =
+    occ::down_cast<::model::utils::BRepTools_NurbsConvertModification>(myModification);
 
   BRep_Builder aBB;
   myVtxToReplace.Clear();

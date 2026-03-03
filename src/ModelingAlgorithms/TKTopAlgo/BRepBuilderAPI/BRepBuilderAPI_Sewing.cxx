@@ -263,7 +263,7 @@ TopoDS_Edge BRepBuilderAPI_Sewing::SameParameterEdge(
   const NCollection_Sequence<TopoDS_Shape>&               seqEdges,
   const NCollection_Sequence<bool>&                       seqForward,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>& mapMerged,
-  const occ::handle<BRepTools_ReShape>&                   locReShape)
+  const occ::handle<::model::utils::BRepTools_ReShape>&                   locReShape)
 {
 
   TopoDS_Shape aTmpShape = myReShape->Apply(edge);
@@ -1567,7 +1567,7 @@ BRepBuilderAPI_Sewing::BRepBuilderAPI_Sewing(const double tolerance,
                                              const bool   optionCutting,
                                              const bool   optionNonmanifold)
 {
-  myReShape = new BRepTools_ReShape;
+  myReShape = new ::model::utils::BRepTools_ReShape;
   Init(tolerance, optionSewing, optionAnalysis, optionCutting, optionNonmanifold);
 }
 
@@ -2803,7 +2803,7 @@ void BRepBuilderAPI_Sewing::VerticesAssembling(const System::log::Message_Progre
 static void replaceNMVertices(const TopoDS_Edge&                    theEdge,
                               const TopoDS_Vertex&                  theV1,
                               const TopoDS_Vertex&                  theV2,
-                              const occ::handle<BRepTools_ReShape>& theReShape)
+                              const occ::handle<::model::utils::BRepTools_ReShape>& theReShape)
 {
 
   NCollection_Sequence<TopoDS_Shape> aSeqNMVert;
@@ -2890,7 +2890,7 @@ static void replaceNMVertices(const TopoDS_Edge&                    theEdge,
 
 static void ReplaceEdge(const TopoDS_Shape&                   oldEdge,
                         const TopoDS_Shape&                   theNewShape,
-                        const occ::handle<BRepTools_ReShape>& aReShape)
+                        const occ::handle<::model::utils::BRepTools_ReShape>& aReShape)
 {
   TopoDS_Shape oldShape = aReShape->Apply(oldEdge);
   TopoDS_Shape newShape = aReShape->Apply(theNewShape);
@@ -3113,7 +3113,7 @@ void BRepBuilderAPI_Sewing::Merging(const bool, const System::log::Message_Progr
     }
     const bool isMerged = !MergedWithBound.IsEmpty();
 
-    occ::handle<BRepTools_ReShape> SectionsReShape = new BRepTools_ReShape;
+    occ::handle<::model::utils::BRepTools_ReShape> SectionsReShape = new ::model::utils::BRepTools_ReShape;
     NCollection_IndexedDataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>
       MergedWithSections;
     if (hasCuttingSections)
@@ -3992,7 +3992,7 @@ void BRepBuilderAPI_Sewing::EdgeRegularity(const System::log::Message_ProgressRa
 void BRepBuilderAPI_Sewing::CreateSewedShape()
 {
 
-  BRepTools_Quilt aQuilt;
+  ::model::utils::BRepTools_Quilt aQuilt;
   bool            isLocal = !myShape.IsNull();
   if (isLocal)
   {
@@ -4711,12 +4711,12 @@ NCollection_CellFilter_Action BRepBuilderAPI_VertexInspector::Inspect(const int 
   return CellFilter_Keep;
 }
 
-const occ::handle<BRepTools_ReShape>& BRepBuilderAPI_Sewing::GetContext() const
+const occ::handle<::model::utils::BRepTools_ReShape>& BRepBuilderAPI_Sewing::GetContext() const
 {
   return myReShape;
 }
 
-void BRepBuilderAPI_Sewing::SetContext(const occ::handle<BRepTools_ReShape>& theContext)
+void BRepBuilderAPI_Sewing::SetContext(const occ::handle<::model::utils::BRepTools_ReShape>& theContext)
 {
   myReShape = theContext;
 }

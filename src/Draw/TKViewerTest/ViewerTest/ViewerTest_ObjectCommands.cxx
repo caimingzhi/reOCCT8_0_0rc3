@@ -2947,7 +2947,7 @@ static int VComputeHLR(Draw_Interpretor&, int theArgNb, const char** theArgVec)
       if (aSh.IsNull())
       {
         BRep_Builder aBrepBuilder;
-        BRepTools::Read(aSh, theArgVec[anArgIter], aBrepBuilder);
+        ::model::utils::BRepTools::Read(aSh, theArgVec[anArgIter], aBrepBuilder);
         if (aSh.IsNull())
         {
           System::log::Message::SendFail() << "Syntax error: no shape with name " << theArgVec[anArgIter]

@@ -13,7 +13,10 @@
 class gp_Ax3;
 class BRepMAT2d_BisectingLocus;
 class BRepMAT2d_LinkTopoBilo;
+namespace model { namespace utils {
 class BRepTools_Quilt;
+}} // namespace model::utils
+
 class TopLoc_Location;
 class TopoDS_Edge;
 class TopoDS_Vertex;
@@ -96,7 +99,7 @@ private:
     TopTools_ShapeMapHasher>&
     Generated();
 
-  Standard_EXPORT void Add(BRepFill_Evolved& Vevo, const TopoDS_Wire& Prof, BRepTools_Quilt& Glue);
+  Standard_EXPORT void Add(BRepFill_Evolved& Vevo, const TopoDS_Wire& Prof, ::model::utils::BRepTools_Quilt& Glue);
 
   Standard_EXPORT TopoDS_Shape& ChangeShape();
 
@@ -128,7 +131,7 @@ private:
 
   Standard_EXPORT void ContinuityOnOffsetEdge(const NCollection_List<TopoDS_Shape>& WorkProf);
 
-  Standard_EXPORT void AddTopAndBottom(BRepTools_Quilt& Glue);
+  Standard_EXPORT void AddTopAndBottom(::model::utils::BRepTools_Quilt& Glue);
 
   Standard_EXPORT void MakeSolid();
 

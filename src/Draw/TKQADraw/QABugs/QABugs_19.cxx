@@ -1053,10 +1053,10 @@ static TopoDS_Shape CreateTestShape(int& theShapeNb)
   BRep_Builder    aBuilder;
   aBuilder.MakeCompound(aComp);
 
-  occ::handle<BRepTools_NurbsConvertModification> aNurbsModif =
-    new BRepTools_NurbsConvertModification;
+  occ::handle<::model::utils::BRepTools_NurbsConvertModification> aNurbsModif =
+    new ::model::utils::BRepTools_NurbsConvertModification;
   TopoDS_Shape       aRefShape = BRepPrimAPI_MakeCylinder(50., 100.).Solid();
-  BRepTools_Modifier aModifier(aRefShape, aNurbsModif);
+  ::model::utils::BRepTools_Modifier aModifier(aRefShape, aNurbsModif);
   if (aModifier.IsDone())
   {
     aRefShape = aModifier.ModifiedShape(aRefShape);
@@ -2893,7 +2893,7 @@ static int OCC26553(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
 
   BRep_Builder aBuilder;
   TopoDS_Shape aShell;
-  BRepTools::Read(aShell, theArgv[1], aBuilder);
+  ::model::utils::BRepTools::Read(aShell, theArgv[1], aBuilder);
 
   if (aShell.IsNull())
   {
@@ -3477,7 +3477,7 @@ static void GetCoords(const char*& path_to_file, std::vector<double>& coords)
 {
   TopoDS_Shape shape;
   BRep_Builder builder;
-  BRepTools::Read(shape, path_to_file, builder);
+  ::model::utils::BRepTools::Read(shape, path_to_file, builder);
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> shape_faces;
   TopExp::MapShapes(shape, TopAbs_FACE, shape_faces);
   TopoDS_Face face_a = TopoDS::Face(shape_faces(1));

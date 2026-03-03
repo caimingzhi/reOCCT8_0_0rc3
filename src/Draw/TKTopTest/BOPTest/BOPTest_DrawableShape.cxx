@@ -107,7 +107,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
     case TopAbs_FACE:
     {
       ::model::adapter::BRepAdaptor_Surface SU(TopoDS::Face(S));
-      BRepTools::UVBounds(TopoDS::Face(S), u1, u2, v1, v2);
+      ::model::utils::BRepTools::UVBounds(TopoDS::Face(S), u1, u2, v1, v2);
 
       facpar = .2;
       u      = u1 + (u2 - u1) * facpar;
@@ -124,7 +124,7 @@ gp_Pnt BOPTest_DrawableShape::Pnt() const
       const TopoDS_Face& aF = TopoDS::Face(aMF(1));
 
       ::model::adapter::BRepAdaptor_Surface SU(TopoDS::Face(aF));
-      BRepTools::UVBounds(aF, u1, u2, v1, v2);
+      ::model::utils::BRepTools::UVBounds(aF, u1, u2, v1, v2);
       facpar = .4;
       u      = u1 + (u2 - u1) * facpar;
       v      = v1 + (v2 - v1) * facpar;

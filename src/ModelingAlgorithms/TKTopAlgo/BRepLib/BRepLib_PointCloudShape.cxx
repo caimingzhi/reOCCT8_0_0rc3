@@ -151,7 +151,7 @@ bool BRepLib_PointCloudShape::addDensityPoints(const TopoDS_Shape& theFace)
 
   TopoDS_Face aFace  = TopoDS::Face(theFace);
   double      anUMin = 0.0, anUMax = 0.0, aVMin = 0.0, aVMax = 0.0;
-  BRepTools::UVBounds(aFace, anUMin, anUMax, aVMin, aVMax);
+  ::model::utils::BRepTools::UVBounds(aFace, anUMin, anUMax, aVMin, aVMax);
   BRepTopAdaptor_FClass2d aClassifier(aFace, math::precision::Precision::Confusion());
 
   const TopLoc_Location&    aLoc  = theFace.Location();

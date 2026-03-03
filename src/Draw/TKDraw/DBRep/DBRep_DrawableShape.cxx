@@ -346,7 +346,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
         double SU1 = 0., SU2 = 0., SV1 = 0., SV2 = 0.;
         double FU1 = 0., FU2 = 0., FV1 = 0., FV2 = 0.;
         aSurf->Bounds(SU1, SU2, SV1, SV2);
-        BRepTools::UVBounds(F->Face(), FU1, FU2, FV1, FV2);
+        ::model::utils::BRepTools::UVBounds(F->Face(), FU1, FU2, FV1, FV2);
         if (aSurf->IsUPeriodic())
         {
           if (FU1 < SU1 || FU1 > SU2)
@@ -623,7 +623,7 @@ void DBRep_DrawableShape::DrawOn(Draw_Display& dis) const
       {
 
         std::cout << "DBRep_DrawableShape : Bad parameters on edge." << std::endl;
-        BRepTools::Dump(E->Edge(), std::cout);
+        ::model::utils::BRepTools::Dump(E->Edge(), std::cout);
         ite.Next();
         continue;
       }
@@ -940,13 +940,13 @@ void DBRep_DrawableShape::GetDisplayHLR(bool&   withHLR,
 
 void DBRep_DrawableShape::Dump(Standard_OStream& S) const
 {
-  BRepTools::Dump(myShape, S);
+  ::model::utils::BRepTools::Dump(myShape, S);
 }
 
 void DBRep_DrawableShape::Save(Standard_OStream& theStream) const
 {
   BRep_Builder       aBuilder;
-  BRepTools_ShapeSet aShapeSet(aBuilder);
+  ::model::utils::BRepTools_ShapeSet aShapeSet(aBuilder);
   aShapeSet.Add(myShape);
   occ::handle<Draw_ProgressIndicator> aProgress = Draw::GetProgressBar();
   aShapeSet.Write(theStream, System::log::Message_ProgressIndicator::Start(aProgress));
@@ -960,7 +960,7 @@ occ::handle<Draw_Drawable3D> DBRep_DrawableShape::Restore(Standard_IStream& theS
 {
   const DBRep_Params&                 aParams = DBRep::Parameters();
   BRep_Builder                        aBuilder;
-  BRepTools_ShapeSet                  aShapeSet(aBuilder);
+  ::model::utils::BRepTools_ShapeSet                  aShapeSet(aBuilder);
   occ::handle<Draw_ProgressIndicator> aProgress = Draw::GetProgressBar();
   aShapeSet.Read(theStream, System::log::Message_ProgressIndicator::Start(aProgress));
   if (!aProgress.IsNull() && aProgress->UserBreak())
@@ -1173,7 +1173,7 @@ bool DBRep_DrawableShape::addSurfaceNormals(
   }
 
   double aUmin = 0.0, aVmin = 0.0, aUmax = 0.0, aVmax = 0.0;
-  BRepTools::UVBounds(theFace, aUmin, aUmax, aVmin, aVmax);
+  ::model::utils::BRepTools::UVBounds(theFace, aUmin, aUmax, aVmin, aVmax);
   const bool   isUseMidU = (theNbAlongU == 1);
   const bool   isUseMidV = (theNbAlongV == 1);
   const double aDU       = (aUmax - aUmin) / (isUseMidU ? 2 : (theNbAlongU - 1));

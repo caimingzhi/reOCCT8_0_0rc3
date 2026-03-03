@@ -110,7 +110,7 @@ void TopoDSToStep_MakeStepFace::Init(const TopoDS_Face&                         
     return;
   }
 
-  const TopoDS_Wire theOuterWire = BRepTools::OuterWire(ForwardFace);
+  const TopoDS_Wire theOuterWire = ::model::utils::BRepTools::OuterWire(ForwardFace);
   if (theOuterWire.IsNull())
   {
     FP->AddWarning(errShape, " Face without wire not mapped");

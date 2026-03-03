@@ -400,7 +400,7 @@ void BinTools_ShapeSet::ReadFlagsAndSubs(TopoDS_Shape&          S,
     if (T == TopAbs_FACE)
     {
       const TopoDS_Face& F = TopoDS::Face(S);
-      BRepTools::Update(F);
+      ::model::utils::BRepTools::Update(F);
     }
 }
 

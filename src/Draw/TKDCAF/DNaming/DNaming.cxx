@@ -366,7 +366,7 @@ static void LoadNextLevels(const TopoDS_Shape& S, const occ::handle<TDF_TagSourc
   else if (S.ShapeType() == TopAbs_WIRE)
   {
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> Edges;
-    BRepTools::Map3DEdges(S, Edges);
+    ::model::utils::BRepTools::Map3DEdges(S, Edges);
     if (Edges.Extent() == 1)
     {
       TNaming_Builder bEdge(Tagger->NewChild());

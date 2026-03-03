@@ -4,7 +4,7 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedMap.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_History, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(::model::utils::BRepTools_History, Standard_Transient)
 
 namespace
 {
@@ -29,6 +29,7 @@ namespace
 
 } // namespace
 
+namespace model { namespace utils {
 void BRepTools_History::AddGenerated(const TopoDS_Shape& theInitial,
                                      const TopoDS_Shape& theGenerated)
 {
@@ -137,13 +138,13 @@ bool BRepTools_History::IsRemoved(const TopoDS_Shape& theInitial) const
   return myRemoved.Contains(theInitial);
 }
 
-void BRepTools_History::Merge(const occ::handle<BRepTools_History>& theHistory23)
+void BRepTools_History::Merge(const occ::handle<::model::utils::BRepTools_History>& theHistory23)
 {
   if (!theHistory23.IsNull())
     Merge(*theHistory23.get());
 }
 
-void BRepTools_History::Merge(const BRepTools_History& theHistory23)
+void BRepTools_History::Merge(const ::model::utils::BRepTools_History& theHistory23)
 {
   if (!(theHistory23.HasModified() || theHistory23.HasGenerated() || theHistory23.HasRemoved()))
 
@@ -304,21 +305,23 @@ bool BRepTools_History::prepareModified(const TopoDS_Shape& theInitial,
   return true;
 }
 
-const NCollection_List<TopoDS_Shape> BRepTools_History::myEmptyList;
+const NCollection_List<TopoDS_Shape> ::model::utils::BRepTools_History::myEmptyList;
 
 const NCollection_List<TopoDS_Shape>& BRepTools_History::emptyList()
 {
   return myEmptyList;
 }
 
-const char* BRepTools_History::myMsgUnsupportedType = "Error: unsupported shape type.";
 
-const char* BRepTools_History::myMsgGeneratedAndRemoved =
+}} // namespace model::utils
+const char* ::model::utils::BRepTools_History::myMsgUnsupportedType = "Error: unsupported shape type.";
+
+const char* ::model::utils::BRepTools_History::myMsgGeneratedAndRemoved =
   "Error: a shape is generated and removed simultaneously.";
 
-const char* BRepTools_History::myMsgModifiedAndRemoved =
+const char* ::model::utils::BRepTools_History::myMsgModifiedAndRemoved =
   "Error: a shape is modified and removed simultaneously.";
 
-const char* BRepTools_History::myMsgGeneratedAndModified =
+const char* ::model::utils::BRepTools_History::myMsgGeneratedAndModified =
   "Error: a shape is generated and modified "
   "from the same shape simultaneously.";

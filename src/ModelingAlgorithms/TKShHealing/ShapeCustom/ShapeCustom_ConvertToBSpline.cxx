@@ -73,7 +73,7 @@ bool ShapeCustom_ConvertToBSpline::NewSurface(const TopoDS_Face&         F,
   double U1, U2, V1, V2;
   S->Bounds(U1, U2, V1, V2);
   double Umin, Umax, Vmin, Vmax;
-  BRepTools::UVBounds(F, Umin, Umax, Vmin, Vmax);
+  ::model::utils::BRepTools::UVBounds(F, Umin, Umax, Vmin, Vmax);
   if (math::precision::Precision::IsInfinite(U1) || math::precision::Precision::IsInfinite(U2))
   {
     U1 = Umin;

@@ -15,7 +15,8 @@ class TopoDS_Vertex;
 class gp_Pnt;
 class Geom2d_Curve;
 
-class BRepTools_GTrsfModification : public BRepTools_Modification
+namespace model { namespace utils {
+class BRepTools_GTrsfModification : public ::model::utils::BRepTools_Modification
 {
 
 public:
@@ -73,3 +74,5 @@ private:
   gp_GTrsf myGTrsf;
   double   myGScale;
 };
+}} // namespace model::utils
+

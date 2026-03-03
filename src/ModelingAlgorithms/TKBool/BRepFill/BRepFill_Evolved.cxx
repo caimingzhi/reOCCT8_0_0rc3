@@ -345,7 +345,7 @@ void BRepFill_Evolved::PrivatePerform(const TopoDS_Face&     Spine,
   }
   CutVevo.SetWork(WorkSpine, WP);
 
-  BRepTools_Quilt Glue;
+  ::model::utils::BRepTools_Quilt Glue;
   int             CSide;
 
   if (YaLeft)
@@ -790,8 +790,8 @@ void BRepFill_Evolved::ElementaryPerform(const TopoDS_Face&              Sp,
           }
         }
 
-        E[0].Orientation(BRepTools::OriEdgeInFace(E[0], F[0]));
-        E[2].Orientation(BRepTools::OriEdgeInFace(E[2], F[1]));
+        E[0].Orientation(::model::utils::BRepTools::OriEdgeInFace(E[0], F[0]));
+        E[2].Orientation(::model::utils::BRepTools::OriEdgeInFace(E[2], F[1]));
 
         if (DistanceToOZ(VF) < DistanceToOZ(VL))
         {
@@ -968,14 +968,14 @@ void BRepFill_Evolved::ElementaryPerform(const TopoDS_Face&              Sp,
         NCollection_List<TopoDS_Shape>::Iterator itl;
         const NCollection_List<TopoDS_Shape>&    LF = myMap(CurrentSpine)(VCF);
 
-        TopAbs_Orientation Ori = BRepTools::OriEdgeInFace(TopoDS::Edge(LF.First()), CurrentFace);
+        TopAbs_Orientation Ori = ::model::utils::BRepTools::OriEdgeInFace(TopoDS::Edge(LF.First()), CurrentFace);
         for (itl.Initialize(LF), itl.Next(); itl.More(); itl.Next())
         {
           TopoDS_Edge RE = TopoDS::Edge(itl.Value());
           MapBis(CurrentFace).Append(RE.Oriented(Ori));
         }
         const NCollection_List<TopoDS_Shape>& LL = myMap(CurrentSpine)(VCL);
-        Ori = BRepTools::OriEdgeInFace(TopoDS::Edge(LL.First()), CurrentFace);
+        Ori = ::model::utils::BRepTools::OriEdgeInFace(TopoDS::Edge(LL.First()), CurrentFace);
         for (itl.Initialize(LL), itl.Next(); itl.More(); itl.Next())
         {
           TopoDS_Edge RE = TopoDS::Edge(itl.Value());
@@ -1503,7 +1503,7 @@ static TopAbs_Orientation Compare(const TopoDS_Edge& E1, const TopoDS_Edge& E2)
   return OO;
 }
 
-void BRepFill_Evolved::Add(BRepFill_Evolved& Vevo, const TopoDS_Wire& Prof, BRepTools_Quilt& Glue)
+void BRepFill_Evolved::Add(BRepFill_Evolved& Vevo, const TopoDS_Wire& Prof, ::model::utils::BRepTools_Quilt& Glue)
 
 {
   NCollection_DataMap<
@@ -1687,7 +1687,7 @@ GeomAbs_JoinType BRepFill_Evolved::JoinType() const
   return myJoinType;
 }
 
-void BRepFill_Evolved::AddTopAndBottom(BRepTools_Quilt& Glue)
+void BRepFill_Evolved::AddTopAndBottom(::model::utils::BRepTools_Quilt& Glue)
 {
 
   TopoDS_Vertex V[2];
@@ -1864,7 +1864,7 @@ void BRepFill_Evolved::MakePipe(const TopoDS_Edge& SE, const gp_Ax3& AxeRef)
   TopoDS_Wire     DummyProf   = PutProfilAt(TopoDS::Wire(aLocalShape), AxeRef, SE, mySpine, true);
 
   occ::handle<BRepTools_TrsfModification> TrsfMod = new BRepTools_TrsfModification(gp_Trsf());
-  BRepTools_Modifier                      Modif(DummyProf, TrsfMod);
+  ::model::utils::BRepTools_Modifier                      Modif(DummyProf, TrsfMod);
 
   TopoDS_Wire GenProf = TopoDS::Wire(Modif.ModifiedShape(DummyProf));
 
@@ -2223,7 +2223,7 @@ void TrimFace(const TopoDS_Face&                  Face,
     TopoDS_Face  FaceCut     = TopoDS::Face(aLocalShape);
 
     FaceCut.Orientation(TopAbs_FORWARD);
-    BRepTools::Update(FaceCut);
+    ::model::utils::BRepTools::Update(FaceCut);
     AddDegeneratedEdge(FaceCut, GoodWire);
     TheBuilder.Add(FaceCut, GoodWire);
     FaceCut.Orientation(Face.Orientation());

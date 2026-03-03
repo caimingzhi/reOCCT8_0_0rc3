@@ -68,7 +68,7 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
   Vmin = 0.;
   Vmax = 0.;
 
-  BRepTools::UVBounds(Spine, Umin, Umax, Vmin, Vmax);
+  ::model::utils::BRepTools::UVBounds(Spine, Umin, Umax, Vmin, Vmax);
   double Deltay = std::max(Umax - Umin, Vmax - Vmin) + std::abs(y);
   Deltay *= 2;
 
@@ -80,7 +80,7 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine,
   Vmin = 0.;
   Vmax = 0.;
 
-  BRepTools::UVBounds(Spine, Umin, Umax, Vmin, Vmax);
+  ::model::utils::BRepTools::UVBounds(Spine, Umin, Umax, Vmin, Vmax);
   double Deltay1 = std::max(Umax - Umin, Vmax - Vmin) + std::abs(y1);
   Deltay1 *= 2;
 
@@ -351,7 +351,7 @@ LocOpe_DPrism::LocOpe_DPrism(const TopoDS_Face& Spine, const double Height, cons
   myProfile2          = BRepLib_MakeEdge(Vert1, Vert2);
 
   double Umin, Umax, Vmin, Vmax;
-  BRepTools::UVBounds(Spine, Umin, Umax, Vmin, Vmax);
+  ::model::utils::BRepTools::UVBounds(Spine, Umin, Umax, Vmin, Vmax);
   double Deltay = std::max(Umax - Umin, Vmax - Vmin) + std::abs(y);
   Deltay *= 2;
 

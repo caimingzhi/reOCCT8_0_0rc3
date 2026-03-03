@@ -48,7 +48,7 @@ private:
   TopoDS_Shell                       myShell;
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher> myMap;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myOldNewShapes;
-  BRepTools_ReShape                                                        myReshaper;
+  ::model::utils::BRepTools_ReShape                                                        myReshaper;
   bool                                                                     myMutableInput;
   BRepFill_ThruSectionErrorStatus                                          myStatus;
 };

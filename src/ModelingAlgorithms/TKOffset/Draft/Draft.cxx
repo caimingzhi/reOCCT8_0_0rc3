@@ -66,7 +66,7 @@ double Draft::Angle(const TopoDS_Face& F, const gp_Dir& D)
       throw Standard_DomainError();
     }
     double umin, umax, vmin, vmax;
-    BRepTools::UVBounds(F, umin, umax, vmin, vmax);
+    ::model::utils::BRepTools::UVBounds(F, umin, umax, vmin, vmax);
     gp_Pnt ptbid;
     gp_Vec d1u, d1v;
     ElSLib::D1(umin + umax / 2., vmin + vmax / 2., Co, ptbid, d1u, d1v);

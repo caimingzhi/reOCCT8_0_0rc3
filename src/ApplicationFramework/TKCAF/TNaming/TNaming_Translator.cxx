@@ -94,8 +94,8 @@ void TNaming_Translator::DumpMap(const bool isWrite) const
         S1.TShape(key);
         TopoDS_Shape S2;
         S2.TShape(item);
-        BRepTools::Write(S1, keyname.Cat(i).ToCString());
-        BRepTools::Write(S2, itemname.Cat(i).ToCString());
+        ::model::utils::BRepTools::Write(S1, keyname.Cat(i).ToCString());
+        ::model::utils::BRepTools::Write(S2, itemname.Cat(i).ToCString());
       }
     }
     else if ((myMap.FindKey(i))->DynamicType() == STANDARD_TYPE(TopLoc_Datum3D))

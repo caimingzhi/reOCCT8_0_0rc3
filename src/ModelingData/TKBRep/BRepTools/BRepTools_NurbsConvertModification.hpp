@@ -18,7 +18,8 @@ class TopoDS_Vertex;
 class gp_Pnt;
 class Geom2d_Curve;
 
-class BRepTools_NurbsConvertModification : public BRepTools_CopyModification
+namespace model { namespace utils {
+class BRepTools_NurbsConvertModification : public ::model::utils::BRepTools_CopyModification
 {
 
 public:
@@ -79,3 +80,5 @@ private:
                                  myMap;
   NCollection_List<TopoDS_Shape> myUpdatedEdges;
 };
+}} // namespace model::utils
+

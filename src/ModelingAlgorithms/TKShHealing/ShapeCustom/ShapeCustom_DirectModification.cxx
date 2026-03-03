@@ -189,7 +189,7 @@ bool ShapeCustom_DirectModification::NewCurve2d(const TopoDS_Edge&         E,
       }
     }
 
-    if (BRepTools::IsReallyClosed(E, F))
+    if (::model::utils::BRepTools::IsReallyClosed(E, F))
     {
 
       TopoDS_Shape              sh  = NewE.Reversed();

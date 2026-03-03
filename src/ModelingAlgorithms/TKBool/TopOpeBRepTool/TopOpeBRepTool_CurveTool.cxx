@@ -134,7 +134,7 @@ static bool CheckPCurve(const occ::handle<Geom2d_Curve>& aPC, const TopoDS_Face&
   const int NPoints = 23;
   double    umin, umax, vmin, vmax;
 
-  BRepTools::UVBounds(aFace, umin, umax, vmin, vmax);
+  ::model::utils::BRepTools::UVBounds(aFace, umin, umax, vmin, vmax);
   double tolU = std::max((umax - umin) * 0.01, math::precision::Precision::Confusion());
   double tolV = std::max((vmax - vmin) * 0.01, math::precision::Precision::Confusion());
   double fp   = aPC->FirstParameter();
@@ -889,7 +889,7 @@ occ::handle<Geom2d_Curve> TopOpeBRepTool_CurveTool::MakePCurveOnFace(
   TolReached2d                         = projcurv.GetTolerance();
 
   double UMin, UMax, VMin, VMax;
-  BRepTools::UVBounds(F, UMin, UMax, VMin, VMax);
+  ::model::utils::BRepTools::UVBounds(F, UMin, UMax, VMin, VMax);
 
   double   f = GAC.FirstParameter();
   double   l = GAC.LastParameter();

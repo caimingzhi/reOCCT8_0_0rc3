@@ -174,7 +174,7 @@ void TopOpeBRepTool_ShapeTool::AdjustOnPeriodic(const TopoDS_Shape& F, double& u
     return;
 
   double UFfirst, UFlast, VFfirst, VFlast;
-  BRepTools::UVBounds(FF, UFfirst, UFlast, VFfirst, VFlast);
+  ::model::utils::BRepTools::UVBounds(FF, UFfirst, UFlast, VFfirst, VFlast);
 
   double tol = math::precision::Precision::PConfusion();
 

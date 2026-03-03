@@ -449,7 +449,7 @@ TopoDS_Shape IGESToBRep_BRepEntity::TransferFace(const occ::handle<IGESSolid_Fac
               B.Add(F, Shape);
           }
 
-          BRepTools::Update(F);
+          ::model::utils::BRepTools::Update(F);
           F.Orientable(true);
           SetShapeResult(start, F);
         }

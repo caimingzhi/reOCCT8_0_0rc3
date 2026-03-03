@@ -609,7 +609,7 @@ void StdPrs_Isolines::UVIsoParameters(const TopoDS_Face&            theFace,
     return;
   }
 
-  BRepTools::UVBounds(theFace, theUmin, theUmax, theVmin, theVmax);
+  ::model::utils::BRepTools::UVBounds(theFace, theUmin, theUmax, theVmin, theVmax);
 
   double aUmin = theUmin;
   double aUmax = theUmax;

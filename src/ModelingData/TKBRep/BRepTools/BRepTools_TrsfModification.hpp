@@ -15,7 +15,7 @@ class TopoDS_Vertex;
 class gp_Pnt;
 class Geom2d_Curve;
 
-class BRepTools_TrsfModification : public BRepTools_Modification
+class BRepTools_TrsfModification : public ::model::utils::BRepTools_Modification
 {
 
 public:
@@ -68,7 +68,7 @@ public:
                                            const TopoDS_Face& NewF1,
                                            const TopoDS_Face& NewF2) override;
 
-  DEFINE_STANDARD_RTTIEXT(BRepTools_TrsfModification, BRepTools_Modification)
+  DEFINE_STANDARD_RTTIEXT(BRepTools_TrsfModification, ::model::utils::BRepTools_Modification)
 
 private:
   gp_Trsf myTrsf;

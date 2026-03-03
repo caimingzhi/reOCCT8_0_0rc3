@@ -64,7 +64,7 @@ void SearchCommonFaces(const ChFiDS_Map&  EFMap,
     }
   }
 
-  if (!F1.IsNull() && F2.IsNull() && BRepTools::IsReallyClosed(E, F1))
+  if (!F1.IsNull() && F2.IsNull() && ::model::utils::BRepTools::IsReallyClosed(E, F1))
     F2 = F1;
 }
 

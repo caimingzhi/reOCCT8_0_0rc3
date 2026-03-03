@@ -48,7 +48,7 @@ public:
   DEFINE_STANDARD_RTTIEXT(XmlMNaming_NamedShapeDriver, XmlMDF_ADriver)
 
 private:
-  BRepTools_ShapeSet myShapeSet;
+  ::model::utils::BRepTools_ShapeSet myShapeSet;
 };
 
 inline TopTools_LocationSet& XmlMNaming_NamedShapeDriver::GetShapesLocations()

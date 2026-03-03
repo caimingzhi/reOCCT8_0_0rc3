@@ -10,7 +10,7 @@
 BRepBuilderAPI_GTransform::BRepBuilderAPI_GTransform(const gp_GTrsf& T)
     : myGTrsf(T)
 {
-  myModification = new BRepTools_GTrsfModification(T);
+  myModification = new ::model::utils::BRepTools_GTrsfModification(T);
 }
 
 BRepBuilderAPI_GTransform::BRepBuilderAPI_GTransform(const TopoDS_Shape& S,
@@ -18,7 +18,7 @@ BRepBuilderAPI_GTransform::BRepBuilderAPI_GTransform(const TopoDS_Shape& S,
                                                      const bool          Copy)
     : myGTrsf(T)
 {
-  myModification = new BRepTools_GTrsfModification(T);
+  myModification = new ::model::utils::BRepTools_GTrsfModification(T);
   Perform(S, Copy);
 }
 
@@ -28,8 +28,8 @@ void BRepBuilderAPI_GTransform::Perform(const TopoDS_Shape& S, const bool Copy)
   nc.Perform(S, Copy);
   myHist.Add(S, nc);
   TopoDS_Shape                             Slocal = nc.Shape();
-  occ::handle<BRepTools_GTrsfModification> theModif =
-    occ::down_cast<BRepTools_GTrsfModification>(myModification);
+  occ::handle<::model::utils::BRepTools_GTrsfModification> theModif =
+    occ::down_cast<::model::utils::BRepTools_GTrsfModification>(myModification);
   theModif->GTrsf() = myGTrsf;
   DoModif(Slocal, myModification);
 }

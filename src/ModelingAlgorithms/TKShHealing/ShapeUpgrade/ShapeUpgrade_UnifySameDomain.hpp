@@ -60,9 +60,9 @@ public:
 
   const TopoDS_Shape& Shape() const { return myShape; }
 
-  const occ::handle<BRepTools_History>& History() const { return myHistory; }
+  const occ::handle<::model::utils::BRepTools_History>& History() const { return myHistory; }
 
-  occ::handle<BRepTools_History>& History() { return myHistory; }
+  occ::handle<::model::utils::BRepTools_History>& History() { return myHistory; }
 
   DEFINE_STANDARD_RTTIEXT(ShapeUpgrade_UnifySameDomain, Standard_Transient)
 
@@ -133,5 +133,5 @@ private:
                                                                            myEFmap;
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> myFaceNewFace;
 
-  occ::handle<BRepTools_History> myHistory;
+  occ::handle<::model::utils::BRepTools_History> myHistory;
 };

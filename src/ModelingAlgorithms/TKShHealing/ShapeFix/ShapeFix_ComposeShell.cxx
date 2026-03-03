@@ -93,7 +93,7 @@ void ShapeFix_ComposeShell::Init(const occ::handle<ShapeExtend_CompositeSurface>
     theSurface->Bounds(U0, U1, V0, V1);
     if (math::precision::Precision::IsInfinite(U0) || math::precision::Precision::IsInfinite(U1) || math::precision::Precision::IsInfinite(V0)
         || math::precision::Precision::IsInfinite(V1))
-      BRepTools::UVBounds(Face, GU0, GU1, GV0, GV1);
+      ::model::utils::BRepTools::UVBounds(Face, GU0, GU1, GV0, GV1);
     if (myUClosed)
     {
       if (math::precision::Precision::IsInfinite(V0))
@@ -1730,7 +1730,7 @@ void ShapeFix_ComposeShell::SplitByGrid(NCollection_Sequence<ShapeFix_WireSegmen
 {
 
   double Uf, Ul, Vf, Vl;
-  BRepTools::UVBounds(myFace, Uf, Ul, Vf, Vl);
+  ::model::utils::BRepTools::UVBounds(myFace, Uf, Ul, Vf, Vl);
   double Umin, Umax, Vmin, Vmax;
   myGrid->Bounds(Umin, Umax, Vmin, Vmax);
 

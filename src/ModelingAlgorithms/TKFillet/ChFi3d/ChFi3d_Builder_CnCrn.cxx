@@ -487,7 +487,7 @@ static void CalculBatten(const occ::handle<GeomAdaptor_Surface>& ASurf,
     {
       pcurve = Bat.Curve();
       double umin, vmin, umax, vmax;
-      BRepTools::UVBounds(Face, umin, umax, vmin, vmax);
+      ::model::utils::BRepTools::UVBounds(Face, umin, umax, vmin, vmax);
       Bnd_Box2d           bf, bc;
       Geom2dAdaptor_Curve acur(pcurve);
       BndLib_Add2dCurve::Add(acur, 0, bc);

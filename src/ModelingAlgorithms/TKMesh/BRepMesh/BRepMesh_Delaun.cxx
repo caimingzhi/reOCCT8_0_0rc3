@@ -2232,7 +2232,7 @@ const char* BRepMesh_DumpPoly(void* thePolygon, void* theMeshHandlePtr, const ch
       aBuilder.Add(aMesh, BRepBuilderAPI_MakeEdge(aPnt[0], aPnt[1]));
     }
 
-    if (!BRepTools::Write(aMesh, theFileNameStr))
+    if (!::model::utils::BRepTools::Write(aMesh, theFileNameStr))
       return "Error: write failed";
   }
   catch (Standard_Failure const& anException)

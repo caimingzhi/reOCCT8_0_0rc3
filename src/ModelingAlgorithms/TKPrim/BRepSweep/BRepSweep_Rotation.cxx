@@ -701,7 +701,7 @@ bool BRepSweep_Rotation::SeparatedWires(const TopoDS_Shape&   aNewShape,
 
 TopoDS_Shape BRepSweep_Rotation::SplitShell(const TopoDS_Shape& aNewShape) const
 {
-  BRepTools_Quilt Q;
+  ::model::utils::BRepTools_Quilt Q;
   Q.Add(aNewShape);
   return Q.Shells();
 }
@@ -729,7 +729,7 @@ bool BRepSweep_Rotation::HasShape(const TopoDS_Shape& aGenS, const Sweep_NumShap
     for (; FaceExp.More(); FaceExp.Next())
     {
       TopoDS_Face F = TopoDS::Face(FaceExp.Current());
-      if (BRepTools::IsReallyClosed(anEdge, F))
+      if (::model::utils::BRepTools::IsReallyClosed(anEdge, F))
         return false;
     }
 

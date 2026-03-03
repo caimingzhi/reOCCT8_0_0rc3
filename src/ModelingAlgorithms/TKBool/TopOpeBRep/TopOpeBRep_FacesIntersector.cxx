@@ -40,8 +40,8 @@ static void SAVFF(const TopoDS_Face& F1, const TopoDS_Face& F2)
   const char* n1 = an1.ToCString();
   const char* n2 = an2.ToCString();
   std::cout << "FaceIntersector : write " << n1 << "," << n2 << std::endl;
-  BRepTools::Write(F1, n1);
-  BRepTools::Write(F2, n2);
+  ::model::utils::BRepTools::Write(F1, n1);
+  ::model::utils::BRepTools::Write(F2, n2);
 }
 
 extern bool TopOpeBRepTool_GettraceKRO();

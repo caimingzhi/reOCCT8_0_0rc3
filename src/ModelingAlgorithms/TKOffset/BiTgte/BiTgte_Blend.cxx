@@ -982,7 +982,7 @@ int BiTgte_Blend::NbBranches()
   if (myNbBranches != -1)
     return myNbBranches;
 
-  BRepTools_Quilt Glue;
+  ::model::utils::BRepTools_Quilt Glue;
 
   int NbFaces = myCenters.Extent();
 
@@ -2002,7 +2002,7 @@ void BiTgte_Blend::ComputeShape()
 
         NewF.Orientation(DeboucFace.Orientation());
 
-        BRepTools::Update(NewF);
+        ::model::utils::BRepTools::Update(NewF);
         B.Add(myResult, NewF);
       }
     }

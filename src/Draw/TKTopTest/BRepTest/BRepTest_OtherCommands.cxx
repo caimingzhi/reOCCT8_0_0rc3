@@ -436,7 +436,7 @@ int xbounds(Draw_Interpretor& di, int n, const char** a)
 
   aF = *((TopoDS_Face*)&aS);
 
-  BRepTools::UVBounds(aF, aUMin, aUMax, aVMin, aVMax);
+  ::model::utils::BRepTools::UVBounds(aF, aUMin, aUMax, aVMin, aVMax);
 
   TCollection_AsciiString aStr;
   TCollection_AsciiString sUMin(aUMin);

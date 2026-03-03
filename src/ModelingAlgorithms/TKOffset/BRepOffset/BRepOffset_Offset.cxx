@@ -422,7 +422,7 @@ void BRepOffset_Offset::Init(
     gp_Pnt Apex = Co->Apex();
     ElSLib::Parameters(Co->Cone(), Apex, Uc, Vc);
     double UU1, UU2, VV1, VV2;
-    BRepTools::UVBounds(Face, UU1, UU2, VV1, VV2);
+    ::model::utils::BRepTools::UVBounds(Face, UU1, UU2, VV1, VV2);
     if (VV2 < Vc && Co->SemiAngle() > 0)
       myOffset *= -1;
     else if (VV1 > Vc && Co->SemiAngle() < 0)
@@ -441,7 +441,7 @@ void BRepOffset_Offset::Init(
   gp_Pnt MinApex, MaxApex;
   bool   HasSingularity = false;
   double uf1, uf2, vf1, vf2, fpar, lpar;
-  BRepTools::UVBounds(Face, uf1, uf2, vf1, vf2);
+  ::model::utils::BRepTools::UVBounds(Face, uf1, uf2, vf1, vf2);
   if ((!OffsetOutside || JoinType != GeomAbs_Arc)
       && (TheSurf->DynamicType() == STANDARD_TYPE(Geom_ConicalSurface)
           || TheSurf->DynamicType() == STANDARD_TYPE(Geom_OffsetSurface)))
@@ -913,7 +913,7 @@ void BRepOffset_Offset::Init(
 
   myFace.Orientation(Face.Orientation());
 
-  BRepTools::Update(myFace);
+  ::model::utils::BRepTools::Update(myFace);
 }
 
 void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
@@ -1321,7 +1321,7 @@ void BRepOffset_Offset::Init(const TopoDS_Edge&  Path,
   if (ExchUV)
     myFace.Reverse();
 
-  BRepTools::Update(myFace);
+  ::model::utils::BRepTools::Update(myFace);
 
   if (Edge1.Orientation() == TopAbs_REVERSED)
     myFace.Reverse();
@@ -1449,7 +1449,7 @@ void BRepOffset_Offset::Init(const TopoDS_Vertex&                  Vertex,
     myBuilder.Add(myFace, W);
   }
 
-  BRepTools::Update(myFace);
+  ::model::utils::BRepTools::Update(myFace);
 }
 
 void BRepOffset_Offset::Init(const TopoDS_Edge& Edge, const double Offset)

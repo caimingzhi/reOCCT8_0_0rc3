@@ -190,7 +190,7 @@ void TopoDSToStep_MakeStepEdge::Init(const TopoDS_Edge&                         
         double aDist2m      = aP12.Distance(aPm);
         double aDistMax     = std::max(std::max(aDist1m, aDist2m), aDist11);
         bool   isSmallCurve = (aDistMax <= aTolV1 || aDistMax <= aTolV2);
-        if (BRepTools::Compare(Vfirst, Vlast) && isSmallCurve && dpar > math::precision::Precision::PConfusion()
+        if (::model::utils::BRepTools::Compare(Vfirst, Vlast) && isSmallCurve && dpar > math::precision::Precision::PConfusion()
             && dpar <= 0.1 * C->Period())
         {
           occ::handle<Geom_BSplineCurve> aBspl1 = occ::down_cast<Geom_BSplineCurve>(C->Copy());

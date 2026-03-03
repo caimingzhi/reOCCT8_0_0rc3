@@ -419,7 +419,7 @@ bool BRepFill_TrimShellCorner::MakeFacesNonSec(const int        theIndex,
   bool bvertexfound =
     FindCommonVertex(theDS, anIndex1, anIndex2, myIntPointCrossDir, aCommonVertex, apar1, apar2);
 
-  occ::handle<BRepTools_ReShape> aSubstitutor = new BRepTools_ReShape();
+  occ::handle<::model::utils::BRepTools_ReShape> aSubstitutor = new ::model::utils::BRepTools_ReShape();
 
   NCollection_List<TopoDS_Shape> aCommonVertices;
   int                            acommonflag = 0;
@@ -769,7 +769,7 @@ bool BRepFill_TrimShellCorner::MakeFacesSec(const int        theIndex,
   NCollection_List<TopoDS_Shape> aCommonVertices;
 
   int                            fit          = 0;
-  occ::handle<BRepTools_ReShape> aSubstitutor = new BRepTools_ReShape();
+  occ::handle<::model::utils::BRepTools_ReShape> aSubstitutor = new ::model::utils::BRepTools_ReShape();
 
   for (fit = 0; fit < 2; fit++)
   {

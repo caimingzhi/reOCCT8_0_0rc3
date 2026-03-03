@@ -35,7 +35,7 @@ void BRepClass_FaceExplorer::ComputeFaceBounds()
   if (math::precision::Precision::IsInfinite(myUMin) || math::precision::Precision::IsInfinite(myUMax)
       || math::precision::Precision::IsInfinite(myVMin) || math::precision::Precision::IsInfinite(myVMax))
   {
-    BRepTools::UVBounds(myFace, myUMin, myUMax, myVMin, myVMax);
+    ::model::utils::BRepTools::UVBounds(myFace, myUMin, myUMax, myVMin, myVMax);
   }
 }
 

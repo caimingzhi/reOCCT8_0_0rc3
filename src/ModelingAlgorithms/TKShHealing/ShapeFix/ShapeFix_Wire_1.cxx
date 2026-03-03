@@ -1347,7 +1347,7 @@ bool ShapeFix_Wire::FixGap2d(const int num, const bool convert)
               || math::precision::Precision::IsInfinite(vmin) || math::precision::Precision::IsInfinite(vmax))
           {
             double fumin, fumax, fvmin, fvmax;
-            BRepTools::UVBounds(face, fumin, fumax, fvmin, fvmax);
+            ::model::utils::BRepTools::UVBounds(face, fumin, fumax, fvmin, fvmax);
             if (math::precision::Precision::IsInfinite(umin))
               umin = fumin - preci;
             if (math::precision::Precision::IsInfinite(umax))

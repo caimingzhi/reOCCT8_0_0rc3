@@ -1083,7 +1083,7 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL1);
     return false;
   }
-  if (!BRepTools::Compare(V1, V2))
+  if (!::model::utils::BRepTools::Compare(V1, V2))
   {
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);
     return false;
@@ -1188,7 +1188,7 @@ bool ShapeAnalysis_Wire::CheckIntersectingEdges(
 
     if ((dist2 > tolt * tolt || isLacking) &&
 
-        (!BRepTools::Compare(Vp, Vn) || dist2 < pint.SquareDistance(BRep_Tool::Pnt(Vp))))
+        (!::model::utils::BRepTools::Compare(Vp, Vn) || dist2 < pint.SquareDistance(BRep_Tool::Pnt(Vp))))
     {
       points2d.Append(IP);
       points3d.Append(pint);
@@ -1357,7 +1357,7 @@ bool ShapeAnalysis_Wire::CheckLacking(const int    num,
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL1);
     return false;
   }
-  if (!BRepTools::Compare(V1, V2))
+  if (!::model::utils::BRepTools::Compare(V1, V2))
   {
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);
     return false;
@@ -1486,7 +1486,7 @@ bool ShapeAnalysis_Wire::CheckNotchedEdges(const int    num,
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL1);
     return false;
   }
-  if (!BRepTools::Compare(V1, V2))
+  if (!::model::utils::BRepTools::Compare(V1, V2))
   {
     myStatus |= ShapeExtend::EncodeStatus(ShapeExtend_FAIL2);
     return false;

@@ -43,6 +43,7 @@
 #include <TopTools_ShapeMapHasher.hpp>
 #include <NCollection_IndexedMap.hpp>
 
+namespace model { namespace utils {
 void BRepTools::UVBounds(const TopoDS_Face& F,
                          double&            UMin,
                          double&            UMax,
@@ -1207,6 +1208,8 @@ TopAbs_Orientation BRepTools::OriEdgeInFace(const TopoDS_Edge& E, const TopoDS_F
   throw Standard_ConstructionError("BRepTools::OriEdgeInFace");
 }
 
+
+}} // namespace model::utils
 namespace
 {
 
@@ -1275,6 +1278,7 @@ namespace
 
 } // namespace
 
+namespace model { namespace utils {
 void BRepTools::RemoveInternals(TopoDS_Shape& theS, const bool theForce)
 {
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>*pMKeep = nullptr, aMKeep;
@@ -1315,3 +1319,5 @@ void BRepTools::CheckLocations(const TopoDS_Shape&             theS,
     }
   }
 }
+
+}} // namespace model::utils

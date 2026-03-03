@@ -4929,7 +4929,7 @@ bool ChFi3d_IsPseudoSeam(const TopoDS_Edge& E, const TopoDS_Face& F)
     {
       TopExp::Vertices(Ecur, V1, V2);
       if ((V1.IsSame(Vf) || V1.IsSame(Vl) || V2.IsSame(Vf) || V2.IsSame(Vl))
-          && BRepTools::IsReallyClosed(Ecur, F))
+          && ::model::utils::BRepTools::IsReallyClosed(Ecur, F))
       {
         NeighborSeamFound = true;
         break;

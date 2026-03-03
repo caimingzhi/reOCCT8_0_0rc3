@@ -644,7 +644,7 @@ static void RemoveCorks(TopoDS_Shape&                                           
 
 static bool IsConnectedShell(const TopoDS_Shape& S)
 {
-  BRepTools_Quilt Glue;
+  ::model::utils::BRepTools_Quilt Glue;
   Glue.Add(S);
 
   TopoDS_Shape    SS = Glue.Shells();
@@ -931,7 +931,7 @@ void BRepOffset_MakeOffset::MakeThickSolid(const System::log::Message_ProgressRa
 
     B.MakeSolid(Res);
 
-    BRepTools_Quilt Glue;
+    ::model::utils::BRepTools_Quilt Glue;
     for (exp.Init(myShape, TopAbs_FACE); exp.More(); exp.Next())
     {
       NbF++;
@@ -3080,7 +3080,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const System::log::Message_Progress
       {
 
         BRepLib::SameParameter(NewFace);
-        BRepTools::Update(NewFace);
+        ::model::utils::BRepTools::Update(NewFace);
       }
 
       TopAbs_Orientation anOr        = OrientationOfEdgeInFace(anEdge, aFaceOfEdge);
@@ -3125,7 +3125,7 @@ void BRepOffset_MakeOffset::MakeMissingWalls(const System::log::Message_Progress
         BRepLib::BuildCurves3d(arcWire, myTol);
         arcWire.Closed(true);
         TopoDS_Face arcFace = BRepLib_MakeFace(arcWire, true);
-        BRepTools::Update(arcFace);
+        ::model::utils::BRepTools::Update(arcFace);
         myWalls.Append(arcFace);
         TopoDS_Shape       localEA2 = EA2.Oriented(TopAbs_FORWARD);
         const TopoDS_Edge& CEA2     = TopoDS::Edge(localEA2);
@@ -3226,7 +3226,7 @@ void BRepOffset_MakeOffset::MakeShells(const System::log::Message_ProgressRange&
 
   if (!bDone)
   {
-    BRepTools_Quilt                          Glue;
+    ::model::utils::BRepTools_Quilt                          Glue;
     NCollection_List<TopoDS_Shape>::Iterator aItLS(aLSF);
     for (; aItLS.More(); aItLS.Next())
     {
@@ -3830,7 +3830,7 @@ bool BRepOffset_MakeOffset::CheckInputData(const System::log::Message_ProgressRa
     aPresenceMap.Add(aF.TShape());
 
     const occ::handle<Geom_Surface>& aSurf = BRep_Tool::Surface(aF, L);
-    BRepTools::UVBounds(aF, aUmin, aUmax, aVmin, aVmax);
+    ::model::utils::BRepTools::UVBounds(aF, aUmin, aUmax, aVmin, aVmax);
 
     if (aSurf->Continuity() == GeomAbs_C0)
     {
@@ -4821,7 +4821,7 @@ void RemoveSeamAndDegeneratedEdges(const TopoDS_Face& theFace, const TopoDS_Face
   for (; anExplo.More(); anExplo.Next())
   {
     const TopoDS_Edge& anEdge = TopoDS::Edge(anExplo.Current());
-    if (BRep_Tool::Degenerated(anEdge) || BRepTools::IsReallyClosed(anEdge, theOldFace))
+    if (BRep_Tool::Degenerated(anEdge) || ::model::utils::BRepTools::IsReallyClosed(anEdge, theOldFace))
       aIsDegOrSeamFound = true;
     else
       aEseq.Append(anEdge);

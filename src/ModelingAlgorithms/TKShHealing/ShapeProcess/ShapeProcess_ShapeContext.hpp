@@ -12,7 +12,10 @@
 #include <GeomAbs_Shape.hpp>
 class ShapeExtend_MsgRegistrator;
 class ShapeBuild_ReShape;
+namespace model { namespace utils {
 class BRepTools_Modifier;
+}} // namespace model::utils
+
 namespace System { namespace log {
 class Message_Msg;
 }} // namespace System::log
@@ -58,7 +61,7 @@ public:
 
   Standard_EXPORT void RecordModification(
     const TopoDS_Shape&                            sh,
-    const BRepTools_Modifier&                      repl,
+    const ::model::utils::BRepTools_Modifier&                      repl,
     const occ::handle<ShapeExtend_MsgRegistrator>& msg = nullptr);
 
   Standard_EXPORT void AddMessage(const TopoDS_Shape&   S,

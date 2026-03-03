@@ -123,7 +123,7 @@ void BOPAlgo_MakePeriodic::Trim()
 
   myShape = aCommon.Shape();
 
-  mySplitHistory = new BRepTools_History();
+  mySplitHistory = new ::model::utils::BRepTools_History();
   mySplitHistory->Merge(anObj, aCommon);
 }
 
@@ -133,7 +133,7 @@ void BOPAlgo_MakePeriodic::MakeIdentical()
     myShape = myInputShape;
 
   if (mySplitHistory.IsNull())
-    mySplitHistory = new BRepTools_History;
+    mySplitHistory = new ::model::utils::BRepTools_History;
 
   SplitNegative();
   if (HasErrors())
@@ -141,7 +141,7 @@ void BOPAlgo_MakePeriodic::MakeIdentical()
 
   SplitPositive();
 
-  myHistory = new BRepTools_History();
+  myHistory = new ::model::utils::BRepTools_History();
   myHistory->Merge(mySplitHistory);
 }
 
@@ -212,7 +212,7 @@ void BOPAlgo_MakePeriodic::SplitPositive()
     for (int j = 1; j <= aNbS; ++j)
     {
       const TopoDS_Shape& aS = aSubShapesMap(j);
-      if (BRepTools_History::IsSupportedType(aS))
+      if (::model::utils::BRepTools_History::IsSupportedType(aS))
       {
         const NCollection_List<TopoDS_Shape>& aSM = aTranslator.Modified(aS);
         NCollection_List<TopoDS_Shape>*       pTS = aTranslationHistMap.ChangeSeek(aS);
@@ -223,8 +223,8 @@ void BOPAlgo_MakePeriodic::SplitPositive()
     }
   }
 
-  occ::handle<BRepTools_History> aSplitShapeHist = new BRepTools_History,
-                                 aSplitToolsHist = new BRepTools_History;
+  occ::handle<::model::utils::BRepTools_History> aSplitShapeHist = new ::model::utils::BRepTools_History,
+                                 aSplitToolsHist = new ::model::utils::BRepTools_History;
 
   SplitShape(aTools, aSplitShapeHist, aSplitToolsHist);
   if (HasErrors())
@@ -263,8 +263,8 @@ void BOPAlgo_MakePeriodic::SplitPositive()
 }
 
 void BOPAlgo_MakePeriodic::SplitShape(const NCollection_List<TopoDS_Shape>& theTools,
-                                      const occ::handle<BRepTools_History>& theSplitShapeHistory,
-                                      const occ::handle<BRepTools_History>& theSplitToolsHistory)
+                                      const occ::handle<::model::utils::BRepTools_History>& theSplitShapeHistory,
+                                      const occ::handle<::model::utils::BRepTools_History>& theSplitToolsHistory)
 {
 
   BOPAlgo_PaveFiller anIntersector;
@@ -344,7 +344,7 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
 
   const int iDir = theTimes > 0 ? 1 : -1;
 
-  BRepTools_History                                             aTranslationHistory;
+  ::model::utils::BRepTools_History                                             aTranslationHistory;
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aSubShapesMap;
   TopExp::MapShapes(myRepeatedShape, aSubShapesMap);
   const int aNbS = aSubShapesMap.Extent();
@@ -355,7 +355,7 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
   for (int i = 1; i <= aNbS; ++i)
   {
     const TopoDS_Shape& aS = aSubShapesMap(i);
-    if (BRepTools_History::IsSupportedType(aS))
+    if (::model::utils::BRepTools_History::IsSupportedType(aS))
       aTranslationHistory.AddGenerated(aS, aS);
   }
 
@@ -369,7 +369,7 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
     for (int j = 1; j <= aNbS; ++j)
     {
       const TopoDS_Shape& aS = aSubShapesMap(j);
-      if (BRepTools_History::IsSupportedType(aS))
+      if (::model::utils::BRepTools_History::IsSupportedType(aS))
       {
         const NCollection_List<TopoDS_Shape>& aLT = aTranslator.Modified(aS);
         aTranslationHistory.AddGenerated(aS, aLT.First());
@@ -400,7 +400,7 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
 
   myRepeatPeriod[id] += std::abs(theTimes) * myRepeatPeriod[id];
 
-  BRepTools_History aGluingHistory(aShapes, aGluer);
+  ::model::utils::BRepTools_History aGluingHistory(aShapes, aGluer);
   myHistory->Merge(aGluingHistory);
 
   UpdateTwins(aTranslationHistory, aGluingHistory);
@@ -408,8 +408,8 @@ const TopoDS_Shape& BOPAlgo_MakePeriodic::RepeatShape(const int theDir, const in
   return myRepeatedShape;
 }
 
-void BOPAlgo_MakePeriodic::UpdateTwins(const BRepTools_History& theTranslationHistory,
-                                       const BRepTools_History& theGluingHistory)
+void BOPAlgo_MakePeriodic::UpdateTwins(const ::model::utils::BRepTools_History& theTranslationHistory,
+                                       const ::model::utils::BRepTools_History& theGluingHistory)
 {
   if (myTwins.IsEmpty())
     return;

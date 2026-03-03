@@ -53,7 +53,7 @@ void WriteShape(const TopoDS_Shape& shape, const int number)
   std::cout << "Output file name : " << fname << std::endl;
   f << "DBRep_DrawableShape\n";
 
-  BRepTools::Write(shape, f);
+  ::model::utils::BRepTools::Write(shape, f);
   f.close();
 }
 

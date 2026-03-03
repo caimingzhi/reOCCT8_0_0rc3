@@ -232,7 +232,7 @@ bool LocOpe_SplitShape::Add(const NCollection_List<TopoDS_Shape>& Lwires, const 
   NCollection_List<TopoDS_Shape>::Iterator itl(lf);
   TopoDS_Vertex                            Vfirst, Vlast;
 
-  BRepTools::Update(F);
+  ::model::utils::BRepTools::Update(F);
 
   NCollection_List<TopoDS_Shape> aLInside;
   for (; itl.More(); itl.Next())
@@ -315,7 +315,7 @@ bool LocOpe_SplitShape::Add(const NCollection_List<TopoDS_Shape>& Lwires, const 
     VerSecMap(V2).Append(aWire);
   }
 
-  TopoDS_Wire       outerW  = BRepTools::OuterWire(FaceRef);
+  TopoDS_Wire       outerW  = ::model::utils::BRepTools::OuterWire(FaceRef);
   TopoDS_Wire       CurWire = outerW;
   BRepLib_MakeWire* MW;
   MW = new BRepLib_MakeWire();
@@ -669,7 +669,7 @@ bool LocOpe_SplitShape::AddOpenWire(const TopoDS_Wire& W, const TopoDS_Face& F)
   NCollection_List<TopoDS_Shape>::Iterator itl(lf);
   TopoDS_Vertex                            Vfirst, Vlast;
 
-  BRepTools::Update(F);
+  ::model::utils::BRepTools::Update(F);
 
   double tolf, toll, tol1;
 
@@ -1025,7 +1025,7 @@ bool LocOpe_SplitShape::AddOpenWire(const TopoDS_Wire& W, const TopoDS_Face& F)
   else
   {
 
-    TopoDS_Wire outerW = BRepTools::OuterWire(FaceRef);
+    TopoDS_Wire outerW = ::model::utils::BRepTools::OuterWire(FaceRef);
     TopoDS_Wire newWire;
     TopoDS_Face newFace;
     B.MakeWire(newWire);

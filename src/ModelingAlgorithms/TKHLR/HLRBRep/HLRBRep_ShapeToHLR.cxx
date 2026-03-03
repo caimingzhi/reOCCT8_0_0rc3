@@ -196,7 +196,7 @@ void HLRBRep_ShapeToHLR::ExploreFace(
       bool               Int       = TopDS.IsIntLFaceEdge(F, E);
       bool               Iso       = TopDS.IsIsoLFaceEdge(F, E);
       bool               Out       = TopDS.IsOutLFaceEdge(F, E);
-      bool               Dbl       = BRepTools::IsReallyClosed(TopoDS::Edge(E), theFace);
+      bool               Dbl       = ::model::utils::BRepTools::IsReallyClosed(TopoDS::Edge(E), theFace);
       fd.SetWEdge(nw, ne, ie, anOrientE, Out, Int, Dbl, Iso);
     }
   }

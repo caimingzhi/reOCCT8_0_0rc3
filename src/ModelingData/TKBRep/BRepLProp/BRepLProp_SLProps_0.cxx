@@ -10,7 +10,7 @@
 
 #define Surface ::model::adapter::BRepAdaptor_Surface
 #define Surface_hxx <BRepAdaptor_Surface.hpp>
-#define Tool BRepLProp_SurfaceTool
+#define Tool ::model::localproperties::BRepLProp_SurfaceTool
 #define Tool_hxx <BRepLProp_SurfaceTool.hpp>
 namespace model { namespace localproperties {
 #define LProp_SLProps BRepLProp_SLProps

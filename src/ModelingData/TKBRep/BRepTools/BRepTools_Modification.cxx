@@ -3,8 +3,9 @@
 #include <Poly_Triangulation.hpp>
 #include <TopoDS_Face.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_Modification, Standard_Transient)
+IMPLEMENT_STANDARD_RTTIEXT(::model::utils::BRepTools_Modification, Standard_Transient)
 
+namespace model { namespace utils {
 bool BRepTools_Modification::NewTriangulation(const TopoDS_Face&, occ::handle<Poly_Triangulation>&)
 {
   return false;
@@ -21,3 +22,5 @@ bool BRepTools_Modification::NewPolygonOnTriangulation(const TopoDS_Edge&,
 {
   return false;
 }
+
+}} // namespace model::utils

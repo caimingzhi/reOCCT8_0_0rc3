@@ -8,6 +8,7 @@
 #include <BRepTools_Modifier.hpp>
 #include <TopLoc_Datum3D.hpp>
 
+namespace model { namespace utils {
 BRepTools_PurgeLocations::BRepTools_PurgeLocations()
     : myDone(false)
 {
@@ -172,3 +173,5 @@ TopoDS_Shape BRepTools_PurgeLocations::ModifiedShape(const TopoDS_Shape& theInit
     aShape = myMapNewShapes.Find(theInitShape);
   return aShape;
 }
+
+}} // namespace model::utils

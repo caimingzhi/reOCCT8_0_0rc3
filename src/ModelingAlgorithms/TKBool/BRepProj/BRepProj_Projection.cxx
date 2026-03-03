@@ -127,7 +127,7 @@ BRepProj_Projection::BRepProj_Projection(const TopoDS_Shape& Wire,
   T.SetTranslation(Vinf);
 
   occ::handle<BRepTools_TrsfModification> Trsf = new BRepTools_TrsfModification(T);
-  BRepTools_Modifier                      Modif(Wire, Trsf);
+  ::model::utils::BRepTools_Modifier                      Modif(Wire, Trsf);
   const TopoDS_Shape&                     WireBase = Modif.ModifiedShape(Wire);
 
   BRepSweep_Prism CylSurf(WireBase, Vsup, false);
@@ -171,7 +171,7 @@ BRepProj_Projection::BRepProj_Projection(const TopoDS_Shape& Wire,
   gp_Trsf T;
   T.SetScale(P, Scale);
   occ::handle<BRepTools_TrsfModification> Tsca = new BRepTools_TrsfModification(T);
-  BRepTools_Modifier                      ModifScale(aWire, Tsca);
+  ::model::utils::BRepTools_Modifier                      ModifScale(aWire, Tsca);
   TopoDS_Shape                            ShapeGen1 = ModifScale.ModifiedShape(aWire);
 
   TopoDS_Vertex aVertex = BRepLib_MakeVertex(P);

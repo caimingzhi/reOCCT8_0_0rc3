@@ -8,7 +8,10 @@
 #include <TopoDS_Shape.hpp>
 #include <BRepBuilderAPI_MakeShape.hpp>
 #include <NCollection_List.hpp>
+namespace model { namespace utils {
 class BRepTools_Modification;
+}} // namespace model::utils
+
 
 class BRepBuilderAPI_ModifyShape : public BRepBuilderAPI_MakeShape
 {
@@ -24,20 +27,20 @@ protected:
 
   Standard_EXPORT BRepBuilderAPI_ModifyShape(const TopoDS_Shape& S);
 
-  Standard_EXPORT BRepBuilderAPI_ModifyShape(const occ::handle<BRepTools_Modification>& M);
+  Standard_EXPORT BRepBuilderAPI_ModifyShape(const occ::handle<::model::utils::BRepTools_Modification>& M);
 
   Standard_EXPORT BRepBuilderAPI_ModifyShape(const TopoDS_Shape&                        S,
-                                             const occ::handle<BRepTools_Modification>& M);
+                                             const occ::handle<::model::utils::BRepTools_Modification>& M);
 
   Standard_EXPORT void DoModif(const TopoDS_Shape& S);
 
-  Standard_EXPORT void DoModif(const occ::handle<BRepTools_Modification>& M);
+  Standard_EXPORT void DoModif(const occ::handle<::model::utils::BRepTools_Modification>& M);
 
-  Standard_EXPORT void DoModif(const TopoDS_Shape& S, const occ::handle<BRepTools_Modification>& M);
+  Standard_EXPORT void DoModif(const TopoDS_Shape& S, const occ::handle<::model::utils::BRepTools_Modification>& M);
 
-  BRepTools_Modifier                  myModifier;
+  ::model::utils::BRepTools_Modifier                  myModifier;
   TopoDS_Shape                        myInitialShape;
-  occ::handle<BRepTools_Modification> myModification;
+  occ::handle<::model::utils::BRepTools_Modification> myModification;
 
 private:
   Standard_EXPORT void DoModif();

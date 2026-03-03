@@ -276,7 +276,7 @@ static void TRIM_INFINIT_FACE(const TopoDS_Shape& S1,
   }
   else
   {
-    BRepTools::UVBounds(aF, U1, U2, V1, V2);
+    ::model::utils::BRepTools::UVBounds(aF, U1, U2, V1, V2);
     if (math::precision::Precision::IsInfinite(U1) && math::precision::Precision::IsInfinite(U2) && math::precision::Precision::IsInfinite(V1)
         && math::precision::Precision::IsInfinite(V2))
       bIsTrim = true;

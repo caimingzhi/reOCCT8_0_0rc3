@@ -24,7 +24,7 @@ void BRepExtrema_ExtFF::Initialize(const TopoDS_Face& F2)
   Tol        = std::min(Surf.UResolution(Tol), Surf.VResolution(Tol));
   Tol        = std::max(Tol, math::precision::Precision::PConfusion());
   double U1, U2, V1, V2;
-  BRepTools::UVBounds(F2, U1, U2, V1, V2);
+  ::model::utils::BRepTools::UVBounds(F2, U1, U2, V1, V2);
   myExtSS.Initialize(*myHS, U1, U2, V1, V2, Tol);
 }
 
@@ -43,7 +43,7 @@ void BRepExtrema_ExtFF::Perform(const TopoDS_Face& F1, const TopoDS_Face& F2)
   Tol1                                 = std::min(Surf1.UResolution(Tol1), Surf1.VResolution(Tol1));
   Tol1                                 = std::max(Tol1, math::precision::Precision::PConfusion());
   double U1, U2, V1, V2;
-  BRepTools::UVBounds(F1, U1, U2, V1, V2);
+  ::model::utils::BRepTools::UVBounds(F1, U1, U2, V1, V2);
   myExtSS.Perform(*HS1, U1, U2, V1, V2, Tol1);
 
   if (!myExtSS.IsDone())

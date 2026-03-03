@@ -456,7 +456,7 @@ int OCC165(Draw_Interpretor& di, int n, const char** a)
   BRep_Builder aBuilder;
   TopoDS_Shape theShape;
 
-  BRepTools::Read(theShape, file, aBuilder);
+  ::model::utils::BRepTools::Read(theShape, file, aBuilder);
   DBRep::Set("shape", theShape);
 
   TopoDS_Wire theWire = TopoDS::Wire(theShape);
@@ -583,7 +583,7 @@ static int OCC305(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Shape sh;
   BRep_Builder builder;
 
-  BRepTools::Read(sh, file, builder);
+  ::model::utils::BRepTools::Read(sh, file, builder);
 
   TopoDS_Wire wire;
   builder.MakeWire(wire);
@@ -856,7 +856,7 @@ static int OCC377(Draw_Interpretor& di, int argc, const char** argv)
 
     BRep_Builder B;
     TopoDS_Shape Shape;
-    BRepTools::Read(Shape, argv[1], B);
+    ::model::utils::BRepTools::Read(Shape, argv[1], B);
 
     TopExp_Explorer exp;
     int             i = 1;
@@ -1353,7 +1353,7 @@ static int OCC921(Draw_Interpretor& di, int argc, const char** argv)
   TopoDS_Face F = TopoDS::Face(DBRep::Get(argv[1]));
   if (F.IsNull())
     return 1;
-  BRepTools::UVBounds(F, u1, u2, v1, v2);
+  ::model::utils::BRepTools::UVBounds(F, u1, u2, v1, v2);
   di << "Bounds: " << u1 << "   " << u2 << "   " << v1 << "   " << v2 << "\n";
   return 0;
 }
@@ -4164,7 +4164,7 @@ static int OCC20627(Draw_Interpretor& di, int argc, const char** argv)
     BRepBuilderAPI_MakeFace  faceBuilder(wireShape);
     const TopoDS_Face&       f(faceBuilder.Face());
     BRepMesh_IncrementalMesh im(f, 1);
-    BRepTools::Clean(f);
+    ::model::utils::BRepTools::Clean(f);
   }
   return 0;
 }

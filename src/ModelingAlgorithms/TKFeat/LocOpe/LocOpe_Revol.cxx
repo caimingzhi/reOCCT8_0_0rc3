@@ -70,7 +70,7 @@ void LocOpe_Revol::Perform(const TopoDS_Shape& Base,
 void LocOpe_Revol::IntPerf()
 {
   TopoDS_Shape       theBase = myBase;
-  BRepTools_Modifier Modif;
+  ::model::utils::BRepTools_Modifier Modif;
   if (myIsTrans)
   {
     gp_Trsf T;

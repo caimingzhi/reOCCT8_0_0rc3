@@ -532,8 +532,8 @@ bool PrsDim_LengthDimension::InitTwoShapesPoints(const TopoDS_Shape& theFirstSha
         {
           double aU1Min, aV1Min, aU1Max, aV1Max;
           double aU2Min, aV2Min, aU2Max, aV2Max;
-          BRepTools::UVBounds(aFirstFace, aU1Min, aU1Max, aV1Min, aV1Max);
-          BRepTools::UVBounds(aSecondFace, aU2Min, aU2Max, aV2Min, aV2Max);
+          ::model::utils::BRepTools::UVBounds(aFirstFace, aU1Min, aU1Max, aV1Min, aV1Max);
+          ::model::utils::BRepTools::UVBounds(aSecondFace, aU2Min, aU2Max, aV2Min, aV2Max);
 
           GeomAPI_ExtremaSurfaceSurface anExtrema(aFirstSurface,
                                                   aSecondSurface,

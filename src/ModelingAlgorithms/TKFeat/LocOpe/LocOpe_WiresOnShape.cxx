@@ -172,7 +172,7 @@ void LocOpe_WiresOnShape::BindAll()
           {
             break;
           }
-          else if (BRepTools::Compare(vtx, vtx2))
+          else if (::model::utils::BRepTools::Compare(vtx, vtx2))
           {
             mapV.Bind(vtx, vtx2);
             break;
@@ -277,7 +277,7 @@ void LocOpe_WiresOnShape::BindAll()
             theMap.Add(vtx);
             break;
           }
-          else if (BRepTools::Compare(vtx, vtx2))
+          else if (::model::utils::BRepTools::Compare(vtx, vtx2))
           {
             double aF1, aL1;
             BRep_Tool::Range(Epro, fac, aF1, aL1);
@@ -641,7 +641,7 @@ void PutPCurve(const TopoDS_Edge& Edg, const TopoDS_Face& Fac)
   }
 
   double Umin, Umax, Vmin, Vmax;
-  BRepTools::UVBounds(Fac, Umin, Umax, Vmin, Vmax);
+  ::model::utils::BRepTools::UVBounds(Fac, Umin, Umax, Vmin, Vmax);
 
   double f, l;
 
@@ -858,7 +858,7 @@ void PutPCurves(const TopoDS_Edge& Efrom, const TopoDS_Edge& Eto, const TopoDS_S
         continue;
       }
 
-      BRepTools::UVBounds(Fac, Umin, Umax, Vmin, Vmax);
+      ::model::utils::BRepTools::UVBounds(Fac, Umin, Umax, Vmin, Vmax);
       C = BRep_Tool::Curve(Efrom, Loc, f, l);
       if (!Loc.IsIdentity())
       {
@@ -1040,7 +1040,7 @@ void PutPCurves(const TopoDS_Edge& Efrom, const TopoDS_Edge& Eto, const TopoDS_S
         C = new Geom_TrimmedCurve(C, f, l);
       }
 
-      BRepTools::UVBounds(Fac, Umin, Umax, Vmin, Vmax);
+      ::model::utils::BRepTools::UVBounds(Fac, Umin, Umax, Vmin, Vmax);
 
       double              tol3d = std::max(BRep_Tool::Tolerance(Efrom), BRep_Tool::Tolerance(Fac));
       GeomAdaptor_Surface Gas(S, Umin, Umax, Vmin, Vmax);

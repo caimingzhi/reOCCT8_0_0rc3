@@ -152,8 +152,8 @@ TopAbs_State TopOpeBRepBuild_ShellFaceClassifier::State()
     B.MakeVertex(V, myPoint3d, tol3d);
     std::cout << "TopOpeBRepBuild_ShellFaceClassifier : write shell " << sname;
     std::cout << " vertex " << vname << std::endl;
-    BRepTools::Write(myShell, sname.ToCString());
-    BRepTools::Write(V, vname.ToCString());
+    ::model::utils::BRepTools::Write(myShell, sname.ToCString());
+    ::model::utils::BRepTools::Write(V, vname.ToCString());
   }
 #endif
   mySolidClassifier.Classify(myShell, myPoint3d, tol3d);

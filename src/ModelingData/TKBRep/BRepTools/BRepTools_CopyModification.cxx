@@ -6,14 +6,15 @@
 #include <TopLoc_Location.hpp>
 #include <TopoDS_Vertex.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_CopyModification, BRepTools_Modification)
+IMPLEMENT_STANDARD_RTTIEXT(::model::utils::BRepTools_CopyModification, ::model::utils::BRepTools_Modification)
 
-BRepTools_CopyModification::BRepTools_CopyModification(const bool copyGeom, const bool copyMesh)
+::model::utils::BRepTools_CopyModification::BRepTools_CopyModification(const bool copyGeom, const bool copyMesh)
     : myCopyGeom(copyGeom),
       myCopyMesh(copyMesh)
 {
 }
 
+namespace model { namespace utils {
 bool BRepTools_CopyModification::NewSurface(const TopoDS_Face&         theFace,
                                             occ::handle<Geom_Surface>& theSurf,
                                             TopLoc_Location&           theLoc,
@@ -155,3 +156,5 @@ GeomAbs_Shape BRepTools_CopyModification::Continuity(const TopoDS_Edge& theEdge,
 {
   return BRep_Tool::Continuity(theEdge, theFace1, theFace2);
 }
+
+}} // namespace model::utils

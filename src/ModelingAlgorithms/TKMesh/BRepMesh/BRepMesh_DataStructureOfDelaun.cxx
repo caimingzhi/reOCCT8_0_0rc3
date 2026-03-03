@@ -430,7 +430,7 @@ const char* BRepMesh_Dump(void* theMeshHandlePtr, const char* theFileNameStr)
       }
     }
 
-    if (!BRepTools::Write(aMesh, theFileNameStr))
+    if (!::model::utils::BRepTools::Write(aMesh, theFileNameStr))
       return "Error: write failed";
   }
   catch (Standard_Failure const& anException)

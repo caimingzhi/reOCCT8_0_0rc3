@@ -47,7 +47,7 @@ DBRep_IsoBuilder::DBRep_IsoBuilder(const TopoDS_Face& TopologicalFace,
   myUInd.Init(0);
   myVInd.Init(0);
 
-  BRepTools::UVBounds(TopologicalFace, myUMin, myUMax, myVMin, myVMax);
+  ::model::utils::BRepTools::UVBounds(TopologicalFace, myUMin, myUMax, myVMin, myVMax);
   bool InfiniteUMin = math::precision::Precision::IsNegativeInfinite(myUMin);
   bool InfiniteUMax = math::precision::Precision::IsPositiveInfinite(myUMax);
   bool InfiniteVMin = math::precision::Precision::IsNegativeInfinite(myVMin);

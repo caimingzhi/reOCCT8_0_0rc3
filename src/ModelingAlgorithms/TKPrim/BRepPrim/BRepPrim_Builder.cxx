@@ -146,22 +146,22 @@ void BRepPrim_Builder::AddShellFace(TopoDS_Shell& S, const TopoDS_Face& F) const
 
 void BRepPrim_Builder::CompleteEdge(TopoDS_Edge& E) const
 {
-  BRepTools::Update(E);
+  ::model::utils::BRepTools::Update(E);
 }
 
 void BRepPrim_Builder::CompleteWire(TopoDS_Wire& W) const
 {
   W.Closed(BRep_Tool::IsClosed(W));
-  BRepTools::Update(W);
+  ::model::utils::BRepTools::Update(W);
 }
 
 void BRepPrim_Builder::CompleteFace(TopoDS_Face& F) const
 {
-  BRepTools::Update(F);
+  ::model::utils::BRepTools::Update(F);
 }
 
 void BRepPrim_Builder::CompleteShell(TopoDS_Shell& S) const
 {
   S.Closed(BRep_Tool::IsClosed(S));
-  BRepTools::Update(S);
+  ::model::utils::BRepTools::Update(S);
 }

@@ -441,7 +441,7 @@ static bool ComputeFaceCrvtInSec(const TopoDS_Face& aFace,
                                  double&            aCrvt)
 {
   ::model::adapter::BRepAdaptor_Surface aSurf(aFace);
-  int                 cn = BRepLProp_SurfaceTool::Continuity(aSurf);
+  int                 cn = ::model::localproperties::BRepLProp_SurfaceTool::Continuity(aSurf);
   if (cn < 2)
     return false;
   ::model::localproperties::BRepLProp_SLProps aProp(aSurf, aP2d.X(), aP2d.Y(), 2, math::precision::Precision::Confusion());

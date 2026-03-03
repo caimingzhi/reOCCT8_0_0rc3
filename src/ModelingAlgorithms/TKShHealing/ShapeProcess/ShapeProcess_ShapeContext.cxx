@@ -272,7 +272,7 @@ void ShapeProcess_ShapeContext::AddMessage(const TopoDS_Shape&   S,
 
 static void ExplodeModifier(
   const TopoDS_Shape&                                                       S,
-  const BRepTools_Modifier&                                                 repl,
+  const ::model::utils::BRepTools_Modifier&                                                 repl,
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& map,
   const TopAbs_ShapeEnum                                                    until)
 {
@@ -292,7 +292,7 @@ static void ExplodeModifier(
 
 void ShapeProcess_ShapeContext::RecordModification(
   const TopoDS_Shape&                            S,
-  const BRepTools_Modifier&                      repl,
+  const ::model::utils::BRepTools_Modifier&                      repl,
   const occ::handle<ShapeExtend_MsgRegistrator>& msg)
 {
   NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher> map;

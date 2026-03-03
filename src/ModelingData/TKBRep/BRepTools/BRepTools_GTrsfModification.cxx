@@ -20,9 +20,9 @@
 #include <TopoDS_Face.hpp>
 #include <TopoDS_Vertex.hpp>
 
-IMPLEMENT_STANDARD_RTTIEXT(BRepTools_GTrsfModification, BRepTools_Modification)
+IMPLEMENT_STANDARD_RTTIEXT(::model::utils::BRepTools_GTrsfModification, ::model::utils::BRepTools_Modification)
 
-BRepTools_GTrsfModification::BRepTools_GTrsfModification(const gp_GTrsf& T)
+::model::utils::BRepTools_GTrsfModification::BRepTools_GTrsfModification(const gp_GTrsf& T)
     : myGTrsf(T)
 {
 
@@ -41,6 +41,7 @@ BRepTools_GTrsfModification::BRepTools_GTrsfModification(const gp_GTrsf& T)
   myGScale = std::max(loc1, std::abs(T.Value(3, 3)));
 }
 
+namespace model { namespace utils {
 gp_GTrsf& BRepTools_GTrsfModification::GTrsf()
 {
   return myGTrsf;
@@ -307,3 +308,5 @@ bool BRepTools_GTrsfModification::NewPolygonOnTriangulation(
     thePoly = thePoly->Copy();
   return true;
 }
+
+}} // namespace model::utils

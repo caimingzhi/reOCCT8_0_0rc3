@@ -153,7 +153,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
       if (!aCurve1.IsNull())
       {
         aCurve1 = occ::down_cast<Geom2d_Curve>(aCurve1->Transformed(T));
-        if (BRepTools::IsReallyClosed(aCopyEdge, TopoDS::Face(aCopy.ModifiedShape(start))))
+        if (::model::utils::BRepTools::IsReallyClosed(aCopyEdge, TopoDS::Face(aCopy.ModifiedShape(start))))
         {
           TopoDS_Edge revEdge = TopoDS::Edge(aCopyEdge.Reversed());
           aCurve2 =
@@ -200,7 +200,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRShell ::TransferFace(const TopoDS_
   {
     double U1, U2, V1, V2;
 
-    BRepTools::UVBounds(aFace, U1, U2, V1, V2);
+    ::model::utils::BRepTools::UVBounds(aFace, U1, U2, V1, V2);
     GeomToIGES_GeomSurface GS;
     GS.SetModel(GetModel());
     ISurf = GS.TransferSurface(Surf, U1, U2, V1, V2);

@@ -64,7 +64,7 @@ void BRepClass_FaceClassifier::Perform(const TopoDS_Face& theF,
   aIndice  = 0;
 
   ::model::adapter::BRepAdaptor_Surface aSurf(theF, false);
-  BRepTools::UVBounds(theF, aU1, aU2, aV1, aV2);
+  ::model::utils::BRepTools::UVBounds(theF, aU1, aU2, aV1, aV2);
   aExtrema.Initialize(aSurf, aU1, aU2, aV1, aV2, theTol, theTol);
 
   rejected = true;

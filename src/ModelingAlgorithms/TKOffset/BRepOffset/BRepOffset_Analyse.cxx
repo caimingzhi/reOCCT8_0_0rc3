@@ -298,7 +298,7 @@ void BRepOffset_Analyse::Perform(const TopoDS_Shape&          S,
         BRep_Tool::Range(E, F, U1, U2);
         BRepOffset_Interval Inter(U1, U2, ChFiDS_Other);
 
-        if (!BRepTools::IsReallyClosed(E, F))
+        if (!::model::utils::BRepTools::IsReallyClosed(E, F))
         {
           Inter.Type(ChFiDS_FreeBound);
         }

@@ -488,7 +488,7 @@ bool ShapeFix_SplitTool::SplitEdge(const TopoDS_Edge&                     edge,
   for (TopExp_Explorer exp(sewd->Wire(), TopAbs_EDGE); exp.More(); exp.Next())
   {
     TopoDS_Edge E = TopoDS::Edge(exp.Current());
-    BRepTools::Update(E);
+    ::model::utils::BRepTools::Update(E);
   }
 
   return true;

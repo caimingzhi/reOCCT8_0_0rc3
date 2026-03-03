@@ -80,7 +80,7 @@ void LocOpe_Prism::Perform(const TopoDS_Shape& Base, const gp_Vec& V, const gp_V
 void LocOpe_Prism::IntPerf()
 {
   TopoDS_Shape       theBase = myBase;
-  BRepTools_Modifier Modif;
+  ::model::utils::BRepTools_Modifier Modif;
   if (myIsTrans)
   {
     gp_Trsf T;

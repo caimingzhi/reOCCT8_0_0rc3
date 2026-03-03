@@ -342,7 +342,7 @@ static int tessellate(Draw_Interpretor&, int nbarg, const char** argv)
       return 1;
     }
 
-    BRepTools::UVBounds(aFace, aUMin, aUMax, aVMin, aVMax);
+    ::model::utils::BRepTools::UVBounds(aFace, aUMin, aUMax, aVMin, aVMax);
   }
   if (math::precision::Precision::IsInfinite(aUMin) || math::precision::Precision::IsInfinite(aUMax) || math::precision::Precision::IsInfinite(aVMin)
       || math::precision::Precision::IsInfinite(aVMax))
@@ -453,7 +453,7 @@ static int MemLeakTest(Draw_Interpretor&, int, const char**)
     BRepBuilderAPI_MakeFace  faceBuilder(wireShape);
     const TopoDS_Face&       f = faceBuilder.Face();
     BRepMesh_IncrementalMesh im(f, 1);
-    BRepTools::Clean(f);
+    ::model::utils::BRepTools::Clean(f);
   }
   return 0;
 }
@@ -485,7 +485,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         {
 
           anArgIter++;
-          if (BRepTools::LoadAllTriangulations(aShape))
+          if (::model::utils::BRepTools::LoadAllTriangulations(aShape))
           {
             theDI << "All triangulations of shape " << theArgVec[1] << " were loaded\n";
           }
@@ -501,7 +501,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
             System::log::Message::SendWarning("Invalid negative triangulation index to be loaded");
             continue;
           }
-          if (BRepTools::LoadTriangulation(aShape, anIndexToLoad))
+          if (::model::utils::BRepTools::LoadTriangulation(aShape, anIndexToLoad))
           {
             theDI << "The " << anIndexToLoad << " triangulation of shape " << theArgVec[1]
                   << " was loaded\n";
@@ -510,7 +510,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         }
       }
 
-      if (BRepTools::LoadTriangulation(aShape))
+      if (::model::utils::BRepTools::LoadTriangulation(aShape))
       {
         theDI << "The active triangulation of shape " << theArgVec[1] << " was loaded\n";
       }
@@ -526,7 +526,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         {
 
           anArgIter++;
-          if (BRepTools::UnloadAllTriangulations(aShape))
+          if (::model::utils::BRepTools::UnloadAllTriangulations(aShape))
           {
             theDI << "All triangulations of shape " << theArgVec[1] << " were unloaded\n";
           }
@@ -542,7 +542,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
             System::log::Message::SendWarning("Invalid negative triangulation index to be unloaded");
             continue;
           }
-          if (BRepTools::UnloadTriangulation(aShape, anIndexToUnload))
+          if (::model::utils::BRepTools::UnloadTriangulation(aShape, anIndexToUnload))
           {
             theDI << "The " << anIndexToUnload << " triangulation of shape " << theArgVec[1]
                   << " was unloaded\n";
@@ -551,7 +551,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         }
       }
 
-      if (BRepTools::UnloadTriangulation(aShape))
+      if (::model::utils::BRepTools::UnloadTriangulation(aShape))
       {
         theDI << "The active triangulation of shape " << theArgVec[1] << " was unloaded\n";
       }
@@ -566,7 +566,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         System::log::Message::SendWarning("Invalid negative triangulation index to be activated");
         continue;
       }
-      if (BRepTools::ActivateTriangulation(aShape, anIndexToActivate, false))
+      if (::model::utils::BRepTools::ActivateTriangulation(aShape, anIndexToActivate, false))
       {
         theDI << "The " << anIndexToActivate << " triangulation of shape " << theArgVec[1]
               << " was activated\n";
@@ -582,7 +582,7 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         System::log::Message::SendWarning("Invalid negative triangulation index to be activated");
         continue;
       }
-      if (BRepTools::ActivateTriangulation(aShape, anIndexToActivate, true))
+      if (::model::utils::BRepTools::ActivateTriangulation(aShape, anIndexToActivate, true))
       {
         theDI << "The " << anIndexToActivate << " triangulation of shape " << theArgVec[1]
               << " was activated\n";
@@ -602,18 +602,18 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         continue;
       }
 
-      if (BRepTools::UnloadAllTriangulations(aShape))
+      if (::model::utils::BRepTools::UnloadAllTriangulations(aShape))
       {
         theDI << "All triangulations of shape " << theArgVec[1] << " were unloaded\n";
       }
 
-      if (anIndexToSingleLoad > -1 && BRepTools::ActivateTriangulation(aShape, anIndexToSingleLoad))
+      if (anIndexToSingleLoad > -1 && ::model::utils::BRepTools::ActivateTriangulation(aShape, anIndexToSingleLoad))
       {
         theDI << "The " << anIndexToSingleLoad << " triangulation of shape " << theArgVec[1]
               << " was activated\n";
       }
 
-      if (BRepTools::LoadTriangulation(aShape))
+      if (::model::utils::BRepTools::LoadTriangulation(aShape))
       {
         theDI << "The " << anIndexToSingleLoad << " triangulation of shape " << theArgVec[1]
               << " was loaded\n";
@@ -635,12 +635,12 @@ static int TrLateLoad(Draw_Interpretor& theDI, int theNbArgs, const char** theAr
         continue;
       }
 
-      if (BRepTools::UnloadAllTriangulations(aShape))
+      if (::model::utils::BRepTools::UnloadAllTriangulations(aShape))
       {
         theDI << "All triangulations of shape " << theArgVec[1] << " were unloaded\n";
       }
 
-      if (BRepTools::LoadTriangulation(aShape, anIndexToSingleLoad, true))
+      if (::model::utils::BRepTools::LoadTriangulation(aShape, anIndexToSingleLoad, true))
       {
         theDI << "The " << anIndexToSingleLoad << " triangulation of shape " << theArgVec[1]
               << " was loaded and activated\n";

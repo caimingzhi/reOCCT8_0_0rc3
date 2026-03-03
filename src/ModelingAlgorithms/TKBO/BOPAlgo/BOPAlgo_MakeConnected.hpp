@@ -54,7 +54,7 @@ public:
   }
 
 public:
-  const occ::handle<BRepTools_History>& History() const { return myHistory; }
+  const occ::handle<::model::utils::BRepTools_History>& History() const { return myHistory; }
 
   const NCollection_List<TopoDS_Shape>& GetModified(const TopoDS_Shape& theS)
   {
@@ -118,8 +118,8 @@ protected:
   NCollection_DataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
     myOrigins;
 
-  occ::handle<BRepTools_History> myGlueHistory;
-  occ::handle<BRepTools_History> myHistory;
+  occ::handle<::model::utils::BRepTools_History> myGlueHistory;
+  occ::handle<::model::utils::BRepTools_History> myHistory;
 
   TopoDS_Shape myGlued;
   TopoDS_Shape myShape;

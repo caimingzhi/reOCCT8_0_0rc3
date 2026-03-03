@@ -158,7 +158,7 @@ bool DEBREP_Provider::Read(const TCollection_AsciiString& thePath,
   }
   else
   {
-    if (!BRepTools::Read(theShape, thePath.ToCString(), BRep_Builder(), theProgress))
+    if (!::model::utils::BRepTools::Read(theShape, thePath.ToCString(), BRep_Builder(), theProgress))
     {
       System::log::Message::SendFail() << "Error in the DEBREP_Provider during reading the file " << thePath
                           << "\t: Cannot read from the file";
@@ -235,7 +235,7 @@ bool DEBREP_Provider::Write(const TCollection_AsciiString& thePath,
                           << "\t: Error: vertex normals require ascii format version 3 or later";
       return false;
     }
-    if (!BRepTools::Write(theShape,
+    if (!::model::utils::BRepTools::Write(theShape,
                           thePath.ToCString(),
                           aNode->InternalParameters.WriteTriangles,
                           aNode->InternalParameters.WriteNormals,

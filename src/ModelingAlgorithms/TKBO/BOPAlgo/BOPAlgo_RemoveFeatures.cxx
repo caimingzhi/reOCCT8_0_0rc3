@@ -40,7 +40,7 @@
 
 static void MakeRemoved(
   const NCollection_List<TopoDS_Shape>&                                theShapes,
-  BRepTools_History&                                                   theHistory,
+  ::model::utils::BRepTools_History&                                                   theHistory,
   const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theKeepShapes =
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>());
 
@@ -56,7 +56,7 @@ static void GetOriginalFaces(
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>&           theAdjFaces,
-  const occ::handle<BRepTools_History>&                                theHistory,
+  const occ::handle<::model::utils::BRepTools_History>&                                theHistory,
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&       theFacesToBeKept,
   NCollection_List<TopoDS_Shape>&                                      theInternalShapes,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&              theFacesToCheckOri,
@@ -98,7 +98,7 @@ static void FillSolidsHistory(
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>&           theAdjFaces,
   BOPAlgo_Builder&                                                     theBuilder,
-  BRepTools_History&                                                   theSolidsHistory);
+  ::model::utils::BRepTools_History&                                                   theSolidsHistory);
 
 static void TakeModified(const TopoDS_Shape&             theS,
                          BOPAlgo_Builder&                theBuilder,
@@ -145,7 +145,7 @@ void BOPAlgo_RemoveFeatures::Perform(const System::log::Message_ProgressRange& t
     OCC_CATCH_SIGNALS
 
     if (HasHistory())
-      myHistory = new BRepTools_History();
+      myHistory = new ::model::utils::BRepTools_History();
 
     CheckData();
     if (HasErrors())
@@ -331,7 +331,7 @@ public:
 
   void SetRunParallel(const bool bRunParallel) { myRunParallel = bRunParallel; }
 
-  const occ::handle<BRepTools_History>& History() { return myHistory; }
+  const occ::handle<::model::utils::BRepTools_History>& History() { return myHistory; }
 
   void SetRange(const System::log::Message_ProgressRange& theRange) { myRange = theRange; }
 
@@ -344,7 +344,7 @@ public:
     {
       System::log::Message_ProgressScope aPS(myRange, nullptr, 3);
 
-      myHistory = new BRepTools_History();
+      myHistory = new ::model::utils::BRepTools_History();
 
       NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aMFAdjacent;
       FindAdjacentFaces(aMFAdjacent, aPS.Next());
@@ -701,7 +701,7 @@ private:
 
     myHistory->Merge(aGFTrim.History());
 
-    BRepTools_History aHistRem;
+    ::model::utils::BRepTools_History aHistRem;
 
     NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aResMap;
     NCollection_List<TopoDS_Shape>::Iterator                      itLF(aLFTrimmed);
@@ -729,7 +729,7 @@ private:
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> mySolids;
   NCollection_IndexedDataMap<TopoDS_Shape, NCollection_List<TopoDS_Shape>, TopTools_ShapeMapHasher>
                                  myFaces;
-  occ::handle<BRepTools_History> myHistory;
+  occ::handle<::model::utils::BRepTools_History> myHistory;
 };
 
 typedef NCollection_Vector<FillGap> VectorOfFillGap;
@@ -775,7 +775,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeatures(const System::log::Message_ProgressR
   }
 
   if (myHistory.IsNull())
-    myHistory = new BRepTools_History();
+    myHistory = new ::model::utils::BRepTools_History();
 
   System::log::Message_ProgressScope aPSLoop(aPSOuter.Next(), "Removing features one by one", aNbF);
   for (int i = 0; i < aNbF; ++i)
@@ -807,7 +807,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeature(
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>&           theAdjFaces,
-  const occ::handle<BRepTools_History>&                                theAdjFacesHistory,
+  const occ::handle<::model::utils::BRepTools_History>&                                theAdjFacesHistory,
   const bool                                                           theSolidsHistoryNeeded,
   const System::log::Message_ProgressRange&                                         theRange)
 {
@@ -997,7 +997,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeature(
     for (; itLS.More(); itLS.Next())
       TopExp::MapShapes(itLS.Value(), aMSRes);
 
-    BRepTools_History aRemHist;
+    ::model::utils::BRepTools_History aRemHist;
     anInternalShapes.Append(aRemovedShapes);
     MakeRemoved(anInternalShapes, aRemHist, aMSRes);
     myHistory->Merge(aRemHist);
@@ -1006,7 +1006,7 @@ void BOPAlgo_RemoveFeatures::RemoveFeature(
 
   if (theSolidsHistoryNeeded)
   {
-    BRepTools_History aSolidsHistory;
+    ::model::utils::BRepTools_History aSolidsHistory;
     FillSolidsHistory(aSolidsToRebuild, aLSRes, theAdjFaces, aMV, aSolidsHistory);
     myHistory->Merge(aSolidsHistory);
   }
@@ -1033,14 +1033,14 @@ void BOPAlgo_RemoveFeatures::UpdateHistory(const System::log::Message_ProgressRa
   myMapShape.Clear();
   TopExp::MapShapes(myShape, myMapShape);
 
-  BRepTools_History aHistory;
+  ::model::utils::BRepTools_History aHistory;
 
   const int             aNbS = myInputsMap.Extent();
   System::log::Message_ProgressScope aPS(theRange, "Updating history", aNbS);
   for (int i = 1; i <= aNbS; ++i, aPS.Next())
   {
     const TopoDS_Shape& aS = myInputsMap(i);
-    if (!BRepTools_History::IsSupportedType(aS))
+    if (!::model::utils::BRepTools_History::IsSupportedType(aS))
       continue;
 
     if (myHistory->IsRemoved(aS))
@@ -1129,7 +1129,7 @@ void BOPAlgo_RemoveFeatures::PostTreat()
 }
 
 void MakeRemoved(const NCollection_List<TopoDS_Shape>&                                theShapes,
-                 BRepTools_History&                                                   theHistory,
+                 ::model::utils::BRepTools_History&                                                   theHistory,
                  const NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>& theKeepShapes)
 {
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher> aShapesMap;
@@ -1141,7 +1141,7 @@ void MakeRemoved(const NCollection_List<TopoDS_Shape>&                          
   for (int i = 1; i <= aNbS; ++i)
   {
     const TopoDS_Shape& aS = aShapesMap(i);
-    if (!theKeepShapes.Contains(aS) && BRepTools_History::IsSupportedType(aS))
+    if (!theKeepShapes.Contains(aS) && ::model::utils::BRepTools_History::IsSupportedType(aS))
     {
       theHistory.Remove(aS);
     }
@@ -1207,7 +1207,7 @@ void GetOriginalFaces(
   const NCollection_IndexedDataMap<TopoDS_Shape,
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>&           theAdjFaces,
-  const occ::handle<BRepTools_History>&                                theHistory,
+  const occ::handle<::model::utils::BRepTools_History>&                                theHistory,
   NCollection_IndexedMap<TopoDS_Shape, TopTools_ShapeMapHasher>&       theFacesToBeKept,
   NCollection_List<TopoDS_Shape>&                                      theInternalShapes,
   NCollection_Map<TopoDS_Shape, TopTools_ShapeMapHasher>&              theFacesToCheckOri,
@@ -1489,7 +1489,7 @@ void FillSolidsHistory(
                                    NCollection_List<TopoDS_Shape>,
                                    TopTools_ShapeMapHasher>&           theAdjFaces,
   BOPAlgo_Builder&                                                     theBuilder,
-  BRepTools_History&                                                   theSolidsHistory)
+  ::model::utils::BRepTools_History&                                                   theSolidsHistory)
 {
   const int aNbS = theSolIn.Extent();
   for (int i = 1; i <= aNbS; ++i)

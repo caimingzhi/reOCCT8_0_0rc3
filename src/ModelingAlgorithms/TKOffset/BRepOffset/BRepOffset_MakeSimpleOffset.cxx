@@ -374,7 +374,7 @@ bool BRepOffset_MakeSimpleOffset::BuildMissingWalls()
 
   aResCompound = TopoDS::Compound(myReShape->Apply(aResCompound));
 
-  BRepTools_Quilt aQuilt;
+  ::model::utils::BRepTools_Quilt aQuilt;
   aQuilt.Add(aResCompound);
   TopoDS_Shape aShells = aQuilt.Shells();
 

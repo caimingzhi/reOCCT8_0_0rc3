@@ -12,7 +12,7 @@ class Message_Msg;
 }} // namespace System::log
 
 
-class ShapeCustom_Modification : public BRepTools_Modification
+class ShapeCustom_Modification : public ::model::utils::BRepTools_Modification
 {
 
 public:
@@ -25,7 +25,7 @@ public:
                                const System::log::Message_Msg&    message,
                                const Message_Gravity gravity = Message_Info) const;
 
-  DEFINE_STANDARD_RTTIEXT(ShapeCustom_Modification, BRepTools_Modification)
+  DEFINE_STANDARD_RTTIEXT(ShapeCustom_Modification, ::model::utils::BRepTools_Modification)
 
 private:
   occ::handle<ShapeExtend_BasicMsgRegistrator> myMsgReg;

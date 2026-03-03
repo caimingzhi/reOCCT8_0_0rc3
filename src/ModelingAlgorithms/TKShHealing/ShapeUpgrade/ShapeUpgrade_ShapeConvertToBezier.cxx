@@ -302,7 +302,7 @@ bool ShapeUpgrade_ShapeConvertToBezier::Perform(const bool newContext)
             }
           }
         }
-        BRepTools::Update(face);
+        ::model::utils::BRepTools::Update(face);
       }
     }
   }

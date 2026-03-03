@@ -35,7 +35,7 @@ static void Write(const TopoDS_Shape& shape, const char* filename)
   save.open(filename);
   save << "DBRep_DrawableShape" << std::endl << std::endl;
   if (!shape.IsNull())
-    BRepTools::Write(shape, save);
+    ::model::utils::BRepTools::Write(shape, save);
   save.close();
 }
 #endif

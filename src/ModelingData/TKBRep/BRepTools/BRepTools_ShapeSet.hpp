@@ -17,6 +17,7 @@
 
 class TopoDS_Shape;
 
+namespace model { namespace utils {
 class BRepTools_ShapeSet : public TopTools_ShapeSet
 {
 public:
@@ -114,3 +115,5 @@ private:
   bool                                                    myWithTriangles;
   bool                                                    myWithNormals;
 };
+}} // namespace model::utils
+

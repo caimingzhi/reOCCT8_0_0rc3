@@ -32,6 +32,7 @@
 #include <TopoDS_Shape.hpp>
 #include <TopoDS_Vertex.hpp>
 
+namespace model { namespace utils {
 BRepTools_ShapeSet::BRepTools_ShapeSet(const bool theWithTriangles, const bool theWithNormals)
     : myWithTriangles(theWithTriangles),
       myWithNormals(theWithNormals)
@@ -47,7 +48,7 @@ BRepTools_ShapeSet::BRepTools_ShapeSet(const BRep_Builder& theBuilder,
 {
 }
 
-BRepTools_ShapeSet::~BRepTools_ShapeSet() = default;
+::model::utils::BRepTools_ShapeSet::~::model::utils::BRepTools_ShapeSet() = default;
 
 void BRepTools_ShapeSet::Clear()
 {
@@ -1502,3 +1503,5 @@ void BRepTools_ShapeSet::ReadTriangulation(Standard_IStream&            IS,
     myTriangulations.Add(T, hasNormals);
   }
 }
+
+}} // namespace model::utils

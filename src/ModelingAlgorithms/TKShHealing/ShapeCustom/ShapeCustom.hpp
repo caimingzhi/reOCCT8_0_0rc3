@@ -13,8 +13,14 @@
 #include <Message_ProgressRange.hpp>
 
 class TopoDS_Shape;
+namespace model { namespace utils {
 class BRepTools_Modification;
+}} // namespace model::utils
+
+namespace model { namespace utils {
 class BRepTools_Modifier;
+}} // namespace model::utils
+
 class ShapeBuild_ReShape;
 class ShapeCustom_RestrictionParameters;
 
@@ -25,9 +31,9 @@ public:
 
   Standard_EXPORT static TopoDS_Shape ApplyModifier(
     const TopoDS_Shape&                                                       S,
-    const occ::handle<BRepTools_Modification>&                                M,
+    const occ::handle<::model::utils::BRepTools_Modification>&                                M,
     NCollection_DataMap<TopoDS_Shape, TopoDS_Shape, TopTools_ShapeMapHasher>& context,
-    BRepTools_Modifier&                                                       MD,
+    ::model::utils::BRepTools_Modifier&                                                       MD,
     const System::log::Message_ProgressRange&           theProgress = System::log::Message_ProgressRange(),
     const occ::handle<ShapeBuild_ReShape>& aReShape    = nullptr);
 

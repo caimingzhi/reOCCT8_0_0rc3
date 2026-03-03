@@ -495,7 +495,7 @@ static int isoedge(Draw_Interpretor&, int n, const char** a)
   TopLoc_Location                  Loc;
   const occ::handle<Geom_Surface>& S = BRep_Tool::Surface(TopoDS::Face(Sh), Loc);
   double                           UMin, UMax, VMin, VMax;
-  BRepTools::UVBounds(TopoDS::Face(Sh), UMin, UMax, VMin, VMax);
+  ::model::utils::BRepTools::UVBounds(TopoDS::Face(Sh), UMin, UMax, VMin, VMax);
   if (uiso)
   {
     VMin = std::min(VMin, std::min(p1, p2));
@@ -1904,7 +1904,7 @@ int reducepcurves(Draw_Interpretor& di, int n, const char** a)
 
       di << a[i] << " is not a valid shape\n";
     else
-      BRepTools::RemoveUnusedPCurves(aShape);
+      ::model::utils::BRepTools::RemoveUnusedPCurves(aShape);
   }
 
   return 0;

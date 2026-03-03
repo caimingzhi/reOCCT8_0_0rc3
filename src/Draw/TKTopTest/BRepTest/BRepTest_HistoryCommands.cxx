@@ -95,7 +95,7 @@ int SaveHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  occ::handle<BRepTools_History> aHistory = BRepTest_Objects::History();
+  occ::handle<::model::utils::BRepTools_History> aHistory = BRepTest_Objects::History();
   if (aHistory.IsNull())
   {
     theDI << "No history has been prepared yet.";
@@ -109,7 +109,7 @@ int SaveHistory(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
   return 0;
 }
 
-static occ::handle<BRepTools_History> GetHistory(Draw_Interpretor& theDI, const char* theName)
+static occ::handle<::model::utils::BRepTools_History> GetHistory(Draw_Interpretor& theDI, const char* theName)
 {
   occ::handle<BRepTest_DrawableHistory> aHistory =
     occ::down_cast<BRepTest_DrawableHistory>(Draw::Get(theName));
@@ -133,7 +133,7 @@ static TopoDS_Shape GetShape(Draw_Interpretor& theDI, const char* theName)
     return TopoDS_Shape();
   }
 
-  if (!BRepTools_History::IsSupportedType(aS))
+  if (!::model::utils::BRepTools_History::IsSupportedType(aS))
   {
     theDI << "History is not supported for this kind of shape.";
     return TopoDS_Shape();
@@ -164,7 +164,7 @@ int Modified(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  occ::handle<BRepTools_History> aHistory = GetHistory(theDI, theArgv[2]);
+  occ::handle<::model::utils::BRepTools_History> aHistory = GetHistory(theDI, theArgv[2]);
   if (aHistory.IsNull())
     return 1;
 
@@ -193,7 +193,7 @@ int Generated(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  occ::handle<BRepTools_History> aHistory = GetHistory(theDI, theArgv[2]);
+  occ::handle<::model::utils::BRepTools_History> aHistory = GetHistory(theDI, theArgv[2]);
   if (aHistory.IsNull())
     return 1;
 
@@ -222,7 +222,7 @@ int IsDeleted(Draw_Interpretor& theDI, int theArgc, const char** theArgv)
     return 1;
   }
 
-  occ::handle<BRepTools_History> aHistory = GetHistory(theDI, theArgv[1]);
+  occ::handle<::model::utils::BRepTools_History> aHistory = GetHistory(theDI, theArgv[1]);
   if (aHistory.IsNull())
     return 1;
 

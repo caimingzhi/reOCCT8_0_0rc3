@@ -159,7 +159,7 @@ namespace
 
       if (theHasTexels)
       {
-        BRepTools::UVBounds(aFace, aUmin, aUmax, aVmin, aVmax);
+        ::model::utils::BRepTools::UVBounds(aFace, aUmin, aUmax, aVmin, aVmax);
         dUmax = (aUmax - aUmin);
         dVmax = (aVmax - aVmin);
       }

@@ -69,7 +69,7 @@ protected:
     const NCollection_IndexedDataMap<TopoDS_Shape,
                                      NCollection_List<TopoDS_Shape>,
                                      TopTools_ShapeMapHasher>&           theAdjFaces,
-    const occ::handle<BRepTools_History>&                                theAdjFacesHistory,
+    const occ::handle<::model::utils::BRepTools_History>&                                theAdjFacesHistory,
     const bool                                                           theSolidsHistoryNeeded,
     const System::log::Message_ProgressRange&                                         theRange);
 

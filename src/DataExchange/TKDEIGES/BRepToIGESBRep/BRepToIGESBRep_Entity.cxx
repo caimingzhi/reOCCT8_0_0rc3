@@ -427,7 +427,7 @@ occ::handle<IGESSolid_Face> BRepToIGESBRep_Entity ::TransferFace(const TopoDS_Fa
   if (!Surf.IsNull())
   {
     double U1, U2, V1, V2;
-    BRepTools::UVBounds(start, U1, U2, V1, V2);
+    ::model::utils::BRepTools::UVBounds(start, U1, U2, V1, V2);
     GeomToIGES_GeomSurface GS;
 
     GS.SetBRepMode(true);

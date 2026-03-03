@@ -524,7 +524,7 @@ void TNamingTool_DumpLabel(const TopoDS_Shape& S, const TDF_Label& Acces)
 
 void TNamingTool_Write(const TopoDS_Shape& S, const char* File)
 {
-  BRepTools::Write(S, File);
+  ::model::utils::BRepTools::Write(S, File);
 }
 
 #endif

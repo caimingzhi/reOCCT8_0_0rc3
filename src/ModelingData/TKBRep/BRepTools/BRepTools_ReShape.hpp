@@ -16,6 +16,7 @@ class TopoDS_Vertex;
   #undef Status
 #endif
 
+namespace model { namespace utils {
 class BRepTools_ReShape : public Standard_Transient
 {
 public:
@@ -138,3 +139,5 @@ protected:
 private:
   bool myConsiderLocation;
 };
+}} // namespace model::utils
+

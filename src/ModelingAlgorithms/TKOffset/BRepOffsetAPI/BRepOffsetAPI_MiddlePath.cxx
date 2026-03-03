@@ -186,7 +186,7 @@ BRepOffsetAPI_MiddlePath::BRepOffsetAPI_MiddlePath(const TopoDS_Shape& aShape,
   if (StartShape.ShapeType() == TopAbs_FACE)
   {
     const TopoDS_Face& StartFace = TopoDS::Face(StartShape);
-    aStartWire                   = BRepTools::OuterWire(StartFace);
+    aStartWire                   = ::model::utils::BRepTools::OuterWire(StartFace);
   }
   else
     aStartWire = TopoDS::Wire(StartShape);
@@ -194,7 +194,7 @@ BRepOffsetAPI_MiddlePath::BRepOffsetAPI_MiddlePath(const TopoDS_Shape& aShape,
   if (EndShape.ShapeType() == TopAbs_FACE)
   {
     const TopoDS_Face& EndFace = TopoDS::Face(EndShape);
-    anEndWire                  = BRepTools::OuterWire(EndFace);
+    anEndWire                  = ::model::utils::BRepTools::OuterWire(EndFace);
   }
   else
     anEndWire = TopoDS::Wire(EndShape);

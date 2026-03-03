@@ -77,7 +77,7 @@ void BRepTools_WireExplorer::Init(const TopoDS_Wire& W, const TopoDS_Face& F)
     if (aSurfType == GeomAbs_Cone || aSurfType == GeomAbs_BSplineSurface
         || aSurfType == GeomAbs_BezierSurface)
     {
-      BRepTools::UVBounds(F, UMin, UMax, VMin, VMax);
+      ::model::utils::BRepTools::UVBounds(F, UMin, UMax, VMin, VMax);
     }
   }
 

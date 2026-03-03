@@ -299,7 +299,7 @@ void BRepMesh_ModelHealer::fixFaceBoundaries(const IMeshData::IFaceHandle& theDF
           aBuilder.Add(aComp, aPoly.Shape());
         }
         TCollection_AsciiString aName("face_discr.brep");
-        BRepTools::Write(aComp, aName.ToCString());
+        ::model::utils::BRepTools::Write(aComp, aName.ToCString());
 #endif
       }
 
@@ -320,8 +320,8 @@ void BRepMesh_ModelHealer::fixFaceBoundaries(const IMeshData::IFaceHandle& theDF
 #ifdef DEBUG_HEALER
   TCollection_AsciiString aName("face_discr.brep");
   TCollection_AsciiString aFaceName("face_geom.brep");
-  BRepTools::Write(aComp, aName.ToCString());
-  BRepTools::Write(theDFace->GetFace(), aFaceName.ToCString());
+  ::model::utils::BRepTools::Write(aComp, aName.ToCString());
+  ::model::utils::BRepTools::Write(theDFace->GetFace(), aFaceName.ToCString());
 #endif
 
   BRepMesh_Deflection::ComputeDeflection(theDFace, myParameters);

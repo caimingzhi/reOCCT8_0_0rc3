@@ -254,7 +254,7 @@ occ::handle<IGESData_IGESEntity> BRepToIGES_BRWire ::TransferEdge(
       return res;
     }
     double Ufirst, Ulast, Vfirst, Vlast;
-    BRepTools::UVBounds(theFace, Ufirst, Ulast, Vfirst, Vlast);
+    ::model::utils::BRepTools::UVBounds(theFace, Ufirst, Ulast, Vfirst, Vlast);
     occ::handle<Geom_Surface> Surf;
 
     if (st->IsKind(STANDARD_TYPE(Geom_RectangularTrimmedSurface)))

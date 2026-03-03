@@ -8,6 +8,7 @@
 #include <NCollection_DataMap.hpp>
 #include <NCollection_Map.hpp>
 
+namespace model { namespace utils {
 class BRepTools_History : public Standard_Transient
 {
 public:
@@ -146,3 +147,5 @@ private:
   static const char* myMsgModifiedAndRemoved;
   static const char* myMsgGeneratedAndModified;
 };
+}} // namespace model::utils
+
